@@ -2,27 +2,45 @@
   "chapter": 18,
   "title": "Program Structure and Compilation",
   "fls_url": "https://rust-lang.github.io/fls/program-structure-and-compilation.html",
-  "summary": "FLS Chapter 18 covers source files, modules, crates, crate imports, conditional compilation, and program entry points. iceoryx2 demonstrates a well-organized multi-crate workspace with 14 library crates (including 1 proc-macro), 545 source files, 518 module declarations, extensive conditional compilation for 5 platforms (Linux, macOS, FreeBSD, Windows, QNX), and 2 no_std crates. No binary crates exist - all are libraries.",
+  "version": "0.8.0",
+  "analysis_date": "2025-12-30",
+  "version_changes": {
+    "from_version": "0.7.0",
+    "to_version": "0.8.0",
+    "summary": "Major restructure to workspace with nested crates. FFI layer added (iceoryx2-ffi), CLI tools added, expanded no_std support.",
+    "key_changes": [
+      "Total crates: 14 → 37+ (+164% - workspace reorganization)",
+      "Source files: 545 → 1071 (+96%)",
+      "Module declarations: 518 → 991 (+91%)",
+      "no_std crates: 2 → 23 (+1050% - embedded support)",
+      "Binary crates: 0 → 5+ (CLI tools added)",
+      "Proc-macro crates: 1 → 3 (ffi-macros, conformance-test-macros added)",
+      "extern crate: 25 → 324 (+1196% - alloc/core for no_std)",
+      "use crate:: imports: 609 → 1153 (+89%)",
+      "#[cfg] attributes: 150 → 360 (+140%)",
+      "#[path] attributes: 6 → 24 (+300%)",
+      "Directory structure flattened: iceoryx2-bb-* → iceoryx2-bb/*",
+      "New crate groups: iceoryx2-ffi, iceoryx2-log, iceoryx2-services, iceoryx2-tunnel"
+    ]
+  },
+  "summary": "FLS Chapter 18 covers source files, modules, crates, crate imports, conditional compilation, and program entry points. iceoryx2 v0.8.0 demonstrates a significantly restructured multi-crate workspace with 37+ crates organized into groups (bb, pal, ffi, log), 1071 source files, 991 module declarations, extensive conditional compilation for 5+ platforms, 23 no_std crates for embedded support, and new CLI binary tools.",
 
   "statistics": {
-    "total_crates": 14,
-    "library_crates": 13,
-    "proc_macro_crates": 1,
-    "binary_crates": 0,
-    "source_files": 545,
-    "test_files": 126,
-    "module_declarations": 518,
-    "outline_modules": 396,
-    "inline_modules": 122,
-    "path_attributes": 6,
-    "extern_crate_usage": 25,
-    "use_crate_internal": 609,
-    "cfg_attributes": 150,
+    "total_crates": 37,
+    "library_crates": 32,
+    "proc_macro_crates": 3,
+    "binary_crates": 5,
+    "source_files": 1071,
+    "test_files": 161,
+    "module_declarations": 991,
+    "path_attributes": 24,
+    "extern_crate_usage": 324,
+    "use_crate_internal": 1153,
+    "cfg_attributes": 360,
     "cfg_attr_usage": 6,
-    "no_std_crates": 2,
-    "doc_test_markers": 71,
+    "no_std_crates": 23,
     "rust_edition": "2021",
-    "rust_version": "1.81"
+    "rust_version": "1.83"
   },
 
   "sections": {
@@ -41,29 +59,13 @@
       "18.1:1": {
         "rule": "A source file contains program text with inner attributes, doc comments, and items.",
         "status": "demonstrated",
-        "source_count": 545
+        "source_count": 1071
       },
       "18.1:2": {
         "rule": "A Shebang does not affect compilation.",
         "status": "not_applicable",
         "note": "No shebangs found - iceoryx2 uses compiled Rust, not scripts"
       }
-    },
-    "source_distribution": {
-      "iceoryx2": 87,
-      "iceoryx2-cal": 71,
-      "iceoryx2-pal-posix": 147,
-      "iceoryx2-bb-posix": 39,
-      "iceoryx2-bb-elementary": 13,
-      "iceoryx2-bb-lock-free": 11,
-      "iceoryx2-bb-log": 9,
-      "iceoryx2-bb-system-types": 9,
-      "iceoryx2-bb-elementary-traits": 9,
-      "iceoryx2-bb-container": 7,
-      "iceoryx2-pal-concurrency-sync": 7,
-      "iceoryx2-bb-memory": 5,
-      "iceoryx2-bb-derive-macros": 2,
-      "iceoryx2-pal-configuration": 1
     }
   },
 
@@ -72,31 +74,18 @@
     "rules": {
       "18.2:1": {
         "rule": "A module is a container for zero or more items.",
-        "declaration_count": 518
+        "declaration_count": 991
       },
       "18.2:3_18.2:4": {
         "rule": "Inline modules have InlineModuleSpecification; outline modules have OutlineModuleSpecification.",
-        "outline_modules": 396,
-        "inline_modules": 122
+        "status": "demonstrated"
       },
       "18.2:6": {
         "rule": "Module source file location can be specified using #[path] attribute.",
-        "usage_count": 6,
+        "usage_count": 24,
         "primary_use": "Platform-specific modules in pal-posix"
       }
     },
-    "path_attribute_samples": [
-      {
-        "file": "iceoryx2-pal-posix-0.7.0/src/lib.rs",
-        "code": "#[path = \"linux/mod.rs\"] pub mod platform;",
-        "purpose": "Platform-specific implementations"
-      },
-      {
-        "file": "iceoryx2-pal-posix-0.7.0/src/lib.rs",
-        "code": "#[path = \"windows/mod.rs\"] mod platform;",
-        "purpose": "Windows platform abstraction"
-      }
-    ],
     "main_crate_modules": [
       "config",
       "node",
@@ -120,125 +109,108 @@
     "rules": {
       "18.3:1": {
         "rule": "A crate is a unit of compilation containing a tree of nested modules.",
-        "crate_count": 14
+        "crate_count": 37
       },
       "18.3:5_18.3:6_18.3:7": {
         "rule": "Binary crates have crate type bin and require main function.",
-        "status": "not_applicable",
-        "note": "iceoryx2 has no binary crates - all are libraries"
+        "status": "demonstrated",
+        "binary_count": 5,
+        "location": "iceoryx2-cli"
       },
       "18.3:8": {
         "rule": "Library crates have crate type lib, rlib, staticlib, dylib, or cdylib.",
-        "library_count": 13
+        "library_count": 32
       },
       "18.3:9_18.3:10_18.3:11": {
         "rule": "Proc-macro crates have crate type proc-macro and declare procedural macros.",
-        "proc_macro_count": 1,
-        "crate": "iceoryx2-bb-derive-macros"
+        "proc_macro_count": 3,
+        "crates": [
+          "iceoryx2-bb/derive-macros",
+          "iceoryx2-bb/conformance-test-macros",
+          "iceoryx2-ffi/ffi-macros"
+        ]
       }
     },
-    "crate_list": [
-      {
-        "name": "iceoryx2",
-        "type": "lib",
-        "description": "Main IPC framework crate"
+    "crate_groups": {
+      "core": {
+        "description": "Main iceoryx2 library",
+        "crates": ["iceoryx2", "iceoryx2-cal"]
       },
-      {
-        "name": "iceoryx2-cal",
-        "type": "lib",
-        "description": "Communication Abstraction Layer"
+      "building_blocks": {
+        "description": "Building blocks in iceoryx2-bb/",
+        "crates": [
+          "iceoryx2-bb/concurrency",
+          "iceoryx2-bb/conformance-test-macros",
+          "iceoryx2-bb/container",
+          "iceoryx2-bb/cxx",
+          "iceoryx2-bb/derive-macros",
+          "iceoryx2-bb/elementary",
+          "iceoryx2-bb/elementary-traits",
+          "iceoryx2-bb/linux",
+          "iceoryx2-bb/lock-free",
+          "iceoryx2-bb/memory",
+          "iceoryx2-bb/posix",
+          "iceoryx2-bb/system-types",
+          "iceoryx2-bb/testing",
+          "iceoryx2-bb/threadsafe",
+          "iceoryx2-bb/trait-tests"
+        ]
       },
-      {
-        "name": "iceoryx2-bb-posix",
-        "type": "lib",
-        "description": "POSIX building blocks"
+      "platform_abstraction": {
+        "description": "PAL crates in iceoryx2-pal/",
+        "crates": [
+          "iceoryx2-pal/concurrency-sync",
+          "iceoryx2-pal/configuration",
+          "iceoryx2-pal/os-api",
+          "iceoryx2-pal/posix",
+          "iceoryx2-pal/testing"
+        ]
       },
-      {
-        "name": "iceoryx2-bb-container",
-        "type": "lib",
-        "description": "Data containers (Vec, Queue, etc.)"
+      "ffi": {
+        "description": "FFI bindings in iceoryx2-ffi/ - NEW",
+        "crates": [
+          "iceoryx2-ffi/c",
+          "iceoryx2-ffi/ffi-macros",
+          "iceoryx2-ffi/python"
+        ]
       },
-      {
-        "name": "iceoryx2-bb-elementary",
-        "type": "lib",
-        "description": "Elementary utilities"
+      "logging": {
+        "description": "Logging in iceoryx2-log/ - RESTRUCTURED",
+        "crates": [
+          "iceoryx2-log/log",
+          "iceoryx2-log/loggers",
+          "iceoryx2-log/types"
+        ]
       },
-      {
-        "name": "iceoryx2-bb-elementary-traits",
-        "type": "lib",
-        "description": "Core traits"
+      "services": {
+        "description": "Service implementations - NEW",
+        "crates": ["iceoryx2-services/discovery"]
       },
-      {
-        "name": "iceoryx2-bb-lock-free",
-        "type": "lib",
-        "description": "Lock-free data structures"
+      "tunnels": {
+        "description": "Tunnel implementations - NEW",
+        "crates": [
+          "iceoryx2-tunnel/backend",
+          "iceoryx2-tunnel/tunnel",
+          "iceoryx2-tunnel/zenoh"
+        ]
       },
-      {
-        "name": "iceoryx2-bb-log",
-        "type": "lib",
-        "description": "Logging infrastructure"
+      "cli": {
+        "description": "CLI tools - NEW",
+        "crates": ["iceoryx2-cli"]
       },
-      {
-        "name": "iceoryx2-bb-memory",
-        "type": "lib",
-        "description": "Memory management"
-      },
-      {
-        "name": "iceoryx2-bb-system-types",
-        "type": "lib",
-        "description": "System type wrappers"
-      },
-      {
-        "name": "iceoryx2-bb-derive-macros",
-        "type": "proc-macro",
-        "description": "Derive macros (PlacementDefault, ZeroCopySend)"
-      },
-      {
-        "name": "iceoryx2-pal-posix",
-        "type": "lib",
-        "description": "POSIX Platform Abstraction Layer"
-      },
-      {
-        "name": "iceoryx2-pal-concurrency-sync",
-        "type": "lib",
-        "description": "Concurrency synchronization primitives"
-      },
-      {
-        "name": "iceoryx2-pal-configuration",
-        "type": "lib",
-        "description": "Platform configuration constants"
+      "userland": {
+        "description": "User utilities - NEW",
+        "crates": ["iceoryx2-userland/record-and-replay"]
       }
-    ],
-    "dependency_graph": {
-      "iceoryx2": [
-        "iceoryx2-cal",
-        "iceoryx2-bb-container",
-        "iceoryx2-bb-elementary",
-        "iceoryx2-bb-elementary-traits",
-        "iceoryx2-bb-lock-free",
-        "iceoryx2-bb-log",
-        "iceoryx2-bb-memory",
-        "iceoryx2-bb-posix",
-        "iceoryx2-bb-system-types",
-        "iceoryx2-bb-derive-macros",
-        "iceoryx2-pal-concurrency-sync",
-        "iceoryx2-pal-configuration"
-      ],
-      "iceoryx2-cal": [
-        "iceoryx2-bb-container",
-        "iceoryx2-bb-elementary",
-        "iceoryx2-bb-elementary-traits",
-        "iceoryx2-bb-lock-free",
-        "iceoryx2-bb-log",
-        "iceoryx2-bb-memory",
-        "iceoryx2-bb-posix",
-        "iceoryx2-bb-system-types",
-        "iceoryx2-bb-derive-macros",
-        "iceoryx2-pal-concurrency-sync"
-      ],
-      "base_crates": [
-        "iceoryx2-pal-concurrency-sync (no_std)",
-        "iceoryx2-pal-configuration (no_std)"
+    },
+    "binary_crates": {
+      "location": "iceoryx2-cli",
+      "binaries": [
+        {"name": "iox2", "path": "iox2/src/main.rs"},
+        {"name": "iox2-node", "path": "iox2-node/src/main.rs"},
+        {"name": "iox2-service", "path": "iox2-service/src/main.rs"},
+        {"name": "iox2-config", "path": "iox2-config/src/main.rs"},
+        {"name": "iox2-relay", "path": "iox2-relay/src/main.rs"}
       ]
     }
   },
@@ -252,27 +224,30 @@
       }
     },
     "extern_crate_usage": {
-      "total": 25,
+      "total": 324,
       "patterns": {
         "extern_crate_alloc": {
-          "count": 22,
-          "purpose": "Access to alloc crate for no_std support",
-          "sample": "extern crate alloc;"
+          "description": "Access to alloc crate for no_std support - MAJOR INCREASE",
+          "sample": "extern crate alloc;",
+          "rationale": "Extensive no_std support requires explicit alloc imports"
+        },
+        "extern_crate_core": {
+          "description": "Access to core crate for no_std support",
+          "sample": "extern crate core;"
         },
         "extern_crate_proc_macro": {
-          "count": 1,
-          "file": "iceoryx2-bb-derive-macros-0.7.0/src/lib.rs",
+          "count": 3,
+          "files": [
+            "iceoryx2-bb/derive-macros/src/lib.rs",
+            "iceoryx2-bb/conformance-test-macros/src/lib.rs",
+            "iceoryx2-ffi/ffi-macros/src/lib.rs"
+          ],
           "purpose": "Required for procedural macros"
-        },
-        "extern_crate_bindgen_cc": {
-          "count": 2,
-          "file": "iceoryx2-pal-posix-0.7.0/build.rs",
-          "purpose": "Build script dependencies"
         }
       }
     },
     "use_crate_internal": {
-      "count": 609,
+      "count": 1153,
       "pattern": "use crate::*",
       "purpose": "Internal module references"
     }
@@ -286,7 +261,7 @@
         "status": "demonstrated"
       }
     },
-    "crate_roots": "All crates use src/lib.rs as crate root"
+    "crate_roots": "All library crates use src/lib.rs as crate root; binaries use src/main.rs"
   },
 
   "conditional_compilation": {
@@ -294,7 +269,7 @@
     "rules": {
       "18.6:1_18.6:2": {
         "rule": "Conditionally-compiled source code depends on configuration predicates.",
-        "cfg_count": 150
+        "cfg_count": 360
       },
       "18.6:3": {
         "rule": "Constructs with #[cfg] where predicate is false are not part of the program.",
@@ -327,47 +302,43 @@
         "module": "qnx/mod.rs"
       }
     },
-    "feature_flags": {
-      "dev_permissions": {
-        "crates": ["iceoryx2", "iceoryx2-cal"],
-        "purpose": "Development permission settings"
-      },
-      "libc_platform": {
-        "crates": ["iceoryx2", "iceoryx2-bb-posix", "iceoryx2-pal-posix"],
-        "purpose": "Use libc instead of custom platform bindings"
-      },
-      "logger_log": {
-        "crates": ["iceoryx2", "iceoryx2-bb-log"],
-        "purpose": "Integration with log crate"
-      },
-      "logger_tracing": {
-        "crates": ["iceoryx2", "iceoryx2-bb-log"],
-        "purpose": "Integration with tracing crate"
+    "no_std_crates": {
+      "count": 23,
+      "description": "Extensive no_std support for embedded systems - MAJOR INCREASE",
+      "categories": {
+        "building_blocks": [
+          "iceoryx2-bb/trait-tests",
+          "iceoryx2-bb/threadsafe",
+          "iceoryx2-bb/elementary-traits",
+          "iceoryx2-bb/derive-macros",
+          "iceoryx2-bb/container",
+          "iceoryx2-bb/linux",
+          "iceoryx2-bb/elementary",
+          "iceoryx2-bb/memory",
+          "iceoryx2-bb/system-types"
+        ],
+        "pal": [
+          "iceoryx2-pal/configuration",
+          "iceoryx2-pal/os-api"
+        ],
+        "log": [
+          "iceoryx2-log/types"
+        ],
+        "services": [
+          "iceoryx2-services/discovery"
+        ],
+        "tunnels": [
+          "iceoryx2-tunnel/backend",
+          "iceoryx2-tunnel/tunnel"
+        ],
+        "userland": [
+          "iceoryx2-userland/record-and-replay"
+        ],
+        "examples": [
+          "examples/nostd/bare-metal/rust/*",
+          "examples/nostd/posix/rust/*"
+        ]
       }
-    },
-    "no_std_crates": [
-      {
-        "name": "iceoryx2-pal-concurrency-sync",
-        "file": "src/lib.rs:13",
-        "code": "#![no_std]"
-      },
-      {
-        "name": "iceoryx2-pal-configuration",
-        "file": "src/lib.rs:13",
-        "code": "#![no_std]"
-      }
-    ],
-    "platform_module_sample": {
-      "file": "iceoryx2-pal-posix-0.7.0/src/lib.rs",
-      "code": [
-        "#[cfg(feature = \"libc_platform\")]",
-        "#[path = \"libc/mod.rs\"]",
-        "mod platform;",
-        "",
-        "#[cfg(all(target_os = \"linux\", not(feature = \"libc_platform\")))]",
-        "#[path = \"linux/mod.rs\"]",
-        "pub mod platform;"
-      ]
     }
   },
 
@@ -376,20 +347,23 @@
     "rules": {
       "18.7:1": {
         "rule": "A program entry point is a function invoked at start of a Rust program.",
-        "status": "not_applicable"
+        "status": "demonstrated"
       },
       "18.7:2_to_18.7:9": {
         "rule": "Main function signature requirements.",
-        "status": "not_applicable",
-        "note": "No binary crates - only build.rs files have main functions"
+        "status": "demonstrated"
       }
     },
-    "main_functions_found": {
-      "build_scripts": [
-        "iceoryx2-pal-posix-0.7.0/build.rs"
+    "main_functions": {
+      "cli_binaries": [
+        "iceoryx2-cli/iox2/src/main.rs",
+        "iceoryx2-cli/iox2-node/src/main.rs",
+        "iceoryx2-cli/iox2-service/src/main.rs",
+        "iceoryx2-cli/iox2-config/src/main.rs",
+        "iceoryx2-cli/iox2-relay/src/main.rs"
       ],
-      "doc_examples": "Many //! # fn main() in documentation",
-      "binary_crates": "None"
+      "examples": "Many example binaries in examples/",
+      "build_scripts": "build.rs files in crates requiring native compilation"
     }
   },
 
@@ -418,30 +392,32 @@
   },
 
   "design_patterns": {
-    "layered_architecture": {
-      "description": "Clear separation into PAL, building blocks, CAL, and main crate",
-      "layers": [
-        "iceoryx2-pal-* (Platform Abstraction Layer)",
-        "iceoryx2-bb-* (Building Blocks)",
-        "iceoryx2-cal (Communication Abstraction Layer)",
-        "iceoryx2 (Main crate)"
+    "workspace_organization": {
+      "description": "Nested workspace structure with crate groups - RESTRUCTURED",
+      "groups": [
+        "iceoryx2-bb/* (Building Blocks)",
+        "iceoryx2-pal/* (Platform Abstraction Layer)",
+        "iceoryx2-ffi/* (FFI bindings - NEW)",
+        "iceoryx2-log/* (Logging - RESTRUCTURED)",
+        "iceoryx2-services/* (Services - NEW)",
+        "iceoryx2-tunnel/* (Tunnels - NEW)"
       ]
     },
     "platform_abstraction": {
       "description": "#[path] and #[cfg(target_os)] for platform-specific code",
       "supported_platforms": ["linux", "macos", "freebsd", "windows", "qnx"]
     },
-    "feature_propagation": {
-      "description": "Features propagate through dependency chain",
-      "example": "libc_platform: iceoryx2 -> iceoryx2-bb-posix -> iceoryx2-pal-posix"
-    },
-    "no_std_base": {
-      "description": "Foundation crates are no_std for embedded compatibility",
-      "crates": ["iceoryx2-pal-concurrency-sync", "iceoryx2-pal-configuration"]
+    "extensive_no_std": {
+      "description": "23 crates support no_std for embedded systems - MAJOR EXPANSION",
+      "rationale": "Safety-critical embedded systems require no_std operation"
     },
     "prelude_for_ergonomics": {
       "description": "Single prelude module for convenient imports",
       "usage": "use iceoryx2::prelude::*;"
+    },
+    "cli_tools": {
+      "description": "CLI binary tools for service management - NEW",
+      "binaries": ["iox2", "iox2-node", "iox2-service", "iox2-config", "iox2-relay"]
     }
   },
 
@@ -449,6 +425,7 @@
     "chapter_3": "Items - module contents",
     "chapter_13": "Attributes - #[cfg], #[path], #[cfg_attr]",
     "chapter_14": "Entities and Resolution - module visibility, use imports",
-    "chapter_20": "Macros - proc-macro crate"
+    "chapter_20": "Macros - proc-macro crates",
+    "chapter_21": "FFI - iceoryx2-ffi crates"
   }
 }
