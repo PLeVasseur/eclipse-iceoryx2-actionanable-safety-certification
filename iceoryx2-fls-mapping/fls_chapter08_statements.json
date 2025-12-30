@@ -1,7 +1,7 @@
 {
   "chapter": 8,
   "title": "Statements",
-  "fls_url": "https://spec.ferrocene.dev/statements.html",
+  "fls_url": "https://rust-lang.github.io/fls/statements.html",
   "fls_id": "fls_wdicg3sqa98e",
   "repository": "eclipse-iceoryx/iceoryx2",
   "version": "0.8.0",
@@ -242,7 +242,7 @@
       }
     },
     "item_statements": {
-      "fls_section": "MUST_BE_FILLED",
+      "fls_section": "8 (iceoryx2 analysis)",
       "description": "An item statement is a statement expressed as an item, scoped to the containing block.",
       "findings": {
         "fls_reference": "8:2",
@@ -261,7 +261,7 @@
       ]
     },
     "macro_statements": {
-      "fls_section": "MUST_BE_FILLED",
+      "fls_section": "8 (iceoryx2 analysis)",
       "description": "A macro statement is a statement expressed as a terminated macro invocation.",
       "findings": {
         "fls_reference": "8:4",
@@ -305,7 +305,7 @@
       ]
     },
     "empty_statements": {
-      "fls_section": "MUST_BE_FILLED",
+      "fls_section": "8 (iceoryx2 analysis)",
       "description": "An empty statement is a statement expressed as character 0x3B (semicolon).",
       "findings": {
         "fls_reference": "8:3",

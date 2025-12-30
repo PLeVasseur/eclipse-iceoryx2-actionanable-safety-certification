@@ -1,6 +1,6 @@
 {
   "fls_chapter": "3. Items",
-  "fls_reference": "https://spec.ferrocene.dev/items.html",
+  "fls_reference": "https://rust-lang.github.io/fls/items.html",
   "codebase": "iceoryx2",
   "version": "0.8.0",
   "analysis_date": "2024-12",

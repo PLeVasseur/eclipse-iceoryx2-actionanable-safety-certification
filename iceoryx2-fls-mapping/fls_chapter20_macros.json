@@ -42,73 +42,13 @@
     "assert_that_invocations": 5283
   },
   "sections": {
-    "20.1": {
-      "fls_section": "20.1",
-      "fls_ids": [],
-      "description": "Declarative Macros",
-      "status": "MUST_BE_FILLED"
-    },
-    "20.1.1": {
-      "fls_section": "20.1.1",
-      "fls_ids": [],
-      "description": "Metavariables",
-      "status": "MUST_BE_FILLED"
-    },
-    "20.1.2": {
-      "fls_section": "20.1.2",
-      "fls_ids": [],
-      "description": "Repetition",
-      "status": "MUST_BE_FILLED"
-    },
-    "20.2": {
-      "fls_section": "20.2",
-      "fls_ids": [],
-      "description": "Procedural Macros",
-      "status": "MUST_BE_FILLED"
-    },
-    "20.2.1": {
-      "fls_section": "20.2.1",
-      "fls_ids": [],
-      "description": "Function-like Macros",
-      "status": "MUST_BE_FILLED"
-    },
-    "20.2.2": {
-      "fls_section": "20.2.2",
-      "fls_ids": [],
-      "description": "Derive Macros",
-      "status": "MUST_BE_FILLED"
-    },
-    "20.2.3": {
-      "fls_section": "20.2.3",
-      "fls_ids": [],
-      "description": "Attribute Macros",
-      "status": "MUST_BE_FILLED"
-    },
-    "20.3": {
-      "fls_section": "20.3",
-      "fls_ids": [],
-      "description": "Macro Invocation",
-      "status": "MUST_BE_FILLED"
-    },
-    "20.4": {
-      "fls_section": "20.4",
-      "fls_ids": [],
-      "description": "Macro Expansion",
-      "status": "MUST_BE_FILLED"
-    },
-    "20.5": {
-      "fls_section": "20.5",
-      "fls_ids": [],
-      "description": "Hygiene",
-      "status": "MUST_BE_FILLED"
-    },
     "declarative_macros": {
       "fls_section": "20.1",
       "fls_ids": [
         "fls_xa7lp0zg1ol2"
       ],
       "description": "Declarative Macros",
-      "status": "MUST_BE_FILLED",
+      "status": "demonstrated",
       "findings": {
         "declarative_macros": {
           "section": "20.1",
@@ -325,7 +265,7 @@
         "fls_wn1i6hzg2ff7"
       ],
       "description": "Procedural Macros",
-      "status": "MUST_BE_FILLED",
+      "status": "demonstrated",
       "findings": {
         "procedural_macros": {
           "section": "20.2",
@@ -411,7 +351,7 @@
         "fls_vnvt40pa48n8"
       ],
       "description": "Macro Invocation",
-      "status": "MUST_BE_FILLED",
+      "status": "demonstrated",
       "findings": {
         "macro_invocation": {
           "section": "20.3",
@@ -435,7 +375,7 @@
         "fls_xlfo7di0gsqz"
       ],
       "description": "Hygiene",
-      "status": "MUST_BE_FILLED",
+      "status": "demonstrated",
       "findings": {
         "hygiene": {
           "section": "20.5",

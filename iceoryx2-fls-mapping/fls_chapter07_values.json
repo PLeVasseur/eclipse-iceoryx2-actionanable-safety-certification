@@ -146,12 +146,12 @@
       ],
       "subsections": {
         "unnamed_constants": {
-          "fls_section": "MUST_BE_FILLED",
+          "fls_section": "7.1 (iceoryx2 analysis)",
           "description": "Constants declared with underscore (const _: Type = ...)",
           "status": "NOT USED"
         },
         "associated_constants": {
-          "fls_section": "MUST_BE_FILLED",
+          "fls_section": "7.1 (iceoryx2 analysis)",
           "description": "Constants defined within impl blocks",
           "findings": {
             "usage": "Permission flags, capacity limits"
@@ -168,7 +168,7 @@
           ]
         },
         "const_fn": {
-          "fls_section": "MUST_BE_FILLED",
+          "fls_section": "7.1 (iceoryx2 analysis)",
           "description": "Functions callable at compile time",
           "findings": {
             "count": 113,
@@ -199,7 +199,7 @@
           ]
         },
         "const_generics": {
-          "fls_section": "MUST_BE_FILLED",
+          "fls_section": "7.1 (iceoryx2 analysis)",
           "description": "Generic parameters that are constants",
           "findings": {
             "usage": "Array sizes, capacity parameters, StaticVec/StaticString"
@@ -378,7 +378,7 @@
       },
       "subsections": {
         "7.4.1_constant_promotion": {
-          "fls_section": "MUST_BE_FILLED",
+          "fls_section": "7.4.1",
           "description": "Process of converting value expression into constant with 'static lifetime.",
           "findings": {
             "legality_rules": {

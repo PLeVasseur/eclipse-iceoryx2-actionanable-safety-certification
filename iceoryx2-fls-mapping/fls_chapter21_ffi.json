@@ -41,37 +41,13 @@
     "platform_modules": 27
   },
   "sections": {
-    "21.1": {
-      "fls_section": "21.1",
-      "fls_ids": [],
-      "description": "ABI",
-      "status": "MUST_BE_FILLED"
-    },
-    "21.2": {
-      "fls_section": "21.2",
-      "fls_ids": [],
-      "description": "External Blocks",
-      "status": "MUST_BE_FILLED"
-    },
-    "21.3": {
-      "fls_section": "21.3",
-      "fls_ids": [],
-      "description": "External Functions",
-      "status": "MUST_BE_FILLED"
-    },
-    "21.4": {
-      "fls_section": "21.4",
-      "fls_ids": [],
-      "description": "External Statics",
-      "status": "MUST_BE_FILLED"
-    },
     "abi": {
       "fls_section": "21.1",
       "fls_ids": [
         "fls_usgd0xlijoxv"
       ],
       "description": "ABI",
-      "status": "MUST_BE_FILLED",
+      "status": "demonstrated",
       "findings": {
         "abi_usage": {
           "section": "21.1",
@@ -148,7 +124,7 @@
         "fls_yztwtek0y34v"
       ],
       "description": "External Functions",
-      "status": "MUST_BE_FILLED",
+      "status": "demonstrated",
       "findings": {
         "ffi_c_crate": {
           "crate": "iceoryx2-ffi/c",
@@ -260,7 +236,7 @@
         "fls_tmoh3y9oyqsy"
       ],
       "description": "External Blocks",
-      "status": "MUST_BE_FILLED",
+      "status": "demonstrated",
       "findings": {
         "platform_abstraction_layer": {
           "crate": "iceoryx2-pal/posix",

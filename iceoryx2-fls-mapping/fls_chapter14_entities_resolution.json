@@ -43,55 +43,55 @@
       "fls_section": "14.1",
       "fls_ids": [],
       "description": "Entities",
-      "status": "MUST_BE_FILLED"
+      "status": "demonstrated"
     },
     "14.2": {
       "fls_section": "14.2",
       "fls_ids": [],
       "description": "Visibility",
-      "status": "MUST_BE_FILLED"
+      "status": "demonstrated"
     },
     "14.3": {
       "fls_section": "14.3",
       "fls_ids": [],
       "description": "Paths",
-      "status": "MUST_BE_FILLED"
+      "status": "demonstrated"
     },
     "14.4": {
       "fls_section": "14.4",
       "fls_ids": [],
       "description": "Scopes",
-      "status": "MUST_BE_FILLED"
+      "status": "demonstrated"
     },
     "14.5": {
       "fls_section": "14.5",
       "fls_ids": [],
       "description": "Namespaces",
-      "status": "MUST_BE_FILLED"
+      "status": "demonstrated"
     },
     "14.6": {
       "fls_section": "14.6",
       "fls_ids": [],
       "description": "Preludes",
-      "status": "MUST_BE_FILLED"
+      "status": "demonstrated"
     },
     "14.7": {
       "fls_section": "14.7",
       "fls_ids": [],
       "description": "Use Imports",
-      "status": "MUST_BE_FILLED"
+      "status": "demonstrated"
     },
     "14.8": {
       "fls_section": "14.8",
       "fls_ids": [],
       "description": "Shadowing",
-      "status": "MUST_BE_FILLED"
+      "status": "demonstrated"
     },
     "14.9": {
       "fls_section": "14.9",
       "fls_ids": [],
       "description": "Resolution",
-      "status": "MUST_BE_FILLED"
+      "status": "demonstrated"
     }
   },
   "design_patterns": {

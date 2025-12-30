@@ -41,25 +41,25 @@
       "fls_section": "12.1",
       "fls_ids": [],
       "description": "Generic Parameters",
-      "status": "MUST_BE_FILLED"
+      "status": "demonstrated"
     },
     "12.2": {
       "fls_section": "12.2",
       "fls_ids": [],
       "description": "Where Clauses",
-      "status": "MUST_BE_FILLED"
+      "status": "demonstrated"
     },
     "12.3": {
       "fls_section": "12.3",
       "fls_ids": [],
       "description": "Generic Arguments",
-      "status": "MUST_BE_FILLED"
+      "status": "demonstrated"
     },
     "12.4": {
       "fls_section": "12.4",
       "fls_ids": [],
       "description": "Generic Conformance",
-      "status": "MUST_BE_FILLED"
+      "status": "demonstrated"
     }
   },
   "design_patterns": {

@@ -49,91 +49,91 @@
       "fls_section": "13.1",
       "fls_ids": [],
       "description": "Attribute Properties",
-      "status": "MUST_BE_FILLED"
+      "status": "demonstrated"
     },
     "13.2": {
       "fls_section": "13.2",
       "fls_ids": [],
       "description": "Built-in Attributes",
-      "status": "MUST_BE_FILLED"
+      "status": "demonstrated"
     },
     "13.2.1": {
       "fls_section": "13.2.1",
       "fls_ids": [],
       "description": "Code Generation Attributes",
-      "status": "MUST_BE_FILLED"
+      "status": "demonstrated"
     },
     "13.2.2": {
       "fls_section": "13.2.2",
       "fls_ids": [],
       "description": "Conditional Compilation Attributes",
-      "status": "MUST_BE_FILLED"
+      "status": "demonstrated"
     },
     "13.2.3": {
       "fls_section": "13.2.3",
       "fls_ids": [],
       "description": "Derivation Attributes",
-      "status": "MUST_BE_FILLED"
+      "status": "demonstrated"
     },
     "13.2.4": {
       "fls_section": "13.2.4",
       "fls_ids": [],
       "description": "Diagnostics Attributes",
-      "status": "MUST_BE_FILLED"
+      "status": "demonstrated"
     },
     "13.2.5": {
       "fls_section": "13.2.5",
       "fls_ids": [],
       "description": "Documentation Attributes",
-      "status": "MUST_BE_FILLED"
+      "status": "demonstrated"
     },
     "13.2.6": {
       "fls_section": "13.2.6",
       "fls_ids": [],
       "description": "Foreign Function Interface Attributes",
-      "status": "MUST_BE_FILLED"
+      "status": "demonstrated"
     },
     "13.2.7": {
       "fls_section": "13.2.7",
       "fls_ids": [],
       "description": "Limits Attributes",
-      "status": "MUST_BE_FILLED"
+      "status": "demonstrated"
     },
     "13.2.8": {
       "fls_section": "13.2.8",
       "fls_ids": [],
       "description": "Macros Attributes",
-      "status": "MUST_BE_FILLED"
+      "status": "demonstrated"
     },
     "13.2.9": {
       "fls_section": "13.2.9",
       "fls_ids": [],
       "description": "Modules Attributes",
-      "status": "MUST_BE_FILLED"
+      "status": "demonstrated"
     },
     "13.2.10": {
       "fls_section": "13.2.10",
       "fls_ids": [],
       "description": "Prelude Attributes",
-      "status": "MUST_BE_FILLED"
+      "status": "demonstrated"
     },
     "13.2.11": {
       "fls_section": "13.2.11",
       "fls_ids": [],
       "description": "Runtime Attributes",
-      "status": "MUST_BE_FILLED"
+      "status": "demonstrated"
     },
     "13.2.12": {
       "fls_section": "13.2.12",
       "fls_ids": [],
       "description": "Testing Attributes",
-      "status": "MUST_BE_FILLED"
+      "status": "demonstrated"
     },
     "13.2.13": {
       "fls_section": "13.2.13",
       "fls_ids": [],
       "description": "Type Attributes",
-      "status": "MUST_BE_FILLED"
+      "status": "demonstrated"
     }
   },
   "design_patterns": {

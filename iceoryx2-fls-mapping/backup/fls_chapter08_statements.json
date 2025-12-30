@@ -1,6 +1,6 @@
 {
   "fls_chapter": "8. Statements",
-  "fls_reference": "https://spec.ferrocene.dev/statements.html",
+  "fls_reference": "https://rust-lang.github.io/fls/statements.html",
   "codebase": "iceoryx2",
   "version": "0.8.0",
   "analysis_date": "2025-12-30",

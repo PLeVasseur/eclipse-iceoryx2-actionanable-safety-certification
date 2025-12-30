@@ -422,6 +422,6 @@ When a new iceoryx2 version is released:
 
 ## References
 
-- [Ferrocene Language Specification](https://spec.ferrocene.dev/)
+- [Ferrocene Language Specification](https://rust-lang.github.io/fls/)
 - [iceoryx2 Repository](https://github.com/eclipse-iceoryx/iceoryx2)
 - [iceoryx2 v0.8.0 Release Notes](cache/repos/iceoryx2/v0.8.0/doc/release-notes/iceoryx2-v0.8.0.md)

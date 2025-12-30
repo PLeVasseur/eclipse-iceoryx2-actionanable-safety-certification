@@ -51,10 +51,10 @@
   },
   "sections": {
     "unsafe_operations": {
-      "fls_section": "MUST_BE_FILLED",
+      "fls_section": "19",
       "fls_ids": [],
-      "description": "MUST_BE_FILLED",
-      "status": "MUST_BE_FILLED",
+      "description": "Unsafe operations in Rust including raw pointer dereferencing, unsafe function calls, and accessing mutable statics.",
+      "status": "demonstrated",
       "findings": {
         "union_types": {
           "description": "NEW in v0.8.0 - Union types for FFI C API",

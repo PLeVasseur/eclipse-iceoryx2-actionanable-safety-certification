@@ -44,55 +44,13 @@
     "rust_version": "1.83"
   },
   "sections": {
-    "18.1": {
-      "fls_section": "18.1",
-      "fls_ids": [],
-      "description": "Source Files",
-      "status": "MUST_BE_FILLED"
-    },
-    "18.2": {
-      "fls_section": "18.2",
-      "fls_ids": [],
-      "description": "Modules",
-      "status": "MUST_BE_FILLED"
-    },
-    "18.3": {
-      "fls_section": "18.3",
-      "fls_ids": [],
-      "description": "Crates",
-      "status": "MUST_BE_FILLED"
-    },
-    "18.4": {
-      "fls_section": "18.4",
-      "fls_ids": [],
-      "description": "Crate Imports",
-      "status": "MUST_BE_FILLED"
-    },
-    "18.5": {
-      "fls_section": "18.5",
-      "fls_ids": [],
-      "description": "Compilation Roots",
-      "status": "MUST_BE_FILLED"
-    },
-    "18.6": {
-      "fls_section": "18.6",
-      "fls_ids": [],
-      "description": "Conditional Compilation",
-      "status": "MUST_BE_FILLED"
-    },
-    "18.7": {
-      "fls_section": "18.7",
-      "fls_ids": [],
-      "description": "Program Entry Point",
-      "status": "MUST_BE_FILLED"
-    },
     "source_files": {
       "fls_section": "18.1",
       "fls_ids": [
         "fls_s35hob3i7lr"
       ],
       "description": "Source Files",
-      "status": "MUST_BE_FILLED",
+      "status": "demonstrated",
       "findings": {
         "source_files": {
           "section": "18.1",
@@ -118,7 +76,7 @@
         "fls_e9hwvqsib5d5"
       ],
       "description": "Modules",
-      "status": "MUST_BE_FILLED",
+      "status": "demonstrated",
       "findings": {
         "modules": {
           "section": "18.2",
@@ -186,7 +144,7 @@
         "fls_maw4u1o8q37u"
       ],
       "description": "Crates",
-      "status": "MUST_BE_FILLED",
+      "status": "demonstrated",
       "findings": {
         "crates": {
           "section": "18.3",
@@ -331,7 +289,7 @@
         "fls_gklst7joeo33"
       ],
       "description": "Crate Imports",
-      "status": "MUST_BE_FILLED",
+      "status": "demonstrated",
       "findings": {
         "crate_imports": {
           "section": "18.4",
@@ -379,7 +337,7 @@
         "fls_5w50kf83oo1u"
       ],
       "description": "Compilation Roots",
-      "status": "MUST_BE_FILLED",
+      "status": "demonstrated",
       "findings": {
         "compilation_roots": {
           "section": "18.5",
@@ -400,7 +358,7 @@
         "fls_u1afezy1ye99"
       ],
       "description": "Conditional Compilation",
-      "status": "MUST_BE_FILLED",
+      "status": "demonstrated",
       "findings": {
         "conditional_compilation": {
           "section": "18.6",
@@ -486,7 +444,7 @@
       "fls_section": "18.7",
       "fls_ids": [],
       "description": "Program Entry Point",
-      "status": "MUST_BE_FILLED",
+      "status": "demonstrated",
       "findings": {
         "program_entry_point": {
           "section": "18.7",

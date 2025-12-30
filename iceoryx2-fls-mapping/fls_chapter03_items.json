@@ -1,7 +1,7 @@
 {
   "chapter": 3,
   "title": "Items",
-  "fls_url": "https://spec.ferrocene.dev/items.html",
+  "fls_url": "https://rust-lang.github.io/fls/items.html",
   "fls_id": "fls_wb86edg02t6a",
   "repository": "eclipse-iceoryx/iceoryx2",
   "version": "0.8.0",

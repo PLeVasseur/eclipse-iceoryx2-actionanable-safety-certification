@@ -50,67 +50,13 @@
     "manually_drop_usage": 541
   },
   "sections": {
-    "15.1": {
-      "fls_section": "15.1",
-      "fls_ids": [],
-      "description": "Ownership",
-      "status": "MUST_BE_FILLED"
-    },
-    "15.2": {
-      "fls_section": "15.2",
-      "fls_ids": [],
-      "description": "Initialization",
-      "status": "MUST_BE_FILLED"
-    },
-    "15.3": {
-      "fls_section": "15.3",
-      "fls_ids": [],
-      "description": "References",
-      "status": "MUST_BE_FILLED"
-    },
-    "15.4": {
-      "fls_section": "15.4",
-      "fls_ids": [],
-      "description": "Borrowing",
-      "status": "MUST_BE_FILLED"
-    },
-    "15.5": {
-      "fls_section": "15.5",
-      "fls_ids": [],
-      "description": "Passing Conventions",
-      "status": "MUST_BE_FILLED"
-    },
-    "15.6": {
-      "fls_section": "15.6",
-      "fls_ids": [],
-      "description": "Destruction",
-      "status": "MUST_BE_FILLED"
-    },
-    "15.7": {
-      "fls_section": "15.7",
-      "fls_ids": [],
-      "description": "Destructors",
-      "status": "MUST_BE_FILLED"
-    },
-    "15.8": {
-      "fls_section": "15.8",
-      "fls_ids": [],
-      "description": "Drop Scopes",
-      "status": "MUST_BE_FILLED"
-    },
-    "15.9": {
-      "fls_section": "15.9",
-      "fls_ids": [],
-      "description": "Drop Order",
-      "status": "MUST_BE_FILLED"
-    },
     "ownership": {
       "fls_section": "15.1",
       "fls_ids": [
         "fls_svkx6szhr472"
       ],
       "description": "Ownership",
-      "status": "MUST_BE_FILLED",
+      "status": "demonstrated",
       "findings": {
         "ownership": {
           "section": "15.1",
@@ -168,7 +114,7 @@
         "fls_3xvm61x0t251"
       ],
       "description": "Initialization",
-      "status": "MUST_BE_FILLED",
+      "status": "demonstrated",
       "findings": {
         "initialization": {
           "section": "15.2",
@@ -202,7 +148,7 @@
         "fls_v5x85lt5ulva"
       ],
       "description": "References",
-      "status": "MUST_BE_FILLED",
+      "status": "demonstrated",
       "findings": {
         "references": {
           "section": "15.3",
@@ -286,7 +232,7 @@
         "fls_a14slch83hzn"
       ],
       "description": "Borrowing",
-      "status": "MUST_BE_FILLED",
+      "status": "demonstrated",
       "findings": {
         "borrowing": {
           "section": "15.4",
@@ -356,7 +302,7 @@
         "fls_77scxuomlbgs"
       ],
       "description": "Passing Conventions",
-      "status": "MUST_BE_FILLED",
+      "status": "demonstrated",
       "findings": {
         "passing_conventions": {
           "section": "15.5",
@@ -401,7 +347,7 @@
         "fls_4jiw35pan7vn"
       ],
       "description": "Destruction",
-      "status": "MUST_BE_FILLED",
+      "status": "demonstrated",
       "findings": {
         "destruction": {
           "section": "15.6",
@@ -451,7 +397,7 @@
         "fls_u2mzjgiwbkz0"
       ],
       "description": "Destructors",
-      "status": "MUST_BE_FILLED",
+      "status": "demonstrated",
       "findings": {
         "destructors": {
           "section": "15.7",
@@ -717,7 +663,7 @@
         "fls_rm4ncoopcdvj"
       ],
       "description": "Drop Scopes",
-      "status": "MUST_BE_FILLED",
+      "status": "demonstrated",
       "findings": {
         "drop_scopes": {
           "section": "15.8",
@@ -741,7 +687,7 @@
         "fls_afafmafz4hf2"
       ],
       "description": "Drop Order",
-      "status": "MUST_BE_FILLED",
+      "status": "demonstrated",
       "findings": {
         "drop_order": {
           "section": "15.9",

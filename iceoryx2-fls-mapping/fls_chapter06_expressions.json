@@ -53,7 +53,7 @@
       "description": "Expressions classified by assignee, constant, diverging, place, and value categories.",
       "subsections": {
         "6.1.1_assignee_expressions": {
-          "fls_section": "MUST_BE_FILLED",
+          "fls_section": "6.1.1",
           "description": "Expressions that appear as left operand of assignment.",
           "findings": {
             "usage": "Place expressions, array/tuple expressions used as assignees"
@@ -69,7 +69,7 @@
           ]
         },
         "6.1.2_constant_expressions": {
-          "fls_section": "MUST_BE_FILLED",
+          "fls_section": "6.1.2",
           "description": "Expressions evaluated statically at compile time.",
           "findings": {
             "usage": "const declarations, array sizes, enum discriminants"
@@ -86,7 +86,7 @@
           ]
         },
         "6.1.3_diverging_expressions": {
-          "fls_section": "MUST_BE_FILLED",
+          "fls_section": "6.1.3",
           "description": "Expressions causing program flow to diverge (break, return, panic).",
           "findings": {
             "break_count": 128,
@@ -112,7 +112,7 @@
           ]
         },
         "6.1.4_place_expressions": {
-          "fls_section": "MUST_BE_FILLED",
+          "fls_section": "6.1.4",
           "description": "Expressions representing memory locations.",
           "findings": {
             "dereferences": 6176,
@@ -130,7 +130,7 @@
           ]
         },
         "6.1.5_value_expressions": {
-          "fls_section": "MUST_BE_FILLED",
+          "fls_section": "6.1.5",
           "description": "Expressions representing values (all non-place expressions).",
           "findings": {
             "usage": "Literals, arithmetic results, function returns"
@@ -208,13 +208,13 @@
       },
       "subsections": {
         "6.4.1_async_blocks": {
-          "fls_section": "MUST_BE_FILLED",
+          "fls_section": "6.4.1",
           "description": "Blocks specified with async keyword.",
           "status": "NOT USED",
           "samples": []
         },
         "6.4.2_const_blocks": {
-          "fls_section": "MUST_BE_FILLED",
+          "fls_section": "6.4.2",
           "description": "Blocks evaluated statically (const {}).",
           "findings": {
             "usage": "Used for compile-time initialization, especially in StaticVec"
@@ -237,13 +237,13 @@
           ]
         },
         "6.4.3_named_blocks": {
-          "fls_section": "MUST_BE_FILLED",
+          "fls_section": "6.4.3",
           "description": "Blocks with labels for break targeting.",
           "status": "NOT USED",
           "samples": []
         },
         "6.4.4_unsafe_blocks": {
-          "fls_section": "MUST_BE_FILLED",
+          "fls_section": "6.4.4",
           "description": "Blocks allowing unsafe operations.",
           "findings": {
             "count": 2372,
@@ -277,7 +277,7 @@
       "description": "Expressions involving operators.",
       "subsections": {
         "6.5.1_borrow_expression": {
-          "fls_section": "MUST_BE_FILLED",
+          "fls_section": "6.5.1",
           "description": "Expressions creating references (&, &mut).",
           "findings": {
             "immutable_borrow_count": 9420,
@@ -301,7 +301,7 @@
           ]
         },
         "6.5.2_dereference_expression": {
-          "fls_section": "MUST_BE_FILLED",
+          "fls_section": "6.5.2",
           "description": "Expressions dereferencing pointers (*).",
           "findings": {
             "count": 6176,
@@ -319,7 +319,7 @@
           ]
         },
         "6.5.3_error_propagation_expression": {
-          "fls_section": "MUST_BE_FILLED",
+          "fls_section": "6.5.3",
           "description": "Expressions using ? operator for error propagation.",
           "findings": {
             "count": 3443,
@@ -344,7 +344,7 @@
           ]
         },
         "6.5.4_negation_expression": {
-          "fls_section": "MUST_BE_FILLED",
+          "fls_section": "6.5.4",
           "description": "Expressions using negation operators (!, -).",
           "findings": {
             "count": 696,
@@ -362,7 +362,7 @@
           ]
         },
         "6.5.5_arithmetic_expressions": {
-          "fls_section": "MUST_BE_FILLED",
+          "fls_section": "6.5.5",
           "description": "Expressions using arithmetic operators (+, -, *, /, %).",
           "findings": {
             "addition": "+ for numeric addition",
@@ -389,7 +389,7 @@
           ]
         },
         "6.5.6_bit_expressions": {
-          "fls_section": "MUST_BE_FILLED",
+          "fls_section": "6.5.6",
           "description": "Expressions using bit operators (&, |, ^, <<, >>).",
           "findings": {
             "bit_and": "& for masking operations",
@@ -418,7 +418,7 @@
           ]
         },
         "6.5.7_comparison_expressions": {
-          "fls_section": "MUST_BE_FILLED",
+          "fls_section": "6.5.7",
           "description": "Expressions using comparison operators (==, !=, <, >, <=, >=).",
           "findings": {
             "equals": "== for equality testing",
@@ -446,7 +446,7 @@
           ]
         },
         "6.5.8_lazy_boolean_expressions": {
-          "fls_section": "MUST_BE_FILLED",
+          "fls_section": "6.5.8",
           "description": "Expressions using short-circuit boolean operators (&&, ||).",
           "findings": {
             "lazy_and": "&& for short-circuit AND",
@@ -471,13 +471,13 @@
           ]
         },
         "6.5.9_raw_borrow_expression": {
-          "fls_section": "MUST_BE_FILLED",
+          "fls_section": "6.5.9",
           "description": "Expressions creating raw pointers without borrow (&raw const/mut).",
           "status": "NOT USED",
           "samples": []
         },
         "6.5.10_type_cast_expression": {
-          "fls_section": "MUST_BE_FILLED",
+          "fls_section": "6.5.10",
           "description": "Expressions using as for type casting.",
           "findings": {
             "count": 4847,
@@ -508,7 +508,7 @@
           ]
         },
         "6.5.11_assignment_expression": {
-          "fls_section": "MUST_BE_FILLED",
+          "fls_section": "6.5.11",
           "description": "Expressions assigning values (=).",
           "findings": {
             "usage": "Variable assignment, field assignment, index assignment"
@@ -531,7 +531,7 @@
           ]
         },
         "6.5.12_compound_assignment_expression": {
-          "fls_section": "MUST_BE_FILLED",
+          "fls_section": "6.5.12",
           "description": "Expressions using compound assignment (+=, -=, etc.).",
           "findings": {
             "add_assign": "+= for increment",
@@ -661,7 +661,7 @@
       "description": "Expressions for iteration (for, while, loop).",
       "subsections": {
         "6.10.1_for_loop": {
-          "fls_section": "MUST_BE_FILLED",
+          "fls_section": "6.15.1",
           "description": "Iteration over iterators.",
           "findings": {
             "count": 1438,
@@ -686,7 +686,7 @@
           ]
         },
         "6.10.2_infinite_loop": {
-          "fls_section": "MUST_BE_FILLED",
+          "fls_section": "6.15.2",
           "description": "Unconditional loop expression.",
           "findings": {
             "count": 130,
@@ -711,7 +711,7 @@
           ]
         },
         "6.10.3_while_loop": {
-          "fls_section": "MUST_BE_FILLED",
+          "fls_section": "6.15.3",
           "description": "Conditional loop expression.",
           "findings": {
             "count": 356,
@@ -736,7 +736,7 @@
           ]
         },
         "6.10.4_while_let_loop": {
-          "fls_section": "MUST_BE_FILLED",
+          "fls_section": "6.15.4",
           "description": "Pattern-matching loop expression.",
           "findings": {
             "count": 70,
@@ -760,7 +760,7 @@
           ]
         },
         "6.10.5_loop_labels": {
-          "fls_section": "MUST_BE_FILLED",
+          "fls_section": "6.15.5",
           "description": "Labels for loop control.",
           "status": "LIMITED USE",
           "samples": []

@@ -1,7 +1,7 @@
 {
   "chapter": 2,
   "title": "Lexical Elements",
-  "fls_url": "MUST_BE_FILLED",
+  "fls_url": "https://rust-lang.github.io/fls/lexical-elements.html",
   "fls_id": "fls_411up5z0b6n6",
   "repository": "eclipse-iceoryx/iceoryx2",
   "version": "0.8.0",
@@ -16,7 +16,7 @@
       "no_std support added - explicit core/alloc imports"
     ]
   },
-  "summary": "MUST_BE_FILLED",
+  "summary": "Analysis of lexical elements used in iceoryx2 including character sets, identifiers, literals, punctuation, and keywords. The codebase uses ASCII-only identifiers and demonstrates extensive use of integer literals with type suffixes for safety-critical code.",
   "statistics": {},
   "sections": {
     "character_set": {
@@ -60,7 +60,7 @@
       }
     },
     "lexical_elements_separators_punctuation": {
-      "fls_section": "MUST_BE_FILLED",
+      "fls_section": "2.2",
       "fls_paragraphs": [
         "2.2:1-6",
         "2.2:7",
@@ -68,7 +68,7 @@
         "2.2:9-11",
         "2.2:12-64"
       ],
-      "description": "MUST_BE_FILLED",
+      "description": "Lexical elements including separators (whitespace, delimiters) and punctuation (operators, brackets, symbols) used to structure Rust source code.",
       "findings": {
         "summary": "Defines punctuators, separators, and delimiters",
         "punctuator_categories": {

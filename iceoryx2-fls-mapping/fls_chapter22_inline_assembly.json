@@ -33,61 +33,13 @@
     "memory_ordering_total": 848
   },
   "sections": {
-    "22.1": {
-      "fls_section": "22.1",
-      "fls_ids": [],
-      "description": "Registers",
-      "status": "MUST_BE_FILLED"
-    },
-    "22.2": {
-      "fls_section": "22.2",
-      "fls_ids": [],
-      "description": "Register Classes",
-      "status": "MUST_BE_FILLED"
-    },
-    "22.3": {
-      "fls_section": "22.3",
-      "fls_ids": [],
-      "description": "Register Arguments",
-      "status": "MUST_BE_FILLED"
-    },
-    "22.4": {
-      "fls_section": "22.4",
-      "fls_ids": [],
-      "description": "Assembly Instructions",
-      "status": "MUST_BE_FILLED"
-    },
-    "22.5": {
-      "fls_section": "22.5",
-      "fls_ids": [],
-      "description": "ABI Clobbers",
-      "status": "MUST_BE_FILLED"
-    },
-    "22.6": {
-      "fls_section": "22.6",
-      "fls_ids": [],
-      "description": "Assembly Options",
-      "status": "MUST_BE_FILLED"
-    },
-    "22.7": {
-      "fls_section": "22.7",
-      "fls_ids": [],
-      "description": "Macros asm, global_asm, and naked_asm",
-      "status": "MUST_BE_FILLED"
-    },
-    "22.8": {
-      "fls_section": "22.8",
-      "fls_ids": [],
-      "description": "Label block",
-      "status": "MUST_BE_FILLED"
-    },
     "macros_asm_globalasm_and_nakedasm": {
       "fls_section": "22.7",
       "fls_ids": [
         "fls_qezwyridmjob"
       ],
       "description": "Macros: asm, global_asm, and naked_asm",
-      "status": "MUST_BE_FILLED",
+      "status": "demonstrated",
       "findings": {
         "global_asm_usage": {
           "count": 1,

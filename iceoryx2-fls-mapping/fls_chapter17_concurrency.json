@@ -49,31 +49,13 @@
     "await_usage": 0
   },
   "sections": {
-    "17.1": {
-      "fls_section": "17.1",
-      "fls_ids": [],
-      "description": "Send and Sync",
-      "status": "MUST_BE_FILLED"
-    },
-    "17.2": {
-      "fls_section": "17.2",
-      "fls_ids": [],
-      "description": "Atomics",
-      "status": "MUST_BE_FILLED"
-    },
-    "17.3": {
-      "fls_section": "17.3",
-      "fls_ids": [],
-      "description": "Asynchronous Computation",
-      "status": "MUST_BE_FILLED"
-    },
     "send_and_sync": {
       "fls_section": "17.1",
       "fls_ids": [
         "fls_eiw4by8z75di"
       ],
       "description": "Send and Sync",
-      "status": "MUST_BE_FILLED",
+      "status": "demonstrated",
       "findings": {
         "send_and_sync": {
           "section": "17.1",
@@ -243,7 +225,7 @@
         "fls_vyc9vcuamlph"
       ],
       "description": "Atomics",
-      "status": "MUST_BE_FILLED",
+      "status": "demonstrated",
       "findings": {
         "atomics": {
           "section": "17.2",
@@ -465,7 +447,7 @@
         "fls_mtuwzinpfvkl"
       ],
       "description": "Asynchronous Computation",
-      "status": "MUST_BE_FILLED",
+      "status": "not_used",
       "findings": {
         "asynchronous_computation": {
           "section": "17.3",
