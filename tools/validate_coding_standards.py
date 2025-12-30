@@ -5,7 +5,8 @@ Validate coding standards JSON files against their schemas.
 This script validates:
 1. Standards files (MISRA/CERT rule listings) against coding_standard_rules.schema.json
 2. Mapping files (FLS mappings) against fls_mapping.schema.json
-3. FLS ID references against the canonical FLS section mapping
+3. FLS ID references against the canonical FLS section mapping AND native RST source
+4. FLS IDs in fls_ids, accepted_matches, and rejected_matches arrays
 
 Usage:
     uv run python tools/validate_coding_standards.py
@@ -34,6 +35,8 @@ STANDARDS_DIR = ROOT_DIR / "coding-standards-fls-mapping" / "standards"
 MAPPINGS_DIR = ROOT_DIR / "coding-standards-fls-mapping" / "mappings"
 SCHEMA_DIR = ROOT_DIR / "coding-standards-fls-mapping" / "schema"
 FLS_MAPPING_PATH = SCRIPT_DIR / "fls_section_mapping.json"
+FLS_RST_DIR = ROOT_DIR / "cache" / "repos" / "fls" / "src"
+SYNTHETIC_IDS_PATH = SCRIPT_DIR / "synthetic_fls_ids.json"
 
 # Schema file names
 RULES_SCHEMA = "coding_standard_rules.schema.json"
@@ -46,7 +49,30 @@ def load_json(path: Path) -> dict:
         return json.load(f)
 
 
-def load_fls_ids() -> set[str]:
+def load_native_fls_ids_from_rst() -> set[str]:
+    """Load all FLS IDs from the FLS RST source files."""
+    ids = set()
+    if not FLS_RST_DIR.exists():
+        return ids
+
+    for rst_file in FLS_RST_DIR.glob("*.rst"):
+        content = rst_file.read_text()
+        # Match FLS ID anchors like .. _fls_abc123:
+        ids.update(re.findall(r'fls_[a-zA-Z0-9]+', content))
+
+    return ids
+
+
+def load_synthetic_fls_ids() -> set[str]:
+    """Load tracked synthetic FLS IDs."""
+    if not SYNTHETIC_IDS_PATH.exists():
+        return set()
+    
+    data = load_json(SYNTHETIC_IDS_PATH)
+    return set(data.get("synthetic_ids", {}).keys())
+
+
+def load_fls_ids_from_mapping() -> set[str]:
     """Load all valid FLS IDs from the FLS section mapping."""
     if not FLS_MAPPING_PATH.exists():
         print(f"Warning: FLS section mapping not found at {FLS_MAPPING_PATH}")
@@ -59,7 +85,7 @@ def load_fls_ids() -> set[str]:
         """Recursively extract FLS IDs from the mapping."""
         if isinstance(obj, dict):
             if "fls_id" in obj and obj["fls_id"]:
-                # Skip synthetic IDs
+                # Skip synthetic IDs marked with special prefix
                 if not obj["fls_id"].startswith("fls_extracted"):
                     fls_ids.add(obj["fls_id"])
             for value in obj.values():
@@ -70,6 +96,18 @@ def load_fls_ids() -> set[str]:
 
     extract_ids(fls_data)
     return fls_ids
+
+
+def load_all_valid_fls_ids() -> tuple[set[str], set[str], set[str]]:
+    """Load all valid FLS IDs from all sources.
+    
+    Returns:
+        Tuple of (native_ids, synthetic_ids, mapping_ids)
+    """
+    native_ids = load_native_fls_ids_from_rst()
+    synthetic_ids = load_synthetic_fls_ids()
+    mapping_ids = load_fls_ids_from_mapping()
+    return native_ids, synthetic_ids, mapping_ids
 
 
 def validate_schema(data: dict, schema: dict, filename: str) -> list[str]:
@@ -85,7 +123,13 @@ def validate_schema(data: dict, schema: dict, filename: str) -> list[str]:
 
 
 def validate_fls_ids(data: dict, valid_fls_ids: set[str], filename: str) -> list[str]:
-    """Validate that all FLS IDs in a mapping file are valid."""
+    """Validate that all FLS IDs in a mapping file are valid.
+    
+    Checks FLS IDs in:
+    - fls_ids array
+    - accepted_matches array (fls_id field)
+    - rejected_matches array (fls_id field)
+    """
     errors = []
 
     if "mappings" not in data:
@@ -93,11 +137,26 @@ def validate_fls_ids(data: dict, valid_fls_ids: set[str], filename: str) -> list
 
     for mapping in data["mappings"]:
         guideline_id = mapping.get("guideline_id", "unknown")
+        
+        # Check fls_ids array
         fls_ids = mapping.get("fls_ids", [])
-
         for fls_id in fls_ids:
             if fls_id not in valid_fls_ids:
-                errors.append(f"{filename}: {guideline_id}: Unknown FLS ID '{fls_id}'")
+                errors.append(f"{filename}: {guideline_id}: Unknown FLS ID '{fls_id}' in fls_ids")
+        
+        # Check accepted_matches array
+        accepted_matches = mapping.get("accepted_matches", [])
+        for match in accepted_matches:
+            fls_id = match.get("fls_id")
+            if fls_id and fls_id not in valid_fls_ids:
+                errors.append(f"{filename}: {guideline_id}: Unknown FLS ID '{fls_id}' in accepted_matches")
+        
+        # Check rejected_matches array
+        rejected_matches = mapping.get("rejected_matches", [])
+        for match in rejected_matches:
+            fls_id = match.get("fls_id")
+            if fls_id and fls_id not in valid_fls_ids:
+                errors.append(f"{filename}: {guideline_id}: Unknown FLS ID '{fls_id}' in rejected_matches")
 
     return errors
 
@@ -230,9 +289,14 @@ def main():
     rules_schema = load_json(rules_schema_path)
     mapping_schema = load_json(mapping_schema_path)
 
-    # Load valid FLS IDs
-    valid_fls_ids = load_fls_ids()
-    print(f"Loaded {len(valid_fls_ids)} valid FLS IDs")
+    # Load valid FLS IDs from all sources
+    native_ids, synthetic_ids, mapping_ids = load_all_valid_fls_ids()
+    valid_fls_ids = native_ids | synthetic_ids
+    print(f"Loaded FLS IDs:")
+    print(f"  Native (from RST):     {len(native_ids)}")
+    print(f"  Synthetic (tracked):   {len(synthetic_ids)}")
+    print(f"  In section mapping:    {len(mapping_ids)}")
+    print(f"  Total valid:           {len(valid_fls_ids)}")
 
     all_errors = []
     schema_errors = []

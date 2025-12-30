@@ -77,15 +77,15 @@
     "mapping_entry": {
       "type": "object",
       "description": "A single guideline's mapping to FLS sections",
-      "required": ["guideline_id", "guideline_type", "applicability_all_rust", "applicability_safe_rust"],
+      "required": ["guideline_id", "guideline_title", "guideline_type", "applicability_all_rust", "applicability_safe_rust"],
       "if": {
         "properties": {
-          "fls_ids": {
+          "accepted_matches": {
             "type": "array",
             "minItems": 1
           }
         },
-        "required": ["fls_ids"]
+        "required": ["accepted_matches"]
       },
       "then": {
         "required": ["fls_rationale_type"]
@@ -95,25 +95,87 @@
           "type": "string",
           "description": "ID from the coding standard (e.g., 'Rule 1.1', 'MEM30-C')"
         },
+        "guideline_title": {
+          "type": "string",
+          "description": "Title/summary of the guideline"
+        },
         "guideline_type": {
           "type": "string",
           "enum": ["rule", "directive", "recommendation"],
           "description": "Type of guideline"
         },
-        "fls_ids": {
+        "accepted_matches": {
           "type": "array",
+          "description": "FLS sections that were matched to this guideline during manual review, with justification for each",
           "items": {
-            "type": "string",
-            "pattern": "^fls_[a-zA-Z0-9]+$"
-          },
-          "description": "List of FLS IDs this guideline maps to (e.g., ['fls_jep7p27kaqlp'])"
+            "type": "object",
+            "required": ["fls_id", "fls_title", "score", "reason"],
+            "properties": {
+              "fls_id": {
+                "type": "string",
+                "pattern": "^fls_[a-zA-Z0-9]+$",
+                "description": "The accepted FLS ID"
+              },
+              "fls_section": {
+                "type": ["string", "null"],
+                "description": "Human-readable FLS section number (e.g., '6.15'). May be null for FLS IDs that don't map to numbered sections."
+              },
+              "fls_title": {
+                "type": "string",
+                "description": "Human-readable title of the FLS section"
+              },
+              "score": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1,
+                "description": "The similarity score (0-1) that was calculated for this match"
+              },
+              "reason": {
+                "type": "string",
+                "description": "Why this FLS section was chosen - should reference specific FLS legality rules or content"
+              }
+            }
+          }
+        },
+        "rejected_matches": {
+          "type": "array",
+          "description": "High-similarity FLS matches (≥0.5) that were rejected during manual review. Used to improve similarity calculation.",
+          "items": {
+            "type": "object",
+            "required": ["fls_id", "fls_title", "score", "reason"],
+            "properties": {
+              "fls_id": {
+                "type": "string",
+                "pattern": "^fls_[a-zA-Z0-9]+$",
+                "description": "The rejected FLS ID"
+              },
+              "fls_section": {
+                "type": ["string", "null"],
+                "description": "Human-readable FLS section number (e.g., '6.15'). May be null for FLS IDs that don't map to numbered sections."
+              },
+              "fls_title": {
+                "type": "string",
+                "description": "Human-readable title of the FLS section"
+              },
+              "score": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1,
+                "description": "The similarity score (0-1) that was calculated for this match"
+              },
+              "reason": {
+                "type": "string",
+                "description": "Why this match was rejected despite high similarity score"
+              }
+            }
+          }
         },
         "fls_sections": {
           "type": "array",
           "items": {
             "type": "string"
           },
-          "description": "Human-readable FLS section numbers and paragraphs (e.g., ['15.1', '15.1:3', '17.2'])"
+          "description": "Human-readable FLS section numbers and paragraphs (e.g., ['15.1', '15.1:3', '17.2']). Deprecated: use accepted_matches instead."
         },
         "fls_rationale_type": {
           "type": "string",
@@ -124,7 +186,7 @@
             "no_equivalent",
             "partial_mapping"
           ],
-          "description": "Explains the relationship between the guideline and the FLS IDs: direct_mapping=rule maps directly to these FLS concepts, rust_alternative=Rust has a different/better mechanism (FLS shows what Rust uses instead), rust_prevents=Rust's design prevents the issue (FLS shows how), no_equivalent=C concept doesn't exist in Rust (FLS shows related Rust constructs for context), partial_mapping=some aspects map directly, others don't"
+          "description": "Explains the relationship between the guideline and the FLS sections: direct_mapping=rule maps directly to these FLS concepts, rust_alternative=Rust has a different/better mechanism (FLS shows what Rust uses instead), rust_prevents=Rust's design prevents the issue (FLS shows how), no_equivalent=C concept doesn't exist in Rust (FLS shows related Rust constructs for context), partial_mapping=some aspects map directly, others don't"
         },
         "applicability_all_rust": {
           "type": "string",
@@ -164,7 +226,7 @@
         },
         "notes": {
           "type": "string",
-          "description": "Explanation of mapping rationale, differences from C/C++, or why not applicable"
+          "description": "High-level summary of the mapping rationale. Detailed justifications should be in accepted_matches and rejected_matches."
         }
       }
     }

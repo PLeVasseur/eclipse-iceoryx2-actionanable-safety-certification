@@ -694,6 +694,151 @@ Some FLS sections (extracted from `.. syntax::` blocks) don't have native FLS ID
 4. Update notes with specific rationale
 5. Upgrade `confidence` to `"high"` when verified
 
+### MISRA to FLS Mapping Verification Workflow
+
+For each MISRA guideline being manually verified, follow these steps rigorously:
+
+#### Step 1: Get Similarity Results
+
+Query `embeddings/similarity/misra_c_to_fls.json` for the rule:
+
+```bash
+cd tools && uv run python -c "
+import json
+with open('../embeddings/similarity/misra_c_to_fls.json') as f:
+    sim = json.load(f)
+rule = 'Rule X.Y'  # Replace with actual rule
+matches = sim['results'][rule]['top_matches'][:5]
+for m in matches:
+    print(f'{m[\"fls_id\"]}: {m[\"similarity\"]:.3f}')
+"
+```
+
+Record the top 5 matches with their similarity scores.
+
+#### Step 2: Evaluate Similarity Quality
+
+Use these thresholds (based on statistical analysis of the corpus):
+
+| Score Range | Interpretation | Action |
+|-------------|----------------|--------|
+| **≥0.6** | Strong match | Likely relevant - MUST investigate. Document if rejected. |
+| **0.5-0.6** | Medium match | Worth investigating, may be relevant |
+| **0.4-0.5** | Weak match | Lower priority, may be tangentially related |
+| **<0.4** | Very weak | Probably not relevant (only 0.9% of top-1 scores fall here) |
+
+**Statistical basis**: Median top-1 score is 0.59, mean is 0.577, stdev is 0.08.
+
+Also check the `missing_siblings` field for related sections that might be relevant.
+
+#### Step 3: Read FLS Content
+
+Use a Task agent to read actual FLS content for strong matches (≥0.5):
+
+```
+Use Task tool with subagent_type="explore" to read FLS section content from cache/repos/fls/src/
+```
+
+Focus on:
+- Legality rules (what the compiler enforces)
+- Dynamic semantics (runtime behavior)
+- Undefined behavior definitions
+- Type constraints
+
+#### Step 4: Compare MISRA Rationale to FLS
+
+Read the MISRA rationale from extracted text:
+
+```bash
+cd tools && uv run python -c "
+import json
+with open('../cache/misra_c_extracted_text.json') as f:
+    misra = json.load(f)
+for g in misra['guidelines']:
+    if g['guideline_id'] == 'Rule X.Y':
+        print(g['rationale'])
+"
+```
+
+Ask yourself:
+- Does the FLS section actually address the MISRA concern?
+- Is Rust's approach the same, different, or does it prevent the issue?
+- Are there multiple FLS sections that together address the concern?
+
+#### Step 5: Make Mapping Decision
+
+Document one of:
+
+1. **Accept similarity suggestion**: Use the FLS ID(s) from similarity results
+   - Add to `accepted_matches` with score and reason
+   - Quote specific FLS paragraph IDs that support the mapping
+
+2. **Override with different FLS IDs**: Use different FLS ID(s) than similarity suggested
+   - Add rejected high-scoring matches (≥0.5) to `rejected_matches` field
+   - Document why the override is more appropriate
+
+3. **No FLS mapping needed**: Set `accepted_matches` to empty array
+   - Explain why (C-specific concept with no Rust equivalent)
+   - May still have `rejected_matches` if similarity suggested irrelevant sections
+
+#### Step 6: Update Mapping with Evidence
+
+The mapping entry should include:
+
+```json
+{
+  "guideline_id": "Rule X.Y",
+  "guideline_title": "...",
+  "applicability_all_rust": "...",
+  "applicability_safe_rust": "...",
+  "accepted_matches": [
+    {
+      "fls_id": "fls_xxx",
+      "fls_title": "Type Cast Expressions",
+      "score": 0.65,
+      "reason": "Per FLS: 'A cast is legal when it performs type coercion or is a specialized cast.' This shows Rust requires explicit casts, directly addressing MISRA's concern about implicit type mixing."
+    },
+    {
+      "fls_id": "fls_yyy",
+      "fls_title": "Type Coercion",
+      "score": 0.53,
+      "reason": "Per FLS: No implicit numeric coercions allowed. This prevents the C 'usual arithmetic conversions' that MISRA is trying to control."
+    }
+  ],
+  "fls_rationale_type": "...",
+  "confidence": "high",
+  "notes": "High-level summary: Rust's type system prevents implicit type conversions that MISRA's Essential Type Model addresses.",
+  "rejected_matches": [
+    {
+      "fls_id": "fls_zzz",
+      "fls_title": "Enum Type Representation",
+      "score": 0.62,
+      "reason": "Section is about enum discriminant layout, not type conversion rules - semantic similarity due to shared 'type' terminology"
+    }
+  ]
+}
+```
+
+#### Notes Field Template
+
+```
+High-level summary: [1-2 sentence explanation of why this MISRA rule maps/doesn't map to Rust].
+[If applicable: Clippy lint 'X' provides additional enforcement.]
+```
+
+The detailed justifications should be in `accepted_matches` and `rejected_matches` fields, not in `notes`.
+
+#### Rejected Matches Documentation
+
+Document rejected high-similarity matches (≥0.5) to help improve the similarity calculation:
+
+| Pattern | Indicates |
+|---------|-----------|
+| Same section rejected repeatedly | May have "generic" language inflating scores |
+| Different section chosen repeatedly | `concept_to_fls.json` keywords may be incomplete |
+| No good matches for a concept | Embedding model may not capture C↔Rust semantic gap |
+| Parent vs child mismatch | Chunking granularity may need adjustment |
+
 ### Applicability Values
 
 | Value | Description |

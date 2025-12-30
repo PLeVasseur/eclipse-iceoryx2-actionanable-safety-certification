@@ -1,0 +1,1430 @@
+{
+  "fls_48qldfwwh493": {
+    "section": "1",
+    "title": "General"
+  },
+  "fls_fo1c7pg2mw1": {
+    "section": "1.1",
+    "title": "Scope"
+  },
+  "fls_10yukmkhl0ng": {
+    "section": "1.1.1",
+    "title": "Extent"
+  },
+  "fls_xscgklvg1wd2": {
+    "section": "1.1.2",
+    "title": "Structure"
+  },
+  "fls_99b7xi1bkgih": {
+    "section": "1.1.3",
+    "title": "Conformity"
+  },
+  "fls_79rl6ylmct07": {
+    "section": "1.1.4",
+    "title": "Method of Description and Syntax Notation"
+  },
+  "fls_9cd746qe40ag": {
+    "section": "1.2",
+    "title": "Versioning"
+  },
+  "fls_ijzgf4h0mp3c": {
+    "section": "1.3",
+    "title": "Definitions"
+  },
+  "fls_411up5z0b6n6": {
+    "section": "2",
+    "title": "Lexical Elements"
+  },
+  "fls_2i089jvv8j5g": {
+    "section": "2.1",
+    "title": "Character Set"
+  },
+  "fls_fgnllgz5k3e6": {
+    "section": "2.2",
+    "title": "Lexical Elements, Separators, and Punctuation"
+  },
+  "fls_21vnag69kbwe": {
+    "section": "2.3",
+    "title": "Identifiers"
+  },
+  "fls_nrkd5wpi64oo": {
+    "section": "2.4",
+    "title": "Literals"
+  },
+  "fls_2ifjqwnw03ms": {
+    "section": "2.4.1",
+    "title": "Byte Literals"
+  },
+  "fls_fqaffyrjob7v": {
+    "section": "2.4.2",
+    "title": "Byte String Literals"
+  },
+  "fls_jps9102q0qfi": {
+    "section": "2.4.2.2",
+    "title": "Raw Byte String Literals"
+  },
+  "fls_hv9jtycp0o1y": {
+    "section": "2.4.4",
+    "title": "Numeric Literals"
+  },
+  "fls_2ed4axpsy9u0": {
+    "section": "2.4.4.1",
+    "title": "Integer Literals"
+  },
+  "fls_29tlg1vyqay2": {
+    "section": "2.4.4.2",
+    "title": "Float Literals"
+  },
+  "fls_ypa86oqxhn9u": {
+    "section": "2.4.5",
+    "title": "Character Literals"
+  },
+  "fls_boyhlu5srp6u": {
+    "section": "2.4.6",
+    "title": "String Literals"
+  },
+  "fls_hucd52suu6it": {
+    "section": "2.4.6.1",
+    "title": "Simple String Literals"
+  },
+  "fls_usr6iuwpwqqh": {
+    "section": "2.4.6.2",
+    "title": "Raw String Literals"
+  },
+  "fls_jkab8eevzbte": {
+    "section": "2.4.7",
+    "title": "Boolean Literals"
+  },
+  "fls_q8l2jza7d9xa": {
+    "section": "2.5",
+    "title": "Comments"
+  },
+  "fls_lish33a1naw5": {
+    "section": "2.6",
+    "title": "Keywords"
+  },
+  "fls_mec5cg5aptf8": {
+    "section": "2.6.1",
+    "title": "Strict Keywords"
+  },
+  "fls_cbsgp6k0qa82": {
+    "section": "2.6.2",
+    "title": "Reserved Keywords"
+  },
+  "fls_9kjpxri0axvg": {
+    "section": "2.6.3",
+    "title": "Weak Keywords"
+  },
+  "fls_wb86edg02t6a": {
+    "section": "3",
+    "title": "Items"
+  },
+  "fls_OhbVrpoiVgRV": {
+    "section": "3.0.1",
+    "title": "Constant Declaration"
+  },
+  "fls_5IfLBcbfnoGM": {
+    "section": "3.0.2",
+    "title": "Enum Declaration"
+  },
+  "fls_bJmTPSIAoCLr": {
+    "section": "3.0.3",
+    "title": "External Block"
+  },
+  "fls_Z3aWZkSBvrjn": {
+    "section": "3.0.4",
+    "title": "External Crate Import"
+  },
+  "fls_9Wvgfygw2wMq": {
+    "section": "3.0.5",
+    "title": "Function Declaration"
+  },
+  "fls_ZcUDIh7yfJs1": {
+    "section": "3.0.6",
+    "title": "Implementation"
+  },
+  "fls_ON43xKmTecQo": {
+    "section": "3.0.7",
+    "title": "Module Declaration"
+  },
+  "fls_Xsf2o3gyrDO1": {
+    "section": "3.0.8",
+    "title": "Static Declaration"
+  },
+  "fls_xkxwnQrS7RPe": {
+    "section": "3.0.9",
+    "title": "Struct Declaration"
+  },
+  "fls_MOkIUpkDyr7O": {
+    "section": "3.0.10",
+    "title": "Trait Declaration"
+  },
+  "fls_SJoRu1XXdo0c": {
+    "section": "3.0.11",
+    "title": "Type Alias Declaration"
+  },
+  "fls_Zuzren68K4Tu": {
+    "section": "3.0.12",
+    "title": "Union Declaration"
+  },
+  "fls_nPFz46PDjqip": {
+    "section": "3.0.13",
+    "title": "Use Import"
+  },
+  "fls_VJIqVLB5Lzxo": {
+    "section": "3.0.14",
+    "title": "Macro Rules Declaration"
+  },
+  "fls_iGFfWd3hjOkY": {
+    "section": "3.0.15",
+    "title": "Terminated Macro Invocation"
+  },
+  "fls_vgb6ev541b2r": {
+    "section": "4",
+    "title": "Types and Traits"
+  },
+  "fls_963gsjp2jas2": {
+    "section": "4.2",
+    "title": "Type Classification"
+  },
+  "fls_id66vnaqw0zt": {
+    "section": "4.3",
+    "title": "Scalar Types"
+  },
+  "fls_tiqp1gxf116z": {
+    "section": "4.3.1",
+    "title": "Bool Type"
+  },
+  "fls_wrvjizrqf3po": {
+    "section": "4.3.2",
+    "title": "Char Type"
+  },
+  "fls_qwljwqr07slp": {
+    "section": "4.3.3",
+    "title": "Numeric Types"
+  },
+  "fls_b4xporvr64s": {
+    "section": "4.3.3.1",
+    "title": "Floating Point Types"
+  },
+  "fls_3qnpv2z7yjil": {
+    "section": "4.3.3.2",
+    "title": "Integer Types"
+  },
+  "fls_fbchw64p6n2x": {
+    "section": "4.4",
+    "title": "Sequence Types"
+  },
+  "fls_uj0kpjwyld60": {
+    "section": "4.4.1",
+    "title": "Array Types"
+  },
+  "fls_vpbikb73dw4k": {
+    "section": "4.4.2",
+    "title": "Slice Types"
+  },
+  "fls_4agmmu5al6gt": {
+    "section": "4.4.3",
+    "title": "Str Type"
+  },
+  "fls_4ckl3n2ko3i4": {
+    "section": "4.4.4",
+    "title": "Tuple Types"
+  },
+  "fls_wdec78luqh5b": {
+    "section": "4.5",
+    "title": "Abstract Data Types"
+  },
+  "fls_szibmtfv117b": {
+    "section": "4.5.1",
+    "title": "Enum Types"
+  },
+  "fls_9ucqbbd0s2yo": {
+    "section": "4.5.2",
+    "title": "Struct Types"
+  },
+  "fls_fmdn7n7s413d": {
+    "section": "4.5.3",
+    "title": "Union Types"
+  },
+  "fls_hbbek3z4wtcs": {
+    "section": "4.6",
+    "title": "Function Types"
+  },
+  "fls_xd2oxlebhs14": {
+    "section": "4.6.1",
+    "title": "Closure Types"
+  },
+  "fls_airvr79xkcag": {
+    "section": "4.6.2",
+    "title": "Function Item Types"
+  },
+  "fls_3i4ou0dq64ny": {
+    "section": "4.7",
+    "title": "Indirection Types"
+  },
+  "fls_xztr1kebz8bo": {
+    "section": "4.7.1",
+    "title": "Function Pointer Types"
+  },
+  "fls_ppd1xwve3tr7": {
+    "section": "4.7.2",
+    "title": "Raw Pointer Types"
+  },
+  "fls_142vncdktbin": {
+    "section": "4.7.3",
+    "title": "Reference Types"
+  },
+  "fls_1ompd93w7c9f": {
+    "section": "4.8",
+    "title": "Trait Types"
+  },
+  "fls_3xqobbu7wfsf": {
+    "section": "4.8.1",
+    "title": "Impl Trait Types"
+  },
+  "fls_qa98qdi42orq": {
+    "section": "4.8.2",
+    "title": "Trait Object Types"
+  },
+  "fls_3pbipk8ki18d": {
+    "section": "4.9",
+    "title": "Other Types"
+  },
+  "fls_s45k21yn4qur": {
+    "section": "4.9.1",
+    "title": "Inferred Types"
+  },
+  "fls_98lnexk53ru4": {
+    "section": "4.9.3",
+    "title": "Never Type"
+  },
+  "fls_olbj67eyxz2k": {
+    "section": "4.9.4",
+    "title": "Parenthesized Types"
+  },
+  "fls_kgvleup5mdhq": {
+    "section": "4.10",
+    "title": "Type Aliases"
+  },
+  "fls_7pby13muw48o": {
+    "section": "4.11",
+    "title": "Representation"
+  },
+  "fls_g1z6bpyjqxkz": {
+    "section": "4.11.1",
+    "title": "Type Layout"
+  },
+  "fls_ohhsmifo0urd": {
+    "section": "4.11.2",
+    "title": "Type Representation"
+  },
+  "fls_xc1hof4qbf6p": {
+    "section": "4.11.2.1",
+    "title": "Enum Type Representation"
+  },
+  "fls_rjxpof29a3nl": {
+    "section": "4.11.2.2",
+    "title": "Struct Type Representation"
+  },
+  "fls_cmq8ogs84ivh": {
+    "section": "4.11.2.3",
+    "title": "Union Type Representation"
+  },
+  "fls_j02707n615z0": {
+    "section": "4.12",
+    "title": "Type Model"
+  },
+  "fls_3gapgqys3ceb": {
+    "section": "4.12.1",
+    "title": "Recursive Types"
+  },
+  "fls_exe4zodlwfez": {
+    "section": "4.12.2",
+    "title": "Type Unification"
+  },
+  "fls_dw33yt5g6m0k": {
+    "section": "4.12.3",
+    "title": "Type Coercion"
+  },
+  "fls_omaq7psg83n3": {
+    "section": "4.12.5",
+    "title": "Interior Mutability"
+  },
+  "fls_lv7w7aalpwm5": {
+    "section": "4.12.7",
+    "title": "Type Inference"
+  },
+  "fls_85vx1qfa061i": {
+    "section": "4.13",
+    "title": "Traits"
+  },
+  "fls_4ikc07mfrez5": {
+    "section": "4.13.1",
+    "title": "Object Safety"
+  },
+  "fls_jeoas4n6su4": {
+    "section": "4.14",
+    "title": "Trait and Lifetime Bounds"
+  },
+  "fls_yqcygq3y6m5j": {
+    "section": "4.14.1",
+    "title": "Lifetimes"
+  },
+  "fls_ikfvbeewame7": {
+    "section": "4.14.2",
+    "title": "Subtyping and Variance"
+  },
+  "fls_l9ebxrlxyawd": {
+    "section": "4.14.3",
+    "title": "Lifetime Elision"
+  },
+  "fls_xgqh0ju6bmbn": {
+    "section": "5",
+    "title": "Patterns"
+  },
+  "fls_uh76pw6ykd57": {
+    "section": "5.1",
+    "title": "Refutability"
+  },
+  "fls_7bxv8lybxm18": {
+    "section": "5.1.1",
+    "title": "Identifier Patterns"
+  },
+  "fls_2krxnq8q9ef1": {
+    "section": "5.1.2",
+    "title": "Literal Patterns"
+  },
+  "fls_1xit18et4ohh": {
+    "section": "5.1.3",
+    "title": "Parenthesized Patterns"
+  },
+  "fls_uloyjbaso8pz": {
+    "section": "5.1.4",
+    "title": "Path Patterns"
+  },
+  "fls_6tl1fx99yn6c": {
+    "section": "5.1.5",
+    "title": "Range Patterns"
+  },
+  "fls_d2sc9hl3v0mk": {
+    "section": "5.1.6",
+    "title": "Reference Patterns"
+  },
+  "fls_7wpgnp4kjq82": {
+    "section": "5.1.7",
+    "title": "Rest Patterns"
+  },
+  "fls_qte70mgzpras": {
+    "section": "5.1.8",
+    "title": "Slice Patterns"
+  },
+  "fls_7dbd5t2750ce": {
+    "section": "5.2",
+    "title": "Struct Patterns"
+  },
+  "fls_nruvg0es3kx7": {
+    "section": "5.2.1",
+    "title": "Record Struct Patterns"
+  },
+  "fls_vlrto778v49m": {
+    "section": "5.2.2",
+    "title": "Tuple Struct Patterns"
+  },
+  "fls_urbr5rg9206v": {
+    "section": "5.2.3",
+    "title": "Tuple Patterns"
+  },
+  "fls_qfsfnql1t7m": {
+    "section": "5.2.4",
+    "title": "Underscore Patterns"
+  },
+  "fls_qssijtofa9i8": {
+    "section": "5.3",
+    "title": "Binding Modes"
+  },
+  "fls_jm6l7b90h6wa": {
+    "section": "5.4",
+    "title": "Pattern Matching"
+  },
+  "fls_vnai6ag4qrdb": {
+    "section": "5.4.1",
+    "title": "Identifier Pattern Matching"
+  },
+  "fls_azzf1llv3wf": {
+    "section": "5.4.2",
+    "title": "Literal Pattern Matching"
+  },
+  "fls_5loglxds6zik": {
+    "section": "5.4.3",
+    "title": "Parenthesized Pattern Matching"
+  },
+  "fls_d44aflefat88": {
+    "section": "5.4.4",
+    "title": "Path Pattern Matching"
+  },
+  "fls_fyskeih6twyb": {
+    "section": "5.4.5",
+    "title": "Range Pattern Matching"
+  },
+  "fls_org6hqv397fp": {
+    "section": "5.4.6",
+    "title": "Reference Pattern Matching"
+  },
+  "fls_57ic33pwdvp3": {
+    "section": "5.4.7",
+    "title": "Slice Pattern Matching"
+  },
+  "fls_asj8rgccvkoe": {
+    "section": "5.4.8",
+    "title": "Record Struct Pattern Matching"
+  },
+  "fls_eexupzdsu7f": {
+    "section": "5.4.9",
+    "title": "Tuple Struct Pattern Matching"
+  },
+  "fls_rce8bb7nz2jy": {
+    "section": "5.4.10",
+    "title": "Tuple Pattern Matching"
+  },
+  "fls_yc4xm4hrfyw7": {
+    "section": "5.4.11",
+    "title": "Underscore Pattern Matching"
+  },
+  "fls_ckvjj4tt1hh2": {
+    "section": "6",
+    "title": "Expressions"
+  },
+  "fls_isyftqu120l": {
+    "section": "6.1",
+    "title": "Expression Classification"
+  },
+  "fls_3ut3biyra4r9": {
+    "section": "6.1.1",
+    "title": "Assignee Expressions"
+  },
+  "fls_66m4rnbssgig": {
+    "section": "6.1.2",
+    "title": "Constant Expressions"
+  },
+  "fls_zJOAmSr3Dbqk": {
+    "section": "6.1.3",
+    "title": "Diverging Expressions"
+  },
+  "fls_6ydylimiv553": {
+    "section": "6.1.4",
+    "title": "Place Expressions"
+  },
+  "fls_e7zgqroy2qxn": {
+    "section": "6.1.5",
+    "title": "Value Expressions"
+  },
+  "fls_h0dvogc64tfh": {
+    "section": "6.2",
+    "title": "Literal Expressions"
+  },
+  "fls_6l60b5hwnjbm": {
+    "section": "6.3",
+    "title": "Path Expressions"
+  },
+  "fls_hndm19t57wby": {
+    "section": "6.4",
+    "title": "Block Expressions"
+  },
+  "fls_aadan19t5006": {
+    "section": "6.4.1",
+    "title": "Async Blocks"
+  },
+  "fls_8wnyln2nmg4y": {
+    "section": "6.4.4",
+    "title": "Unsafe Blocks"
+  },
+  "fls_izdv9i4spokw": {
+    "section": "6.5",
+    "title": "Operator Expressions"
+  },
+  "fls_qztk0bkju9u": {
+    "section": "6.5.1",
+    "title": "Borrow Expression"
+  },
+  "fls_5cm4gkt55hjh": {
+    "section": "6.5.2",
+    "title": "Dereference Expression"
+  },
+  "fls_pocsh1neugpc": {
+    "section": "6.5.3",
+    "title": "Error Propagation Expression"
+  },
+  "fls_wrecura8u5ar": {
+    "section": "6.5.4",
+    "title": "Negation Expression"
+  },
+  "fls_1k9mkv7rbezi": {
+    "section": "6.5.5",
+    "title": "Arithmetic Expressions"
+  },
+  "fls_abp6tjbz8tpn": {
+    "section": "6.5.6",
+    "title": "Bit Expressions"
+  },
+  "fls_nsvzzbldhq53": {
+    "section": "6.5.7",
+    "title": "Comparison Expressions"
+  },
+  "fls_lstusiu2c8lu": {
+    "section": "6.5.8",
+    "title": "Lazy Boolean Expressions"
+  },
+  "fls_1qhsun1vyarz": {
+    "section": "6.5.10",
+    "title": "Type Cast Expressions"
+  },
+  "fls_y4by2i8dl05o": {
+    "section": "6.5.11",
+    "title": "Assignment Expressions"
+  },
+  "fls_nnqlae9zp80s": {
+    "section": "6.5.11.1",
+    "title": "Basic Assignment"
+  },
+  "fls_9beohh5475s2": {
+    "section": "6.5.11.2",
+    "title": "Destructuring Assignment"
+  },
+  "fls_290jmzfh7x4e": {
+    "section": "6.5.12",
+    "title": "Compound Assignment Expressions"
+  },
+  "fls_tpwp86mronn2": {
+    "section": "6.6",
+    "title": "Underscore Expressions"
+  },
+  "fls_g0uyl7qw4c7w": {
+    "section": "6.7",
+    "title": "Parenthesized Expressions"
+  },
+  "fls_xinykul167l": {
+    "section": "6.8",
+    "title": "Array Expressions"
+  },
+  "fls_sxcr4aa098i6": {
+    "section": "6.9",
+    "title": "Indexing Expressions"
+  },
+  "fls_k64tfywtn0g8": {
+    "section": "6.10",
+    "title": "Tuple Expressions"
+  },
+  "fls_8tsynkj2cufj": {
+    "section": "6.11",
+    "title": "Struct Expressions"
+  },
+  "fls_xa4nbfas01cj": {
+    "section": "6.12.1",
+    "title": "Call Expressions"
+  },
+  "fls_z7q8kbjwdc7g": {
+    "section": "6.12.2",
+    "title": "Method Call Expressions"
+  },
+  "fls_18k3uajrgq5f": {
+    "section": "6.13",
+    "title": "Field Access Expressions"
+  },
+  "fls_tjyexqrx0fx5": {
+    "section": "6.14",
+    "title": "Closure Expressions"
+  },
+  "fls_rr908hgunja7": {
+    "section": "6.15",
+    "title": "Loop Expressions"
+  },
+  "fls_onfyolkcbeh3": {
+    "section": "6.15.1",
+    "title": "For Loops"
+  },
+  "fls_sf4qnd43z2wc": {
+    "section": "6.15.2",
+    "title": "Infinite Loops"
+  },
+  "fls_5jjm1kt43axd": {
+    "section": "6.15.3",
+    "title": "While Loops"
+  },
+  "fls_m6kd5i9dy8dx": {
+    "section": "6.15.4",
+    "title": "While Let Loops"
+  },
+  "fls_uusi0zej55is": {
+    "section": "6.15.5",
+    "title": "Loop Labels"
+  },
+  "fls_jr4tpuyksr75": {
+    "section": "6.15.6",
+    "title": "Break Expressions"
+  },
+  "fls_sjwrlwvpulp": {
+    "section": "6.15.7",
+    "title": "Continue Expressions"
+  },
+  "fls_18swodqqzadj": {
+    "section": "6.16",
+    "title": "Range Expressions"
+  },
+  "fls_nlzksiu8y3z9": {
+    "section": "6.17",
+    "title": "If and If Let Expressions"
+  },
+  "fls_mkut7gut49gi": {
+    "section": "6.17.1",
+    "title": "If Expressions"
+  },
+  "fls_p0t1ch115tra": {
+    "section": "6.17.2",
+    "title": "If Let Expressions"
+  },
+  "fls_e5td0fa92fay": {
+    "section": "6.18",
+    "title": "Match Expressions"
+  },
+  "fls_8l74abhlxzdl": {
+    "section": "6.19",
+    "title": "Return Expressions"
+  },
+  "fls_hyrbmfmf6r8g": {
+    "section": "6.20",
+    "title": "Await Expressions"
+  },
+  "fls_kw25194gpael": {
+    "section": "6.21",
+    "title": "Expression Precedence"
+  },
+  "fls_jmjn8jkbzujm": {
+    "section": "6.22",
+    "title": "Capturing"
+  },
+  "fls_ZfIBiJMf8qE1": {
+    "section": "6.23",
+    "title": "Arithmetic Overflow"
+  },
+  "fls_94a8v54bufn8": {
+    "section": "7",
+    "title": "Values"
+  },
+  "fls_ixjc5jaamx84": {
+    "section": "7.1",
+    "title": "Constants"
+  },
+  "fls_xdvdl2ssnhlo": {
+    "section": "7.2",
+    "title": "Statics"
+  },
+  "fls_cleoffpn5ew6": {
+    "section": "7.3",
+    "title": "Temporaries"
+  },
+  "fls_gho955gmob73": {
+    "section": "7.4",
+    "title": "Variables"
+  },
+  "fls_wttihxen35as": {
+    "section": "7.4.1",
+    "title": "Constant Promotion"
+  },
+  "fls_wdicg3sqa98e": {
+    "section": "8",
+    "title": "Statements"
+  },
+  "fls_kdxe1ukmgl1": {
+    "section": "8.-2.1",
+    "title": "Item Statement"
+  },
+  "fls_fftdnwe22xrb": {
+    "section": "8.-2.2",
+    "title": "Empty Statement"
+  },
+  "fls_or125cqtxg9j": {
+    "section": "8.-2.3",
+    "title": "Macro Statement"
+  },
+  "fls_dl763ssb54q1": {
+    "section": "8.-3.1",
+    "title": "Empty Statement Execution"
+  },
+  "fls_yivm43r5wnp1": {
+    "section": "8.1",
+    "title": "Let Statements"
+  },
+  "fls_1pg5ig740tg1": {
+    "section": "8.2",
+    "title": "Expression Statements"
+  },
+  "fls_qcb1n9c0e5hz": {
+    "section": "9",
+    "title": "Functions"
+  },
+  "fls_RBMeyyMDHqJ3": {
+    "section": "9.0.1",
+    "title": "Function Declaration"
+  },
+  "fls_8aRUhR4IWrXP": {
+    "section": "9.0.2",
+    "title": "Function Qualifier List"
+  },
+  "fls_vhsBkDa9U4Uq": {
+    "section": "9.0.3",
+    "title": "Function Parameter List"
+  },
+  "fls_GWlG6g3Ot1OG": {
+    "section": "9.0.4",
+    "title": "Function Parameter"
+  },
+  "fls_MmjxWkI9X7H6": {
+    "section": "9.0.5",
+    "title": "Function Parameter Pattern"
+  },
+  "fls_aMuFbh7x41Zt": {
+    "section": "9.0.6",
+    "title": "Function Parameter Variadic Part"
+  },
+  "fls_pdp4K8ffUF0e": {
+    "section": "9.0.7",
+    "title": "Return Type"
+  },
+  "fls_WIXiiQE8JkqH": {
+    "section": "9.0.8",
+    "title": "Function Body"
+  },
+  "fls_3MB9n7IWUSmT": {
+    "section": "9.0.9",
+    "title": "Self Parameter"
+  },
+  "fls_tzQPxC5HChpo": {
+    "section": "9.0.10",
+    "title": "Shorthand Self"
+  },
+  "fls_evbLJoLoaeTO": {
+    "section": "9.0.11",
+    "title": "Typed Self"
+  },
+  "fls_l21tjqjkkaa0": {
+    "section": "10",
+    "title": "Associated Items"
+  },
+  "fls_doe5c3veGprQ": {
+    "section": "10.0.1",
+    "title": "Constant Declaration"
+  },
+  "fls_FnIiU74KKEpY": {
+    "section": "10.0.2",
+    "title": "Function Declaration"
+  },
+  "fls_EZAmggQBwBAD": {
+    "section": "10.0.3",
+    "title": "Type Alias Declaration"
+  },
+  "fls_fk2m2irwpeof": {
+    "section": "11",
+    "title": "Implementations"
+  },
+  "fls_46ork6fz5o2e": {
+    "section": "11.1",
+    "title": "Implementation Coherence"
+  },
+  "fls_e1pgdlv81vul": {
+    "section": "11.2",
+    "title": "Implementation Conformance"
+  },
+  "fls_y2k5paj8m8ug": {
+    "section": "12",
+    "title": "Generics"
+  },
+  "fls_vhpwge5123cm": {
+    "section": "12.1",
+    "title": "Generic Parameters"
+  },
+  "fls_7nv8ualeaqe3": {
+    "section": "12.2",
+    "title": "Where Clauses"
+  },
+  "fls_utuu8mdbuyxm": {
+    "section": "12.3",
+    "title": "Generic Arguments"
+  },
+  "fls_i7g2n7hfg3ch": {
+    "section": "12.4",
+    "title": "Generic Conformance"
+  },
+  "fls_gvwd0kf72jt": {
+    "section": "13",
+    "title": "Attributes"
+  },
+  "fls_i52cujixq9qs": {
+    "section": "13.1",
+    "title": "Attribute Properties"
+  },
+  "fls_ahmnqhm8anlb": {
+    "section": "13.2",
+    "title": "Built-in Attributes"
+  },
+  "fls_h4k49eadninz": {
+    "section": "13.2.1",
+    "title": "Code Generation Attributes"
+  },
+  "fls_kpwbpp5hc00s": {
+    "section": "13.2.1.1",
+    "title": "Attribute ``cold``"
+  },
+  "fls_ypio6boj3pwf": {
+    "section": "13.2.1.2",
+    "title": "Attribute ``inline``"
+  },
+  "fls_zakwockktml8": {
+    "section": "13.2.1.3",
+    "title": "Attribute ``no_builtins``"
+  },
+  "fls_spdmit5fy7el": {
+    "section": "13.2.1.4",
+    "title": "Attribute ``target_feature``"
+  },
+  "fls_6qj249hphj1s": {
+    "section": "13.2.1.5",
+    "title": "Attribute ``track_caller``"
+  },
+  "fls_cdx9zb1yxcc8": {
+    "section": "13.2.2",
+    "title": "Conditional Compilation Attributes"
+  },
+  "fls_fymvsy6ig99a": {
+    "section": "13.2.2.1",
+    "title": "Attribute ``cfg``"
+  },
+  "fls_dd9xh3wdjudo": {
+    "section": "13.2.2.2",
+    "title": "Attribute ``cfg_attr``"
+  },
+  "fls_wednba84zi3y": {
+    "section": "13.2.3",
+    "title": "Derivation Attributes"
+  },
+  "fls_bqw87nz4qbrb": {
+    "section": "13.2.3.1",
+    "title": "Attribute ``automatically_derived``"
+  },
+  "fls_r6gj1p4gajnq": {
+    "section": "13.2.3.2",
+    "title": "Attribute ``derive``"
+  },
+  "fls_t2590yyvclgb": {
+    "section": "13.2.4",
+    "title": "Diagnostics Attributes"
+  },
+  "fls_8wcliky2svcs": {
+    "section": "13.2.5",
+    "title": "Documentation Attributes"
+  },
+  "fls_63v1fqedzwfd": {
+    "section": "13.2.5.1",
+    "title": "Attribute ``doc``"
+  },
+  "fls_pgp7ezcc9lh8": {
+    "section": "13.2.6",
+    "title": "Foreign Function Interface Attributes"
+  },
+  "fls_sun645voqex6": {
+    "section": "13.2.6.1",
+    "title": "Attribute ``crate_name``"
+  },
+  "fls_ujig607lmwbm": {
+    "section": "13.2.6.2",
+    "title": "Attribute ``crate_type``"
+  },
+  "fls_olzilmy8n0nl": {
+    "section": "13.2.6.3",
+    "title": "Attribute ``export_name``"
+  },
+  "fls_o0f9ae22ug1x": {
+    "section": "13.2.6.4",
+    "title": "Attribute ``link``"
+  },
+  "fls_p44fky7fifc": {
+    "section": "13.2.6.5",
+    "title": "Attribute ``link_name``"
+  },
+  "fls_hffpo88r61rh": {
+    "section": "13.2.6.6",
+    "title": "Attribute ``link_section``"
+  },
+  "fls_ch9nkxkloozv": {
+    "section": "13.2.6.8",
+    "title": "Attribute ``no_link``"
+  },
+  "fls_fh27ljezn3qz": {
+    "section": "13.2.6.9",
+    "title": "Attribute ``no_main``"
+  },
+  "fls_mvd7nz8k3wcy": {
+    "section": "13.2.6.10",
+    "title": "Attribute ``no_mangle``"
+  },
+  "fls_aibb2quva4mn": {
+    "section": "13.2.6.11",
+    "title": "Attribute ``repr``"
+  },
+  "fls_7skf24auayqy": {
+    "section": "13.2.6.13",
+    "title": "Attribute ``used``"
+  },
+  "fls_cjq792yj6vft": {
+    "section": "13.2.7",
+    "title": "Limits Attributes"
+  },
+  "fls_u2hzlzpzh7yy": {
+    "section": "13.2.7.1",
+    "title": "Attribute ``recursion_limit``"
+  },
+  "fls_tdjjuwbr7mkg": {
+    "section": "13.2.7.2",
+    "title": "Attribute ``type_length_limit``"
+  },
+  "fls_2084b06dr0wz": {
+    "section": "13.2.8",
+    "title": "Macros Attributes"
+  },
+  "fls_e0a96eb6ux3y": {
+    "section": "13.2.8.2",
+    "title": "Attribute ``macro_export``"
+  },
+  "fls_qxjy0f758x5s": {
+    "section": "13.2.8.3",
+    "title": "Attribute ``macro_use``"
+  },
+  "fls_qkmkev85o5jf": {
+    "section": "13.2.8.4",
+    "title": "Attribute ``proc_macro``"
+  },
+  "fls_ejhlylrcajo": {
+    "section": "13.2.8.5",
+    "title": "Attribute ``proc_macro_attribute``"
+  },
+  "fls_q6qecp6e413": {
+    "section": "13.2.8.6",
+    "title": "Attribute ``proc_macro_derive``"
+  },
+  "fls_7bb5ua4g06k8": {
+    "section": "13.2.9",
+    "title": "Modules Attributes"
+  },
+  "fls_1zbaajz5prpn": {
+    "section": "13.2.9.1",
+    "title": "Attribute ``path``"
+  },
+  "fls_go457hpaf7ov": {
+    "section": "13.2.10",
+    "title": "Prelude Attributes"
+  },
+  "fls_iikmhqsp1r5a": {
+    "section": "13.2.10.1",
+    "title": "Attribute ``no_implicit_prelude``"
+  },
+  "fls_9xnaxd7qbakp": {
+    "section": "13.2.10.2",
+    "title": "Attribute ``no_std``"
+  },
+  "fls_nbbvukrdngev": {
+    "section": "13.2.11",
+    "title": "Runtime Attributes"
+  },
+  "fls_fs0lcfllamj": {
+    "section": "13.2.11.1",
+    "title": "Attribute ``global_allocator``"
+  },
+  "fls_ls5eryuoxlp9": {
+    "section": "13.2.11.2",
+    "title": "Attribute ``panic_handler``"
+  },
+  "fls_1l4mnlfk5rr2": {
+    "section": "13.2.11.3",
+    "title": "Attribute ``windows_subsystem``"
+  },
+  "fls_riyi0gy48fxw": {
+    "section": "13.2.12",
+    "title": "Testing Attributes"
+  },
+  "fls_x849a4u7h82j": {
+    "section": "13.2.12.1",
+    "title": "Attribute ``ignore``"
+  },
+  "fls_aes2d94g12b9": {
+    "section": "13.2.12.2",
+    "title": "Attribute ``should_panic``"
+  },
+  "fls_dv2j1fvvnk1t": {
+    "section": "13.2.12.3",
+    "title": "Attribute ``test``"
+  },
+  "fls_r3zwgf9sg1xp": {
+    "section": "13.2.13",
+    "title": "Type Attributes"
+  },
+  "fls_9tmvuqrmk3ug": {
+    "section": "13.2.13.1",
+    "title": "Attribute ``non_exhaustive``"
+  },
+  "fls_gdeyap4or1db": {
+    "section": "14",
+    "title": "Entities and Resolution"
+  },
+  "fls_151r19d7xbgz": {
+    "section": "14.1",
+    "title": "Entities"
+  },
+  "fls_jdknpu3kf865": {
+    "section": "14.2",
+    "title": "Visibility"
+  },
+  "fls_9i5msiuuyihf": {
+    "section": "14.3",
+    "title": "Paths"
+  },
+  "fls_izl8iuhoz9e0": {
+    "section": "14.4",
+    "title": "Scopes"
+  },
+  "fls_6ozthochxz1i": {
+    "section": "14.4.1",
+    "title": "Binding Scopes"
+  },
+  "fls_ftphlagzd2te": {
+    "section": "14.4.2",
+    "title": "Generic Parameter Scope"
+  },
+  "fls_m0z7omni9hp0": {
+    "section": "14.4.3",
+    "title": "Item Scope"
+  },
+  "fls_769b4p8v3cwu": {
+    "section": "14.4.4",
+    "title": "Label Scope"
+  },
+  "fls_kgbi26212eof": {
+    "section": "14.4.5",
+    "title": "Self Scope"
+  },
+  "fls_octf6sf7yso": {
+    "section": "14.4.6",
+    "title": "Textual Macro Scope"
+  },
+  "fls_lnpyb285qdiy": {
+    "section": "14.4.7",
+    "title": "Scope Hierarchy"
+  },
+  "fls_dq403wq5yrs": {
+    "section": "14.5",
+    "title": "Namespaces"
+  },
+  "fls_ld0ize96cm6m": {
+    "section": "14.6",
+    "title": "Preludes"
+  },
+  "fls_9gprp17h6t1q": {
+    "section": "14.7",
+    "title": "Use Imports"
+  },
+  "fls_ydmnb7qnmzzq": {
+    "section": "14.8",
+    "title": "Shadowing"
+  },
+  "fls_40xoego2thsp": {
+    "section": "14.9",
+    "title": "Resolution"
+  },
+  "fls_xcwfotmq2e5d": {
+    "section": "14.9.1",
+    "title": "Field Resolution"
+  },
+  "fls_wqazkzle0ix9": {
+    "section": "14.9.2",
+    "title": "Method Resolution"
+  },
+  "fls_i6qzga6dyaee": {
+    "section": "14.9.4",
+    "title": "Path Resolution"
+  },
+  "fls_bbso3c45kr9z": {
+    "section": "14.9.4.1",
+    "title": "Simple Path Resolution"
+  },
+  "fls_o9u2h5m17kpz": {
+    "section": "14.9.4.2",
+    "title": "Path Expression Resolution"
+  },
+  "fls_1h0olpc7vbui": {
+    "section": "14.9.4.3",
+    "title": "Type Path Resolution"
+  },
+  "fls_ronnwodjjjsh": {
+    "section": "15",
+    "title": "Ownership and Destruction"
+  },
+  "fls_svkx6szhr472": {
+    "section": "15.1",
+    "title": "Ownership"
+  },
+  "fls_3xvm61x0t251": {
+    "section": "15.2",
+    "title": "Initialization"
+  },
+  "fls_v5x85lt5ulva": {
+    "section": "15.3",
+    "title": "References"
+  },
+  "fls_a14slch83hzn": {
+    "section": "15.4",
+    "title": "Borrowing"
+  },
+  "fls_77scxuomlbgs": {
+    "section": "15.5",
+    "title": "Passing Conventions"
+  },
+  "fls_4jiw35pan7vn": {
+    "section": "15.6",
+    "title": "Destruction"
+  },
+  "fls_u2mzjgiwbkz0": {
+    "section": "15.7",
+    "title": "Destructors"
+  },
+  "fls_rm4ncoopcdvj": {
+    "section": "15.8",
+    "title": "Drop Scopes"
+  },
+  "fls_5eima0pd31c0": {
+    "section": "15.8.1",
+    "title": "Drop Scope Extension"
+  },
+  "fls_afafmafz4hf2": {
+    "section": "15.9",
+    "title": "Drop Order"
+  },
+  "fls_dzq9cdz4ibsz": {
+    "section": "16",
+    "title": "Exceptions and Errors"
+  },
+  "fls_k02nt1m5fq1z": {
+    "section": "16.1",
+    "title": "Panic"
+  },
+  "fls_hi1iz0gbnksi": {
+    "section": "16.2",
+    "title": "Abort"
+  },
+  "fls_3v733mnewssy": {
+    "section": "17",
+    "title": "Concurrency"
+  },
+  "fls_eiw4by8z75di": {
+    "section": "17.1",
+    "title": "Send and Sync"
+  },
+  "fls_vyc9vcuamlph": {
+    "section": "17.2",
+    "title": "Atomics"
+  },
+  "fls_mtuwzinpfvkl": {
+    "section": "17.3",
+    "title": "Asynchronous Computation"
+  },
+  "fls_hdwwrsyunir": {
+    "section": "18",
+    "title": "Program Structure and Compilation"
+  },
+  "fls_s35hob3i7lr": {
+    "section": "18.1",
+    "title": "Source Files"
+  },
+  "fls_e9hwvqsib5d5": {
+    "section": "18.2",
+    "title": "Modules"
+  },
+  "fls_maw4u1o8q37u": {
+    "section": "18.3",
+    "title": "Crates"
+  },
+  "fls_gklst7joeo33": {
+    "section": "18.4",
+    "title": "Crate Imports"
+  },
+  "fls_5w50kf83oo1u": {
+    "section": "18.5",
+    "title": "Compilation Roots"
+  },
+  "fls_u1afezy1ye99": {
+    "section": "18.6",
+    "title": "Conditional Compilation"
+  },
+  "fls_jep7p27kaqlp": {
+    "section": "19",
+    "title": "Unsafety"
+  },
+  "fls_8kqo952gjhaf": {
+    "section": "19.-2.1",
+    "title": "Unsafety Definition"
+  },
+  "fls_ovn9czwnwxue": {
+    "section": "19.-2.2",
+    "title": "Unsafe Operation Definition"
+  },
+  "fls_pfhmcafsjyf7": {
+    "section": "19.-2.3",
+    "title": "Unsafe Operations List"
+  },
+  "fls_jd1inwz7ulyw": {
+    "section": "19.-2.4",
+    "title": "Raw Pointer Dereference"
+  },
+  "fls_3ra8s1v1vbek": {
+    "section": "19.-2.5",
+    "title": "External Static Access"
+  },
+  "fls_6ipl0xo5qjyl": {
+    "section": "19.-2.6",
+    "title": "Mutable Static Access"
+  },
+  "fls_ucghxcnpaq2t": {
+    "section": "19.-2.7",
+    "title": "Union Field Access"
+  },
+  "fls_ljocmnaz2m49": {
+    "section": "19.-2.8",
+    "title": "Unsafe Function Call"
+  },
+  "fls_jb6krd90tjmc": {
+    "section": "19.-2.9",
+    "title": "Unsafe Context"
+  },
+  "fls_ybnpe7ppq1vh": {
+    "section": "19.-2.10",
+    "title": "Unsafe Operation Requirement"
+  },
+  "fls_83182bfa9uqb": {
+    "section": "20",
+    "title": "Macros"
+  },
+  "fls_xa7lp0zg1ol2": {
+    "section": "20.1",
+    "title": "Declarative Macros"
+  },
+  "fls_8nzypdu9j3ge": {
+    "section": "20.1.1",
+    "title": "Metavariables"
+  },
+  "fls_k01lsksqtq1r": {
+    "section": "20.1.2",
+    "title": "Repetition"
+  },
+  "fls_wn1i6hzg2ff7": {
+    "section": "20.2",
+    "title": "Procedural Macros"
+  },
+  "fls_2d6bqnpy6tvs": {
+    "section": "20.2.1",
+    "title": "Function-like Macros"
+  },
+  "fls_o8s3r7m90q59": {
+    "section": "20.2.2",
+    "title": "Derive Macros"
+  },
+  "fls_4vjbkm4ceymk": {
+    "section": "20.2.3",
+    "title": "Attribute Macros"
+  },
+  "fls_vnvt40pa48n8": {
+    "section": "20.3",
+    "title": "Macro Invocation"
+  },
+  "fls_wjldgtio5o75": {
+    "section": "20.4",
+    "title": "Macro Expansion"
+  },
+  "fls_4apk1exafxii": {
+    "section": "20.4.1",
+    "title": "Macro Matching"
+  },
+  "fls_n3ktmjqf87qb": {
+    "section": "20.4.1.1",
+    "title": "Rule Matching"
+  },
+  "fls_qpx6lgapce57": {
+    "section": "20.4.1.2",
+    "title": "Token Matching"
+  },
+  "fls_ym00b6ewf4n3": {
+    "section": "20.4.2",
+    "title": "Macro Transcription"
+  },
+  "fls_xlfo7di0gsqz": {
+    "section": "20.5",
+    "title": "Hygiene"
+  },
+  "fls_osd6c4utyjb3": {
+    "section": "21",
+    "title": "FFI"
+  },
+  "fls_usgd0xlijoxv": {
+    "section": "21.1",
+    "title": "ABI"
+  },
+  "fls_tmoh3y9oyqsy": {
+    "section": "21.2",
+    "title": "External Blocks"
+  },
+  "fls_yztwtek0y34v": {
+    "section": "21.3",
+    "title": "External Functions"
+  },
+  "fls_s4yt19sptl7d": {
+    "section": "21.4",
+    "title": "External Statics"
+  },
+  "fls_z1il3w9nulzy": {
+    "section": "22",
+    "title": "Inline Assembly"
+  },
+  "fls_j9l8wn6wgm06": {
+    "section": "22.1",
+    "title": "Registers"
+  },
+  "fls_pz2ioqchjtym": {
+    "section": "22.2",
+    "title": "Register Classes"
+  },
+  "fls_hejgghwzblf": {
+    "section": "22.3",
+    "title": "Register Arguments"
+  },
+  "fls_e0896uk0mdyl": {
+    "section": "22.4",
+    "title": "Assembly Instructions"
+  },
+  "fls_lv19xysy1f7e": {
+    "section": "22.4.1",
+    "title": "Register Parameter Modifiers"
+  },
+  "fls_6momhvgx4w21": {
+    "section": "22.4.2",
+    "title": "Directive Support"
+  },
+  "fls_a3joqzqp1v9d": {
+    "section": "22.5",
+    "title": "ABI Clobbers"
+  },
+  "fls_ylli0ortyegk": {
+    "section": "22.6",
+    "title": "Assembly Options"
+  },
+  "fls_qezwyridmjob": {
+    "section": "22.7",
+    "title": "Macros: asm, global_asm, and naked_asm"
+  }
+}
