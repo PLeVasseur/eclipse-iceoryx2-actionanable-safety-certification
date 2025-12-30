@@ -40,7 +40,33 @@
           "findings": {
             "description": "Identifier Patterns patterns are used throughout iceoryx2 in match expressions and destructuring."
           },
-          "samples": []
+          "samples": [
+            {
+              "file": "iceoryx2-userland/record-and-replay/tests/replayer_tests.rs",
+              "line": [
+                29
+              ],
+              "code": "let file_name = generate_file_name();",
+              "purpose": "Demonstrates let\\s+\\w+\\s*=|let\\s+mut\\s+\\w+\\s*=..."
+            },
+            {
+              "file": "benchmarks/publish-subscribe/src/main.rs",
+              "line": [
+                24
+              ],
+              "code": "let service_name_a2b = ServiceName::new(\"a2b\")?;",
+              "purpose": "Demonstrates let\\s+\\w+\\s*=|let\\s+mut\\s+\\w+\\s*=..."
+            },
+            {
+              "file": "iceoryx2-userland/record-and-replay/tests/recorder_tests.rs",
+              "line": [
+                36
+              ],
+              "code": "let file_name = generate_file_name();",
+              "purpose": "Demonstrates let\\s+\\w+\\s*=|let\\s+mut\\s+\\w+\\s*=..."
+            }
+          ],
+          "count": 14175
         },
         "literal_patterns": {
           "fls_section": "5.1.2",
@@ -52,7 +78,33 @@
           "findings": {
             "description": "Literal Patterns patterns are used throughout iceoryx2 in match expressions and destructuring."
           },
-          "samples": []
+          "samples": [
+            {
+              "file": "iceoryx2-pal/posix/src/common/error_enum_generator.rs",
+              "line": [
+                52
+              ],
+              "code": "Err(_) => \"\".to_string(),",
+              "purpose": "Demonstrates =>\\s*\\d+|=>\\s*\\\"..."
+            },
+            {
+              "file": "iceoryx2-pal/posix/src/windows/unistd.rs",
+              "line": [
+                86
+              ],
+              "code": "_SC_MONOTONIC_CLOCK => 0,",
+              "purpose": "Demonstrates =>\\s*\\d+|=>\\s*\\\"..."
+            },
+            {
+              "file": "iceoryx2-bb/posix/src/file_lock.rs",
+              "line": [
+                466
+              ],
+              "code": "LockType::Read => \"Unable to acquire read file-lock\",",
+              "purpose": "Demonstrates =>\\s*\\d+|=>\\s*\\\"..."
+            }
+          ],
+          "count": 47
         },
         "parenthesized_patterns": {
           "fls_section": "5.1.3",
@@ -64,7 +116,33 @@
           "findings": {
             "description": "Parenthesized Patterns patterns are used throughout iceoryx2 in match expressions and destructuring."
           },
-          "samples": []
+          "samples": [
+            {
+              "file": "iceoryx2-services/discovery/tests/service_discovery_tracker_tests.rs",
+              "line": [
+                52
+              ],
+              "code": "let (added, _) = sut.sync().expect(\"failed to sync tracker\");",
+              "purpose": "Demonstrates let\\s*\\(..."
+            },
+            {
+              "file": "iceoryx2-services/discovery/src/service_discovery/service.rs",
+              "line": [
+                372
+              ],
+              "code": "let (request_response, server) = if discovery_config.enable_server {",
+              "purpose": "Demonstrates let\\s*\\(..."
+            },
+            {
+              "file": "examples/rust/health_monitoring/subscriber.rs",
+              "line": [
+                41
+              ],
+              "code": "let (service_event_1, service_pubsub_1) = open_service(&node, &service_name_1)?;",
+              "purpose": "Demonstrates let\\s*\\(..."
+            }
+          ],
+          "count": 216
         },
         "path_patterns": {
           "fls_section": "5.1.4",
@@ -76,7 +154,33 @@
           "findings": {
             "description": "Path Patterns patterns are used throughout iceoryx2 in match expressions and destructuring."
           },
-          "samples": []
+          "samples": [
+            {
+              "file": "iceoryx2/src/waitset.rs",
+              "line": [
+                339
+              ],
+              "code": "GuardType::Tick(t) => WaitSetAttachmentId::tick(guard.waitset, t.index()),",
+              "purpose": "Demonstrates =>\\s*\\w+::..."
+            },
+            {
+              "file": "iceoryx2-cli/iox2-tunnel/src/command/zenoh.rs",
+              "line": [
+                33
+              ],
+              "code": "Some(path) => zenoh::Config::from_file(&path)",
+              "purpose": "Demonstrates =>\\s*\\w+::..."
+            },
+            {
+              "file": "iceoryx2-cli/lib/src/filter.rs",
+              "line": [
+                84
+              ],
+              "code": "NodeState::Alive(view) => NodeIdString::from(view.id()) == **id,",
+              "purpose": "Demonstrates =>\\s*\\w+::..."
+            }
+          ],
+          "count": 609
         },
         "range_patterns": {
           "fls_section": "5.1.5",
@@ -88,7 +192,33 @@
           "findings": {
             "description": "Range Patterns patterns are used throughout iceoryx2 in match expressions and destructuring."
           },
-          "samples": []
+          "samples": [
+            {
+              "file": "iceoryx2/src/node/mod.rs",
+              "line": [
+                134
+              ],
+              "code": "//!             println!(\"Someone send an interrupt signal ...\");",
+              "purpose": "Demonstrates \\.\\.\\.|\\.\\.=..."
+            },
+            {
+              "file": "iceoryx2/src/lib.rs",
+              "line": [
+                252
+              ],
+              "code": "//!     println!(\"Trigger event with id {} ...\", counter);",
+              "purpose": "Demonstrates \\.\\.\\.|\\.\\.=..."
+            },
+            {
+              "file": "iceoryx2-bb/container/tests/string_tests.rs",
+              "line": [
+                171
+              ],
+              "code": "for byte in 128u8..=255u8 {",
+              "purpose": "Demonstrates \\.\\.\\.|\\.\\.=..."
+            }
+          ],
+          "count": 65
         },
         "reference_patterns": {
           "fls_section": "5.1.6",
@@ -100,7 +230,14 @@
           "findings": {
             "description": "Reference Patterns patterns are used throughout iceoryx2 in match expressions and destructuring."
           },
-          "samples": []
+          "samples": [],
+          "count": 0,
+          "samples_waiver": {
+            "reason": "insufficient_patterns",
+            "explanation": "Only 0 instance(s) found in codebase, fewer than 3 required samples",
+            "approved_by": "automated",
+            "date": "2025-12-30"
+          }
         },
         "rest_patterns": {
           "fls_section": "5.1.7",
@@ -112,7 +249,33 @@
           "findings": {
             "description": "Rest Patterns patterns are used throughout iceoryx2 in match expressions and destructuring."
           },
-          "samples": []
+          "samples": [
+            {
+              "file": "iceoryx2-services/discovery/tests/service_discovery_tracker_tests.rs",
+              "line": [
+                41
+              ],
+              "code": "for _ in 0..NUMBER_OF_SERVICES_ADDED {",
+              "purpose": "Demonstrates \\.\\...."
+            },
+            {
+              "file": "iceoryx2-cal/tests/used_chunk_list_tests.rs",
+              "line": [
+                24
+              ],
+              "code": "for i in 0..sut.capacity() {",
+              "purpose": "Demonstrates \\.\\...."
+            },
+            {
+              "file": "iceoryx2-cal/tests/static_storage_file_tests.rs",
+              "line": [
+                106
+              ],
+              "code": "for _i in 0..NUMBER_OF_STORAGES {",
+              "purpose": "Demonstrates \\.\\...."
+            }
+          ],
+          "count": 1158
         },
         "slice_patterns": {
           "fls_section": "5.1.8",
@@ -124,8 +287,43 @@
           "findings": {
             "description": "Slice Patterns patterns are used throughout iceoryx2 in match expressions and destructuring."
           },
-          "samples": []
+          "samples": [
+            {
+              "file": "component-tests/rust/src/test_container_mutation.rs",
+              "line": [
+                125
+              ],
+              "code": "if !res.vector_add_element.iter().eq([1, 2, 3, 4, 123].iter()) {",
+              "purpose": "Demonstrates \\[\\s*\\w+\\s*,|\\[\\s*\\.\\...."
+            },
+            {
+              "file": "iceoryx2-pal/posix/src/freebsd/mman.rs",
+              "line": [
+                55
+              ],
+              "code": "state_file_path[..SHM_STATE_DIRECTORY.len()].copy_from_slice(SHM_STATE_DIRECTORY);",
+              "purpose": "Demonstrates \\[\\s*\\w+\\s*,|\\[\\s*\\.\\...."
+            },
+            {
+              "file": "iceoryx2-bb/posix/tests/unix_datagram_socket_tests.rs",
+              "line": [
+                109
+              ],
+              "code": "let send_data: Vec<u8> = vec![1u8, 3u8, 3u8, 7u8, 13u8, 37u8];",
+              "purpose": "Demonstrates \\[\\s*\\w+\\s*,|\\[\\s*\\.\\...."
+            }
+          ],
+          "count": 100
         }
+      },
+      "count": null,
+      "count_methodology": "Conceptual - refutability is pattern property",
+      "samples": [],
+      "samples_waiver": {
+        "reason": "conceptual_section",
+        "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+        "approved_by": "automated",
+        "date": "2025-12-30"
       }
     },
     "struct_patterns": {
@@ -150,7 +348,33 @@
           "findings": {
             "description": "Record Struct Patterns used in destructuring and pattern matching."
           },
-          "samples": []
+          "samples": [
+            {
+              "file": "iceoryx2-bb/system-types/src/path.rs",
+              "line": [
+                114
+              ],
+              "code": "unsafe { Path::new_unchecked(&raw_path[0..n]) }",
+              "purpose": "Demonstrates \\w+\\s*\\{\\s*\\w+\\s*:..."
+            },
+            {
+              "file": "iceoryx2-bb/trait-tests/tests/relocatable_container_tests.rs",
+              "line": [
+                52
+              ],
+              "code": "let mut sut = unsafe { T::new_uninit(capacity) };",
+              "purpose": "Demonstrates \\w+\\s*\\{\\s*\\w+\\s*:..."
+            },
+            {
+              "file": "iceoryx2-bb/testing/src/lifetime_tracker.rs",
+              "line": [
+                44
+              ],
+              "code": "Self { value: 0 }",
+              "purpose": "Demonstrates \\w+\\s*\\{\\s*\\w+\\s*:..."
+            }
+          ],
+          "count": 583
         },
         "tuple_struct_patterns": {
           "fls_section": "5.2.2",
@@ -162,7 +386,33 @@
           "findings": {
             "description": "Tuple Struct Patterns used in destructuring and pattern matching."
           },
-          "samples": []
+          "samples": [
+            {
+              "file": "component-tests/rust/src/test_containers.rs",
+              "line": [
+                1
+              ],
+              "code": "// Copyright (c) 2025 Contributors to the Eclipse Foundation",
+              "purpose": "Demonstrates \\w+\\s*\\(\\s*\\w+..."
+            },
+            {
+              "file": "component-tests/rust/src/test_container_mutation.rs",
+              "line": [
+                1
+              ],
+              "code": "// Copyright (c) 2025 Contributors to the Eclipse Foundation",
+              "purpose": "Demonstrates \\w+\\s*\\(\\s*\\w+..."
+            },
+            {
+              "file": "component-tests/rust/src/main.rs",
+              "line": [
+                1
+              ],
+              "code": "// Copyright (c) 2025 Contributors to the Eclipse Foundation",
+              "purpose": "Demonstrates \\w+\\s*\\(\\s*\\w+..."
+            }
+          ],
+          "count": 28630
         },
         "tuple_patterns": {
           "fls_section": "5.2.3",
@@ -174,7 +424,33 @@
           "findings": {
             "description": "Tuple Patterns used in destructuring and pattern matching."
           },
-          "samples": []
+          "samples": [
+            {
+              "file": "iceoryx2-cli/iox2-config/src/commands.rs",
+              "line": [
+                90
+              ],
+              "code": "match (soft_limit_result, hard_limit_result) {",
+              "purpose": "Demonstrates \\(\\s*\\w+\\s*,\\s*\\w+\\s*\\)..."
+            },
+            {
+              "file": "benchmarks/request-response/src/main.rs",
+              "line": [
+                231
+              ],
+              "code": "#[derive(Parser, Debug)]",
+              "purpose": "Demonstrates \\(\\s*\\w+\\s*,\\s*\\w+\\s*\\)..."
+            },
+            {
+              "file": "benchmarks/queue/src/main.rs",
+              "line": [
+                120
+              ],
+              "code": "#[derive(Parser, Debug)]",
+              "purpose": "Demonstrates \\(\\s*\\w+\\s*,\\s*\\w+\\s*\\)..."
+            }
+          ],
+          "count": 2263
         },
         "underscore_patterns": {
           "fls_section": "5.2.4",
@@ -186,8 +462,59 @@
           "findings": {
             "description": "Underscore Patterns used in destructuring and pattern matching."
           },
-          "samples": []
+          "samples": [
+            {
+              "file": "iceoryx2-cli/iox2-config/src/command/explain.rs",
+              "line": [
+                476
+              ],
+              "code": "_ => continue, // skip non-string keys",
+              "purpose": "Demonstrates \\b_\\b\\s*=>|let\\s+_\\s*=..."
+            },
+            {
+              "file": "iceoryx2-bb/system-types/src/user_name.rs",
+              "line": [
+                58
+              ],
+              "code": "_ => return true,",
+              "purpose": "Demonstrates \\b_\\b\\s*=>|let\\s+_\\s*=..."
+            },
+            {
+              "file": "iceoryx2-bb/system-types/src/path.rs",
+              "line": [
+                78
+              ],
+              "code": "_ => (),",
+              "purpose": "Demonstrates \\b_\\b\\s*=>|let\\s+_\\s*=..."
+            }
+          ],
+          "count": 255
         }
+      },
+      "count": 4,
+      "samples": [
+        {
+          "file": "iceoryx2-cli/iox2-config/src/main.rs",
+          "line": [
+            50
+          ],
+          "code": "Action::Show { config } => match config {",
+          "purpose": "Demonstrates \\w+\\s*\\{[^}]*\\}\\s*=>..."
+        },
+        {
+          "file": "iceoryx2-bb/derive-macros/src/lib.rs",
+          "line": [
+            256
+          ],
+          "code": "Self::#variant_name { #field_name, .. } => {",
+          "purpose": "Demonstrates \\w+\\s*\\{[^}]*\\}\\s*=>..."
+        }
+      ],
+      "samples_waiver": {
+        "reason": "single_location",
+        "explanation": "Pattern found in limited locations (2 unique files) despite 4 total matches",
+        "approved_by": "automated",
+        "date": "2025-12-30"
       }
     },
     "binding_modes": {
@@ -223,7 +550,9 @@
           ],
           "code": "MessagingPattern::PublishSubscribe(ref mut v) => v,"
         }
-      ]
+      ],
+      "count": null,
+      "count_methodology": "Pattern not defined for this section"
     },
     "pattern_matching": {
       "fls_section": "5.4",
@@ -247,7 +576,33 @@
           "findings": {
             "description": "Identifier Pattern Matching semantics applied in 1663+ match expressions."
           },
-          "samples": []
+          "samples": [
+            {
+              "file": "iceoryx2-bb/elementary/tests/unique_id_tests.rs",
+              "line": [
+                18
+              ],
+              "code": "let a = UniqueId::new();",
+              "purpose": "Demonstrates let\\s+\\w+\\s*=..."
+            },
+            {
+              "file": "iceoryx2-bb/elementary/tests/scope_guard_tests.rs",
+              "line": [
+                20
+              ],
+              "code": "let startup_callback = AtomicU64::new(0);",
+              "purpose": "Demonstrates let\\s+\\w+\\s*=..."
+            },
+            {
+              "file": "iceoryx2-bb/elementary/tests/relocatable_ptr_tests.rs",
+              "line": [
+                22
+              ],
+              "code": "let value = 9128391;",
+              "purpose": "Demonstrates let\\s+\\w+\\s*=..."
+            }
+          ],
+          "count": 12040
         },
         "literal_pattern_matching": {
           "fls_section": "5.4.2",
@@ -259,7 +614,15 @@
           "findings": {
             "description": "Literal Pattern Matching semantics applied in 1663+ match expressions."
           },
-          "samples": []
+          "samples": [],
+          "count": null,
+          "count_methodology": "Pattern not defined for this section",
+          "samples_waiver": {
+            "reason": "conceptual_section",
+            "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+            "approved_by": "automated",
+            "date": "2025-12-30"
+          }
         },
         "parenthesized_pattern_matching": {
           "fls_section": "5.4.3",
@@ -271,7 +634,15 @@
           "findings": {
             "description": "Parenthesized Pattern Matching semantics applied in 1663+ match expressions."
           },
-          "samples": []
+          "samples": [],
+          "count": null,
+          "count_methodology": "Pattern not defined for this section",
+          "samples_waiver": {
+            "reason": "conceptual_section",
+            "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+            "approved_by": "automated",
+            "date": "2025-12-30"
+          }
         },
         "path_pattern_matching": {
           "fls_section": "5.4.4",
@@ -283,7 +654,15 @@
           "findings": {
             "description": "Path Pattern Matching semantics applied in 1663+ match expressions."
           },
-          "samples": []
+          "samples": [],
+          "count": null,
+          "count_methodology": "Pattern not defined for this section",
+          "samples_waiver": {
+            "reason": "conceptual_section",
+            "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+            "approved_by": "automated",
+            "date": "2025-12-30"
+          }
         },
         "range_pattern_matching": {
           "fls_section": "5.4.5",
@@ -295,7 +674,15 @@
           "findings": {
             "description": "Range Pattern Matching semantics applied in 1663+ match expressions."
           },
-          "samples": []
+          "samples": [],
+          "count": null,
+          "count_methodology": "Pattern not defined for this section",
+          "samples_waiver": {
+            "reason": "conceptual_section",
+            "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+            "approved_by": "automated",
+            "date": "2025-12-30"
+          }
         },
         "reference_pattern_matching": {
           "fls_section": "5.4.6",
@@ -307,7 +694,15 @@
           "findings": {
             "description": "Reference Pattern Matching semantics applied in 1663+ match expressions."
           },
-          "samples": []
+          "samples": [],
+          "count": null,
+          "count_methodology": "Pattern not defined for this section",
+          "samples_waiver": {
+            "reason": "conceptual_section",
+            "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+            "approved_by": "automated",
+            "date": "2025-12-30"
+          }
         },
         "slice_pattern_matching": {
           "fls_section": "5.4.7",
@@ -319,7 +714,15 @@
           "findings": {
             "description": "Slice Pattern Matching semantics applied in 1663+ match expressions."
           },
-          "samples": []
+          "samples": [],
+          "count": null,
+          "count_methodology": "Pattern not defined for this section",
+          "samples_waiver": {
+            "reason": "conceptual_section",
+            "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+            "approved_by": "automated",
+            "date": "2025-12-30"
+          }
         },
         "record_struct_pattern_matching": {
           "fls_section": "5.4.8",
@@ -331,7 +734,15 @@
           "findings": {
             "description": "Record Struct Pattern Matching semantics applied in 1663+ match expressions."
           },
-          "samples": []
+          "samples": [],
+          "count": null,
+          "count_methodology": "Pattern not defined for this section",
+          "samples_waiver": {
+            "reason": "conceptual_section",
+            "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+            "approved_by": "automated",
+            "date": "2025-12-30"
+          }
         },
         "tuple_struct_pattern_matching": {
           "fls_section": "5.4.9",
@@ -343,7 +754,15 @@
           "findings": {
             "description": "Tuple Struct Pattern Matching semantics applied in 1663+ match expressions."
           },
-          "samples": []
+          "samples": [],
+          "count": null,
+          "count_methodology": "Pattern not defined for this section",
+          "samples_waiver": {
+            "reason": "conceptual_section",
+            "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+            "approved_by": "automated",
+            "date": "2025-12-30"
+          }
         },
         "tuple_pattern_matching": {
           "fls_section": "5.4.10",
@@ -355,7 +774,15 @@
           "findings": {
             "description": "Tuple Pattern Matching semantics applied in 1663+ match expressions."
           },
-          "samples": []
+          "samples": [],
+          "count": null,
+          "count_methodology": "Pattern not defined for this section",
+          "samples_waiver": {
+            "reason": "conceptual_section",
+            "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+            "approved_by": "automated",
+            "date": "2025-12-30"
+          }
         },
         "underscore_pattern_matching": {
           "fls_section": "5.4.11",
@@ -367,9 +794,44 @@
           "findings": {
             "description": "Underscore Pattern Matching semantics applied in 1663+ match expressions."
           },
-          "samples": []
+          "samples": [],
+          "count": null,
+          "count_methodology": "Pattern not defined for this section",
+          "samples_waiver": {
+            "reason": "conceptual_section",
+            "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+            "approved_by": "automated",
+            "date": "2025-12-30"
+          }
         }
-      }
+      },
+      "count": 1663,
+      "samples": [
+        {
+          "file": "iceoryx2-ffi/python/src/writer.rs",
+          "line": [
+            46
+          ],
+          "code": "match &*self.value.lock() {",
+          "purpose": "Demonstrates \\bmatch\\b..."
+        },
+        {
+          "file": "iceoryx2-ffi/python/src/waitset_run_result.rs",
+          "line": [
+            38
+          ],
+          "code": "match value {",
+          "purpose": "Demonstrates \\bmatch\\b..."
+        },
+        {
+          "file": "iceoryx2-ffi/python/src/waitset_guard.rs",
+          "line": [
+            43
+          ],
+          "code": "match self.0 {",
+          "purpose": "Demonstrates \\bmatch\\b..."
+        }
+      ]
     }
   },
   "safety_critical_summary": {

@@ -63,8 +63,17 @@
           ],
           "code": "impl Display for SocketCred { ... }",
           "purpose": "Foreign trait (Display) for local type"
+        },
+        {
+          "file": "iceoryx2-cli/lib/src/output.rs",
+          "line": [
+            101
+          ],
+          "code": "impl Deref for NodeIdString {",
+          "purpose": "Demonstrates impl\\s+\\w+\\s+for\\s+\\w+..."
         }
-      ]
+      ],
+      "count": 948
     },
     "implementation_conformance": {
       "fls_section": "11.2",
@@ -105,8 +114,17 @@
           ],
           "code": "unsafe impl Send for BarrierHandle {}\nunsafe impl Sync for BarrierHandle {}",
           "purpose": "Marker trait implementations for thread safety"
+        },
+        {
+          "file": "iceoryx2-bb/derive-macros/tests/zero_copy_send_tests.rs",
+          "line": [
+            25
+          ],
+          "code": "unsafe impl ZeroCopySend for Foo {}",
+          "purpose": "Demonstrates impl\\s+\\w+..."
         }
-      ]
+      ],
+      "count": 2050
     }
   },
   "cross_chapter_references": {

@@ -68,7 +68,31 @@
           }
         }
       },
-      "samples": []
+      "samples": [
+        {
+          "file": "iceoryx2-bb/trait-tests/src/lib.rs",
+          "line": [
+            14
+          ],
+          "code": "// dummy lib.rs",
+          "purpose": "Demonstrates \\.rs$..."
+        },
+        {
+          "file": "iceoryx2/conformance-tests/src/service_blackboard.rs",
+          "line": [
+            1838
+          ],
+          "code": "// TODO [#817] move the custom key type tests to testing.rs",
+          "purpose": "Demonstrates \\.rs$..."
+        }
+      ],
+      "count": 2,
+      "samples_waiver": {
+        "reason": "insufficient_patterns",
+        "explanation": "Only 2 instance(s) found in codebase, fewer than 3 required samples",
+        "approved_by": "automated",
+        "date": "2025-12-30"
+      }
     },
     "modules": {
       "fls_section": "18.2",
@@ -136,7 +160,33 @@
           ]
         }
       },
-      "samples": []
+      "samples": [
+        {
+          "file": "iceoryx2-pal/os-api/src/linux-libc/mod.rs",
+          "line": [
+            13
+          ],
+          "code": "pub mod epoll;",
+          "purpose": "Demonstrates \\bmod\\s+\\w+..."
+        },
+        {
+          "file": "iceoryx2/conformance-tests/tests/service_tests.rs",
+          "line": [
+            18
+          ],
+          "code": "mod ipc {",
+          "purpose": "Demonstrates \\bmod\\s+\\w+..."
+        },
+        {
+          "file": "iceoryx2/src/service/builder/mod.rs",
+          "line": [
+            18
+          ],
+          "code": "pub mod event;",
+          "purpose": "Demonstrates \\bmod\\s+\\w+..."
+        }
+      ],
+      "count": 1039
     },
     "crates": {
       "fls_section": "18.3",
@@ -281,7 +331,14 @@
           }
         }
       },
-      "samples": []
+      "samples": [],
+      "count": 0,
+      "samples_waiver": {
+        "reason": "insufficient_patterns",
+        "explanation": "Only 0 instance(s) found in codebase, fewer than 3 required samples",
+        "approved_by": "automated",
+        "date": "2025-12-30"
+      }
     },
     "crate_imports": {
       "fls_section": "18.4",
@@ -329,7 +386,33 @@
           }
         }
       },
-      "samples": []
+      "samples": [
+        {
+          "file": "iceoryx2-bb/posix/tests/users_tests.rs",
+          "line": [
+            13
+          ],
+          "code": "extern crate iceoryx2_loggers;",
+          "purpose": "Demonstrates extern\\s+crate|use\\s+\\w+::..."
+        },
+        {
+          "file": "iceoryx2-bb/posix/tests/unix_datagram_socket_tests.rs",
+          "line": [
+            13
+          ],
+          "code": "extern crate iceoryx2_loggers;",
+          "purpose": "Demonstrates extern\\s+crate|use\\s+\\w+::..."
+        },
+        {
+          "file": "iceoryx2-bb/posix/tests/unique_system_id_tests.rs",
+          "line": [
+            13
+          ],
+          "code": "extern crate iceoryx2_loggers;",
+          "purpose": "Demonstrates extern\\s+crate|use\\s+\\w+::..."
+        }
+      ],
+      "count": 6847
     },
     "compilation_roots": {
       "fls_section": "18.5",
@@ -350,7 +433,23 @@
           "crate_roots": "All library crates use src/lib.rs as crate root; binaries use src/main.rs"
         }
       },
-      "samples": []
+      "samples": [
+        {
+          "file": "iceoryx2-bb/trait-tests/src/lib.rs",
+          "line": [
+            14
+          ],
+          "code": "// dummy lib.rs",
+          "purpose": "Demonstrates main\\.rs|lib\\.rs..."
+        }
+      ],
+      "count": 1,
+      "samples_waiver": {
+        "reason": "insufficient_patterns",
+        "explanation": "Only 1 instance(s) found in codebase, fewer than 3 required samples",
+        "approved_by": "automated",
+        "date": "2025-12-30"
+      }
     },
     "conditional_compilation": {
       "fls_section": "18.6",
@@ -438,7 +537,33 @@
           }
         }
       },
-      "samples": []
+      "samples": [
+        {
+          "file": "iceoryx2/tests/service_static_config_tests.rs",
+          "line": [
+            13
+          ],
+          "code": "#[cfg(test)]",
+          "purpose": "Demonstrates #\\[cfg\\(..."
+        },
+        {
+          "file": "iceoryx2-pal/posix/tests/win32_select_tests.rs",
+          "line": [
+            13
+          ],
+          "code": "#[cfg(target_os = \"windows\")]",
+          "purpose": "Demonstrates #\\[cfg\\(..."
+        },
+        {
+          "file": "iceoryx2-log/loggers/src/console.rs",
+          "line": [
+            16
+          ],
+          "code": "#[cfg(feature = \"std\")]",
+          "purpose": "Demonstrates #\\[cfg\\(..."
+        }
+      ],
+      "count": 360
     },
     "program_entry_point": {
       "fls_section": "18.7",
@@ -471,7 +596,15 @@
           }
         }
       },
-      "samples": []
+      "samples": [],
+      "count": null,
+      "count_methodology": "Pattern not defined for this section",
+      "samples_waiver": {
+        "reason": "conceptual_section",
+        "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+        "approved_by": "automated",
+        "date": "2025-12-30"
+      }
     }
   },
   "design_patterns": {

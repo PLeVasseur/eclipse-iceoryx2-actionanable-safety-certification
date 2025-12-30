@@ -3,257 +3,119 @@ FLS MAPPING VALIDATION REPORT
 ============================================================
 
 Files validated: 21
-Schema valid: 0/21
+Schema valid: 21/21
 Coverage valid: 21/21
 FLS IDs valid: 21/21
-Sample minimums valid: 0/21
+Sample minimums valid: 21/21
 MUST_BE_FILLED markers: 0
 Path errors: 0
-Sample violations (<3 samples): 292
-Sections missing count field: 352
+Sample violations (<3 samples): 0
+Sections missing count field: 0
 
 ------------------------------------------------------------
 FILE: fls_chapter02_lexical_elements.json
 ------------------------------------------------------------
-  SCHEMA ERRORS:
-    - $.sections.literals: 'count' is a required property
-  SAMPLE VIOLATIONS (21):
-    - 2.1 (sections.character_set): 1 samples, status=demonstrated
-    - 2.2 (sections.lexical_elements_separators_and_punctuation): 0 samples, status=demonstrated
-    - 2.3 (sections.identifiers): 1 samples, status=demonstrated
-    - 2.4 (sections.literals): 1 samples, status=demonstrated
-    - 2.4.1 (sections.literals.byte_literals): 2 samples, status=demonstrated
-    ... and 16 more
+  OK - No issues found
 
 ------------------------------------------------------------
 FILE: fls_chapter03_items.json
 ------------------------------------------------------------
-  SCHEMA ERRORS:
-    - $.sections.use_import: 'count' is a required property
-  SAMPLE VIOLATIONS (9):
-    - 3.0.1 (sections.constant_declaration): 1 samples, status=demonstrated
-    - 3.0.2 (sections.enum_declaration): 1 samples, status=demonstrated
-    - 3.0.3 (sections.external_block): 1 samples, status=demonstrated
-    - 3.0.5 (sections.function_declaration): 0 samples, status=demonstrated
-    - 3.0.8 (sections.static_declaration): 1 samples, status=demonstrated
-    ... and 4 more
+  OK - No issues found
 
 ------------------------------------------------------------
 FILE: fls_chapter04_types_and_traits.json
 ------------------------------------------------------------
-  SCHEMA ERRORS:
-    - $.sections.types: 'count' is a required property
-  SAMPLE VIOLATIONS (53):
-    - 4.1 (sections.types): 0 samples, status=demonstrated
-    - 4.2 (sections.type_classification): 0 samples, status=demonstrated
-    - 4.3 (sections.scalar_types): 0 samples, status=demonstrated
-    - 4.3.1 (sections.scalar_types.bool_type): 0 samples, status=demonstrated
-    - 4.3.2 (sections.scalar_types.char_type): 0 samples, status=limited_use
-    ... and 48 more
+  OK - No issues found
 
 ------------------------------------------------------------
 FILE: fls_chapter05_patterns.json
 ------------------------------------------------------------
-  SCHEMA ERRORS:
-    - $.sections.struct_patterns: 'count' is a required property
-  SAMPLE VIOLATIONS (26):
-    - 5.1 (sections.refutability): 0 samples, status=
-    - 5.1.1 (sections.refutability.identifier_patterns): 0 samples, status=demonstrated
-    - 5.1.2 (sections.refutability.literal_patterns): 0 samples, status=demonstrated
-    - 5.1.3 (sections.refutability.parenthesized_patterns): 0 samples, status=demonstrated
-    - 5.1.4 (sections.refutability.path_patterns): 0 samples, status=demonstrated
-    ... and 21 more
+  OK - No issues found
 
 ------------------------------------------------------------
 FILE: fls_chapter06_expressions.json
 ------------------------------------------------------------
-  SCHEMA ERRORS:
-    - $.sections.underscore_expressions: 'count' is a required property
-  SAMPLE VIOLATIONS (53):
-    - 6.1 (sections.expression_classification): 0 samples, status=demonstrated
-    - 6.1.1 (sections.expression_classification.assignee_expressions): 0 samples, status=demonstrated
-    - 6.1.2 (sections.expression_classification.constant_expressions): 0 samples, status=demonstrated
-    - 6.1.3 (sections.expression_classification.diverging_expressions): 0 samples, status=demonstrated
-    - 6.1.4 (sections.expression_classification.place_expressions): 0 samples, status=demonstrated
-    ... and 48 more
+  OK - No issues found
 
 ------------------------------------------------------------
 FILE: fls_chapter07_values.json
 ------------------------------------------------------------
-  SCHEMA ERRORS:
-    - $.sections.variables: 'count' is a required property
-  SAMPLE VIOLATIONS (1):
-    - 7.4.1 (sections.variables.constant_promotion): 1 samples, status=demonstrated
+  OK - No issues found
 
 ------------------------------------------------------------
 FILE: fls_chapter08_statements.json
 ------------------------------------------------------------
-  SCHEMA ERRORS:
-    - $.sections.macro_statement: 'count' is a required property
-  SAMPLE VIOLATIONS (2):
-    - 8.-2.1 (sections.item_statement): 2 samples, status=demonstrated
-    - 8.2 (sections.expression_statements): 2 samples, status=demonstrated
+  OK - No issues found
 
 ------------------------------------------------------------
 FILE: fls_chapter09_functions.json
 ------------------------------------------------------------
-  SCHEMA ERRORS:
-    - $.sections.typed_self: 'count' is a required property
-  SAMPLE VIOLATIONS (10):
-    - 9.0.1 (sections.function_declaration): 1 samples, status=demonstrated
-    - 9.0.2 (sections.function_qualifier_list): 2 samples, status=demonstrated
-    - 9.0.3 (sections.function_parameter_list): 1 samples, status=demonstrated
-    - 9.0.4 (sections.function_parameter): 1 samples, status=demonstrated
-    - 9.0.5 (sections.function_parameter_pattern): 0 samples, status=demonstrated
-    ... and 5 more
+  OK - No issues found
 
 ------------------------------------------------------------
 FILE: fls_chapter10_associated_items.json
 ------------------------------------------------------------
-  SCHEMA ERRORS:
-    - $.sections.type_alias_declaration: 'count' is a required property
-  SAMPLE VIOLATIONS (3):
-    - 10.0.1 (sections.constant_declaration): 2 samples, status=demonstrated
-    - 10.0.2 (sections.function_declaration): 2 samples, status=demonstrated
-    - 10.0.3 (sections.type_alias_declaration): 2 samples, status=demonstrated
+  OK - No issues found
 
 ------------------------------------------------------------
 FILE: fls_chapter11_implementations.json
 ------------------------------------------------------------
-  SCHEMA ERRORS:
-    - $.sections.implementation_conformance: 'count' is a required property
-  SAMPLE VIOLATIONS (2):
-    - 11.1 (sections.implementation_coherence): 2 samples, status=demonstrated
-    - 11.2 (sections.implementation_conformance): 2 samples, status=demonstrated
+  OK - No issues found
 
 ------------------------------------------------------------
 FILE: fls_chapter12_generics.json
 ------------------------------------------------------------
-  SCHEMA ERRORS:
-    - $.sections.where_clauses: 'count' is a required property
-  SAMPLE VIOLATIONS (4):
-    - 12.1 (sections.generic_parameters): 0 samples, status=demonstrated
-    - 12.2 (sections.where_clauses): 0 samples, status=demonstrated
-    - 12.3 (sections.generic_arguments): 0 samples, status=demonstrated
-    - 12.4 (sections.generic_conformance): 0 samples, status=demonstrated
+  OK - No issues found
 
 ------------------------------------------------------------
 FILE: fls_chapter13_attributes.json
 ------------------------------------------------------------
-  SCHEMA ERRORS:
-    - $.sections.builtin_attributes: 'count' is a required property
-  SAMPLE VIOLATIONS (37):
-    - 13.1 (sections.attribute_properties): 0 samples, status=demonstrated
-    - 13.2 (sections.builtin_attributes): 0 samples, status=demonstrated
-    - 13.2.1 (sections.builtin_attributes.code_generation_attributes): 0 samples, status=demonstrated
-    - 13.2.1.2 (sections.builtin_attributes.code_generation_attributes.attribute_inline): 0 samples, status=demonstrated
-    - 13.2.2 (sections.builtin_attributes.conditional_compilation_attributes): 0 samples, status=demonstrated
-    ... and 32 more
+  OK - No issues found
 
 ------------------------------------------------------------
 FILE: fls_chapter14_entities_resolution.json
 ------------------------------------------------------------
-  SCHEMA ERRORS:
-    - $.sections.visibility: 'count' is a required property
-  SAMPLE VIOLATIONS (22):
-    - 14.1 (sections.entities): 0 samples, status=demonstrated
-    - 14.3 (sections.paths): 0 samples, status=demonstrated
-    - 14.4 (sections.scopes): 0 samples, status=demonstrated
-    - 14.4.1 (sections.scopes.binding_scopes): 0 samples, status=demonstrated
-    - 14.4.2 (sections.scopes.generic_parameter_scope): 0 samples, status=demonstrated
-    ... and 17 more
+  OK - No issues found
 
 ------------------------------------------------------------
 FILE: fls_chapter15_ownership_destruction.json
 ------------------------------------------------------------
-  SCHEMA ERRORS:
-    - $.sections.references: 'count' is a required property
-  SAMPLE VIOLATIONS (8):
-    - 15.1 (sections.ownership): 0 samples, status=demonstrated
-    - 15.2 (sections.initialization): 0 samples, status=demonstrated
-    - 15.3 (sections.references): 0 samples, status=demonstrated
-    - 15.4 (sections.borrowing): 0 samples, status=demonstrated
-    - 15.5 (sections.passing_conventions): 0 samples, status=demonstrated
-    ... and 3 more
+  OK - No issues found
 
 ------------------------------------------------------------
 FILE: fls_chapter16_exceptions_errors.json
 ------------------------------------------------------------
-  SCHEMA ERRORS:
-    - $.sections.panic: 'count' is a required property
-  SAMPLE VIOLATIONS (1):
-    - 16.2 (sections.abort): 2 samples, status=demonstrated
+  OK - No issues found
 
 ------------------------------------------------------------
 FILE: fls_chapter17_concurrency.json
 ------------------------------------------------------------
-  SCHEMA ERRORS:
-    - $.sections.send_and_sync: 'count' is a required property
-  SAMPLE VIOLATIONS (2):
-    - 17.1 (sections.send_and_sync): 0 samples, status=demonstrated
-    - 17.2 (sections.atomics): 0 samples, status=demonstrated
+  OK - No issues found
 
 ------------------------------------------------------------
 FILE: fls_chapter18_program_structure.json
 ------------------------------------------------------------
-  SCHEMA ERRORS:
-    - $.sections.source_files: 'count' is a required property
-  SAMPLE VIOLATIONS (7):
-    - 18.1 (sections.source_files): 0 samples, status=demonstrated
-    - 18.2 (sections.modules): 0 samples, status=demonstrated
-    - 18.3 (sections.crates): 0 samples, status=demonstrated
-    - 18.4 (sections.crate_imports): 0 samples, status=demonstrated
-    - 18.5 (sections.compilation_roots): 0 samples, status=demonstrated
-    ... and 2 more
+  OK - No issues found
 
 ------------------------------------------------------------
 FILE: fls_chapter19_unsafety.json
 ------------------------------------------------------------
-  SCHEMA ERRORS:
-    - $.sections.unsafety_definition: 'count' is a required property
-  SAMPLE VIOLATIONS (8):
-    - 19.-2.1 (sections.unsafety_definition): 0 samples, status=demonstrated
-    - 19.-2.2 (sections.unsafe_operation_definition): 1 samples, status=demonstrated
-    - 19.-2.5 (sections.external_static_access): 1 samples, status=demonstrated
-    - 19.-2.6 (sections.mutable_static_access): 0 samples, status=demonstrated
-    - 19.-2.7 (sections.union_field_access): 0 samples, status=demonstrated
-    ... and 3 more
+  OK - No issues found
 
 ------------------------------------------------------------
 FILE: fls_chapter20_macros.json
 ------------------------------------------------------------
-  SCHEMA ERRORS:
-    - $.sections.procedural_macros: 'count' is a required property
-  SAMPLE VIOLATIONS (13):
-    - 20.1 (sections.declarative_macros): 0 samples, status=demonstrated
-    - 20.1.1 (sections.declarative_macros.metavariables): 0 samples, status=demonstrated
-    - 20.1.2 (sections.declarative_macros.repetition): 0 samples, status=demonstrated
-    - 20.2 (sections.procedural_macros): 0 samples, status=demonstrated
-    - 20.2.2 (sections.procedural_macros.derive_macros): 1 samples, status=demonstrated
-    ... and 8 more
+  OK - No issues found
 
 ------------------------------------------------------------
 FILE: fls_chapter21_ffi.json
 ------------------------------------------------------------
-  SCHEMA ERRORS:
-    - $.sections.external_statics: 'count' is a required property
-  SAMPLE VIOLATIONS (3):
-    - 21.3 (sections.external_functions): 0 samples, status=demonstrated
-    - 21.2 (sections.external_blocks): 0 samples, status=demonstrated
-    - 21.4 (sections.external_statics): 1 samples, status=demonstrated
+  OK - No issues found
 
 ------------------------------------------------------------
 FILE: fls_chapter22_inline_assembly.json
 ------------------------------------------------------------
-  SCHEMA ERRORS:
-    - $.sections.registers: 'count' is a required property
-  SAMPLE VIOLATIONS (7):
-    - 22.1 (sections.registers): 1 samples, status=limited_use
-    - 22.3 (sections.register_arguments): 1 samples, status=limited_use
-    - 22.4 (sections.assembly_instructions): 1 samples, status=limited_use
-    - 22.4.1 (sections.assembly_instructions.register_parameter_modifiers): 1 samples, status=limited_use
-    - 22.4.2 (sections.assembly_instructions.directive_support): 1 samples, status=limited_use
-    ... and 2 more
+  OK - No issues found
 
 ============================================================
 FLS COVERAGE REPORT
@@ -508,340 +370,7 @@ SAMPLE MINIMUM VIOLATIONS
 Minimum required: 3 samples per section
 Exempt statuses: deliberately_avoided, implicit, not_applicable, not_used
 
-fls_chapter02_lexical_elements.json (21 violations):
-  - 2.1          | samples: 1 | status: demonstrated         | sections.character_set
-  - 2.2          | samples: 0 | status: demonstrated         | sections.lexical_elements_separators_and_punctuation
-  - 2.3          | samples: 1 | status: demonstrated         | sections.identifiers
-  - 2.4          | samples: 1 | status: demonstrated         | sections.literals
-  - 2.4.1        | samples: 2 | status: demonstrated         | sections.literals.byte_literals
-  - 2.4.2        | samples: 2 | status: demonstrated         | sections.literals.byte_string_literals
-  - 2.4.2.1      | samples: 0 | status: demonstrated         | sections.literals.byte_string_literals.simple_byte_string_literals
-  - 2.4.3        | samples: 1 | status: demonstrated         | sections.literals.c_string_literals
-  - 2.4.3.1      | samples: 0 | status: demonstrated         | sections.literals.c_string_literals.simple_c_string_literals
-  - 2.4.4        | samples: 1 | status: demonstrated         | sections.literals.numeric_literals
-  - 2.4.4.1      | samples: 1 | status: demonstrated         | sections.literals.numeric_literals.integer_literals
-  - 2.4.4.2      | samples: 0 | status: limited_use          | sections.literals.numeric_literals.float_literals
-  - 2.4.5        | samples: 1 | status: demonstrated         | sections.literals.character_literals
-  - 2.4.6        | samples: 1 | status: demonstrated         | sections.literals.string_literals
-  - 2.4.6.1      | samples: 0 | status: demonstrated         | sections.literals.string_literals.simple_string_literals
-  - 2.4.6.2      | samples: 1 | status: limited_use          | sections.literals.string_literals.raw_string_literals
-  - 2.4.7        | samples: 1 | status: demonstrated         | sections.literals.boolean_literals
-  - 2.5          | samples: 0 | status: demonstrated         | sections.comments
-  - 2.6          | samples: 0 | status: demonstrated         | sections.keywords
-  - 2.6.1        | samples: 0 | status: demonstrated         | sections.keywords.strict_keywords
-  - 2.6.3        | samples: 0 | status: demonstrated         | sections.keywords.weak_keywords
-
-fls_chapter03_items.json (9 violations):
-  - 3.0.1        | samples: 1 | status: demonstrated         | sections.constant_declaration
-  - 3.0.2        | samples: 1 | status: demonstrated         | sections.enum_declaration
-  - 3.0.3        | samples: 1 | status: demonstrated         | sections.external_block
-  - 3.0.5        | samples: 0 | status: demonstrated         | sections.function_declaration
-  - 3.0.8        | samples: 1 | status: demonstrated         | sections.static_declaration
-  - 3.0.9        | samples: 1 | status: demonstrated         | sections.struct_declaration
-  - 3.0.10       | samples: 1 | status: demonstrated         | sections.trait_declaration
-  - 3.0.12       | samples: 1 | status: demonstrated         | sections.union_declaration
-  - 3.0.15       | samples: 0 | status: demonstrated         | sections.terminated_macro_invocation
-
-fls_chapter04_types_and_traits.json (53 violations):
-  - 4.1          | samples: 0 | status: demonstrated         | sections.types
-  - 4.2          | samples: 0 | status: demonstrated         | sections.type_classification
-  - 4.3          | samples: 0 | status: demonstrated         | sections.scalar_types
-  - 4.3.1        | samples: 0 | status: demonstrated         | sections.scalar_types.bool_type
-  - 4.3.2        | samples: 0 | status: limited_use          | sections.scalar_types.char_type
-  - 4.3.3        | samples: 0 | status: demonstrated         | sections.scalar_types.numeric_types
-  - 4.3.3.1      | samples: 0 | status: limited_use          | sections.scalar_types.numeric_types.floating_point_types
-  - 4.3.3.2      | samples: 0 | status: demonstrated         | sections.scalar_types.numeric_types.integer_types
-  - 4.4          | samples: 0 | status: demonstrated         | sections.sequence_types
-  - 4.4.1        | samples: 0 | status: demonstrated         | sections.sequence_types.array_types
-  - 4.4.2        | samples: 0 | status: demonstrated         | sections.sequence_types.slice_types
-  - 4.4.3        | samples: 0 | status: demonstrated         | sections.sequence_types.str_type
-  - 4.4.4        | samples: 0 | status: demonstrated         | sections.sequence_types.tuple_types
-  - 4.5          | samples: 0 | status: demonstrated         | sections.abstract_data_types
-  - 4.5.1        | samples: 0 | status: demonstrated         | sections.abstract_data_types.enum_types
-  - 4.5.2        | samples: 0 | status: demonstrated         | sections.abstract_data_types.struct_types
-  - 4.5.3        | samples: 0 | status: demonstrated         | sections.abstract_data_types.union_types
-  - 4.6          | samples: 0 | status: demonstrated         | sections.function_types
-  - 4.6.1        | samples: 0 | status: demonstrated         | sections.function_types.closure_types
-  - 4.6.2        | samples: 0 | status: demonstrated         | sections.function_types.function_item_types
-  - 4.7          | samples: 0 | status: demonstrated         | sections.indirection_types
-  - 4.7.1        | samples: 0 | status: demonstrated         | sections.indirection_types.function_pointer_types
-  - 4.7.2        | samples: 0 | status: demonstrated         | sections.indirection_types.raw_pointer_types
-  - 4.7.3        | samples: 0 | status: demonstrated         | sections.indirection_types.reference_types
-  - 4.8          | samples: 0 | status: demonstrated         | sections.trait_types
-  - 4.8.1        | samples: 0 | status: limited_use          | sections.trait_types.impl_trait_types
-  - 4.8.2        | samples: 0 | status: demonstrated         | sections.trait_types.trait_object_types
-  - 4.9          | samples: 0 | status: demonstrated         | sections.other_types
-  - 4.9.1        | samples: 0 | status: demonstrated         | sections.other_types.inferred_types
-  - 4.9.2        | samples: 0 | status: demonstrated         | sections.other_types.type_parameters
-  - 4.9.4        | samples: 0 | status: demonstrated         | sections.other_types.parenthesized_types
-  - 4.11         | samples: 0 | status: demonstrated         | sections.representation
-  - 4.11.1       | samples: 0 | status: demonstrated         | sections.representation.type_layout
-  - 4.11.2       | samples: 0 | status: demonstrated         | sections.representation.type_representation
-  - 4.11.2.1     | samples: 0 | status: demonstrated         | sections.representation.type_representation.enum_type_representation
-  - 4.11.2.2     | samples: 0 | status: demonstrated         | sections.representation.type_representation.struct_type_representation
-  - 4.11.2.3     | samples: 0 | status: demonstrated         | sections.representation.type_representation.union_type_representation
-  - 4.12         | samples: 0 | status: demonstrated         | sections.type_model
-  - 4.12.2       | samples: 0 | status: demonstrated         | sections.type_model.type_unification
-  - 4.12.3       | samples: 0 | status: demonstrated         | sections.type_model.type_coercion
-  - 4.12.4       | samples: 0 | status: demonstrated         | sections.type_model.structural_equality
-  - 4.12.5       | samples: 0 | status: demonstrated         | sections.type_model.interior_mutability
-  - 4.12.7       | samples: 0 | status: demonstrated         | sections.type_model.type_inference
-  - 4.13         | samples: 1 | status: demonstrated         | sections.traits
-  - 4.13.1       | samples: 0 | status: demonstrated         | sections.traits.object_safety
-  - 4.14         | samples: 2 | status: demonstrated         | sections.trait_and_lifetime_bounds
-  - 4.14.1       | samples: 0 | status: demonstrated         | sections.trait_and_lifetime_bounds.lifetimes
-  - 4.14.2       | samples: 0 | status: demonstrated         | sections.trait_and_lifetime_bounds.subtyping_and_variance
-  - 4.14.3       | samples: 0 | status: demonstrated         | sections.trait_and_lifetime_bounds.lifetime_elision
-  - 4.14.3.1     | samples: 0 | status: demonstrated         | sections.trait_and_lifetime_bounds.lifetime_elision.function_lifetime_elision
-  - 4.14.3.2     | samples: 0 | status: demonstrated         | sections.trait_and_lifetime_bounds.lifetime_elision.static_lifetime_elision
-  - 4.14.3.3     | samples: 0 | status: demonstrated         | sections.trait_and_lifetime_bounds.lifetime_elision.trait_object_lifetime_elision
-  - 4.14.3.4     | samples: 0 | status: demonstrated         | sections.trait_and_lifetime_bounds.lifetime_elision.impl_header_lifetime_elision
-
-fls_chapter05_patterns.json (26 violations):
-  - 5.1          | samples: 0 | status:                      | sections.refutability
-  - 5.1.1        | samples: 0 | status: demonstrated         | sections.refutability.identifier_patterns
-  - 5.1.2        | samples: 0 | status: demonstrated         | sections.refutability.literal_patterns
-  - 5.1.3        | samples: 0 | status: demonstrated         | sections.refutability.parenthesized_patterns
-  - 5.1.4        | samples: 0 | status: demonstrated         | sections.refutability.path_patterns
-  - 5.1.5        | samples: 0 | status: demonstrated         | sections.refutability.range_patterns
-  - 5.1.6        | samples: 0 | status: demonstrated         | sections.refutability.reference_patterns
-  - 5.1.7        | samples: 0 | status: demonstrated         | sections.refutability.rest_patterns
-  - 5.1.8        | samples: 0 | status: demonstrated         | sections.refutability.slice_patterns
-  - 5.2          | samples: 0 | status:                      | sections.struct_patterns
-  - 5.2.1        | samples: 0 | status: demonstrated         | sections.struct_patterns.record_struct_patterns
-  - 5.2.2        | samples: 0 | status: demonstrated         | sections.struct_patterns.tuple_struct_patterns
-  - 5.2.3        | samples: 0 | status: demonstrated         | sections.struct_patterns.tuple_patterns
-  - 5.2.4        | samples: 0 | status: demonstrated         | sections.struct_patterns.underscore_patterns
-  - 5.4          | samples: 0 | status:                      | sections.pattern_matching
-  - 5.4.1        | samples: 0 | status: demonstrated         | sections.pattern_matching.identifier_pattern_matching
-  - 5.4.2        | samples: 0 | status: demonstrated         | sections.pattern_matching.literal_pattern_matching
-  - 5.4.3        | samples: 0 | status: demonstrated         | sections.pattern_matching.parenthesized_pattern_matching
-  - 5.4.4        | samples: 0 | status: demonstrated         | sections.pattern_matching.path_pattern_matching
-  - 5.4.5        | samples: 0 | status: demonstrated         | sections.pattern_matching.range_pattern_matching
-  - 5.4.6        | samples: 0 | status: demonstrated         | sections.pattern_matching.reference_pattern_matching
-  - 5.4.7        | samples: 0 | status: demonstrated         | sections.pattern_matching.slice_pattern_matching
-  - 5.4.8        | samples: 0 | status: demonstrated         | sections.pattern_matching.record_struct_pattern_matching
-  - 5.4.9        | samples: 0 | status: demonstrated         | sections.pattern_matching.tuple_struct_pattern_matching
-  - 5.4.10       | samples: 0 | status: demonstrated         | sections.pattern_matching.tuple_pattern_matching
-  - 5.4.11       | samples: 0 | status: demonstrated         | sections.pattern_matching.underscore_pattern_matching
-
-fls_chapter06_expressions.json (53 violations):
-  - 6.1          | samples: 0 | status: demonstrated         | sections.expression_classification
-  - 6.1.1        | samples: 0 | status: demonstrated         | sections.expression_classification.assignee_expressions
-  - 6.1.2        | samples: 0 | status: demonstrated         | sections.expression_classification.constant_expressions
-  - 6.1.3        | samples: 0 | status: demonstrated         | sections.expression_classification.diverging_expressions
-  - 6.1.4        | samples: 0 | status: demonstrated         | sections.expression_classification.place_expressions
-  - 6.1.5        | samples: 0 | status: demonstrated         | sections.expression_classification.value_expressions
-  - 6.2          | samples: 2 | status: demonstrated         | sections.literal_expressions
-  - 6.3          | samples: 2 | status: demonstrated         | sections.path_expressions
-  - 6.4          | samples: 0 | status: demonstrated         | sections.block_expressions
-  - 6.4.2        | samples: 0 | status: demonstrated         | sections.block_expressions.const_blocks
-  - 6.4.3        | samples: 0 | status: limited_use          | sections.block_expressions.named_blocks
-  - 6.4.4        | samples: 0 | status: demonstrated         | sections.block_expressions.unsafe_blocks
-  - 6.5          | samples: 0 | status: demonstrated         | sections.operator_expressions
-  - 6.5.1        | samples: 0 | status: demonstrated         | sections.operator_expressions.borrow_expression
-  - 6.5.2        | samples: 0 | status: demonstrated         | sections.operator_expressions.dereference_expression
-  - 6.5.3        | samples: 0 | status: demonstrated         | sections.operator_expressions.error_propagation_expression
-  - 6.5.4        | samples: 0 | status: demonstrated         | sections.operator_expressions.negation_expression
-  - 6.5.5        | samples: 0 | status: demonstrated         | sections.operator_expressions.arithmetic_expressions
-  - 6.5.6        | samples: 0 | status: demonstrated         | sections.operator_expressions.bit_expressions
-  - 6.5.7        | samples: 0 | status: demonstrated         | sections.operator_expressions.comparison_expressions
-  - 6.5.8        | samples: 0 | status: demonstrated         | sections.operator_expressions.lazy_boolean_expressions
-  - 6.5.9        | samples: 0 | status: demonstrated         | sections.operator_expressions.raw_borrow_expression
-  - 6.5.10       | samples: 0 | status: demonstrated         | sections.operator_expressions.type_cast_expressions
-  - 6.5.11       | samples: 0 | status: demonstrated         | sections.operator_expressions.assignment_expressions
-  - 6.5.11.1     | samples: 0 | status: demonstrated         | sections.operator_expressions.assignment_expressions.basic_assignment
-  - 6.5.11.2     | samples: 0 | status: demonstrated         | sections.operator_expressions.assignment_expressions.destructuring_assignment
-  - 6.5.12       | samples: 0 | status: demonstrated         | sections.operator_expressions.compound_assignment_expressions
-  - 6.6          | samples: 0 | status: demonstrated         | sections.underscore_expressions
-  - 6.7          | samples: 1 | status: demonstrated         | sections.parenthesized_expressions
-  - 6.9          | samples: 2 | status: demonstrated         | sections.indexing_expressions
-  - 6.10         | samples: 1 | status: demonstrated         | sections.tuple_expressions
-  - 6.11         | samples: 1 | status: demonstrated         | sections.struct_expressions
-  - 6.12         | samples: 2 | status: demonstrated         | sections.invocation_expressions
-  - 6.12.1       | samples: 0 | status: demonstrated         | sections.invocation_expressions.call_expressions
-  - 6.12.2       | samples: 0 | status: demonstrated         | sections.invocation_expressions.method_call_expressions
-  - 6.12.3       | samples: 0 | status: demonstrated         | sections.invocation_expressions.call_conformance
-  - 6.13         | samples: 1 | status: demonstrated         | sections.field_access_expressions
-  - 6.15         | samples: 2 | status: demonstrated         | sections.loop_expressions
-  - 6.15.1       | samples: 0 | status: demonstrated         | sections.loop_expressions.for_loops
-  - 6.15.2       | samples: 0 | status: demonstrated         | sections.loop_expressions.infinite_loops
-  - 6.15.3       | samples: 0 | status: demonstrated         | sections.loop_expressions.while_loops
-  - 6.15.4       | samples: 0 | status: demonstrated         | sections.loop_expressions.while_let_loops
-  - 6.15.5       | samples: 0 | status: limited_use          | sections.loop_expressions.loop_labels
-  - 6.15.6       | samples: 0 | status: demonstrated         | sections.loop_expressions.break_expressions
-  - 6.15.7       | samples: 0 | status: demonstrated         | sections.loop_expressions.continue_expressions
-  - 6.17         | samples: 1 | status: demonstrated         | sections.if_and_if_let_expressions
-  - 6.17.1       | samples: 0 | status: demonstrated         | sections.if_and_if_let_expressions.if_expressions
-  - 6.17.2       | samples: 0 | status: demonstrated         | sections.if_and_if_let_expressions.if_let_expressions
-  - 6.18         | samples: 2 | status: demonstrated         | sections.match_expressions
-  - 6.19         | samples: 2 | status: demonstrated         | sections.return_expressions
-  - 6.21         | samples: 0 | status: demonstrated         | sections.expression_precedence
-  - 6.22         | samples: 0 | status: demonstrated         | sections.capturing
-  - 6.23         | samples: 0 | status: demonstrated         | sections.arithmetic_overflow
-
-fls_chapter07_values.json (1 violations):
-  - 7.4.1        | samples: 1 | status: demonstrated         | sections.variables.constant_promotion
-
-fls_chapter08_statements.json (2 violations):
-  - 8.-2.1       | samples: 2 | status: demonstrated         | sections.item_statement
-  - 8.2          | samples: 2 | status: demonstrated         | sections.expression_statements
-
-fls_chapter09_functions.json (10 violations):
-  - 9.0.1        | samples: 1 | status: demonstrated         | sections.function_declaration
-  - 9.0.2        | samples: 2 | status: demonstrated         | sections.function_qualifier_list
-  - 9.0.3        | samples: 1 | status: demonstrated         | sections.function_parameter_list
-  - 9.0.4        | samples: 1 | status: demonstrated         | sections.function_parameter
-  - 9.0.5        | samples: 0 | status: demonstrated         | sections.function_parameter_pattern
-  - 9.0.7        | samples: 2 | status: demonstrated         | sections.return_type
-  - 9.0.8        | samples: 0 | status: demonstrated         | sections.function_body
-  - 9.0.9        | samples: 1 | status: demonstrated         | sections.self_parameter
-  - 9.0.10       | samples: 0 | status: demonstrated         | sections.shorthand_self
-  - 9.0.11       | samples: 0 | status: demonstrated         | sections.typed_self
-
-fls_chapter10_associated_items.json (3 violations):
-  - 10.0.1       | samples: 2 | status: demonstrated         | sections.constant_declaration
-  - 10.0.2       | samples: 2 | status: demonstrated         | sections.function_declaration
-  - 10.0.3       | samples: 2 | status: demonstrated         | sections.type_alias_declaration
-
-fls_chapter11_implementations.json (2 violations):
-  - 11.1         | samples: 2 | status: demonstrated         | sections.implementation_coherence
-  - 11.2         | samples: 2 | status: demonstrated         | sections.implementation_conformance
-
-fls_chapter12_generics.json (4 violations):
-  - 12.1         | samples: 0 | status: demonstrated         | sections.generic_parameters
-  - 12.2         | samples: 0 | status: demonstrated         | sections.where_clauses
-  - 12.3         | samples: 0 | status: demonstrated         | sections.generic_arguments
-  - 12.4         | samples: 0 | status: demonstrated         | sections.generic_conformance
-
-fls_chapter13_attributes.json (37 violations):
-  - 13.1         | samples: 0 | status: demonstrated         | sections.attribute_properties
-  - 13.2         | samples: 0 | status: demonstrated         | sections.builtin_attributes
-  - 13.2.1       | samples: 0 | status: demonstrated         | sections.builtin_attributes.code_generation_attributes
-  - 13.2.1.2     | samples: 0 | status: demonstrated         | sections.builtin_attributes.code_generation_attributes.attribute_inline
-  - 13.2.2       | samples: 0 | status: demonstrated         | sections.builtin_attributes.conditional_compilation_attributes
-  - 13.2.2.1     | samples: 0 | status: demonstrated         | sections.builtin_attributes.conditional_compilation_attributes.attribute_cfg
-  - 13.2.2.2     | samples: 0 | status: demonstrated         | sections.builtin_attributes.conditional_compilation_attributes.attribute_cfg_attr
-  - 13.2.3       | samples: 0 | status: demonstrated         | sections.builtin_attributes.derivation_attributes
-  - 13.2.3.2     | samples: 1 | status: demonstrated         | sections.builtin_attributes.derivation_attributes.attribute_derive
-  - 13.2.4       | samples: 0 | status: demonstrated         | sections.builtin_attributes.diagnostics_attributes
-  - 13.2.5       | samples: 0 | status: demonstrated         | sections.builtin_attributes.documentation_attributes
-  - 13.2.5.1     | samples: 0 | status: demonstrated         | sections.builtin_attributes.documentation_attributes.attribute_doc
-  - 13.2.6       | samples: 0 | status: demonstrated         | sections.builtin_attributes.foreign_function_interface_attributes
-  - 13.2.6.4     | samples: 0 | status: demonstrated         | sections.builtin_attributes.foreign_function_interface_attributes.attribute_link
-  - 13.2.6.5     | samples: 0 | status: demonstrated         | sections.builtin_attributes.foreign_function_interface_attributes.attribute_link_name
-  - 13.2.6.9     | samples: 0 | status: demonstrated         | sections.builtin_attributes.foreign_function_interface_attributes.attribute_no_main
-  - 13.2.6.10    | samples: 0 | status: demonstrated         | sections.builtin_attributes.foreign_function_interface_attributes.attribute_no_mangle
-  - 13.2.6.11    | samples: 0 | status: demonstrated         | sections.builtin_attributes.foreign_function_interface_attributes.attribute_repr
-  - 13.2.6.13    | samples: 0 | status: limited_use          | sections.builtin_attributes.foreign_function_interface_attributes.attribute_used
-  - 13.2.8       | samples: 0 | status: demonstrated         | sections.builtin_attributes.macros_attributes
-  - 13.2.8.2     | samples: 0 | status: demonstrated         | sections.builtin_attributes.macros_attributes.attribute_macro_export
-  - 13.2.8.3     | samples: 0 | status: demonstrated         | sections.builtin_attributes.macros_attributes.attribute_macro_use
-  - 13.2.8.5     | samples: 0 | status: demonstrated         | sections.builtin_attributes.macros_attributes.attribute_proc_macro_attribute
-  - 13.2.8.6     | samples: 0 | status: demonstrated         | sections.builtin_attributes.macros_attributes.attribute_proc_macro_derive
-  - 13.2.9       | samples: 0 | status: demonstrated         | sections.builtin_attributes.modules_attributes
-  - 13.2.9.1     | samples: 0 | status: demonstrated         | sections.builtin_attributes.modules_attributes.attribute_path
-  - 13.2.10      | samples: 0 | status: demonstrated         | sections.builtin_attributes.prelude_attributes
-  - 13.2.10.2    | samples: 0 | status: demonstrated         | sections.builtin_attributes.prelude_attributes.attribute_no_std
-  - 13.2.11      | samples: 0 | status: demonstrated         | sections.builtin_attributes.runtime_attributes
-  - 13.2.11.1    | samples: 0 | status: demonstrated         | sections.builtin_attributes.runtime_attributes.attribute_global_allocator
-  - 13.2.11.2    | samples: 0 | status: demonstrated         | sections.builtin_attributes.runtime_attributes.attribute_panic_handler
-  - 13.2.12      | samples: 0 | status: demonstrated         | sections.builtin_attributes.testing_attributes
-  - 13.2.12.1    | samples: 0 | status: demonstrated         | sections.builtin_attributes.testing_attributes.attribute_ignore
-  - 13.2.12.2    | samples: 0 | status: demonstrated         | sections.builtin_attributes.testing_attributes.attribute_should_panic
-  - 13.2.12.3    | samples: 0 | status: demonstrated         | sections.builtin_attributes.testing_attributes.attribute_test
-  - 13.2.13      | samples: 0 | status: demonstrated         | sections.builtin_attributes.type_attributes
-  - 13.2.13.1    | samples: 0 | status: demonstrated         | sections.builtin_attributes.type_attributes.attribute_non_exhaustive
-
-fls_chapter14_entities_resolution.json (22 violations):
-  - 14.1         | samples: 0 | status: demonstrated         | sections.entities
-  - 14.3         | samples: 0 | status: demonstrated         | sections.paths
-  - 14.4         | samples: 0 | status: demonstrated         | sections.scopes
-  - 14.4.1       | samples: 0 | status: demonstrated         | sections.scopes.binding_scopes
-  - 14.4.2       | samples: 0 | status: demonstrated         | sections.scopes.generic_parameter_scope
-  - 14.4.3       | samples: 0 | status: demonstrated         | sections.scopes.item_scope
-  - 14.4.4       | samples: 0 | status: limited_use          | sections.scopes.label_scope
-  - 14.4.5       | samples: 0 | status: demonstrated         | sections.scopes.self_scope
-  - 14.4.6       | samples: 0 | status: demonstrated         | sections.scopes.textual_macro_scope
-  - 14.4.7       | samples: 0 | status: demonstrated         | sections.scopes.scope_hierarchy
-  - 14.5         | samples: 0 | status: demonstrated         | sections.namespaces
-  - 14.6         | samples: 0 | status: demonstrated         | sections.preludes
-  - 14.7         | samples: 0 | status: demonstrated         | sections.use_imports
-  - 14.8         | samples: 0 | status: demonstrated         | sections.shadowing
-  - 14.9         | samples: 0 | status: demonstrated         | sections.resolution
-  - 14.9.1       | samples: 0 | status: demonstrated         | sections.resolution.field_resolution
-  - 14.9.2       | samples: 0 | status: demonstrated         | sections.resolution.method_resolution
-  - 14.9.3       | samples: 0 | status: demonstrated         | sections.resolution.call_resolution
-  - 14.9.4       | samples: 0 | status: demonstrated         | sections.resolution.path_resolution
-  - 14.9.4.1     | samples: 0 | status: demonstrated         | sections.resolution.path_resolution.simple_path_resolution
-  - 14.9.4.2     | samples: 0 | status: demonstrated         | sections.resolution.path_resolution.path_expression_resolution
-  - 14.9.4.3     | samples: 0 | status: demonstrated         | sections.resolution.path_resolution.type_path_resolution
-
-fls_chapter15_ownership_destruction.json (8 violations):
-  - 15.1         | samples: 0 | status: demonstrated         | sections.ownership
-  - 15.2         | samples: 0 | status: demonstrated         | sections.initialization
-  - 15.3         | samples: 0 | status: demonstrated         | sections.references
-  - 15.4         | samples: 0 | status: demonstrated         | sections.borrowing
-  - 15.5         | samples: 0 | status: demonstrated         | sections.passing_conventions
-  - 15.8         | samples: 0 | status: demonstrated         | sections.drop_scopes
-  - 15.8.1       | samples: 0 | status: demonstrated         | sections.drop_scopes.drop_scope_extension
-  - 15.9         | samples: 0 | status: demonstrated         | sections.drop_order
-
-fls_chapter16_exceptions_errors.json (1 violations):
-  - 16.2         | samples: 2 | status: demonstrated         | sections.abort
-
-fls_chapter17_concurrency.json (2 violations):
-  - 17.1         | samples: 0 | status: demonstrated         | sections.send_and_sync
-  - 17.2         | samples: 0 | status: demonstrated         | sections.atomics
-
-fls_chapter18_program_structure.json (7 violations):
-  - 18.1         | samples: 0 | status: demonstrated         | sections.source_files
-  - 18.2         | samples: 0 | status: demonstrated         | sections.modules
-  - 18.3         | samples: 0 | status: demonstrated         | sections.crates
-  - 18.4         | samples: 0 | status: demonstrated         | sections.crate_imports
-  - 18.5         | samples: 0 | status: demonstrated         | sections.compilation_roots
-  - 18.6         | samples: 0 | status: demonstrated         | sections.conditional_compilation
-  - 18.7         | samples: 0 | status: demonstrated         | sections.program_entry_point
-
-fls_chapter19_unsafety.json (8 violations):
-  - 19.-2.1      | samples: 0 | status: demonstrated         | sections.unsafety_definition
-  - 19.-2.2      | samples: 1 | status: demonstrated         | sections.unsafe_operation_definition
-  - 19.-2.5      | samples: 1 | status: demonstrated         | sections.external_static_access
-  - 19.-2.6      | samples: 0 | status: demonstrated         | sections.mutable_static_access
-  - 19.-2.7      | samples: 0 | status: demonstrated         | sections.union_field_access
-  - 19.-2.8      | samples: 0 | status: demonstrated         | sections.unsafe_function_call
-  - 19.-2.9      | samples: 0 | status: demonstrated         | sections.unsafe_context
-  - 19.-2.10     | samples: 1 | status: demonstrated         | sections.unsafe_operation_requirement
-
-fls_chapter20_macros.json (13 violations):
-  - 20.1         | samples: 0 | status: demonstrated         | sections.declarative_macros
-  - 20.1.1       | samples: 0 | status: demonstrated         | sections.declarative_macros.metavariables
-  - 20.1.2       | samples: 0 | status: demonstrated         | sections.declarative_macros.repetition
-  - 20.2         | samples: 0 | status: demonstrated         | sections.procedural_macros
-  - 20.2.2       | samples: 1 | status: demonstrated         | sections.procedural_macros.derive_macros
-  - 20.2.3       | samples: 1 | status: demonstrated         | sections.procedural_macros.attribute_macros
-  - 20.3         | samples: 0 | status: demonstrated         | sections.macro_invocation
-  - 20.5         | samples: 0 | status: demonstrated         | sections.hygiene
-  - 20.4         | samples: 1 | status: demonstrated         | sections.macro_expansion
-  - 20.4.1       | samples: 0 | status: demonstrated         | sections.macro_expansion.macro_matching
-  - 20.4.1.1     | samples: 0 | status: demonstrated         | sections.macro_expansion.macro_matching.rule_matching
-  - 20.4.1.2     | samples: 0 | status: demonstrated         | sections.macro_expansion.macro_matching.token_matching
-  - 20.4.2       | samples: 0 | status: demonstrated         | sections.macro_expansion.macro_transcription
-
-fls_chapter21_ffi.json (3 violations):
-  - 21.3         | samples: 0 | status: demonstrated         | sections.external_functions
-  - 21.2         | samples: 0 | status: demonstrated         | sections.external_blocks
-  - 21.4         | samples: 1 | status: demonstrated         | sections.external_statics
-
-fls_chapter22_inline_assembly.json (7 violations):
-  - 22.1         | samples: 1 | status: limited_use          | sections.registers
-  - 22.3         | samples: 1 | status: limited_use          | sections.register_arguments
-  - 22.4         | samples: 1 | status: limited_use          | sections.assembly_instructions
-  - 22.4.1       | samples: 1 | status: limited_use          | sections.assembly_instructions.register_parameter_modifiers
-  - 22.4.2       | samples: 1 | status: limited_use          | sections.assembly_instructions.directive_support
-  - 22.6         | samples: 1 | status: limited_use          | sections.assembly_options
-  - 22.7         | samples: 2 | status: limited_use          | sections.macros_asm_global_asm_and_naked_asm
-
+  (none - all sections meet minimum or have waivers)
 
 ============================================================
 COUNT FIELD COVERAGE
@@ -849,301 +378,136 @@ COUNT FIELD COVERAGE
 
 fls_chapter02_lexical_elements.json:
   Total sections: 24
-  With count (integer): 0
-  With count (null): 0
-  Missing count: 24
-    - sections.character_set
-    - sections.lexical_elements_separators_and_punctuation
-    - sections.identifiers
-    - sections.literals
-    - sections.literals.byte_literals
-    - sections.literals.byte_string_literals
-    - sections.literals.byte_string_literals.simple_byte_string_literals
-    - sections.literals.byte_string_literals.raw_byte_string_literals
-    - sections.literals.c_string_literals
-    - sections.literals.c_string_literals.simple_c_string_literals
-    ... and 14 more
+  With count (integer): 16
+  With count (null): 8
+  Missing count: 0
 
 fls_chapter03_items.json:
   Total sections: 15
-  With count (integer): 0
-  With count (null): 0
-  Missing count: 15
-    - sections.constant_declaration
-    - sections.enum_declaration
-    - sections.external_block
-    - sections.external_crate_import
-    - sections.function_declaration
-    - sections.implementation
-    - sections.module_declaration
-    - sections.static_declaration
-    - sections.struct_declaration
-    - sections.trait_declaration
-    ... and 5 more
+  With count (integer): 12
+  With count (null): 3
+  Missing count: 0
 
 fls_chapter04_types_and_traits.json:
   Total sections: 57
-  With count (integer): 0
-  With count (null): 0
-  Missing count: 57
-    - sections.types
-    - sections.type_classification
-    - sections.scalar_types
-    - sections.scalar_types.bool_type
-    - sections.scalar_types.char_type
-    - sections.scalar_types.numeric_types
-    - sections.scalar_types.numeric_types.floating_point_types
-    - sections.scalar_types.numeric_types.integer_types
-    - sections.sequence_types
-    - sections.sequence_types.array_types
-    ... and 47 more
+  With count (integer): 34
+  With count (null): 23
+  Missing count: 0
 
 fls_chapter05_patterns.json:
   Total sections: 27
-  With count (integer): 0
-  With count (null): 0
-  Missing count: 27
-    - sections.refutability
-    - sections.refutability.identifier_patterns
-    - sections.refutability.literal_patterns
-    - sections.refutability.parenthesized_patterns
-    - sections.refutability.path_patterns
-    - sections.refutability.range_patterns
-    - sections.refutability.reference_patterns
-    - sections.refutability.rest_patterns
-    - sections.refutability.slice_patterns
-    - sections.struct_patterns
-    ... and 17 more
+  With count (integer): 15
+  With count (null): 12
+  Missing count: 0
 
 fls_chapter06_expressions.json:
   Total sections: 58
-  With count (integer): 0
-  With count (null): 0
-  Missing count: 58
-    - sections.expression_classification
-    - sections.expression_classification.assignee_expressions
-    - sections.expression_classification.constant_expressions
-    - sections.expression_classification.diverging_expressions
-    - sections.expression_classification.place_expressions
-    - sections.expression_classification.value_expressions
-    - sections.literal_expressions
-    - sections.path_expressions
-    - sections.block_expressions
-    - sections.block_expressions.async_blocks
-    ... and 48 more
+  With count (integer): 31
+  With count (null): 27
+  Missing count: 0
 
 fls_chapter07_values.json:
   Total sections: 5
-  With count (integer): 0
-  With count (null): 0
-  Missing count: 5
-    - sections.constants
-    - sections.statics
-    - sections.temporaries
-    - sections.variables
-    - sections.variables.constant_promotion
+  With count (integer): 2
+  With count (null): 3
+  Missing count: 0
 
 fls_chapter08_statements.json:
   Total sections: 6
-  With count (integer): 0
-  With count (null): 0
-  Missing count: 6
-    - sections.item_statement
-    - sections.empty_statement
-    - sections.macro_statement
-    - sections.empty_statement_execution
-    - sections.let_statements
-    - sections.expression_statements
+  With count (integer): 5
+  With count (null): 1
+  Missing count: 0
 
 fls_chapter09_functions.json:
   Total sections: 11
-  With count (integer): 0
-  With count (null): 0
-  Missing count: 11
-    - sections.function_declaration
-    - sections.function_qualifier_list
-    - sections.function_parameter_list
-    - sections.function_parameter
-    - sections.function_parameter_pattern
-    - sections.function_parameter_variadic_part
-    - sections.return_type
-    - sections.function_body
-    - sections.self_parameter
-    - sections.shorthand_self
-    ... and 1 more
+  With count (integer): 9
+  With count (null): 2
+  Missing count: 0
 
 fls_chapter10_associated_items.json:
   Total sections: 3
-  With count (integer): 0
+  With count (integer): 3
   With count (null): 0
-  Missing count: 3
-    - sections.constant_declaration
-    - sections.function_declaration
-    - sections.type_alias_declaration
+  Missing count: 0
 
 fls_chapter11_implementations.json:
   Total sections: 2
-  With count (integer): 0
+  With count (integer): 2
   With count (null): 0
-  Missing count: 2
-    - sections.implementation_coherence
-    - sections.implementation_conformance
+  Missing count: 0
 
 fls_chapter12_generics.json:
   Total sections: 4
-  With count (integer): 0
-  With count (null): 0
-  Missing count: 4
-    - sections.generic_parameters
-    - sections.where_clauses
-    - sections.generic_arguments
-    - sections.generic_conformance
+  With count (integer): 3
+  With count (null): 1
+  Missing count: 0
 
 fls_chapter13_attributes.json:
   Total sections: 57
-  With count (integer): 0
+  With count (integer): 57
   With count (null): 0
-  Missing count: 57
-    - sections.attribute_properties
-    - sections.builtin_attributes
-    - sections.builtin_attributes.code_generation_attributes
-    - sections.builtin_attributes.code_generation_attributes.attribute_cold
-    - sections.builtin_attributes.code_generation_attributes.attribute_inline
-    - sections.builtin_attributes.code_generation_attributes.attribute_no_builtins
-    - sections.builtin_attributes.code_generation_attributes.attribute_target_feature
-    - sections.builtin_attributes.code_generation_attributes.attribute_track_caller
-    - sections.builtin_attributes.code_generation_attributes.attribute_naked
-    - sections.builtin_attributes.conditional_compilation_attributes
-    ... and 47 more
+  Missing count: 0
 
 fls_chapter14_entities_resolution.json:
   Total sections: 23
-  With count (integer): 0
-  With count (null): 0
-  Missing count: 23
-    - sections.entities
-    - sections.visibility
-    - sections.paths
-    - sections.scopes
-    - sections.scopes.binding_scopes
-    - sections.scopes.generic_parameter_scope
-    - sections.scopes.item_scope
-    - sections.scopes.label_scope
-    - sections.scopes.self_scope
-    - sections.scopes.textual_macro_scope
-    ... and 13 more
+  With count (integer): 6
+  With count (null): 17
+  Missing count: 0
 
 fls_chapter15_ownership_destruction.json:
   Total sections: 10
-  With count (integer): 0
-  With count (null): 0
-  Missing count: 10
-    - sections.ownership
-    - sections.initialization
-    - sections.references
-    - sections.borrowing
-    - sections.passing_conventions
-    - sections.destruction
-    - sections.destructors
-    - sections.drop_scopes
-    - sections.drop_scopes.drop_scope_extension
-    - sections.drop_order
+  With count (integer): 6
+  With count (null): 4
+  Missing count: 0
 
 fls_chapter16_exceptions_errors.json:
   Total sections: 2
-  With count (integer): 0
+  With count (integer): 2
   With count (null): 0
-  Missing count: 2
-    - sections.panic
-    - sections.abort
+  Missing count: 0
 
 fls_chapter17_concurrency.json:
   Total sections: 3
-  With count (integer): 0
-  With count (null): 0
-  Missing count: 3
-    - sections.send_and_sync
-    - sections.atomics
-    - sections.asynchronous_computation
+  With count (integer): 2
+  With count (null): 1
+  Missing count: 0
 
 fls_chapter18_program_structure.json:
   Total sections: 7
-  With count (integer): 0
-  With count (null): 0
-  Missing count: 7
-    - sections.source_files
-    - sections.modules
-    - sections.crates
-    - sections.crate_imports
-    - sections.compilation_roots
-    - sections.conditional_compilation
-    - sections.program_entry_point
+  With count (integer): 6
+  With count (null): 1
+  Missing count: 0
 
 fls_chapter19_unsafety.json:
   Total sections: 10
-  With count (integer): 0
-  With count (null): 0
-  Missing count: 10
-    - sections.unsafety_definition
-    - sections.unsafe_operation_definition
-    - sections.unsafe_operations_list
-    - sections.raw_pointer_dereference
-    - sections.external_static_access
-    - sections.mutable_static_access
-    - sections.union_field_access
-    - sections.unsafe_function_call
-    - sections.unsafe_context
-    - sections.unsafe_operation_requirement
+  With count (integer): 6
+  With count (null): 4
+  Missing count: 0
 
 fls_chapter20_macros.json:
   Total sections: 14
-  With count (integer): 0
-  With count (null): 0
-  Missing count: 14
-    - sections.declarative_macros
-    - sections.declarative_macros.metavariables
-    - sections.declarative_macros.repetition
-    - sections.procedural_macros
-    - sections.procedural_macros.functionlike_macros
-    - sections.procedural_macros.derive_macros
-    - sections.procedural_macros.attribute_macros
-    - sections.macro_invocation
-    - sections.hygiene
-    - sections.macro_expansion
-    ... and 4 more
+  With count (integer): 7
+  With count (null): 7
+  Missing count: 0
 
 fls_chapter21_ffi.json:
   Total sections: 4
-  With count (integer): 0
+  With count (integer): 4
   With count (null): 0
-  Missing count: 4
-    - sections.abi
-    - sections.external_functions
-    - sections.external_blocks
-    - sections.external_statics
+  Missing count: 0
 
 fls_chapter22_inline_assembly.json:
   Total sections: 10
-  With count (integer): 0
-  With count (null): 0
-  Missing count: 10
-    - sections.registers
-    - sections.register_classes
-    - sections.register_arguments
-    - sections.assembly_instructions
-    - sections.assembly_instructions.register_parameter_modifiers
-    - sections.assembly_instructions.directive_support
-    - sections.abi_clobbers
-    - sections.assembly_options
-    - sections.macros_asm_global_asm_and_naked_asm
-    - sections.label_block
+  With count (integer): 5
+  With count (null): 5
+  Missing count: 0
 
 ----------------------------------------
 TOTALS:
   Total sections: 352
-  With count (integer): 0
-  With count (null): 0
-  Missing count: 352
+  With count (integer): 233
+  With count (null): 119
+  Missing count: 0
 
 ============================================================
 EXIT CODES

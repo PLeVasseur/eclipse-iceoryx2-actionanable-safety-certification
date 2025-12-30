@@ -9,22 +9,22 @@
   "version_changes": {
     "from_version": "0.7.0",
     "to_version": "0.8.0",
-    "summary": "Significant unsafe increase due to FFI C layer. Union types introduced (0→42), ManuallyDrop for FFI union handling, expanded raw pointer usage.",
+    "summary": "Significant unsafe increase due to FFI C layer. Union types introduced (0\u219242), ManuallyDrop for FFI union handling, expanded raw pointer usage.",
     "key_changes": [
-      "unsafe blocks: 1,702 → 2,372 (+39%)",
-      "unsafe fn: 1,302 → 1,763 (+35%)",
-      "unsafe impl: 203 → 219 (+8%)",
-      "raw pointer types: 1,554 → 3,435 (+121%)",
-      "static mut: 3 → 14 (+367% - logger restructuring)",
-      "union types: 0 → 42 (NEW - FFI C layer)",
-      "transmute: 50 → 82 (+64%)",
-      "from_raw_parts: 46 → 69 (+50%)",
-      "MaybeUninit: 146 → 219 (+50%)",
-      "assume_init: 83 → 133 (+60%)",
-      "NonNull: 160 → 356 (+123%)",
-      "drop_in_place: 8 → 29 (+263%)",
-      "extern C blocks: 26 → 11 (consolidated)",
-      "SAFETY comments: 14 → 11 (needs improvement)"
+      "unsafe blocks: 1,702 \u2192 2,372 (+39%)",
+      "unsafe fn: 1,302 \u2192 1,763 (+35%)",
+      "unsafe impl: 203 \u2192 219 (+8%)",
+      "raw pointer types: 1,554 \u2192 3,435 (+121%)",
+      "static mut: 3 \u2192 14 (+367% - logger restructuring)",
+      "union types: 0 \u2192 42 (NEW - FFI C layer)",
+      "transmute: 50 \u2192 82 (+64%)",
+      "from_raw_parts: 46 \u2192 69 (+50%)",
+      "MaybeUninit: 146 \u2192 219 (+50%)",
+      "assume_init: 83 \u2192 133 (+60%)",
+      "NonNull: 160 \u2192 356 (+123%)",
+      "drop_in_place: 8 \u2192 29 (+263%)",
+      "extern C blocks: 26 \u2192 11 (consolidated)",
+      "SAFETY comments: 14 \u2192 11 (needs improvement)"
     ]
   },
   "summary": "FLS Chapter 19 covers unsafe operations that may result in undefined behavior. iceoryx2 v0.8.0 demonstrates extensive but disciplined unsafe usage: 2,372 unsafe blocks, 1,763 unsafe functions (primarily in pal-posix and ffi-c layers), 219 unsafe impl (mostly Send/Sync), 1 unsafe trait (ZeroCopySend), and 42 union types (NEW for FFI). Key unsafe operations: raw pointer manipulation (3,435 pointer types), FFI calls to POSIX APIs, interior mutability (231 UnsafeCell), and union field access for C API. static mut usage increased to 14 due to logger restructuring.",
@@ -86,7 +86,33 @@
           ]
         }
       },
-      "samples": []
+      "samples": [
+        {
+          "file": "iceoryx2/src/waitset.rs",
+          "line": [
+            342
+          ],
+          "code": "unsafe { r.file_descriptor().native_handle() },",
+          "purpose": "Demonstrates \\bunsafe\\b..."
+        },
+        {
+          "file": "iceoryx2/conformance-tests/src/sample_mut.rs",
+          "line": [
+            134
+          ],
+          "code": "let mut sample = unsafe { sample.assume_init() };",
+          "purpose": "Demonstrates \\bunsafe\\b..."
+        },
+        {
+          "file": "examples/rust/cross_language_communication_complex_types/publisher.rs",
+          "line": [
+            45
+          ],
+          "code": "unsafe { ComplexType::placement_default(sample.payload_mut().as_mut_ptr()) };",
+          "purpose": "Demonstrates \\bunsafe\\b..."
+        }
+      ],
+      "count": 4961
     },
     "unsafe_operation_definition": {
       "fls_section": "19.-2.2",
@@ -110,11 +136,30 @@
       "samples": [
         {
           "file": "iceoryx2-bb/elementary/src/lazy_singleton.rs",
-          "line": [94],
+          "line": [
+            94
+          ],
           "code": "unsafe { *self.data.get() = Some(value) };",
           "purpose": "Interior mutability access via UnsafeCell"
+        },
+        {
+          "file": "iceoryx2/src/waitset.rs",
+          "line": [
+            342
+          ],
+          "code": "unsafe { r.file_descriptor().native_handle() },",
+          "purpose": "Demonstrates unsafe\\s*\\{..."
+        },
+        {
+          "file": "iceoryx2-ffi/python/src/writer.rs",
+          "line": [
+            60
+          ],
+          "code": "let entry_handle = unsafe {",
+          "purpose": "Demonstrates unsafe\\s*\\{..."
         }
-      ]
+      ],
+      "count": 2376
     },
     "unsafe_operations_list": {
       "fls_section": "19.-2.3",
@@ -230,7 +275,8 @@
             513
           ]
         }
-      ]
+      ],
+      "count": 2376
     },
     "raw_pointer_dereference": {
       "fls_section": "19.-2.4",
@@ -258,23 +304,31 @@
       "samples": [
         {
           "file": "iceoryx2-bb/elementary/tests/relocatable_ptr_tests.rs",
-          "line": [28],
+          "line": [
+            28
+          ],
           "code": "assert_that!(unsafe { *sut.as_ptr() }, eq value);",
           "purpose": "Dereferencing relocatable pointer for testing"
         },
         {
           "file": "iceoryx2-bb/container/src/vector/mod.rs",
-          "line": [237],
+          "line": [
+            237
+          ],
           "code": "let value = unsafe { core::ptr::read(data[index].as_ptr()) };",
           "purpose": "Reading value from container via raw pointer"
         },
         {
           "file": "iceoryx2-bb/posix/src/thread.rs",
-          "line": [467],
+          "line": [
+            467
+          ],
           "code": "unsafe { core::ptr::read(args as *const ThreadStartupArgs<TT, FF>) };",
           "purpose": "Reading thread startup args from raw pointer"
         }
-      ]
+      ],
+      "count": null,
+      "count_methodology": "Pattern not defined for this section"
     },
     "external_static_access": {
       "fls_section": "19.-2.5",
@@ -291,11 +345,22 @@
       "samples": [
         {
           "file": "examples/nostd/bare-metal/rust/_common/src/global_allocator.rs",
-          "line": [20, 21, 22],
+          "line": [
+            20,
+            21,
+            22
+          ],
           "code": "extern \"C\" {\n    static _heap_start: u8;\n    static _heap_end: u8;\n}",
           "purpose": "Linker-defined symbols for heap bounds in bare-metal allocator"
         }
-      ]
+      ],
+      "count": 0,
+      "samples_waiver": {
+        "reason": "insufficient_patterns",
+        "explanation": "Only 0 instance(s) found in codebase, fewer than 3 required samples",
+        "approved_by": "automated",
+        "date": "2025-12-30"
+      }
     },
     "mutable_static_access": {
       "fls_section": "19.-2.6",
@@ -338,7 +403,33 @@
           ]
         }
       },
-      "samples": []
+      "samples": [
+        {
+          "file": "iceoryx2-pal/posix/src/windows/socket.rs",
+          "line": [
+            51
+          ],
+          "code": "static mut WSA_INSTANCE: OnceCell<GlobalWsaInitializer> = OnceCell::new();",
+          "purpose": "Demonstrates static\\s+mut..."
+        },
+        {
+          "file": "iceoryx2-log/log/src/lib.rs",
+          "line": [
+            144
+          ],
+          "code": "static mut LOGGER: Option<&'static dyn Log> = None;",
+          "purpose": "Demonstrates static\\s+mut..."
+        },
+        {
+          "file": "iceoryx2-ffi/c/src/api/log.rs",
+          "line": [
+            79
+          ],
+          "code": "static mut LOGGER: Option<CLogger> = None;",
+          "purpose": "Demonstrates static\\s+mut..."
+        }
+      ],
+      "count": 14
     },
     "union_field_access": {
       "fls_section": "19.-2.7",
@@ -355,7 +446,33 @@
           "pattern": "Each union contains ipc/local variants with ManuallyDrop wrapper for explicit destruction control"
         }
       },
-      "samples": []
+      "samples": [
+        {
+          "file": "iceoryx2-ffi/c/src/api/writer.rs",
+          "line": [
+            50
+          ],
+          "code": "pub(super) union WriterUnion {",
+          "purpose": "Demonstrates \\bunion\\b..."
+        },
+        {
+          "file": "iceoryx2-ffi/c/src/api/waitset_guard.rs",
+          "line": [
+            25
+          ],
+          "code": "pub(crate) union GuardUnion {",
+          "purpose": "Demonstrates \\bunion\\b..."
+        },
+        {
+          "file": "iceoryx2-ffi/c/src/api/waitset_attachment_id.rs",
+          "line": [
+            28
+          ],
+          "code": "pub(crate) union AttachmentIdUnion {",
+          "purpose": "Demonstrates \\bunion\\b..."
+        }
+      ],
+      "count": 42
     },
     "unsafe_function_call": {
       "fls_section": "19.-2.8",
@@ -388,7 +505,15 @@
           }
         }
       },
-      "samples": []
+      "samples": [],
+      "count": null,
+      "count_methodology": "Pattern not defined for this section",
+      "samples_waiver": {
+        "reason": "conceptual_section",
+        "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+        "approved_by": "automated",
+        "date": "2025-12-30"
+      }
     },
     "unsafe_context": {
       "fls_section": "19.-2.9",
@@ -413,7 +538,15 @@
           ]
         }
       },
-      "samples": []
+      "samples": [],
+      "count": null,
+      "count_methodology": "Pattern not defined for this section",
+      "samples_waiver": {
+        "reason": "conceptual_section",
+        "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+        "approved_by": "automated",
+        "date": "2025-12-30"
+      }
     },
     "unsafe_operation_requirement": {
       "fls_section": "19.-2.10",
@@ -434,11 +567,21 @@
       "samples": [
         {
           "file": "iceoryx2-bb/container/src/string/static_string.rs",
-          "line": [291],
+          "line": [
+            291
+          ],
           "code": "core::ptr::write::<u8>(new_self.data.as_mut_ptr().add(len).cast(), 0);",
           "purpose": "Writing null terminator within unsafe block"
         }
-      ]
+      ],
+      "count": null,
+      "count_methodology": "Pattern not defined for this section",
+      "samples_waiver": {
+        "reason": "conceptual_section",
+        "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+        "approved_by": "automated",
+        "date": "2025-12-30"
+      }
     }
   },
   "design_patterns": {

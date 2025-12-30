@@ -217,7 +217,33 @@
           ]
         }
       },
-      "samples": []
+      "samples": [
+        {
+          "file": "iceoryx2-cal/tests/dynamic_storage_posix_shared_memory_tests.rs",
+          "line": [
+            30
+          ],
+          "code": "unsafe impl Send for TestData {}",
+          "purpose": "Demonstrates unsafe\\s+impl\\s+(Send|Sync)|impl\\s+(Send|Sync)..."
+        },
+        {
+          "file": "iceoryx2-pal/posix/src/windows/socket.rs",
+          "line": [
+            78
+          ],
+          "code": "unsafe impl Sync for GlobalWsaInitializer {}",
+          "purpose": "Demonstrates unsafe\\s+impl\\s+(Send|Sync)|impl\\s+(Send|Sync)..."
+        },
+        {
+          "file": "iceoryx2-pal/posix/src/windows/signal.rs",
+          "line": [
+            104
+          ],
+          "code": "unsafe impl Send for SigAction {}",
+          "purpose": "Demonstrates unsafe\\s+impl\\s+(Send|Sync)|impl\\s+(Send|Sync)..."
+        }
+      ],
+      "count": 55
     },
     "atomics": {
       "fls_section": "17.2",
@@ -439,7 +465,33 @@
           }
         }
       },
-      "samples": []
+      "samples": [
+        {
+          "file": "iceoryx2/src/waitset.rs",
+          "line": [
+            222
+          ],
+          "code": "use iceoryx2_bb_concurrency::atomic::AtomicUsize;",
+          "purpose": "Demonstrates Atomic\\w+|Ordering::..."
+        },
+        {
+          "file": "iceoryx2/tests/service_event_thread_safety_tests.rs",
+          "line": [
+            18
+          ],
+          "code": "use iceoryx2_bb_concurrency::atomic::AtomicBool;",
+          "purpose": "Demonstrates Atomic\\w+|Ordering::..."
+        },
+        {
+          "file": "iceoryx2-cal/src/zero_copy_connection/used_chunk_list.rs",
+          "line": [
+            15
+          ],
+          "code": "use iceoryx2_bb_concurrency::atomic::AtomicBool;",
+          "purpose": "Demonstrates Atomic\\w+|Ordering::..."
+        }
+      ],
+      "count": 1711
     },
     "asynchronous_computation": {
       "fls_section": "17.3",
@@ -473,7 +525,9 @@
           }
         }
       },
-      "samples": []
+      "samples": [],
+      "count": null,
+      "count_methodology": "Pattern not defined for this section"
     }
   },
   "design_patterns": {

@@ -53,7 +53,33 @@
       "description": "Attribute Properties",
       "status": "demonstrated",
       "findings": {},
-      "samples": []
+      "samples": [
+        {
+          "file": "iceoryx2-pal/testing/src/lib.rs",
+          "line": [
+            13
+          ],
+          "code": "#![warn(clippy::alloc_instead_of_core)]",
+          "purpose": "Demonstrates #\\[|#!\\[..."
+        },
+        {
+          "file": "iceoryx2-pal/testing/src/assert.rs",
+          "line": [
+            13
+          ],
+          "code": "#[macro_export(local_inner_macros)]",
+          "purpose": "Demonstrates #\\[|#!\\[..."
+        },
+        {
+          "file": "iceoryx2-pal/posix/tests/win32_select_tests.rs",
+          "line": [
+            13
+          ],
+          "code": "#[cfg(target_os = \"windows\")]",
+          "purpose": "Demonstrates #\\[|#!\\[..."
+        }
+      ],
+      "count": 6376
     },
     "builtin_attributes": {
       "fls_section": "13.2",
@@ -63,7 +89,32 @@
       "description": "Built-in Attributes",
       "status": "demonstrated",
       "findings": {},
-      "samples": [],
+      "samples": [
+        {
+          "file": "iceoryx2-userland/record-and-replay/tests/replayer_tests.rs",
+          "line": [
+            13
+          ],
+          "code": "#[cfg(test)]",
+          "purpose": "Demonstrates #\\[..."
+        },
+        {
+          "file": "iceoryx2/tests/service_static_config_tests.rs",
+          "line": [
+            13
+          ],
+          "code": "#[cfg(test)]",
+          "purpose": "Demonstrates #\\[..."
+        },
+        {
+          "file": "iceoryx2/tests/service_request_response_thread_safety_tests.rs",
+          "line": [
+            21
+          ],
+          "code": "#[test]",
+          "purpose": "Demonstrates #\\[..."
+        }
+      ],
       "subsections": {
         "code_generation_attributes": {
           "fls_section": "13.2.1",
@@ -76,7 +127,32 @@
             "description": "Attributes that control code generation and optimization.",
             "inline_count": 32
           },
-          "samples": [],
+          "samples": [
+            {
+              "file": "iceoryx2/src/raw_sample.rs",
+              "line": [
+                32
+              ],
+              "code": "#[inline]",
+              "purpose": "Demonstrates #\\[(inline|cold|target_feature|track_caller)..."
+            },
+            {
+              "file": "iceoryx2-bb/concurrency/src/atomic.rs",
+              "line": [
+                68
+              ],
+              "code": "#[inline]",
+              "purpose": "Demonstrates #\\[(inline|cold|target_feature|track_caller)..."
+            },
+            {
+              "file": "iceoryx2-pal/concurrency-sync/src/once.rs",
+              "line": [
+                113
+              ],
+              "code": "#[inline]",
+              "purpose": "Demonstrates #\\[(inline|cold|target_feature|track_caller)..."
+            }
+          ],
           "subsections": {
             "attribute_cold": {
               "fls_section": "13.2.1.1",
@@ -88,7 +164,8 @@
               "findings": {
                 "description": "#[cold] not used in iceoryx2."
               },
-              "samples": []
+              "samples": [],
+              "count": 0
             },
             "attribute_inline": {
               "fls_section": "13.2.1.2",
@@ -104,7 +181,33 @@
                   "#[inline(always)]"
                 ]
               },
-              "samples": []
+              "samples": [
+                {
+                  "file": "iceoryx2-log/loggers/src/null.rs",
+                  "line": [
+                    24
+                  ],
+                  "code": "#[inline(always)]",
+                  "purpose": "Demonstrates #\\[inline..."
+                },
+                {
+                  "file": "iceoryx2-bb/container/src/queue.rs",
+                  "line": [
+                    339
+                  ],
+                  "code": "#[inline(always)]",
+                  "purpose": "Demonstrates #\\[inline..."
+                },
+                {
+                  "file": "iceoryx2-bb/container/src/vec.rs",
+                  "line": [
+                    147
+                  ],
+                  "code": "#[inline(always)]",
+                  "purpose": "Demonstrates #\\[inline..."
+                }
+              ],
+              "count": 32
             },
             "attribute_no_builtins": {
               "fls_section": "13.2.1.3",
@@ -116,7 +219,8 @@
               "findings": {
                 "description": "#[no_builtins] not used."
               },
-              "samples": []
+              "samples": [],
+              "count": 0
             },
             "attribute_target_feature": {
               "fls_section": "13.2.1.4",
@@ -128,7 +232,8 @@
               "findings": {
                 "description": "#[target_feature] not used - portable code."
               },
-              "samples": []
+              "samples": [],
+              "count": 0
             },
             "attribute_track_caller": {
               "fls_section": "13.2.1.5",
@@ -140,7 +245,8 @@
               "findings": {
                 "description": "#[track_caller] not used."
               },
-              "samples": []
+              "samples": [],
+              "count": 0
             },
             "attribute_naked": {
               "fls_section": "13.2.1.6",
@@ -150,9 +256,11 @@
               "findings": {
                 "description": "#[naked] not used - no bare-metal function prologues."
               },
-              "samples": []
+              "samples": [],
+              "count": 0
             }
-          }
+          },
+          "count": 32
         },
         "conditional_compilation_attributes": {
           "fls_section": "13.2.2",
@@ -165,7 +273,32 @@
             "count": 360,
             "change": "+140% from v0.7.0"
           },
-          "samples": [],
+          "samples": [
+            {
+              "file": "iceoryx2-cli/iox2-service/src/main.rs",
+              "line": [
+                13
+              ],
+              "code": "#[cfg(not(debug_assertions))]",
+              "purpose": "Demonstrates #\\[cfg..."
+            },
+            {
+              "file": "iceoryx2-pal/posix/tests/win32_select_tests.rs",
+              "line": [
+                13
+              ],
+              "code": "#[cfg(target_os = \"windows\")]",
+              "purpose": "Demonstrates #\\[cfg..."
+            },
+            {
+              "file": "iceoryx2-pal/posix/tests/win32_security_attributes_tests.rs",
+              "line": [
+                13
+              ],
+              "code": "#[cfg(target_os = \"windows\")]",
+              "purpose": "Demonstrates #\\[cfg..."
+            }
+          ],
           "subsections": {
             "attribute_cfg": {
               "fls_section": "13.2.2.1",
@@ -182,7 +315,33 @@
                   "cfg(test)"
                 ]
               },
-              "samples": []
+              "samples": [
+                {
+                  "file": "iceoryx2/tests/service_static_config_tests.rs",
+                  "line": [
+                    13
+                  ],
+                  "code": "#[cfg(test)]",
+                  "purpose": "Demonstrates #\\[cfg\\(..."
+                },
+                {
+                  "file": "iceoryx2-ffi/ffi-macros/src/lib.rs",
+                  "line": [
+                    160
+                  ],
+                  "code": "#[cfg(test)]",
+                  "purpose": "Demonstrates #\\[cfg\\(..."
+                },
+                {
+                  "file": "iceoryx2-cli/iox2/tests/commands_tests.rs",
+                  "line": [
+                    13
+                  ],
+                  "code": "#[cfg(test)]",
+                  "purpose": "Demonstrates #\\[cfg\\(..."
+                }
+              ],
+              "count": 360
             },
             "attribute_cfg_attr": {
               "fls_section": "13.2.2.2",
@@ -194,9 +353,36 @@
               "findings": {
                 "description": "Conditional attribute application."
               },
-              "samples": []
+              "samples": [
+                {
+                  "file": "iceoryx2-pal/posix/src/qnx/select.rs",
+                  "line": [
+                    67
+                  ],
+                  "code": "#[cfg_attr(target_os = \"nto\", link(name = \"c\"))]",
+                  "purpose": "Demonstrates #\\[cfg_attr\\(..."
+                },
+                {
+                  "file": "iceoryx2-pal/posix/src/linux/pthread.rs",
+                  "line": [
+                    254
+                  ],
+                  "code": "#[cfg_attr(target_os = \"linux\", link(name = \"pthread\"))]",
+                  "purpose": "Demonstrates #\\[cfg_attr\\(..."
+                },
+                {
+                  "file": "iceoryx2-pal/posix/src/freebsd/errno.rs",
+                  "line": [
+                    171
+                  ],
+                  "code": "#[cfg_attr(target_os = \"freebsd\", link(name = \"c\"))]",
+                  "purpose": "Demonstrates #\\[cfg_attr\\(..."
+                }
+              ],
+              "count": 6
             }
-          }
+          },
+          "count": 366
         },
         "derivation_attributes": {
           "fls_section": "13.2.3",
@@ -209,7 +395,32 @@
             "count": 998,
             "change": "+52% from v0.7.0"
           },
-          "samples": [],
+          "samples": [
+            {
+              "file": "iceoryx2/conformance-tests/src/writer.rs",
+              "line": [
+                229
+              ],
+              "code": "#[derive(ZeroCopySend)]",
+              "purpose": "Demonstrates #\\[derive\\(..."
+            },
+            {
+              "file": "iceoryx2/conformance-tests/src/service_request_response.rs",
+              "line": [
+                31
+              ],
+              "code": "#[derive(Clone, Copy)]",
+              "purpose": "Demonstrates #\\[derive\\(..."
+            },
+            {
+              "file": "iceoryx2/conformance-tests/src/service_publish_subscribe.rs",
+              "line": [
+                45
+              ],
+              "code": "#[derive(Debug, ZeroCopySend)]",
+              "purpose": "Demonstrates #\\[derive\\(..."
+            }
+          ],
           "subsections": {
             "attribute_automatically_derived": {
               "fls_section": "13.2.3.1",
@@ -221,7 +432,9 @@
               "findings": {
                 "description": "Generated by derive macros, not used directly."
               },
-              "samples": []
+              "samples": [],
+              "count": 0,
+              "count_methodology": "Generated by compiler, not in source"
             },
             "attribute_derive": {
               "fls_section": "13.2.3.2",
@@ -243,10 +456,28 @@
                   ],
                   "code": "#[derive(Debug, Clone, Copy, PartialEq, Eq)]",
                   "purpose": "Standard derives for enum types"
+                },
+                {
+                  "file": "iceoryx2/tests/service_static_config_tests.rs",
+                  "line": [
+                    22
+                  ],
+                  "code": "#[derive(ZeroCopySend)]",
+                  "purpose": "Demonstrates #\\[derive\\(..."
+                },
+                {
+                  "file": "component-tests/rust/src/test_containers.rs",
+                  "line": [
+                    26
+                  ],
+                  "code": "#[derive(Debug, Clone, Copy, ZeroCopySend)]",
+                  "purpose": "Demonstrates #\\[derive\\(..."
                 }
-              ]
+              ],
+              "count": 998
             }
-          }
+          },
+          "count": 998
         },
         "diagnostics_attributes": {
           "fls_section": "13.2.4",
@@ -259,7 +490,33 @@
             "allow_count": 142,
             "must_use_count": 8
           },
-          "samples": []
+          "samples": [
+            {
+              "file": "iceoryx2-log/loggers/src/console.rs",
+              "line": [
+                28
+              ],
+              "code": "#[allow(dead_code)]",
+              "purpose": "Demonstrates #\\[(allow|warn|deny|forbid|must_use|deprecated)..."
+            },
+            {
+              "file": "iceoryx2-services/discovery/src/service_discovery/service.rs",
+              "line": [
+                42
+              ],
+              "code": "#[allow(dead_code)] // Fields used by subscribers",
+              "purpose": "Demonstrates #\\[(allow|warn|deny|forbid|must_use|deprecated)..."
+            },
+            {
+              "file": "iceoryx2-ffi/python/src/type_name.rs",
+              "line": [
+                42
+              ],
+              "code": "#[allow(clippy::inherent_to_string)] // method required to generate this API in Python",
+              "purpose": "Demonstrates #\\[(allow|warn|deny|forbid|must_use|deprecated)..."
+            }
+          ],
+          "count": 159
         },
         "documentation_attributes": {
           "fls_section": "13.2.5",
@@ -271,7 +528,32 @@
           "findings": {
             "doc_comments": 22784
           },
-          "samples": [],
+          "samples": [
+            {
+              "file": "iceoryx2-ffi/python/src/writer.rs",
+              "line": [
+                30
+              ],
+              "code": "/// Represents the writing endpoint of a blackboard based communication.",
+              "purpose": "Demonstrates #\\[doc|///|//!..."
+            },
+            {
+              "file": "iceoryx2-ffi/python/src/waitset_run_result.rs",
+              "line": [
+                17
+              ],
+              "code": "/// States why the `WaitSet::wait_and_process()` method returned.",
+              "purpose": "Demonstrates #\\[doc|///|//!..."
+            },
+            {
+              "file": "iceoryx2-ffi/python/src/waitset_guard.rs",
+              "line": [
+                35
+              ],
+              "code": "/// Is returned when something is attached to the `WaitSet`. As soon as it goes out",
+              "purpose": "Demonstrates #\\[doc|///|//!..."
+            }
+          ],
           "subsections": {
             "attribute_doc": {
               "fls_section": "13.2.5.1",
@@ -284,9 +566,36 @@
                 "count": 156,
                 "doc_comments": 22784
               },
-              "samples": []
+              "samples": [
+                {
+                  "file": "iceoryx2-bb/testing/src/lifetime_tracker.rs",
+                  "line": [
+                    48
+                  ],
+                  "code": "#[doc(hidden)]",
+                  "purpose": "Demonstrates #\\[doc..."
+                },
+                {
+                  "file": "iceoryx2-bb/container/src/vector/mod.rs",
+                  "line": [
+                    50
+                  ],
+                  "code": "#[doc(hidden)]",
+                  "purpose": "Demonstrates #\\[doc..."
+                },
+                {
+                  "file": "iceoryx2-bb/elementary-traits/src/zero_copy_send.rs",
+                  "line": [
+                    44
+                  ],
+                  "code": "#[doc(hidden)]",
+                  "purpose": "Demonstrates #\\[doc..."
+                }
+              ],
+              "count": 156
             }
-          }
+          },
+          "count": 23696
         },
         "foreign_function_interface_attributes": {
           "fls_section": "13.2.6",
@@ -300,7 +609,32 @@
             "repr": 512,
             "repr_c": 393
           },
-          "samples": [],
+          "samples": [
+            {
+              "file": "iceoryx2/conformance-tests/src/writer.rs",
+              "line": [
+                228
+              ],
+              "code": "#[repr(C)]",
+              "purpose": "Demonstrates #\\[(no_mangle|repr|link|export_name)..."
+            },
+            {
+              "file": "iceoryx2/conformance-tests/src/service_publish_subscribe.rs",
+              "line": [
+                46
+              ],
+              "code": "#[repr(C)]",
+              "purpose": "Demonstrates #\\[(no_mangle|repr|link|export_name)..."
+            },
+            {
+              "file": "iceoryx2/conformance-tests/src/service_blackboard.rs",
+              "line": [
+                564
+              ],
+              "code": "#[repr(C)]",
+              "purpose": "Demonstrates #\\[(no_mangle|repr|link|export_name)..."
+            }
+          ],
           "subsections": {
             "attribute_crate_name": {
               "fls_section": "13.2.6.1",
@@ -312,7 +646,8 @@
               "findings": {
                 "description": "Crate names set via Cargo.toml."
               },
-              "samples": []
+              "samples": [],
+              "count": 0
             },
             "attribute_crate_type": {
               "fls_section": "13.2.6.2",
@@ -324,7 +659,8 @@
               "findings": {
                 "description": "Crate types set via Cargo.toml."
               },
-              "samples": []
+              "samples": [],
+              "count": 0
             },
             "attribute_export_name": {
               "fls_section": "13.2.6.3",
@@ -336,7 +672,8 @@
               "findings": {
                 "description": "Not used - #[no_mangle] used instead."
               },
-              "samples": []
+              "samples": [],
+              "count": 0
             },
             "attribute_link": {
               "fls_section": "13.2.6.4",
@@ -349,7 +686,23 @@
                 "count": 1,
                 "description": "Links to external libraries."
               },
-              "samples": []
+              "samples": [
+                {
+                  "file": "iceoryx2-pal/posix/src/macos/pthread.rs",
+                  "line": [
+                    150
+                  ],
+                  "code": "#[link(name = \"c++\")]",
+                  "purpose": "Demonstrates #\\[link\\(..."
+                }
+              ],
+              "count": 1,
+              "samples_waiver": {
+                "reason": "insufficient_patterns",
+                "explanation": "Only 1 instance(s) found in codebase, fewer than 3 required samples",
+                "approved_by": "automated",
+                "date": "2025-12-30"
+              }
             },
             "attribute_link_name": {
               "fls_section": "13.2.6.5",
@@ -362,7 +715,23 @@
                 "count": 4,
                 "description": "Renames symbols for linking."
               },
-              "samples": []
+              "samples": [
+                {
+                  "file": "iceoryx2-pal/posix/src/macos/pthread.rs",
+                  "line": [
+                    152
+                  ],
+                  "code": "#[link_name = \"_ZNSt3__123__libcpp_atomic_monitorEPVKv\"]",
+                  "purpose": "Demonstrates #\\[link_name..."
+                }
+              ],
+              "count": 4,
+              "samples_waiver": {
+                "reason": "single_location",
+                "explanation": "Pattern found in limited locations (1 unique files) despite 4 total matches",
+                "approved_by": "automated",
+                "date": "2025-12-30"
+              }
             },
             "attribute_link_section": {
               "fls_section": "13.2.6.6",
@@ -374,7 +743,8 @@
               "findings": {
                 "description": "Not used."
               },
-              "samples": []
+              "samples": [],
+              "count": 0
             },
             "attribute_link_ordinal": {
               "fls_section": "13.2.6.7",
@@ -384,7 +754,8 @@
               "findings": {
                 "description": "Windows-specific, not used."
               },
-              "samples": []
+              "samples": [],
+              "count": 0
             },
             "attribute_no_link": {
               "fls_section": "13.2.6.8",
@@ -396,7 +767,8 @@
               "findings": {
                 "description": "Not used."
               },
-              "samples": []
+              "samples": [],
+              "count": 0
             },
             "attribute_no_main": {
               "fls_section": "13.2.6.9",
@@ -408,7 +780,33 @@
               "findings": {
                 "description": "Used in no_std bare-metal examples."
               },
-              "samples": []
+              "samples": [
+                {
+                  "file": "examples/nostd/posix/rust/publish-subscribe/src/subscriber.rs",
+                  "line": [
+                    14
+                  ],
+                  "code": "#![no_main]",
+                  "purpose": "Demonstrates #!\\[no_main\\]..."
+                },
+                {
+                  "file": "examples/nostd/bare-metal/rust/publish-subscribe/src/publish-subscribe.rs",
+                  "line": [
+                    14
+                  ],
+                  "code": "#![no_main]",
+                  "purpose": "Demonstrates #!\\[no_main\\]..."
+                },
+                {
+                  "file": "examples/nostd/posix/rust/publish-subscribe/src/publisher.rs",
+                  "line": [
+                    14
+                  ],
+                  "code": "#![no_main]",
+                  "purpose": "Demonstrates #!\\[no_main\\]..."
+                }
+              ],
+              "count": 5
             },
             "attribute_no_mangle": {
               "fls_section": "13.2.6.10",
@@ -422,7 +820,33 @@
                 "status": "NEW in v0.8.0",
                 "description": "Exports C API functions."
               },
-              "samples": []
+              "samples": [
+                {
+                  "file": "examples/nostd/bare-metal/rust/publish-subscribe/src/publish-subscribe.rs",
+                  "line": [
+                    44
+                  ],
+                  "code": "#[no_mangle]",
+                  "purpose": "Demonstrates #\\[no_mangle\\]..."
+                },
+                {
+                  "file": "iceoryx2-ffi/c/src/api/port_factory_writer_builder.rs",
+                  "line": [
+                    154
+                  ],
+                  "code": "#[no_mangle]",
+                  "purpose": "Demonstrates #\\[no_mangle\\]..."
+                },
+                {
+                  "file": "iceoryx2-ffi/c/src/api/port_factory_subscriber_builder.rs",
+                  "line": [
+                    167
+                  ],
+                  "code": "#[no_mangle]",
+                  "purpose": "Demonstrates #\\[no_mangle\\]..."
+                }
+              ],
+              "count": 602
             },
             "attribute_repr": {
               "fls_section": "13.2.6.11",
@@ -437,7 +861,33 @@
                 "repr_transparent": 35,
                 "change": "+160% from v0.7.0"
               },
-              "samples": []
+              "samples": [
+                {
+                  "file": "iceoryx2/src/service/builder/mod.rs",
+                  "line": [
+                    76
+                  ],
+                  "code": "#[repr(C)]",
+                  "purpose": "Demonstrates #\\[repr\\(..."
+                },
+                {
+                  "file": "iceoryx2/conformance-tests/src/writer.rs",
+                  "line": [
+                    228
+                  ],
+                  "code": "#[repr(C)]",
+                  "purpose": "Demonstrates #\\[repr\\(..."
+                },
+                {
+                  "file": "iceoryx2/tests/service_static_config_tests.rs",
+                  "line": [
+                    23
+                  ],
+                  "code": "#[repr(C)]",
+                  "purpose": "Demonstrates #\\[repr\\(..."
+                }
+              ],
+              "count": 512
             },
             "attribute_unsafe": {
               "fls_section": "13.2.6.12",
@@ -447,7 +897,8 @@
               "findings": {
                 "description": "unsafe attribute for extern blocks not used."
               },
-              "samples": []
+              "samples": [],
+              "count": 0
             },
             "attribute_used": {
               "fls_section": "13.2.6.13",
@@ -459,9 +910,17 @@
               "findings": {
                 "description": "Used in bare-metal examples for startup code."
               },
-              "samples": []
+              "samples": [],
+              "count": 0,
+              "samples_waiver": {
+                "reason": "insufficient_patterns",
+                "explanation": "Only 0 instance(s) found in codebase, fewer than 3 required samples",
+                "approved_by": "automated",
+                "date": "2025-12-30"
+              }
             }
-          }
+          },
+          "count": 1119
         },
         "limits_attributes": {
           "fls_section": "13.2.7",
@@ -485,7 +944,8 @@
               "findings": {
                 "description": "Not used."
               },
-              "samples": []
+              "samples": [],
+              "count": 0
             },
             "attribute_type_length_limit": {
               "fls_section": "13.2.7.2",
@@ -497,9 +957,11 @@
               "findings": {
                 "description": "Not used."
               },
-              "samples": []
+              "samples": [],
+              "count": 0
             }
-          }
+          },
+          "count": 0
         },
         "macros_attributes": {
           "fls_section": "13.2.8",
@@ -513,7 +975,32 @@
             "proc_macro_derive": 3,
             "proc_macro_attribute": 3
           },
-          "samples": [],
+          "samples": [
+            {
+              "file": "iceoryx2-log/log/src/fail.rs",
+              "line": [
+                54
+              ],
+              "code": "#[macro_export(local_inner_macros)]",
+              "purpose": "Demonstrates #\\[(macro_export|macro_use|proc_macro)..."
+            },
+            {
+              "file": "iceoryx2-pal/testing/src/lib.rs",
+              "line": [
+                19
+              ],
+              "code": "#[macro_use]",
+              "purpose": "Demonstrates #\\[(macro_export|macro_use|proc_macro)..."
+            },
+            {
+              "file": "iceoryx2-pal/testing/src/assert.rs",
+              "line": [
+                13
+              ],
+              "code": "#[macro_export(local_inner_macros)]",
+              "purpose": "Demonstrates #\\[(macro_export|macro_use|proc_macro)..."
+            }
+          ],
           "subsections": {
             "attribute_collapse_debuginfo": {
               "fls_section": "13.2.8.1",
@@ -523,7 +1010,8 @@
               "findings": {
                 "description": "Not used."
               },
-              "samples": []
+              "samples": [],
+              "count": 0
             },
             "attribute_macro_export": {
               "fls_section": "13.2.8.2",
@@ -536,7 +1024,33 @@
                 "count": 20,
                 "description": "Exports declarative macros."
               },
-              "samples": []
+              "samples": [
+                {
+                  "file": "iceoryx2-log/log/src/lib.rs",
+                  "line": [
+                    275
+                  ],
+                  "code": "#[macro_export]",
+                  "purpose": "Demonstrates #\\[macro_export\\]..."
+                },
+                {
+                  "file": "iceoryx2-bb/conformance-test-macros/src/lib.rs",
+                  "line": [
+                    61
+                  ],
+                  "code": "#[macro_export]",
+                  "purpose": "Demonstrates #\\[macro_export\\]..."
+                },
+                {
+                  "file": "iceoryx2-bb/testing/src/instantiate_conformance_tests_macro.rs",
+                  "line": [
+                    30
+                  ],
+                  "code": "#[macro_export]",
+                  "purpose": "Demonstrates #\\[macro_export\\]..."
+                }
+              ],
+              "count": 5
             },
             "attribute_macro_use": {
               "fls_section": "13.2.8.3",
@@ -548,7 +1062,33 @@
               "findings": {
                 "description": "Imports macros from dependencies."
               },
-              "samples": []
+              "samples": [
+                {
+                  "file": "iceoryx2-bb/posix/src/lib.rs",
+                  "line": [
+                    48
+                  ],
+                  "code": "#[macro_use]",
+                  "purpose": "Demonstrates #\\[macro_use\\]..."
+                },
+                {
+                  "file": "iceoryx2-pal/posix/src/windows/mod.rs",
+                  "line": [
+                    36
+                  ],
+                  "code": "#[macro_use]",
+                  "purpose": "Demonstrates #\\[macro_use\\]..."
+                },
+                {
+                  "file": "iceoryx2-pal/testing/src/lib.rs",
+                  "line": [
+                    19
+                  ],
+                  "code": "#[macro_use]",
+                  "purpose": "Demonstrates #\\[macro_use\\]..."
+                }
+              ],
+              "count": 5
             },
             "attribute_proc_macro": {
               "fls_section": "13.2.8.4",
@@ -560,7 +1100,8 @@
               "findings": {
                 "description": "Function-like proc macros not used."
               },
-              "samples": []
+              "samples": [],
+              "count": 0
             },
             "attribute_proc_macro_attribute": {
               "fls_section": "13.2.8.5",
@@ -576,7 +1117,31 @@
                   "implement_conformance_test"
                 ]
               },
-              "samples": []
+              "samples": [
+                {
+                  "file": "iceoryx2-ffi/ffi-macros/src/lib.rs",
+                  "line": [
+                    25
+                  ],
+                  "code": "#[proc_macro_attribute]",
+                  "purpose": "Demonstrates #\\[proc_macro_attribute\\]..."
+                },
+                {
+                  "file": "iceoryx2-bb/conformance-test-macros/src/lib.rs",
+                  "line": [
+                    35
+                  ],
+                  "code": "#[proc_macro_attribute]",
+                  "purpose": "Demonstrates #\\[proc_macro_attribute\\]..."
+                }
+              ],
+              "count": 3,
+              "samples_waiver": {
+                "reason": "single_location",
+                "explanation": "Pattern found in limited locations (2 unique files) despite 3 total matches",
+                "approved_by": "automated",
+                "date": "2025-12-30"
+              }
             },
             "attribute_proc_macro_derive": {
               "fls_section": "13.2.8.6",
@@ -593,9 +1158,34 @@
                   "CStrRepr"
                 ]
               },
-              "samples": []
+              "samples": [
+                {
+                  "file": "iceoryx2-bb/derive-macros/src/lib.rs",
+                  "line": [
+                    56
+                  ],
+                  "code": "#[proc_macro_derive(PlacementDefault)]",
+                  "purpose": "Demonstrates #\\[proc_macro_derive..."
+                },
+                {
+                  "file": "iceoryx2-ffi/ffi-macros/src/lib.rs",
+                  "line": [
+                    251
+                  ],
+                  "code": "#[proc_macro_derive(CStrRepr, attributes(CStr))]",
+                  "purpose": "Demonstrates #\\[proc_macro_derive..."
+                }
+              ],
+              "count": 3,
+              "samples_waiver": {
+                "reason": "single_location",
+                "explanation": "Pattern found in limited locations (2 unique files) despite 3 total matches",
+                "approved_by": "automated",
+                "date": "2025-12-30"
+              }
             }
-          }
+          },
+          "count": 31
         },
         "modules_attributes": {
           "fls_section": "13.2.9",
@@ -607,7 +1197,32 @@
           "findings": {
             "description": "Module attributes used for file organization."
           },
-          "samples": [],
+          "samples": [
+            {
+              "file": "iceoryx2-pal/posix/src/windows/os.rs",
+              "line": [
+                13
+              ],
+              "code": "#[path = \"mod.rs\"]",
+              "purpose": "Demonstrates #\\[path..."
+            },
+            {
+              "file": "iceoryx2-pal/posix/src/stub/os.rs",
+              "line": [
+                13
+              ],
+              "code": "#[path = \"mod.rs\"]",
+              "purpose": "Demonstrates #\\[path..."
+            },
+            {
+              "file": "iceoryx2-pal/posix/build.rs",
+              "line": [
+                143
+              ],
+              "code": "#[path = \"bindgen/linux.rs\"]",
+              "purpose": "Demonstrates #\\[path..."
+            }
+          ],
           "subsections": {
             "attribute_path": {
               "fls_section": "13.2.9.1",
@@ -619,9 +1234,36 @@
               "findings": {
                 "description": "Used for platform-specific module selection."
               },
-              "samples": []
+              "samples": [
+                {
+                  "file": "iceoryx2-pal/posix/src/lib.rs",
+                  "line": [
+                    46
+                  ],
+                  "code": "#[path = \"libc/os.rs\"]",
+                  "purpose": "Demonstrates #\\[path\\s*=..."
+                },
+                {
+                  "file": "iceoryx2-pal/posix/src/freebsd/os.rs",
+                  "line": [
+                    13
+                  ],
+                  "code": "#[path = \"mod.rs\"]",
+                  "purpose": "Demonstrates #\\[path\\s*=..."
+                },
+                {
+                  "file": "iceoryx2-pal/posix/build.rs",
+                  "line": [
+                    143
+                  ],
+                  "code": "#[path = \"bindgen/linux.rs\"]",
+                  "purpose": "Demonstrates #\\[path\\s*=..."
+                }
+              ],
+              "count": 24
             }
-          }
+          },
+          "count": 24
         },
         "prelude_attributes": {
           "fls_section": "13.2.10",
@@ -633,7 +1275,32 @@
           "findings": {
             "no_std_count": 23
           },
-          "samples": [],
+          "samples": [
+            {
+              "file": "iceoryx2-bb/trait-tests/src/lib.rs",
+              "line": [
+                13
+              ],
+              "code": "#![no_std]",
+              "purpose": "Demonstrates #!\\[(no_std|no_implicit_prelude)..."
+            },
+            {
+              "file": "iceoryx2-bb/elementary-traits/src/lib.rs",
+              "line": [
+                13
+              ],
+              "code": "#![no_std]",
+              "purpose": "Demonstrates #!\\[(no_std|no_implicit_prelude)..."
+            },
+            {
+              "file": "iceoryx2-services/discovery/src/lib.rs",
+              "line": [
+                20
+              ],
+              "code": "#![no_std]",
+              "purpose": "Demonstrates #!\\[(no_std|no_implicit_prelude)..."
+            }
+          ],
           "subsections": {
             "attribute_no_implicit_prelude": {
               "fls_section": "13.2.10.1",
@@ -645,7 +1312,8 @@
               "findings": {
                 "description": "Not used."
               },
-              "samples": []
+              "samples": [],
+              "count": 0
             },
             "attribute_no_std": {
               "fls_section": "13.2.10.2",
@@ -659,9 +1327,36 @@
                 "change": "+1050% from v0.7.0",
                 "description": "Extensive no_std support in v0.8.0."
               },
-              "samples": []
+              "samples": [
+                {
+                  "file": "iceoryx2-log/types/src/lib.rs",
+                  "line": [
+                    13
+                  ],
+                  "code": "#![no_std]",
+                  "purpose": "Demonstrates #!\\[no_std\\]..."
+                },
+                {
+                  "file": "iceoryx2-bb/trait-tests/src/lib.rs",
+                  "line": [
+                    13
+                  ],
+                  "code": "#![no_std]",
+                  "purpose": "Demonstrates #!\\[no_std\\]..."
+                },
+                {
+                  "file": "examples/nostd/posix/rust/publish-subscribe/src/publisher.rs",
+                  "line": [
+                    13
+                  ],
+                  "code": "#![no_std]",
+                  "purpose": "Demonstrates #!\\[no_std\\]..."
+                }
+              ],
+              "count": 23
             }
-          }
+          },
+          "count": 23
         },
         "runtime_attributes": {
           "fls_section": "13.2.11",
@@ -673,7 +1368,32 @@
           "findings": {
             "description": "Runtime attributes used in bare-metal examples."
           },
-          "samples": [],
+          "samples": [
+            {
+              "file": "examples/nostd/posix/rust/publish-subscribe/src/subscriber.rs",
+              "line": [
+                83
+              ],
+              "code": "#[panic_handler]",
+              "purpose": "Demonstrates #\\[(global_allocator|panic_handler|windows_subsyst..."
+            },
+            {
+              "file": "examples/nostd/posix/rust/_common/src/global_allocator.rs",
+              "line": [
+                45
+              ],
+              "code": "#[global_allocator]",
+              "purpose": "Demonstrates #\\[(global_allocator|panic_handler|windows_subsyst..."
+            },
+            {
+              "file": "examples/nostd/bare-metal/rust/_common/src/global_allocator.rs",
+              "line": [
+                67
+              ],
+              "code": "#[global_allocator]",
+              "purpose": "Demonstrates #\\[(global_allocator|panic_handler|windows_subsyst..."
+            }
+          ],
           "subsections": {
             "attribute_global_allocator": {
               "fls_section": "13.2.11.1",
@@ -685,7 +1405,31 @@
               "findings": {
                 "description": "Custom allocators in bare-metal examples."
               },
-              "samples": []
+              "samples": [
+                {
+                  "file": "examples/nostd/posix/rust/_common/src/global_allocator.rs",
+                  "line": [
+                    45
+                  ],
+                  "code": "#[global_allocator]",
+                  "purpose": "Demonstrates #\\[global_allocator\\]..."
+                },
+                {
+                  "file": "examples/nostd/bare-metal/rust/_common/src/global_allocator.rs",
+                  "line": [
+                    67
+                  ],
+                  "code": "#[global_allocator]",
+                  "purpose": "Demonstrates #\\[global_allocator\\]..."
+                }
+              ],
+              "count": 2,
+              "samples_waiver": {
+                "reason": "insufficient_patterns",
+                "explanation": "Only 2 instance(s) found in codebase, fewer than 3 required samples",
+                "approved_by": "automated",
+                "date": "2025-12-30"
+              }
             },
             "attribute_panic_handler": {
               "fls_section": "13.2.11.2",
@@ -697,7 +1441,33 @@
               "findings": {
                 "description": "Custom panic handlers in no_std examples."
               },
-              "samples": []
+              "samples": [
+                {
+                  "file": "examples/nostd/posix/rust/publish-subscribe/src/publisher.rs",
+                  "line": [
+                    90
+                  ],
+                  "code": "#[panic_handler]",
+                  "purpose": "Demonstrates #\\[panic_handler\\]..."
+                },
+                {
+                  "file": "examples/nostd/posix/rust/event/src/notifier.rs",
+                  "line": [
+                    73
+                  ],
+                  "code": "#[panic_handler]",
+                  "purpose": "Demonstrates #\\[panic_handler\\]..."
+                },
+                {
+                  "file": "examples/nostd/posix/rust/publish-subscribe/src/subscriber.rs",
+                  "line": [
+                    83
+                  ],
+                  "code": "#[panic_handler]",
+                  "purpose": "Demonstrates #\\[panic_handler\\]..."
+                }
+              ],
+              "count": 5
             },
             "attribute_windows_subsystem": {
               "fls_section": "13.2.11.3",
@@ -709,9 +1479,11 @@
               "findings": {
                 "description": "Not used - console applications."
               },
-              "samples": []
+              "samples": [],
+              "count": 0
             }
-          }
+          },
+          "count": 7
         },
         "testing_attributes": {
           "fls_section": "13.2.12",
@@ -725,7 +1497,32 @@
             "should_panic": 36,
             "ignore": 5
           },
-          "samples": [],
+          "samples": [
+            {
+              "file": "iceoryx2/conformance-tests/src/subscriber.rs",
+              "line": [
+                84
+              ],
+              "code": "#[should_panic]",
+              "purpose": "Demonstrates #\\[(test|should_panic|ignore)..."
+            },
+            {
+              "file": "iceoryx2-userland/record-and-replay/tests/hex_conversion_tests.rs",
+              "line": [
+                20
+              ],
+              "code": "#[test]",
+              "purpose": "Demonstrates #\\[(test|should_panic|ignore)..."
+            },
+            {
+              "file": "iceoryx2-userland/record-and-replay/tests/recorder_replayer_tests.rs",
+              "line": [
+                129
+              ],
+              "code": "#[test]",
+              "purpose": "Demonstrates #\\[(test|should_panic|ignore)..."
+            }
+          ],
           "subsections": {
             "attribute_ignore": {
               "fls_section": "13.2.12.1",
@@ -738,7 +1535,33 @@
                 "count": 5,
                 "description": "Skips tests that require special conditions."
               },
-              "samples": []
+              "samples": [
+                {
+                  "file": "iceoryx2-bb/posix/tests/unix_datagram_socket_tests.rs",
+                  "line": [
+                    237
+                  ],
+                  "code": "#[ignore]",
+                  "purpose": "Demonstrates #\\[ignore..."
+                },
+                {
+                  "file": "iceoryx2-cal/conformance-tests/src/zero_copy_connection_trait.rs",
+                  "line": [
+                    1792
+                  ],
+                  "code": "#[ignore] // TODO: iox2-671 enable this test when the concurrency issue is fixed.",
+                  "purpose": "Demonstrates #\\[ignore..."
+                },
+                {
+                  "file": "iceoryx2-cal/conformance-tests/src/dynamic_storage_trait.rs",
+                  "line": [
+                    426
+                  ],
+                  "code": "#[ignore] // TODO: iox2-671 enable this test when the concurrency issue is fixed.",
+                  "purpose": "Demonstrates #\\[ignore..."
+                }
+              ],
+              "count": 5
             },
             "attribute_should_panic": {
               "fls_section": "13.2.12.2",
@@ -751,7 +1574,33 @@
                 "count": 36,
                 "description": "Tests expected panic conditions."
               },
-              "samples": []
+              "samples": [
+                {
+                  "file": "iceoryx2-bb/container/tests/flatmap_tests.rs",
+                  "line": [
+                    215
+                  ],
+                  "code": "#[should_panic]",
+                  "purpose": "Demonstrates #\\[should_panic..."
+                },
+                {
+                  "file": "iceoryx2-bb/lock-free/tests/bitset_tests.rs",
+                  "line": [
+                    107
+                  ],
+                  "code": "#[should_panic]",
+                  "purpose": "Demonstrates #\\[should_panic..."
+                },
+                {
+                  "file": "iceoryx2-bb/container/tests/relocatable_vec_tests.rs",
+                  "line": [
+                    20
+                  ],
+                  "code": "#[should_panic]",
+                  "purpose": "Demonstrates #\\[should_panic..."
+                }
+              ],
+              "count": 36
             },
             "attribute_test": {
               "fls_section": "13.2.12.3",
@@ -764,9 +1613,36 @@
                 "count": 960,
                 "description": "Marks unit test functions."
               },
-              "samples": []
+              "samples": [
+                {
+                  "file": "iceoryx2-bb/trait-tests/tests/semantic_string_tests.rs",
+                  "line": [
+                    24
+                  ],
+                  "code": "#[test]",
+                  "purpose": "Demonstrates #\\[test\\]..."
+                },
+                {
+                  "file": "iceoryx2-bb/trait-tests/tests/relocatable_container_tests.rs",
+                  "line": [
+                    44
+                  ],
+                  "code": "#[test]",
+                  "purpose": "Demonstrates #\\[test\\]..."
+                },
+                {
+                  "file": "iceoryx2-bb/threadsafe/tests/trigger_queue_tests.rs",
+                  "line": [
+                    31
+                  ],
+                  "code": "#[test]",
+                  "purpose": "Demonstrates #\\[test\\]..."
+                }
+              ],
+              "count": 960
             }
-          }
+          },
+          "count": 1001
         },
         "type_attributes": {
           "fls_section": "13.2.13",
@@ -778,7 +1654,24 @@
           "findings": {
             "non_exhaustive": 10
           },
-          "samples": [],
+          "samples": [
+            {
+              "file": "iceoryx2/src/config.rs",
+              "line": [
+                130
+              ],
+              "code": "#[non_exhaustive]",
+              "purpose": "Demonstrates #\\[non_exhaustive\\]..."
+            },
+            {
+              "file": "iceoryx2/src/service/static_config/messaging_pattern.rs",
+              "line": [
+                32
+              ],
+              "code": "#[non_exhaustive]",
+              "purpose": "Demonstrates #\\[non_exhaustive\\]..."
+            }
+          ],
           "subsections": {
             "attribute_non_exhaustive": {
               "fls_section": "13.2.13.1",
@@ -791,11 +1684,43 @@
                 "count": 10,
                 "description": "Marks enums/structs as non-exhaustive for future extension."
               },
-              "samples": []
+              "samples": [
+                {
+                  "file": "iceoryx2/src/service/static_config/messaging_pattern.rs",
+                  "line": [
+                    32
+                  ],
+                  "code": "#[non_exhaustive]",
+                  "purpose": "Demonstrates #\\[non_exhaustive\\]..."
+                },
+                {
+                  "file": "iceoryx2/src/config.rs",
+                  "line": [
+                    130
+                  ],
+                  "code": "#[non_exhaustive]",
+                  "purpose": "Demonstrates #\\[non_exhaustive\\]..."
+                }
+              ],
+              "count": 10,
+              "samples_waiver": {
+                "reason": "single_location",
+                "explanation": "Pattern found in limited locations (2 unique files) despite 10 total matches",
+                "approved_by": "automated",
+                "date": "2025-12-30"
+              }
             }
+          },
+          "count": 10,
+          "samples_waiver": {
+            "reason": "single_location",
+            "explanation": "Pattern found in limited locations (2 unique files) despite 10 total matches",
+            "approved_by": "automated",
+            "date": "2025-12-30"
           }
         }
-      }
+      },
+      "count": 5782
     }
   },
   "design_patterns": {

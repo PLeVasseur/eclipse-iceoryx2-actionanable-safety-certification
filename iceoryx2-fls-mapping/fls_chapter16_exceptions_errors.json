@@ -85,7 +85,8 @@
         "Production code uses fatal_panic! (321 calls) instead of raw panic! for logging",
         "fail! macro (1,082 calls) is preferred for recoverable errors",
         "unwrap() primarily confined to tests (~4,300 test vs ~494 production)"
-      ]
+      ],
+      "count": 5772
     },
     "abort": {
       "fls_section": "16.2",
@@ -131,12 +132,21 @@
           ],
           "code": "SignalHandler::abort();",
           "purpose": "no_std panic handler calls abort"
+        },
+        {
+          "file": "iceoryx2-pal/posix/src/android/signal.rs",
+          "line": [
+            71
+          ],
+          "code": "pub unsafe fn abort() {",
+          "purpose": "Demonstrates std::process::abort|abort\\s*\\(\\)..."
         }
       ],
       "safety_notes": [
         "Abort only exposed through SignalHandler::abort() safe wrapper",
         "Used exclusively in no_std panic handlers as last resort"
-      ]
+      ],
+      "count": 20
     }
   }
 }

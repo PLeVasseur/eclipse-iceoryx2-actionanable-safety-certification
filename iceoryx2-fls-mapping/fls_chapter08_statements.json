@@ -68,8 +68,17 @@
           ],
           "code": "const NUMBER_OF_SERVICES_ADDED: usize = 8;",
           "purpose": "Local constant for test configuration"
+        },
+        {
+          "file": "iceoryx2-log/types/src/lib.rs",
+          "line": [
+            18
+          ],
+          "code": "pub enum LogLevel {",
+          "purpose": "Demonstrates ^\\s*(pub\\s+)?(fn|struct|enum|const|static|type|tra..."
         }
-      ]
+      ],
+      "count": 22288
     },
     "empty_statement": {
       "fls_section": "8.-2.2",
@@ -84,7 +93,8 @@
         "dynamic_semantics": "The execution of an empty statement has no effect.",
         "status": "Not intentionally used in iceoryx2 - empty statements are rare in production Rust code"
       },
-      "samples": []
+      "samples": [],
+      "count": 0
     },
     "macro_statement": {
       "fls_section": "8.-2.3",
@@ -142,7 +152,8 @@
           "code": "debug_assert!(ptr.offset() % sample_size == 0);",
           "purpose": "Debug-only alignment validation"
         }
-      ]
+      ],
+      "count": 10953
     },
     "empty_statement_execution": {
       "fls_section": "8.-3.1",
@@ -154,7 +165,9 @@
       "findings": {
         "description": "Dynamic semantics for empty statement execution - has no effect. Not applicable as empty statements are not used in iceoryx2."
       },
-      "samples": []
+      "samples": [],
+      "count": null,
+      "count_methodology": "Pattern not defined for this section"
     },
     "let_statements": {
       "fls_section": "8.1",
@@ -211,7 +224,8 @@
           "code": "let port;",
           "purpose": "Uninitialized binding - must be assigned before use"
         }
-      ]
+      ],
+      "count": 13605
     },
     "expression_statements": {
       "fls_section": "8.2",
@@ -246,8 +260,17 @@
           ],
           "code": "*DROP_COUNTER.lock().unwrap() += 1;",
           "purpose": "Expression statement for mutex-guarded update"
+        },
+        {
+          "file": "iceoryx2/tests/service_static_config_tests.rs",
+          "line": [
+            15
+          ],
+          "code": "use iceoryx2::service::static_config::message_type_details::{TypeDetail, TypeVariant};",
+          "purpose": "Demonstrates ;\\s*$..."
         }
-      ]
+      ],
+      "count": 45398
     }
   },
   "safety_critical_summary": {

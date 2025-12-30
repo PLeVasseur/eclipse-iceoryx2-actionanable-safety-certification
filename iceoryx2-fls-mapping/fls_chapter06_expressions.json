@@ -59,7 +59,33 @@
           "findings": {
             "description": "Assignee expressions can appear on the left side of assignment. Used for variables, fields, and array indexing."
           },
-          "samples": []
+          "samples": [
+            {
+              "file": "iceoryx2-services/discovery/tests/service_discovery_tracker_tests.rs",
+              "line": [
+                32
+              ],
+              "code": "const NUMBER_OF_SERVICES_ADDED: usize = 8;",
+              "purpose": "Demonstrates \\w+\\s*=\\s*[^=]..."
+            },
+            {
+              "file": "iceoryx2-services/discovery/tests/service_discovery_service_tests.rs",
+              "line": [
+                35
+              ],
+              "code": "const NUMBER_OF_SERVICES_ADDED: usize = 5;",
+              "purpose": "Demonstrates \\w+\\s*=\\s*[^=]..."
+            },
+            {
+              "file": "iceoryx2-userland/record-and-replay/tests/hex_conversion_tests.rs",
+              "line": [
+                22
+              ],
+              "code": "let sut = \"don't stop me now\";",
+              "purpose": "Demonstrates \\w+\\s*=\\s*[^=]..."
+            }
+          ],
+          "count": 24780
         },
         "constant_expressions": {
           "fls_section": "6.1.2",
@@ -70,9 +96,39 @@
           "status": "demonstrated",
           "findings": {
             "description": "Expressions evaluable at compile time. Used for const declarations, array lengths, and const generics.",
-            "patterns": ["const fn calls", "Literal arithmetic", "Array size expressions"]
+            "patterns": [
+              "const fn calls",
+              "Literal arithmetic",
+              "Array size expressions"
+            ]
           },
-          "samples": []
+          "samples": [
+            {
+              "file": "examples/rust/service_variant_customization/subscriber.rs",
+              "line": [
+                24
+              ],
+              "code": "const CYCLE_TIME: Duration = Duration::from_secs(1);",
+              "purpose": "Demonstrates const\\s+\\w+.*=..."
+            },
+            {
+              "file": "examples/rust/service_variant_customization/publisher.rs",
+              "line": [
+                25
+              ],
+              "code": "const CYCLE_TIME: Duration = Duration::from_secs(1);",
+              "purpose": "Demonstrates const\\s+\\w+.*=..."
+            },
+            {
+              "file": "examples/rust/service_types/local_pubsub.rs",
+              "line": [
+                25
+              ],
+              "code": "const CYCLE_TIME: Duration = Duration::from_secs(1);",
+              "purpose": "Demonstrates const\\s+\\w+.*=..."
+            }
+          ],
+          "count": 3964
         },
         "diverging_expressions": {
           "fls_section": "6.1.3",
@@ -81,9 +137,39 @@
           "status": "demonstrated",
           "findings": {
             "description": "Expressions that never complete normally (panic!, return, break, continue).",
-            "patterns": ["panic! for invariant violations", "return for early exit", "continue for loop control"]
+            "patterns": [
+              "panic! for invariant violations",
+              "return for early exit",
+              "continue for loop control"
+            ]
           },
-          "samples": []
+          "samples": [
+            {
+              "file": "iceoryx2/src/service/builder/request_response.rs",
+              "line": [
+                329
+              ],
+              "code": "fatal_panic!(from self, \"This should never happen! Accessing wrong messaging pattern in RequestResponse builder!\");",
+              "purpose": "Demonstrates panic!|unreachable!|todo!|unimplemented!..."
+            },
+            {
+              "file": "iceoryx2/src/service/builder/publish_subscribe.rs",
+              "line": [
+                295
+              ],
+              "code": "fatal_panic!(from self, \"This should never happen! Accessing wrong messaging pattern in PublishSubscribe builder!\");",
+              "purpose": "Demonstrates panic!|unreachable!|todo!|unimplemented!..."
+            },
+            {
+              "file": "iceoryx2/src/service/builder/mod.rs",
+              "line": [
+                372
+              ],
+              "code": "let node_handle = fatal_panic!(from self,",
+              "purpose": "Demonstrates panic!|unreachable!|todo!|unimplemented!..."
+            }
+          ],
+          "count": 607
         },
         "place_expressions": {
           "fls_section": "6.1.4",
@@ -95,7 +181,15 @@
           "findings": {
             "description": "Expressions representing memory locations. Variables, dereferences, field accesses, and indexing."
           },
-          "samples": []
+          "samples": [],
+          "count": null,
+          "count_methodology": "Conceptual - place is semantic",
+          "samples_waiver": {
+            "reason": "conceptual_section",
+            "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+            "approved_by": "automated",
+            "date": "2025-12-30"
+          }
         },
         "value_expressions": {
           "fls_section": "6.1.5",
@@ -107,8 +201,24 @@
           "findings": {
             "description": "Expressions that produce values rather than locations. Literals, function calls, operators."
           },
-          "samples": []
+          "samples": [],
+          "count": null,
+          "count_methodology": "Conceptual - value is semantic",
+          "samples_waiver": {
+            "reason": "conceptual_section",
+            "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+            "approved_by": "automated",
+            "date": "2025-12-30"
+          }
         }
+      },
+      "count": null,
+      "count_methodology": "Conceptual - classification is semantic",
+      "samples_waiver": {
+        "reason": "conceptual_section",
+        "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+        "approved_by": "automated",
+        "date": "2025-12-30"
       }
     },
     "literal_expressions": {
@@ -135,8 +245,17 @@
             40
           ],
           "code": "b'\\t' => vec![b'\\\\', b't'].into_iter(),"
+        },
+        {
+          "file": "iceoryx2-bb/posix/tests/users_tests.rs",
+          "line": [
+            1
+          ],
+          "code": "// Copyright (c) 2023 Contributors to the Eclipse Foundation",
+          "purpose": "Demonstrates \"\\w|true|false|\\d+..."
         }
-      ]
+      ],
+      "count": 51054
     },
     "path_expressions": {
       "fls_section": "6.3",
@@ -162,8 +281,17 @@
             54
           ],
           "code": "FixedSizePoolAllocator::<512>::new("
+        },
+        {
+          "file": "iceoryx2/conformance-tests/tests/writer_tests.rs",
+          "line": [
+            13
+          ],
+          "code": "use iceoryx2_bb_testing::instantiate_conformance_tests_with_module;",
+          "purpose": "Demonstrates \\w+::\\w+..."
         }
-      ]
+      ],
+      "count": 39291
     },
     "block_expressions": {
       "fls_section": "6.4",
@@ -175,7 +303,32 @@
       "findings": {
         "analyzed": true
       },
-      "samples": [],
+      "samples": [
+        {
+          "file": "iceoryx2-pal/testing/src/assert.rs",
+          "line": [
+            259
+          ],
+          "code": "\"assertion failed: {}expr: {} any_of {} ({:?});  contents: {:?}{}\",",
+          "purpose": "Demonstrates \\{[^}]+\\}..."
+        },
+        {
+          "file": "iceoryx2-pal/posix/tests/win32_select_tests.rs",
+          "line": [
+            15
+          ],
+          "code": "use iceoryx2_pal_posix::posix::{settings::FD_SET_CAPACITY, *};",
+          "purpose": "Demonstrates \\{[^}]+\\}..."
+        },
+        {
+          "file": "iceoryx2-pal/posix/src/windows/win32_udp_port_to_uds_name.rs",
+          "line": [
+            15
+          ],
+          "code": "Foundation::{CloseHandle, ERROR_ALREADY_EXISTS, HANDLE},",
+          "purpose": "Demonstrates \\{[^}]+\\}..."
+        }
+      ],
       "subsections": {
         "async_blocks": {
           "fls_section": "6.4.1",
@@ -188,7 +341,9 @@
             "count": 0,
             "rationale": "Async intentionally avoided for deterministic real-time behavior"
           },
-          "samples": []
+          "samples": [],
+          "count": null,
+          "count_methodology": "Pattern not defined for this section"
         },
         "const_blocks": {
           "fls_section": "6.4.2",
@@ -198,9 +353,19 @@
           "findings": {
             "count": 4,
             "description": "const { } blocks for compile-time evaluation in array initialization.",
-            "patterns": ["[const { MaybeUninit::uninit() }; N]"]
+            "patterns": [
+              "[const { MaybeUninit::uninit() }; N]"
+            ]
           },
-          "samples": []
+          "samples": [],
+          "count": null,
+          "count_methodology": "Pattern not defined for this section",
+          "samples_waiver": {
+            "reason": "conceptual_section",
+            "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+            "approved_by": "automated",
+            "date": "2025-12-30"
+          }
         },
         "named_blocks": {
           "fls_section": "6.4.3",
@@ -210,7 +375,15 @@
           "findings": {
             "description": "Named blocks ('label: { }) for break targets. Limited use in iceoryx2."
           },
-          "samples": []
+          "samples": [],
+          "count": null,
+          "count_methodology": "Pattern not defined for this section",
+          "samples_waiver": {
+            "reason": "conceptual_section",
+            "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+            "approved_by": "automated",
+            "date": "2025-12-30"
+          }
         },
         "unsafe_blocks": {
           "fls_section": "6.4.4",
@@ -223,11 +396,25 @@
             "count": 2372,
             "change": "+39% from v0.7.0",
             "description": "Unsafe blocks enable unsafe operations within safe code.",
-            "contexts": ["FFI calls", "Raw pointer ops", "Union field access", "Static mut access"]
+            "contexts": [
+              "FFI calls",
+              "Raw pointer ops",
+              "Union field access",
+              "Static mut access"
+            ]
           },
-          "samples": []
+          "samples": [],
+          "count": null,
+          "count_methodology": "Pattern not defined for this section",
+          "samples_waiver": {
+            "reason": "conceptual_section",
+            "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+            "approved_by": "automated",
+            "date": "2025-12-30"
+          }
         }
-      }
+      },
+      "count": 4934
     },
     "operator_expressions": {
       "fls_section": "6.5",
@@ -252,9 +439,20 @@
           "status": "demonstrated",
           "findings": {
             "description": "Borrow expressions (&expr, &mut expr) create references. Extensively used.",
-            "patterns": ["&self for shared access", "&mut self for mutable access"]
+            "patterns": [
+              "&self for shared access",
+              "&mut self for mutable access"
+            ]
           },
-          "samples": []
+          "samples": [],
+          "count": null,
+          "count_methodology": "Pattern not defined for this section",
+          "samples_waiver": {
+            "reason": "conceptual_section",
+            "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+            "approved_by": "automated",
+            "date": "2025-12-30"
+          }
         },
         "dereference_expression": {
           "fls_section": "6.5.2",
@@ -268,7 +466,15 @@
             "description": "Dereference (*expr) accesses the value behind a pointer/reference.",
             "note": "Raw pointer deref requires unsafe"
           },
-          "samples": []
+          "samples": [],
+          "count": null,
+          "count_methodology": "Pattern not defined for this section",
+          "samples_waiver": {
+            "reason": "conceptual_section",
+            "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+            "approved_by": "automated",
+            "date": "2025-12-30"
+          }
         },
         "error_propagation_expression": {
           "fls_section": "6.5.3",
@@ -282,7 +488,15 @@
             "change": "+67% from v0.7.0",
             "description": "The ? operator propagates errors up the call stack."
           },
-          "samples": []
+          "samples": [],
+          "count": null,
+          "count_methodology": "Pattern not defined for this section",
+          "samples_waiver": {
+            "reason": "conceptual_section",
+            "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+            "approved_by": "automated",
+            "date": "2025-12-30"
+          }
         },
         "negation_expression": {
           "fls_section": "6.5.4",
@@ -294,7 +508,15 @@
           "findings": {
             "description": "Unary negation (- for numeric, ! for boolean/bitwise)."
           },
-          "samples": []
+          "samples": [],
+          "count": null,
+          "count_methodology": "Pattern not defined for this section",
+          "samples_waiver": {
+            "reason": "conceptual_section",
+            "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+            "approved_by": "automated",
+            "date": "2025-12-30"
+          }
         },
         "arithmetic_expressions": {
           "fls_section": "6.5.5",
@@ -307,7 +529,33 @@
             "description": "Binary arithmetic (+, -, *, /, %) used for numeric calculations.",
             "note": "Division/modulo can panic on zero"
           },
-          "samples": []
+          "samples": [
+            {
+              "file": "iceoryx2-ffi/python/src/writer.rs",
+              "line": [
+                1
+              ],
+              "code": "// Copyright (c) 2025 Contributors to the Eclipse Foundation",
+              "purpose": "Demonstrates \\+\\s*\\w|\\-\\s*\\w|\\*\\s*\\w|/\\s*\\w|%\\s*\\w..."
+            },
+            {
+              "file": "iceoryx2-ffi/python/src/waitset_run_result.rs",
+              "line": [
+                1
+              ],
+              "code": "// Copyright (c) 2025 Contributors to the Eclipse Foundation",
+              "purpose": "Demonstrates \\+\\s*\\w|\\-\\s*\\w|\\*\\s*\\w|/\\s*\\w|%\\s*\\w..."
+            },
+            {
+              "file": "iceoryx2-ffi/python/src/waitset_guard.rs",
+              "line": [
+                1
+              ],
+              "code": "// Copyright (c) 2025 Contributors to the Eclipse Foundation",
+              "purpose": "Demonstrates \\+\\s*\\w|\\-\\s*\\w|\\*\\s*\\w|/\\s*\\w|%\\s*\\w..."
+            }
+          ],
+          "count": 43589
         },
         "bit_expressions": {
           "fls_section": "6.5.6",
@@ -319,7 +567,33 @@
           "findings": {
             "description": "Bitwise operators (&, |, ^, <<, >>) used for flags and low-level manipulation."
           },
-          "samples": []
+          "samples": [
+            {
+              "file": "iceoryx2-userland/record-and-replay/tests/replayer_tests.rs",
+              "line": [
+                31
+              ],
+              "code": "let result = ReplayerOpener::new(&file_name).open();",
+              "purpose": "Demonstrates &\\s*\\w|\\|\\s*\\w|\\^\\s*\\w|<<|>>..."
+            },
+            {
+              "file": "iceoryx2-log/types/src/lib.rs",
+              "line": [
+                31
+              ],
+              "code": "&self,",
+              "purpose": "Demonstrates &\\s*\\w|\\|\\s*\\w|\\^\\s*\\w|<<|>>..."
+            },
+            {
+              "file": "iceoryx2/src/request_mut.rs",
+              "line": [
+                18
+              ],
+              "code": "//! # fn main() -> Result<(), Box<dyn core::error::Error>> {",
+              "purpose": "Demonstrates &\\s*\\w|\\|\\s*\\w|\\^\\s*\\w|<<|>>..."
+            }
+          ],
+          "count": 15747
         },
         "comparison_expressions": {
           "fls_section": "6.5.7",
@@ -331,7 +605,33 @@
           "findings": {
             "description": "Comparison operators (==, !=, <, >, <=, >=) for ordering and equality."
           },
-          "samples": []
+          "samples": [
+            {
+              "file": "iceoryx2/tests/service_static_config_tests.rs",
+              "line": [
+                25
+              ],
+              "code": "let sut = TypeDetail::new::<Tmp>(TypeVariant::FixedSize);",
+              "purpose": "Demonstrates ==|!=|<=|>=|<[^<]|>[^>]..."
+            },
+            {
+              "file": "iceoryx2/src/waitset.rs",
+              "line": [
+                49
+              ],
+              "code": "//! # fn main() -> Result<(), Box<dyn core::error::Error>> {",
+              "purpose": "Demonstrates ==|!=|<=|>=|<[^<]|>[^>]..."
+            },
+            {
+              "file": "iceoryx2/src/testing.rs",
+              "line": [
+                26
+              ],
+              "code": "pub fn generate_service_name() -> ServiceName {",
+              "purpose": "Demonstrates ==|!=|<=|>=|<[^<]|>[^>]..."
+            }
+          ],
+          "count": 39847
         },
         "lazy_boolean_expressions": {
           "fls_section": "6.5.8",
@@ -343,7 +643,33 @@
           "findings": {
             "description": "Short-circuit operators (&&, ||) for boolean logic with lazy evaluation."
           },
-          "samples": []
+          "samples": [
+            {
+              "file": "benchmarks/request-response/src/main.rs",
+              "line": [
+                69
+              ],
+              "code": ".spawn(|| {",
+              "purpose": "Demonstrates &&|\\|\\|..."
+            },
+            {
+              "file": "iceoryx2-cli/iox2-service/src/command/notify.rs",
+              "line": [
+                44
+              ],
+              "code": "let notify = || -> Result<()> {",
+              "purpose": "Demonstrates &&|\\|\\|..."
+            },
+            {
+              "file": "benchmarks/queue/src/main.rs",
+              "line": [
+                77
+              ],
+              "code": ".spawn(|| {",
+              "purpose": "Demonstrates &&|\\|\\|..."
+            }
+          ],
+          "count": 602
         },
         "raw_borrow_expression": {
           "fls_section": "6.5.9",
@@ -354,7 +680,15 @@
             "description": "&raw const and &raw mut for creating raw pointers without going through references.",
             "note": "Used in unsafe code for low-level memory operations"
           },
-          "samples": []
+          "samples": [],
+          "count": null,
+          "count_methodology": "Pattern not defined for this section",
+          "samples_waiver": {
+            "reason": "conceptual_section",
+            "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+            "approved_by": "automated",
+            "date": "2025-12-30"
+          }
         },
         "type_cast_expressions": {
           "fls_section": "6.5.10",
@@ -366,9 +700,39 @@
           "findings": {
             "count": 2312,
             "description": "The 'as' operator for type coercion.",
-            "patterns": ["Numeric conversions", "Pointer casts", "Reference to pointer"]
+            "patterns": [
+              "Numeric conversions",
+              "Pointer casts",
+              "Reference to pointer"
+            ]
           },
-          "samples": []
+          "samples": [
+            {
+              "file": "iceoryx2-cal/tests/zero_copy_connection_posix_shared_memory_tests.rs",
+              "line": [
+                39
+              ],
+              "code": "let file_name = <Sut as NamedConceptMgmt>::Configuration::default()",
+              "purpose": "Demonstrates \\bas\\s+..."
+            },
+            {
+              "file": "iceoryx2-cal/tests/static_storage_file_tests.rs",
+              "line": [
+                46
+              ],
+              "code": "let content_len = content.len() as u64;",
+              "purpose": "Demonstrates \\bas\\s+..."
+            },
+            {
+              "file": "iceoryx2-cal/tests/shm_allocator_pool_allocator_tests.rs",
+              "line": [
+                66
+              ],
+              "code": "assert_that!(test_context.sut.number_of_buckets() as usize, eq PAYLOAD_SIZE / 2);",
+              "purpose": "Demonstrates \\bas\\s+..."
+            }
+          ],
+          "count": 5278
         },
         "assignment_expressions": {
           "fls_section": "6.5.11",
@@ -380,7 +744,32 @@
           "findings": {
             "description": "Assignment (=) stores a value in a place expression."
           },
-          "samples": [],
+          "samples": [
+            {
+              "file": "iceoryx2-services/discovery/tests/service_discovery_tracker_tests.rs",
+              "line": [
+                32
+              ],
+              "code": "const NUMBER_OF_SERVICES_ADDED: usize = 8;",
+              "purpose": "Demonstrates \\w+\\s*=\\s*[^=]..."
+            },
+            {
+              "file": "iceoryx2-services/discovery/tests/service_discovery_service_tests.rs",
+              "line": [
+                35
+              ],
+              "code": "const NUMBER_OF_SERVICES_ADDED: usize = 5;",
+              "purpose": "Demonstrates \\w+\\s*=\\s*[^=]..."
+            },
+            {
+              "file": "iceoryx2-services/discovery/src/service_discovery/tracker.rs",
+              "line": [
+                45
+              ],
+              "code": "ServiceListError::InsufficientPermissions => Self::InsufficientPermissions,",
+              "purpose": "Demonstrates \\w+\\s*=\\s*[^=]..."
+            }
+          ],
           "subsections": {
             "basic_assignment": {
               "fls_section": "6.5.11.1",
@@ -392,7 +781,15 @@
               "findings": {
                 "description": "Simple assignment to a single place (x = expr)."
               },
-              "samples": []
+              "samples": [],
+              "count": null,
+              "count_methodology": "Pattern not defined for this section",
+              "samples_waiver": {
+                "reason": "conceptual_section",
+                "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+                "approved_by": "automated",
+                "date": "2025-12-30"
+              }
             },
             "destructuring_assignment": {
               "fls_section": "6.5.11.2",
@@ -404,9 +801,18 @@
               "findings": {
                 "description": "Assignment with pattern destructuring ((a, b) = expr)."
               },
-              "samples": []
+              "samples": [],
+              "count": null,
+              "count_methodology": "Pattern not defined for this section",
+              "samples_waiver": {
+                "reason": "conceptual_section",
+                "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+                "approved_by": "automated",
+                "date": "2025-12-30"
+              }
             }
-          }
+          },
+          "count": 24780
         },
         "compound_assignment_expressions": {
           "fls_section": "6.5.12",
@@ -418,8 +824,42 @@
           "findings": {
             "description": "Compound assignment (+=, -=, *=, etc.) combines operation with assignment."
           },
-          "samples": []
+          "samples": [
+            {
+              "file": "iceoryx2/src/port/notifier.rs",
+              "line": [
+                476
+              ],
+              "code": "number_of_triggered_listeners += 1;",
+              "purpose": "Demonstrates \\+=|-=|\\*=|/=|%=|&=|\\|=|\\^=|<<=|>>=..."
+            },
+            {
+              "file": "examples/rust/service_variant_customization/publisher.rs",
+              "line": [
+                41
+              ],
+              "code": "counter += 1;",
+              "purpose": "Demonstrates \\+=|-=|\\*=|/=|%=|&=|\\|=|\\^=|<<=|>>=..."
+            },
+            {
+              "file": "examples/rust/service_types/local_pubsub.rs",
+              "line": [
+                79
+              ],
+              "code": "counter += 1;",
+              "purpose": "Demonstrates \\+=|-=|\\*=|/=|%=|&=|\\|=|\\^=|<<=|>>=..."
+            }
+          ],
+          "count": 278
         }
+      },
+      "count": null,
+      "count_methodology": "Aggregate of operator subtypes",
+      "samples_waiver": {
+        "reason": "conceptual_section",
+        "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+        "approved_by": "automated",
+        "date": "2025-12-30"
       }
     },
     "underscore_expressions": {
@@ -432,7 +872,33 @@
       "findings": {
         "analyzed": true
       },
-      "samples": []
+      "samples": [
+        {
+          "file": "iceoryx2-ffi/python/src/writer.rs",
+          "line": [
+            49
+          ],
+          "code": "_ => fatal_panic!(from \"Writer::id()\",",
+          "purpose": "Demonstrates \\b_\\b..."
+        },
+        {
+          "file": "iceoryx2/conformance-tests/src/writer.rs",
+          "line": [
+            202
+          ],
+          "code": "for _ in 0..number_of_threads {",
+          "purpose": "Demonstrates \\b_\\b..."
+        },
+        {
+          "file": "iceoryx2/conformance-tests/src/waitset.rs",
+          "line": [
+            54
+          ],
+          "code": "let _ = path.add_path_entry(",
+          "purpose": "Demonstrates \\b_\\b..."
+        }
+      ],
+      "count": 4533
     },
     "parenthesized_expressions": {
       "fls_section": "6.7",
@@ -451,8 +917,25 @@
             50
           ],
           "code": "(TestFixture::memory_size() / core::cmp::max(size, align)) as u32 - 1"
+        },
+        {
+          "file": "iceoryx2-cli/iox2/tests/commands_tests.rs",
+          "line": [
+            1
+          ],
+          "code": "// Copyright (c) 2024 Contributors to the Eclipse Foundation",
+          "purpose": "Demonstrates \\(\\s*\\w+\\s*\\)..."
+        },
+        {
+          "file": "iceoryx2-cli/iox2/src/main.rs",
+          "line": [
+            1
+          ],
+          "code": "// Copyright (c) 2024 Contributors to the Eclipse Foundation",
+          "purpose": "Demonstrates \\(\\s*\\w+\\s*\\)..."
         }
-      ]
+      ],
+      "count": 15399
     },
     "array_expressions": {
       "fls_section": "6.8",
@@ -486,7 +969,8 @@
           ],
           "code": "data: [const { MaybeUninit::uninit() }; CAPACITY],"
         }
-      ]
+      ],
+      "count": 489
     },
     "indexing_expressions": {
       "fls_section": "6.9",
@@ -513,7 +997,15 @@
           ],
           "code": "unsafe { memory.as_mut()[i] = 255 };"
         }
-      ]
+      ],
+      "count": null,
+      "count_methodology": "Pattern not defined for this section",
+      "samples_waiver": {
+        "reason": "conceptual_section",
+        "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+        "approved_by": "automated",
+        "date": "2025-12-30"
+      }
     },
     "tuple_expressions": {
       "fls_section": "6.10",
@@ -532,8 +1024,25 @@
             79
           ],
           "code": "let mut contained_values: Vec<(u32, usize)> = vec![];"
+        },
+        {
+          "file": "iceoryx2/tests/service_publish_subscribe_thread_safety_tests.rs",
+          "line": [
+            73
+          ],
+          "code": "assert_that!(n, eq number_of_publisher_threads);",
+          "purpose": "Demonstrates \\(\\s*\\w+\\s*,\\s*\\w+..."
+        },
+        {
+          "file": "iceoryx2/tests/node_name_tests.rs",
+          "line": [
+            22
+          ],
+          "code": "assert_that!(sut, eq value);",
+          "purpose": "Demonstrates \\(\\s*\\w+\\s*,\\s*\\w+..."
         }
-      ]
+      ],
+      "count": 4677
     },
     "struct_expressions": {
       "fls_section": "6.11",
@@ -553,8 +1062,25 @@
             49
           ],
           "code": "pub fn new(ptr: NonNull<u8>, size: usize) -> Self {\n    Self {"
+        },
+        {
+          "file": "iceoryx2-pal/testing/src/watchdog.rs",
+          "line": [
+            51
+          ],
+          "code": "eprintln!(\"Killing test since timeout of {timeout:?} was hit.\");",
+          "purpose": "Demonstrates \\w+\\s*\\{\\s*\\w+\\s*:..."
+        },
+        {
+          "file": "iceoryx2-pal/testing/src/memory.rs",
+          "line": [
+            84
+          ],
+          "code": "unsafe { core::slice::from_raw_parts(self.memory.cast(), core::mem::size_of::<T>()) }",
+          "purpose": "Demonstrates \\w+\\s*\\{\\s*\\w+\\s*:..."
         }
-      ]
+      ],
+      "count": 583
     },
     "invocation_expressions": {
       "fls_section": "6.12",
@@ -590,9 +1116,38 @@
           "status": "demonstrated",
           "findings": {
             "description": "Function call expressions invoke functions and closures.",
-            "patterns": ["Function::new()", "closure(args)"]
+            "patterns": [
+              "Function::new()",
+              "closure(args)"
+            ]
           },
-          "samples": []
+          "samples": [
+            {
+              "file": "iceoryx2-services/discovery/tests/service_discovery_tracker_tests.rs",
+              "line": [
+                1
+              ],
+              "code": "// Copyright (c) 2025 Contributors to the Eclipse Foundation",
+              "purpose": "Demonstrates \\w+\\s*\\(..."
+            },
+            {
+              "file": "iceoryx2-services/discovery/tests/service_discovery_service_tests.rs",
+              "line": [
+                1
+              ],
+              "code": "// Copyright (c) 2025 Contributors to the Eclipse Foundation",
+              "purpose": "Demonstrates \\w+\\s*\\(..."
+            },
+            {
+              "file": "iceoryx2-services/discovery/src/service_discovery/tracker.rs",
+              "line": [
+                1
+              ],
+              "code": "// Copyright (c) 2025 Contributors to the Eclipse Foundation",
+              "purpose": "Demonstrates \\w+\\s*\\(..."
+            }
+          ],
+          "count": 75389
         },
         "method_call_expressions": {
           "fls_section": "6.12.2",
@@ -606,7 +1161,33 @@
             "change": "+50% from v0.7.0",
             "description": "Method call expressions (receiver.method()) heavily used."
           },
-          "samples": []
+          "samples": [
+            {
+              "file": "iceoryx2-bb/trait-tests/tests/semantic_string_tests.rs",
+              "line": [
+                39
+              ],
+              "code": "let sut = sut.unwrap();",
+              "purpose": "Demonstrates \\.\\w+\\s*\\(..."
+            },
+            {
+              "file": "iceoryx2-bb/trait-tests/tests/relocatable_container_tests.rs",
+              "line": [
+                39
+              ],
+              "code": "NonNull::new(memory.as_mut_ptr() as *mut u8).unwrap(),",
+              "purpose": "Demonstrates \\.\\w+\\s*\\(..."
+            },
+            {
+              "file": "iceoryx2-bb/threadsafe/tests/trigger_queue_tests.rs",
+              "line": [
+                39
+              ],
+              "code": "assert_that!(!sut.is_full(), eq true);",
+              "purpose": "Demonstrates \\.\\w+\\s*\\(..."
+            }
+          ],
+          "count": 36467
         },
         "call_conformance": {
           "fls_section": "6.12.3",
@@ -616,8 +1197,24 @@
           "findings": {
             "description": "Call conformance rules ensure arguments match function signatures."
           },
-          "samples": []
+          "samples": [],
+          "count": null,
+          "count_methodology": "Pattern not defined for this section",
+          "samples_waiver": {
+            "reason": "conceptual_section",
+            "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+            "approved_by": "automated",
+            "date": "2025-12-30"
+          }
         }
+      },
+      "count": null,
+      "count_methodology": "Pattern not defined for this section",
+      "samples_waiver": {
+        "reason": "conceptual_section",
+        "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+        "approved_by": "automated",
+        "date": "2025-12-30"
       }
     },
     "field_access_expressions": {
@@ -637,8 +1234,25 @@
             31
           ],
           "code": "test.raw_memory[i] = 255;"
+        },
+        {
+          "file": "iceoryx2/tests/service_static_config_tests.rs",
+          "line": [
+            7
+          ],
+          "code": "// terms of the Apache Software License 2.0 which is available at",
+          "purpose": "Demonstrates \\.\\w+[^(]..."
+        },
+        {
+          "file": "iceoryx2/tests/service_request_response_thread_safety_tests.rs",
+          "line": [
+            7
+          ],
+          "code": "// terms of the Apache Software License 2.0 which is available at",
+          "purpose": "Demonstrates \\.\\w+[^(]..."
         }
-      ]
+      ],
+      "count": 52244
     },
     "closure_expressions": {
       "fls_section": "6.14",
@@ -674,7 +1288,8 @@
           ],
           "code": "next_free_index: core::array::from_fn(|i| UnsafeCell::new(i as u32 + 1)),"
         }
-      ]
+      ],
+      "count": 1617
     },
     "loop_expressions": {
       "fls_section": "6.15",
@@ -704,6 +1319,14 @@
             348
           ],
           "code": "continue;"
+        },
+        {
+          "file": "iceoryx2-cli/iox2-service/src/command/record.rs",
+          "line": [
+            52
+          ],
+          "code": "'node_loop: loop {",
+          "purpose": "Demonstrates \\bloop\\s*\\{..."
         }
       ],
       "subsections": {
@@ -719,7 +1342,15 @@
             "change": "+24% from v0.7.0",
             "description": "For loops iterate over collections implementing IntoIterator."
           },
-          "samples": []
+          "samples": [],
+          "count": null,
+          "count_methodology": "Pattern not defined for this section",
+          "samples_waiver": {
+            "reason": "conceptual_section",
+            "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+            "approved_by": "automated",
+            "date": "2025-12-30"
+          }
         },
         "infinite_loops": {
           "fls_section": "6.15.2",
@@ -731,9 +1362,21 @@
           "findings": {
             "count": 130,
             "description": "loop {} for intentional infinite loops with break exit.",
-            "patterns": ["Event loops", "Retry loops", "State machines"]
+            "patterns": [
+              "Event loops",
+              "Retry loops",
+              "State machines"
+            ]
           },
-          "samples": []
+          "samples": [],
+          "count": null,
+          "count_methodology": "Pattern not defined for this section",
+          "samples_waiver": {
+            "reason": "conceptual_section",
+            "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+            "approved_by": "automated",
+            "date": "2025-12-30"
+          }
         },
         "while_loops": {
           "fls_section": "6.15.3",
@@ -746,7 +1389,15 @@
             "count": 356,
             "description": "Condition-controlled loops."
           },
-          "samples": []
+          "samples": [],
+          "count": null,
+          "count_methodology": "Pattern not defined for this section",
+          "samples_waiver": {
+            "reason": "conceptual_section",
+            "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+            "approved_by": "automated",
+            "date": "2025-12-30"
+          }
         },
         "while_let_loops": {
           "fls_section": "6.15.4",
@@ -759,7 +1410,15 @@
             "count": 70,
             "description": "while let pattern = expr loops for iterating Option/Result."
           },
-          "samples": []
+          "samples": [],
+          "count": null,
+          "count_methodology": "Pattern not defined for this section",
+          "samples_waiver": {
+            "reason": "conceptual_section",
+            "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+            "approved_by": "automated",
+            "date": "2025-12-30"
+          }
         },
         "loop_labels": {
           "fls_section": "6.15.5",
@@ -771,7 +1430,15 @@
           "findings": {
             "description": "Loop labels ('label: loop) for nested loop control. Rarely used."
           },
-          "samples": []
+          "samples": [],
+          "count": null,
+          "count_methodology": "Pattern not defined for this section",
+          "samples_waiver": {
+            "reason": "conceptual_section",
+            "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+            "approved_by": "automated",
+            "date": "2025-12-30"
+          }
         },
         "break_expressions": {
           "fls_section": "6.15.6",
@@ -784,7 +1451,33 @@
             "count": 128,
             "description": "break exits loops, optionally with a value."
           },
-          "samples": []
+          "samples": [
+            {
+              "file": "iceoryx2/tests/service_event_thread_safety_tests.rs",
+              "line": [
+                75
+              ],
+              "code": "break;",
+              "purpose": "Demonstrates \\bbreak\\b..."
+            },
+            {
+              "file": "iceoryx2-cal/src/event/common.rs",
+              "line": [
+                382
+              ],
+              "code": "Ok(_) => break,",
+              "purpose": "Demonstrates \\bbreak\\b..."
+            },
+            {
+              "file": "iceoryx2-cal/src/dynamic_storage/posix_shared_memory.rs",
+              "line": [
+                209
+              ],
+              "code": "Ok(v) => break v,",
+              "purpose": "Demonstrates \\bbreak\\b..."
+            }
+          ],
+          "count": 128
         },
         "continue_expressions": {
           "fls_section": "6.15.7",
@@ -797,9 +1490,36 @@
             "count": 66,
             "description": "continue skips to the next iteration."
           },
-          "samples": []
+          "samples": [
+            {
+              "file": "iceoryx2/src/waitset.rs",
+              "line": [
+                715
+              ],
+              "code": "/// The provided callback must return [`CallbackProgression::Continue`] to continue the event",
+              "purpose": "Demonstrates \\bcontinue\\b..."
+            },
+            {
+              "file": "iceoryx2/src/pending_response.rs",
+              "line": [
+                315
+              ],
+              "code": "continue;",
+              "purpose": "Demonstrates \\bcontinue\\b..."
+            },
+            {
+              "file": "iceoryx2/src/service/builder/request_response.rs",
+              "line": [
+                844
+              ],
+              "code": "continue;",
+              "purpose": "Demonstrates \\bcontinue\\b..."
+            }
+          ],
+          "count": 66
         }
-      }
+      },
+      "count": 130
     },
     "range_expressions": {
       "fls_section": "6.16",
@@ -833,7 +1553,8 @@
           ],
           "code": "matches!(string[0], b'-' | b'0'..=b'9')"
         }
-      ]
+      ],
+      "count": 1158
     },
     "if_and_if_let_expressions": {
       "fls_section": "6.17",
@@ -866,7 +1587,33 @@
             "count": 2444,
             "description": "Conditional branching based on boolean expression."
           },
-          "samples": []
+          "samples": [
+            {
+              "file": "component-tests/rust/src/test_containers.rs",
+              "line": [
+                178
+              ],
+              "code": "if (response.container_type_sequence != request.container_type_sequence)",
+              "purpose": "Demonstrates \\bif\\s+..."
+            },
+            {
+              "file": "component-tests/rust/src/test_container_mutation.rs",
+              "line": [
+                116
+              ],
+              "code": "if !check_response(response.payload()) {",
+              "purpose": "Demonstrates \\bif\\s+..."
+            },
+            {
+              "file": "component-tests/rust/src/common.rs",
+              "line": [
+                51
+              ],
+              "code": "if node.wait(cycle_time).is_err() {",
+              "purpose": "Demonstrates \\bif\\s+..."
+            }
+          ],
+          "count": 2448
         },
         "if_let_expressions": {
           "fls_section": "6.17.2",
@@ -878,10 +1625,47 @@
           "findings": {
             "count": 337,
             "description": "if let pattern = expr for conditional pattern matching.",
-            "patterns": ["if let Some(x) = opt", "if let Ok(v) = result"]
+            "patterns": [
+              "if let Some(x) = opt",
+              "if let Ok(v) = result"
+            ]
           },
-          "samples": []
+          "samples": [
+            {
+              "file": "iceoryx2-bb/system-types/src/path.rs",
+              "line": [
+                87
+              ],
+              "code": "let mut n = if let Some(&PATH_SEPARATOR) = value.first() {",
+              "purpose": "Demonstrates if\\s+let\\s+..."
+            },
+            {
+              "file": "iceoryx2-bb/posix/tests/thread_tests.rs",
+              "line": [
+                306
+              ],
+              "code": "if let Err(error) = spawn_result {",
+              "purpose": "Demonstrates if\\s+let\\s+..."
+            },
+            {
+              "file": "iceoryx2-bb/posix/tests/ownership_tests.rs",
+              "line": [
+                31
+              ],
+              "code": "let group = if let Ok(group) = Group::from_name(&root) {",
+              "purpose": "Demonstrates if\\s+let\\s+..."
+            }
+          ],
+          "count": 337
         }
+      },
+      "count": null,
+      "count_methodology": "Pattern not defined for this section",
+      "samples_waiver": {
+        "reason": "conceptual_section",
+        "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+        "approved_by": "automated",
+        "date": "2025-12-30"
       }
     },
     "match_expressions": {
@@ -909,8 +1693,17 @@
             98
           ],
           "code": "match value {"
+        },
+        {
+          "file": "iceoryx2-ffi/python/src/writer.rs",
+          "line": [
+            46
+          ],
+          "code": "match &*self.value.lock() {",
+          "purpose": "Demonstrates \\bmatch\\s+..."
         }
-      ]
+      ],
+      "count": 1657
     },
     "return_expressions": {
       "fls_section": "6.19",
@@ -936,8 +1729,17 @@
             378
           ],
           "code": "return Ok(());"
+        },
+        {
+          "file": "iceoryx2-log/loggers/src/console.rs",
+          "line": [
+            74
+          ],
+          "code": "return Duration::from_secs(current_time.tv_sec as u64)",
+          "purpose": "Demonstrates \\breturn\\b..."
         }
-      ]
+      ],
+      "count": 960
     },
     "await_expressions": {
       "fls_section": "6.20",
@@ -950,7 +1752,8 @@
         "count": 0,
         "rationale": "Async intentionally avoided for deterministic real-time IPC"
       },
-      "samples": []
+      "samples": [],
+      "count": 0
     },
     "expression_precedence": {
       "fls_section": "6.21",
@@ -962,7 +1765,15 @@
       "findings": {
         "analyzed": true
       },
-      "samples": []
+      "samples": [],
+      "count": null,
+      "count_methodology": "Pattern not defined for this section",
+      "samples_waiver": {
+        "reason": "conceptual_section",
+        "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+        "approved_by": "automated",
+        "date": "2025-12-30"
+      }
     },
     "capturing": {
       "fls_section": "6.22",
@@ -974,7 +1785,15 @@
       "findings": {
         "analyzed": true
       },
-      "samples": []
+      "samples": [],
+      "count": null,
+      "count_methodology": "Pattern not defined for this section",
+      "samples_waiver": {
+        "reason": "conceptual_section",
+        "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+        "approved_by": "automated",
+        "date": "2025-12-30"
+      }
     },
     "arithmetic_overflow": {
       "fls_section": "6.23",
@@ -984,7 +1803,15 @@
       "findings": {
         "analyzed": true
       },
-      "samples": []
+      "samples": [],
+      "count": null,
+      "count_methodology": "Pattern not defined for this section",
+      "samples_waiver": {
+        "reason": "conceptual_section",
+        "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+        "approved_by": "automated",
+        "date": "2025-12-30"
+      }
     }
   },
   "safety_critical_summary": {

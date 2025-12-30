@@ -63,8 +63,25 @@
           ],
           "code": "pub fn new() -> Self { Self::default() }",
           "purpose": "Constructor following Rust naming conventions"
+        },
+        {
+          "file": "iceoryx2-pal/concurrency-sync/tests/semaphore_tests.rs",
+          "line": [
+            24
+          ],
+          "code": "fn semaphore_post_and_try_wait_works() {",
+          "purpose": "Demonstrates fn\\s+\\w+..."
+        },
+        {
+          "file": "iceoryx2-bb/trait-tests/tests/semantic_string_tests.rs",
+          "line": [
+            25
+          ],
+          "code": "fn display_error_enum_works() {",
+          "purpose": "Demonstrates fn\\s+\\w+..."
         }
-      ]
+      ],
+      "count": 9977
     },
     "function_qualifier_list": {
       "fls_section": "9.0.2",
@@ -98,8 +115,17 @@
           ],
           "code": "#[no_mangle] pub unsafe extern \"C\" fn iox2_service_name_new(...)",
           "purpose": "extern C function for FFI"
+        },
+        {
+          "file": "iceoryx2-pal/testing/src/memory.rs",
+          "line": [
+            69
+          ],
+          "code": "pub unsafe fn assume_init(&self) -> &T {",
+          "purpose": "Demonstrates (async|unsafe|const|extern)\\s+fn..."
         }
-      ]
+      ],
+      "count": 1876
     },
     "function_parameter_list": {
       "fls_section": "9.0.3",
@@ -119,8 +145,25 @@
           ],
           "code": "service_name_struct_ptr: *mut iox2_service_name_t, service_name_str: *const c_char",
           "purpose": "C-compatible parameter list"
+        },
+        {
+          "file": "iceoryx2-userland/record-and-replay/tests/recorder_replayer_tests.rs",
+          "line": [
+            35
+          ],
+          "code": "fn generate_type_detail(variant: TypeVariant, size: usize, alignment: usize) -> TypeDetail {",
+          "purpose": "Demonstrates fn\\s+\\w+\\s*\\([^)]+\\)..."
+        },
+        {
+          "file": "iceoryx2/src/waitset.rs",
+          "line": [
+            265
+          ],
+          "code": "fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {",
+          "purpose": "Demonstrates fn\\s+\\w+\\s*\\([^)]+\\)..."
         }
-      ]
+      ],
+      "count": 5591
     },
     "function_parameter": {
       "fls_section": "9.0.4",
@@ -139,8 +182,25 @@
           ],
           "code": "pub fn list_servers<F: FnMut(&ServerDetails) -> CallbackProgression>(&self, mut callback: F)",
           "purpose": "Callback parameter with FnMut trait bound"
+        },
+        {
+          "file": "component-tests/rust/src/test_containers.rs",
+          "line": [
+            127
+          ],
+          "code": "fn test_name(&self) -> &'static str {",
+          "purpose": "Demonstrates fn\\s+\\w+\\s*\\([^)]+\\)..."
+        },
+        {
+          "file": "iceoryx2/conformance-tests/src/writer.rs",
+          "line": [
+            235
+          ],
+          "code": "fn cmp_for_foo(lhs: *const u8, rhs: *const u8) -> bool {",
+          "purpose": "Demonstrates fn\\s+\\w+\\s*\\([^)]+\\)..."
         }
-      ]
+      ],
+      "count": 5591
     },
     "function_parameter_pattern": {
       "fls_section": "9.0.5",
@@ -153,7 +213,33 @@
           "mut bindings"
         ]
       },
-      "samples": []
+      "samples": [
+        {
+          "file": "iceoryx2-services/discovery/src/service_discovery/tracker.rs",
+          "line": [
+            43
+          ],
+          "code": "fn from(error: ServiceListError) -> Self {",
+          "purpose": "Demonstrates fn\\s+\\w+\\s*\\(\\s*\\w+\\s*:..."
+        },
+        {
+          "file": "iceoryx2-ffi/python/src/waitset_run_result.rs",
+          "line": [
+            37
+          ],
+          "code": "fn from(value: iceoryx2::waitset::WaitSetRunResult) -> Self {",
+          "purpose": "Demonstrates fn\\s+\\w+\\s*\\(\\s*\\w+\\s*:..."
+        },
+        {
+          "file": "iceoryx2-ffi/python/src/waitset_attachment_id.rs",
+          "line": [
+            34
+          ],
+          "code": "pub fn from_guard(guard: &WaitSetGuard) -> Self {",
+          "purpose": "Demonstrates fn\\s+\\w+\\s*\\(\\s*\\w+\\s*:..."
+        }
+      ],
+      "count": 2047
     },
     "function_parameter_variadic_part": {
       "fls_section": "9.0.6",
@@ -164,7 +250,9 @@
         "count": 0,
         "note": "No variadic functions - parameter lists are explicit"
       },
-      "samples": []
+      "samples": [],
+      "count": null,
+      "count_methodology": "Pattern not defined for this section"
     },
     "return_type": {
       "fls_section": "9.0.7",
@@ -194,7 +282,14 @@
           "code": "pub fn deadline(&self) -> Option<Duration>",
           "purpose": "Option return for nullable values"
         }
-      ]
+      ],
+      "count": 0,
+      "samples_waiver": {
+        "reason": "insufficient_patterns",
+        "explanation": "Only 0 instance(s) found in codebase, fewer than 3 required samples",
+        "approved_by": "automated",
+        "date": "2025-12-30"
+      }
     },
     "function_body": {
       "fls_section": "9.0.8",
@@ -208,7 +303,33 @@
           "unsafe blocks"
         ]
       },
-      "samples": []
+      "samples": [
+        {
+          "file": "iceoryx2-bb/trait-tests/tests/semantic_string_tests.rs",
+          "line": [
+            25
+          ],
+          "code": "fn display_error_enum_works() {",
+          "purpose": "Demonstrates fn\\s+\\w+[^{]*\\{..."
+        },
+        {
+          "file": "iceoryx2-pal/testing/src/watchdog.rs",
+          "line": [
+            24
+          ],
+          "code": "fn drop(&mut self) {",
+          "purpose": "Demonstrates fn\\s+\\w+[^{]*\\{..."
+        },
+        {
+          "file": "iceoryx2-pal/testing/src/memory.rs",
+          "line": [
+            23
+          ],
+          "code": "fn drop(&mut self) {",
+          "purpose": "Demonstrates fn\\s+\\w+[^{]*\\{..."
+        }
+      ],
+      "count": 7904
     },
     "self_parameter": {
       "fls_section": "9.0.9",
@@ -230,8 +351,25 @@
           ],
           "code": "pub fn clock_type(mut self, clock_type: ClockType) -> Self { ... }",
           "purpose": "mut self for builder pattern"
+        },
+        {
+          "file": "iceoryx2-userland/record-and-replay/src/replayer.rs",
+          "line": [
+            129
+          ],
+          "code": "fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {",
+          "purpose": "Demonstrates fn\\s+\\w+\\s*\\(\\s*&?self|fn\\s+\\w+\\s*\\(\\s*&?mut\\s+sel..."
+        },
+        {
+          "file": "iceoryx2/src/waitset.rs",
+          "line": [
+            265
+          ],
+          "code": "fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {",
+          "purpose": "Demonstrates fn\\s+\\w+\\s*\\(\\s*&?self|fn\\s+\\w+\\s*\\(\\s*&?mut\\s+sel..."
         }
-      ]
+      ],
+      "count": 3542
     },
     "shorthand_self": {
       "fls_section": "9.0.10",
@@ -241,7 +379,15 @@
       "findings": {
         "note": "Shorthand self patterns used throughout"
       },
-      "samples": []
+      "samples": [],
+      "count": null,
+      "count_methodology": "Pattern not defined for this section",
+      "samples_waiver": {
+        "reason": "conceptual_section",
+        "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+        "approved_by": "automated",
+        "date": "2025-12-30"
+      }
     },
     "typed_self": {
       "fls_section": "9.0.11",
@@ -251,7 +397,33 @@
       "findings": {
         "note": "Typed self used in some advanced patterns"
       },
-      "samples": []
+      "samples": [
+        {
+          "file": "iceoryx2-userland/record-and-replay/src/replayer.rs",
+          "line": [
+            130
+          ],
+          "code": "write!(f, \"ReplayerOpenError::{self:?}\")",
+          "purpose": "Demonstrates self\\s*:\\s*..."
+        },
+        {
+          "file": "iceoryx2-ffi/python/src/waitset_run_result.rs",
+          "line": [
+            32
+          ],
+          "code": "format!(\"{self:?}\")",
+          "purpose": "Demonstrates self\\s*:\\s*..."
+        },
+        {
+          "file": "iceoryx2-ffi/python/src/unable_to_deliver_strategy.rs",
+          "line": [
+            30
+          ],
+          "code": "format!(\"{self:?}\")",
+          "purpose": "Demonstrates self\\s*:\\s*..."
+        }
+      ],
+      "count": 186
     }
   },
   "design_patterns": {

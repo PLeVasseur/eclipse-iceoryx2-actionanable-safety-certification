@@ -11,13 +11,13 @@
     "to_version": "0.8.0",
     "summary": "Still NO inline assembly in core library. One global_asm! in bare-metal example for ARM startup. Fence usage slightly decreased as atomics restructured.",
     "key_changes": [
-      "asm! macro: 0 → 0 (unchanged)",
-      "global_asm! macro: 0 → 1 (bare-metal example only)",
-      "naked_asm! macro: 0 → 0 (unchanged)",
-      "fence() usage: 12 → 11 (-8%)",
-      "compiler_fence() usage: 8 → 8 (unchanged)",
+      "asm! macro: 0 \u2192 0 (unchanged)",
+      "global_asm! macro: 0 \u2192 1 (bare-metal example only)",
+      "naked_asm! macro: 0 \u2192 0 (unchanged)",
+      "fence() usage: 12 \u2192 11 (-8%)",
+      "compiler_fence() usage: 8 \u2192 8 (unchanged)",
       "Atomic wrapper types restructured in iceoryx2-bb/concurrency",
-      "Memory ordering total: 816 → 848 (+4%)"
+      "Memory ordering total: 816 \u2192 848 (+4%)"
     ]
   },
   "summary": "iceoryx2 v0.8.0 introduces minimal inline assembly usage exclusively in bare-metal no_std examples for ARM architecture. The main codebase remains assembly-free for portability. Memory fences (compiler_fence and hardware fence) are used extensively in lock-free data structures for memory ordering.",
@@ -52,8 +52,23 @@
           ],
           "code": "core::arch::asm!(\"svc 0x123456\", inout(\"r0\") operation => result, in(\"r1\") arg, options(nostack));",
           "purpose": "ARM semihosting syscall with r0/r1 register bindings"
+        },
+        {
+          "file": "examples/nostd/bare-metal/rust/publish-subscribe/src/startup.rs",
+          "line": [
+            13
+          ],
+          "code": "core::arch::global_asm!(",
+          "purpose": "Demonstrates asm!..."
         }
-      ]
+      ],
+      "count": 2,
+      "samples_waiver": {
+        "reason": "insufficient_patterns",
+        "explanation": "Only 2 instance(s) found in codebase, fewer than 3 required samples",
+        "approved_by": "automated",
+        "date": "2025-12-30"
+      }
     },
     "register_classes": {
       "fls_section": "22.2",
@@ -65,7 +80,9 @@
       "findings": {
         "description": "No register class specifiers found. Uses explicit named registers."
       },
-      "samples": []
+      "samples": [],
+      "count": null,
+      "count_methodology": "Pattern not defined for this section"
     },
     "register_arguments": {
       "fls_section": "22.3",
@@ -89,8 +106,23 @@
           ],
           "code": "inout(\"r0\") operation => result, in(\"r1\") arg,",
           "purpose": "Bidirectional and input register arguments"
+        },
+        {
+          "file": "examples/nostd/bare-metal/rust/publish-subscribe/src/startup.rs",
+          "line": [
+            13
+          ],
+          "code": "core::arch::global_asm!(",
+          "purpose": "Demonstrates asm!..."
         }
-      ]
+      ],
+      "count": 2,
+      "samples_waiver": {
+        "reason": "insufficient_patterns",
+        "explanation": "Only 2 instance(s) found in codebase, fewer than 3 required samples",
+        "approved_by": "automated",
+        "date": "2025-12-30"
+      }
     },
     "assembly_instructions": {
       "fls_section": "22.4",
@@ -114,6 +146,14 @@
           ],
           "code": "\"svc 0x123456\",",
           "purpose": "ARM supervisor call for semihosting"
+        },
+        {
+          "file": "examples/nostd/bare-metal/rust/publish-subscribe/src/startup.rs",
+          "line": [
+            13
+          ],
+          "code": "core::arch::global_asm!(",
+          "purpose": "Demonstrates asm!..."
         }
       ],
       "subsections": {
@@ -126,16 +166,37 @@
           "status": "limited_use",
           "findings": {
             "description": "Register parameter modifiers specify how values are passed to/from assembly. iceoryx2 uses 'inout' and 'in' modifiers in bare-metal example.",
-            "modifiers_used": ["inout", "in"]
+            "modifiers_used": [
+              "inout",
+              "in"
+            ]
           },
           "samples": [
             {
               "file": "examples/nostd/bare-metal/rust/_common/src/semihosting.rs",
-              "line": [21, 22],
+              "line": [
+                21,
+                22
+              ],
               "code": "inout(\"r0\") operation => result, in(\"r1\") arg,",
               "purpose": "inout for bidirectional r0, in for input-only r1"
+            },
+            {
+              "file": "examples/nostd/bare-metal/rust/publish-subscribe/src/startup.rs",
+              "line": [
+                13
+              ],
+              "code": "core::arch::global_asm!(",
+              "purpose": "Demonstrates asm!..."
             }
-          ]
+          ],
+          "count": 2,
+          "samples_waiver": {
+            "reason": "insufficient_patterns",
+            "explanation": "Only 2 instance(s) found in codebase, fewer than 3 required samples",
+            "approved_by": "automated",
+            "date": "2025-12-30"
+          }
         },
         "directive_support": {
           "fls_section": "22.4.2",
@@ -146,17 +207,43 @@
           "status": "limited_use",
           "findings": {
             "description": "Assembly directives provide additional context to the assembler. iceoryx2 uses .section directive in global_asm! for bare-metal startup.",
-            "directives_used": [".section"]
+            "directives_used": [
+              ".section"
+            ]
           },
           "samples": [
             {
               "file": "examples/nostd/bare-metal/rust/publish-subscribe/src/startup.rs",
-              "line": [14],
+              "line": [
+                14
+              ],
               "code": ".section .text.startup",
               "purpose": "Places startup code in specific section"
+            },
+            {
+              "file": "examples/nostd/bare-metal/rust/_common/src/semihosting.rs",
+              "line": [
+                19
+              ],
+              "code": "core::arch::asm!(",
+              "purpose": "Demonstrates asm!..."
             }
-          ]
+          ],
+          "count": 2,
+          "samples_waiver": {
+            "reason": "insufficient_patterns",
+            "explanation": "Only 2 instance(s) found in codebase, fewer than 3 required samples",
+            "approved_by": "automated",
+            "date": "2025-12-30"
+          }
         }
+      },
+      "count": 2,
+      "samples_waiver": {
+        "reason": "insufficient_patterns",
+        "explanation": "Only 2 instance(s) found in codebase, fewer than 3 required samples",
+        "approved_by": "automated",
+        "date": "2025-12-30"
       }
     },
     "abi_clobbers": {
@@ -169,7 +256,9 @@
       "findings": {
         "description": "No explicit clobber lists found"
       },
-      "samples": []
+      "samples": [],
+      "count": null,
+      "count_methodology": "Pattern not defined for this section"
     },
     "assembly_options": {
       "fls_section": "22.6",
@@ -192,7 +281,15 @@
           "code": "options(nostack)",
           "purpose": "Indicates assembly does not use stack"
         }
-      ]
+      ],
+      "count": null,
+      "count_methodology": "Pattern not defined for this section",
+      "samples_waiver": {
+        "reason": "conceptual_section",
+        "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+        "approved_by": "automated",
+        "date": "2025-12-30"
+      }
     },
     "macros_asm_global_asm_and_naked_asm": {
       "fls_section": "22.7",
@@ -232,7 +329,15 @@
       "safety_notes": [
         "All inline assembly confined to bare-metal examples, not production code",
         "asm! properly marked unsafe"
-      ]
+      ],
+      "count": null,
+      "count_methodology": "Pattern not defined for this section",
+      "samples_waiver": {
+        "reason": "conceptual_section",
+        "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+        "approved_by": "automated",
+        "date": "2025-12-30"
+      }
     },
     "label_block": {
       "fls_section": "22.8",
@@ -242,7 +347,9 @@
       "findings": {
         "description": "Label blocks in inline assembly allow defining named labels for branching. iceoryx2 does not use label blocks - the minimal assembly in bare-metal examples uses only simple instructions without labels."
       },
-      "samples": []
+      "samples": [],
+      "count": null,
+      "count_methodology": "Pattern not defined for this section"
     }
   },
   "cross_chapter_references": {

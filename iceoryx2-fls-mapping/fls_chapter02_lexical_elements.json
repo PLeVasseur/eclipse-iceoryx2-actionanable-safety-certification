@@ -38,10 +38,18 @@
             93,
             94
           ],
-          "code": "cout!(\"╔═══════════════════════════════════════╗\");",
+          "code": "cout!(\"\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\");",
           "purpose": "Unicode box-drawing characters for panic display in no_std environment"
         }
-      ]
+      ],
+      "count": null,
+      "count_methodology": "Conceptual - all Rust source uses UTF-8",
+      "samples_waiver": {
+        "reason": "conceptual_section",
+        "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+        "approved_by": "automated",
+        "date": "2025-12-30"
+      }
     },
     "lexical_elements_separators_and_punctuation": {
       "fls_section": "2.2",
@@ -56,7 +64,15 @@
         "thin_arrow_return": 7138,
         "question_mark_operator": 3443
       },
-      "samples": []
+      "samples": [],
+      "count": null,
+      "count_methodology": "Conceptual - punctuation is pervasive",
+      "samples_waiver": {
+        "reason": "conceptual_section",
+        "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+        "approved_by": "automated",
+        "date": "2025-12-30"
+      }
     },
     "identifiers": {
       "fls_section": "2.3",
@@ -78,8 +94,25 @@
           ],
           "code": "const FINAL_PERMISSIONS: Permission = Permission::OWNER_READ;",
           "purpose": "SCREAMING_SNAKE_CASE constants for file permissions"
+        },
+        {
+          "file": "iceoryx2-ffi/python/src/writer.rs",
+          "line": [
+            31
+          ],
+          "code": "pub struct Writer {",
+          "purpose": "Demonstrates ^(pub\\s+)?(fn|struct|enum|trait|type|const|static|..."
+        },
+        {
+          "file": "iceoryx2-ffi/python/src/waitset_run_result.rs",
+          "line": [
+            18
+          ],
+          "code": "pub enum WaitSetRunResult {",
+          "purpose": "Demonstrates ^(pub\\s+)?(fn|struct|enum|trait|type|const|static|..."
         }
-      ]
+      ],
+      "count": 6857
     },
     "literals": {
       "fls_section": "2.4",
@@ -118,22 +151,39 @@
           "findings": {
             "count": 110,
             "description": "Byte literals (b'x') represent ASCII characters as u8 values. Used extensively for character manipulation and string building.",
-            "patterns": ["ASCII character constants", "String building operations", "Escape sequence handling"]
+            "patterns": [
+              "ASCII character constants",
+              "String building operations",
+              "Escape sequence handling"
+            ]
           },
           "samples": [
             {
               "file": "iceoryx2-tunnel/conformance-tests/src/publish_subscribe_propagation.rs",
-              "line": [228],
+              "line": [
+                228
+              ],
               "code": "let char_value = (b'A' + char_index) as char;",
               "purpose": "Byte literal for ASCII character arithmetic"
             },
             {
               "file": "iceoryx2-bb/trait-tests/tests/semantic_string_tests.rs",
-              "line": [79],
+              "line": [
+                79
+              ],
               "code": "assert_that!(sut.insert(1, b't'), is_ok);",
               "purpose": "Byte literal for character insertion"
+            },
+            {
+              "file": "iceoryx2-pal/configuration/src/lib.rs",
+              "line": [
+                37
+              ],
+              "code": "pub const PATH_SEPARATOR: u8 = b'/';",
+              "purpose": "Demonstrates b'[^']*'..."
             }
-          ]
+          ],
+          "count": 157
         },
         "byte_string_literals": {
           "fls_section": "2.4.2",
@@ -145,20 +195,37 @@
           "findings": {
             "count": 743,
             "description": "Byte string literals (b\"...\") are heavily used for file names, paths, and ASCII string constants.",
-            "patterns": ["File names", "Path components", "Test data", "POSIX string constants"]
+            "patterns": [
+              "File names",
+              "Path components",
+              "Test data",
+              "POSIX string constants"
+            ]
           },
           "samples": [
             {
               "file": "iceoryx2/src/node/mod.rs",
-              "line": [343],
+              "line": [
+                343
+              ],
               "code": "const FALLBACK_EXEC: &[u8] = b\"undefined\";",
               "purpose": "Byte string for fallback executable name"
             },
             {
               "file": "iceoryx2/src/node/mod.rs",
-              "line": [1133],
+              "line": [
+                1133
+              ],
               "code": "&FileName::new(b\"node\").unwrap(),",
               "purpose": "Byte string for node file name"
+            },
+            {
+              "file": "iceoryx2-cal/tests/zero_copy_connection_posix_shared_memory_tests.rs",
+              "line": [
+                29
+              ],
+              "code": "let mut file = FileName::new(b\"test_\").unwrap();",
+              "purpose": "Demonstrates b\"[^\"]*\"..."
             }
           ],
           "subsections": {
@@ -171,7 +238,33 @@
                 "count": 743,
                 "description": "Simple byte strings are the primary form used - no raw byte strings found."
               },
-              "samples": []
+              "samples": [
+                {
+                  "file": "iceoryx2-bb/trait-tests/tests/semantic_string_tests.rs",
+                  "line": [
+                    37
+                  ],
+                  "code": "let sut = Sut::new(b\"hello-txt\");",
+                  "purpose": "Demonstrates b\"[^\"]*\"..."
+                },
+                {
+                  "file": "iceoryx2/src/testing.rs",
+                  "line": [
+                    37
+                  ],
+                  "code": "let mut prefix = FileName::new(b\"test_prefix_\").unwrap();",
+                  "purpose": "Demonstrates b\"[^\"]*\"..."
+                },
+                {
+                  "file": "iceoryx2-userland/record-and-replay/src/replayer.rs",
+                  "line": [
+                    27
+                  ],
+                  "code": "//! let replay = ReplayerOpener::new(&FilePath::new(b\"recorded_data.iox2\")?)",
+                  "purpose": "Demonstrates b\"[^\"]*\"..."
+                }
+              ],
+              "count": 741
             },
             "raw_byte_string_literals": {
               "fls_section": "2.4.2.2",
@@ -183,9 +276,12 @@
               "findings": {
                 "description": "Raw byte string literals (br\"...\") are not used in iceoryx2."
               },
-              "samples": []
+              "samples": [],
+              "count": null,
+              "count_methodology": "Pattern not defined for this section"
             }
-          }
+          },
+          "count": 741
         },
         "c_string_literals": {
           "fls_section": "2.4.3",
@@ -200,9 +296,27 @@
           "samples": [
             {
               "file": "iceoryx2-pal/posix/src/qnx/unistd.rs",
-              "line": [23],
+              "line": [
+                23
+              ],
               "code": "c\"/proc/self/exefile\".to_owned()",
               "purpose": "C string literal for QNX process path"
+            },
+            {
+              "file": "iceoryx2-pal/posix/src/libc/unistd.rs",
+              "line": [
+                23
+              ],
+              "code": "c\"/proc/self/exe\".to_owned()",
+              "purpose": "Demonstrates c\"[^\"]*\"..."
+            },
+            {
+              "file": "iceoryx2-pal/posix/src/linux/unistd.rs",
+              "line": [
+                23
+              ],
+              "code": "c\"/proc/self/exe\".to_owned()",
+              "purpose": "Demonstrates c\"[^\"]*\"..."
             }
           ],
           "subsections": {
@@ -215,7 +329,33 @@
                 "count": 34,
                 "description": "Simple C strings used for FFI path constants"
               },
-              "samples": []
+              "samples": [
+                {
+                  "file": "iceoryx2-pal/posix/src/windows/win32_udp_port_to_uds_name.rs",
+                  "line": [
+                    32
+                  ],
+                  "code": "const SHM_SEGMENT_NAME: &CStr = c\"/port_to_uds_name_map\";",
+                  "purpose": "Demonstrates c\"[^\"]*\"..."
+                },
+                {
+                  "file": "iceoryx2-bb/derive-macros/src/zero_copy_send_compile_tests.rs",
+                  "line": [
+                    156
+                  ],
+                  "code": "/// #[type_name(\"abc\" \"def\")]",
+                  "purpose": "Demonstrates c\"[^\"]*\"..."
+                },
+                {
+                  "file": "iceoryx2-pal/posix/src/linux/unistd.rs",
+                  "line": [
+                    23
+                  ],
+                  "code": "c\"/proc/self/exe\".to_owned()",
+                  "purpose": "Demonstrates c\"[^\"]*\"..."
+                }
+              ],
+              "count": 18
             },
             "raw_c_string_literals": {
               "fls_section": "2.4.3.2",
@@ -225,9 +365,12 @@
               "findings": {
                 "description": "Raw C string literals (cr\"...\") are not used in iceoryx2."
               },
-              "samples": []
+              "samples": [],
+              "count": null,
+              "count_methodology": "Pattern not defined for this section"
             }
-          }
+          },
+          "count": 18
         },
         "numeric_literals": {
           "fls_section": "2.4.4",
@@ -245,9 +388,29 @@
           "samples": [
             {
               "file": "iceoryx2-pal/posix/src/windows/win32_security_attributes.rs",
-              "line": [85, 86, 87],
+              "line": [
+                85,
+                86,
+                87
+              ],
               "code": "const FILE_READ_DATA_HEX: u32 = 0x1;\nconst FILE_WRITE_DATA_HEX: u32 = 0x2;\nconst FILE_EXECUTE_HEX: u32 = 0x20;",
               "purpose": "Hexadecimal literals for Windows file permission flags"
+            },
+            {
+              "file": "iceoryx2-cal/tests/zero_copy_connection_posix_shared_memory_tests.rs",
+              "line": [
+                1
+              ],
+              "code": "// Copyright (c) 2024 Contributors to the Eclipse Foundation",
+              "purpose": "Demonstrates \\b\\d+(_\\d+)*\\b..."
+            },
+            {
+              "file": "iceoryx2-cal/tests/used_chunk_list_tests.rs",
+              "line": [
+                1
+              ],
+              "code": "// Copyright (c) 2024 Contributors to the Eclipse Foundation",
+              "purpose": "Demonstrates \\b\\d+(_\\d+)*\\b..."
             }
           ],
           "subsections": {
@@ -260,17 +423,46 @@
               "status": "demonstrated",
               "findings": {
                 "description": "Integer literals with type suffixes (u8, u16, u32, u64, usize, i8, etc.) are used extensively for type safety.",
-                "patterns": ["Array initialization with 0u8", "POSIX constants with mode_t", "Size constants with usize"],
-                "bases": ["Decimal (most common)", "Hexadecimal (0x - permissions)", "Octal (0o - POSIX modes)", "Binary (0b - bit patterns)"]
+                "patterns": [
+                  "Array initialization with 0u8",
+                  "POSIX constants with mode_t",
+                  "Size constants with usize"
+                ],
+                "bases": [
+                  "Decimal (most common)",
+                  "Hexadecimal (0x - permissions)",
+                  "Octal (0o - POSIX modes)",
+                  "Binary (0b - bit patterns)"
+                ]
               },
               "samples": [
                 {
                   "file": "iceoryx2-pal/posix/src/stub/constants.rs",
-                  "line": [169, 170],
+                  "line": [
+                    169,
+                    170
+                  ],
                   "code": "pub const S_IFMT: mode_t = 0o0170000;\npub const S_IFIFO: mode_t = 0o0010000;",
                   "purpose": "Octal literals for POSIX file mode constants"
+                },
+                {
+                  "file": "iceoryx2/tests/service_static_config_tests.rs",
+                  "line": [
+                    1
+                  ],
+                  "code": "// Copyright (c) 2024 Contributors to the Eclipse Foundation",
+                  "purpose": "Demonstrates \\b\\d+(_\\d+)*(u8|u16|u32|u64|u128|usize|i8|i16|i32|..."
+                },
+                {
+                  "file": "iceoryx2-tunnel/tunnel/src/tunnel.rs",
+                  "line": [
+                    1
+                  ],
+                  "code": "// Copyright (c) 2025 Contributors to the Eclipse Foundation",
+                  "purpose": "Demonstrates \\b\\d+(_\\d+)*(u8|u16|u32|u64|u128|usize|i8|i16|i32|..."
                 }
-              ]
+              ],
+              "count": 19819
             },
             "float_literals": {
               "fls_section": "2.4.4.2",
@@ -284,9 +476,36 @@
                 "count": "~10",
                 "note": "Limited use of floating point for safety-critical determinism"
               },
-              "samples": []
+              "samples": [
+                {
+                  "file": "iceoryx2/tests/service_request_response_thread_safety_tests.rs",
+                  "line": [
+                    7
+                  ],
+                  "code": "// terms of the Apache Software License 2.0 which is available at",
+                  "purpose": "Demonstrates \\b\\d+\\.\\d+..."
+                },
+                {
+                  "file": "iceoryx2-cal/tests/zero_copy_connection_posix_shared_memory_tests.rs",
+                  "line": [
+                    7
+                  ],
+                  "code": "// terms of the Apache Software License 2.0 which is available at",
+                  "purpose": "Demonstrates \\b\\d+\\.\\d+..."
+                },
+                {
+                  "file": "iceoryx2-cal/tests/used_chunk_list_tests.rs",
+                  "line": [
+                    7
+                  ],
+                  "code": "// terms of the Apache Software License 2.0 which is available at",
+                  "purpose": "Demonstrates \\b\\d+\\.\\d+..."
+                }
+              ],
+              "count": 3264
             }
-          }
+          },
+          "count": 19544
         },
         "character_literals": {
           "fls_section": "2.4.5",
@@ -298,16 +517,39 @@
           "findings": {
             "count": 117,
             "description": "Character literals ('x') are used for char type values. Byte literals (b'x') are preferred for ASCII operations.",
-            "patterns": ["Escape sequences in string processing", "Unicode box-drawing in panic handlers"]
+            "patterns": [
+              "Escape sequences in string processing",
+              "Unicode box-drawing in panic handlers"
+            ]
           },
           "samples": [
             {
               "file": "iceoryx2-bb/container/src/string/utils.rs",
-              "line": [40, 41],
+              "line": [
+                40,
+                41
+              ],
               "code": "b'\\t' => vec![b'\\\\', b't'].into_iter(),\nb'\\r' => vec![b'\\\\', b'r'].into_iter(),",
               "purpose": "Escape sequence handling with byte literals"
+            },
+            {
+              "file": "iceoryx2-pal/posix/src/windows/win32_udp_port_to_uds_name.rs",
+              "line": [
+                130
+              ],
+              "code": "if *c == b'\\\\' || *c == b'/' {",
+              "purpose": "Demonstrates '[^'\\\\]'|'\\\\.'..."
+            },
+            {
+              "file": "iceoryx2/src/service/naming_scheme.rs",
+              "line": [
+                31
+              ],
+              "code": "file.push(b'_').unwrap();",
+              "purpose": "Demonstrates '[^'\\\\]'|'\\\\.'..."
             }
-          ]
+          ],
+          "count": 178
         },
         "string_literals": {
           "fls_section": "2.4.6",
@@ -318,14 +560,37 @@
           "status": "demonstrated",
           "findings": {
             "description": "String literals (\"...\") are used extensively for error messages, documentation, and test data.",
-            "patterns": ["Error messages", "Log format strings", "Test assertions", "Documentation strings"]
+            "patterns": [
+              "Error messages",
+              "Log format strings",
+              "Test assertions",
+              "Documentation strings"
+            ]
           },
           "samples": [
             {
               "file": "iceoryx2-userland/record-and-replay/tests/hex_conversion_tests.rs",
-              "line": [22],
+              "line": [
+                22
+              ],
               "code": "let sut = \"don't stop me now\";",
               "purpose": "String literal for test data"
+            },
+            {
+              "file": "component-tests/rust/src/test_containers.rs",
+              "line": [
+                27
+              ],
+              "code": "#[type_name(\"ContainerTestRequest\")]",
+              "purpose": "Demonstrates \"[^\"]*\"..."
+            },
+            {
+              "file": "iceoryx2-services/discovery/tests/service_discovery_tracker_tests.rs",
+              "line": [
+                24
+              ],
+              "code": "\"test_service_tracker_{}\",",
+              "purpose": "Demonstrates \"[^\"]*\"..."
             }
           ],
           "subsections": {
@@ -339,7 +604,33 @@
               "findings": {
                 "description": "Simple string literals are the primary form used throughout the codebase."
               },
-              "samples": []
+              "samples": [
+                {
+                  "file": "iceoryx2-userland/record-and-replay/tests/replayer_tests.rs",
+                  "line": [
+                    45
+                  ],
+                  "code": "file.write(b\"schalalala\").unwrap();",
+                  "purpose": "Demonstrates \"[^\"]*\"..."
+                },
+                {
+                  "file": "iceoryx2-pal/testing/src/watchdog.rs",
+                  "line": [
+                    51
+                  ],
+                  "code": "eprintln!(\"Killing test since timeout of {timeout:?} was hit.\");",
+                  "purpose": "Demonstrates \"[^\"]*\"..."
+                },
+                {
+                  "file": "iceoryx2-pal/testing/src/lib.rs",
+                  "line": [
+                    35
+                  ],
+                  "code": "\"test failed: {} {} {}\",",
+                  "purpose": "Demonstrates \"[^\"]*\"..."
+                }
+              ],
+              "count": 8828
             },
             "raw_string_literals": {
               "fls_section": "2.4.6.2",
@@ -355,13 +646,23 @@
               "samples": [
                 {
                   "file": "examples/nostd/bare-metal/rust/publish-subscribe/src/startup.rs",
-                  "line": [14],
+                  "line": [
+                    14
+                  ],
                   "code": "r#\".section .text.startup...\"#",
                   "purpose": "Raw string for inline assembly directives"
                 }
-              ]
+              ],
+              "count": 1,
+              "samples_waiver": {
+                "reason": "insufficient_patterns",
+                "explanation": "Only 1 instance(s) found in codebase, fewer than 3 required samples",
+                "approved_by": "automated",
+                "date": "2025-12-30"
+              }
             }
-          }
+          },
+          "count": 8828
         },
         "boolean_literals": {
           "fls_section": "2.4.7",
@@ -379,12 +680,39 @@
           "samples": [
             {
               "file": "iceoryx2/tests/service_request_response_thread_safety_tests.rs",
-              "line": [39],
+              "line": [
+                39
+              ],
               "code": ".enable_fire_and_forget_requests(true)",
               "purpose": "Boolean literal for configuration option"
+            },
+            {
+              "file": "iceoryx2-pal/concurrency-sync/tests/rwlock_tests.rs",
+              "line": [
+                186
+              ],
+              "code": "assert_that!(test_result, eq true);",
+              "purpose": "Demonstrates \\b(true|false)\\b..."
+            },
+            {
+              "file": "component-tests/rust/src/test_containers.rs",
+              "line": [
+                122
+              ],
+              "code": "size_component_type_is_unsigned: false,",
+              "purpose": "Demonstrates \\b(true|false)\\b..."
             }
-          ]
+          ],
+          "count": 2618
         }
+      },
+      "count": null,
+      "count_methodology": "Aggregate of literal subtypes",
+      "samples_waiver": {
+        "reason": "conceptual_section",
+        "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+        "approved_by": "automated",
+        "date": "2025-12-30"
       }
     },
     "comments": {
@@ -400,7 +728,33 @@
         "spdx_license_headers": 1071,
         "regular_comments": 24407
       },
-      "samples": []
+      "samples": [
+        {
+          "file": "iceoryx2-cli/lib/src/output.rs",
+          "line": [
+            1
+          ],
+          "code": "// Copyright (c) 2024 Contributors to the Eclipse Foundation",
+          "purpose": "Demonstrates //|/\\*..."
+        },
+        {
+          "file": "iceoryx2-cli/lib/src/lib.rs",
+          "line": [
+            1
+          ],
+          "code": "// Copyright (c) 2024 Contributors to the Eclipse Foundation",
+          "purpose": "Demonstrates //|/\\*..."
+        },
+        {
+          "file": "iceoryx2-cli/lib/src/format.rs",
+          "line": [
+            1
+          ],
+          "code": "// Copyright (c) 2024 Contributors to the Eclipse Foundation",
+          "purpose": "Demonstrates //|/\\*..."
+        }
+      ],
+      "count": 36787
     },
     "keywords": {
       "fls_section": "2.6",
@@ -428,11 +782,43 @@
           "status": "demonstrated",
           "findings": {
             "description": "Strict keywords cannot be used as identifiers. iceoryx2 uses most strict keywords except async/await.",
-            "heavily_used": ["fn", "let", "pub", "use", "impl", "struct", "enum", "trait", "unsafe", "const", "static", "mut", "where", "for", "if", "else", "match", "return", "self", "Self"],
-            "not_used": ["async", "await"],
+            "heavily_used": [
+              "fn",
+              "let",
+              "pub",
+              "use",
+              "impl",
+              "struct",
+              "enum",
+              "trait",
+              "unsafe",
+              "const",
+              "static",
+              "mut",
+              "where",
+              "for",
+              "if",
+              "else",
+              "match",
+              "return",
+              "self",
+              "Self"
+            ],
+            "not_used": [
+              "async",
+              "await"
+            ],
             "async_await_rationale": "Intentionally avoided for deterministic real-time behavior"
           },
-          "samples": []
+          "samples": [],
+          "count": null,
+          "count_methodology": "Conceptual - strict keywords pervasive",
+          "samples_waiver": {
+            "reason": "conceptual_section",
+            "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+            "approved_by": "automated",
+            "date": "2025-12-30"
+          }
         },
         "reserved_keywords": {
           "fls_section": "2.6.2",
@@ -444,7 +830,9 @@
           "findings": {
             "description": "Reserved keywords (abstract, become, box, do, final, macro, override, priv, try, typeof, unsized, virtual, yield) are reserved for future use and cannot be used. iceoryx2 does not use any reserved keywords."
           },
-          "samples": []
+          "samples": [],
+          "count": null,
+          "count_methodology": "Pattern not defined for this section"
         },
         "weak_keywords": {
           "fls_section": "2.6.3",
@@ -468,8 +856,42 @@
               "note": "Declarative macro definitions"
             }
           },
-          "samples": []
+          "samples": [
+            {
+              "file": "iceoryx2-bb/testing/src/instantiate_conformance_tests_macro.rs",
+              "line": [
+                31
+              ],
+              "code": "macro_rules! instantiate_conformance_tests {",
+              "purpose": "Demonstrates \\b(macro_rules|union|'static)\\b..."
+            },
+            {
+              "file": "iceoryx2-ffi/c/src/api/writer.rs",
+              "line": [
+                50
+              ],
+              "code": "pub(super) union WriterUnion {",
+              "purpose": "Demonstrates \\b(macro_rules|union|'static)\\b..."
+            },
+            {
+              "file": "iceoryx2-ffi/c/src/api/waitset_guard.rs",
+              "line": [
+                25
+              ],
+              "code": "pub(crate) union GuardUnion {",
+              "purpose": "Demonstrates \\b(macro_rules|union|'static)\\b..."
+            }
+          ],
+          "count": 70
         }
+      },
+      "count": null,
+      "count_methodology": "Conceptual - keywords pervasive",
+      "samples_waiver": {
+        "reason": "conceptual_section",
+        "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+        "approved_by": "automated",
+        "date": "2025-12-30"
       }
     }
   },
