@@ -1,0 +1,141 @@
+{
+  "chapter": 16,
+  "title": "Exceptions and Errors",
+  "fls_url": "https://rust-lang.github.io/fls/exceptions-and-errors.html",
+  "fls_id": "fls_dzq9cdz4ibsz",
+  "repository": "eclipse-iceoryx/iceoryx2",
+  "version": "0.8.0",
+  "analysis_date": "2025-12-30",
+  "version_changes": {
+    "from_version": "0.7.0",
+    "to_version": "0.8.0",
+    "summary": "Error handling patterns refined with increased fail! macro usage for structured error returns",
+    "key_changes": [
+      "fail! macro usage increased",
+      "fatal_panic! used for all panic scenarios"
+    ]
+  },
+  "summary": "iceoryx2 takes a safety-critical approach to error handling: Result<T, E> returns with 176 custom Error enums, fail! macro (1,082 calls) for early-return error propagation with logging, and fatal_panic! (321 calls) for unrecoverable invariant violations. The library deliberately avoids direct panic! in production code, restricts unwrap() mostly to tests, and provides platform-level abort() for no_std panic handlers.",
+  "statistics": {
+    "fatal_panic_macro": 321,
+    "direct_panic_macro": 0,
+    "fail_macro": 1082,
+    "unwrap_calls": 4840,
+    "unwrap_in_production": 494,
+    "expect_calls": 303,
+    "unreachable_macro": 6,
+    "todo_macro": 2,
+    "abort_calls": 10,
+    "panic_handlers": 5,
+    "result_types": 1518,
+    "error_propagation_operator": 3443,
+    "error_enums": 176
+  },
+  "sections": {
+    "panic": {
+      "fls_section": "16.1",
+      "fls_ids": [
+        "fls_k02nt1m5fq1z"
+      ],
+      "description": "Panic",
+      "status": "deliberately_avoided",
+      "findings": {
+        "direct_panic_macro": {
+          "count": 0,
+          "note": "All panics go through fatal_panic! wrapper for audit trail"
+        },
+        "fatal_panic_wrapper": {
+          "count": 321,
+          "purpose": "Custom macro that logs at Fatal level before panicking"
+        },
+        "unwrap_calls": {
+          "total": 4840,
+          "production": 494,
+          "test": 4300
+        },
+        "expect_calls": {
+          "count": 303
+        },
+        "panic_handlers": {
+          "count": 5,
+          "location": "no_std examples only"
+        }
+      },
+      "samples": [
+        {
+          "file": "iceoryx2-log/log/src/log.rs",
+          "line": [
+            244,
+            245,
+            246
+          ],
+          "code": "macro_rules! fatal_panic! { ... core::panic!(...) }",
+          "purpose": "fatal_panic! macro logs Fatal then panics"
+        },
+        {
+          "file": "iceoryx2/src/service/static_config/mod.rs",
+          "line": [
+            155
+          ],
+          "code": "fatal_panic!(from self, \"This should never happen!...\")",
+          "purpose": "Invariant violation for messaging pattern mismatch"
+        }
+      ],
+      "safety_notes": [
+        "Production code uses fatal_panic! (321 calls) instead of raw panic! for logging",
+        "fail! macro (1,082 calls) is preferred for recoverable errors",
+        "unwrap() primarily confined to tests (~4,300 test vs ~494 production)"
+      ]
+    },
+    "abort": {
+      "fls_section": "16.2",
+      "fls_ids": [
+        "fls_hi1iz0gbnksi"
+      ],
+      "description": "Abort",
+      "status": "platform_abstraction_provided",
+      "findings": {
+        "abort_wrapper": {
+          "count": 10,
+          "note": "Platform abstraction layer provides abort()"
+        },
+        "signal_handler_abort": {
+          "count": 4,
+          "location": "no_std examples"
+        },
+        "platforms": [
+          "linux",
+          "macos",
+          "freebsd",
+          "android"
+        ]
+      },
+      "samples": [
+        {
+          "file": "iceoryx2-bb/posix/src/signal.rs",
+          "line": [
+            638,
+            639,
+            640
+          ],
+          "code": "pub fn abort() { unsafe { iceoryx2_pal_posix::posix::abort(); } }",
+          "purpose": "SignalHandler::abort() safe wrapper"
+        },
+        {
+          "file": "examples/nostd/posix/rust/publish-subscribe/src/subscriber.rs",
+          "line": [
+            93,
+            94,
+            95
+          ],
+          "code": "SignalHandler::abort();",
+          "purpose": "no_std panic handler calls abort"
+        }
+      ],
+      "safety_notes": [
+        "Abort only exposed through SignalHandler::abort() safe wrapper",
+        "Used exclusively in no_std panic handlers as last resort"
+      ]
+    }
+  }
+}

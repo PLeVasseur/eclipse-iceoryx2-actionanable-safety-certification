@@ -37,29 +37,45 @@
     "const_capacity_params": 99
   },
   "sections": {
-    "12.1": {
+    "generic_parameters": {
       "fls_section": "12.1",
-      "fls_ids": [],
+      "fls_ids": [
+        "fls_vhpwge5123cm"
+      ],
       "description": "Generic Parameters",
-      "status": "demonstrated"
+      "status": "demonstrated",
+      "findings": {},
+      "samples": []
     },
-    "12.2": {
+    "where_clauses": {
       "fls_section": "12.2",
-      "fls_ids": [],
+      "fls_ids": [
+        "fls_7nv8ualeaqe3"
+      ],
       "description": "Where Clauses",
-      "status": "demonstrated"
+      "status": "demonstrated",
+      "findings": {},
+      "samples": []
     },
-    "12.3": {
+    "generic_arguments": {
       "fls_section": "12.3",
-      "fls_ids": [],
+      "fls_ids": [
+        "fls_utuu8mdbuyxm"
+      ],
       "description": "Generic Arguments",
-      "status": "demonstrated"
+      "status": "demonstrated",
+      "findings": {},
+      "samples": []
     },
-    "12.4": {
+    "generic_conformance": {
       "fls_section": "12.4",
-      "fls_ids": [],
+      "fls_ids": [
+        "fls_i7g2n7hfg3ch"
+      ],
       "description": "Generic Conformance",
-      "status": "demonstrated"
+      "status": "demonstrated",
+      "findings": {},
+      "samples": []
     }
   },
   "design_patterns": {

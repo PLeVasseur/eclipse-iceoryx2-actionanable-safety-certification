@@ -11,13 +11,13 @@
     "to_version": "0.8.0",
     "summary": "Logging system restructured to iceoryx2-log crate. New proc-macro crates added for FFI and conformance testing.",
     "key_changes": [
-      "Declarative macros: 16 \u2192 28 (+75%)",
-      "Procedural macros: 2 \u2192 6 (+200%)",
-      "Proc-macro crates: 1 \u2192 3 (derive-macros, ffi-macros, conformance-test-macros)",
-      "#[macro_export]: 12 \u2192 20 (+67%)",
-      "ZeroCopySend derives: 138 \u2192 166 (+20%)",
-      "PlacementDefault derives: 11 \u2192 20 (+82%)",
-      "assert_that! invocations: 4,571 \u2192 5,283 (+16%)",
+      "Declarative macros: 16 → 28 (+75%)",
+      "Procedural macros: 2 → 6 (+200%)",
+      "Proc-macro crates: 1 → 3 (derive-macros, ffi-macros, conformance-test-macros)",
+      "#[macro_export]: 12 → 20 (+67%)",
+      "ZeroCopySend derives: 138 → 166 (+20%)",
+      "PlacementDefault derives: 11 → 20 (+82%)",
+      "assert_that! invocations: 4,571 → 5,283 (+16%)",
       "Logging macros moved to iceoryx2-log/log/src/log.rs",
       "fail! macro moved to iceoryx2-log/log/src/fail.rs",
       "New CStrRepr derive macro for FFI",
@@ -392,6 +392,36 @@
         }
       },
       "samples": []
+    },
+    "macro_expansion": {
+      "fls_section": "20.4",
+      "fls_ids": [
+        "fls_wjldgtio5o75"
+      ],
+      "description": "Macro Expansion",
+      "status": "demonstrated",
+      "findings": {
+        "description": "Macro expansion is the process of replacing a macro invocation with the result of the macro. In iceoryx2, declarative macros expand to Rust code while procedural macros generate TokenStreams.",
+        "expansion_patterns": {
+          "declarative": "macro_rules! macros expand via pattern matching and substitution",
+          "derive": "Derive macros generate impl blocks for traits",
+          "attribute": "Attribute macros transform annotated items"
+        },
+        "notable_expansions": {
+          "enum_gen": "Expands to enum definition with From implementations for each entry",
+          "semantic_string": "Expands to struct with validation, normalization, and trait implementations",
+          "fail": "Expands to conditional check, log call, and early return with error"
+        },
+        "recursive_expansion": "Declarative macros use #[macro_export(local_inner_macros)] to enable recursive calls"
+      },
+      "samples": [
+        {
+          "file": "iceoryx2-bb/elementary/src/enum_gen.rs",
+          "line": [172],
+          "code": "macro_rules! enum_gen { ... }",
+          "purpose": "Generates error enums with automatic From implementations"
+        }
+      ]
     }
   },
   "design_patterns": {

@@ -45,55 +45,19 @@
     "Err": 918
   },
   "sections": {
-    "values_overview": {
-      "fls_section": "7. Values",
-      "description": "A value is either a literal or computation result, stored in memory and interpreted by type.",
+    "constants": {
+      "fls_section": "7.1",
+      "fls_ids": [
+        "fls_ixjc5jaamx84"
+      ],
+      "description": "Constants",
+      "status": "demonstrated",
       "findings": {
         "legality_rules": {
           "7:1": "A value is either a literal or the result of a computation",
           "7:2": "An allocated object is a value stored at some memory address",
           "7:3": "Base address is the memory address where object is stored",
           "7:4": "Memory size is bytes spanned from base address"
-        },
-        "undefined_behavior": {
-          "7:10": "Creating value from uninitialized memory (except union)",
-          "7:11": "Creating allocated object at null base address",
-          "7:12": "Creating object where base + size > usize::MAX",
-          "7:13": "Creating object where size > isize::MAX"
-        },
-        "null_checks": "NonNull<T> used extensively (175 uses) to prevent null pointers",
-        "uninitialized_handling": "MaybeUninit<T> used (219 uses) for safe uninitialized memory",
-        "ptr_null_usage": "ptr::null (24) and ptr::null_mut (141) for FFI interop"
-      },
-      "samples": [
-        {
-          "file": "iceoryx2-bb/memory/tests/pool_allocator_tests.rs",
-          "line": [
-            56
-          ],
-          "code": "NonNull::new(self.get_mut_memory()).unwrap()"
-        },
-        {
-          "file": "iceoryx2-bb/memory/src/bump_allocator.rs",
-          "line": [
-            48
-          ],
-          "code": "pub fn new(ptr: NonNull<u8>, size: usize) -> Self {"
-        }
-      ]
-    },
-    "constants": {
-      "fls_section": "7.1 Constants",
-      "fls_ids": [
-        "fls_ixjc5jaamx84"
-      ],
-      "description": "A constant is an immutable value expression whose uses are substituted by the value.",
-      "findings": {
-        "legality_rules": {
-          "7.1:1": "Constant is immutable value expression, uses substituted by value",
-          "7.1:3": "Type specification shall have 'static lifetime",
-          "7.1:4": "Type shall implement core::marker::Sized",
-          "7.1:7": "Expression of constant initializer shall be constant expression"
         },
         "count": 3968,
         "change_from_v0_7_0": "+943 (+31%)",
@@ -104,7 +68,16 @@
           "Permission bit flags",
           "Test fixture constants",
           "FFI constants for C interop"
-        ]
+        ],
+        "undefined_behavior": {
+          "7:10": "Creating value from uninitialized memory (except union)",
+          "7:11": "Creating allocated object at null base address",
+          "7:12": "Creating object where base + size > usize::MAX",
+          "7:13": "Creating object where size > isize::MAX"
+        },
+        "null_checks": "NonNull<T> used extensively (175 uses) to prevent null pointers",
+        "uninitialized_handling": "MaybeUninit<T> used (219 uses) for safe uninitialized memory",
+        "ptr_null_usage": "ptr::null (24) and ptr::null_mut (141) for FFI interop"
       },
       "samples": [
         {
@@ -142,100 +115,30 @@
             66
           ],
           "code": "const BUCKET_SIZE: usize = 128;\nconst BUCKET_ALIGNMENT: usize = 1;"
+        },
+        {
+          "file": "iceoryx2-bb/memory/tests/pool_allocator_tests.rs",
+          "line": [
+            56
+          ],
+          "code": "NonNull::new(self.get_mut_memory()).unwrap()"
+        },
+        {
+          "file": "iceoryx2-bb/memory/src/bump_allocator.rs",
+          "line": [
+            48
+          ],
+          "code": "pub fn new(ptr: NonNull<u8>, size: usize) -> Self {"
         }
-      ],
-      "subsections": {
-        "unnamed_constants": {
-          "fls_section": "7.1 (iceoryx2 analysis)",
-          "description": "Constants declared with underscore (const _: Type = ...)",
-          "status": "NOT USED"
-        },
-        "associated_constants": {
-          "fls_section": "7.1 (iceoryx2 analysis)",
-          "description": "Constants defined within impl blocks",
-          "findings": {
-            "usage": "Permission flags, capacity limits"
-          },
-          "samples": [
-            {
-              "file": "iceoryx2-bb/posix/src/permission.rs",
-              "line": [
-                29,
-                30
-              ],
-              "code": "pub const OWNER_READ: Self = Self(0o0400);\npub const OWNER_WRITE: Self = Self(0o0200);"
-            }
-          ]
-        },
-        "const_fn": {
-          "fls_section": "7.1 (iceoryx2 analysis)",
-          "description": "Functions callable at compile time",
-          "findings": {
-            "count": 113,
-            "usage": "Constructors, utility functions evaluated at compile time"
-          },
-          "samples": [
-            {
-              "file": "iceoryx2-bb/posix/src/file_descriptor_set.rs",
-              "line": [
-                220
-              ],
-              "code": "pub const fn capacity() -> usize {"
-            },
-            {
-              "file": "iceoryx2-pal/posix/src/windows/pthread.rs",
-              "line": [
-                69
-              ],
-              "code": "const fn new() -> Self {"
-            },
-            {
-              "file": "iceoryx2-bb/elementary/src/static_assert.rs",
-              "line": [
-                53
-              ],
-              "code": "pub const fn static_assert_eq<const L: usize, const R: usize>() {"
-            }
-          ]
-        },
-        "const_generics": {
-          "fls_section": "7.1 (iceoryx2 analysis)",
-          "description": "Generic parameters that are constants",
-          "findings": {
-            "usage": "Array sizes, capacity parameters, StaticVec/StaticString"
-          },
-          "samples": [
-            {
-              "file": "iceoryx2-pal/posix/src/windows/win32_udp_port_to_uds_name.rs",
-              "line": [
-                34
-              ],
-              "code": "struct Entries<const N: usize> {"
-            },
-            {
-              "file": "iceoryx2-bb/elementary/src/static_assert.rs",
-              "line": [
-                57
-              ],
-              "code": "struct AssertEq<const L: usize, const R: usize>;"
-            },
-            {
-              "file": "iceoryx2-bb/elementary-traits/src/placement_default.rs",
-              "line": [
-                115
-              ],
-              "code": "impl<T: PlacementDefault, const CAPACITY: usize> PlacementDefault for [T; CAPACITY] {"
-            }
-          ]
-        }
-      }
+      ]
     },
     "statics": {
-      "fls_section": "7.2 Statics",
+      "fls_section": "7.2",
       "fls_ids": [
         "fls_xdvdl2ssnhlo"
       ],
-      "description": "A static is a value associated with a specific memory location.",
+      "description": "Statics",
+      "status": "demonstrated",
       "findings": {
         "legality_rules": {
           "7.2:1": "Static is value associated with specific memory location",
@@ -314,30 +217,50 @@
       }
     },
     "temporaries": {
-      "fls_section": "7.3 Temporaries",
+      "fls_section": "7.3",
       "fls_ids": [
         "fls_cleoffpn5ew6"
       ],
-      "description": "A temporary is an anonymous variable produced by intermediate computation.",
+      "description": "Temporaries",
+      "status": "demonstrated",
       "findings": {
-        "usage": "Implicit in method chains, expression evaluation"
+        "description": "Temporaries are unnamed values created during expression evaluation. They have limited lifetime scope and are dropped at the end of their containing statement unless lifetime-extended.",
+        "usage_patterns": [
+          "Method chaining creates intermediate temporaries",
+          "Builder pattern chains create temporary builder states",
+          "Expression evaluation creates temporaries for intermediate results",
+          "Unwrap chains create temporaries for Option/Result values"
+        ],
+        "lifetime_extension": "Temporaries bound to references with let have extended lifetime"
       },
       "samples": [
         {
           "file": "iceoryx2-bb/memory/tests/pool_allocator_tests.rs",
-          "line": [
-            50
-          ],
-          "code": "(TestFixture::memory_size() / core::cmp::max(size, align)) as u32 - 1"
+          "line": [50],
+          "code": "(TestFixture::memory_size() / core::cmp::max(size, align)) as u32 - 1",
+          "purpose": "Arithmetic expression creates temporaries for intermediate values"
+        },
+        {
+          "file": "iceoryx2-bb/linux/tests/signal_fd_tests.rs",
+          "line": [34],
+          "code": "let sut = SignalFdBuilder::new(signals).create_non_blocking().unwrap();",
+          "purpose": "Builder pattern creates temporary SignalFdBuilder"
+        },
+        {
+          "file": "iceoryx2-bb/linux/tests/signal_fd_tests.rs",
+          "line": [46],
+          "code": "assert_that!(signal.origin_pid(), eq Process::from_self().id());",
+          "purpose": "Method chain creates temporary Process instance"
         }
       ]
     },
     "variables": {
-      "fls_section": "7.4 Variables",
+      "fls_section": "7.4",
       "fls_ids": [
         "fls_gho955gmob73"
       ],
-      "description": "A variable is a placeholder for a value allocated on the stack.",
+      "description": "Variables",
+      "status": "demonstrated",
       "findings": {
         "legality_rules": {
           "7.4:1": "Variable is placeholder for value allocated on stack",
@@ -377,20 +300,29 @@
         ]
       },
       "subsections": {
-        "7.4.1_constant_promotion": {
+        "constant_promotion": {
           "fls_section": "7.4.1",
-          "description": "Process of converting value expression into constant with 'static lifetime.",
+          "fls_ids": [
+            "fls_wttihxen35as"
+          ],
+          "description": "Constant Promotion",
+          "status": "demonstrated",
           "findings": {
-            "legality_rules": {
-              "7.4.1:1": "Constant promotion converts value expression into constant",
-              "7.4.1:3": "Value expression must be constant expression",
-              "7.4.1:4": "Type must not have destructor",
-              "7.4.1:5": "Must not construct UnsafeCell",
-              "7.4.1:7": "Must be operand of immutable borrow expression"
-            },
-            "usage": "Implicit promotion of literal references to 'static"
+            "description": "Constant promotion allows certain expressions to be promoted to static memory. In iceoryx2, this occurs implicitly with literal references and const-evaluable expressions.",
+            "patterns": [
+              "Literal array references (&[1, 2, 3]) promoted to 'static",
+              "const fn results used in static contexts",
+              "Compile-time string literals"
+            ]
           },
-          "samples": []
+          "samples": [
+            {
+              "file": "iceoryx2-userland/record-and-replay/tests/recorder_tests.rs",
+              "line": [73, 74, 75],
+              "code": "system_header: &[0u8; 8],\nuser_header: &[0u8; 0],\npayload: &[0u8; 8],",
+              "purpose": "Literal arrays promoted to static lifetime for test fixtures"
+            }
+          ]
         }
       }
     }

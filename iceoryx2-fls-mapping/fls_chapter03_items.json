@@ -20,18 +20,304 @@
     ]
   },
   "summary": "FLS Chapter 3 defines Items as the building blocks of a Rust program. Items are declarations that introduce names and define types, functions, modules, and other constructs. This mapping covers all item categories found in iceoryx2.",
-  "statistics": {},
+  "statistics": {
+    "constant_declaration": 4122,
+    "enum_declaration": 407,
+    "external_block": 11,
+    "external_crate_import": 324,
+    "function_declaration": 8810,
+    "implementation": 2554,
+    "macro_rules_declaration": 27,
+    "module_declaration": 1022,
+    "static_declaration": 85,
+    "static_mut_declaration": 14,
+    "struct_declaration": 1079,
+    "terminated_macro_invocation": 8492,
+    "trait_declaration": 126,
+    "type_alias_declaration": 1204,
+    "union_declaration": 42,
+    "use_import": 5854
+  },
   "sections": {
-    "modules": {
-      "fls_section": "3.1 Modules (covered in Chapter 18)",
-      "description": "Modules organize items hierarchically within a crate",
+    "constant_declaration": {
+      "fls_section": "3.0.1",
+      "fls_ids": [
+        "fls_extracted_from_syntax_block"
+      ],
+      "description": "Constant Declaration",
+      "status": "demonstrated",
       "findings": {
-        "total_modules": 1054,
-        "public_modules": "~600+",
-        "private_modules": "~450 (primarily test modules)",
-        "inline_modules": true,
-        "outline_modules": true,
-        "unsafe_modules": false
+        "analyzed": true
+      },
+      "samples": [
+        {
+          "file": "iceoryx2/src/constants.rs",
+          "line": [
+            14
+          ],
+          "code": "pub const MAX_SERVICE_NAME_LENGTH: usize = 255;",
+          "purpose": "Configuration constant"
+        }
+      ],
+      "safety_notes": [
+        "Constants are evaluated at compile time - no runtime cost",
+        "const fn enables compile-time computation of memory sizes",
+        "Size constants (MAX_*) define system limits - important for static analysis",
+        "NEW: Unchecked const creation functions added for SemanticString types (#1109)"
+      ]
+    },
+    "enum_declaration": {
+      "fls_section": "3.0.2",
+      "fls_ids": [
+        "fls_extracted_from_syntax_block"
+      ],
+      "description": "Enum Declaration",
+      "status": "demonstrated",
+      "findings": {
+        "analyzed": true
+      },
+      "samples": [
+        {
+          "file": "iceoryx2/src/service/service_name.rs",
+          "line": [
+            44,
+            45,
+            46
+          ],
+          "code": "pub enum ServiceNameError { InvalidContent, ExceedsMaximumLength }",
+          "purpose": "Error enum"
+        }
+      ],
+      "safety_notes": [
+        "#[repr(u32)] and #[repr(i32)] ensure ABI-stable discriminant types",
+        "Error enums follow Result<T, E> pattern for explicit error handling",
+        "Generic enums (NodeState<Service>) maintain type safety across variants",
+        "Discriminant values are explicitly controlled for FFI compatibility"
+      ]
+    },
+    "external_block": {
+      "fls_section": "3.0.3",
+      "fls_ids": [
+        "fls_extracted_from_syntax_block"
+      ],
+      "description": "External Block",
+      "status": "demonstrated",
+      "findings": {
+        "analyzed": true
+      },
+      "samples": [
+        {
+          "file": "iceoryx2-pal/posix/src/linux/pthread.rs",
+          "line": [
+            255,
+            256
+          ],
+          "code": "extern \"C\" { pub fn pthread_attr_setaffinity_np(...) }",
+          "purpose": "POSIX FFI binding"
+        }
+      ],
+      "safety_notes": [
+        "All extern blocks are for POSIX/platform APIs",
+        "Functions are pub(super) - restricted visibility",
+        "Platform-specific implementations (macos, linux, qnx, freebsd, windows)",
+        "No unsafe extern blocks (functions implicitly unsafe)",
+        "Custom C helper functions (iceoryx2_cmsg_*) for platform compatibility"
+      ]
+    },
+    "external_crate_import": {
+      "fls_section": "3.0.4",
+      "fls_ids": [
+        "fls_extracted_from_syntax_block"
+      ],
+      "description": "External Crate Import",
+      "status": "demonstrated",
+      "findings": {
+        "analyzed": true
+      },
+      "samples": [
+        {
+          "file": "iceoryx2-bb/elementary-traits/src/lib.rs",
+          "line": [
+            17
+          ],
+          "code": "extern crate alloc;"
+        },
+        {
+          "file": "iceoryx2/src/lib.rs",
+          "line": [
+            513
+          ],
+          "code": "extern crate alloc;"
+        },
+        {
+          "file": "iceoryx2/src/port/writer.rs",
+          "line": [
+            61
+          ],
+          "code": "extern crate alloc;"
+        },
+        {
+          "file": "iceoryx2/src/port/reader.rs",
+          "line": [
+            56
+          ],
+          "code": "extern crate alloc;"
+        },
+        {
+          "file": "iceoryx2-log/log/src/lib.rs",
+          "line": [
+            145
+          ],
+          "code": "extern crate alloc;"
+        },
+        {
+          "file": "iceoryx2-cal/src/lib.rs",
+          "line": [
+            17
+          ],
+          "code": "extern crate alloc;"
+        },
+        {
+          "file": "iceoryx2-bb/container/src/lib.rs",
+          "line": [
+            91
+          ],
+          "code": "extern crate alloc;"
+        },
+        {
+          "file": "iceoryx2-bb/derive-macros/src/lib.rs",
+          "line": [
+            19
+          ],
+          "code": "extern crate proc_macro;"
+        },
+        {
+          "file": "iceoryx2-log/loggers/src/lib.rs",
+          "line": [],
+          "code": "extern crate iceoryx2_log;"
+        }
+      ],
+      "safety_notes": [
+        "extern crate alloc - for #![no_std] support with heap allocation",
+        "extern crate proc_macro - only in derive macro crate",
+        "extern crate iceoryx2_loggers - NEW: logger backend linkage requirement",
+        "SIGNIFICANT INCREASE (20 -> 324) due to explicit core/alloc imports for no_std support (#865)",
+        "alloc usage indicates no_std compatible design"
+      ]
+    },
+    "function_declaration": {
+      "fls_section": "3.0.5",
+      "fls_ids": [
+        "fls_extracted_from_syntax_block"
+      ],
+      "description": "Function Declaration",
+      "status": "demonstrated",
+      "findings": {
+        "analyzed": true
+      },
+      "samples": [],
+      "safety_notes": [
+        "No async functions - synchronous IPC design",
+        "unsafe fn count significantly increased (200+ -> 1763) due to FFI layer",
+        "extern \"C\" fn count significantly increased due to C/C++ bindings",
+        "All extern \"C\" functions are critical for FFI correctness",
+        "FFI functions marked as pub unsafe extern \"C\" following best practices"
+      ]
+    },
+    "implementation": {
+      "fls_section": "3.0.6",
+      "fls_ids": [
+        "fls_extracted_from_syntax_block"
+      ],
+      "description": "Implementation",
+      "status": "demonstrated",
+      "findings": {
+        "analyzed": true
+      },
+      "samples": [
+        {
+          "file": "iceoryx2-bb/elementary-traits/src/zero_copy_send.rs",
+          "line": [
+            52
+          ],
+          "code": "unsafe impl ZeroCopySend for usize {}"
+        },
+        {
+          "file": "iceoryx2-bb/elementary-traits/src/zero_copy_send.rs",
+          "line": [
+            53,
+            54,
+            55,
+            56,
+            57,
+            58,
+            59,
+            60,
+            61,
+            62,
+            63,
+            64
+          ],
+          "code": "unsafe impl ZeroCopySend for u8 {} ... unsafe impl ZeroCopySend for i128 {}"
+        },
+        {
+          "file": "iceoryx2-bb/elementary-traits/src/zero_copy_send.rs",
+          "line": [
+            66,
+            67
+          ],
+          "code": "unsafe impl ZeroCopySend for f32 {} unsafe impl ZeroCopySend for f64 {}"
+        },
+        {
+          "file": "iceoryx2-bb/elementary-traits/src/zero_copy_send.rs",
+          "line": [
+            69,
+            70
+          ],
+          "code": "unsafe impl ZeroCopySend for char {} unsafe impl ZeroCopySend for bool {}"
+        },
+        {
+          "file": "iceoryx2-bb/elementary-traits/src/zero_copy_send.rs",
+          "line": [
+            72,
+            73,
+            74,
+            75
+          ],
+          "code": "unsafe impl ZeroCopySend for IoxAtomicUsize {} ... IoxAtomicU32 {}"
+        },
+        {
+          "file": "iceoryx2-bb/elementary-traits/src/zero_copy_send.rs",
+          "line": [
+            89
+          ],
+          "code": "unsafe impl<T: ZeroCopySend, const N: usize> ZeroCopySend for [T; N] {}"
+        },
+        {
+          "file": "iceoryx2-bb/elementary-traits/src/placement_default.rs",
+          "line": [
+            115
+          ],
+          "code": "impl<T: PlacementDefault, const CAPACITY: usize> PlacementDefault for [T; CAPACITY] {"
+        }
+      ],
+      "safety_notes": [
+        "unsafe impl required for ZeroCopySend marker trait",
+        "All primitive types have unsafe impl ZeroCopySend",
+        "Atomic types (IoxAtomic*) correctly marked as ZeroCopySend",
+        "Generic impl with const generics ([T; N]) properly constrained",
+        "NEW: 219 unsafe impl (increased from 80+) - expanded FFI layer"
+      ]
+    },
+    "module_declaration": {
+      "fls_section": "3.0.7",
+      "fls_ids": [
+        "fls_extracted_from_syntax_block"
+      ],
+      "description": "Module Declaration",
+      "status": "demonstrated",
+      "findings": {
+        "analyzed": true
       },
       "samples": [
         {
@@ -90,126 +376,54 @@
         "NEW: iceoryx2-ffi adds many modules for C/C++ bindings"
       ]
     },
-    "structs": {
-      "fls_section": "Struct Types (4.5.2)",
-      "description": "Structs define product types with named or positional fields",
+    "static_declaration": {
+      "fls_section": "3.0.8",
+      "fls_ids": [
+        "fls_extracted_from_syntax_block"
+      ],
+      "description": "Static Declaration",
+      "status": "demonstrated",
       "findings": {
-        "repr_samples": [
-          {
-            "path": "iceoryx2-bb/elementary-traits/src/owning_pointer.rs",
-            "lines": "27",
-            "line_fragment": "#[repr(C)]"
-          },
-          {
-            "path": "iceoryx2/src/node/mod.rs",
-            "lines": "200",
-            "line_fragment": "#[repr(C)]"
-          },
-          {
-            "path": "iceoryx2/src/raw_sample.rs",
-            "lines": "16",
-            "line_fragment": "#[repr(C)]"
-          },
-          {
-            "path": "iceoryx2/src/raw_sample.rs",
-            "lines": "127",
-            "line_fragment": "#[repr(C)]"
-          },
-          {
-            "path": "iceoryx2/src/port/details/data_segment.rs",
-            "lines": "39",
-            "line_fragment": "#[repr(C)]"
-          },
-          {
-            "path": "iceoryx2/src/sample_mut_uninit.rs",
-            "lines": "110",
-            "line_fragment": "#[repr(transparent)]"
-          },
-          {
-            "path": "iceoryx2/src/request_mut_uninit.rs",
-            "lines": "48",
-            "line_fragment": "#[repr(transparent)]"
-          },
-          {
-            "path": "iceoryx2-ffi/c/src/api/node.rs",
-            "lines": "various",
-            "line_fragment": "#[repr(C)] (FFI structs)"
-          }
-        ],
-        "total_structs": 874,
-        "record_structs": "majority",
-        "tuple_structs": "some",
-        "unit_structs": "few",
-        "generic_structs": "significant usage",
-        "repr_c_structs": "present (FFI compatibility)",
-        "repr_transparent_structs": "present (newtype pattern)"
+        "analyzed": true
       },
       "samples": [
         {
-          "file": "iceoryx2/src/node/node_name.rs",
+          "file": "iceoryx2-pal/posix/src/windows/errno.rs",
           "line": [
-            24
+            142
           ],
-          "code": "pub struct NodeName {"
-        },
+          "code": "pub static GLOBAL_ERRNO_VALUE: Cell<u32> = const { Cell::new(Errno::ESUCCES as _) };"
+        }
+      ],
+      "safety_notes": [
+        "CRITICAL: 14 static mut declarations (increased from 3 in v0.7.0)",
+        "static mut LOGGER - now in multiple locations due to logger restructuring",
+        "static mut STDOUT/STDERR - new logger backend infrastructure",
+        "static mut in FFI layer - C logger callback storage",
+        "static mut WSA_INSTANCE - Windows socket initialization, platform-specific",
+        "static mut INITIALIZATION_STATE - atomic, but still static mut",
+        "Cell<u32> pattern used for thread-local errno without static mut"
+      ]
+    },
+    "struct_declaration": {
+      "fls_section": "3.0.9",
+      "fls_ids": [
+        "fls_extracted_from_syntax_block"
+      ],
+      "description": "Struct Declaration",
+      "status": "demonstrated",
+      "findings": {
+        "analyzed": true
+      },
+      "samples": [
         {
-          "file": "iceoryx2/src/node/mod.rs",
+          "file": "iceoryx2-bb/posix/src/mutex.rs",
           "line": [
-            201
+            507,
+            508
           ],
-          "code": "pub struct NodeId(UniqueSystemId);"
-        },
-        {
-          "file": "iceoryx2/src/node/mod.rs",
-          "line": [
-            316
-          ],
-          "code": "pub struct NodeDetails {"
-        },
-        {
-          "file": "iceoryx2/src/node/mod.rs",
-          "line": [
-            845
-          ],
-          "code": "pub struct Node<Service: service::Service> {"
-        },
-        {
-          "file": "iceoryx2/src/node/mod.rs",
-          "line": [
-            1206
-          ],
-          "code": "pub struct NodeBuilder {"
-        },
-        {
-          "file": "iceoryx2/src/waitset.rs",
-          "line": [
-            311
-          ],
-          "code": "pub struct WaitSetAttachmentId<Service: crate::service::Service> {"
-        },
-        {
-          "file": "iceoryx2/src/waitset.rs",
-          "line": [
-            451
-          ],
-          "code": "pub struct WaitSetGuard<'waitset, 'attachment, Service: crate::service::Service>"
-        },
-        {
-          "file": "iceoryx2/src/waitset.rs",
-          "line": [
-            528
-          ],
-          "code": "pub struct WaitSet<Service: crate::service::Service> {"
-        },
-        {
-          "file": "iceoryx2-bb/container/src/vector/static_vec.rs",
-          "line": [54],
-          "code": "pub struct StaticVec<T, const CAPACITY: usize> { (NEW in v0.8.0)"
-        },
-        {
-          "file": "iceoryx2-bb/container/src/string/static_string.rs",
-          "line": [60],
-          "code": "pub struct StaticString<const CAPACITY: usize> { (NEW in v0.8.0)"
+          "code": "pub struct Mutex<'this, 'handle: 'this, T: Debug> { ... }",
+          "purpose": "POSIX mutex wrapper"
         }
       ],
       "safety_notes": [
@@ -221,196 +435,43 @@
         "NEW: StaticVec and StaticString replace FixedSizeVec/FixedSizeByteString with better no_std support"
       ]
     },
-    "enums": {
-      "fls_section": "Enum Types (4.5.1)",
-      "description": "Enums define sum types with variants",
+    "trait_declaration": {
+      "fls_section": "3.0.10",
+      "fls_ids": [
+        "fls_extracted_from_syntax_block"
+      ],
+      "description": "Trait Declaration",
+      "status": "demonstrated",
       "findings": {
-        "repr_samples": [
-          {
-            "path": "iceoryx2/src/service/messaging_pattern.rs",
-            "lines": "53-54",
-            "line_fragment": "#[repr(u32)] pub enum MessagingPattern {"
-          },
-          {
-            "path": "iceoryx2-bb/posix/src/file_type.rs",
-            "lines": "19-20",
-            "line_fragment": "#[repr(u32)] pub enum FileType {"
-          },
-          {
-            "path": "iceoryx2-bb/posix/src/memory_lock.rs",
-            "lines": "54-55",
-            "line_fragment": "#[repr(i32)] pub enum LockMode {"
-          },
-          {
-            "path": "iceoryx2-bb/posix/src/signal.rs",
-            "lines": "82-83",
-            "line_fragment": "#[repr(i32)] pub enum UnfetchableSignal {"
-          },
-          {
-            "path": "iceoryx2-bb/posix/src/signal.rs",
-            "lines": "101-102",
-            "line_fragment": "#[repr(i32)] pub enum FatalFetchableSignal {"
-          },
-          {
-            "path": "iceoryx2-bb/posix/src/signal.rs",
-            "lines": "119-120",
-            "line_fragment": "#[repr(i32)] pub enum Signal {"
-          },
-          {
-            "path": "iceoryx2-bb/posix/src/scheduler.rs",
-            "lines": "27-28",
-            "line_fragment": "#[repr(i32)] pub enum Scheduler {"
-          }
-        ],
-        "total_enums": 330,
-        "error_enums": "majority (error handling pattern)",
-        "repr_enums": "present (FFI compatibility)",
-        "generic_enums": "some"
+        "analyzed": true
       },
       "samples": [
         {
-          "file": "iceoryx2-bb/elementary-traits/src/allocator.rs",
+          "file": "iceoryx2-bb/elementary-traits/src/zero_copy_send.rs",
           "line": [
-            20
+            32
           ],
-          "code": "pub enum AllocationError {"
-        },
-        {
-          "file": "iceoryx2-bb/elementary-traits/src/allocator.rs",
-          "line": [
-            30
-          ],
-          "code": "pub enum AllocationGrowError {"
-        },
-        {
-          "file": "iceoryx2-bb/elementary-traits/src/allocator.rs",
-          "line": [
-            40
-          ],
-          "code": "pub enum AllocationShrinkError {"
-        },
-        {
-          "file": "iceoryx2/src/signal_handling_mode.rs",
-          "line": [
-            16
-          ],
-          "code": "pub enum SignalHandlingMode {"
-        },
-        {
-          "file": "iceoryx2/src/node/mod.rs",
-          "line": [
-            227
-          ],
-          "code": "pub enum NodeCreationFailure {"
-        },
-        {
-          "file": "iceoryx2/src/node/mod.rs",
-          "line": [
-            244
-          ],
-          "code": "pub enum NodeWaitFailure {"
-        },
-        {
-          "file": "iceoryx2/src/node/mod.rs",
-          "line": [
-            261
-          ],
-          "code": "pub enum NodeListFailure {"
-        },
-        {
-          "file": "iceoryx2/src/node/mod.rs",
-          "line": [
-            281
-          ],
-          "code": "pub enum NodeCleanupFailure {"
-        },
-        {
-          "file": "iceoryx2/src/node/mod.rs",
-          "line": [
-            369
-          ],
-          "code": "pub enum NodeState<Service: service::Service> {"
-        },
-        {
-          "file": "iceoryx2/src/waitset.rs",
-          "line": [
-            237
-          ],
-          "code": "pub enum WaitSetRunResult {"
-        },
-        {
-          "file": "iceoryx2/src/waitset.rs",
-          "line": [
-            251
-          ],
-          "code": "pub enum WaitSetAttachmentError {"
-        },
-        {
-          "file": "iceoryx2/src/config.rs",
-          "line": [
-            105
-          ],
-          "code": "pub enum ConfigCreationError {"
-        },
-        {
-          "file": "iceoryx2-ffi/c/src/api/mod.rs",
-          "line": [],
-          "code": "pub enum iox2_*_error_e (FFI error enums)"
+          "code": "pub unsafe trait ZeroCopySend { }",
+          "purpose": "Zero-copy safety trait"
         }
       ],
       "safety_notes": [
-        "#[repr(u32)] and #[repr(i32)] ensure ABI-stable discriminant types",
-        "Error enums follow Result<T, E> pattern for explicit error handling",
-        "Generic enums (NodeState<Service>) maintain type safety across variants",
-        "Discriminant values are explicitly controlled for FFI compatibility"
+        "Only ONE unsafe trait defined (ZeroCopySend) - requires careful review",
+        "Trait bounds (Send + Sync) enforce thread-safety at compile time",
+        "Supertraits create inheritance hierarchies for capability composition",
+        "Object-safe traits enable dyn usage (Log: Send + Sync)",
+        "NEW: Log trait moved to iceoryx2-log/log crate (frontend/backend split)"
       ]
     },
-    "unions": {
-      "fls_section": "Union Types (4.5.3)",
-      "description": "Unions allow multiple types to share the same memory location",
-      "findings": {
-        "total_unions": 42,
-        "note": "NEW in v0.8.0: Union types now used in FFI layer for C bindings and ZeroCopySend tests"
-      },
-      "samples": [
-        {
-          "file": "iceoryx2-ffi/c/src/api/static_config.rs",
-          "line": [
-            31
-          ],
-          "code": "pub union iox2_static_config_details_t {"
-        },
-        {
-          "file": "iceoryx2-ffi/c/src/api/publisher.rs",
-          "line": [],
-          "code": "pub union ... (FFI type unions)"
-        },
-        {
-          "file": "iceoryx2-ffi/c/src/api/subscriber.rs",
-          "line": [],
-          "code": "pub union ... (FFI type unions)"
-        },
-        {
-          "file": "iceoryx2-bb/derive-macros/src/zero_copy_send_compile_tests.rs",
-          "line": [],
-          "code": "union types for ZeroCopySend tests"
-        }
+    "type_alias_declaration": {
+      "fls_section": "3.0.11",
+      "fls_ids": [
+        "fls_extracted_from_syntax_block"
       ],
-      "safety_notes": [
-        "CHANGED from v0.7.0: Union types NOW USED (previously none)",
-        "Union access is inherently unsafe (requires unsafe block)",
-        "All unions are in FFI layer (iceoryx2-ffi/c) for C interop",
-        "ZeroCopySend now supports unions (#1144)",
-        "Review required: ensure all union accesses have proper safety justifications"
-      ]
-    },
-    "type_aliases": {
-      "fls_section": "Type Aliases (4.10)",
-      "description": "Type aliases introduce alternative names for existing types",
+      "description": "Type Alias Declaration",
+      "status": "demonstrated",
       "findings": {
-        "total_type_aliases": 1166,
-        "platform_specific_aliases": "present (recommended.rs pattern)",
-        "generic_aliases": "present"
+        "analyzed": true
       },
       "samples": [
         {
@@ -499,657 +560,44 @@
         "NEW: TypeNameString now uses StaticString instead of FixedSizeByteString"
       ]
     },
-    "traits": {
-      "fls_section": "Traits (4.13)",
-      "description": "Traits define shared behavior that types can implement",
-      "findings": {
-        "unsafe_trait_samples": [
-          {
-            "path": "iceoryx2-bb/elementary-traits/src/zero_copy_send.rs",
-            "lines": "34",
-            "line_fragment": "pub unsafe trait ZeroCopySend {"
-          }
-        ],
-        "total_traits": 106,
-        "unsafe_traits": 1,
-        "marker_traits": "present",
-        "object_safe_traits": "present (dyn usage)"
-      },
-      "samples": [
-        {
-          "file": "iceoryx2-bb/elementary-traits/src/placement_default.rs",
-          "line": [
-            55
-          ],
-          "code": "pub trait PlacementDefault {"
-        },
-        {
-          "file": "iceoryx2-bb/elementary-traits/src/pointer_trait.rs",
-          "line": [
-            18
-          ],
-          "code": "pub trait PointerTrait<T> {"
-        },
-        {
-          "file": "iceoryx2-bb/elementary-traits/src/allocator.rs",
-          "line": [
-            48
-          ],
-          "code": "pub trait BaseAllocator {"
-        },
-        {
-          "file": "iceoryx2-bb/elementary-traits/src/allocator.rs",
-          "line": [
-            80
-          ],
-          "code": "pub trait Allocator: BaseAllocator {"
-        },
-        {
-          "file": "iceoryx2-bb/elementary-traits/src/generic_pointer.rs",
-          "line": [
-            18
-          ],
-          "code": "pub trait GenericPointer {"
-        },
-        {
-          "file": "iceoryx2-bb/elementary-traits/src/relocatable_container.rs",
-          "line": [
-            20
-          ],
-          "code": "pub trait RelocatableContainer {"
-        },
-        {
-          "file": "iceoryx2/src/node/mod.rs",
-          "line": [
-            441
-          ],
-          "code": "pub trait NodeView {"
-        },
-        {
-          "file": "iceoryx2/src/port/update_connections.rs",
-          "line": [
-            48
-          ],
-          "code": "pub trait UpdateConnections {"
-        },
-        {
-          "file": "iceoryx2/src/service/port_factory/mod.rs",
-          "line": [
-            62
-          ],
-          "code": "pub trait PortFactory {"
-        },
-        {
-          "file": "iceoryx2/src/service/mod.rs",
-          "line": [
-            806
-          ],
-          "code": "pub trait ServiceResource {"
-        },
-        {
-          "file": "iceoryx2/src/service/mod.rs",
-          "line": [
-            823
-          ],
-          "code": "pub trait Service: Debug + Sized + internal::ServiceInternal<Self> + Clone {"
-        },
-        {
-          "file": "iceoryx2-log/log/src/lib.rs",
-          "line": [
-            175
-          ],
-          "code": "pub trait Log: Send + Sync {"
-        },
-        {
-          "file": "iceoryx2-cal/src/dynamic_storage/mod.rs",
-          "line": [
-            109
-          ],
-          "code": "pub trait DynamicStorageBuilder<'builder, T: Send + Sync, D: DynamicStorage<T>>:"
-        },
-        {
-          "file": "iceoryx2-cal/src/dynamic_storage/mod.rs",
-          "line": [
-            154
-          ],
-          "code": "pub trait DynamicStorage<T: Send + Sync>:"
-        },
-        {
-          "file": "iceoryx2-cal/src/zero_copy_connection/mod.rs",
-          "line": [
-            140
-          ],
-          "code": "pub trait ZeroCopyConnectionBuilder<C: ZeroCopyConnection>: NamedConceptBuilder<C> {"
-        },
-        {
-          "file": "iceoryx2-cal/src/zero_copy_connection/mod.rs",
-          "line": [
-            169
-          ],
-          "code": "pub trait ZeroCopySender: Debug + ZeroCopyPortDetails + NamedConcept + Send {"
-        }
+    "union_declaration": {
+      "fls_section": "3.0.12",
+      "fls_ids": [
+        "fls_extracted_from_syntax_block"
       ],
-      "safety_notes": [
-        "Only ONE unsafe trait defined (ZeroCopySend) - requires careful review",
-        "Trait bounds (Send + Sync) enforce thread-safety at compile time",
-        "Supertraits create inheritance hierarchies for capability composition",
-        "Object-safe traits enable dyn usage (Log: Send + Sync)",
-        "NEW: Log trait moved to iceoryx2-log/log crate (frontend/backend split)"
-      ]
-    },
-    "implementations": {
-      "fls_section": "Implementations (Chapter 11)",
-      "description": "Implementations associate methods and associated items with types",
+      "description": "Union Declaration",
+      "status": "demonstrated",
       "findings": {
-        "total_implementations": 2851,
-        "inherent_impls": "majority",
-        "trait_impls": "significant",
-        "unsafe_impl": 219
+        "analyzed": true
       },
       "samples": [
         {
-          "file": "iceoryx2-bb/elementary-traits/src/zero_copy_send.rs",
+          "file": "iceoryx2-ffi/c/src/api/writer.rs",
           "line": [
-            52
-          ],
-          "code": "unsafe impl ZeroCopySend for usize {}"
-        },
-        {
-          "file": "iceoryx2-bb/elementary-traits/src/zero_copy_send.rs",
-          "line": [
-            53,
-            54,
-            55,
-            56,
-            57,
-            58,
-            59,
-            60,
-            61,
-            62,
-            63,
-            64
-          ],
-          "code": "unsafe impl ZeroCopySend for u8 {} ... unsafe impl ZeroCopySend for i128 {}"
-        },
-        {
-          "file": "iceoryx2-bb/elementary-traits/src/zero_copy_send.rs",
-          "line": [
-            66,
-            67
-          ],
-          "code": "unsafe impl ZeroCopySend for f32 {} unsafe impl ZeroCopySend for f64 {}"
-        },
-        {
-          "file": "iceoryx2-bb/elementary-traits/src/zero_copy_send.rs",
-          "line": [
-            69,
-            70
-          ],
-          "code": "unsafe impl ZeroCopySend for char {} unsafe impl ZeroCopySend for bool {}"
-        },
-        {
-          "file": "iceoryx2-bb/elementary-traits/src/zero_copy_send.rs",
-          "line": [
-            72,
-            73,
-            74,
-            75
-          ],
-          "code": "unsafe impl ZeroCopySend for IoxAtomicUsize {} ... IoxAtomicU32 {}"
-        },
-        {
-          "file": "iceoryx2-bb/elementary-traits/src/zero_copy_send.rs",
-          "line": [
-            89
-          ],
-          "code": "unsafe impl<T: ZeroCopySend, const N: usize> ZeroCopySend for [T; N] {}"
-        },
-        {
-          "file": "iceoryx2-bb/elementary-traits/src/placement_default.rs",
-          "line": [
-            115
-          ],
-          "code": "impl<T: PlacementDefault, const CAPACITY: usize> PlacementDefault for [T; CAPACITY] {"
-        }
-      ],
-      "safety_notes": [
-        "unsafe impl required for ZeroCopySend marker trait",
-        "All primitive types have unsafe impl ZeroCopySend",
-        "Atomic types (IoxAtomic*) correctly marked as ZeroCopySend",
-        "Generic impl with const generics ([T; N]) properly constrained",
-        "NEW: 219 unsafe impl (increased from 80+) - expanded FFI layer"
-      ]
-    },
-    "constants": {
-      "fls_section": "Constants (Chapter 7.1)",
-      "description": "Constants define immutable values computed at compile time",
-      "findings": {
-        "const_fn_samples": [
-          {
-            "path": "iceoryx2/src/service/service_id.rs",
-            "lines": "47",
-            "line_fragment": "pub const fn max_number_of_characters() -> usize {"
-          },
-          {
-            "path": "iceoryx2/src/service/attribute.rs",
-            "lines": "346",
-            "line_fragment": "pub const fn capacity() -> usize {"
-          },
-          {
-            "path": "iceoryx2-bb/lock-free/src/mpmc/bit_set.rs",
-            "lines": "172",
-            "line_fragment": "pub const fn const_memory_size(capacity: usize) -> usize {"
-          },
-          {
-            "path": "iceoryx2-bb/lock-free/src/mpmc/container.rs",
-            "lines": "254",
-            "line_fragment": "pub const fn const_memory_size(capacity: usize) -> usize {"
-          },
-          {
-            "path": "iceoryx2-bb/lock-free/src/mpmc/unique_index_set.rs",
-            "lines": "314",
-            "line_fragment": "pub const fn const_memory_size(capacity: usize) -> usize {"
-          },
-          {
-            "path": "iceoryx2-bb/lock-free/src/spsc/index_queue.rs",
-            "lines": "193",
-            "line_fragment": "pub const fn const_memory_size(capacity: usize) -> usize {"
-          },
-          {
-            "path": "iceoryx2-bb/lock-free/src/spsc/index_queue.rs",
-            "lines": "349",
-            "line_fragment": "pub const fn capacity(&self) -> usize {"
-          },
-          {
-            "file": "iceoryx2-bb/container/src/semantic_string.rs",
-            "line": [482],
-            "code": "pub const unsafe fn new_unchecked_const(value: &[u8]) (NEW unchecked const constructors)"
-          }
-        ],
-        "total_constants": 5427,
-        "const_fn": "~100+",
-        "associated_constants": "present"
-      },
-      "samples": [
-        {
-          "file": "iceoryx2/src/constants.rs",
-          "line": [
-            13
-          ],
-          "code": "pub const MAX_SERVICE_NAME_LENGTH: usize = 255;"
-        },
-        {
-          "file": "iceoryx2/src/constants.rs",
-          "line": [
-            15
-          ],
-          "code": "pub const MAX_ATTRIBUTES: usize = 8;"
-        },
-        {
-          "file": "iceoryx2/src/constants.rs",
-          "line": [
-            16
-          ],
-          "code": "pub const MAX_ATTRIBUTE_KEY_LENGTH: usize = 64;"
-        },
-        {
-          "file": "iceoryx2/src/constants.rs",
-          "line": [
-            17
-          ],
-          "code": "pub const MAX_ATTRIBUTE_VALUE_LENGTH: usize = 256;"
-        },
-        {
-          "file": "iceoryx2/src/constants.rs",
-          "line": [
-            18
-          ],
-          "code": "pub const MAX_NODE_NAME_LENGTH: usize = 128;"
-        },
-        {
-          "file": "iceoryx2/src/constants.rs",
-          "line": [
-            19
-          ],
-          "code": "pub const MAX_TYPE_NAME_LENGTH: usize = 256;"
-        },
-        {
-          "file": "iceoryx2/src/service/service_name.rs",
-          "line": [
-            40
-          ],
-          "code": "pub const INTERNAL_SERVICE_PREFIX: &str = \"iox2://\";"
-        }
-      ],
-      "safety_notes": [
-        "Constants are evaluated at compile time - no runtime cost",
-        "const fn enables compile-time computation of memory sizes",
-        "Size constants (MAX_*) define system limits - important for static analysis",
-        "NEW: Unchecked const creation functions added for SemanticString types (#1109)"
-      ]
-    },
-    "statics": {
-      "fls_section": "Statics (Chapter 7.2)",
-      "description": "Statics define values with a fixed memory location for the program lifetime",
-      "findings": {
-        "static_mut_samples": [
-          {
-            "path": "iceoryx2-log/log/src/lib.rs",
-            "lines": "144",
-            "line_fragment": "static mut LOGGER: Option<&'static dyn Log> = None;"
-          },
-          {
-            "path": "iceoryx2-log/loggers/src/writer.rs",
-            "lines": "19",
-            "line_fragment": "static mut STDOUT: Stdout = Stdout;"
-          },
-          {
-            "path": "iceoryx2-log/loggers/src/writer.rs",
-            "lines": "28",
-            "line_fragment": "static mut STDERR: Stderr = Stderr;"
-          },
-          {
-            "path": "iceoryx2-ffi/c/src/api/log.rs",
-            "lines": "79",
-            "line_fragment": "static mut LOGGER: Option<CLogger> = None;"
-          },
-          {
-            "path": "iceoryx2-pal/posix/src/windows/socket.rs",
-            "lines": "51",
-            "line_fragment": "static mut WSA_INSTANCE: OnceCell<GlobalWsaInitializer> = OnceCell::new();"
-          },
-          {
-            "path": "iceoryx2-pal/posix/src/windows/socket.rs",
-            "lines": "52",
-            "line_fragment": "static mut INITIALIZATION_STATE: AtomicU8 = AtomicU8::new(0);"
-          }
-        ],
-        "total_statics": 454,
-        "mutable_statics": 14,
-        "thread_local": "present (Cell pattern)"
-      },
-      "samples": [
-        {
-          "file": "iceoryx2-pal/posix/src/windows/errno.rs",
-          "line": [
-            142
-          ],
-          "code": "pub static GLOBAL_ERRNO_VALUE: Cell<u32> = const { Cell::new(Errno::ESUCCES as _) };"
-        }
-      ],
-      "safety_notes": [
-        "CRITICAL: 14 static mut declarations (increased from 3 in v0.7.0)",
-        "static mut LOGGER - now in multiple locations due to logger restructuring",
-        "static mut STDOUT/STDERR - new logger backend infrastructure",
-        "static mut in FFI layer - C logger callback storage",
-        "static mut WSA_INSTANCE - Windows socket initialization, platform-specific",
-        "static mut INITIALIZATION_STATE - atomic, but still static mut",
-        "Cell<u32> pattern used for thread-local errno without static mut"
-      ]
-    },
-    "functions": {
-      "fls_section": "Functions (Chapter 9)",
-      "description": "Functions are reusable blocks of code with parameters and return values",
-      "findings": {
-        "unsafe_fn_samples": [
-          {
-            "path": "iceoryx2-bb/elementary-traits/src/zero_copy_send.rs",
-            "lines": "42",
-            "line_fragment": "unsafe fn type_name() -> &'static str {"
-          },
-          {
-            "path": "iceoryx2-bb/elementary-traits/src/placement_default.rs",
-            "lines": "65",
-            "line_fragment": "unsafe fn placement_default(ptr: *mut Self);"
-          },
-          {
-            "path": "iceoryx2-bb/elementary-traits/src/pointer_trait.rs",
-            "lines": "25",
-            "line_fragment": "unsafe fn as_ptr(&self) -> *const T;"
-          },
-          {
-            "path": "iceoryx2-bb/elementary-traits/src/pointer_trait.rs",
-            "lines": "33",
-            "line_fragment": "unsafe fn as_mut_ptr(&mut self) -> *mut T;"
-          },
-          {
-            "path": "iceoryx2-ffi/c/src/api/publisher.rs",
-            "lines": "various",
-            "line_fragment": "pub unsafe extern \"C\" fn iox2_publisher_* (FFI functions)"
-          }
-        ],
-        "extern_fn_samples": [
-          {
-            "path": "iceoryx2-bb/posix/src/signal.rs",
-            "lines": "303",
-            "line_fragment": "extern \"C\" fn handler(signal: posix::int) {"
-          },
-          {
-            "path": "iceoryx2-bb/posix/src/signal.rs",
-            "lines": "310",
-            "line_fragment": "extern \"C\" fn capture_signal(signal: posix::int) {"
-          },
-          {
-            "path": "iceoryx2-bb/posix/src/thread.rs",
-            "lines": "408",
-            "line_fragment": "extern \"C\" fn start_routine<'thread, FF, TT>(args: *mut posix::void) -> *mut posix::void"
-          },
-          {
-            "path": "iceoryx2-pal/posix/src/macos/pthread.rs",
-            "lines": "297",
-            "line_fragment": "unsafe extern \"C\" fn thread_callback(args: *mut void) -> *mut void {"
-          },
-          {
-            "path": "iceoryx2-ffi/c/src/api/node.rs",
-            "lines": "various",
-            "line_fragment": "pub unsafe extern \"C\" fn iox2_node_* (C API functions)"
-          }
-        ],
-        "total_functions": 10194,
-        "unsafe_fn": 1763,
-        "const_fn": "~100+",
-        "extern_fn": "~900+",
-        "async_fn": 0
-      },
-      "safety_notes": [
-        "No async functions - synchronous IPC design",
-        "unsafe fn count significantly increased (200+ -> 1763) due to FFI layer",
-        "extern \"C\" fn count significantly increased due to C/C++ bindings",
-        "All extern \"C\" functions are critical for FFI correctness",
-        "FFI functions marked as pub unsafe extern \"C\" following best practices"
-      ]
-    },
-    "extern_blocks": {
-      "fls_section": "External Blocks (Chapter 21.2)",
-      "description": "External blocks declare items from external (non-Rust) code",
-      "findings": {
-        "total_extern_blocks": 11,
-        "extern_c_blocks": "majority",
-        "platform_specific": true
-      },
-      "samples": [
-        {
-          "file": "iceoryx2-pal/posix/src/macos/errno.rs",
-          "line": [
-            182,
-            183,
-            184,
-            185
-          ],
-          "code": "extern \"C\" { pub(super) fn __error() -> *mut int; pub(super) fn strerror_r(...); }"
-        },
-        {
-          "file": "iceoryx2-pal/posix/src/macos/dirent.rs",
-          "line": [
-            49,
             50,
             51
           ],
-          "code": "extern \"C\" { pub(super) fn dirfd(dirp: *mut DIR) -> int; }"
-        },
-        {
-          "file": "iceoryx2-pal/posix/src/macos/pthread.rs",
-          "line": [
-            150,
-            151,
-            152,
-            153,
-            154,
-            155
-          ],
-          "code": "extern \"C\" { fn __libcpp_atomic_monitor(...); fn __libcpp_atomic_wait(...); }"
-        },
-        {
-          "file": "iceoryx2-pal/posix/src/qnx/select.rs",
-          "line": [
-            68,
-            69,
-            70,
-            71,
-            72,
-            73
-          ],
-          "code": "extern \"C\" { pub(super) fn iceoryx2_cmsg_space(...); ... }"
-        },
-        {
-          "file": "iceoryx2-pal/posix/src/linux/pthread.rs",
-          "line": [
-            255,
-            256,
-            257,
-            258,
-            259,
-            260
-          ],
-          "code": "extern \"C\" { pub(super) fn pthread_attr_setaffinity_np(...); }"
-        },
-        {
-          "file": "iceoryx2-pal/posix/src/linux/select.rs",
-          "line": [
-            68,
-            69,
-            70,
-            71,
-            72,
-            73
-          ],
-          "code": "extern \"C\" { pub(super) fn iceoryx2_cmsg_space(...); ... }"
+          "code": "pub union WriterUnion { ipc: ManuallyDrop<...>, local: ManuallyDrop<...> }",
+          "purpose": "FFI union"
         }
       ],
       "safety_notes": [
-        "All extern blocks are for POSIX/platform APIs",
-        "Functions are pub(super) - restricted visibility",
-        "Platform-specific implementations (macos, linux, qnx, freebsd, windows)",
-        "No unsafe extern blocks (functions implicitly unsafe)",
-        "Custom C helper functions (iceoryx2_cmsg_*) for platform compatibility"
+        "CHANGED from v0.7.0: Union types NOW USED (previously none)",
+        "Union access is inherently unsafe (requires unsafe block)",
+        "All unions are in FFI layer (iceoryx2-ffi/c) for C interop",
+        "ZeroCopySend now supports unions (#1144)",
+        "Review required: ensure all union accesses have proper safety justifications"
       ]
     },
-    "extern_crate": {
-      "fls_section": "Crate Imports (Chapter 18.4)",
-      "description": "Extern crate declarations import external crates",
-      "findings": {
-        "total_extern_crate": 324,
-        "alloc_crate": "most common",
-        "core_crate": "common",
-        "proc_macro_crate": 1
-      },
-      "samples": [
-        {
-          "file": "iceoryx2-bb/elementary-traits/src/lib.rs",
-          "line": [
-            17
-          ],
-          "code": "extern crate alloc;"
-        },
-        {
-          "file": "iceoryx2/src/lib.rs",
-          "line": [
-            513
-          ],
-          "code": "extern crate alloc;"
-        },
-        {
-          "file": "iceoryx2/src/port/writer.rs",
-          "line": [
-            61
-          ],
-          "code": "extern crate alloc;"
-        },
-        {
-          "file": "iceoryx2/src/port/reader.rs",
-          "line": [
-            56
-          ],
-          "code": "extern crate alloc;"
-        },
-        {
-          "file": "iceoryx2-log/log/src/lib.rs",
-          "line": [
-            145
-          ],
-          "code": "extern crate alloc;"
-        },
-        {
-          "file": "iceoryx2-cal/src/lib.rs",
-          "line": [
-            17
-          ],
-          "code": "extern crate alloc;"
-        },
-        {
-          "file": "iceoryx2-bb/container/src/lib.rs",
-          "line": [
-            91
-          ],
-          "code": "extern crate alloc;"
-        },
-        {
-          "file": "iceoryx2-bb/derive-macros/src/lib.rs",
-          "line": [
-            19
-          ],
-          "code": "extern crate proc_macro;"
-        },
-        {
-          "file": "iceoryx2-log/loggers/src/lib.rs",
-          "line": [],
-          "code": "extern crate iceoryx2_log;"
-        }
+    "use_import": {
+      "fls_section": "3.0.13",
+      "fls_ids": [
+        "fls_extracted_from_syntax_block"
       ],
-      "safety_notes": [
-        "extern crate alloc - for #![no_std] support with heap allocation",
-        "extern crate proc_macro - only in derive macro crate",
-        "extern crate iceoryx2_loggers - NEW: logger backend linkage requirement",
-        "SIGNIFICANT INCREASE (20 -> 324) due to explicit core/alloc imports for no_std support (#865)",
-        "alloc usage indicates no_std compatible design"
-      ]
-    },
-    "use_imports": {
-      "fls_section": "Use Imports (Chapter 14.7)",
-      "description": "Use declarations bring items into scope",
+      "description": "Use Import",
+      "status": "demonstrated",
       "findings": {
-        "glob_import_samples": [
-          {
-            "path": "iceoryx2-bb/elementary-traits/src/zero_copy_send.rs",
-            "lines": "13",
-            "line_fragment": "use iceoryx2_pal_concurrency_sync::iox_atomic::*;"
-          },
-          {
-            "path": "iceoryx2-bb/elementary-traits/src/placement_default.rs",
-            "lines": "19",
-            "line_fragment": "use iceoryx2_pal_concurrency_sync::iox_atomic::*;"
-          },
-          {
-            "path": "iceoryx2-bb/elementary-traits/src/lib.rs",
-            "lines": "21",
-            "line_fragment": "pub use crate::as_cstr::*;"
-          }
-        ],
-        "total_use_imports": 6647,
-        "pub_use": "present (re-exports)",
-        "glob_imports": "limited",
-        "nested_imports": "common"
+        "analyzed": true
       },
       "samples": [
         {
@@ -1214,106 +662,15 @@
         "SIGNIFICANT INCREASE (1960 -> 6647) due to no_std explicit imports"
       ]
     },
-    "visibility": {
-      "fls_section": "Visibility (Chapter 14.2)",
-      "description": "Visibility modifiers control access to items",
-      "findings": {
-        "pub": "common",
-        "pub_crate": "present",
-        "pub_super": "present",
-        "pub_in_path": "not used"
-      },
-      "samples": [
-        {
-          "file": "iceoryx2/src/sample_mut_uninit.rs",
-          "line": [
-            275
-          ],
-          "code": "pub(crate) fn new("
-        },
-        {
-          "file": "iceoryx2/src/sample.rs",
-          "line": [
-            54,
-            55,
-            56,
-            57
-          ],
-          "code": "pub(crate) ptr: RawSample<...>; pub(crate) subscriber_shared_state: ...; pub(crate) details: ...;"
-        },
-        {
-          "file": "iceoryx2/src/node/mod.rs",
-          "line": [
-            204
-          ],
-          "code": "pub(crate) fn as_file_name(&self) -> FileName {"
-        },
-        {
-          "file": "iceoryx2/src/node/mod.rs",
-          "line": [
-            738
-          ],
-          "code": "pub(crate) struct RegisteredServices {"
-        },
-        {
-          "file": "iceoryx2/src/node/mod.rs",
-          "line": [
-            798
-          ],
-          "code": "pub(crate) struct SharedNode<Service: service::Service> {"
-        },
-        {
-          "file": "iceoryx2-bb/lock-free/src/mpmc/bit_set.rs",
-          "line": [
-            167
-          ],
-          "code": "pub(super) const fn array_capacity(capacity: usize) -> usize {"
-        },
-        {
-          "file": "iceoryx2-bb/lock-free/src/spsc/index_queue.rs",
-          "line": [
-            112,
-            113
-          ],
-          "code": "pub(super) has_producer: IoxAtomicBool; pub(super) has_consumer: IoxAtomicBool;"
-        },
-        {
-          "file": "iceoryx2-pal/posix/src/macos/errno.rs",
-          "line": [
-            183,
-            184
-          ],
-          "code": "pub(super) fn __error() -> *mut int; pub(super) fn strerror_r(...);"
-        }
+    "macro_rules_declaration": {
+      "fls_section": "3.0.14",
+      "fls_ids": [
+        "fls_extracted_from_syntax_block"
       ],
-      "safety_notes": [
-        "pub(crate) used for internal implementation details",
-        "pub(super) used for module-private helpers",
-        "pub(in path) NOT USED - simplifies visibility reasoning",
-        "FFI functions are pub(super) - restricted to PAL layer"
-      ]
-    },
-    "derive_macros": {
-      "fls_section": "Derive Macros (Chapter 20.2)",
-      "description": "Derive macros automatically implement traits for types",
+      "description": "Macro Rules Declaration",
+      "status": "demonstrated",
       "findings": {
-        "common_derives": [
-          "Debug",
-          "Clone",
-          "Copy",
-          "PartialEq",
-          "Eq",
-          "Hash",
-          "Default"
-        ],
-        "serde_derives": [
-          "Serialize",
-          "Deserialize"
-        ],
-        "custom_derives": [
-          "PlacementDefault",
-          "ZeroCopySend"
-        ]
+        "analyzed": true
       },
       "samples": [
         {
@@ -1353,7 +710,9 @@
         },
         {
           "file": "iceoryx2-bb/container/src/string/static_string.rs",
-          "line": [58],
+          "line": [
+            58
+          ],
           "code": "#[derive(PlacementDefault, ZeroCopySend, Clone, Copy)] (NEW: StaticString implements Copy)"
         }
       ],
@@ -1363,6 +722,18 @@
         "Custom derives (PlacementDefault, ZeroCopySend) for safety-critical traits",
         "NEW: Copy now derived for StaticString, SemanticString (#1114)"
       ]
+    },
+    "terminated_macro_invocation": {
+      "fls_section": "3.0.15",
+      "fls_ids": [
+        "fls_extracted_from_syntax_block"
+      ],
+      "description": "Terminated Macro Invocation",
+      "status": "demonstrated",
+      "findings": {
+        "analyzed": true
+      },
+      "samples": []
     }
   },
   "safety_critical_summary": {

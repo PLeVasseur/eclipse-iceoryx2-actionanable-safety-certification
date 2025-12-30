@@ -22,13 +22,93 @@
   "summary": "FLS Chapter 11 defines implementations as items that supplement an implementing type by extending its functionality. There are two kinds: inherent implementations (adding direct functionality) and trait implementations (adding functionality specified by a trait). iceoryx2 v0.8.0 uses 2,397 impl blocks total, with heavy use of trait implementations for abstraction and unsafe impl for Send/Sync markers on IPC and FFI types.",
   "statistics": {
     "total_impl_blocks": 2397,
+    "inherent_impl_blocks": 1336,
     "trait_implementations": 956,
-    "generic_implementations": 571,
-    "unsafe_trait_implementations": 219,
-    "blanket_implementations": 1,
-    "ref_implementations": 2
+    "generic_implementations": 333,
+    "unsafe_impl_blocks": 66,
+    "trait_definitions": 124
   },
-  "sections": {},
+  "sections": {
+    "implementation_coherence": {
+      "fls_section": "11.1",
+      "fls_ids": [
+        "fls_46ork6fz5o2e"
+      ],
+      "description": "Implementation Coherence",
+      "status": "demonstrated",
+      "findings": {
+        "patterns": [
+          "Orphan rule compliance",
+          "Platform-specific implementations via cfg",
+          "Generic implementations with distinct bounds"
+        ],
+        "coherence_strategies": {
+          "local_trait_for_local_type": true,
+          "foreign_trait_for_local_type": true
+        }
+      },
+      "samples": [
+        {
+          "file": "iceoryx2-bb/testing/src/lifetime_tracker.rs",
+          "line": [
+            50
+          ],
+          "code": "unsafe impl ZeroCopySend for LifetimeTracker {}",
+          "purpose": "Local trait for local type (coherent)"
+        },
+        {
+          "file": "iceoryx2-bb/posix/src/socket_ancillary.rs",
+          "line": [
+            167
+          ],
+          "code": "impl Display for SocketCred { ... }",
+          "purpose": "Foreign trait (Display) for local type"
+        }
+      ]
+    },
+    "implementation_conformance": {
+      "fls_section": "11.2",
+      "fls_ids": [
+        "fls_e1pgdlv81vul"
+      ],
+      "description": "Implementation Conformance",
+      "status": "demonstrated",
+      "findings": {
+        "patterns": [
+          "All required trait methods implemented",
+          "All associated types bound",
+          "Default implementations used"
+        ],
+        "common_conformance": {
+          "Default": 55,
+          "Drop": 41,
+          "From": 143,
+          "Deref": 4
+        }
+      },
+      "samples": [
+        {
+          "file": "iceoryx2-bb/posix/src/mutex.rs",
+          "line": [
+            190,
+            191,
+            192
+          ],
+          "code": "impl<T: Debug> Deref for MutexGuard { type Target = T; fn deref(&self) -> &Self::Target { ... } }",
+          "purpose": "Complete Deref conformance with associated type"
+        },
+        {
+          "file": "iceoryx2-bb/posix/src/barrier.rs",
+          "line": [
+            162,
+            163
+          ],
+          "code": "unsafe impl Send for BarrierHandle {}\nunsafe impl Sync for BarrierHandle {}",
+          "purpose": "Marker trait implementations for thread safety"
+        }
+      ]
+    }
+  },
   "cross_chapter_references": {
     "chapter_3": "Implementations are items",
     "chapter_4": "Implementing types are types; trait implementations implement traits",

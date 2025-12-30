@@ -39,59 +39,312 @@
     "use_super_imports": 243
   },
   "sections": {
-    "14.1": {
+    "entities": {
       "fls_section": "14.1",
-      "fls_ids": [],
+      "fls_ids": [
+        "fls_151r19d7xbgz"
+      ],
       "description": "Entities",
-      "status": "demonstrated"
+      "status": "demonstrated",
+      "findings": {},
+      "samples": []
     },
-    "14.2": {
+    "visibility": {
       "fls_section": "14.2",
-      "fls_ids": [],
+      "fls_ids": [
+        "fls_jdknpu3kf865"
+      ],
       "description": "Visibility",
-      "status": "demonstrated"
+      "status": "demonstrated",
+      "findings": {
+        "pub": "common",
+        "pub_crate": "present",
+        "pub_super": "present",
+        "pub_in_path": "not used"
+      },
+      "samples": [
+        {
+          "file": "iceoryx2/src/sample_mut_uninit.rs",
+          "line": [
+            275
+          ],
+          "code": "pub(crate) fn new("
+        },
+        {
+          "file": "iceoryx2/src/sample.rs",
+          "line": [
+            54,
+            55,
+            56,
+            57
+          ],
+          "code": "pub(crate) ptr: RawSample<...>; pub(crate) subscriber_shared_state: ...; pub(crate) details: ...;"
+        },
+        {
+          "file": "iceoryx2/src/node/mod.rs",
+          "line": [
+            204
+          ],
+          "code": "pub(crate) fn as_file_name(&self) -> FileName {"
+        },
+        {
+          "file": "iceoryx2/src/node/mod.rs",
+          "line": [
+            738
+          ],
+          "code": "pub(crate) struct RegisteredServices {"
+        },
+        {
+          "file": "iceoryx2/src/node/mod.rs",
+          "line": [
+            798
+          ],
+          "code": "pub(crate) struct SharedNode<Service: service::Service> {"
+        },
+        {
+          "file": "iceoryx2-bb/lock-free/src/mpmc/bit_set.rs",
+          "line": [
+            167
+          ],
+          "code": "pub(super) const fn array_capacity(capacity: usize) -> usize {"
+        },
+        {
+          "file": "iceoryx2-bb/lock-free/src/spsc/index_queue.rs",
+          "line": [
+            112,
+            113
+          ],
+          "code": "pub(super) has_producer: IoxAtomicBool; pub(super) has_consumer: IoxAtomicBool;"
+        },
+        {
+          "file": "iceoryx2-pal/posix/src/macos/errno.rs",
+          "line": [
+            183,
+            184
+          ],
+          "code": "pub(super) fn __error() -> *mut int; pub(super) fn strerror_r(...);"
+        }
+      ],
+      "safety_notes": [
+        "pub(crate) used for internal implementation details",
+        "pub(super) used for module-private helpers",
+        "pub(in path) NOT USED - simplifies visibility reasoning",
+        "FFI functions are pub(super) - restricted to PAL layer"
+      ]
     },
-    "14.3": {
+    "paths": {
       "fls_section": "14.3",
-      "fls_ids": [],
+      "fls_ids": [
+        "fls_9i5msiuuyihf"
+      ],
       "description": "Paths",
-      "status": "demonstrated"
+      "status": "demonstrated",
+      "findings": {},
+      "samples": []
     },
-    "14.4": {
+    "scopes": {
       "fls_section": "14.4",
-      "fls_ids": [],
+      "fls_ids": [
+        "fls_izl8iuhoz9e0"
+      ],
       "description": "Scopes",
-      "status": "demonstrated"
+      "status": "demonstrated",
+      "findings": {},
+      "samples": [],
+      "subsections": {
+        "binding_scopes": {
+          "fls_section": "14.4.1",
+          "fls_ids": [
+            "fls_6ozthochxz1i"
+          ],
+          "description": "Binding Scopes",
+          "status": "demonstrated",
+          "findings": {"description": "Variable bindings scoped to their enclosing block."},
+          "samples": []
+        },
+        "generic_parameter_scope": {
+          "fls_section": "14.4.2",
+          "fls_ids": [
+            "fls_ftphlagzd2te"
+          ],
+          "description": "Generic Parameter Scope",
+          "status": "demonstrated",
+          "findings": {"description": "Generic parameters scoped to their declaring item."},
+          "samples": []
+        },
+        "item_scope": {
+          "fls_section": "14.4.3",
+          "fls_ids": [
+            "fls_m0z7omni9hp0"
+          ],
+          "description": "Item Scope",
+          "status": "demonstrated",
+          "findings": {"description": "Items scoped to their containing module."},
+          "samples": []
+        },
+        "label_scope": {
+          "fls_section": "14.4.4",
+          "fls_ids": [
+            "fls_769b4p8v3cwu"
+          ],
+          "description": "Label Scope",
+          "status": "limited_use",
+          "findings": {"description": "Loop labels have limited use in iceoryx2."},
+          "samples": []
+        },
+        "self_scope": {
+          "fls_section": "14.4.5",
+          "fls_ids": [
+            "fls_kgbi26212eof"
+          ],
+          "description": "Self Scope",
+          "status": "demonstrated",
+          "findings": {"self_paths": 11, "description": "self:: paths for module-relative imports."},
+          "samples": []
+        },
+        "textual_macro_scope": {
+          "fls_section": "14.4.6",
+          "fls_ids": [
+            "fls_octf6sf7yso"
+          ],
+          "description": "Textual Macro Scope",
+          "status": "demonstrated",
+          "findings": {"description": "Declarative macros have textual scope. #[macro_export] for visibility."},
+          "samples": []
+        },
+        "scope_hierarchy": {
+          "fls_section": "14.4.7",
+          "fls_ids": [
+            "fls_lnpyb285qdiy"
+          ],
+          "description": "Scope Hierarchy",
+          "status": "demonstrated",
+          "findings": {"description": "Standard Rust scope hierarchy applies."},
+          "samples": []
+        }
+      }
     },
-    "14.5": {
+    "namespaces": {
       "fls_section": "14.5",
-      "fls_ids": [],
+      "fls_ids": [
+        "fls_dq403wq5yrs"
+      ],
       "description": "Namespaces",
-      "status": "demonstrated"
+      "status": "demonstrated",
+      "findings": {},
+      "samples": []
     },
-    "14.6": {
+    "preludes": {
       "fls_section": "14.6",
-      "fls_ids": [],
+      "fls_ids": [
+        "fls_ld0ize96cm6m"
+      ],
       "description": "Preludes",
-      "status": "demonstrated"
+      "status": "demonstrated",
+      "findings": {},
+      "samples": []
     },
-    "14.7": {
+    "use_imports": {
       "fls_section": "14.7",
-      "fls_ids": [],
+      "fls_ids": [
+        "fls_9gprp17h6t1q"
+      ],
       "description": "Use Imports",
-      "status": "demonstrated"
+      "status": "demonstrated",
+      "findings": {},
+      "samples": []
     },
-    "14.8": {
+    "shadowing": {
       "fls_section": "14.8",
-      "fls_ids": [],
+      "fls_ids": [
+        "fls_ydmnb7qnmzzq"
+      ],
       "description": "Shadowing",
-      "status": "demonstrated"
+      "status": "demonstrated",
+      "findings": {},
+      "samples": []
     },
-    "14.9": {
+    "resolution": {
       "fls_section": "14.9",
-      "fls_ids": [],
+      "fls_ids": [
+        "fls_40xoego2thsp"
+      ],
       "description": "Resolution",
-      "status": "demonstrated"
+      "status": "demonstrated",
+      "findings": {},
+      "samples": [],
+      "subsections": {
+        "field_resolution": {
+          "fls_section": "14.9.1",
+          "fls_ids": [
+            "fls_xcwfotmq2e5d"
+          ],
+          "description": "Field Resolution",
+          "status": "demonstrated",
+          "findings": {"description": "Field access resolved via struct type."},
+          "samples": []
+        },
+        "method_resolution": {
+          "fls_section": "14.9.2",
+          "fls_ids": [
+            "fls_wqazkzle0ix9"
+          ],
+          "description": "Method Resolution",
+          "status": "demonstrated",
+          "findings": {"method_calls": 28421, "description": "Methods resolved via receiver type and trait impls."},
+          "samples": []
+        },
+        "call_resolution": {
+          "fls_section": "14.9.3",
+          "fls_ids": [],
+          "description": "Call Resolution",
+          "status": "demonstrated",
+          "findings": {"description": "Function calls resolved via path or closure type."},
+          "samples": []
+        },
+        "path_resolution": {
+          "fls_section": "14.9.4",
+          "fls_ids": [
+            "fls_i6qzga6dyaee"
+          ],
+          "description": "Path Resolution",
+          "status": "demonstrated",
+          "findings": {"crate_paths": 5145, "super_paths": 354},
+          "samples": [],
+          "subsections": {
+            "simple_path_resolution": {
+              "fls_section": "14.9.4.1",
+              "fls_ids": [
+                "fls_bbso3c45kr9z"
+              ],
+              "description": "Simple Path Resolution",
+              "status": "demonstrated",
+              "findings": {"description": "Simple paths in use statements and attributes."},
+              "samples": []
+            },
+            "path_expression_resolution": {
+              "fls_section": "14.9.4.2",
+              "fls_ids": [
+                "fls_o9u2h5m17kpz"
+              ],
+              "description": "Path Expression Resolution",
+              "status": "demonstrated",
+              "findings": {"description": "Path expressions for values (functions, constants, statics)."},
+              "samples": []
+            },
+            "type_path_resolution": {
+              "fls_section": "14.9.4.3",
+              "fls_ids": [
+                "fls_1h0olpc7vbui"
+              ],
+              "description": "Type Path Resolution",
+              "status": "demonstrated",
+              "findings": {"description": "Type paths for type annotations and turbofish."},
+              "samples": []
+            }
+          }
+        }
+      }
     }
   },
   "design_patterns": {

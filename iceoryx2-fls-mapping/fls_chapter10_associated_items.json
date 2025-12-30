@@ -25,30 +25,124 @@
   },
   "summary": "FLS Chapter 10 defines associated items as items that appear within implementations or traits. There are three kinds: associated constants, associated functions (including methods with self parameter), and associated types. iceoryx2 v0.8.0 extensively uses all three, with particular emphasis on trait-based abstraction for IPC backends, Generic Associated Types (GATs) for reactor/guard patterns, and methods for the primary API.",
   "statistics": {
-    "impl_blocks_total": 2397,
-    "trait_definitions": 117,
-    "trait_implementations": 956,
-    "type_aliases": 578,
+    "total_const_declarations": 2833,
+    "public_const_declarations": 568,
+    "const_fn_declarations": 113,
+    "type_alias_definitions": 578,
     "associated_type_declarations": 3,
-    "associated_constants": 3792,
-    "generic_associated_types": 40,
-    "methods_with_self": 3526,
-    "methods_ref_self": 2349,
-    "methods_mut_self": 485,
-    "fn_new_constructors": 351,
-    "pub_fn_in_impl": 2675,
-    "common_trait_impls": {
-      "From": 143,
-      "Default": 55,
-      "Drop": 41,
-      "Send": 25,
-      "Display": 19,
-      "Sync": 18,
-      "Debug": 16,
-      "Clone": 3
+    "total_impl_blocks": 2397,
+    "trait_implementations": 956
+  },
+  "sections": {
+    "constant_declaration": {
+      "fls_section": "10.0.1",
+      "fls_ids": [
+        "fls_extracted_from_syntax_block"
+      ],
+      "description": "Constant Declaration",
+      "status": "demonstrated",
+      "findings": {
+        "count": 2833,
+        "public_count": 568,
+        "const_fn_count": 113
+      },
+      "samples": [
+        {
+          "file": "iceoryx2-pal/configuration/src/lib.rs",
+          "line": [
+            37,
+            41,
+            44
+          ],
+          "code": "pub const PATH_SEPARATOR: u8 = b'/';\npub const FILENAME_LENGTH: usize = 255;",
+          "purpose": "Platform-specific path configuration constants"
+        },
+        {
+          "file": "iceoryx2-bb/system-types/src/ipv4_address.rs",
+          "line": [
+            25,
+            26,
+            27
+          ],
+          "code": "pub const LOCALHOST: Ipv4Address = Ipv4Address::new(127, 0, 0, 1);",
+          "purpose": "Well-known IPv4 address constants using const fn"
+        }
+      ]
+    },
+    "function_declaration": {
+      "fls_section": "10.0.2",
+      "fls_ids": [
+        "fls_extracted_from_syntax_block"
+      ],
+      "description": "Function Declaration",
+      "status": "demonstrated",
+      "findings": {
+        "total_functions": 8459,
+        "fn_new_constructors": 351,
+        "common_trait_impls": {
+          "From": 143,
+          "Default": 55,
+          "Drop": 41
+        }
+      },
+      "samples": [
+        {
+          "file": "iceoryx2/src/service/service_name.rs",
+          "line": [
+            84
+          ],
+          "code": "pub fn new(name: &str) -> Result<Self, ServiceNameError>",
+          "purpose": "Fallible constructor pattern"
+        },
+        {
+          "file": "iceoryx2-bb/posix/src/mutex.rs",
+          "line": [
+            190,
+            191,
+            192
+          ],
+          "code": "impl<T: Debug> Deref for MutexGuard { type Target = T; fn deref(&self) -> &Self::Target { ... } }",
+          "purpose": "Deref implementation for RAII guard"
+        }
+      ]
+    },
+    "type_alias_declaration": {
+      "fls_section": "10.0.3",
+      "fls_ids": [
+        "fls_extracted_from_syntax_block"
+      ],
+      "description": "Type Alias Declaration",
+      "status": "demonstrated",
+      "findings": {
+        "type_alias_definitions": 578,
+        "associated_type_declarations": 3,
+        "patterns": [
+          "Error types",
+          "Target types",
+          "Builder types"
+        ]
+      },
+      "samples": [
+        {
+          "file": "iceoryx2/src/service/port_factory/mod.rs",
+          "line": [
+            68,
+            72
+          ],
+          "code": "type StaticConfig;\ntype DynamicConfig;",
+          "purpose": "Associated type declarations in PortFactory trait"
+        },
+        {
+          "file": "iceoryx2-bb/posix/src/mutex.rs",
+          "line": [
+            191
+          ],
+          "code": "type Target = T;",
+          "purpose": "Associated type binding in Deref impl"
+        }
+      ]
     }
   },
-  "sections": {},
   "design_patterns": {
     "trait_abstraction_for_backends": {
       "description": "Traits define contracts, implementations provide platform-specific backends",

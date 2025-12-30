@@ -27,33 +27,255 @@
   },
   "summary": "FLS Chapter 9 defines functions as values of function types that model behavior. Each function declares a unique function item type. The chapter covers function qualifiers (const, async, unsafe), function parameters (including self parameter for methods), return types, function bodies, and function signatures. iceoryx2 v0.8.0 demonstrates massive growth in FFI functions for C/C++ bindings, heavy use of unsafe functions for systems programming, and const functions for compile-time evaluation.",
   "statistics": {
-    "total_fn_declarations": 8422,
-    "public_functions": 2809,
-    "pub_crate_functions": 276,
-    "private_functions": 5337,
-    "const_fn": 113,
+    "total_fn_declarations": 9884,
+    "pub_fn": 2809,
     "unsafe_fn": 1763,
-    "async_fn": 0,
+    "const_fn": 113,
     "extern_c_fn": 630,
-    "methods_with_self": 3526,
-    "methods_ref_self": 2349,
-    "methods_mut_self": 485,
-    "generic_functions": 1425,
-    "functions_returning_result": 835,
-    "functions_returning_option": 217,
-    "functions_returning_self": 1107,
-    "functions_returning_bool": 392,
-    "functions_returning_usize": 354,
-    "where_clauses": 182,
-    "impl_blocks": 2397,
-    "test_functions": 960,
-    "inline_attribute": 32,
-    "must_use_attribute": 8,
-    "no_mangle_attribute": 602,
-    "extern_c_blocks": 11,
-    "extern_rust_blocks": 1
+    "async_fn": 0,
+    "no_mangle_functions": 602,
+    "generic_functions": 1418,
+    "fn_new_constructors": 354,
+    "return_result": 1396,
+    "return_option": 235,
+    "return_self": 1216,
+    "ref_self": 1537,
+    "ref_mut_self": 265,
+    "owned_self": 530
   },
-  "sections": {},
+  "sections": {
+    "function_declaration": {
+      "fls_section": "9.0.1",
+      "fls_ids": [
+        "fls_extracted_from_syntax_block"
+      ],
+      "description": "Function Declaration",
+      "status": "demonstrated",
+      "findings": {
+        "total_declarations": 9884,
+        "pub_functions": 2809
+      },
+      "samples": [
+        {
+          "file": "iceoryx2-bb/posix/src/mutex.rs",
+          "line": [
+            281,
+            282,
+            283
+          ],
+          "code": "pub fn new() -> Self { Self::default() }",
+          "purpose": "Constructor following Rust naming conventions"
+        }
+      ]
+    },
+    "function_qualifier_list": {
+      "fls_section": "9.0.2",
+      "fls_ids": [
+        "fls_extracted_from_syntax_block"
+      ],
+      "description": "Function Qualifier List",
+      "status": "demonstrated",
+      "findings": {
+        "const_fn": 113,
+        "unsafe_fn": 1763,
+        "async_fn": 0,
+        "extern_c_fn": 630,
+        "note": "async fn intentionally avoided for deterministic behavior"
+      },
+      "samples": [
+        {
+          "file": "iceoryx2-bb/elementary/src/lazy_singleton.rs",
+          "line": [
+            60,
+            61,
+            62
+          ],
+          "code": "pub const fn new() -> Self { ... }",
+          "purpose": "const fn constructor for compile-time initialization"
+        },
+        {
+          "file": "iceoryx2-ffi/c/src/api/service_name.rs",
+          "line": [
+            125,
+            126,
+            127
+          ],
+          "code": "#[no_mangle] pub unsafe extern \"C\" fn iox2_service_name_new(...)",
+          "purpose": "extern C function for FFI"
+        }
+      ]
+    },
+    "function_parameter_list": {
+      "fls_section": "9.0.3",
+      "fls_ids": [
+        "fls_extracted_from_syntax_block"
+      ],
+      "description": "Function Parameter List",
+      "status": "demonstrated",
+      "findings": {
+        "variadic_functions": 0
+      },
+      "samples": [
+        {
+          "file": "iceoryx2-ffi/c/src/api/service_name.rs",
+          "line": [
+            126,
+            127,
+            128
+          ],
+          "code": "service_name_struct_ptr: *mut iox2_service_name_t, service_name_str: *const c_char",
+          "purpose": "C-compatible parameter list"
+        }
+      ]
+    },
+    "function_parameter": {
+      "fls_section": "9.0.4",
+      "fls_ids": [
+        "fls_extracted_from_syntax_block"
+      ],
+      "description": "Function Parameter",
+      "status": "demonstrated",
+      "findings": {
+        "all_typed": true,
+        "fn_mut_callbacks": 106
+      },
+      "samples": [
+        {
+          "file": "iceoryx2/src/service/dynamic_config/request_response.rs",
+          "line": [
+            182
+          ],
+          "code": "pub fn list_servers<F: FnMut(&ServerDetails) -> CallbackProgression>(&self, mut callback: F)",
+          "purpose": "Callback parameter with FnMut trait bound"
+        }
+      ]
+    },
+    "function_parameter_pattern": {
+      "fls_section": "9.0.5",
+      "fls_ids": [
+        "fls_extracted_from_syntax_block"
+      ],
+      "description": "Function Parameter Pattern",
+      "status": "demonstrated",
+      "findings": {
+        "patterns": [
+          "simple identifiers",
+          "mut bindings"
+        ]
+      },
+      "samples": []
+    },
+    "function_parameter_variadic_part": {
+      "fls_section": "9.0.6",
+      "fls_ids": [
+        "fls_extracted_from_syntax_block"
+      ],
+      "description": "Function Parameter Variadic Part",
+      "status": "not_used",
+      "findings": {
+        "count": 0,
+        "note": "No variadic functions - parameter lists are explicit"
+      },
+      "samples": []
+    },
+    "return_type": {
+      "fls_section": "9.0.7",
+      "fls_ids": [
+        "fls_extracted_from_syntax_block"
+      ],
+      "description": "Return Type",
+      "status": "demonstrated",
+      "findings": {
+        "result_returns": 1396,
+        "option_returns": 235,
+        "self_returns": 1216,
+        "never_type": 3
+      },
+      "samples": [
+        {
+          "file": "iceoryx2-bb/posix/src/mutex.rs",
+          "line": [
+            552
+          ],
+          "code": "pub fn lock(&self) -> Result<MutexGuard<T>, MutexLockError<T>>",
+          "purpose": "Result return with lifetime-annotated types"
+        },
+        {
+          "file": "iceoryx2/src/port/listener.rs",
+          "line": [
+            217
+          ],
+          "code": "pub fn deadline(&self) -> Option<Duration>",
+          "purpose": "Option return for nullable values"
+        }
+      ]
+    },
+    "function_body": {
+      "fls_section": "9.0.8",
+      "fls_ids": [
+        "fls_extracted_from_syntax_block"
+      ],
+      "description": "Function Body",
+      "status": "demonstrated",
+      "findings": {
+        "patterns": [
+          "early return with ?",
+          "match expressions",
+          "unsafe blocks"
+        ]
+      },
+      "samples": []
+    },
+    "self_parameter": {
+      "fls_section": "9.0.9",
+      "fls_ids": [
+        "fls_extracted_from_syntax_block"
+      ],
+      "description": "Self Parameter",
+      "status": "demonstrated",
+      "findings": {
+        "ref_self": 1537,
+        "ref_mut_self": 265,
+        "owned_self": 530
+      },
+      "samples": [
+        {
+          "file": "iceoryx2-bb/posix/src/mutex.rs",
+          "line": [
+            286,
+            287,
+            288
+          ],
+          "code": "pub fn clock_type(mut self, clock_type: ClockType) -> Self { ... }",
+          "purpose": "mut self for builder pattern"
+        }
+      ]
+    },
+    "shorthand_self": {
+      "fls_section": "9.0.10",
+      "fls_ids": [
+        "fls_extracted_from_syntax_block"
+      ],
+      "description": "Shorthand Self",
+      "status": "demonstrated",
+      "findings": {
+        "note": "Shorthand self patterns used throughout"
+      },
+      "samples": []
+    },
+    "typed_self": {
+      "fls_section": "9.0.11",
+      "fls_ids": [
+        "fls_extracted_from_syntax_block"
+      ],
+      "description": "Typed Self",
+      "status": "demonstrated",
+      "findings": {
+        "note": "Typed self used in some advanced patterns"
+      },
+      "samples": []
+    }
+  },
   "design_patterns": {
     "no_async": {
       "description": "Zero async functions - deliberate design for real-time IPC systems",

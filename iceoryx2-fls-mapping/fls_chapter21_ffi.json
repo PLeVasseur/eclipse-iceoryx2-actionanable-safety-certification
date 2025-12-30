@@ -11,10 +11,10 @@
     "to_version": "0.8.0",
     "summary": "MASSIVE FFI expansion - new iceoryx2-ffi/c crate provides complete C API with 585 #[no_mangle] functions, 42 union types, and comprehensive type bindings.",
     "key_changes": [
-      "extern C fn: 17 \u2192 630 (+3606%)",
-      "#[no_mangle]: ~0 \u2192 602 (NEW - C API exports)",
-      "#[repr(C)]: 160 \u2192 393 (+146%)",
-      "union types: 0 \u2192 42 (NEW - FFI discriminated unions)",
+      "extern C fn: 17 → 630 (+3606%)",
+      "#[no_mangle]: ~0 → 602 (NEW - C API exports)",
+      "#[repr(C)]: 160 → 393 (+146%)",
+      "union types: 0 → 42 (NEW - FFI discriminated unions)",
       "New crate: iceoryx2-ffi/c with 83 API modules",
       "New crate: iceoryx2-ffi/ffi-macros with iceoryx2_ffi attribute",
       "New crate: iceoryx2-ffi/python for Python bindings",
@@ -276,6 +276,27 @@
         }
       },
       "samples": []
+    },
+    "external_statics": {
+      "fls_section": "21.4",
+      "fls_ids": [
+        "fls_s4yt19sptl7d"
+      ],
+      "description": "External Statics",
+      "status": "demonstrated",
+      "findings": {
+        "description": "External statics are static items declared within an external block that are defined in external libraries. iceoryx2 uses external statics minimally, only in bare-metal examples.",
+        "usage": "Limited to linker-defined symbols in bare-metal examples",
+        "rationale": "Main codebase avoids extern statics - uses FFI function calls instead for better safety"
+      },
+      "samples": [
+        {
+          "file": "examples/nostd/bare-metal/rust/_common/src/global_allocator.rs",
+          "line": [20, 21, 22],
+          "code": "extern \"C\" {\n    static _heap_start: u8;\n    static _heap_end: u8;\n}",
+          "purpose": "Linker-defined symbols for heap memory bounds"
+        }
+      ]
     }
   },
   "design_patterns": {

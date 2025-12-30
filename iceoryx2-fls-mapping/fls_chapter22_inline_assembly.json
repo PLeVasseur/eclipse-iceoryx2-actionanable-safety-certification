@@ -11,212 +11,236 @@
     "to_version": "0.8.0",
     "summary": "Still NO inline assembly in core library. One global_asm! in bare-metal example for ARM startup. Fence usage slightly decreased as atomics restructured.",
     "key_changes": [
-      "asm! macro: 0 \u2192 0 (unchanged)",
-      "global_asm! macro: 0 \u2192 1 (bare-metal example only)",
-      "naked_asm! macro: 0 \u2192 0 (unchanged)",
-      "fence() usage: 12 \u2192 11 (-8%)",
-      "compiler_fence() usage: 8 \u2192 8 (unchanged)",
+      "asm! macro: 0 → 0 (unchanged)",
+      "global_asm! macro: 0 → 1 (bare-metal example only)",
+      "naked_asm! macro: 0 → 0 (unchanged)",
+      "fence() usage: 12 → 11 (-8%)",
+      "compiler_fence() usage: 8 → 8 (unchanged)",
       "Atomic wrapper types restructured in iceoryx2-bb/concurrency",
-      "Memory ordering total: 816 \u2192 848 (+4%)"
+      "Memory ordering total: 816 → 848 (+4%)"
     ]
   },
-  "summary": "FLS Chapter 22 covers inline assembly (asm!, global_asm!, naked_asm! macros). iceoryx2 v0.8.0 deliberately DOES NOT USE inline assembly in its core library - zero asm!/naked_asm! instances. One global_asm! exists in a bare-metal ARM startup example (examples/nostd/bare-metal). The library achieves low-level operations through Rust's atomics (806 atomic usages), fence()/compiler_fence() for memory barriers (19 uses), and POSIX APIs via FFI. This portability-first design enables support across 5 platforms and 4+ architectures without architecture-specific assembly.",
+  "summary": "iceoryx2 v0.8.0 introduces minimal inline assembly usage exclusively in bare-metal no_std examples for ARM architecture. The main codebase remains assembly-free for portability. Memory fences (compiler_fence and hardware fence) are used extensively in lock-free data structures for memory ordering.",
   "statistics": {
-    "asm_macro_usage": 0,
-    "global_asm_macro_usage": 1,
-    "naked_asm_macro_usage": 0,
-    "core_arch_usage": 1,
-    "total_inline_assembly_in_library": 0,
-    "fence_usage": 11,
-    "compiler_fence_usage": 8,
-    "atomic_operations": 806,
-    "memory_ordering_total": 848
+    "asm_macro": 1,
+    "global_asm_macro": 1,
+    "naked_asm_macro": 0,
+    "compiler_fence": 8,
+    "hardware_fence": 11,
+    "spin_loop_hints": 12
   },
   "sections": {
-    "macros_asm_globalasm_and_nakedasm": {
+    "registers": {
+      "fls_section": "22.1",
+      "fls_ids": [
+        "fls_j9l8wn6wgm06"
+      ],
+      "description": "Registers",
+      "status": "limited_use",
+      "findings": {
+        "description": "Register usage limited to bare-metal ARM example using r0/r1 for syscall",
+        "usage_context": "ARM semihosting syscall only"
+      },
+      "samples": [
+        {
+          "file": "examples/nostd/bare-metal/rust/_common/src/semihosting.rs",
+          "line": [
+            19,
+            20,
+            21,
+            22
+          ],
+          "code": "core::arch::asm!(\"svc 0x123456\", inout(\"r0\") operation => result, in(\"r1\") arg, options(nostack));",
+          "purpose": "ARM semihosting syscall with r0/r1 register bindings"
+        }
+      ]
+    },
+    "register_classes": {
+      "fls_section": "22.2",
+      "fls_ids": [
+        "fls_pz2ioqchjtym"
+      ],
+      "description": "Register Classes",
+      "status": "not_used",
+      "findings": {
+        "description": "No register class specifiers found. Uses explicit named registers."
+      },
+      "samples": []
+    },
+    "register_arguments": {
+      "fls_section": "22.3",
+      "fls_ids": [
+        "fls_hejgghwzblf"
+      ],
+      "description": "Register Arguments",
+      "status": "limited_use",
+      "findings": {
+        "patterns": [
+          "inout(\"r0\") for bidirectional",
+          "in(\"r1\") for input-only"
+        ]
+      },
+      "samples": [
+        {
+          "file": "examples/nostd/bare-metal/rust/_common/src/semihosting.rs",
+          "line": [
+            21,
+            22
+          ],
+          "code": "inout(\"r0\") operation => result, in(\"r1\") arg,",
+          "purpose": "Bidirectional and input register arguments"
+        }
+      ]
+    },
+    "assembly_instructions": {
+      "fls_section": "22.4",
+      "fls_ids": [
+        "fls_e0896uk0mdyl"
+      ],
+      "description": "Assembly Instructions",
+      "status": "limited_use",
+      "findings": {
+        "instructions": [
+          "svc 0x123456 - ARM supervisor call",
+          "LDR - Load register",
+          "bl - Branch with link"
+        ]
+      },
+      "samples": [
+        {
+          "file": "examples/nostd/bare-metal/rust/_common/src/semihosting.rs",
+          "line": [
+            20
+          ],
+          "code": "\"svc 0x123456\",",
+          "purpose": "ARM supervisor call for semihosting"
+        }
+      ],
+      "subsections": {
+        "register_parameter_modifiers": {
+          "fls_section": "22.4.1",
+          "fls_ids": [
+            "fls_lv19xysy1f7e"
+          ],
+          "description": "Register Parameter Modifiers",
+          "status": "limited_use",
+          "findings": {
+            "description": "Register parameter modifiers specify how values are passed to/from assembly. iceoryx2 uses 'inout' and 'in' modifiers in bare-metal example.",
+            "modifiers_used": ["inout", "in"]
+          },
+          "samples": [
+            {
+              "file": "examples/nostd/bare-metal/rust/_common/src/semihosting.rs",
+              "line": [21, 22],
+              "code": "inout(\"r0\") operation => result, in(\"r1\") arg,",
+              "purpose": "inout for bidirectional r0, in for input-only r1"
+            }
+          ]
+        },
+        "directive_support": {
+          "fls_section": "22.4.2",
+          "fls_ids": [
+            "fls_6momhvgx4w21"
+          ],
+          "description": "Directive Support",
+          "status": "limited_use",
+          "findings": {
+            "description": "Assembly directives provide additional context to the assembler. iceoryx2 uses .section directive in global_asm! for bare-metal startup.",
+            "directives_used": [".section"]
+          },
+          "samples": [
+            {
+              "file": "examples/nostd/bare-metal/rust/publish-subscribe/src/startup.rs",
+              "line": [14],
+              "code": ".section .text.startup",
+              "purpose": "Places startup code in specific section"
+            }
+          ]
+        }
+      }
+    },
+    "abi_clobbers": {
+      "fls_section": "22.5",
+      "fls_ids": [
+        "fls_a3joqzqp1v9d"
+      ],
+      "description": "ABI Clobbers",
+      "status": "not_used",
+      "findings": {
+        "description": "No explicit clobber lists found"
+      },
+      "samples": []
+    },
+    "assembly_options": {
+      "fls_section": "22.6",
+      "fls_ids": [
+        "fls_ylli0ortyegk"
+      ],
+      "description": "Assembly Options",
+      "status": "limited_use",
+      "findings": {
+        "options_found": [
+          "nostack"
+        ]
+      },
+      "samples": [
+        {
+          "file": "examples/nostd/bare-metal/rust/_common/src/semihosting.rs",
+          "line": [
+            23
+          ],
+          "code": "options(nostack)",
+          "purpose": "Indicates assembly does not use stack"
+        }
+      ]
+    },
+    "macros_asm_global_asm_and_naked_asm": {
       "fls_section": "22.7",
       "fls_ids": [
         "fls_qezwyridmjob"
       ],
       "description": "Macros: asm, global_asm, and naked_asm",
-      "status": "demonstrated",
+      "status": "limited_use",
       "findings": {
-        "global_asm_usage": {
-          "count": 1,
-          "location": "examples/nostd/bare-metal/rust/publish-subscribe/src/startup.rs",
-          "purpose": "ARM bare-metal startup code for no_std example",
-          "architecture": "ARM",
-          "description": "Startup vector table and initialization for bare-metal ARM environment",
-          "contents": [
-            "_vectors: Reset vector definition",
-            "_start: Stack pointer setup",
-            "VFP coprocessor access enablement",
-            "Jump to kmain"
+        "asm": 1,
+        "global_asm": 1,
+        "naked_asm": 0,
+        "location": "examples/nostd/bare-metal/rust/ only"
+      },
+      "samples": [
+        {
+          "file": "examples/nostd/bare-metal/rust/_common/src/semihosting.rs",
+          "line": [
+            17,
+            18,
+            19
           ],
-          "not_in_library": true
+          "code": "core::arch::asm!(\"svc 0x123456\", ...)",
+          "purpose": "asm! macro for ARM semihosting syscall"
         },
-        "alternatives_used": {
-          "atomics": {
-            "description": "Rust atomic wrapper types instead of asm for atomic operations",
-            "count": 806,
-            "location": "iceoryx2-bb/concurrency/src/atomic.rs",
-            "types": [
-              "AtomicBool",
-              "AtomicU8",
-              "AtomicU16",
-              "AtomicU32",
-              "AtomicU64",
-              "AtomicI8",
-              "AtomicI16",
-              "AtomicI32",
-              "AtomicI64",
-              "AtomicUsize"
-            ],
-            "note": "Wrapper types ensure ZeroCopySend compatibility for IPC"
-          },
-          "memory_barriers": {
-            "description": "fence() and compiler_fence() instead of asm memory barriers",
-            "fence_count": 11,
-            "compiler_fence_count": 8,
-            "total": 19,
-            "fence_locations": [
-              {
-                "file": "iceoryx2-pal/concurrency-sync/src/atomic.rs",
-                "count": 8,
-                "purpose": "Atomic operation ordering"
-              },
-              {
-                "file": "iceoryx2-bb/lock-free/src/mpmc/unique_index_set.rs",
-                "count": 2,
-                "purpose": "Lock-free index set synchronization"
-              }
-            ],
-            "compiler_fence_locations": [
-              {
-                "file": "iceoryx2/src/port/server.rs",
-                "line": 447
-              },
-              {
-                "file": "iceoryx2/src/port/publisher.rs",
-                "line": 490
-              },
-              {
-                "file": "iceoryx2/src/port/subscriber.rs",
-                "line": 245
-              },
-              {
-                "file": "iceoryx2/src/port/client.rs",
-                "line": 518
-              },
-              {
-                "file": "iceoryx2/src/port/listener.rs",
-                "line": 193
-              },
-              {
-                "file": "iceoryx2/src/port/notifier.rs",
-                "line": 372
-              },
-              {
-                "file": "iceoryx2/src/port/writer.rs",
-                "line": 149
-              },
-              {
-                "file": "iceoryx2/src/port/reader.rs",
-                "line": 173
-              }
-            ]
-          },
-          "memory_ordering": {
-            "description": "Memory ordering via Ordering enum instead of asm memory fence instructions",
-            "distribution": {
-              "Relaxed": 729,
-              "Acquire": 41,
-              "Release": 21,
-              "AcqRel": 6,
-              "SeqCst": 48
-            },
-            "total": 848
-          },
-          "ffi_posix": {
-            "description": "Platform-specific operations via POSIX FFI instead of asm",
-            "functions": [
-              "pthread_* (threading)",
-              "sem_* (semaphores)",
-              "mmap/munmap (memory mapping)",
-              "shm_open/shm_unlink (shared memory)"
-            ]
-          }
-        },
-        "fence_samples": {
-          "hardware_fence": {
-            "file": "iceoryx2-pal/concurrency-sync/src/atomic.rs",
-            "line": 262,
-            "code": "fence(Ordering::SeqCst);",
-            "purpose": "Full memory barrier for atomic operations"
-          },
-          "compiler_fence": {
-            "file": "iceoryx2/src/port/subscriber.rs",
-            "line": 245,
-            "code": "core::sync::atomic::compiler_fence(Ordering::SeqCst);",
-            "purpose": "Prevent compiler reordering in IPC port operations"
-          }
-        },
-        "bare_metal_example": {
-          "location": "examples/nostd/bare-metal/rust/publish-subscribe/",
-          "description": "Example showing iceoryx2 usage on bare-metal ARM without OS",
-          "files": {
-            "startup.rs": "ARM startup assembly via global_asm!",
-            "publish-subscribe.rs": "Main application logic"
-          },
-          "note": "Assembly is for startup only, not iceoryx2 functionality"
-        },
-        "design_decision": {
-          "approach": "NO_INLINE_ASSEMBLY_IN_LIBRARY",
-          "rationale": [
-            "Maximum portability across platforms",
-            "Rust's std atomics compile to optimal CPU instructions",
-            "POSIX APIs provide platform abstraction",
-            "Reduced maintenance burden",
-            "Better compiler optimization opportunities",
-            "Safety certification friendliness (Ferrocene/safety-critical)"
+        {
+          "file": "examples/nostd/bare-metal/rust/publish-subscribe/src/startup.rs",
+          "line": [
+            13,
+            14,
+            15
           ],
-          "supported_architectures": [
-            "x86",
-            "x86_64",
-            "ARM",
-            "AArch64",
-            "RISC-V (via Rust stdlib)"
-          ],
-          "supported_platforms": [
-            "Linux",
-            "macOS",
-            "FreeBSD",
-            "Windows",
-            "QNX"
-          ]
-        },
-        "why_no_inline_assembly": {
-          "portability": {
-            "description": "Same code runs on x86, ARM, RISC-V without modification",
-            "benefit": "Single codebase for 5 platforms"
-          },
-          "safety": {
-            "description": "No undefined behavior from incorrect asm",
-            "benefit": "Rust compiler ensures memory safety"
-          },
-          "maintainability": {
-            "description": "No architecture-specific code paths to maintain",
-            "benefit": "Reduced testing and validation burden"
-          },
-          "optimization": {
-            "description": "Rust/LLVM can optimize atomic operations",
-            "benefit": "Better codegen than hand-written asm in many cases"
-          },
-          "certification": {
-            "description": "Inline asm complicates safety certification",
-            "benefit": "Easier path to automotive/safety-critical use"
-          }
+          "code": "core::arch::global_asm!(r#\".section .text.startup...\"#);",
+          "purpose": "global_asm! for ARM bare-metal startup code"
         }
+      ],
+      "safety_notes": [
+        "All inline assembly confined to bare-metal examples, not production code",
+        "asm! properly marked unsafe"
+      ]
+    },
+    "label_block": {
+      "fls_section": "22.8",
+      "fls_ids": [],
+      "description": "Label block",
+      "status": "not_used",
+      "findings": {
+        "description": "Label blocks in inline assembly allow defining named labels for branching. iceoryx2 does not use label blocks - the minimal assembly in bare-metal examples uses only simple instructions without labels."
       },
       "samples": []
     }

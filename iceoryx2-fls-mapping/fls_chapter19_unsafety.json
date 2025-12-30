@@ -9,22 +9,22 @@
   "version_changes": {
     "from_version": "0.7.0",
     "to_version": "0.8.0",
-    "summary": "Significant unsafe increase due to FFI C layer. Union types introduced (0\u219242), ManuallyDrop for FFI union handling, expanded raw pointer usage.",
+    "summary": "Significant unsafe increase due to FFI C layer. Union types introduced (0→42), ManuallyDrop for FFI union handling, expanded raw pointer usage.",
     "key_changes": [
-      "unsafe blocks: 1,702 \u2192 2,372 (+39%)",
-      "unsafe fn: 1,302 \u2192 1,763 (+35%)",
-      "unsafe impl: 203 \u2192 219 (+8%)",
-      "raw pointer types: 1,554 \u2192 3,435 (+121%)",
-      "static mut: 3 \u2192 14 (+367% - logger restructuring)",
-      "union types: 0 \u2192 42 (NEW - FFI C layer)",
-      "transmute: 50 \u2192 82 (+64%)",
-      "from_raw_parts: 46 \u2192 69 (+50%)",
-      "MaybeUninit: 146 \u2192 219 (+50%)",
-      "assume_init: 83 \u2192 133 (+60%)",
-      "NonNull: 160 \u2192 356 (+123%)",
-      "drop_in_place: 8 \u2192 29 (+263%)",
-      "extern C blocks: 26 \u2192 11 (consolidated)",
-      "SAFETY comments: 14 \u2192 11 (needs improvement)"
+      "unsafe blocks: 1,702 → 2,372 (+39%)",
+      "unsafe fn: 1,302 → 1,763 (+35%)",
+      "unsafe impl: 203 → 219 (+8%)",
+      "raw pointer types: 1,554 → 3,435 (+121%)",
+      "static mut: 3 → 14 (+367% - logger restructuring)",
+      "union types: 0 → 42 (NEW - FFI C layer)",
+      "transmute: 50 → 82 (+64%)",
+      "from_raw_parts: 46 → 69 (+50%)",
+      "MaybeUninit: 146 → 219 (+50%)",
+      "assume_init: 83 → 133 (+60%)",
+      "NonNull: 160 → 356 (+123%)",
+      "drop_in_place: 8 → 29 (+263%)",
+      "extern C blocks: 26 → 11 (consolidated)",
+      "SAFETY comments: 14 → 11 (needs improvement)"
     ]
   },
   "summary": "FLS Chapter 19 covers unsafe operations that may result in undefined behavior. iceoryx2 v0.8.0 demonstrates extensive but disciplined unsafe usage: 2,372 unsafe blocks, 1,763 unsafe functions (primarily in pal-posix and ffi-c layers), 219 unsafe impl (mostly Send/Sync), 1 unsafe trait (ZeroCopySend), and 42 union types (NEW for FFI). Key unsafe operations: raw pointer manipulation (3,435 pointer types), FFI calls to POSIX APIs, interior mutability (231 UnsafeCell), and union field access for C API. static mut usage increased to 14 due to logger restructuring.",
@@ -50,18 +50,14 @@
     "safety_comments": 11
   },
   "sections": {
-    "unsafe_operations": {
-      "fls_section": "19",
-      "fls_ids": [],
-      "description": "Unsafe operations in Rust including raw pointer dereferencing, unsafe function calls, and accessing mutable statics.",
+    "unsafety_definition": {
+      "fls_section": "19.-2.1",
+      "fls_ids": [
+        "fls_8kqo952gjhaf"
+      ],
+      "description": "Unsafety Definition",
       "status": "demonstrated",
       "findings": {
-        "union_types": {
-          "description": "NEW in v0.8.0 - Union types for FFI C API",
-          "count": 42,
-          "purpose": "Discriminated unions for C API type-safety across IPC/Local service variants",
-          "pattern": "Each union contains ipc/local variants with ManuallyDrop wrapper for explicit destruction control"
-        },
         "unsafe_impl_categories": {
           "send_sync": {
             "count": 43,
@@ -77,60 +73,57 @@
             "description": "Implemented via derive macro primarily"
           }
         },
-        "static_mut_usage": {
-          "count": 14,
-          "rationale": "Increased due to logger restructuring - still minimal global mutable state",
-          "locations": [
-            {
-              "file": "iceoryx2-pal/posix/src/windows/socket.rs",
-              "variables": [
-                "WSA_INSTANCE",
-                "INITIALIZATION_STATE"
-              ],
-              "purpose": "Windows socket initialization (platform-specific singleton)"
-            },
-            {
-              "file": "iceoryx2-log/log/src/lib.rs",
-              "variable": "LOGGER",
-              "purpose": "Global logger instance"
-            },
-            {
-              "file": "iceoryx2-log/loggers/src/writer.rs",
-              "variables": [
-                "STDOUT",
-                "STDERR"
-              ],
-              "purpose": "Standard output/error handles"
-            },
-            {
-              "file": "iceoryx2-ffi/c/src/api/log.rs",
-              "variable": "LOGGER",
-              "purpose": "C API logger instance"
-            }
+        "unsafe_trait": {
+          "count": 1,
+          "trait": "ZeroCopySend",
+          "file": "iceoryx2-bb/elementary-traits/src/zero_copy_send.rs",
+          "line": 32,
+          "purpose": "Marker for types safe to transfer across process boundaries",
+          "safety_requirements": [
+            "Types must be self-contained (no external resource handles)",
+            "No pointers or references to heap/external memory",
+            "Must have #[repr(C)] for uniform memory layout"
           ]
+        }
+      },
+      "samples": []
+    },
+    "unsafe_operation_definition": {
+      "fls_section": "19.-2.2",
+      "fls_ids": [
+        "fls_ovn9czwnwxue"
+      ],
+      "description": "Unsafe Operation Definition",
+      "status": "demonstrated",
+      "findings": {
+        "description": "An unsafe operation is an operation that may result in undefined behavior if its safety invariants are not upheld. In iceoryx2, unsafe operations are used for FFI calls, raw pointer manipulation, shared memory access, and lock-free data structures.",
+        "categories": {
+          "ffi_operations": "Calling C POSIX APIs and providing C API exports",
+          "raw_pointer_ops": "Dereferencing, reading, writing raw pointers",
+          "memory_operations": "Creating slices from raw parts, transmuting types",
+          "interior_mutability": "Accessing UnsafeCell contents",
+          "union_access": "Reading/writing union fields"
         },
-        "unsafe_fn_purposes": {
-          "ffi_wrappers": {
-            "crate": "iceoryx2-pal/posix",
-            "description": "Direct POSIX API wrappers - inherently unsafe due to C ABI"
-          },
-          "ffi_c_api": {
-            "crate": "iceoryx2-ffi/c",
-            "description": "NEW - C API export functions with extern C ABI"
-          },
-          "relocatable_containers": {
-            "crate": "iceoryx2-bb/container",
-            "description": "Container operations on relocatable types in shared memory"
-          },
-          "shared_memory_ops": {
-            "crate": "iceoryx2-cal",
-            "description": "Shared memory creation, mapping, and access"
-          },
-          "lock_free_ops": {
-            "crate": "iceoryx2-bb/lock-free",
-            "description": "Lock-free queue and container operations"
-          }
-        },
+        "total_unsafe_blocks": 2372,
+        "total_unsafe_fn": 1763
+      },
+      "samples": [
+        {
+          "file": "iceoryx2-bb/elementary/src/lazy_singleton.rs",
+          "line": [94],
+          "code": "unsafe { *self.data.get() = Some(value) };",
+          "purpose": "Interior mutability access via UnsafeCell"
+        }
+      ]
+    },
+    "unsafe_operations_list": {
+      "fls_section": "19.-2.3",
+      "fls_ids": [
+        "fls_pfhmcafsjyf7"
+      ],
+      "description": "Unsafe Operations List",
+      "status": "demonstrated",
+      "findings": {
         "unsafe_operation_patterns": {
           "raw_pointer_dereference": {
             "count": 3435,
@@ -188,32 +181,6 @@
             "trait": "PlacementDefault",
             "usage": "Large IPC types initialized directly in shared memory"
           }
-        },
-        "unsafe_trait": {
-          "count": 1,
-          "trait": "ZeroCopySend",
-          "file": "iceoryx2-bb/elementary-traits/src/zero_copy_send.rs",
-          "line": 32,
-          "purpose": "Marker for types safe to transfer across process boundaries",
-          "safety_requirements": [
-            "Types must be self-contained (no external resource handles)",
-            "No pointers or references to heap/external memory",
-            "Must have #[repr(C)] for uniform memory layout"
-          ]
-        },
-        "safety_documentation": {
-          "safety_comments": 11,
-          "pattern": "// SAFETY: <explanation>",
-          "note": "Low SAFETY comment count suggests opportunity for improved documentation"
-        },
-        "testing_unsafe": {
-          "unsafe_blocks_in_tests": 30,
-          "purpose": [
-            "Testing unsafe APIs directly",
-            "Simulating process crashes (mem::forget)",
-            "Low-level data structure testing",
-            "FFI integration testing"
-          ]
         }
       },
       "samples": [
@@ -262,6 +229,214 @@
           "line": [
             513
           ]
+        }
+      ]
+    },
+    "raw_pointer_dereference": {
+      "fls_section": "19.-2.4",
+      "fls_ids": [
+        "fls_jd1inwz7ulyw"
+      ],
+      "description": "Raw Pointer Dereference",
+      "status": "demonstrated",
+      "findings": {
+        "description": "Dereferencing a raw pointer is an unsafe operation. iceoryx2 extensively uses raw pointer dereference for shared memory access, relocatable pointers, and FFI.",
+        "count": 3435,
+        "patterns": [
+          "Shared memory access via mapped pointers",
+          "Relocatable pointers for IPC container data",
+          "FFI buffer/struct access",
+          "Lock-free queue node manipulation",
+          "Union field access through pointers"
+        ],
+        "safety_wrappers": {
+          "NonNull": "356 uses - prevents null pointer dereference",
+          "as_ptr": "Converts references to raw pointers safely",
+          "as_mut_ptr": "Converts mutable references to raw pointers"
+        }
+      },
+      "samples": [
+        {
+          "file": "iceoryx2-bb/elementary/tests/relocatable_ptr_tests.rs",
+          "line": [28],
+          "code": "assert_that!(unsafe { *sut.as_ptr() }, eq value);",
+          "purpose": "Dereferencing relocatable pointer for testing"
+        },
+        {
+          "file": "iceoryx2-bb/container/src/vector/mod.rs",
+          "line": [237],
+          "code": "let value = unsafe { core::ptr::read(data[index].as_ptr()) };",
+          "purpose": "Reading value from container via raw pointer"
+        },
+        {
+          "file": "iceoryx2-bb/posix/src/thread.rs",
+          "line": [467],
+          "code": "unsafe { core::ptr::read(args as *const ThreadStartupArgs<TT, FF>) };",
+          "purpose": "Reading thread startup args from raw pointer"
+        }
+      ]
+    },
+    "external_static_access": {
+      "fls_section": "19.-2.5",
+      "fls_ids": [
+        "fls_3ra8s1v1vbek"
+      ],
+      "description": "External Static Access",
+      "status": "demonstrated",
+      "findings": {
+        "description": "Accessing an external static (declared via extern block) is an unsafe operation because the compiler cannot verify the static's validity. iceoryx2 uses this only in bare-metal examples.",
+        "usage": "Minimal - only in no_std bare-metal examples",
+        "rationale": "Main codebase avoids extern statics; uses FFI function calls instead"
+      },
+      "samples": [
+        {
+          "file": "examples/nostd/bare-metal/rust/_common/src/global_allocator.rs",
+          "line": [20, 21, 22],
+          "code": "extern \"C\" {\n    static _heap_start: u8;\n    static _heap_end: u8;\n}",
+          "purpose": "Linker-defined symbols for heap bounds in bare-metal allocator"
+        }
+      ]
+    },
+    "mutable_static_access": {
+      "fls_section": "19.-2.6",
+      "fls_ids": [
+        "fls_6ipl0xo5qjyl"
+      ],
+      "description": "Mutable Static Access",
+      "status": "demonstrated",
+      "findings": {
+        "static_mut_usage": {
+          "count": 14,
+          "rationale": "Increased due to logger restructuring - still minimal global mutable state",
+          "locations": [
+            {
+              "file": "iceoryx2-pal/posix/src/windows/socket.rs",
+              "variables": [
+                "WSA_INSTANCE",
+                "INITIALIZATION_STATE"
+              ],
+              "purpose": "Windows socket initialization (platform-specific singleton)"
+            },
+            {
+              "file": "iceoryx2-log/log/src/lib.rs",
+              "variable": "LOGGER",
+              "purpose": "Global logger instance"
+            },
+            {
+              "file": "iceoryx2-log/loggers/src/writer.rs",
+              "variables": [
+                "STDOUT",
+                "STDERR"
+              ],
+              "purpose": "Standard output/error handles"
+            },
+            {
+              "file": "iceoryx2-ffi/c/src/api/log.rs",
+              "variable": "LOGGER",
+              "purpose": "C API logger instance"
+            }
+          ]
+        }
+      },
+      "samples": []
+    },
+    "union_field_access": {
+      "fls_section": "19.-2.7",
+      "fls_ids": [
+        "fls_ucghxcnpaq2t"
+      ],
+      "description": "Union Field Access",
+      "status": "demonstrated",
+      "findings": {
+        "union_types": {
+          "description": "NEW in v0.8.0 - Union types for FFI C API",
+          "count": 42,
+          "purpose": "Discriminated unions for C API type-safety across IPC/Local service variants",
+          "pattern": "Each union contains ipc/local variants with ManuallyDrop wrapper for explicit destruction control"
+        }
+      },
+      "samples": []
+    },
+    "unsafe_function_call": {
+      "fls_section": "19.-2.8",
+      "fls_ids": [
+        "fls_ljocmnaz2m49"
+      ],
+      "description": "Unsafe Function Call",
+      "status": "demonstrated",
+      "findings": {
+        "unsafe_fn_purposes": {
+          "ffi_wrappers": {
+            "crate": "iceoryx2-pal/posix",
+            "description": "Direct POSIX API wrappers - inherently unsafe due to C ABI"
+          },
+          "ffi_c_api": {
+            "crate": "iceoryx2-ffi/c",
+            "description": "NEW - C API export functions with extern C ABI"
+          },
+          "relocatable_containers": {
+            "crate": "iceoryx2-bb/container",
+            "description": "Container operations on relocatable types in shared memory"
+          },
+          "shared_memory_ops": {
+            "crate": "iceoryx2-cal",
+            "description": "Shared memory creation, mapping, and access"
+          },
+          "lock_free_ops": {
+            "crate": "iceoryx2-bb/lock-free",
+            "description": "Lock-free queue and container operations"
+          }
+        }
+      },
+      "samples": []
+    },
+    "unsafe_context": {
+      "fls_section": "19.-2.9",
+      "fls_ids": [
+        "fls_jb6krd90tjmc"
+      ],
+      "description": "Unsafe Context",
+      "status": "demonstrated",
+      "findings": {
+        "safety_documentation": {
+          "safety_comments": 11,
+          "pattern": "// SAFETY: <explanation>",
+          "note": "Low SAFETY comment count suggests opportunity for improved documentation"
+        },
+        "testing_unsafe": {
+          "unsafe_blocks_in_tests": 30,
+          "purpose": [
+            "Testing unsafe APIs directly",
+            "Simulating process crashes (mem::forget)",
+            "Low-level data structure testing",
+            "FFI integration testing"
+          ]
+        }
+      },
+      "samples": []
+    },
+    "unsafe_operation_requirement": {
+      "fls_section": "19.-2.10",
+      "fls_ids": [
+        "fls_ybnpe7ppq1vh"
+      ],
+      "description": "Unsafe Operation Requirement",
+      "status": "demonstrated",
+      "findings": {
+        "description": "Unsafe operations can only be performed within an unsafe context (unsafe block or unsafe function). iceoryx2 consistently uses unsafe blocks to isolate unsafe operations.",
+        "patterns": [
+          "Unsafe blocks wrapping single operations for minimal scope",
+          "Unsafe functions for operations requiring multiple unsafe calls",
+          "SAFETY comments (11 instances) documenting invariants"
+        ],
+        "improvement_opportunity": "SAFETY comment count (11) is low for 2,372 unsafe blocks - documentation could be improved"
+      },
+      "samples": [
+        {
+          "file": "iceoryx2-bb/container/src/string/static_string.rs",
+          "line": [291],
+          "code": "core::ptr::write::<u8>(new_self.data.as_mut_ptr().add(len).cast(), 0);",
+          "purpose": "Writing null terminator within unsafe block"
         }
       ]
     }

@@ -2,8 +2,8 @@
 FLS MAPPING VALIDATION REPORT
 ============================================================
 
-Files validated: 20
-Schema valid: 20/20
+Files validated: 21
+Schema valid: 21/21
 MUST_BE_FILLED markers: 0
 Path errors: 0
 
@@ -74,6 +74,11 @@ FILE: fls_chapter14_entities_resolution.json
 
 ------------------------------------------------------------
 FILE: fls_chapter15_ownership_destruction.json
+------------------------------------------------------------
+  OK - No issues found
+
+------------------------------------------------------------
+FILE: fls_chapter16_exceptions_errors.json
 ------------------------------------------------------------
   OK - No issues found
 
