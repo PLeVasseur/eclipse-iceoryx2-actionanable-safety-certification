@@ -132,17 +132,24 @@ def validate_mapping_file(
     fls_errors = validate_fls_ids(data, valid_fls_ids, filepath.name)
     errors.extend(fls_errors)
 
-    # Compute statistics
+    # Compute statistics for both applicability dimensions
     mappings = data.get("mappings", [])
+    
+    def count_applicability(field: str) -> dict[str, int]:
+        """Count applicability values for a given field."""
+        return {
+            "direct": sum(1 for m in mappings if m.get(field) == "direct"),
+            "partial": sum(1 for m in mappings if m.get(field) == "partial"),
+            "not_applicable": sum(1 for m in mappings if m.get(field) == "not_applicable"),
+            "rust_prevents": sum(1 for m in mappings if m.get(field) == "rust_prevents"),
+            "unmapped": sum(1 for m in mappings if m.get(field) == "unmapped"),
+        }
+    
     stats = {
         "standard": data.get("standard", "unknown"),
         "total": len(mappings),
-        "mapped": sum(1 for m in mappings if m.get("applicability") in ("direct", "partial")),
-        "unmapped": sum(1 for m in mappings if m.get("applicability") == "unmapped"),
-        "not_applicable": sum(
-            1 for m in mappings
-            if m.get("applicability") in ("not_applicable", "rust_prevents")
-        ),
+        "all_rust": count_applicability("applicability_all_rust"),
+        "safe_rust": count_applicability("applicability_safe_rust"),
     }
 
     return errors, stats
@@ -291,11 +298,20 @@ def main():
                         print(f"      - {e}")
 
                 if not errors:
-                    print(f"    OK - {stats['standard']}")
+                    print(f"    OK - {stats['standard']} ({stats['total']} guidelines)")
+                    all_rust = stats["all_rust"]
+                    safe_rust = stats["safe_rust"]
                     print(
-                        f"       {stats['mapped']} mapped, "
-                        f"{stats['unmapped']} unmapped, "
-                        f"{stats['not_applicable']} N/A"
+                        f"       All Rust:  {all_rust['direct']} direct, "
+                        f"{all_rust['partial']} partial, "
+                        f"{all_rust['not_applicable']} N/A, "
+                        f"{all_rust['rust_prevents']} rust_prevents"
+                    )
+                    print(
+                        f"       Safe Rust: {safe_rust['direct']} direct, "
+                        f"{safe_rust['partial']} partial, "
+                        f"{safe_rust['not_applicable']} N/A, "
+                        f"{safe_rust['rust_prevents']} rust_prevents"
                     )
 
     # Check guideline coverage

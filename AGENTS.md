@@ -613,15 +613,25 @@ coding-standards-fls-mapping/
 
 ## Current Status (2025-12-31)
 
-**Infrastructure Complete**:
-- Schemas created and validated
-- MISRA C:2025 and C++:2023 rules extracted from PDFs
-- CERT C and C++ rules scraped from SEI wiki
-- Validation script operational
-- Empty mapping scaffolds created with all 833 guidelines
+**MISRA C:2025 Mapping - Complete (Draft)**:
+- All 212 guidelines mapped with MISRA ADD-6 Rust applicability data
+- 107 unique FLS IDs referenced across all mappings
+- All mappings have `medium` confidence (automated) - require manual review for `high` confidence
+- 29 synthetic FLS IDs generated for syntax block sections
+
+| Applicability | All Rust | Safe Rust |
+|---------------|----------|-----------|
+| direct | 117 | 58 |
+| partial | 2 | 15 |
+| not_applicable | 91 | 139 |
+| rust_prevents | 2 | 0 |
+
+**Other Standards - Scaffolds Only**:
+- MISRA C++, CERT C, CERT C++ mapping files need schema updates and population
 
 **Next Steps**:
-- Populate FLS mappings with expert domain knowledge
+- Manual review of MISRA C mappings to upgrade confidence to `high`
+- Update other standard mapping files with new schema fields
 - Run cross-reference analysis to identify high-priority FLS sections
 
 ## Tools
@@ -631,7 +641,10 @@ coding-standards-fls-mapping/
 | `extract_misra_rules.py` | Extract rules/directives from MISRA PDFs |
 | `scrape_cert_rules.py` | Scrape rules from SEI CERT wiki |
 | `validate_coding_standards.py` | Validate JSON files against schemas |
+| `validate_synthetic_ids.py` | Validate synthetic FLS IDs don't collide with native FLS |
+| `map_misra_to_fls.py` | Generate automated MISRA C → FLS mappings |
 | `analyze_fls_coverage.py` | Cross-reference analysis of FLS coverage |
+| `review_fls_mappings.py` | Helper for reviewing mappings with FLS content |
 
 ## Validation
 
@@ -639,20 +652,47 @@ coding-standards-fls-mapping/
 # Validate all standards and mapping files
 cd tools && uv run python validate_coding_standards.py
 
-# Check guideline coverage (all guidelines have mapping entries)
-uv run python validate_coding_standards.py --check-coverage
+# Validate a specific mapping file
+uv run python validate_coding_standards.py --file=misra_c_to_fls.json
 
-# Analyze FLS coverage frequency
-uv run python analyze_fls_coverage.py
+# Validate synthetic FLS IDs
+uv run python validate_synthetic_ids.py
+
+# Regenerate MISRA C mappings
+uv run python map_misra_to_fls.py
+
+# Regenerate with verbose output (for debugging)
+uv run python map_misra_to_fls.py --verbose --limit 20
 ```
+
+## Synthetic FLS IDs
+
+Some FLS sections (extracted from `.. syntax::` blocks) don't have native FLS ID anchors. We generate synthetic IDs for these:
+
+- **29 synthetic IDs** generated using FLS's ID format (`fls_` + 12 alphanumeric chars)
+- Tracked in `tools/synthetic_fls_ids.json`
+- Validated against native FLS IDs to prevent collisions
+- See `tools/SYNTHETIC_FLS_IDS.md` for methodology
 
 ## Mapping Workflow
 
-1. Select a guideline from a mapping file (`applicability: "unmapped"`)
-2. Read the guideline in its original standard
-3. Identify relevant FLS sections using `tools/fls_section_mapping.json`
-4. Update the mapping with FLS IDs, sections, applicability, and notes
-5. Run validation to verify changes
+### Automated Pass (MISRA C Complete)
+
+1. Load rules from `standards/misra_c_2025.json`
+2. Load MISRA ADD-6 Rust applicability from `misra_rust_applicability.json`
+3. Match guideline titles against `concept_to_fls.json` keywords
+4. Generate FLS ID lists from matched concepts
+5. Apply MISRA ADD-6 applicability values
+6. Add `fls_rationale_type` explaining the relationship
+7. Output with `confidence: "medium"`
+
+### Manual Review Pass (TODO)
+
+1. Review each guideline with `confidence: "medium"`
+2. Verify FLS ID assignments are correct
+3. Add/remove FLS IDs as needed
+4. Update notes with specific rationale
+5. Upgrade `confidence` to `"high"` when verified
 
 ### Applicability Values
 
@@ -663,6 +703,27 @@ uv run python analyze_fls_coverage.py
 | `not_applicable` | C/C++ specific, no Rust equivalent |
 | `rust_prevents` | Rust's design prevents the issue entirely |
 | `unmapped` | Awaiting expert mapping |
+
+### FLS Rationale Types
+
+When `fls_ids` are present, `fls_rationale_type` explains the relationship:
+
+| Value | Description |
+|-------|-------------|
+| `direct_mapping` | Rule maps directly to these FLS concepts |
+| `rust_alternative` | Rust has a different/better mechanism |
+| `rust_prevents` | Rust's design prevents the issue |
+| `no_equivalent` | C concept doesn't exist in Rust (FLS shows context) |
+| `partial_mapping` | Some aspects map directly, others don't |
+
+## Key Configuration Files
+
+| File | Purpose |
+|------|---------|
+| `concept_to_fls.json` | Maps C concepts to FLS IDs with keywords |
+| `misra_rust_applicability.json` | MISRA ADD-6 Rust applicability data |
+| `fls_section_mapping.json` | Canonical FLS section IDs and titles |
+| `synthetic_fls_ids.json` | Tracks synthetic FLS IDs we generated |
 
 ## Data Sources
 

@@ -1,0 +1,841 @@
+{
+  "metadata": {
+    "description": "Mapping from C language concepts to Ferrocene Language Specification (FLS) sections and IDs",
+    "purpose": "Used by map_misra_to_fls.py to generate draft mappings from MISRA/CERT guidelines to FLS",
+    "fls_version": "1.0 (2024)",
+    "created_date": "2025-12-31",
+    "last_updated": "2025-12-31",
+    "applicability_model": "Dual applicability: all_rust (including unsafe) vs safe_rust (safe subset only)"
+  },
+  "concepts": {
+    "memory_allocation": {
+      "description": "Dynamic memory allocation and deallocation (malloc, free, heap)",
+      "keywords": ["malloc", "free", "alloc", "realloc", "calloc", "heap", "memory allocation", "dynamic memory", "deallocation", "memory management"],
+      "fls_ids": [
+        "fls_ronnwodjjjsh",
+        "fls_svkx6szhr472",
+        "fls_3xvm61x0t251",
+        "fls_4jiw35pan7vn",
+        "fls_u2mzjgiwbkz0",
+        "fls_rm4ncoopcdvj",
+        "fls_5eima0pd31c0",
+        "fls_afafmafz4hf2"
+      ],
+      "fls_sections": ["15", "15.1", "15.2", "15.6", "15.7", "15.8", "15.8.1", "15.9"],
+      "typical_applicability_all_rust": "partial",
+      "typical_applicability_safe_rust": "rust_prevents",
+      "rationale": "Safe Rust prevents use-after-free and double-free at compile time via ownership; unsafe Rust can use raw allocator APIs"
+    },
+    "pointers": {
+      "description": "Pointer types, dereferencing, null pointers, pointer arithmetic",
+      "keywords": ["pointer", "dereference", "null", "NULL", "address", "indirection", "pointer to", "void pointer"],
+      "fls_ids": [
+        "fls_3i4ou0dq64ny",
+        "fls_ppd1xwve3tr7",
+        "fls_142vncdktbin",
+        "fls_v5x85lt5ulva",
+        "fls_a14slch83hzn",
+        "fls_5cm4gkt55hjh",
+        "fls_qztk0bkju9u",
+        "fls_jep7p27kaqlp",
+        "fls_jd1inwz7ulyw"
+      ],
+      "fls_sections": ["4.7", "4.7.2", "4.7.3", "15.3", "15.4", "6.5.2", "6.5.1", "19", "19.-2.4"],
+      "typical_applicability_all_rust": "partial",
+      "typical_applicability_safe_rust": "rust_prevents",
+      "rationale": "Safe Rust uses references with borrow checking, preventing null/dangling pointers; raw pointers require unsafe blocks"
+    },
+    "pointer_arithmetic": {
+      "description": "Pointer arithmetic, array indexing via pointers",
+      "keywords": ["pointer arithmetic", "pointer operand", "subtraction between pointers", "pointer addition"],
+      "fls_ids": [
+        "fls_ppd1xwve3tr7",
+        "fls_uj0kpjwyld60",
+        "fls_vpbikb73dw4k",
+        "fls_1k9mkv7rbezi",
+        "fls_jep7p27kaqlp",
+        "fls_jd1inwz7ulyw"
+      ],
+      "fls_sections": ["4.7.2", "4.4.1", "4.4.2", "6.5.5", "19", "19.-2.4"],
+      "typical_applicability_all_rust": "partial",
+      "typical_applicability_safe_rust": "rust_prevents",
+      "rationale": "Safe Rust uses bounds-checked indexing; pointer arithmetic requires unsafe"
+    },
+    "arrays": {
+      "description": "Array types, bounds checking, buffer access",
+      "keywords": ["array", "buffer", "bounds", "index", "element", "subscript", "out of bounds"],
+      "fls_ids": [
+        "fls_uj0kpjwyld60",
+        "fls_vpbikb73dw4k",
+        "fls_xinykul167l",
+        "fls_qfsfnql1t7m"
+      ],
+      "fls_sections": ["4.4.1", "4.4.2", "6.8.1", "6.8.2"],
+      "typical_applicability_all_rust": "partial",
+      "typical_applicability_safe_rust": "rust_prevents",
+      "rationale": "Safe Rust performs bounds checking on array access; unsafe can use unchecked access"
+    },
+    "references_borrowing": {
+      "description": "References, borrowing, lifetimes",
+      "keywords": ["reference", "borrow", "lifetime", "aliasing", "mutable reference", "shared reference"],
+      "fls_ids": [
+        "fls_142vncdktbin",
+        "fls_v5x85lt5ulva",
+        "fls_a14slch83hzn",
+        "fls_qztk0bkju9u",
+        "fls_5cm4gkt55hjh"
+      ],
+      "fls_sections": ["4.7.3", "15.3", "15.4", "6.5.1", "6.5.2"],
+      "typical_applicability_all_rust": "direct",
+      "typical_applicability_safe_rust": "direct",
+      "rationale": "Core Rust concept for safe memory access, applies to all Rust"
+    },
+    "initialization": {
+      "description": "Variable initialization, uninitialized values",
+      "keywords": ["initialize", "initialization", "uninitialized", "initializer", "initial value", "default value"],
+      "fls_ids": [
+        "fls_3xvm61x0t251",
+        "fls_svkx6szhr472",
+        "fls_8wnyln2nmg4y",
+        "fls_jep7p27kaqlp"
+      ],
+      "fls_sections": ["15.2", "15.1", "6.4.4", "19"],
+      "typical_applicability_all_rust": "partial",
+      "typical_applicability_safe_rust": "rust_prevents",
+      "rationale": "Safe Rust requires initialization before use; unsafe can use MaybeUninit"
+    },
+    "integer_types": {
+      "description": "Integer types, signedness, overflow",
+      "keywords": ["integer", "signed", "unsigned", "overflow", "wraparound", "int", "i32", "u32", "arithmetic"],
+      "fls_ids": [
+        "fls_3qnpv2z7yjil",
+        "fls_1k9mkv7rbezi",
+        "fls_abp6tjbz8tpn",
+        "fls_nsvzzbldhq53",
+        "fls_id66vnaqw0zt"
+      ],
+      "fls_sections": ["4.3.3.2", "6.5.5", "6.5.6", "6.5.7", "4.3"],
+      "typical_applicability_all_rust": "partial",
+      "typical_applicability_safe_rust": "partial",
+      "rationale": "Rust has checked arithmetic in debug mode, wrapping/saturating methods; overflow behavior differs from C"
+    },
+    "floating_point": {
+      "description": "Floating point types, precision, NaN, infinity",
+      "keywords": ["float", "floating", "double", "f32", "f64", "NaN", "infinity", "precision"],
+      "fls_ids": [
+        "fls_b4xporvr64s",
+        "fls_29tlg1vyqay2",
+        "fls_1k9mkv7rbezi",
+        "fls_nsvzzbldhq53"
+      ],
+      "fls_sections": ["4.3.3.1", "2.4.4.2", "6.5.5", "6.5.7"],
+      "typical_applicability_all_rust": "partial",
+      "typical_applicability_safe_rust": "partial",
+      "rationale": "Rust has similar floating point semantics to C (IEEE 754)"
+    },
+    "type_conversions": {
+      "description": "Type casts, implicit conversions, coercion",
+      "keywords": ["cast", "type conversion", "coercion", "implicit conversion", "explicit conversion", "type cast"],
+      "fls_ids": [
+        "fls_1qhsun1vyarz",
+        "fls_dw33yt5g6m0k",
+        "fls_exe4zodlwfez",
+        "fls_lv7w7aalpwm5"
+      ],
+      "fls_sections": ["6.5.10", "4.12.3", "4.12.2", "4.12.7"],
+      "typical_applicability_all_rust": "partial",
+      "typical_applicability_safe_rust": "partial",
+      "rationale": "Rust requires explicit casts; no implicit narrowing conversions; transmute is unsafe"
+    },
+    "structs": {
+      "description": "Struct types, members, layout",
+      "keywords": ["struct", "structure", "member", "field", "record"],
+      "fls_ids": [
+        "fls_9ucqbbd0s2yo",
+        "fls_rjxpof29a3nl",
+        "fls_7pby13muw48o",
+        "fls_g1z6bpyjqxkz"
+      ],
+      "fls_sections": ["4.5.2", "4.11.2.2", "4.11", "4.11.1"],
+      "typical_applicability_all_rust": "direct",
+      "typical_applicability_safe_rust": "direct",
+      "rationale": "Rust has similar struct semantics"
+    },
+    "unions": {
+      "description": "Union types, overlapping storage",
+      "keywords": ["union type", "union field", "overlapping storage"],
+      "fls_ids": [
+        "fls_fmdn7n7s413d",
+        "fls_cmq8ogs84ivh",
+        "fls_jep7p27kaqlp",
+        "fls_ucghxcnpaq2t"
+      ],
+      "fls_sections": ["4.5.3", "4.11.2.3", "19", "19.-2.7"],
+      "typical_applicability_all_rust": "partial",
+      "typical_applicability_safe_rust": "not_applicable",
+      "rationale": "Rust unions require unsafe to read; safe Rust should use enums for tagged unions"
+    },
+    "enums": {
+      "description": "Enumeration types, enumerators",
+      "keywords": ["enum", "enumeration", "enumerator", "variant"],
+      "fls_ids": [
+        "fls_szibmtfv117b",
+        "fls_xc1hof4qbf6p",
+        "fls_7pby13muw48o"
+      ],
+      "fls_sections": ["4.5.1", "4.11.2.1", "4.11"],
+      "typical_applicability_all_rust": "direct",
+      "typical_applicability_safe_rust": "direct",
+      "rationale": "Rust enums are more powerful (algebraic data types)"
+    },
+    "bit_fields": {
+      "description": "Bit-fields, bit manipulation",
+      "keywords": ["bit-field", "bitfield", "bit field", "bits"],
+      "fls_ids": [
+        "fls_abp6tjbz8tpn",
+        "fls_7pby13muw48o",
+        "fls_ohhsmifo0urd"
+      ],
+      "fls_sections": ["6.5.6", "4.11", "4.11.2"],
+      "typical_applicability_all_rust": "not_applicable",
+      "typical_applicability_safe_rust": "not_applicable",
+      "rationale": "Rust has no native bit-field syntax; use bitflags crate or manual bit manipulation"
+    },
+    "functions": {
+      "description": "Function declarations, parameters, return values",
+      "keywords": ["function", "parameter", "argument", "return", "call", "declaration", "prototype"],
+      "fls_ids": [
+        "fls_hbbek3z4wtcs",
+        "fls_xztr1kebz8bo",
+        "fls_airvr79xkcag",
+        "fls_77scxuomlbgs",
+        "fls_lnpyb285qdiy"
+      ],
+      "fls_sections": ["4.6", "4.6.1", "4.6.2", "15.5", "14.4.7"],
+      "typical_applicability_all_rust": "direct",
+      "typical_applicability_safe_rust": "direct",
+      "rationale": "Similar function semantics with stronger type checking"
+    },
+    "function_pointers": {
+      "description": "Function pointers, callbacks",
+      "keywords": ["function pointer", "callback", "fn pointer"],
+      "fls_ids": [
+        "fls_xztr1kebz8bo",
+        "fls_3i4ou0dq64ny"
+      ],
+      "fls_sections": ["4.7.1", "4.7"],
+      "typical_applicability_all_rust": "direct",
+      "typical_applicability_safe_rust": "direct",
+      "rationale": "Rust has fn pointer types and closures"
+    },
+    "recursion": {
+      "description": "Recursive functions, self-referential",
+      "keywords": ["recursive", "recursion", "call themselves", "self-referential"],
+      "fls_ids": [
+        "fls_3gapgqys3ceb",
+        "fls_hbbek3z4wtcs"
+      ],
+      "fls_sections": ["4.12.1", "4.6"],
+      "typical_applicability_all_rust": "direct",
+      "typical_applicability_safe_rust": "direct",
+      "rationale": "Rust allows recursion; stack overflow is runtime behavior"
+    },
+    "control_flow": {
+      "description": "Control flow statements (if, while, for, switch)",
+      "keywords": ["if", "else", "while", "for", "loop", "switch", "case", "break", "continue", "control flow"],
+      "fls_ids": [
+        "fls_jm6l7b90h6wa",
+        "fls_sf4qnd43z2wc",
+        "fls_onfyolkcbeh3",
+        "fls_5jjm1kt43axd",
+        "fls_uusi0zej55is",
+        "fls_sjwrlwvpulp"
+      ],
+      "fls_sections": ["6.9", "6.10", "6.11", "6.12", "6.13", "6.14"],
+      "typical_applicability_all_rust": "direct",
+      "typical_applicability_safe_rust": "direct",
+      "rationale": "Rust has similar control flow with expressions"
+    },
+    "goto_labels": {
+      "description": "Goto statements, labels",
+      "keywords": ["goto", "label", "jump"],
+      "fls_ids": [
+        "fls_769b4p8v3cwu"
+      ],
+      "fls_sections": ["14.4.4"],
+      "typical_applicability_all_rust": "not_applicable",
+      "typical_applicability_safe_rust": "not_applicable",
+      "rationale": "Rust has no goto; uses labeled loops for complex control flow"
+    },
+    "switch_match": {
+      "description": "Switch/match statements, exhaustiveness",
+      "keywords": ["switch", "case", "default", "match", "pattern"],
+      "fls_ids": [
+        "fls_e5td0fa92fay",
+        "fls_fyskeih6twyb",
+        "fls_7dbd5t2750ce"
+      ],
+      "fls_sections": ["6.14", "5.4.5", "5.2"],
+      "typical_applicability_all_rust": "direct",
+      "typical_applicability_safe_rust": "direct",
+      "rationale": "Rust match is exhaustive and more powerful than C switch"
+    },
+    "concurrency_threads": {
+      "description": "Threads, thread safety, data races",
+      "keywords": ["thread", "concurrent", "data race", "parallel", "synchronization", "thrd_"],
+      "fls_ids": [
+        "fls_3v733mnewssy",
+        "fls_eiw4by8z75di",
+        "fls_vyc9vcuamlph"
+      ],
+      "fls_sections": ["17", "17.1", "17.2"],
+      "typical_applicability_all_rust": "partial",
+      "typical_applicability_safe_rust": "rust_prevents",
+      "rationale": "Safe Rust Send/Sync traits prevent data races at compile time; unsafe can bypass"
+    },
+    "atomics": {
+      "description": "Atomic operations, memory ordering",
+      "keywords": ["atomic", "_Atomic", "memory order", "memory synchronization", "fence", "compare and swap"],
+      "fls_ids": [
+        "fls_vyc9vcuamlph",
+        "fls_eiw4by8z75di"
+      ],
+      "fls_sections": ["17.2", "17.1"],
+      "typical_applicability_all_rust": "direct",
+      "typical_applicability_safe_rust": "direct",
+      "rationale": "Rust has std::sync::atomic with similar memory ordering"
+    },
+    "mutexes_synchronization": {
+      "description": "Mutexes, locks, condition variables",
+      "keywords": ["mutex", "mtx_", "lock", "unlock", "condition variable", "cnd_", "deadlock", "synchronization object"],
+      "fls_ids": [
+        "fls_3v733mnewssy",
+        "fls_eiw4by8z75di"
+      ],
+      "fls_sections": ["17", "17.1"],
+      "typical_applicability_all_rust": "direct",
+      "typical_applicability_safe_rust": "direct",
+      "rationale": "Rust has Mutex<T> and RwLock<T> with RAII guards"
+    },
+    "async_computation": {
+      "description": "Asynchronous computation, async/await",
+      "keywords": ["async", "await", "future", "asynchronous"],
+      "fls_ids": [
+        "fls_mtuwzinpfvkl",
+        "fls_aadan19t5006"
+      ],
+      "fls_sections": ["17.3", "6.4.1"],
+      "typical_applicability_all_rust": "not_applicable",
+      "typical_applicability_safe_rust": "not_applicable",
+      "rationale": "C has no native async; Rust has async/await"
+    },
+    "preprocessor": {
+      "description": "Preprocessor directives, macros, includes",
+      "keywords": ["preprocessor", "#include", "#define", "#if", "#ifdef", "macro", "preprocessing directive"],
+      "fls_ids": [],
+      "fls_sections": [],
+      "typical_applicability_all_rust": "not_applicable",
+      "typical_applicability_safe_rust": "not_applicable",
+      "rationale": "Rust has no C-style preprocessor; uses modules and declarative/procedural macros"
+    },
+    "macros_rust": {
+      "description": "Rust macro system (declarative and procedural)",
+      "keywords": ["macro_rules", "proc_macro", "derive"],
+      "fls_ids": [
+        "fls_vnvt40pa48n8",
+        "fls_xa7lp0zg1ol2",
+        "fls_wjldgtio5o75",
+        "fls_4apk1exafxii",
+        "fls_qxjy0f758x5s",
+        "fls_wn1i6hzg2ff7"
+      ],
+      "fls_sections": ["20", "20.1", "20.2", "20.3", "20.4", "20.5"],
+      "typical_applicability_all_rust": "partial",
+      "typical_applicability_safe_rust": "partial",
+      "rationale": "Rust macros are different from C preprocessor macros"
+    },
+    "identifiers_naming": {
+      "description": "Identifier naming, scope, visibility, shadowing",
+      "keywords": ["identifier", "name", "scope", "visibility", "shadow", "hide", "distinct", "unique"],
+      "fls_ids": [
+        "fls_21vnag69kbwe",
+        "fls_izl8iuhoz9e0",
+        "fls_6ozthochxz1i",
+        "fls_m0z7omni9hp0",
+        "fls_ydmnb7qnmzzq",
+        "fls_jdknpu3kf865"
+      ],
+      "fls_sections": ["2.3", "14.4", "14.4.1", "14.4.3", "14.8", "14.2"],
+      "typical_applicability_all_rust": "direct",
+      "typical_applicability_safe_rust": "direct",
+      "rationale": "Rust has similar scoping rules with explicit shadowing"
+    },
+    "storage_duration": {
+      "description": "Storage duration, automatic, static, thread-local",
+      "keywords": ["storage duration", "automatic", "static", "thread-local", "lifetime", "storage class"],
+      "fls_ids": [
+        "fls_svkx6szhr472",
+        "fls_rm4ncoopcdvj",
+        "fls_5eima0pd31c0"
+      ],
+      "fls_sections": ["15.1", "15.8", "15.8.1"],
+      "typical_applicability_all_rust": "direct",
+      "typical_applicability_safe_rust": "direct",
+      "rationale": "Rust has ownership-based lifetimes and static/const items"
+    },
+    "linkage": {
+      "description": "External/internal linkage, declarations",
+      "keywords": ["linkage", "external", "internal", "static", "extern", "declaration", "definition"],
+      "fls_ids": [
+        "fls_jdknpu3kf865",
+        "fls_m0z7omni9hp0",
+        "fls_9gprp17h6t1q"
+      ],
+      "fls_sections": ["14.2", "14.4.3", "14.7"],
+      "typical_applicability_all_rust": "direct",
+      "typical_applicability_safe_rust": "direct",
+      "rationale": "Rust uses pub visibility and modules instead of linkage"
+    },
+    "ffi_extern": {
+      "description": "Foreign function interface, extern C",
+      "keywords": ["extern", "foreign", "ffi", "abi", "extern \"C\"", "no_mangle", "link"],
+      "fls_ids": [
+        "fls_uloyjbaso8pz",
+        "fls_yztwtek0y34v",
+        "fls_tmoh3y9oyqsy",
+        "fls_pgp7ezcc9lh8"
+      ],
+      "fls_sections": ["21", "21.1", "21.2", "13.2.6"],
+      "typical_applicability_all_rust": "direct",
+      "typical_applicability_safe_rust": "partial",
+      "rationale": "Rust has explicit FFI support with extern blocks; calling extern fn is unsafe"
+    },
+    "inline_assembly": {
+      "description": "Inline assembly, asm",
+      "keywords": ["assembly", "asm", "inline assembly", "assembler"],
+      "fls_ids": [
+        "fls_a3joqzqp1v9d",
+        "fls_e0896uk0mdyl",
+        "fls_lv19xysy1f7e"
+      ],
+      "fls_sections": ["22", "22.1", "22.2"],
+      "typical_applicability_all_rust": "direct",
+      "typical_applicability_safe_rust": "not_applicable",
+      "rationale": "Rust has asm! macro for inline assembly; always requires unsafe"
+    },
+    "expressions_evaluation": {
+      "description": "Expression evaluation, order, side effects",
+      "keywords": ["expression", "evaluation", "order", "side effect", "sequence point", "precedence"],
+      "fls_ids": [
+        "fls_ckvjj4tt1hh2",
+        "fls_isyftqu120l",
+        "fls_izdv9i4spokw"
+      ],
+      "fls_sections": ["6", "6.1", "6.5"],
+      "typical_applicability_all_rust": "partial",
+      "typical_applicability_safe_rust": "partial",
+      "rationale": "Rust has well-defined evaluation order in most cases"
+    },
+    "undefined_behavior": {
+      "description": "Undefined behavior, unspecified behavior",
+      "keywords": ["undefined", "unspecified", "implementation-defined", "behavior"],
+      "fls_ids": [
+        "fls_jep7p27kaqlp",
+        "fls_8kqo952gjhaf",
+        "fls_ovn9czwnwxue",
+        "fls_pfhmcafsjyf7"
+      ],
+      "fls_sections": ["19", "19.-2.1", "19.-2.2", "19.-2.3"],
+      "typical_applicability_all_rust": "partial",
+      "typical_applicability_safe_rust": "rust_prevents",
+      "rationale": "Safe Rust prevents undefined behavior; unsafe requires careful handling"
+    },
+    "unsafe_operations": {
+      "description": "Unsafe operations, raw pointer dereference, union access",
+      "keywords": ["unsafe", "raw pointer", "dereference", "union", "mutable static"],
+      "fls_ids": [
+        "fls_jep7p27kaqlp",
+        "fls_8kqo952gjhaf",
+        "fls_ovn9czwnwxue",
+        "fls_pfhmcafsjyf7",
+        "fls_jd1inwz7ulyw",
+        "fls_3ra8s1v1vbek",
+        "fls_6ipl0xo5qjyl",
+        "fls_ucghxcnpaq2t",
+        "fls_ljocmnaz2m49",
+        "fls_jb6krd90tjmc",
+        "fls_ybnpe7ppq1vh",
+        "fls_8wnyln2nmg4y"
+      ],
+      "fls_sections": ["19", "19.-2.1", "19.-2.2", "19.-2.3", "19.-2.4", "19.-2.5", "19.-2.6", "19.-2.7", "19.-2.8", "19.-2.9", "19.-2.10", "6.4.4"],
+      "typical_applicability_all_rust": "direct",
+      "typical_applicability_safe_rust": "not_applicable",
+      "rationale": "Unsafe operations only exist in unsafe Rust by definition"
+    },
+    "error_handling": {
+      "description": "Error handling, errno, return values",
+      "keywords": ["error handling", "errno", "error return", "Result type", "error code"],
+      "fls_ids": [
+        "fls_dzq9cdz4ibsz",
+        "fls_k02nt1m5fq1z",
+        "fls_hi1iz0gbnksi",
+        "fls_pocsh1neugpc"
+      ],
+      "fls_sections": ["16", "16.1", "16.2", "6.5.3"],
+      "typical_applicability_all_rust": "partial",
+      "typical_applicability_safe_rust": "partial",
+      "rationale": "Rust uses Result<T, E> type instead of errno"
+    },
+    "panic_abort": {
+      "description": "Panic, abort, termination",
+      "keywords": ["panic", "abort", "program termination", "exit", "unwinding", "abnormal termination"],
+      "fls_ids": [
+        "fls_k02nt1m5fq1z",
+        "fls_hi1iz0gbnksi"
+      ],
+      "fls_sections": ["16.1", "16.2"],
+      "typical_applicability_all_rust": "direct",
+      "typical_applicability_safe_rust": "direct",
+      "rationale": "Rust has panic! and abort for abnormal termination"
+    },
+    "setjmp_longjmp": {
+      "description": "Non-local jumps (setjmp, longjmp)",
+      "keywords": ["setjmp", "longjmp", "non-local jump"],
+      "fls_ids": [],
+      "fls_sections": [],
+      "typical_applicability_all_rust": "not_applicable",
+      "typical_applicability_safe_rust": "not_applicable",
+      "rationale": "Rust has no setjmp/longjmp; uses panic/catch_unwind or Result"
+    },
+    "signals": {
+      "description": "Signal handling",
+      "keywords": ["signal", "signal handler", "SIGINT", "SIGSEGV"],
+      "fls_ids": [],
+      "fls_sections": [],
+      "typical_applicability_all_rust": "not_applicable",
+      "typical_applicability_safe_rust": "not_applicable",
+      "rationale": "Rust has no native signal handling; use platform-specific crates"
+    },
+    "variadic_functions": {
+      "description": "Variadic functions (va_arg, stdarg)",
+      "keywords": ["variadic", "va_arg", "va_list", "stdarg", "..."],
+      "fls_ids": [],
+      "fls_sections": [],
+      "typical_applicability_all_rust": "not_applicable",
+      "typical_applicability_safe_rust": "not_applicable",
+      "rationale": "Rust has no C-style variadic functions; use generics or extern for FFI"
+    },
+    "io_stdio": {
+      "description": "Input/output, stdio functions",
+      "keywords": ["stdio", "printf", "scanf", "FILE stream", "fopen", "fclose", "file input", "file output"],
+      "fls_ids": [],
+      "fls_sections": [],
+      "typical_applicability_all_rust": "not_applicable",
+      "typical_applicability_safe_rust": "not_applicable",
+      "rationale": "Rust uses std::io and std::fs; different API design"
+    },
+    "strings": {
+      "description": "String handling, string functions",
+      "keywords": ["string", "char*", "strcpy", "strlen", "strcat", "buffer"],
+      "fls_ids": [
+        "fls_4agmmu5al6gt",
+        "fls_boyhlu5srp6u",
+        "fls_hucd52suu6it",
+        "fls_usr6iuwpwqqh",
+        "fls_vpbikb73dw4k"
+      ],
+      "fls_sections": ["4.4.3", "2.4.6", "2.4.6.1", "2.4.6.2", "4.4.2"],
+      "typical_applicability_all_rust": "partial",
+      "typical_applicability_safe_rust": "rust_prevents",
+      "rationale": "Safe Rust String/str types prevent buffer overflows and ensure valid UTF-8; unsafe can use raw pointers"
+    },
+    "comments": {
+      "description": "Comments, documentation",
+      "keywords": ["comment", "/*", "*/", "//", "documentation"],
+      "fls_ids": [
+        "fls_q8l2jza7d9xa"
+      ],
+      "fls_sections": ["2.5"],
+      "typical_applicability_all_rust": "direct",
+      "typical_applicability_safe_rust": "direct",
+      "rationale": "Rust has similar comment syntax plus doc comments"
+    },
+    "literals": {
+      "description": "Literals, constants",
+      "keywords": ["literal", "constant", "octal", "hexadecimal", "suffix"],
+      "fls_ids": [
+        "fls_nrkd5wpi64oo",
+        "fls_hv9jtycp0o1y",
+        "fls_2ed4axpsy9u0",
+        "fls_29tlg1vyqay2",
+        "fls_jkab8eevzbte",
+        "fls_h0dvogc64tfh"
+      ],
+      "fls_sections": ["2.4", "2.4.4", "2.4.4.1", "2.4.4.2", "2.4.7", "6.2"],
+      "typical_applicability_all_rust": "direct",
+      "typical_applicability_safe_rust": "direct",
+      "rationale": "Rust has similar literals with type suffixes"
+    },
+    "type_qualifiers": {
+      "description": "Type qualifiers (const, volatile, restrict)",
+      "keywords": ["const qualifier", "volatile", "restrict", "type qualifier", "_Atomic"],
+      "fls_ids": [
+        "fls_142vncdktbin",
+        "fls_omaq7psg83n3"
+      ],
+      "fls_sections": ["4.7.3", "4.12.5"],
+      "typical_applicability_all_rust": "partial",
+      "typical_applicability_safe_rust": "partial",
+      "rationale": "Rust uses mut/immutable references; volatile via std::ptr::read/write_volatile (unsafe)"
+    },
+    "const_constexpr": {
+      "description": "Compile-time constants, const expressions",
+      "keywords": ["const fn", "constant expression", "compile-time constant", "constexpr"],
+      "fls_ids": [
+        "fls_66m4rnbssgig",
+        "fls_h0dvogc64tfh"
+      ],
+      "fls_sections": ["6.1.2", "6.2"],
+      "typical_applicability_all_rust": "direct",
+      "typical_applicability_safe_rust": "direct",
+      "rationale": "Rust has const fn and const generics"
+    },
+    "unreachable_dead_code": {
+      "description": "Unreachable code, dead code",
+      "keywords": ["unreachable", "dead code", "unused"],
+      "fls_ids": [
+        "fls_98lnexk53ru4"
+      ],
+      "fls_sections": ["4.9.3"],
+      "typical_applicability_all_rust": "direct",
+      "typical_applicability_safe_rust": "direct",
+      "rationale": "Rust compiler warns about unreachable code; has unreachable!() macro"
+    },
+    "generic_selection": {
+      "description": "Generic selection (_Generic)",
+      "keywords": ["generic", "_Generic", "type-generic"],
+      "fls_ids": [
+        "fls_y2k5paj8m8ug",
+        "fls_vhpwge5123cm",
+        "fls_utuu8mdbuyxm"
+      ],
+      "fls_sections": ["12", "12.1", "12.3"],
+      "typical_applicability_all_rust": "partial",
+      "typical_applicability_safe_rust": "partial",
+      "rationale": "Rust uses generics and traits instead of _Generic"
+    },
+    "alignment": {
+      "description": "Type alignment, _Alignof, _Alignas",
+      "keywords": ["alignment", "align", "_Alignof", "_Alignas", "aligned"],
+      "fls_ids": [
+        "fls_g1z6bpyjqxkz",
+        "fls_7pby13muw48o"
+      ],
+      "fls_sections": ["4.11.1", "4.11"],
+      "typical_applicability_all_rust": "direct",
+      "typical_applicability_safe_rust": "direct",
+      "rationale": "Rust has #[repr(align(N))] and std::mem::align_of"
+    },
+    "sizeof": {
+      "description": "Size of types (sizeof)",
+      "keywords": ["sizeof", "size", "size_of"],
+      "fls_ids": [
+        "fls_g1z6bpyjqxkz",
+        "fls_7pby13muw48o"
+      ],
+      "fls_sections": ["4.11.1", "4.11"],
+      "typical_applicability_all_rust": "direct",
+      "typical_applicability_safe_rust": "direct",
+      "rationale": "Rust has std::mem::size_of"
+    },
+    "interior_mutability": {
+      "description": "Interior mutability patterns",
+      "keywords": ["interior mutability", "UnsafeCell", "Cell", "RefCell"],
+      "fls_ids": [
+        "fls_omaq7psg83n3"
+      ],
+      "fls_sections": ["4.12.5"],
+      "typical_applicability_all_rust": "direct",
+      "typical_applicability_safe_rust": "direct",
+      "rationale": "Rust pattern for mutating data behind shared references"
+    },
+    "traits": {
+      "description": "Traits, trait bounds, trait objects",
+      "keywords": ["trait", "impl block", "dyn", "trait bound", "impl trait"],
+      "fls_ids": [
+        "fls_85vx1qfa061i",
+        "fls_4ikc07mfrez5",
+        "fls_jeoas4n6su4",
+        "fls_1ompd93w7c9f",
+        "fls_3xqobbu7wfsf",
+        "fls_qa98qdi42orq"
+      ],
+      "fls_sections": ["4.13", "4.13.1", "4.14", "4.8", "4.8.1", "4.8.2"],
+      "typical_applicability_all_rust": "direct",
+      "typical_applicability_safe_rust": "direct",
+      "rationale": "Core Rust abstraction mechanism"
+    },
+    "attributes": {
+      "description": "Attributes, annotations",
+      "keywords": ["attribute", "annotation", "#[", "derive"],
+      "fls_ids": [
+        "fls_gvwd0kf72jt",
+        "fls_i52cujixq9qs",
+        "fls_ahmnqhm8anlb"
+      ],
+      "fls_sections": ["13", "13.1", "13.2"],
+      "typical_applicability_all_rust": "direct",
+      "typical_applicability_safe_rust": "direct",
+      "rationale": "Rust attributes for metadata and code generation"
+    },
+    "modules_crates": {
+      "description": "Modules, crates, program structure",
+      "keywords": ["module", "crate", "mod statement", "use statement", "pub visibility"],
+      "fls_ids": [
+        "fls_maw4u1o8q37u",
+        "fls_gklst7joeo33",
+        "fls_jm6l7b90h6wa"
+      ],
+      "fls_sections": ["18", "18.1", "18.2"],
+      "typical_applicability_all_rust": "direct",
+      "typical_applicability_safe_rust": "direct",
+      "rationale": "Rust module system replaces header files"
+    },
+    "null_pointer": {
+      "description": "Null pointer handling, Option type",
+      "keywords": ["null", "NULL", "null pointer", "nullptr", "Option", "None"],
+      "fls_ids": [
+        "fls_szibmtfv117b",
+        "fls_3i4ou0dq64ny",
+        "fls_jep7p27kaqlp"
+      ],
+      "fls_sections": ["4.5.1", "4.7", "19"],
+      "typical_applicability_all_rust": "partial",
+      "typical_applicability_safe_rust": "rust_prevents",
+      "rationale": "Safe Rust uses Option<T> instead of nullable pointers; raw pointers can be null in unsafe"
+    },
+    "dangling_pointer": {
+      "description": "Dangling pointers, use-after-free",
+      "keywords": ["dangling", "use-after-free", "freed memory", "invalid pointer"],
+      "fls_ids": [
+        "fls_svkx6szhr472",
+        "fls_a14slch83hzn",
+        "fls_qztk0bkju9u",
+        "fls_jep7p27kaqlp",
+        "fls_jd1inwz7ulyw"
+      ],
+      "fls_sections": ["15.1", "15.3", "6.5.1", "19", "19.-2.4"],
+      "typical_applicability_all_rust": "partial",
+      "typical_applicability_safe_rust": "rust_prevents",
+      "rationale": "Safe Rust's borrow checker prevents dangling references; unsafe can create dangling raw pointers"
+    },
+    "uninitialized_memory": {
+      "description": "Reading uninitialized memory",
+      "keywords": ["uninitialized", "MaybeUninit", "assume_init", "zeroed"],
+      "fls_ids": [
+        "fls_3xvm61x0t251",
+        "fls_8wnyln2nmg4y",
+        "fls_jep7p27kaqlp"
+      ],
+      "fls_sections": ["15.2", "6.4.4", "19"],
+      "typical_applicability_all_rust": "partial",
+      "typical_applicability_safe_rust": "rust_prevents",
+      "rationale": "Safe Rust requires initialization; unsafe can use MaybeUninit"
+    },
+    "static_mutable": {
+      "description": "Mutable static variables",
+      "keywords": ["static mut", "mutable static", "global mutable"],
+      "fls_ids": [
+        "fls_5eima0pd31c0",
+        "fls_jep7p27kaqlp",
+        "fls_ljocmnaz2m49"
+      ],
+      "fls_sections": ["15.8.1", "19", "19.-2.9"],
+      "typical_applicability_all_rust": "direct",
+      "typical_applicability_safe_rust": "not_applicable",
+      "rationale": "Accessing mutable statics requires unsafe in Rust"
+    },
+    "volatile_access": {
+      "description": "Volatile memory access",
+      "keywords": ["volatile", "read_volatile", "write_volatile", "memory-mapped"],
+      "fls_ids": [
+        "fls_ppd1xwve3tr7",
+        "fls_jep7p27kaqlp"
+      ],
+      "fls_sections": ["4.7.2", "19"],
+      "typical_applicability_all_rust": "direct",
+      "typical_applicability_safe_rust": "not_applicable",
+      "rationale": "Volatile access in Rust requires unsafe (std::ptr::read/write_volatile)"
+    },
+    "standard_library": {
+      "description": "Standard library functions",
+      "keywords": ["stdlib", "standard library", "<stdlib.h>", "<string.h>", "<stdio.h>"],
+      "fls_ids": [],
+      "fls_sections": [],
+      "typical_applicability_all_rust": "not_applicable",
+      "typical_applicability_safe_rust": "not_applicable",
+      "rationale": "C standard library rules don't apply to Rust std library"
+    },
+    "resource_management": {
+      "description": "Resource management, RAII, cleanup",
+      "keywords": ["resource", "RAII", "cleanup", "acquire", "release", "handle"],
+      "fls_ids": [
+        "fls_u2mzjgiwbkz0",
+        "fls_4jiw35pan7vn",
+        "fls_rm4ncoopcdvj"
+      ],
+      "fls_sections": ["15.6", "15.7", "15.8"],
+      "typical_applicability_all_rust": "direct",
+      "typical_applicability_safe_rust": "direct",
+      "rationale": "Rust uses Drop trait for RAII; ownership ensures cleanup"
+    }
+  },
+  "applicability_rules": {
+    "not_applicable": {
+      "description": "C-specific features with no Rust equivalent",
+      "keyword_patterns": ["preprocessor", "#include", "#define", "#if", "setjmp", "longjmp", "signal", "va_arg", "va_list", "stdarg", "stdio", "printf", "scanf", "FILE", "trigraph"],
+      "category_patterns": ["Rule 20"]
+    },
+    "rust_prevents": {
+      "description": "Issues that Rust's design prevents at compile time (for safe Rust)",
+      "keyword_patterns": ["use-after-free", "double-free", "dangling pointer", "buffer overflow", "uninitialized", "data race", "null pointer dereference", "bounds"],
+      "rule_patterns": [],
+      "note": "These apply to safe Rust; unsafe Rust may still have these issues"
+    },
+    "partial": {
+      "description": "Concept exists but Rust handles differently",
+      "keyword_patterns": ["integer overflow", "type cast", "implicit conversion", "bit-field", "volatile"],
+      "rule_patterns": []
+    },
+    "direct": {
+      "description": "Direct mapping to FLS concepts",
+      "keyword_patterns": ["concurrency", "atomic", "thread", "assembly", "ffi", "extern", "struct", "enum", "function"],
+      "rule_patterns": []
+    }
+  },
+  "misra_category_hints": {
+    "Rule 1": {"concepts": ["undefined_behavior"], "typical_applicability_all_rust": "partial", "typical_applicability_safe_rust": "rust_prevents"},
+    "Rule 2": {"concepts": ["unreachable_dead_code"], "typical_applicability_all_rust": "direct", "typical_applicability_safe_rust": "direct"},
+    "Rule 3": {"concepts": ["comments"], "typical_applicability_all_rust": "direct", "typical_applicability_safe_rust": "direct"},
+    "Rule 4": {"concepts": ["literals"], "typical_applicability_all_rust": "direct", "typical_applicability_safe_rust": "direct"},
+    "Rule 5": {"concepts": ["identifiers_naming"], "typical_applicability_all_rust": "direct", "typical_applicability_safe_rust": "direct"},
+    "Rule 6": {"concepts": ["bit_fields"], "typical_applicability_all_rust": "not_applicable", "typical_applicability_safe_rust": "not_applicable"},
+    "Rule 7": {"concepts": ["literals", "integer_types"], "typical_applicability_all_rust": "direct", "typical_applicability_safe_rust": "direct"},
+    "Rule 8": {"concepts": ["functions", "linkage", "storage_duration"], "typical_applicability_all_rust": "direct", "typical_applicability_safe_rust": "direct"},
+    "Rule 9": {"concepts": ["initialization"], "typical_applicability_all_rust": "partial", "typical_applicability_safe_rust": "rust_prevents"},
+    "Rule 10": {"concepts": ["type_conversions", "integer_types"], "typical_applicability_all_rust": "partial", "typical_applicability_safe_rust": "partial"},
+    "Rule 11": {"concepts": ["pointers", "type_conversions"], "typical_applicability_all_rust": "partial", "typical_applicability_safe_rust": "rust_prevents"},
+    "Rule 12": {"concepts": ["expressions_evaluation"], "typical_applicability_all_rust": "partial", "typical_applicability_safe_rust": "partial"},
+    "Rule 13": {"concepts": ["expressions_evaluation"], "typical_applicability_all_rust": "partial", "typical_applicability_safe_rust": "partial"},
+    "Rule 14": {"concepts": ["control_flow"], "typical_applicability_all_rust": "direct", "typical_applicability_safe_rust": "direct"},
+    "Rule 15": {"concepts": ["control_flow", "goto_labels"], "typical_applicability_all_rust": "partial", "typical_applicability_safe_rust": "not_applicable"},
+    "Rule 16": {"concepts": ["switch_match"], "typical_applicability_all_rust": "direct", "typical_applicability_safe_rust": "direct"},
+    "Rule 17": {"concepts": ["functions", "variadic_functions"], "typical_applicability_all_rust": "partial", "typical_applicability_safe_rust": "partial"},
+    "Rule 18": {"concepts": ["pointers", "pointer_arithmetic", "arrays"], "typical_applicability_all_rust": "partial", "typical_applicability_safe_rust": "rust_prevents"},
+    "Rule 19": {"concepts": ["unions"], "typical_applicability_all_rust": "partial", "typical_applicability_safe_rust": "not_applicable"},
+    "Rule 20": {"concepts": ["preprocessor"], "typical_applicability_all_rust": "not_applicable", "typical_applicability_safe_rust": "not_applicable"},
+    "Rule 21": {"concepts": ["memory_allocation", "setjmp_longjmp", "signals", "io_stdio", "strings"], "typical_applicability_all_rust": "partial", "typical_applicability_safe_rust": "partial"},
+    "Rule 22": {"concepts": ["memory_allocation", "io_stdio", "concurrency_threads", "mutexes_synchronization"], "typical_applicability_all_rust": "partial", "typical_applicability_safe_rust": "partial"},
+    "Rule 23": {"concepts": ["generic_selection"], "typical_applicability_all_rust": "partial", "typical_applicability_safe_rust": "partial"}
+  }
+}

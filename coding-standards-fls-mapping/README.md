@@ -11,6 +11,28 @@ The Safety-Critical Rust Consortium needs to understand how existing C/C++ safet
 3. **Documentation**: Provide traceability from established standards to Rust equivalents
 4. **Tool Development**: Support static analysis tools that need to map C/C++ rules to Rust
 
+## Current Status (2025-12-31)
+
+### MISRA C:2025 Mapping - Complete (Draft)
+
+| Applicability | All Rust | Safe Rust |
+|---------------|----------|-----------|
+| direct | 117 | 58 |
+| partial | 2 | 15 |
+| not_applicable | 91 | 139 |
+| rust_prevents | 2 | 0 |
+| **Total** | **212** | **212** |
+
+Key findings:
+- **91 guidelines N/A**: C-specific features (preprocessor, bit-fields, etc.)
+- **2 rust_prevents**: Rules 11.11 and 14.4 are enforced by the Rust compiler
+- **61 guidelines differ**: Between all-Rust and safe-Rust applicability
+- **All mappings have medium confidence**: Automated from MISRA ADD-6 data + keyword matching
+
+### Other Standards - Scaffolds Only
+
+CERT C, CERT C++, and MISRA C++ mapping files exist but need schema updates and population.
+
 ## Directory Structure
 
 ```
@@ -24,10 +46,12 @@ coding-standards-fls-mapping/
 │   ├── cert_c.json                         # CERT C rules & recommendations
 │   └── cert_cpp.json                       # CERT C++ rules
 ├── mappings/                                # FLS mappings (deliverables)
-│   ├── misra_c_to_fls.json                 # MISRA C → FLS IDs
-│   ├── misra_cpp_to_fls.json               # MISRA C++ → FLS IDs
-│   ├── cert_c_to_fls.json                  # CERT C → FLS IDs
-│   └── cert_cpp_to_fls.json                # CERT C++ → FLS IDs
+│   ├── misra_c_to_fls.json                 # MISRA C → FLS IDs ✅ COMPLETE
+│   ├── misra_cpp_to_fls.json               # MISRA C++ → FLS IDs (needs update)
+│   ├── cert_c_to_fls.json                  # CERT C → FLS IDs (needs update)
+│   └── cert_cpp_to_fls.json                # CERT C++ → FLS IDs (needs update)
+├── concept_to_fls.json                      # C concepts → FLS mappings
+├── misra_rust_applicability.json            # MISRA ADD-6 Rust applicability data
 └── README.md
 ```
 
@@ -42,27 +66,41 @@ coding-standards-fls-mapping/
 
 *CERT C++ recommendations were removed from the wiki pending review.
 
-## Guideline Types
+## Dual Applicability Model
 
-### MISRA Terminology
-- **Rule**: Normative requirement that code must follow
-- **Directive**: Higher-level guidance that may require judgment to apply
+Each guideline has TWO applicability values:
 
-### CERT Terminology
-- **Rule**: Normative requirement (violations are security issues)
-- **Recommendation**: Best practice guidance (violations reduce quality)
+| Field | Description |
+|-------|-------------|
+| `applicability_all_rust` | Applies to ALL Rust code, including unsafe |
+| `applicability_safe_rust` | Applies to SAFE Rust code only |
 
-## Mapping Applicability Values
+This distinction is critical because many C/C++ safety issues:
+- Are **prevented by safe Rust** (borrow checker, bounds checking, etc.)
+- But **still apply in unsafe Rust** (raw pointers, union access, etc.)
 
-Each guideline is mapped with an `applicability` field:
+### Applicability Values
 
 | Value | Meaning | Example |
 |-------|---------|---------|
-| `direct` | Guideline maps directly to FLS concept(s) | Memory allocation rules → FLS ownership |
-| `partial` | Concept exists but Rust handles it differently | Integer overflow (Rust has checked arithmetic in debug) |
-| `not_applicable` | C/C++ specific with no Rust equivalent | Preprocessor rules (Rust has no preprocessor) |
-| `rust_prevents` | Rust's design prevents the issue entirely | Use-after-free (prevented by borrow checker) |
-| `unmapped` | Awaiting expert mapping | Initial state for all guidelines |
+| `direct` | Guideline maps directly to FLS concept(s) | Function declarations → FLS Chapter 9 |
+| `partial` | Concept exists but Rust handles differently | Integer overflow (checked in debug mode) |
+| `not_applicable` | C/C++ specific with no Rust equivalent | Preprocessor rules (#define, #include) |
+| `rust_prevents` | Rust's design prevents the issue entirely | Use-after-free (borrow checker) |
+| `unmapped` | Awaiting expert mapping | Initial state before analysis |
+
+### MISRA Rust Categories
+
+For MISRA guidelines, we also track MISRA's own Rust categorization from ADD-6:
+
+| Category | Meaning |
+|----------|---------|
+| `required` | Code shall comply (formal deviation required if not) |
+| `advisory` | Recommendations to follow as practical |
+| `recommended` | Best practice recommendations |
+| `disapplied` | Compliance not required |
+| `implicit` | Rust compiler enforces this (maps to `rust_prevents`) |
+| `n_a` | Does not apply to Rust |
 
 ## Usage
 
@@ -75,10 +113,27 @@ cd tools
 uv run python validate_coding_standards.py
 ```
 
-Check that all guidelines have mapping entries:
+Validate a specific file:
 
 ```bash
-uv run python validate_coding_standards.py --check-coverage
+uv run python validate_coding_standards.py --file=misra_c_to_fls.json
+```
+
+### Generating MISRA C Mappings
+
+The `map_misra_to_fls.py` script generates automated mappings:
+
+```bash
+cd tools
+
+# Generate all MISRA C mappings
+uv run python map_misra_to_fls.py
+
+# Generate only rules (skip directives)
+uv run python map_misra_to_fls.py --rules-only
+
+# Generate first N guidelines for testing
+uv run python map_misra_to_fls.py --limit 50 --verbose
 ```
 
 ### Regenerating Standards Files
@@ -97,7 +152,7 @@ uv run python scrape_cert_rules.py
 
 ### Cross-Reference Analysis
 
-Once mappings are populated, analyze FLS coverage frequency:
+Analyze FLS coverage frequency across all mapped standards:
 
 ```bash
 uv run python analyze_fls_coverage.py
@@ -105,87 +160,99 @@ uv run python analyze_fls_coverage.py
 
 ## Mapping Workflow
 
-1. **Select a guideline** from one of the mapping files (start with `applicability: "unmapped"`)
+### Automated Pass (Completed for MISRA C)
 
-2. **Read the guideline** in its original standard:
-   - MISRA: See PDF in `cache/misra-standards/`
-   - CERT C: https://wiki.sei.cmu.edu/confluence/display/c/
-   - CERT C++: https://wiki.sei.cmu.edu/confluence/display/cplusplus/
+1. Load MISRA C:2025 rules from `standards/misra_c_2025.json`
+2. Load MISRA ADD-6 Rust applicability from `misra_rust_applicability.json`
+3. Match guideline titles against `concept_to_fls.json` keywords
+4. Generate FLS ID lists from matched concepts
+5. Apply MISRA ADD-6 applicability values
+6. Output with `confidence: "medium"`
 
-3. **Identify relevant FLS sections** by consulting:
-   - `tools/fls_section_mapping.json` - canonical FLS section list with IDs
-   - https://rust-lang.github.io/fls/ - FLS documentation
+### Manual Review Pass (TODO)
 
-4. **Update the mapping** in the appropriate `mappings/*.json` file:
-   ```json
-   {
-     "guideline_id": "MEM30-C",
-     "guideline_type": "rule",
-     "fls_ids": ["fls_svkx6szhr472", "fls_u2mzjgiwng0"],
-     "fls_sections": ["15.1", "15.2"],
-     "applicability": "rust_prevents",
-     "confidence": "high",
-     "notes": "Rust's ownership system prevents use-after-free at compile time"
-   }
-   ```
+1. Review each guideline with `confidence: "medium"` or `"low"`
+2. Verify FLS ID assignments are correct
+3. Add/remove FLS IDs as needed
+4. Update notes with specific rationale
+5. Upgrade `confidence` to `"high"` when verified
 
-5. **Validate** after updates:
-   ```bash
-   uv run python validate_coding_standards.py
-   ```
+## Key Files
+
+### concept_to_fls.json
+
+Maps C language concepts to FLS sections:
+
+```json
+{
+  "memory_allocation": {
+    "keywords": ["malloc", "free", "alloc", ...],
+    "fls_ids": ["fls_svkx6szhr472", ...],
+    "fls_sections": ["15.1", "15.2", ...],
+    "typical_applicability_all_rust": "partial",
+    "typical_applicability_safe_rust": "rust_prevents",
+    "rationale": "Safe Rust prevents use-after-free..."
+  }
+}
+```
+
+### misra_rust_applicability.json
+
+MISRA ADD-6 data for Rust applicability:
+
+```json
+{
+  "guidelines": {
+    "Rule 11.11": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Yes",
+      "adjusted_category": "implicit",
+      "comment": "enforced by rustc"
+    }
+  }
+}
+```
 
 ## Schema Details
 
-### coding_standard_rules.schema.json
-
-Defines the structure for listing rules/directives/recommendations:
-
-```json
-{
-  "standard": "MISRA-C",
-  "version": "2025",
-  "categories": [
-    {
-      "id": "MEM",
-      "name": "Memory Management",
-      "guidelines": [
-        {
-          "id": "Rule 21.3",
-          "title": "The memory allocation...",
-          "guideline_type": "rule"
-        }
-      ]
-    }
-  ]
-}
-```
-
 ### fls_mapping.schema.json
 
-Defines the structure for FLS mappings:
+Each mapping entry contains:
 
 ```json
 {
-  "standard": "MISRA-C",
-  "standard_version": "2025",
-  "fls_version": "1.0 (2024)",
-  "mappings": [
-    {
-      "guideline_id": "Rule 21.3",
-      "guideline_type": "rule",
-      "fls_ids": ["fls_abc123"],
-      "fls_sections": ["15.1"],
-      "applicability": "partial",
-      "confidence": "medium",
-      "notes": "..."
-    }
-  ]
+  "guideline_id": "Rule 11.11",
+  "guideline_type": "rule",
+  "applicability_all_rust": "rust_prevents",
+  "applicability_safe_rust": "rust_prevents",
+  "fls_ids": ["fls_3i4ou0dq64ny", "fls_ppd1xwve3tr7"],
+  "fls_sections": ["4.7", "4.7.2"],
+  "fls_rationale_type": "rust_prevents",
+  "misra_rust_category": "implicit",
+  "misra_rust_comment": "enforced by rustc",
+  "confidence": "medium",
+  "notes": "Rust compiler enforces pointer type compatibility"
 }
 ```
+
+### fls_rationale_type
+
+When `fls_ids` are present, `fls_rationale_type` is **required** and explains WHY those FLS sections are referenced:
+
+| Value | Meaning | When to Use |
+|-------|---------|-------------|
+| `direct_mapping` | Rule maps directly to these FLS concepts | Guideline applies to Rust the same way as C |
+| `rust_alternative` | Rust has a different/better mechanism | FLS shows what Rust uses instead |
+| `rust_prevents` | Rust's design prevents the issue | FLS shows how Rust's design avoids the problem |
+| `no_equivalent` | C concept doesn't exist in Rust | FLS shows related concepts for context |
+| `partial_mapping` | Some aspects map, others don't | Mixed applicability |
+
+This field is especially important for `not_applicable` rules - it explains why FLS IDs are included even though the rule doesn't apply to Rust.
 
 ## Data Sources
 
 - **MISRA C:2025**: Extracted from official PDF (not redistributed)
+- **MISRA C:2025 ADD-6**: Rust Applicability addendum (not redistributed)
 - **MISRA C++:2023**: Extracted from official PDF (not redistributed)
 - **CERT C**: Scraped from https://wiki.sei.cmu.edu/confluence/display/c/
 - **CERT C++**: Scraped from https://wiki.sei.cmu.edu/confluence/display/cplusplus/
@@ -198,7 +265,8 @@ When adding or updating mappings:
 1. Use the validation script to ensure schema compliance
 2. Include meaningful `notes` explaining the mapping rationale
 3. Set appropriate `confidence` level based on certainty
-4. Update the `mapping_date` in the file header
+4. For MISRA, cross-reference with ADD-6 for Rust applicability
+5. Consider both `applicability_all_rust` and `applicability_safe_rust`
 
 ## License
 

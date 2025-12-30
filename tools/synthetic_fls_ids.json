@@ -1,0 +1,156 @@
+{
+  "metadata": {
+    "description": "Tracks FLS IDs we generated for sections without native FLS anchors",
+    "fls_id_format": "fls_ + 12 alphanumeric (a-zA-Z0-9), matching FLS generate-random-ids.py",
+    "last_updated": "2025-12-31",
+    "native_ids_checked": 6132,
+    "generation_seed": 42
+  },
+  "synthetic_ids": {
+    "fls_OhbVrpoiVgRV": {
+      "fls_section": "3.0.1",
+      "title": "Constant Declaration",
+      "reason": "Extracted from syntax block, no native FLS anchor"
+    },
+    "fls_5IfLBcbfnoGM": {
+      "fls_section": "3.0.2",
+      "title": "Enum Declaration",
+      "reason": "Extracted from syntax block, no native FLS anchor"
+    },
+    "fls_bJmTPSIAoCLr": {
+      "fls_section": "3.0.3",
+      "title": "External Block",
+      "reason": "Extracted from syntax block, no native FLS anchor"
+    },
+    "fls_Z3aWZkSBvrjn": {
+      "fls_section": "3.0.4",
+      "title": "External Crate Import",
+      "reason": "Extracted from syntax block, no native FLS anchor"
+    },
+    "fls_9Wvgfygw2wMq": {
+      "fls_section": "3.0.5",
+      "title": "Function Declaration",
+      "reason": "Extracted from syntax block, no native FLS anchor"
+    },
+    "fls_ZcUDIh7yfJs1": {
+      "fls_section": "3.0.6",
+      "title": "Implementation",
+      "reason": "Extracted from syntax block, no native FLS anchor"
+    },
+    "fls_ON43xKmTecQo": {
+      "fls_section": "3.0.7",
+      "title": "Module Declaration",
+      "reason": "Extracted from syntax block, no native FLS anchor"
+    },
+    "fls_Xsf2o3gyrDO1": {
+      "fls_section": "3.0.8",
+      "title": "Static Declaration",
+      "reason": "Extracted from syntax block, no native FLS anchor"
+    },
+    "fls_xkxwnQrS7RPe": {
+      "fls_section": "3.0.9",
+      "title": "Struct Declaration",
+      "reason": "Extracted from syntax block, no native FLS anchor"
+    },
+    "fls_MOkIUpkDyr7O": {
+      "fls_section": "3.0.10",
+      "title": "Trait Declaration",
+      "reason": "Extracted from syntax block, no native FLS anchor"
+    },
+    "fls_SJoRu1XXdo0c": {
+      "fls_section": "3.0.11",
+      "title": "Type Alias Declaration",
+      "reason": "Extracted from syntax block, no native FLS anchor"
+    },
+    "fls_Zuzren68K4Tu": {
+      "fls_section": "3.0.12",
+      "title": "Union Declaration",
+      "reason": "Extracted from syntax block, no native FLS anchor"
+    },
+    "fls_nPFz46PDjqip": {
+      "fls_section": "3.0.13",
+      "title": "Use Import",
+      "reason": "Extracted from syntax block, no native FLS anchor"
+    },
+    "fls_VJIqVLB5Lzxo": {
+      "fls_section": "3.0.14",
+      "title": "Macro Rules Declaration",
+      "reason": "Extracted from syntax block, no native FLS anchor"
+    },
+    "fls_iGFfWd3hjOkY": {
+      "fls_section": "3.0.15",
+      "title": "Terminated Macro Invocation",
+      "reason": "Extracted from syntax block, no native FLS anchor"
+    },
+    "fls_RBMeyyMDHqJ3": {
+      "fls_section": "9.0.1",
+      "title": "Function Declaration",
+      "reason": "Extracted from syntax block, no native FLS anchor"
+    },
+    "fls_8aRUhR4IWrXP": {
+      "fls_section": "9.0.2",
+      "title": "Function Qualifier List",
+      "reason": "Extracted from syntax block, no native FLS anchor"
+    },
+    "fls_vhsBkDa9U4Uq": {
+      "fls_section": "9.0.3",
+      "title": "Function Parameter List",
+      "reason": "Extracted from syntax block, no native FLS anchor"
+    },
+    "fls_GWlG6g3Ot1OG": {
+      "fls_section": "9.0.4",
+      "title": "Function Parameter",
+      "reason": "Extracted from syntax block, no native FLS anchor"
+    },
+    "fls_MmjxWkI9X7H6": {
+      "fls_section": "9.0.5",
+      "title": "Function Parameter Pattern",
+      "reason": "Extracted from syntax block, no native FLS anchor"
+    },
+    "fls_aMuFbh7x41Zt": {
+      "fls_section": "9.0.6",
+      "title": "Function Parameter Variadic Part",
+      "reason": "Extracted from syntax block, no native FLS anchor"
+    },
+    "fls_pdp4K8ffUF0e": {
+      "fls_section": "9.0.7",
+      "title": "Return Type",
+      "reason": "Extracted from syntax block, no native FLS anchor"
+    },
+    "fls_WIXiiQE8JkqH": {
+      "fls_section": "9.0.8",
+      "title": "Function Body",
+      "reason": "Extracted from syntax block, no native FLS anchor"
+    },
+    "fls_3MB9n7IWUSmT": {
+      "fls_section": "9.0.9",
+      "title": "Self Parameter",
+      "reason": "Extracted from syntax block, no native FLS anchor"
+    },
+    "fls_tzQPxC5HChpo": {
+      "fls_section": "9.0.10",
+      "title": "Shorthand Self",
+      "reason": "Extracted from syntax block, no native FLS anchor"
+    },
+    "fls_evbLJoLoaeTO": {
+      "fls_section": "9.0.11",
+      "title": "Typed Self",
+      "reason": "Extracted from syntax block, no native FLS anchor"
+    },
+    "fls_doe5c3veGprQ": {
+      "fls_section": "10.0.1",
+      "title": "Constant Declaration",
+      "reason": "Extracted from syntax block, no native FLS anchor"
+    },
+    "fls_FnIiU74KKEpY": {
+      "fls_section": "10.0.2",
+      "title": "Function Declaration",
+      "reason": "Extracted from syntax block, no native FLS anchor"
+    },
+    "fls_EZAmggQBwBAD": {
+      "fls_section": "10.0.3",
+      "title": "Type Alias Declaration",
+      "reason": "Extracted from syntax block, no native FLS anchor"
+    }
+  }
+}

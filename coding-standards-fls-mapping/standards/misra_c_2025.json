@@ -157,12 +157,12 @@
       "guidelines": [
         {
           "id": "Rule 1.1",
-          "title": "4.2 Compilation and build",
+          "title": "The program shall contain no violations of the standard C syntax and constraints, and shall not exceed the implementation's translation limits",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 1.2",
-          "title": "Renumbered as Directive 1.2 MISRA C:2025",
+          "title": "[DELETED - Renumbered to Directive 1.2 in MISRA C:2025]",
           "guideline_type": "rule"
         },
         {
@@ -379,7 +379,7 @@
         },
         {
           "id": "Rule 8.6",
-          "title": "5.3 Comments",
+          "title": "An identifier with external linkage shall have exactly one external definition",
           "guideline_type": "rule"
         },
         {
@@ -844,7 +844,7 @@
         },
         {
           "id": "Rule 18.8",
-          "title": "5.14 Control statement expressions",
+          "title": "Variable-length array types shall not be used",
           "guideline_type": "rule"
         },
         {
@@ -951,7 +951,7 @@
         },
         {
           "id": "Rule 20.15",
-          "title": "5.6 Types",
+          "title": "#undef shall not be used",
           "guideline_type": "rule"
         }
       ]
@@ -962,12 +962,12 @@
       "guidelines": [
         {
           "id": "Rule 21.1",
-          "title": "Renumbered as Rule 20.15 MISRA C:2025",
+          "title": "[DELETED - Renumbered to Rule 20.15 in MISRA C:2025]",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 21.2",
-          "title": "Renumbered as Rule 5.10 MISRA C:2025",
+          "title": "[DELETED - Renumbered to Rule 5.10 in MISRA C:2025]",
           "guideline_type": "rule"
         },
         {

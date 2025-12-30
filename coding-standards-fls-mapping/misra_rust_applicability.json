@@ -1,0 +1,1392 @@
+{
+  "metadata": {
+    "source": "MISRA C:2025 Addendum 6 - Applicability of MISRA C:2025 to the Rust Language",
+    "version": "Working Draft March 2025",
+    "isbn": "978-1-911700-22-7",
+    "extracted_date": "2025-12-31",
+    "total_guidelines": 228
+  },
+  "applicability_values": {
+    "Yes": "The MISRA C guideline applies equally to the Rust language",
+    "No": "The MISRA C guideline does not apply to the Rust language",
+    "Partial": "The MISRA C guideline partially applies to some aspects of the Rust language"
+  },
+  "adjusted_category_values": {
+    "required": "Code shall comply with this guideline, with a formal deviation required where this is not the case",
+    "advisory": "These are recommendations which should be followed as far as is reasonably practical",
+    "recommended": "Best practice recommendations",
+    "disapplied": "Guidelines for which compliance is not required. No enforcement is expected",
+    "implicit": "The behaviour is not permitted by Rust (compiler enforces)",
+    "n_a": "The behaviour does not apply to Rust"
+  },
+  "guidelines": {
+    "Dir 1.1": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Yes",
+      "adjusted_category": "required",
+      "comment": ""
+    },
+    "Dir 1.2": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Yes",
+      "adjusted_category": "required",
+      "comment": "previously Rule 1.2"
+    },
+    "Dir 2.1": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Yes",
+      "adjusted_category": "required",
+      "comment": ""
+    },
+    "Dir 3.1": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Yes",
+      "adjusted_category": "required",
+      "comment": ""
+    },
+    "Dir 4.1": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Yes",
+      "adjusted_category": "required",
+      "comment": "often in the form of panics"
+    },
+    "Dir 4.2": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Yes",
+      "adjusted_category": "required",
+      "comment": ""
+    },
+    "Dir 4.3": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Yes",
+      "adjusted_category": "advisory",
+      "comment": ""
+    },
+    "Dir 4.4": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Yes",
+      "adjusted_category": "advisory",
+      "comment": ""
+    },
+    "Dir 4.5": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Yes",
+      "adjusted_category": "recommended",
+      "comment": "\u201cambiguity\u201d is determined by the project"
+    },
+    "Dir 4.6": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": "all primitive types already fulfil this"
+    },
+    "Dir 4.7": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Yes",
+      "adjusted_category": "advisory",
+      "comment": "prefer Option, Result, etc."
+    },
+    "Dir 4.8": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Dir 4.9": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Yes",
+      "adjusted_category": "recommended",
+      "comment": ""
+    },
+    "Dir 4.10": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Dir 4.11": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Yes",
+      "adjusted_category": "advisory",
+      "comment": ""
+    },
+    "Dir 4.12": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Yes",
+      "adjusted_category": "advisory",
+      "comment": ""
+    },
+    "Dir 4.13": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Yes",
+      "adjusted_category": "required",
+      "comment": ""
+    },
+    "Dir 4.14": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Yes",
+      "adjusted_category": "required",
+      "comment": ""
+    },
+    "Dir 4.15": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Yes",
+      "adjusted_category": "required",
+      "comment": "Rust implements IEEE-754"
+    },
+    "Dir 5.1": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Partial",
+      "adjusted_category": "required",
+      "comment": "not all safe Rust types are race-free"
+    },
+    "Dir 5.2": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Yes",
+      "adjusted_category": "required",
+      "comment": ""
+    },
+    "Dir 5.3": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Yes",
+      "adjusted_category": "required",
+      "comment": ""
+    },
+    "Rule 1.1": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Partial",
+      "adjusted_category": "required",
+      "comment": ""
+    },
+    "Rule 1.2": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": "Renumbered moved to Directive 1.2"
+    },
+    "Rule 1.3": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Yes",
+      "adjusted_category": "required",
+      "comment": ""
+    },
+    "Rule 1.4": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": "this is specific to C versioning"
+    },
+    "Rule 1.5": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "required",
+      "comment": "this applies to deprecated APIs"
+    },
+    "Rule 2.1": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Yes",
+      "adjusted_category": "advisory",
+      "comment": ""
+    },
+    "Rule 2.2": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Yes",
+      "adjusted_category": "required",
+      "comment": ""
+    },
+    "Rule 2.3": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Yes",
+      "adjusted_category": "recommended",
+      "comment": ""
+    },
+    "Rule 2.4": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": "no separate tag name space in Rust"
+    },
+    "Rule 2.5": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Yes",
+      "adjusted_category": "recommended",
+      "comment": ""
+    },
+    "Rule 2.6": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Yes",
+      "adjusted_category": "recommended",
+      "comment": ""
+    },
+    "Rule 2.7": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Yes",
+      "adjusted_category": "recommended",
+      "comment": ""
+    },
+    "Rule 2.8": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Yes",
+      "adjusted_category": "recommended",
+      "comment": ""
+    },
+    "Rule 3.1": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Yes",
+      "adjusted_category": "advisory",
+      "comment": "nested comments are fully supported"
+    },
+    "Rule 3.2": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 4.1": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 4.2": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 5.1": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "required",
+      "comment": "no character limit, except in extern \u201cC\u201d"
+    },
+    "Rule 5.2": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Yes",
+      "adjusted_category": "required",
+      "comment": "no character limit, but has name spaces"
+    },
+    "Rule 5.3": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Yes",
+      "adjusted_category": "advisory",
+      "comment": "this also applies to macro names"
+    },
+    "Rule 5.4": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 5.5": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Partial",
+      "adjusted_category": "advisory",
+      "comment": "macros and functions use different syntax"
+    },
+    "Rule 5.6": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Yes",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 5.7": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": "no separate tag name space in Rust"
+    },
+    "Rule 5.8": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Yes",
+      "adjusted_category": "recommended",
+      "comment": ""
+    },
+    "Rule 5.9": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Yes",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 5.10": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Partial",
+      "adjusted_category": "advisory",
+      "comment": "only possible in some cases. Previously Rule 21.2"
+    },
+    "Rule 6.1": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": "only provided as a library feature"
+    },
+    "Rule 6.2": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 6.3": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 7.1": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Yes",
+      "adjusted_category": "recommended",
+      "comment": "Rust octals have a distinct prefix from decimals"
+    },
+    "Rule 7.2": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Yes",
+      "adjusted_category": "recommended",
+      "comment": "this is an error by default but can be enabled"
+    },
+    "Rule 7.3": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 7.4": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 7.5": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 7.6": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 8.1": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 8.2": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 8.3": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "required",
+      "comment": "an extern declaration shall have a type compatible with the C declaration"
+    },
+    "Rule 8.4": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 8.5": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "advisory",
+      "comment": "may affect extern \u201cC\u201d declarations"
+    },
+    "Rule 8.6": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "required",
+      "comment": "may affect extern \u201cC\u201d declarations"
+    },
+    "Rule 8.7": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Yes",
+      "adjusted_category": "advisory",
+      "comment": "items should not be declared pub if referenced in only one crate"
+    },
+    "Rule 8.8": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 8.9": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Yes",
+      "adjusted_category": "recommended",
+      "comment": ""
+    },
+    "Rule 8.10": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 8.11": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 8.12": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 8.13": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Yes",
+      "adjusted_category": "advisory",
+      "comment": ""
+    },
+    "Rule 8.14": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 8.15": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "required",
+      "comment": "may affect extern \u201cC\u201d declarations"
+    },
+    "Rule 8.16": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": "cannot be explicitly specified. Only ZSTs have this alignment"
+    },
+    "Rule 8.17": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 8.18": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 8.19": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 9.1": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Yes",
+      "adjusted_category": "required",
+      "comment": "enforced by rustc but can be bypassed by unsafe"
+    },
+    "Rule 9.2": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 9.3": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 9.4": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Yes",
+      "adjusted_category": "required",
+      "comment": "enforced by rustc"
+    },
+    "Rule 9.5": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 9.6": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 9.7": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "required",
+      "comment": ""
+    },
+    "Rule 10.1": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 10.2": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 10.3": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 10.4": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 10.5": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Partial",
+      "adjusted_category": "recommended",
+      "comment": "includes both safe `as` and unsafe `transmute` operations"
+    },
+    "Rule 10.6": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 10.7": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 10.8": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Partial",
+      "adjusted_category": "advisory",
+      "comment": "includes both safe `as` and unsafe `transmute` operations"
+    },
+    "Rule 11.1": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Partial",
+      "adjusted_category": "required",
+      "comment": "includes both safe `as` and unsafe `transmute` operations"
+    },
+    "Rule 11.2": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "required",
+      "comment": ""
+    },
+    "Rule 11.3": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Yes",
+      "adjusted_category": "required",
+      "comment": ""
+    },
+    "Rule 11.4": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Yes",
+      "adjusted_category": "required",
+      "comment": ""
+    },
+    "Rule 11.5": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "required",
+      "comment": ""
+    },
+    "Rule 11.6": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "advisory",
+      "comment": ""
+    },
+    "Rule 11.7": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "required",
+      "comment": "merged into Rule 11.4"
+    },
+    "Rule 11.8": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Partial",
+      "adjusted_category": "required",
+      "comment": ""
+    },
+    "Rule 11.9": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": "Rust does not have a null pointer constant"
+    },
+    "Rule 11.10": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 11.11": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Yes",
+      "adjusted_category": "implicit",
+      "comment": "enforced by rustc"
+    },
+    "Rule 12.1": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Yes",
+      "adjusted_category": "recommended",
+      "comment": ""
+    },
+    "Rule 12.2": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Partial",
+      "adjusted_category": "advisory",
+      "comment": ""
+    },
+    "Rule 12.3": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 12.4": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "advisory",
+      "comment": "this is either well-defined or will not occur"
+    },
+    "Rule 12.5": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 12.6": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 13.1": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Yes",
+      "adjusted_category": "recommended",
+      "comment": "order of evaluation is strict in Rust"
+    },
+    "Rule 13.2": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": "order of evaluation is strict in Rust"
+    },
+    "Rule 13.3": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 13.4": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 13.5": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Yes",
+      "adjusted_category": "recommended",
+      "comment": ""
+    },
+    "Rule 13.6": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": "this is not an expression operator in Rust"
+    },
+    "Rule 14.1": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Partial",
+      "adjusted_category": "required",
+      "comment": "applies to while loops only"
+    },
+    "Rule 14.2": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 14.3": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Yes",
+      "adjusted_category": "required",
+      "comment": ""
+    },
+    "Rule 14.4": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Yes",
+      "adjusted_category": "implicit",
+      "comment": "enforced by rustc"
+    },
+    "Rule 15.1": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 15.2": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 15.3": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 15.4": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Yes",
+      "adjusted_category": "recommended",
+      "comment": ""
+    },
+    "Rule 15.5": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Yes",
+      "adjusted_category": "disapplied",
+      "comment": "no longer endorsed by MISRA"
+    },
+    "Rule 15.6": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 15.7": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Yes",
+      "adjusted_category": "advisory",
+      "comment": ""
+    },
+    "Rule 16.1": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 16.2": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 16.3": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 16.4": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": "a corresponding match expression must be complete"
+    },
+    "Rule 16.5": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": "irrefutable pattern causes a subsequent refutable one to be unreachable"
+    },
+    "Rule 16.6": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 16.7": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 17.1": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 17.2": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Yes",
+      "adjusted_category": "required",
+      "comment": ""
+    },
+    "Rule 17.3": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 17.4": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": "the return keyword is not needed to return a value in Rust, only to exit"
+    },
+    "Rule 17.5": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 17.6": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": "no longer endorsed by MISRA"
+    },
+    "Rule 17.7": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Yes",
+      "adjusted_category": "required",
+      "comment": ""
+    },
+    "Rule 17.8": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Yes",
+      "adjusted_category": "disapplied",
+      "comment": "this cannot be done accidentally without declaring parameters `mut`"
+    },
+    "Rule 17.9": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "required",
+      "comment": "this is expressed with the `!` (Never) type, and enforced by rustc"
+    },
+    "Rule 17.10": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 17.11": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Partial",
+      "adjusted_category": "advisory",
+      "comment": "a non-returning function can be declared to return a value type"
+    },
+    "Rule 17.12": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 17.13": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 18.1": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "required",
+      "comment": "by unsafe API"
+    },
+    "Rule 18.2": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "required",
+      "comment": "by unsafe API"
+    },
+    "Rule 18.3": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Yes",
+      "adjusted_category": "required",
+      "comment": ""
+    },
+    "Rule 18.4": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "advisory",
+      "comment": "applies to use of the unsafe API"
+    },
+    "Rule 18.5": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Yes",
+      "adjusted_category": "recommended",
+      "comment": ""
+    },
+    "Rule 18.6": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "required",
+      "comment": ""
+    },
+    "Rule 18.7": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 18.8": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 18.9": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 18.10": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 19.1": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "required",
+      "comment": ""
+    },
+    "Rule 19.2": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Yes",
+      "adjusted_category": "advisory",
+      "comment": ""
+    },
+    "Rule 19.3": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Yes",
+      "adjusted_category": "required",
+      "comment": ""
+    },
+    "Rule 20.1": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": "rules specific to the C preprocessor do not apply to Rust"
+    },
+    "Rule 20.2": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 20.3": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 20.4": {
+      "applicability_all_rust": "Partial",
+      "applicability_safe_rust": "Partial",
+      "adjusted_category": "required",
+      "comment": "possible with raw identifiers but the compiler prevents visual conflicts"
+    },
+    "Rule 20.5": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 20.6": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 20.7": {
+      "applicability_all_rust": "Partial",
+      "applicability_safe_rust": "Partial",
+      "adjusted_category": "advisory",
+      "comment": "possible to express with procedural macros only, not macro_rules"
+    },
+    "Rule 20.8": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 20.9": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 20.10": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 20.11": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 20.12": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 20.13": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 20.14": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 20.15": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": "previously Rule 21.1"
+    },
+    "Rule 21.1": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": "Renumbered moved to rule 20.15"
+    },
+    "Rule 21.2": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": "Renumbered moved to Rule 5.10"
+    },
+    "Rule 21.3": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "required",
+      "comment": "only accessible through unsafe extern \u201cC\u201d"
+    },
+    "Rule 21.4": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "required",
+      "comment": "only accessible through unsafe extern \u201cC\u201d"
+    },
+    "Rule 21.5": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "required",
+      "comment": "only accessible through unsafe extern \u201cC\u201d"
+    },
+    "Rule 21.6": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "required",
+      "comment": "only accessible through unsafe extern \u201cC\u201d"
+    },
+    "Rule 21.7": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "required",
+      "comment": "only accessible through unsafe extern \u201cC\u201d"
+    },
+    "Rule 21.8": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "required",
+      "comment": "only accessible through unsafe extern \u201cC\u201d"
+    },
+    "Rule 21.9": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "required",
+      "comment": "only accessible through unsafe extern \u201cC\u201d"
+    },
+    "Rule 21.10": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "required",
+      "comment": "only accessible through unsafe extern \u201cC\u201d"
+    },
+    "Rule 21.11": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": "no external interface"
+    },
+    "Rule 21.12": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "required",
+      "comment": "only accessible through unsafe extern \u201cC\u201d"
+    },
+    "Rule 21.13": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "required",
+      "comment": "only accessible through unsafe extern \u201cC\u201d"
+    },
+    "Rule 21.14": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "required",
+      "comment": "only accessible through unsafe extern \u201cC\u201d"
+    },
+    "Rule 21.15": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "required",
+      "comment": "only accessible through unsafe extern \u201cC\u201d"
+    },
+    "Rule 21.16": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "required",
+      "comment": "only accessible through unsafe extern \u201cC\u201d"
+    },
+    "Rule 21.17": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "required",
+      "comment": "only accessible through unsafe extern \u201cC\u201d"
+    },
+    "Rule 21.18": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "required",
+      "comment": "only accessible through unsafe extern \u201cC\u201d"
+    },
+    "Rule 21.19": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "required",
+      "comment": "only accessible through unsafe extern \u201cC\u201d"
+    },
+    "Rule 21.20": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "required",
+      "comment": "only accessible through unsafe extern \u201cC\u201d"
+    },
+    "Rule 21.21": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "required",
+      "comment": "only accessible through unsafe extern \u201cC\u201d"
+    },
+    "Rule 21.22": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": "no external interface"
+    },
+    "Rule 21.23": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": "no external interface"
+    },
+    "Rule 21.24": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "required",
+      "comment": "only accessible through unsafe extern \u201cC\u201d"
+    },
+    "Rule 21.25": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Yes",
+      "adjusted_category": "required",
+      "comment": ""
+    },
+    "Rule 21.26": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "required",
+      "comment": "only accessible through unsafe extern \u201cC\u201d"
+    },
+    "Rule 22.1": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "required",
+      "comment": "applies to resources acquired through FFI only"
+    },
+    "Rule 22.2": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "required",
+      "comment": "only accessible through unsafe extern \u201cC\u201d"
+    },
+    "Rule 22.3": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "required",
+      "comment": "only accessible through unsafe extern \u201cC\u201d"
+    },
+    "Rule 22.4": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "required",
+      "comment": "only accessible through unsafe extern \u201cC\u201d"
+    },
+    "Rule 22.5": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "required",
+      "comment": "only accessible through unsafe extern \u201cC\u201d"
+    },
+    "Rule 22.6": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "required",
+      "comment": "only accessible through unsafe extern \u201cC\u201d"
+    },
+    "Rule 22.7": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "required",
+      "comment": "only accessible through unsafe extern \u201cC\u201d"
+    },
+    "Rule 22.8": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "disapplied",
+      "comment": "only accessible through unsafe extern \u201cC\u201d"
+    },
+    "Rule 22.9": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "disapplied",
+      "comment": "only accessible through unsafe extern \u201cC\u201d"
+    },
+    "Rule 22.10": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "disapplied",
+      "comment": "only accessible through unsafe extern \u201cC\u201d"
+    },
+    "Rule 22.11": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Partial",
+      "adjusted_category": "required",
+      "comment": ""
+    },
+    "Rule 22.12": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "required",
+      "comment": "only accessible through unsafe extern \u201cC\u201d"
+    },
+    "Rule 22.13": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Yes",
+      "adjusted_category": "required",
+      "comment": ""
+    },
+    "Rule 22.14": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Partial",
+      "adjusted_category": "required",
+      "comment": "applies to creating synchronization objects before threads that use them"
+    },
+    "Rule 22.15": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Partial",
+      "adjusted_category": "required",
+      "comment": "applies to releasing synchronization objects after threads that use them"
+    },
+    "Rule 22.16": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "required",
+      "comment": "only accessible through unsafe extern \u201cC\u201d"
+    },
+    "Rule 22.17": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "required",
+      "comment": "only accessible through unsafe extern \u201cC\u201d"
+    },
+    "Rule 22.18": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Yes",
+      "adjusted_category": "required",
+      "comment": ""
+    },
+    "Rule 22.19": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Yes",
+      "adjusted_category": "required",
+      "comment": ""
+    },
+    "Rule 22.20": {
+      "applicability_all_rust": "Yes",
+      "applicability_safe_rust": "Partial",
+      "adjusted_category": "required",
+      "comment": ""
+    },
+    "Rule 23.1": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 23.2": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 23.3": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 23.4": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 23.5": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 23.6": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 23.7": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    },
+    "Rule 23.8": {
+      "applicability_all_rust": "No",
+      "applicability_safe_rust": "No",
+      "adjusted_category": "n_a",
+      "comment": ""
+    }
+  }
+}
