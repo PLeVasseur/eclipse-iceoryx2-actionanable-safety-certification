@@ -134,7 +134,7 @@
     },
     "section": {
       "type": "object",
-      "required": ["fls_section", "description"],
+      "required": ["fls_section", "description", "count"],
       "properties": {
         "fls_section": {
           "type": "string",
@@ -157,6 +157,15 @@
         },
         "description": {
           "type": "string"
+        },
+        "count": {
+          "type": ["integer", "null"],
+          "minimum": 0,
+          "description": "Number of times this construct appears in iceoryx2. Use null for abstract/conceptual sections that cannot be meaningfully counted."
+        },
+        "count_methodology": {
+          "type": "string",
+          "description": "Explanation of how count was derived, especially for aggregated or computed counts (e.g., 'Sum of impl Drop + explicit drop() calls')"
         },
         "status": {
           "type": "string",
@@ -181,7 +190,11 @@
           "items": {
             "$ref": "#/$defs/code_sample"
           },
-          "description": "Code samples demonstrating this section"
+          "description": "Code samples demonstrating this section. Minimum 3 samples required unless status is not_used/not_applicable/implicit/deliberately_avoided or samples_waiver is provided."
+        },
+        "samples_waiver": {
+          "$ref": "#/$defs/samples_waiver",
+          "description": "Waiver for sections with fewer than 3 samples, explaining why the minimum cannot be met"
         },
         "safety_notes": {
           "type": "array",
@@ -245,6 +258,37 @@
           "items": {
             "$ref": "#/$defs/code_sample"
           }
+        }
+      }
+    },
+    "samples_waiver": {
+      "type": "object",
+      "required": ["reason", "explanation", "approved_by", "date"],
+      "description": "Waiver for sections that cannot provide the minimum 3 code samples",
+      "properties": {
+        "reason": {
+          "type": "string",
+          "enum": [
+            "insufficient_patterns",
+            "conceptual_section",
+            "implicit_usage",
+            "single_location",
+            "other"
+          ],
+          "description": "Category of reason for waiver. insufficient_patterns = fewer than 3 distinct patterns exist in codebase. conceptual_section = section describes abstract concept not directly mappable to code. implicit_usage = construct is used implicitly by compiler. single_location = construct only exists in one place. other = see explanation."
+        },
+        "explanation": {
+          "type": "string",
+          "description": "Detailed explanation of why fewer than 3 samples are provided"
+        },
+        "approved_by": {
+          "type": "string",
+          "description": "Name or identifier of person approving this waiver"
+        },
+        "date": {
+          "type": "string",
+          "format": "date",
+          "description": "Date waiver was approved (YYYY-MM-DD format)"
         }
       }
     }

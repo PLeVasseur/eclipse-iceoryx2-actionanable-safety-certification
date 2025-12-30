@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env -S uv run python
 """
 Validate FLS mapping JSON files against schema and FLS section mapping.
 
@@ -10,6 +10,8 @@ This script performs comprehensive validation of the FLS chapter mapping files:
 4. FLS Coverage Check - Ensures all FLS sections are documented
 5. FLS ID Validation - Verifies fls_ids match canonical FLS identifiers
 6. Section Hierarchy Validation - Checks fls_section numbering is well-formed
+7. Sample Minimum Check - Ensures sections have >= 3 samples (or waiver/exempt status)
+8. Count Field Check - Ensures all sections have count field
 
 Exit Codes:
     0 - All checks pass
@@ -17,6 +19,7 @@ Exit Codes:
     2 - FLS coverage check failed (missing required sections)
     3 - FLS ID validation failed (invalid IDs found)
     4 - Multiple failures (combination of above)
+    5 - Sample minimum violations (sections with <3 samples without waiver)
 
 Usage:
     # Validate all files with full recursive depth
@@ -57,6 +60,17 @@ NON_SECTION_KEYS = {
 # Sentinel value for sections extracted from syntax blocks (no native FLS ID)
 FLS_EXTRACTED_FROM_SYNTAX = "fls_extracted_from_syntax_block"
 
+# Minimum number of samples required per section
+MIN_SAMPLES_REQUIRED = 3
+
+# Statuses exempt from sample minimum requirement
+SAMPLE_EXEMPT_STATUSES = {
+    "not_used",
+    "not_applicable",
+    "implicit",
+    "deliberately_avoided",
+}
+
 
 def parse_args() -> argparse.Namespace:
     """Parse command-line arguments."""
@@ -70,6 +84,7 @@ Exit Codes:
   2  FLS coverage check failed (missing required sections)
   3  FLS ID validation failed (invalid IDs found)
   4  Multiple failures (combination of above)
+  5  Sample minimum violations
 
 Examples:
   # Validate all files with full recursive depth
@@ -463,6 +478,103 @@ def validate_fls_ids(data: Dict, chapter_mapping: Dict) -> Dict:
     return result
 
 
+def check_sample_minimums(data: Dict) -> List[Dict]:
+    """
+    Find sections violating the minimum 3 samples rule.
+
+    A section requires >= 3 samples UNLESS:
+    - status is in SAMPLE_EXEMPT_STATUSES (not_used, not_applicable, implicit, deliberately_avoided)
+    - samples_waiver is present
+
+    Returns list of dicts with:
+        - path: JSON path to section
+        - fls_section: FLS section number
+        - status: section status
+        - sample_count: number of samples
+        - has_waiver: whether waiver is present
+    """
+    violations = []
+
+    def check_sections(sections: Dict, path: str = ""):
+        for key, section in sections.items():
+            if not isinstance(section, dict):
+                continue
+
+            current_path = f"{path}.{key}" if path else key
+            fls_section = section.get("fls_section", "")
+            status = section.get("status", "")
+            samples = section.get("samples", [])
+            sample_count = len(samples) if isinstance(samples, list) else 0
+            has_waiver = "samples_waiver" in section
+
+            # Check if section requires samples
+            needs_samples = status not in SAMPLE_EXEMPT_STATUSES
+
+            # Check for violation
+            if needs_samples and sample_count < MIN_SAMPLES_REQUIRED and not has_waiver:
+                violations.append({
+                    "path": current_path,
+                    "fls_section": fls_section,
+                    "status": status,
+                    "sample_count": sample_count,
+                    "has_waiver": has_waiver,
+                })
+
+            # Recurse into subsections
+            subsections = section.get("subsections", {})
+            if subsections:
+                check_sections(subsections, current_path)
+
+    json_sections = data.get("sections", {})
+    check_sections(json_sections, "sections")
+
+    return violations
+
+
+def collect_count_coverage(data: Dict) -> Dict:
+    """
+    Summarize count field presence across all sections.
+
+    Returns dict with:
+        - total_sections: total number of sections/subsections
+        - sections_with_count: sections with integer count
+        - sections_with_null_count: sections with null count (conceptual)
+        - missing_count: list of paths missing count field
+    """
+    result = {
+        "total_sections": 0,
+        "sections_with_count": 0,
+        "sections_with_null_count": 0,
+        "missing_count": [],
+    }
+
+    def collect(sections: Dict, path: str = ""):
+        for key, section in sections.items():
+            if not isinstance(section, dict):
+                continue
+
+            current_path = f"{path}.{key}" if path else key
+            result["total_sections"] += 1
+
+            if "count" in section:
+                if section["count"] is None:
+                    result["sections_with_null_count"] += 1
+                else:
+                    result["sections_with_count"] += 1
+            else:
+                result["missing_count"].append(current_path)
+
+            # Recurse into subsections
+            subsections = section.get("subsections", {})
+            if subsections:
+                collect(subsections, current_path)
+
+    json_sections = data.get("sections", {})
+    collect(json_sections, "sections")
+
+    return result
+
+
 def validate_section_hierarchy(data: Dict) -> List[str]:
     """
     Validate that fls_section values form a valid hierarchy.
@@ -539,6 +651,8 @@ def validate_file(
         - coverage: coverage validation results
         - id_validation: FLS ID validation results
         - hierarchy_errors: section hierarchy errors
+        - sample_violations: sections with insufficient samples
+        - count_coverage: count field coverage summary
     """
     result = {
         "file": file_path.name,
@@ -546,12 +660,15 @@ def validate_file(
         "schema_valid": True,
         "coverage_valid": True,
         "ids_valid": True,
+        "samples_valid": True,
         "schema_errors": [],
         "must_be_filled": [],
         "path_errors": [],
         "coverage": {},
         "id_validation": {},
         "hierarchy_errors": [],
+        "sample_violations": [],
+        "count_coverage": {},
     }
 
     # Load JSON
@@ -606,6 +723,15 @@ def validate_file(
         if result["hierarchy_errors"]:
             result["valid"] = False
 
+    # Sample minimum validation (independent of FLS mapping)
+    result["sample_violations"] = check_sample_minimums(data)
+    if result["sample_violations"]:
+        result["valid"] = False
+        result["samples_valid"] = False
+
+    # Count field coverage (independent of FLS mapping)
+    result["count_coverage"] = collect_count_coverage(data)
+
     return result
 
 
@@ -652,15 +778,21 @@ def generate_report(
     schema_valid = sum(1 for r in results if r["schema_valid"])
     coverage_valid = sum(1 for r in results if r["coverage_valid"])
     ids_valid = sum(1 for r in results if r["ids_valid"])
+    samples_valid = sum(1 for r in results if r["samples_valid"])
     total_must_fill = sum(len(r["must_be_filled"]) for r in results)
     total_path_errors = sum(len(r["path_errors"]) for r in results)
+    total_sample_violations = sum(len(r["sample_violations"]) for r in results)
+    total_missing_counts = sum(len(r.get("count_coverage", {}).get("missing_count", [])) for r in results)
 
     lines.append(f"Files validated: {total_files}")
     lines.append(f"Schema valid: {schema_valid}/{total_files}")
     lines.append(f"Coverage valid: {coverage_valid}/{total_files}")
     lines.append(f"FLS IDs valid: {ids_valid}/{total_files}")
+    lines.append(f"Sample minimums valid: {samples_valid}/{total_files}")
     lines.append(f"MUST_BE_FILLED markers: {total_must_fill}")
     lines.append(f"Path errors: {total_path_errors}")
+    lines.append(f"Sample violations (<3 samples): {total_sample_violations}")
+    lines.append(f"Sections missing count field: {total_missing_counts}")
     if max_depth:
         lines.append(f"Coverage depth limit: {max_depth}")
     lines.append("")
@@ -699,11 +831,23 @@ def generate_report(
                     f"    ... and {len(result['hierarchy_errors']) - 5} more"
                 )
 
+        if result["sample_violations"]:
+            lines.append(f"  SAMPLE VIOLATIONS ({len(result['sample_violations'])}):")
+            for v in result["sample_violations"][:5]:
+                lines.append(
+                    f"    - {v['fls_section']} ({v['path']}): {v['sample_count']} samples, status={v['status']}"
+                )
+            if len(result["sample_violations"]) > 5:
+                lines.append(
+                    f"    ... and {len(result['sample_violations']) - 5} more"
+                )
+
         if (
             not result["schema_errors"]
             and not result["must_be_filled"]
             and not result["path_errors"]
             and not result["hierarchy_errors"]
+            and not result["sample_violations"]
             and result["coverage_valid"]
             and result["ids_valid"]
         ):
@@ -808,6 +952,71 @@ def generate_report(
     if not has_must_fill:
         lines.append("\n  (none)")
 
+    # Sample Minimum Violations Report
+    lines.append("")
+    lines.append("=" * 60)
+    lines.append("SAMPLE MINIMUM VIOLATIONS")
+    lines.append("=" * 60)
+    lines.append(f"\nMinimum required: {MIN_SAMPLES_REQUIRED} samples per section")
+    lines.append(f"Exempt statuses: {', '.join(sorted(SAMPLE_EXEMPT_STATUSES))}")
+    lines.append("")
+
+    has_violations = False
+    for result in results:
+        violations = result.get("sample_violations", [])
+        if violations:
+            has_violations = True
+            lines.append(f"{result['file']} ({len(violations)} violations):")
+            for v in violations:
+                lines.append(
+                    f"  - {v['fls_section']:12} | samples: {v['sample_count']} | status: {v['status']:20} | {v['path']}"
+                )
+            lines.append("")
+
+    if not has_violations:
+        lines.append("  (none - all sections meet minimum or have waivers)")
+
+    # Count Field Coverage Report
+    lines.append("")
+    lines.append("=" * 60)
+    lines.append("COUNT FIELD COVERAGE")
+    lines.append("=" * 60)
+
+    total_sections = 0
+    total_with_count = 0
+    total_with_null = 0
+    total_missing = 0
+
+    for result in results:
+        cc = result.get("count_coverage", {})
+        if not cc:
+            continue
+
+        total_sections += cc.get("total_sections", 0)
+        total_with_count += cc.get("sections_with_count", 0)
+        total_with_null += cc.get("sections_with_null_count", 0)
+        total_missing += len(cc.get("missing_count", []))
+
+        lines.append(f"\n{result['file']}:")
+        lines.append(f"  Total sections: {cc.get('total_sections', 0)}")
+        lines.append(f"  With count (integer): {cc.get('sections_with_count', 0)}")
+        lines.append(f"  With count (null): {cc.get('sections_with_null_count', 0)}")
+        missing = cc.get("missing_count", [])
+        lines.append(f"  Missing count: {len(missing)}")
+        if missing:
+            for path in missing[:10]:
+                lines.append(f"    - {path}")
+            if len(missing) > 10:
+                lines.append(f"    ... and {len(missing) - 10} more")
+
+    lines.append("")
+    lines.append("-" * 40)
+    lines.append("TOTALS:")
+    lines.append(f"  Total sections: {total_sections}")
+    lines.append(f"  With count (integer): {total_with_count}")
+    lines.append(f"  With count (null): {total_with_null}")
+    lines.append(f"  Missing count: {total_missing}")
+
     # Exit codes reference
     lines.append("")
     lines.append("=" * 60)
@@ -818,6 +1027,7 @@ def generate_report(
     lines.append("  2 = FLS coverage check failed")
     lines.append("  3 = FLS ID validation failed")
     lines.append("  4 = Multiple failures")
+    lines.append("  5 = Sample minimum violations")
 
     return "\n".join(lines)
 
@@ -832,12 +1042,14 @@ def calculate_exit_code(results: List[Dict]) -> int:
         2 - FLS coverage check failed
         3 - FLS ID validation failed
         4 - Multiple failures
+        5 - Sample minimum violations
     """
     schema_failed = any(not r["schema_valid"] for r in results)
     coverage_failed = any(not r["coverage_valid"] for r in results)
     ids_failed = any(not r["ids_valid"] for r in results)
+    samples_failed = any(not r["samples_valid"] for r in results)
 
-    failures = sum([schema_failed, coverage_failed, ids_failed])
+    failures = sum([schema_failed, coverage_failed, ids_failed, samples_failed])
 
     if failures == 0:
         return 0
@@ -847,8 +1059,10 @@ def calculate_exit_code(results: List[Dict]) -> int:
         return 1
     elif coverage_failed:
         return 2
-    else:  # ids_failed
+    elif ids_failed:
         return 3
+    else:  # samples_failed
+        return 5
 
 
 def main() -> int:

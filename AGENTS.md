@@ -129,7 +129,7 @@ All code samples use a consistent format with line numbers as arrays:
 Fields requiring data that couldn't be automatically determined are marked with `"MUST_BE_FILLED"`. Run the validation script to find these:
 
 ```bash
-python tools/validate_fls_json.py
+uv run python tools/validate_fls_json.py
 ```
 
 ### Validation
@@ -157,6 +157,8 @@ The validation script performs comprehensive checks:
 | **FLS coverage check** | Ensures all FLS sections from `fls_section_mapping.json` are documented |
 | **FLS ID validation** | Verifies `fls_ids` match canonical FLS identifiers |
 | **Section hierarchy validation** | Checks `fls_section` numbering is well-formed (X.Y.Z pattern) |
+| **Sample minimum check** | Ensures sections have ≥3 code samples (unless exempt status or waiver) |
+| **Count field check** | Ensures all sections have required `count` field |
 
 #### Exit Codes
 
@@ -167,6 +169,7 @@ The validation script performs comprehensive checks:
 | 2 | FLS coverage check failed (missing required sections) |
 | 3 | FLS ID validation failed (invalid IDs found) |
 | 4 | Multiple failures (combination of above) |
+| 5 | Sample minimum violations |
 
 #### FLS Section Mapping
 
@@ -196,7 +199,7 @@ This encoding allows us to reference and track FLS content that exists outside t
 To normalize JSON files to the schema (after manual edits):
 
 ```bash
-python tools/normalize_fls_json.py
+uv run python tools/normalize_fls_json.py
 ```
 
 This script:
@@ -461,7 +464,7 @@ Update line numbers as needed.
 
 When a new iceoryx2 version is released:
 
-1. [ ] Clone new version: `python tools/clone_iceoryx2.py v{NEW_VERSION}`
+1. [ ] Clone new version: `uv run python tools/clone_iceoryx2.py v{NEW_VERSION}`
 2. [ ] Review release notes for major changes
 3. [ ] Identify high-priority chapters (typically FFI, Unsafety, Concurrency)
 4. [ ] Update each chapter JSON with new statistics
