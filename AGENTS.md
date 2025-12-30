@@ -124,6 +124,94 @@ All code samples use a consistent format with line numbers as arrays:
 }
 ```
 
+### Code Sample Quality Guidelines
+
+#### Acceptable Sample Sources
+
+Code samples in FLS mapping files should come from **production source code only**. The key principle is:
+
+> Samples must come from `/src/` directories of crates that ship as part of the iceoryx2 library or its supporting infrastructure.
+
+**General pattern:** `iceoryx2*/src/` or `iceoryx2-*/*/src/`
+
+As of v0.8.0, this includes:
+- `iceoryx2/src/` - Core library
+- `iceoryx2-bb/*/src/` - Building blocks (container, elementary, lock-free, memory, posix, etc.)
+- `iceoryx2-pal/*/src/` - Platform abstraction layer
+- `iceoryx2-ffi/*/src/` - Foreign function interface bindings
+- `iceoryx2-cal/src/` - Communication abstraction layer
+- `iceoryx2-cli/*/src/` - CLI tools
+- `iceoryx2-log/*/src/` - Logging infrastructure
+- `iceoryx2-services/*/src/` - Service implementations
+
+**When new crates are added:** If iceoryx2 adds new crates (e.g., `iceoryx2-newcrate/`), their `/src/` directories are acceptable sample sources. Use this command to discover all valid source directories:
+
+```bash
+find cache/repos/iceoryx2/v{VERSION} -type d -name src -path "*/iceoryx2*" | grep -v test | grep -v example
+```
+
+#### NOT Acceptable Sample Sources
+
+Samples must NOT come from:
+- `**/tests/` directories or `test_*.rs` files
+- `examples/` directories
+- `benchmarks/` directories
+- `conformance-tests/` or `component-tests/`
+- Testing infrastructure crates (e.g., `iceoryx2-pal/testing/`)
+- Doc comments (`//!`, `///`) - these are documentation, not production code
+
+#### Sample Quality Requirements
+
+| Requirement | Description |
+|-------------|-------------|
+| **Code length** | Snippets must be >20 characters |
+| **Purpose field** | Must be a meaningful description of what the code does, NOT a regex pattern like "Demonstrates \w+..." |
+| **Line accuracy** | Line numbers must match actual file content in `cache/repos/iceoryx2/v{VERSION}/` |
+| **Context** | Include enough surrounding lines to show the pattern clearly (typically 3-8 lines) |
+
+#### Handling Features Only in Tests/Examples
+
+Some FLS language features may only appear in test or example code (not production). For these:
+
+1. Set `status` to `not_used`, `not_applicable`, or `deliberately_avoided`
+2. Add a `samples_waiver` with explanation
+3. Document why it's not in production code
+
+Examples of features typically only in tests:
+- `#[test]`, `#[ignore]`, `#[should_panic]` - testing attributes
+- `#[global_allocator]`, `#[panic_handler]`, `#[no_main]` - runtime attributes (only in examples/bare-metal)
+
+#### Sample Audit Commands
+
+Run the sample audit to find quality issues:
+
+```bash
+# Audit a specific chapter
+cd tools && uv run python validate_fls_json.py --audit-samples --file=fls_chapter04_types_and_traits.json
+
+# Audit all chapters and show status
+cd tools && for f in ../iceoryx2-fls-mapping/fls_chapter*.json; do 
+  output=$(uv run python validate_fls_json.py --audit-samples --file="$(basename $f)" 2>&1)
+  flagged=$(echo "$output" | grep "Total flagged:" | awk '{print $3}')
+  if [ -z "$flagged" ]; then flagged="0"; fi
+  if [ "$flagged" = "0" ]; then 
+    echo "✅ $(basename $f)"
+  else 
+    echo "❌ $(basename $f): $flagged flagged"
+  fi
+done
+```
+
+#### Audit Issue Types
+
+| Issue | Meaning | Resolution |
+|-------|---------|------------|
+| `test_file` | Sample from test file | Replace with production code |
+| `short_snippet` | Code <20 characters | Expand to include more context |
+| `generic_purpose` | Purpose looks auto-generated | Rewrite with meaningful description |
+| `file_missing` | File not found in repo | Update file path |
+| `line_mismatch` | Line content doesn't match | Correct line numbers |
+
 ### MUST_BE_FILLED Markers
 
 Fields requiring data that couldn't be automatically determined are marked with `"MUST_BE_FILLED"`. Run the validation script to find these:
