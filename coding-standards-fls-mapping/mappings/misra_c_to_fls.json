@@ -5,20 +5,20 @@
   "mapping_date": "2025-12-31",
   "methodology": "Semantic embedding similarity + manual verification. High confidence mappings verified against MISRA rationale and FLS content.",
   "statistics": {
-    "total_guidelines": 228,
+    "total_guidelines": 223,
     "mapped": 196,
-    "unmapped": 32,
-    "not_applicable": 99,
+    "unmapped": 27,
+    "not_applicable": 95,
     "rust_prevents": 2,
-    "preserved_high_confidence": 11,
-    "avg_matches_per_guideline": 8.8,
+    "preserved_high_confidence": 14,
+    "avg_matches_per_guideline": 8.9,
     "matches_by_category": {
-      "section": 712,
-      "general": 19,
-      "legality_rules": 1061,
+      "section": 699,
+      "general": 18,
+      "legality_rules": 1044,
       "implementation_requirements": 5,
-      "dynamic_semantics": 139,
-      "undefined_behavior": 32
+      "dynamic_semantics": 137,
+      "undefined_behavior": 31
     },
     "thresholds": {
       "section": 0.5,
@@ -28,7 +28,7 @@
   "mappings": [
     {
       "guideline_id": "Dir 1.1",
-      "guideline_title": "Any implementation-defined behaviour on which the output of the",
+      "guideline_title": "Any implementation-defined behaviour on which the output of the program depends shall be documented and understood C90",
       "guideline_type": "directive",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "direct",
@@ -310,7 +310,7 @@
     },
     {
       "guideline_id": "Dir 4.1",
-      "guideline_title": "Run-time failures shall be minimized",
+      "guideline_title": "Run-time failures shall be minimized C90",
       "guideline_type": "directive",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "direct",
@@ -672,7 +672,7 @@
     },
     {
       "guideline_id": "Dir 4.5",
-      "guideline_title": "Identifiers in the same name space with overlapping visibility should",
+      "guideline_title": "Identifiers in the same name space with overlapping visibility should be typographically unambiguous",
       "guideline_type": "directive",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "direct",
@@ -734,7 +734,7 @@
     },
     {
       "guideline_id": "Dir 4.6",
-      "guideline_title": "typedefs that indicate size and signedness should be used in place of",
+      "guideline_title": "typedefs that indicate size and signedness should be used in place of the basic integer types",
       "guideline_type": "directive",
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",
@@ -868,7 +868,7 @@
     },
     {
       "guideline_id": "Dir 4.7",
-      "guideline_title": "If a function returns error information, then that error information",
+      "guideline_title": "If a function returns error information, then that error information shall be tested",
       "guideline_type": "directive",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "direct",
@@ -906,7 +906,7 @@
     },
     {
       "guideline_id": "Dir 4.8",
-      "guideline_title": "If a pointer to a structure or union is never dereferenced within a",
+      "guideline_title": "If a pointer to a structure or union is never dereferenced within a translation unit, then the implementation of the object should be hidden",
       "guideline_type": "directive",
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",
@@ -975,7 +975,7 @@
     },
     {
       "guideline_id": "Dir 4.9",
-      "guideline_title": "A function should be used in preference to a function-like macro",
+      "guideline_title": "A function should be used in preference to a function-like macro where they are interchangeable",
       "guideline_type": "directive",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "direct",
@@ -1092,7 +1092,7 @@
     },
     {
       "guideline_id": "Dir 4.10",
-      "guideline_title": "Precautions shall be taken in order to prevent the contents of a",
+      "guideline_title": "Precautions shall be taken in order to prevent the contents of a header file being included more than once",
       "guideline_type": "directive",
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",
@@ -1102,7 +1102,7 @@
     },
     {
       "guideline_id": "Dir 4.11",
-      "guideline_title": "The validity of values passed to library functions shall be checked",
+      "guideline_title": "The validity of values passed to library functions shall be checked C90",
       "guideline_type": "directive",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "direct",
@@ -1245,7 +1245,7 @@
     },
     {
       "guideline_id": "Dir 4.13",
-      "guideline_title": "Functions which are designed to provide operations on a resource",
+      "guideline_title": "Functions which are designed to provide operations on a resource should be called in an appropriate sequence",
       "guideline_type": "directive",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "direct",
@@ -1322,7 +1322,7 @@
     },
     {
       "guideline_id": "Dir 4.14",
-      "guideline_title": "The validity of values received from external sources shall be checked",
+      "guideline_title": "The validity of values received from external sources shall be checked C90",
       "guideline_type": "directive",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "direct",
@@ -1359,7 +1359,7 @@
     },
     {
       "guideline_id": "Dir 4.15",
-      "guideline_title": "Evaluation of floating-point expressions shall not lead to the",
+      "guideline_title": "Evaluation of floating-point expressions shall not lead to the undetected generation of infinities and NaNs C90",
       "guideline_type": "directive",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "direct",
@@ -1453,7 +1453,7 @@
     },
     {
       "guideline_id": "Dir 5.1",
-      "guideline_title": "There shall be no data races between threads",
+      "guideline_title": "There shall be no data races between threads C11 [Undefined 5]",
       "guideline_type": "directive",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "partial",
@@ -1558,7 +1558,7 @@
     },
     {
       "guideline_id": "Dir 5.3",
-      "guideline_title": "There shall be no dynamic thread creation",
+      "guideline_title": "There shall be no dynamic thread creation C11",
       "guideline_type": "directive",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "direct",
@@ -1579,7 +1579,7 @@
     },
     {
       "guideline_id": "Rule 1.1",
-      "guideline_title": "4.2 Compilation and build",
+      "guideline_title": "The program shall contain no violations of the standard C syntax and constraints, and shall not exceed the implementation\u2019s translation limits",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "partial",
@@ -1711,19 +1711,8 @@
       "notes": "Similarity-based mapping - requires manual verification"
     },
     {
-      "guideline_id": "Rule 1.2",
-      "guideline_title": "Renumbered as Directive 1.2 MISRA C:2025",
-      "guideline_type": "rule",
-      "applicability_all_rust": "not_applicable",
-      "applicability_safe_rust": "not_applicable",
-      "misra_rust_category": "n_a",
-      "misra_rust_comment": "Renumbered moved to Directive 1.2",
-      "confidence": "medium",
-      "notes": "MISRA ADD-6: Renumbered moved to Directive 1.2"
-    },
-    {
       "guideline_id": "Rule 1.3",
-      "guideline_title": "There shall be no occurrence of undefined or critical unspecified",
+      "guideline_title": "There shall be no occurrence of undefined or critical unspecified behaviour",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "direct",
@@ -2056,7 +2045,7 @@
     },
     {
       "guideline_id": "Rule 2.3",
-      "guideline_title": "Advisory A project should not contain unused type declarations",
+      "guideline_title": "A project should not contain unused type declarations",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "direct",
@@ -2257,7 +2246,7 @@
     },
     {
       "guideline_id": "Rule 3.1",
-      "guideline_title": "The character sequences /* and // shall not be used within a",
+      "guideline_title": "The character sequences /* and // shall not be used within a comment",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "direct",
@@ -2436,7 +2425,7 @@
     },
     {
       "guideline_id": "Rule 4.1",
-      "guideline_title": "Octal and hexadecimal escape sequences shall be terminated",
+      "guideline_title": "Octal and hexadecimal escape sequences shall be terminated C90",
       "guideline_type": "rule",
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",
@@ -2579,7 +2568,7 @@
     },
     {
       "guideline_id": "Rule 5.1",
-      "guideline_title": "External identifiers shall be distinct",
+      "guideline_title": "External identifiers shall be distinct C90 [Undefined 7], C99 [Unspecified 7; Undefined 28], C11 [Unspecified 8; Undefined 31]",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "not_applicable",
@@ -2647,7 +2636,7 @@
     },
     {
       "guideline_id": "Rule 5.2",
-      "guideline_title": "Identifiers declared in the same scope and name space shall be",
+      "guideline_title": "Identifiers declared in the same scope and name space shall be distinct C90",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "direct",
@@ -2693,7 +2682,7 @@
     },
     {
       "guideline_id": "Rule 5.3",
-      "guideline_title": "An identifier declared in an inner scope shall not hide an identifier",
+      "guideline_title": "An identifier declared in an inner scope shall not hide an identifier declared in an outer scope",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "direct",
@@ -2787,7 +2776,7 @@
     },
     {
       "guideline_id": "Rule 5.4",
-      "guideline_title": "Macro identifiers shall be distinct",
+      "guideline_title": "Macro identifiers shall be distinct C90",
       "guideline_type": "rule",
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",
@@ -2920,7 +2909,7 @@
     },
     {
       "guideline_id": "Rule 5.5",
-      "guideline_title": "Identifiers shall be distinct from macro names",
+      "guideline_title": "Identifiers shall be distinct from macro names C90",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "partial",
@@ -3187,7 +3176,7 @@
     },
     {
       "guideline_id": "Rule 5.7",
-      "guideline_title": "Required A tag name shall be a unique identifier",
+      "guideline_title": "A tag name shall be a unique identifier",
       "guideline_type": "rule",
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",
@@ -3225,7 +3214,7 @@
     },
     {
       "guideline_id": "Rule 5.8",
-      "guideline_title": "Required Identifiers that define objects or functions with external linkage shall be",
+      "guideline_title": "Identifiers that define objects or functions with external linkage shall be unique",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "direct",
@@ -3342,140 +3331,62 @@
     },
     {
       "guideline_id": "Rule 5.9",
-      "guideline_title": "Advisory Identifiers that define objects or functions with internal linkage should",
+      "guideline_title": "Identifiers that define objects or functions with internal linkage should be unique",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "direct",
       "accepted_matches": [
         {
+          "fls_id": "fls_dq403wq5yrs",
+          "category": 0,
+          "fls_section": "14.3",
+          "fls_title": "Namespaces",
+          "score": 0.555,
+          "reason": "Per FLS fls_1d4jm61qnt4l: 'A namespace is a logical grouping of names such that the occurrence of a name in one namespace does not conflict with an occurrence of the same name in another namespace.' Rust's 5 namespaces (label, lifetime, macro, type, value) prevent the identifier confusion that MISRA aims to avoid."
+        },
+        {
           "fls_id": "fls_21vnag69kbwe",
           "category": 0,
-          "fls_section": "2.-2.3",
+          "fls_section": "2.3",
           "fls_title": "Identifiers",
           "score": 0.674,
-          "reason": "Section-level similarity match (score: 0.67)"
-        },
-        {
-          "fls_id": "fls_w473jevurlt1",
-          "category": -2,
-          "fls_section": "fls_21vnag69kbwe",
-          "fls_title": "Identifiers",
-          "score": 0.636,
-          "reason": "Per FLS: '[Name]s of external [crate]s represented in a simple path, when the...' (similarity: 0.64)"
-        },
-        {
-          "fls_id": "fls_p44fky7fifc",
-          "category": 0,
-          "fls_section": "13.-2.19",
-          "fls_title": "Attribute ``link_name``",
-          "score": 0.629,
-          "reason": "Section-level similarity match (score: 0.63)"
-        },
-        {
-          "fls_id": "fls_j9yh8j8jgdeu",
-          "category": -2,
-          "fls_section": "fls_21vnag69kbwe",
-          "fls_title": "Identifiers",
-          "score": 0.622,
-          "reason": "Per FLS: 'Two [identifier]s are considered the same if they consist of the sa...' (similarity: 0.62)"
-        },
-        {
-          "fls_id": "fls_jejt5z8m1yew",
-          "category": -2,
-          "fls_section": "fls_21vnag69kbwe",
-          "fls_title": "Identifiers",
-          "score": 0.615,
-          "reason": "Per FLS: '[Declarative macro]s and [procedural macro]s shall receive normaliz...' (similarity: 0.61)"
-        },
-        {
-          "fls_id": "fls_ktnf6zkrdy45",
-          "category": -2,
-          "fls_section": "fls_21vnag69kbwe",
-          "fls_title": "Identifiers",
-          "score": 0.609,
-          "reason": "Per FLS: 'A pure identifier is an identifier that does not include [weak keyw...' (similarity: 0.61)"
-        },
-        {
-          "fls_id": "fls_jpecw46eh061",
-          "category": -2,
-          "fls_section": "fls_21vnag69kbwe",
-          "fls_title": "Identifiers",
-          "score": 0.606,
-          "reason": "Per FLS: 'A pure identifier shall follow the specification in Unicode Standar...' (similarity: 0.61)"
-        },
-        {
-          "fls_id": "fls_irwcldiotei2",
-          "category": -2,
-          "fls_section": "fls_21vnag69kbwe",
-          "fls_title": "Identifiers",
-          "score": 0.602,
-          "reason": "Per FLS: 'A pure identifier shall be restricted to characters in category Asc...' (similarity: 0.60)"
-        },
-        {
-          "fls_id": "fls_89yNjGNB7KI3",
-          "category": -2,
-          "fls_section": "fls_fk2m2irwpeof",
-          "fls_title": "Implementations",
-          "score": 0.597,
-          "reason": "Per FLS: '[Inherent implementation]s of the same implementing type shall not ...' (similarity: 0.60)"
-        },
-        {
-          "fls_id": "fls_xsdmun5uqy4c",
-          "category": -2,
-          "fls_section": "fls_21vnag69kbwe",
-          "fls_title": "Identifiers",
-          "score": 0.588,
-          "reason": "Per FLS: 'An identifier is a lexical element that refers to a name.' (similarity: 0.59)"
+          "reason": "Per FLS fls_j9yh8j8jgdeu: 'Two identifiers are considered the same if they consist of the same sequence of characters after performing normalization.' Defines identifier equality/uniqueness."
         },
         {
           "fls_id": "fls_151r19d7xbgz",
           "category": 0,
-          "fls_section": "14.-2.1",
+          "fls_section": "14.1",
           "fls_title": "Entities",
           "score": 0.588,
-          "reason": "Section-level similarity match (score: 0.59)"
-        },
-        {
-          "fls_id": "fls_24c95c56tugl",
-          "category": -2,
-          "fls_section": "fls_7bxv8lybxm18",
-          "fls_title": "Identifier Patterns",
-          "score": 0.581,
-          "reason": "Per FLS: 'The identifier pattern enters its binding into binding scope in the...' (similarity: 0.58)"
-        },
-        {
-          "fls_id": "fls_vde7gev5rz4q",
-          "category": -2,
-          "fls_section": "fls_21vnag69kbwe",
-          "fls_title": "Identifiers",
-          "score": 0.575,
-          "reason": "Per FLS: '[Identifier]s are normalized using Normalization Form C as defined ...' (similarity: 0.58)"
-        },
-        {
-          "fls_id": "fls_dq403wq5yrs",
-          "category": 0,
-          "fls_section": "14.-2.12",
-          "fls_title": "Namespaces",
-          "score": 0.555,
-          "reason": "Section-level similarity match (score: 0.56)"
-        },
-        {
-          "fls_id": "fls_7bxv8lybxm18",
-          "category": 0,
-          "fls_section": "5.-2.3",
-          "fls_title": "Identifier Patterns",
-          "score": 0.548,
-          "reason": "Section-level similarity match (score: 0.55)"
+          "reason": "Defines how entities (functions, objects, types) are named and resolved within Rust's module system, which provides isolation analogous to C's internal linkage."
         }
       ],
       "fls_rationale_type": "direct_mapping",
       "misra_rust_category": "n_a",
-      "confidence": "medium",
-      "notes": "Similarity-based mapping - requires manual verification"
+      "confidence": "high",
+      "notes": "MISRA aims to prevent confusion from duplicate internal-linkage identifiers. Rust's module system and namespace segregation (FLS 14.3) structurally prevents this issue. Private items are module-scoped, not file-scoped like C's 'static', and the 5-namespace model ensures names in different categories never conflict.",
+      "rejected_matches": [
+        {
+          "fls_id": "fls_p44fky7fifc",
+          "category": 0,
+          "fls_section": "13.19",
+          "fls_title": "Attribute link_name",
+          "score": 0.629,
+          "reason": "About renaming symbols for FFI linking, not about identifier uniqueness."
+        },
+        {
+          "fls_id": "fls_7bxv8lybxm18",
+          "category": 0,
+          "fls_section": "5.3",
+          "fls_title": "Identifier Patterns",
+          "score": 0.548,
+          "reason": "Pattern matching syntax, not about identifier uniqueness or naming conflicts."
+        }
+      ]
     },
     {
       "guideline_id": "Rule 5.10",
-      "guideline_title": "A reserved identifier or reserved macro name shall not be declared",
+      "guideline_title": "A reserved identifier or reserved macro name shall not be declared C90",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "partial",
@@ -3609,7 +3520,7 @@
     },
     {
       "guideline_id": "Rule 6.1",
-      "guideline_title": "Bit-fields shall only be declared with an appropriate type",
+      "guideline_title": "Bit-fields shall only be declared with an appropriate type C90",
       "guideline_type": "rule",
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",
@@ -3876,7 +3787,7 @@
     },
     {
       "guideline_id": "Rule 6.3",
-      "guideline_title": "A bit-field shall not be declared as a member of a union",
+      "guideline_title": "A bit-field shall not be declared as a member of a union C90",
       "guideline_type": "rule",
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",
@@ -4127,7 +4038,7 @@
     },
     {
       "guideline_id": "Rule 7.2",
-      "guideline_title": "A \u201cu\u201d or \u201cU\u201d suffix shall be applied to all integer constants that are",
+      "guideline_title": "A \u201cu\u201d or \u201cU\u201d suffix shall be applied to all integer constants that are represented in an unsigned type",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "direct",
@@ -4338,7 +4249,7 @@
     },
     {
       "guideline_id": "Rule 7.4",
-      "guideline_title": "A string literal shall not be assigned to an object unless the object\u2019s",
+      "guideline_title": "A string literal shall not be assigned to an object unless the object\u2019s type is \u201cpointer to const-qualified char\u201d C90",
       "guideline_type": "rule",
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",
@@ -4471,7 +4382,7 @@
     },
     {
       "guideline_id": "Rule 7.5",
-      "guideline_title": "The argument of an integer constant macro shall have an appropriate",
+      "guideline_title": "The argument of an integer constant macro shall have an appropriate form C99",
       "guideline_type": "rule",
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",
@@ -4604,7 +4515,7 @@
     },
     {
       "guideline_id": "Rule 7.6",
-      "guideline_title": "Required The small integer variants of the minimum-width integer constant",
+      "guideline_title": "The small integer variants of the minimum-width integer constant macros shall not be used",
       "guideline_type": "rule",
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",
@@ -4870,7 +4781,7 @@
     },
     {
       "guideline_id": "Rule 8.2",
-      "guideline_title": "Required Function types shall be in prototype form with named parameters",
+      "guideline_title": "Function types shall be in prototype form with named parameters C90",
       "guideline_type": "rule",
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",
@@ -4987,7 +4898,7 @@
     },
     {
       "guideline_id": "Rule 8.3",
-      "guideline_title": "All declarations of an object or function shall use the same names and",
+      "guideline_title": "All declarations of an object or function shall use the same names and type qualifiers C90",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "not_applicable",
@@ -5121,7 +5032,7 @@
     },
     {
       "guideline_id": "Rule 8.4",
-      "guideline_title": "A compatible declaration shall be visible when an object or function",
+      "guideline_title": "A compatible declaration shall be visible when an object or function with external linkage is defined C90",
       "guideline_type": "rule",
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",
@@ -5174,7 +5085,7 @@
     },
     {
       "guideline_id": "Rule 8.5",
-      "guideline_title": "An external object or function shall be declared once in one and only",
+      "guideline_title": "An external object or function shall be declared once in one and only one file",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "not_applicable",
@@ -5212,141 +5123,71 @@
     },
     {
       "guideline_id": "Rule 8.6",
-      "guideline_title": "5.3 Comments",
+      "guideline_title": "An identifier with external linkage shall have exactly one external definition C90",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "not_applicable",
       "accepted_matches": [
         {
-          "fls_id": "fls_21vnag69kbwe",
+          "fls_id": "fls_tmoh3y9oyqsy",
           "category": 0,
-          "fls_section": "2.-2.3",
-          "fls_title": "Identifiers",
-          "score": 0.652,
-          "reason": "Section-level similarity match (score: 0.65)"
+          "fls_section": "21.1",
+          "fls_title": "External Blocks",
+          "score": 0.5,
+          "reason": "Per FLS fls_4dje9t5y2dia: 'An external block is a construct that provides the declarations of external functions and external statics as unchecked imports.' The 'unchecked' nature means Rust trusts the linker to enforce ODR for external symbols."
         },
         {
-          "fls_id": "fls_j9yh8j8jgdeu",
-          "category": -2,
-          "fls_section": "fls_21vnag69kbwe",
-          "fls_title": "Identifiers",
-          "score": 0.651,
-          "reason": "Per FLS: 'Two [identifier]s are considered the same if they consist of the sa...' (similarity: 0.65)"
-        },
-        {
-          "fls_id": "fls_89yNjGNB7KI3",
-          "category": -2,
-          "fls_section": "fls_fk2m2irwpeof",
-          "fls_title": "Implementations",
-          "score": 0.637,
-          "reason": "Per FLS: '[Inherent implementation]s of the same implementing type shall not ...' (similarity: 0.64)"
-        },
-        {
-          "fls_id": "fls_w473jevurlt1",
-          "category": -2,
-          "fls_section": "fls_21vnag69kbwe",
-          "fls_title": "Identifiers",
-          "score": 0.636,
-          "reason": "Per FLS: '[Name]s of external [crate]s represented in a simple path, when the...' (similarity: 0.64)"
-        },
-        {
-          "fls_id": "fls_mq80i8fof7sx",
-          "category": -2,
-          "fls_section": "fls_8tsynkj2cufj",
-          "fls_title": "Struct Expressions",
-          "score": 0.633,
-          "reason": "Per FLS: 'Contain exactly one matched named initializer, or' (similarity: 0.63)"
-        },
-        {
-          "fls_id": "fls_ktnf6zkrdy45",
-          "category": -2,
-          "fls_section": "fls_21vnag69kbwe",
-          "fls_title": "Identifiers",
-          "score": 0.629,
-          "reason": "Per FLS: 'A pure identifier is an identifier that does not include [weak keyw...' (similarity: 0.63)"
-        },
-        {
-          "fls_id": "fls_bbmm5vir9xos",
-          "category": -2,
-          "fls_section": "fls_8tsynkj2cufj",
-          "fls_title": "Struct Expressions",
-          "score": 0.618,
-          "reason": "Per FLS: 'Contain at most one matched named initializer, or' (similarity: 0.62)"
-        },
-        {
-          "fls_id": "fls_hw26hy33guk5",
-          "category": -2,
-          "fls_section": "fls_7bxv8lybxm18",
-          "fls_title": "Identifier Patterns",
-          "score": 0.616,
-          "reason": "Per FLS: 'An identifier pattern is an irrefutable pattern when:' (similarity: 0.62)"
-        },
-        {
-          "fls_id": "fls_jejt5z8m1yew",
-          "category": -2,
-          "fls_section": "fls_21vnag69kbwe",
-          "fls_title": "Identifiers",
-          "score": 0.609,
-          "reason": "Per FLS: '[Declarative macro]s and [procedural macro]s shall receive normaliz...' (similarity: 0.61)"
-        },
-        {
-          "fls_id": "fls_ibYKKQdB2tDn",
-          "category": -2,
-          "fls_section": "fls_ixjc5jaamx84",
-          "fls_title": "Constants",
-          "score": 0.607,
-          "reason": "Per FLS: 'The mutable reference is contained within an union, or -' (similarity: 0.61)"
-        },
-        {
-          "fls_id": "fls_irwcldiotei2",
-          "category": -2,
-          "fls_section": "fls_21vnag69kbwe",
-          "fls_title": "Identifiers",
-          "score": 0.603,
-          "reason": "Per FLS: 'A pure identifier shall be restricted to characters in category Asc...' (similarity: 0.60)"
-        },
-        {
-          "fls_id": "fls_p44fky7fifc",
+          "fls_id": "fls_yztwtek0y34v",
           "category": 0,
-          "fls_section": "13.-2.19",
-          "fls_title": "Attribute ``link_name``",
-          "score": 0.595,
-          "reason": "Section-level similarity match (score: 0.59)"
+          "fls_section": "21.2",
+          "fls_title": "External Functions",
+          "score": 0.48,
+          "reason": "Per FLS fls_v24ino4hix3m: 'An external function is an unchecked import of a foreign function.' Per fls_rdu4723vp0oo: 'An external function shall not specify a FunctionBody.' These are declarations only - the single definition must exist in linked C code."
         },
         {
-          "fls_id": "fls_7bxv8lybxm18",
+          "fls_id": "fls_s4yt19sptl7d",
           "category": 0,
-          "fls_section": "5.-2.3",
-          "fls_title": "Identifier Patterns",
-          "score": 0.579,
-          "reason": "Section-level similarity match (score: 0.58)"
+          "fls_section": "21.3",
+          "fls_title": "External Statics",
+          "score": 0.48,
+          "reason": "Per FLS fls_8ddsytjr4il6: 'An external static is an import of a foreign variable.' Per fls_tr7purzcldn0: 'An external static shall not specify a static initializer.' These are declarations only."
         },
         {
           "fls_id": "fls_mvd7nz8k3wcy",
           "category": 0,
-          "fls_section": "13.-2.24",
-          "fls_title": "Attribute ``no_mangle``",
+          "fls_section": "13.24",
+          "fls_title": "Attribute no_mangle",
           "score": 0.53,
-          "reason": "Section-level similarity match (score: 0.53)"
-        },
-        {
-          "fls_id": "fls_151r19d7xbgz",
-          "category": 0,
-          "fls_section": "14.-2.1",
-          "fls_title": "Entities",
-          "score": 0.53,
-          "reason": "Section-level similarity match (score: 0.53)"
+          "reason": "The #[no_mangle] attribute exposes Rust symbols with external linkage, making ODR concerns relevant when Rust functions are called from C."
         }
       ],
       "fls_rationale_type": "direct_mapping",
       "misra_rust_category": "required",
       "misra_rust_comment": "may affect extern \u201cC\u201d declarations",
-      "confidence": "medium",
-      "notes": "MISRA ADD-6: may affect extern \u201cC\u201d declarations. Only applicable in unsafe Rust"
+      "confidence": "high",
+      "notes": "MISRA enforces C's ODR for external linkage. In Rust, extern blocks provide 'unchecked imports' - the compiler trusts that exactly one definition exists in linked code. For pure Rust items, the module system and crate boundaries enforce uniqueness. For FFI with #[no_mangle], the user must ensure ODR compliance in the linked C code. Per ADD-6: 'may affect extern \"C\" declarations'.",
+      "rejected_matches": [
+        {
+          "fls_id": "fls_21vnag69kbwe",
+          "category": 0,
+          "fls_section": "2.3",
+          "fls_title": "Identifiers",
+          "score": 0.652,
+          "reason": "About identifier syntax, not about external linkage or definition uniqueness."
+        },
+        {
+          "fls_id": "fls_7bxv8lybxm18",
+          "category": 0,
+          "fls_section": "5.3",
+          "fls_title": "Identifier Patterns",
+          "score": 0.579,
+          "reason": "Pattern matching syntax, not related to external linkage."
+        }
+      ]
     },
     {
       "guideline_id": "Rule 8.7",
-      "guideline_title": "Advisory Functions and objects should not be defined with external linkage if they",
+      "guideline_title": "Functions and objects should not be defined with external linkage if they are referenced in only one translation unit",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "direct",
@@ -5424,7 +5265,7 @@
     },
     {
       "guideline_id": "Rule 8.8",
-      "guideline_title": "The static storage class specifier shall be used in all declarations of",
+      "guideline_title": "The static storage class specifier shall be used in all declarations of objects and functions that have internal linkage",
       "guideline_type": "rule",
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",
@@ -5557,7 +5398,7 @@
     },
     {
       "guideline_id": "Rule 8.9",
-      "guideline_title": "Advisory An object should be declared at block scope if its identifier only appears",
+      "guideline_title": "An object should be declared at block scope if its identifier only appears in a single function",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "direct",
@@ -5626,7 +5467,7 @@
     },
     {
       "guideline_id": "Rule 8.10",
-      "guideline_title": "Section 5: Rules",
+      "guideline_title": "An inline function shall be declared with the static storage class C99",
       "guideline_type": "rule",
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",
@@ -5759,7 +5600,7 @@
     },
     {
       "guideline_id": "Rule 8.11",
-      "guideline_title": "Advisory When an array with external linkage is declared, its size should be",
+      "guideline_title": "When an array with external linkage is declared, its size should be explicitly specified",
       "guideline_type": "rule",
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",
@@ -5860,7 +5701,7 @@
     },
     {
       "guideline_id": "Rule 8.12",
-      "guideline_title": "Within an enumerator list, the value of an implicitly-specified",
+      "guideline_title": "Within an enumerator list, the value of an implicitly-specified enumeration constant shall be unique",
       "guideline_type": "rule",
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",
@@ -6022,7 +5863,7 @@
     },
     {
       "guideline_id": "Rule 8.14",
-      "guideline_title": "The restrict type qualifier shall not be used",
+      "guideline_title": "The restrict type qualifier shall not be used C99",
       "guideline_type": "rule",
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",
@@ -6155,7 +5996,7 @@
     },
     {
       "guideline_id": "Rule 8.15",
-      "guideline_title": "All declarations of an object with an explicit alignment specification",
+      "guideline_title": "All declarations of an object with an explicit alignment specification shall specify the same alignment C11",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "not_applicable",
@@ -6289,7 +6130,7 @@
     },
     {
       "guideline_id": "Rule 8.16",
-      "guideline_title": "The alignment specification of zero should not appear in an object",
+      "guideline_title": "The alignment specification of zero should not appear in an object declaration",
       "guideline_type": "rule",
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",
@@ -6423,7 +6264,7 @@
     },
     {
       "guideline_id": "Rule 8.17",
-      "guideline_title": "At most one explicit alignment specifier should appear in an object",
+      "guideline_title": "At most one explicit alignment specifier should appear in an object declaration",
       "guideline_type": "rule",
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",
@@ -6532,7 +6373,7 @@
     },
     {
       "guideline_id": "Rule 8.18",
-      "guideline_title": "There shall be no tentative definitions in a header file",
+      "guideline_title": "There shall be no tentative definitions in a header file C90",
       "guideline_type": "rule",
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",
@@ -6702,7 +6543,7 @@
     },
     {
       "guideline_id": "Rule 9.1",
-      "guideline_title": "The value of an object with automatic storage duration shall not be",
+      "guideline_title": "The value of an object with automatic storage duration shall not be read before it has been set C90",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "direct",
@@ -6836,7 +6677,7 @@
     },
     {
       "guideline_id": "Rule 9.2",
-      "guideline_title": "The initializer for an aggregate or union shall be enclosed in braces",
+      "guideline_title": "The initializer for an aggregate or union shall be enclosed in braces C90",
       "guideline_type": "rule",
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",
@@ -7036,135 +6877,57 @@
       "applicability_safe_rust": "direct",
       "accepted_matches": [
         {
-          "fls_id": "fls_e5b9n910z1cp",
-          "category": -2,
-          "fls_section": "fls_8tsynkj2cufj",
+          "fls_id": "fls_8tsynkj2cufj",
+          "category": 0,
+          "fls_section": "6.4",
           "fls_title": "Struct Expressions",
-          "score": 0.732,
-          "reason": "Per FLS: 'The value of an indexed initializer is the value of its operand.' (similarity: 0.73)"
+          "score": 0.61,
+          "reason": "Per FLS fls_bbmm5vir9xos: 'Contain at most one matched named initializer'. Per fls_j2kmp1fee0g4: 'Contain at most one matched indexed initializer'. These rules explicitly prevent duplicate field initialization in struct expressions."
         },
         {
-          "fls_id": "fls_lmxz5768v5d8",
+          "fls_id": "fls_bbmm5vir9xos",
           "category": -2,
-          "fls_section": "fls_8tsynkj2cufj",
+          "fls_section": "6.4",
           "fls_title": "Struct Expressions",
-          "score": 0.722,
-          "reason": "Per FLS: 'A base initializer is allowed even if all [field]s of the construct...' (similarity: 0.72)"
+          "score": 0.62,
+          "reason": "'Contain at most one matched named initializer' - Rust enforces this at compile time, directly addressing MISRA's concern about duplicate initialization."
         },
         {
-          "fls_id": "fls_qo05owpmtag0",
+          "fls_id": "fls_j2kmp1fee0g4",
           "category": -2,
-          "fls_section": "fls_8tsynkj2cufj",
+          "fls_section": "6.4",
           "fls_title": "Struct Expressions",
-          "score": 0.722,
-          "reason": "Per FLS: 'A base initializer is allowed even if all [field]s of the construct...' (similarity: 0.72)"
-        },
-        {
-          "fls_id": "fls_w7x9wy6t0qcp",
-          "category": -2,
-          "fls_section": "fls_8tsynkj2cufj",
-          "fls_title": "Struct Expressions",
-          "score": 0.721,
-          "reason": "Per FLS: 'If a base initializer is supplied, then for each field that was not...' (similarity: 0.72)"
-        },
-        {
-          "fls_id": "fls_z3gj1v6g605r",
-          "category": -2,
-          "fls_section": "fls_8tsynkj2cufj",
-          "fls_title": "Struct Expressions",
-          "score": 0.716,
-          "reason": "Per FLS: 'The value of a named initializer is the value of its expression.' (similarity: 0.72)"
-        },
-        {
-          "fls_id": "fls_5w9lj5dc84p",
-          "category": -2,
-          "fls_section": "fls_8tsynkj2cufj",
-          "fls_title": "Struct Expressions",
-          "score": 0.704,
-          "reason": "Per FLS: 'The struct expression shall not contain a base initializer.' (similarity: 0.70)"
-        },
-        {
-          "fls_id": "fls_gfu267bpl9ql",
-          "category": -2,
-          "fls_section": "fls_8tsynkj2cufj",
-          "fls_title": "Struct Expressions",
-          "score": 0.697,
-          "reason": "Per FLS: 'The type of a base initializer is the type of its operand. The type...' (similarity: 0.70)"
-        },
-        {
-          "fls_id": "fls_njder5r7y5fg",
-          "category": -2,
-          "fls_section": "fls_8tsynkj2cufj",
-          "fls_title": "Struct Expressions",
-          "score": 0.688,
-          "reason": "Per FLS: 'If the constructee is a unit enum variant or a unit struct, then th...' (similarity: 0.69)"
-        },
-        {
-          "fls_id": "fls_ph7fsphbpbv4",
-          "category": -2,
-          "fls_section": "fls_8tsynkj2cufj",
-          "fls_title": "Struct Expressions",
-          "score": 0.687,
-          "reason": "Per FLS: 'An indexed initializer is a construct that specifies the index and ...' (similarity: 0.69)"
-        },
-        {
-          "fls_id": "fls_y3p6rtm7ek3l",
-          "category": -2,
-          "fls_section": "fls_8tsynkj2cufj",
-          "fls_title": "Struct Expressions",
-          "score": 0.684,
-          "reason": "Per FLS: 'An indexed initializer matches a field of the constructee when the ...' (similarity: 0.68)"
+          "score": 0.6,
+          "reason": "'Contain at most one matched indexed initializer' - Prevents duplicate initialization of tuple struct fields."
         },
         {
           "fls_id": "fls_3xvm61x0t251",
           "category": 0,
-          "fls_section": "15.-2.2",
+          "fls_section": "15.2",
           "fls_title": "Initialization",
           "score": 0.651,
-          "reason": "Section-level similarity match (score: 0.65)"
-        },
-        {
-          "fls_id": "fls_8tsynkj2cufj",
-          "category": 0,
-          "fls_section": "6.-2.34",
-          "fls_title": "Struct Expressions",
-          "score": 0.61,
-          "reason": "Section-level similarity match (score: 0.61)"
-        },
-        {
-          "fls_id": "fls_94a8v54bufn8",
-          "category": 0,
-          "fls_section": "7.-2.1",
-          "fls_title": "Values",
-          "score": 0.517,
-          "reason": "Section-level similarity match (score: 0.52)"
-        },
-        {
-          "fls_id": "fls_xdvdl2ssnhlo",
-          "category": 0,
-          "fls_section": "7.-2.3",
-          "fls_title": "Statics",
-          "score": 0.511,
-          "reason": "Section-level similarity match (score: 0.51)"
-        },
-        {
-          "fls_id": "fls_rjxpof29a3nl",
-          "category": 0,
-          "fls_section": "4.-2.29",
-          "fls_title": "Struct Type Representation",
-          "score": 0.503,
-          "reason": "Section-level similarity match (score: 0.50)"
+          "reason": "Defines initialization semantics. Per FLS: 'A variable shall be initialized before it is accessed.' Rust's initialization tracking ensures each field is initialized exactly once."
         }
       ],
       "fls_rationale_type": "direct_mapping",
       "misra_rust_category": "required",
       "misra_rust_comment": "enforced by rustc",
-      "confidence": "medium",
-      "notes": "MISRA ADD-6: enforced by rustc"
+      "confidence": "high",
+      "notes": "MISRA prevents duplicate designated initializers in C. Rust enforces this at compile time via FLS 6.4 (Struct Expressions): each field must have 'at most one matched named/indexed/shorthand initializer'. The compiler emits error E0062 for duplicate field specifications. Per ADD-6: 'enforced by rustc'.",
+      "rejected_matches": [
+        {
+          "fls_id": "fls_94a8v54bufn8",
+          "category": 0,
+          "fls_section": "7.1",
+          "fls_title": "Values",
+          "score": 0.517,
+          "reason": "General value semantics, not specifically about initialization uniqueness."
+        }
+      ]
     },
     {
       "guideline_id": "Rule 9.5",
-      "guideline_title": "Required Where designated initializers are used to initialize an array object the",
+      "guideline_title": "Where designated initializers are used to initialize an array object the size of the array shall be specified explicitly",
       "guideline_type": "rule",
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",
@@ -7297,7 +7060,7 @@
     },
     {
       "guideline_id": "Rule 9.6",
-      "guideline_title": "Section 5: Rules",
+      "guideline_title": "An initializer using chained designators shall not contain initializers without designators",
       "guideline_type": "rule",
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",
@@ -7398,120 +7161,50 @@
     },
     {
       "guideline_id": "Rule 9.7",
-      "guideline_title": "Atomic objects shall be appropriately initialized before being accessed",
+      "guideline_title": "Atomic objects shall be appropriately initialized before being accessed C11",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "not_applicable",
       "accepted_matches": [
         {
-          "fls_id": "fls_3pjla9s93mhd",
-          "category": -2,
-          "fls_section": "fls_vyc9vcuamlph",
-          "fls_title": "Atomics",
-          "score": 0.714,
-          "reason": "Per FLS: 'An atomic type is a type defined in module core::sync::atomic. [Ato...' (similarity: 0.71)"
-        },
-        {
           "fls_id": "fls_vyc9vcuamlph",
           "category": 0,
-          "fls_section": "17.-2.3",
+          "fls_section": "17.1",
           "fls_title": "Atomics",
           "score": 0.697,
-          "reason": "Section-level similarity match (score: 0.70)"
-        },
-        {
-          "fls_id": "fls_5ab2sw3gwmt3",
-          "category": -2,
-          "fls_section": "fls_vyc9vcuamlph",
-          "fls_title": "Atomics",
-          "score": 0.589,
-          "reason": "Per FLS: '- isize - core::sync::atomic::AtomicIsize -' (similarity: 0.59)"
-        },
-        {
-          "fls_id": "fls_jt7rfq9atbiv",
-          "category": -2,
-          "fls_section": "fls_vyc9vcuamlph",
-          "fls_title": "Atomics",
-          "score": 0.588,
-          "reason": "Per FLS: '- i32 - core::sync::atomic::AtomicI32 -' (similarity: 0.59)"
-        },
-        {
-          "fls_id": "fls_w2mw833g28eb",
-          "category": -2,
-          "fls_section": "fls_vyc9vcuamlph",
-          "fls_title": "Atomics",
-          "score": 0.581,
-          "reason": "Per FLS: '- *mut T - core::sync::atomic::AtomicPtr -' (similarity: 0.58)"
-        },
-        {
-          "fls_id": "fls_jx0784jzxy00",
-          "category": -2,
-          "fls_section": "fls_vyc9vcuamlph",
-          "fls_title": "Atomics",
-          "score": 0.578,
-          "reason": "Per FLS: '- bool - core::sync::atomic::AtomicBool -' (similarity: 0.58)"
-        },
-        {
-          "fls_id": "fls_cry1e78gp19q",
-          "category": -2,
-          "fls_section": "fls_vyc9vcuamlph",
-          "fls_title": "Atomics",
-          "score": 0.574,
-          "reason": "Per FLS: '- usize - core::sync::atomic::AtomicUsize' (similarity: 0.57)"
-        },
-        {
-          "fls_id": "fls_2hqmfwswc6k",
-          "category": -2,
-          "fls_section": "fls_vyc9vcuamlph",
-          "fls_title": "Atomics",
-          "score": 0.571,
-          "reason": "Per FLS: '- i64 - core::sync::atomic::AtomicI64 -' (similarity: 0.57)"
-        },
-        {
-          "fls_id": "fls_2qkrcd5eovpe",
-          "category": -2,
-          "fls_section": "fls_vyc9vcuamlph",
-          "fls_title": "Atomics",
-          "score": 0.562,
-          "reason": "Per FLS: '- u64 - core::sync::atomic::AtomicU64 -' (similarity: 0.56)"
-        },
-        {
-          "fls_id": "fls_4urmnh4mfehl",
-          "category": -2,
-          "fls_section": "fls_vyc9vcuamlph",
-          "fls_title": "Atomics",
-          "score": 0.556,
-          "reason": "Per FLS: '- u32 - core::sync::atomic::AtomicU32 -' (similarity: 0.56)"
-        },
-        {
-          "fls_id": "fls_3v733mnewssy",
-          "category": 0,
-          "fls_section": "17.-1.1",
-          "fls_title": "Concurrency",
-          "score": 0.529,
-          "reason": "Section-level similarity match (score: 0.53)"
-        },
-        {
-          "fls_id": "fls_xdvdl2ssnhlo",
-          "category": 0,
-          "fls_section": "7.-2.3",
-          "fls_title": "Statics",
-          "score": 0.524,
-          "reason": "Section-level similarity match (score: 0.52)"
+          "reason": "Per FLS fls_3pjla9s93mhd: 'An atomic type is a type defined in module core::sync::atomic. Atomic types provide primitive shared-memory communication between threads.' Rust's atomic types require const initialization (e.g., AtomicBool::new(false))."
         },
         {
           "fls_id": "fls_3xvm61x0t251",
           "category": 0,
-          "fls_section": "15.-2.2",
+          "fls_section": "15.2",
           "fls_title": "Initialization",
           "score": 0.501,
-          "reason": "Section-level similarity match (score: 0.50)"
+          "reason": "Per FLS fls_46910buiwvv9: 'A variable shall be initialized before it is accessed.' This fundamental rule applies to atomic types - the compiler enforces initialization before access."
+        },
+        {
+          "fls_id": "fls_3v733mnewssy",
+          "category": 0,
+          "fls_section": "17.0",
+          "fls_title": "Concurrency",
+          "score": 0.529,
+          "reason": "Per FLS fls_tx4b8r6i93n4: 'A data race is a scenario where two or more threads access a shared memory location concurrently without any synchronization, where one of the accesses is a modification.' Rust's atomic types prevent data races through memory ordering guarantees."
         }
       ],
       "fls_rationale_type": "direct_mapping",
       "misra_rust_category": "required",
-      "confidence": "medium",
-      "notes": "Only applicable in unsafe Rust"
+      "confidence": "high",
+      "notes": "MISRA requires atomic objects to be initialized before access to avoid data races. Rust's atomic types (core::sync::atomic) must be initialized with const constructors like AtomicBool::new(). The compiler enforces FLS fls_46910buiwvv9: 'A variable shall be initialized before it is accessed.' For safe Rust, the type system prevents uninitialized access entirely. For unsafe Rust with static atomics, the const initialization requirement applies.",
+      "rejected_matches": [
+        {
+          "fls_id": "fls_xdvdl2ssnhlo",
+          "category": 0,
+          "fls_section": "3.10",
+          "fls_title": "Statics",
+          "score": 0.524,
+          "reason": "About static variable declarations, not specifically about atomic initialization."
+        }
+      ]
     },
     {
       "guideline_id": "Rule 10.1",
@@ -7522,7 +7215,7 @@
       "misra_rust_category": "n_a",
       "confidence": "high",
       "notes": "Rust's type system prevents implicit type conversions entirely. MISRA's 'essential type model' exists because C has implicit conversions between bool/char/numeric - Rust has none.",
-      "guideline_title": "Operands shall not be of an inappropriate essential type",
+      "guideline_title": "Operands shall not be of an inappropriate essential type C90 [Unspecified 23; Implementation G.3.4(8), G.3.5(3,5), G.3.9(6)] C99 [Undefined 13, 48, 49; Implementation J.3.4(2,5), J.3.5(5), J.3.9(6)] C11 [Undefined 15, 51, 52; Implementation J.3.4(2,5), J.3.5(5), J.3.9(7)]",
       "rejected_matches": [
         {
           "fls_id": "fls_xc1hof4qbf6p",
@@ -7641,7 +7334,7 @@
     },
     {
       "guideline_id": "Rule 10.3",
-      "guideline_title": "The value of an expression shall not be assigned to an object with a narrower essential type",
+      "guideline_title": "The value of an expression shall not be assigned to an object with a narrower essential type or of a different essential type category C90 [Undefined 15; Implementation G.3.5(2)] C99 [Undefined 15, 16; Implementation J.3.5(4)] C11 [Undefined 17, 18; Implementation J.3.5(4)]",
       "guideline_type": "rule",
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",
@@ -7711,7 +7404,7 @@
       "misra_rust_category": "n_a",
       "confidence": "high",
       "notes": "C's 'usual arithmetic conversions' don't exist in Rust. Operands must match exactly or code won't compile.",
-      "guideline_title": "Both operands of an operator in which the usual arithmetic conversions are performed shall have the same essential type category",
+      "guideline_title": "Both operands of an operator in which the usual arithmetic conversions are performed shall have the same essential type category C90 [Implementation G.3.6(2)], C99 [Implementation J.3.6(4)], C11 [Implementation J.3.6(5)]",
       "rejected_matches": [
         {
           "fls_id": "fls_1qhsun1vyarz",
@@ -7957,141 +7650,55 @@
     },
     {
       "guideline_id": "Rule 11.1",
-      "guideline_title": "Conversions shall not be performed between a pointer to a function",
+      "guideline_title": "Conversions shall not be performed between a pointer to a function and any other type C90",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "partial",
       "accepted_matches": [
         {
-          "fls_id": "fls_wz2etmkpvxed",
-          "category": -2,
-          "fls_section": "fls_exe4zodlwfez",
-          "fls_title": "Type Unification",
-          "score": 0.705,
-          "reason": "Per FLS: 'A function pointer type is unifiable only with another function poi...' (similarity: 0.70)"
-        },
-        {
-          "fls_id": "fls_bhw2j9wjpf2x",
-          "category": -2,
-          "fls_section": "fls_1qhsun1vyarz",
-          "fls_title": "Type Cast Expressions",
-          "score": 0.685,
-          "reason": "Per FLS: 'An operand of a function pointer type and a target integer type per...' (similarity: 0.68)"
-        },
-        {
           "fls_id": "fls_xztr1kebz8bo",
           "category": 0,
-          "fls_section": "4.-2.16",
+          "fls_section": "4.8",
           "fls_title": "Function Pointer Types",
           "score": 0.669,
-          "reason": "Section-level similarity match (score: 0.67)"
-        },
-        {
-          "fls_id": "fls_133j6xw8k4qe",
-          "category": -2,
-          "fls_section": "fls_1qhsun1vyarz",
-          "fls_title": "Type Cast Expressions",
-          "score": 0.664,
-          "reason": "Per FLS: 'An operand of a function pointer type and a target type *const V or...' (similarity: 0.66)"
-        },
-        {
-          "fls_id": "fls_5dd7icjcl3nt",
-          "category": -2,
-          "fls_section": "fls_xztr1kebz8bo",
-          "fls_title": "Function Pointer Types",
-          "score": 0.661,
-          "reason": "Per FLS: 'An unsafe function pointer type is a function pointer type subject ...' (similarity: 0.66)"
-        },
-        {
-          "fls_id": "fls_v2wrytr3t04h",
-          "category": -2,
-          "fls_section": "fls_xztr1kebz8bo",
-          "fls_title": "Function Pointer Types",
-          "score": 0.651,
-          "reason": "Per FLS: 'A function pointer type is an indirection type that refers to a fun...' (similarity: 0.65)"
-        },
-        {
-          "fls_id": "fls_1kg1mknf4yx7",
-          "category": -2,
-          "fls_section": "fls_963gsjp2jas2",
-          "fls_title": "Type Classification",
-          "score": 0.641,
-          "reason": "Per FLS: '[Function pointer type]s' (similarity: 0.64)"
-        },
-        {
-          "fls_id": "fls_k6ues2936pjq",
-          "category": -2,
-          "fls_section": "fls_ppd1xwve3tr7",
-          "fls_title": "Raw Pointer Types",
-          "score": 0.641,
-          "reason": "Per FLS: 'Comparing a value of a raw pointer type to a value of a dynamically...' (similarity: 0.64)"
-        },
-        {
-          "fls_id": "fls_8gpvNJfVlyaD",
-          "category": -2,
-          "fls_section": "fls_xztr1kebz8bo",
-          "fls_title": "Function Pointer Types",
-          "score": 0.638,
-          "reason": "Per FLS: 'If the function pointer type specifies a ReturnTypeWithoutBounds, t...' (similarity: 0.64)"
-        },
-        {
-          "fls_id": "fls_g1iYVw7upBnH",
-          "category": -2,
-          "fls_section": "fls_xztr1kebz8bo",
-          "fls_title": "Function Pointer Types",
-          "score": 0.636,
-          "reason": "Per FLS: 'The return type of a function pointer type is determined as follows:' (similarity: 0.64)"
-        },
-        {
-          "fls_id": "fls_6hbkvbb1c8aj",
-          "category": -2,
-          "fls_section": "fls_1qhsun1vyarz",
-          "fls_title": "Type Cast Expressions",
-          "score": 0.635,
-          "reason": "Per FLS: 'An operand of a function item type and a target integer type perfor...' (similarity: 0.64)"
+          "reason": "Per FLS fls_v2wrytr3t04h: 'A function pointer type is an indirection type that refers to a function.' Defines function pointer as a distinct type."
         },
         {
           "fls_id": "fls_1qhsun1vyarz",
           "category": 0,
-          "fls_section": "6.-2.24",
+          "fls_section": "6.27",
           "fls_title": "Type Cast Expressions",
           "score": 0.548,
-          "reason": "Section-level similarity match (score: 0.55)"
+          "reason": "Per FLS fls_133j6xw8k4qe: 'An operand of a function pointer type and a target type *const V or *mut V... perform function-pointer-to-pointer cast.' Per fls_bhw2j9wjpf2x: function-pointer-to-address casts are explicitly defined. Rust allows these casts via 'as' but they require explicit syntax."
         },
         {
-          "fls_id": "fls_ppd1xwve3tr7",
-          "category": 0,
-          "fls_section": "4.-2.17",
-          "fls_title": "Raw Pointer Types",
-          "score": 0.533,
-          "reason": "Section-level similarity match (score: 0.53)"
-        },
-        {
-          "fls_id": "fls_5cm4gkt55hjh",
-          "category": 0,
-          "fls_section": "6.-2.16",
-          "fls_title": "Dereference Expression",
-          "score": 0.528,
-          "reason": "Section-level similarity match (score: 0.53)"
-        },
-        {
-          "fls_id": "fls_jep7p27kaqlp",
-          "category": 0,
-          "fls_section": "19.-2.1",
-          "fls_title": "Unsafety",
-          "score": 0.511,
-          "reason": "Section-level similarity match (score: 0.51)"
+          "fls_id": "fls_wz2etmkpvxed",
+          "category": -2,
+          "fls_section": "4.19",
+          "fls_title": "Type Unification",
+          "score": 0.705,
+          "reason": "'A function pointer type is unifiable only with another function pointer type when...' - Function pointers have strict type compatibility rules, preventing implicit conversions."
         }
       ],
       "fls_rationale_type": "partial_mapping",
       "misra_rust_category": "required",
       "misra_rust_comment": "includes both safe `as` and unsafe `transmute` operations",
-      "confidence": "medium",
-      "notes": "MISRA ADD-6: includes both safe `as` and unsafe `transmute` operations"
+      "confidence": "high",
+      "notes": "MISRA prohibits conversions between function pointers and other types due to UB. Rust allows explicit casts via 'as' (fn ptr -> *const T, fn ptr -> usize) but these are explicit, not implicit. For safe Rust, function pointers have strict type unification rules (fls_wz2etmkpvxed). For unsafe transmute operations, the user takes responsibility. Per ADD-6: 'includes both safe `as` and unsafe `transmute` operations'.",
+      "rejected_matches": [
+        {
+          "fls_id": "fls_5cm4gkt55hjh",
+          "category": 0,
+          "fls_section": "6.17",
+          "fls_title": "Dereference Expression",
+          "score": 0.528,
+          "reason": "About dereferencing pointers, not about function pointer type conversions."
+        }
+      ]
     },
     {
       "guideline_id": "Rule 11.2",
-      "guideline_title": "Conversions shall not be performed between a pointer to an",
+      "guideline_title": "Conversions shall not be performed between a pointer to an incomplete type and any other type C90",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "not_applicable",
@@ -8224,7 +7831,7 @@
     },
     {
       "guideline_id": "Rule 11.3",
-      "guideline_title": "Required A conversion shall not be performed between a pointer to object type",
+      "guideline_title": "A conversion shall not be performed between a pointer to object type and a pointer to a different object type C90",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "direct",
@@ -8357,7 +7964,7 @@
     },
     {
       "guideline_id": "Rule 11.4",
-      "guideline_title": "A conversion shall not be performed between a pointer to object and",
+      "guideline_title": "A conversion shall not be performed between a pointer to object and an arithmetic type C90",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "direct",
@@ -8365,132 +7972,46 @@
         {
           "fls_id": "fls_1qhsun1vyarz",
           "category": 0,
-          "fls_section": "6.-2.24",
+          "fls_section": "6.27",
           "fls_title": "Type Cast Expressions",
           "score": 0.709,
-          "reason": "Section-level similarity match (score: 0.71)"
-        },
-        {
-          "fls_id": "fls_59mpteeczzo",
-          "category": -2,
-          "fls_section": "fls_1qhsun1vyarz",
-          "fls_title": "Type Cast Expressions",
-          "score": 0.701,
-          "reason": "Per FLS: 'An operand of integer type and target type *const V or *mut V where...' (similarity: 0.70)"
-        },
-        {
-          "fls_id": "fls_kc3gwj9x3jnr",
-          "category": -3,
-          "fls_section": "fls_1qhsun1vyarz",
-          "fls_title": "Type Cast Expressions",
-          "score": 0.695,
-          "reason": "Per FLS: 'Casting an operand of an integer type to a target integer type of t...' (similarity: 0.70)"
-        },
-        {
-          "fls_id": "fls_4s69s9pcvbn7",
-          "category": -2,
-          "fls_section": "fls_1qhsun1vyarz",
-          "fls_title": "Type Cast Expressions",
-          "score": 0.695,
-          "reason": "Per FLS: 'An operand of a numeric type and a target numeric type perform a nu...' (similarity: 0.69)"
-        },
-        {
-          "fls_id": "fls_pcromhosmnf0",
-          "category": -2,
-          "fls_section": "fls_1qhsun1vyarz",
-          "fls_title": "Type Cast Expressions",
-          "score": 0.694,
-          "reason": "Per FLS: 'An operand of type bool or type char and a target integer type perf...' (similarity: 0.69)"
-        },
-        {
-          "fls_id": "fls_bhw2j9wjpf2x",
-          "category": -2,
-          "fls_section": "fls_1qhsun1vyarz",
-          "fls_title": "Type Cast Expressions",
-          "score": 0.689,
-          "reason": "Per FLS: 'An operand of a function pointer type and a target integer type per...' (similarity: 0.69)"
-        },
-        {
-          "fls_id": "fls_6hbkvbb1c8aj",
-          "category": -2,
-          "fls_section": "fls_1qhsun1vyarz",
-          "fls_title": "Type Cast Expressions",
-          "score": 0.679,
-          "reason": "Per FLS: 'An operand of a function item type and a target integer type perfor...' (similarity: 0.68)"
+          "reason": "Defines pointer-to-integer and integer-to-pointer casts. Per fls_i4zsbbmfa2fl: 'pointer-to-address cast produces an integer that represents the machine address'. Per fls_59mpteeczzo: 'address-to-pointer cast produces a pointer that interprets the integer as a machine address.' These casts require explicit 'as' syntax."
         },
         {
           "fls_id": "fls_i4zsbbmfa2fl",
           "category": -2,
-          "fls_section": "fls_1qhsun1vyarz",
+          "fls_section": "6.27",
           "fls_title": "Type Cast Expressions",
-          "score": 0.676,
-          "reason": "Per FLS: 'An operand of type *const T or *mut T where T implements the core::...' (similarity: 0.68)"
+          "score": 0.68,
+          "reason": "'An operand of type *const T or *mut T... and a target integer type perform pointer-to-address cast... If the integer type is smaller than the type of the operand, the address is truncated.' Addresses truncation concern from MISRA."
         },
         {
-          "fls_id": "fls_hcc5odh52bk7",
-          "category": -3,
-          "fls_section": "fls_1qhsun1vyarz",
-          "fls_title": "Type Cast Expressions",
-          "score": 0.671,
-          "reason": "Per FLS: 'Saturates the value of the operand to the minimum value of the targ...' (similarity: 0.67)"
-        },
-        {
-          "fls_id": "fls_k6ues2936pjq",
+          "fls_id": "fls_59mpteeczzo",
           "category": -2,
-          "fls_section": "fls_ppd1xwve3tr7",
-          "fls_title": "Raw Pointer Types",
-          "score": 0.671,
-          "reason": "Per FLS: 'Comparing a value of a raw pointer type to a value of a dynamically...' (similarity: 0.67)"
-        },
-        {
-          "fls_id": "fls_76eq3bd6birr",
-          "category": -3,
-          "fls_section": "fls_1qhsun1vyarz",
+          "fls_section": "6.27",
           "fls_title": "Type Cast Expressions",
-          "score": 0.671,
-          "reason": "Per FLS: 'Casting an operand of an integer type to a target integer type with...' (similarity: 0.67)"
-        },
-        {
-          "fls_id": "fls_ohhsmifo0urd",
-          "category": 0,
-          "fls_section": "4.-2.27",
-          "fls_title": "Type Representation",
-          "score": 0.589,
-          "reason": "Section-level similarity match (score: 0.59)"
-        },
-        {
-          "fls_id": "fls_ZfIBiJMf8qE1",
-          "category": 0,
-          "fls_section": "6.-1.2",
-          "fls_title": "Arithmetic Overflow",
-          "score": 0.586,
-          "reason": "Section-level similarity match (score: 0.59)"
-        },
-        {
-          "fls_id": "fls_3qnpv2z7yjil",
-          "category": 0,
-          "fls_section": "4.-2.6",
-          "fls_title": "Integer Types",
-          "score": 0.586,
-          "reason": "Section-level similarity match (score: 0.59)"
-        },
-        {
-          "fls_id": "fls_5cm4gkt55hjh",
-          "category": 0,
-          "fls_section": "6.-2.16",
-          "fls_title": "Dereference Expression",
-          "score": 0.579,
-          "reason": "Section-level similarity match (score: 0.58)"
+          "score": 0.701,
+          "reason": "'An operand of integer type and target type *const V or *mut V... perform address-to-pointer cast.' Explicitly requires 'as' cast - no implicit conversion."
         }
       ],
       "fls_rationale_type": "direct_mapping",
       "misra_rust_category": "required",
-      "confidence": "medium",
-      "notes": "Similarity-based mapping - requires manual verification"
+      "confidence": "high",
+      "notes": "MISRA prohibits implicit pointer-integer conversions due to alignment and representation UB. Rust requires explicit 'as' casts for pointer<->integer conversions (fls_i4zsbbmfa2fl, fls_59mpteeczzo). The explicit syntax ensures developer awareness. Using raw pointer casts to dereference requires unsafe context. For usize/isize, the cast is well-defined; for smaller integers, truncation occurs (documented in FLS).",
+      "rejected_matches": [
+        {
+          "fls_id": "fls_ZfIBiJMf8qE1",
+          "category": 0,
+          "fls_section": "7.3",
+          "fls_title": "Arithmetic Overflow",
+          "score": 0.586,
+          "reason": "About integer overflow, not about pointer-integer conversions."
+        }
+      ]
     },
     {
       "guideline_id": "Rule 11.5",
-      "guideline_title": "A conversion should not be performed from pointer to void into",
+      "guideline_title": "A conversion should not be performed from pointer to void into pointer to object C90",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "not_applicable",
@@ -8615,135 +8136,62 @@
     },
     {
       "guideline_id": "Rule 11.6",
-      "guideline_title": "A cast shall not be performed between pointer to void and an",
+      "guideline_title": "A cast shall not be performed between pointer to void and an arithmetic type C90",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "not_applicable",
       "accepted_matches": [
         {
-          "fls_id": "fls_pcromhosmnf0",
-          "category": -2,
-          "fls_section": "fls_1qhsun1vyarz",
-          "fls_title": "Type Cast Expressions",
-          "score": 0.704,
-          "reason": "Per FLS: 'An operand of type bool or type char and a target integer type perf...' (similarity: 0.70)"
-        },
-        {
-          "fls_id": "fls_4s69s9pcvbn7",
-          "category": -2,
-          "fls_section": "fls_1qhsun1vyarz",
-          "fls_title": "Type Cast Expressions",
-          "score": 0.702,
-          "reason": "Per FLS: 'An operand of a numeric type and a target numeric type perform a nu...' (similarity: 0.70)"
-        },
-        {
-          "fls_id": "fls_bhw2j9wjpf2x",
-          "category": -2,
-          "fls_section": "fls_1qhsun1vyarz",
-          "fls_title": "Type Cast Expressions",
-          "score": 0.7,
-          "reason": "Per FLS: 'An operand of a function pointer type and a target integer type per...' (similarity: 0.70)"
-        },
-        {
-          "fls_id": "fls_6hbkvbb1c8aj",
-          "category": -2,
-          "fls_section": "fls_1qhsun1vyarz",
-          "fls_title": "Type Cast Expressions",
-          "score": 0.69,
-          "reason": "Per FLS: 'An operand of a function item type and a target integer type perfor...' (similarity: 0.69)"
-        },
-        {
-          "fls_id": "fls_kc3gwj9x3jnr",
-          "category": -3,
-          "fls_section": "fls_1qhsun1vyarz",
-          "fls_title": "Type Cast Expressions",
-          "score": 0.685,
-          "reason": "Per FLS: 'Casting an operand of an integer type to a target integer type of t...' (similarity: 0.69)"
-        },
-        {
-          "fls_id": "fls_59mpteeczzo",
-          "category": -2,
-          "fls_section": "fls_1qhsun1vyarz",
-          "fls_title": "Type Cast Expressions",
-          "score": 0.664,
-          "reason": "Per FLS: 'An operand of integer type and target type *const V or *mut V where...' (similarity: 0.66)"
-        },
-        {
           "fls_id": "fls_1qhsun1vyarz",
           "category": 0,
-          "fls_section": "6.-2.24",
+          "fls_section": "6.27",
           "fls_title": "Type Cast Expressions",
           "score": 0.658,
-          "reason": "Section-level similarity match (score: 0.66)"
-        },
-        {
-          "fls_id": "fls_76eq3bd6birr",
-          "category": -3,
-          "fls_section": "fls_1qhsun1vyarz",
-          "fls_title": "Type Cast Expressions",
-          "score": 0.654,
-          "reason": "Per FLS: 'Casting an operand of an integer type to a target integer type with...' (similarity: 0.65)"
-        },
-        {
-          "fls_id": "fls_o2ep4b6t287z",
-          "category": -3,
-          "fls_section": "fls_1qhsun1vyarz",
-          "fls_title": "Type Cast Expressions",
-          "score": 0.647,
-          "reason": "Per FLS: 'Casting an operand of an integer type to a target floating-point ty...' (similarity: 0.65)"
+          "reason": "Defines all pointer-to-integer and integer-to-pointer casts. Rust's *const T/*mut T (including *const ()) can be cast to usize/isize via explicit 'as', but requires unsafe for dereferencing."
         },
         {
           "fls_id": "fls_i4zsbbmfa2fl",
           "category": -2,
-          "fls_section": "fls_1qhsun1vyarz",
+          "fls_section": "6.27",
           "fls_title": "Type Cast Expressions",
           "score": 0.644,
-          "reason": "Per FLS: 'An operand of type *const T or *mut T where T implements the core::...' (similarity: 0.64)"
+          "reason": "Per FLS: 'An operand of type *const T or *mut T... and a target integer type perform pointer-to-address cast.' This covers void pointer (*const ()) to integer conversion."
         },
         {
-          "fls_id": "fls_4xldaoj5ac6t",
-          "category": -3,
-          "fls_section": "fls_1qhsun1vyarz",
+          "fls_id": "fls_59mpteeczzo",
+          "category": -2,
+          "fls_section": "6.27",
           "fls_title": "Type Cast Expressions",
-          "score": 0.643,
-          "reason": "Per FLS: 'Casting an operand of a floating-point type to a target integer typ...' (similarity: 0.64)"
-        },
-        {
-          "fls_id": "fls_3qnpv2z7yjil",
-          "category": 0,
-          "fls_section": "4.-2.6",
-          "fls_title": "Integer Types",
-          "score": 0.561,
-          "reason": "Section-level similarity match (score: 0.56)"
-        },
-        {
-          "fls_id": "fls_ZfIBiJMf8qE1",
-          "category": 0,
-          "fls_section": "6.-1.2",
-          "fls_title": "Arithmetic Overflow",
-          "score": 0.506,
-          "reason": "Section-level similarity match (score: 0.51)"
+          "score": 0.664,
+          "reason": "Per FLS: 'An operand of integer type and target type *const V or *mut V... perform address-to-pointer cast.' Covers integer to void pointer conversion."
         }
       ],
       "fls_rationale_type": "direct_mapping",
       "misra_rust_category": "advisory",
-      "confidence": "medium",
-      "notes": "Only applicable in unsafe Rust"
-    },
-    {
-      "guideline_id": "Rule 11.7",
-      "guideline_title": "Combined with Rule 11.4 MISRA C:2025",
-      "guideline_type": "rule",
-      "applicability_all_rust": "direct",
-      "applicability_safe_rust": "not_applicable",
-      "misra_rust_category": "required",
-      "misra_rust_comment": "merged into Rule 11.4",
-      "confidence": "medium",
-      "notes": "MISRA ADD-6: merged into Rule 11.4. Only applicable in unsafe Rust"
+      "confidence": "high",
+      "notes": "MISRA prohibits void* <-> arithmetic conversions. Rust doesn't have void* but uses *const ()/*mut c_void. These can be cast to usize/isize via explicit 'as' (fls_i4zsbbmfa2fl, fls_59mpteeczzo). No implicit conversions exist. Floating-point to pointer is not directly supported in Rust - would require intermediate integer cast. Only applicable in unsafe Rust for dereferencing.",
+      "rejected_matches": [
+        {
+          "fls_id": "fls_pcromhosmnf0",
+          "category": -2,
+          "fls_section": "6.27",
+          "fls_title": "Type Cast Expressions",
+          "score": 0.704,
+          "reason": "About bool/char to integer casts, not about void pointer conversions."
+        },
+        {
+          "fls_id": "fls_ZfIBiJMf8qE1",
+          "category": 0,
+          "fls_section": "7.3",
+          "fls_title": "Arithmetic Overflow",
+          "score": 0.506,
+          "reason": "About integer overflow, not about pointer-integer conversions."
+        }
+      ]
     },
     {
       "guideline_id": "Rule 11.8",
-      "guideline_title": "Required A conversion shall not remove any const, volatile or _Atomic qualification",
+      "guideline_title": "A conversion shall not remove any const, volatile or _Atomic qualification from the type pointed to by a pointer C90",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "partial",
@@ -8876,7 +8324,7 @@
     },
     {
       "guideline_id": "Rule 11.9",
-      "guideline_title": "The macro NULL shall be the only permitted form of integer null",
+      "guideline_title": "The macro NULL shall be the only permitted form of integer null pointer constant",
       "guideline_type": "rule",
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",
@@ -8962,7 +8410,7 @@
     },
     {
       "guideline_id": "Rule 11.10",
-      "guideline_title": "Required The _Atomic qualifier shall not be applied to the incomplete type void",
+      "guideline_title": "The _Atomic qualifier shall not be applied to the incomplete type void",
       "guideline_type": "rule",
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",
@@ -8991,7 +8439,7 @@
     },
     {
       "guideline_id": "Rule 11.11",
-      "guideline_title": "Required Pointers shall not be implicitly compared to NULL",
+      "guideline_title": "Pointers shall not be implicitly compared to NULL",
       "guideline_type": "rule",
       "applicability_all_rust": "rust_prevents",
       "applicability_safe_rust": "rust_prevents",
@@ -9021,7 +8469,7 @@
     },
     {
       "guideline_id": "Rule 12.1",
-      "guideline_title": "The precedence of operators within expressions should be made",
+      "guideline_title": "The precedence of operators within expressions should be made explicit",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "direct",
@@ -9029,132 +8477,38 @@
         {
           "fls_id": "fls_kw25194gpael",
           "category": 0,
-          "fls_section": "6.-2.53",
+          "fls_section": "6.21",
           "fls_title": "Expression Precedence",
           "score": 0.733,
-          "reason": "Section-level similarity match (score: 0.73)"
-        },
-        {
-          "fls_id": "fls_f6in3h5cj8i6",
-          "category": -2,
-          "fls_section": "fls_kw25194gpael",
-          "fls_title": "Expression Precedence",
-          "score": 0.705,
-          "reason": "Per FLS: '- Bit xor expression - - left-to-right -' (similarity: 0.71)"
-        },
-        {
-          "fls_id": "fls_t1zqnab8a752",
-          "category": -2,
-          "fls_section": "fls_kw25194gpael",
-          "fls_title": "Expression Precedence",
-          "score": 0.69,
-          "reason": "Per FLS: '- Bit and expression - - left-to-right -' (similarity: 0.69)"
-        },
-        {
-          "fls_id": "fls_bezkcuwp5qol",
-          "category": -2,
-          "fls_section": "fls_kw25194gpael",
-          "fls_title": "Expression Precedence",
-          "score": 0.684,
-          "reason": "Per FLS: 'Associativity is the order by which [operand]s are evaluated within...' (similarity: 0.68)"
-        },
-        {
-          "fls_id": "fls_290jmzfh7x4e",
-          "category": 0,
-          "fls_section": "6.-2.28",
-          "fls_title": "Compound Assignment Expressions",
-          "score": 0.676,
-          "reason": "Section-level similarity match (score: 0.68)"
-        },
-        {
-          "fls_id": "fls_hxa1avitfvrq",
-          "category": -2,
-          "fls_section": "fls_kw25194gpael",
-          "fls_title": "Expression Precedence",
-          "score": 0.662,
-          "reason": "Per FLS: '- Bit or expression - - left-to-right -' (similarity: 0.66)"
-        },
-        {
-          "fls_id": "fls_d7x817v8xzea",
-          "category": -2,
-          "fls_section": "fls_kw25194gpael",
-          "fls_title": "Expression Precedence",
-          "score": 0.654,
-          "reason": "Per FLS: '- Addition expression Subtraction expression - - left-to-right -' (similarity: 0.65)"
-        },
-        {
-          "fls_id": "fls_cwt7afsbgs7w",
-          "category": -2,
-          "fls_section": "fls_kw25194gpael",
-          "fls_title": "Expression Precedence",
-          "score": 0.649,
-          "reason": "Per FLS: 'Certain [expression]s are subject to precedence and associativity.' (similarity: 0.65)"
+          "reason": "FLS defines operator precedence and associativity rules. Rust has a well-defined precedence table. The MISRA concern about making precedence explicit applies - Rust allows parentheses for clarity."
         },
         {
           "fls_id": "fls_ckvjj4tt1hh2",
           "category": 0,
-          "fls_section": "6.-2.1",
+          "fls_section": "6.0",
           "fls_title": "Expressions",
           "score": 0.649,
-          "reason": "Section-level similarity match (score: 0.65)"
-        },
-        {
-          "fls_id": "fls_1l3rgtm6o54s",
-          "category": -2,
-          "fls_section": "fls_kw25194gpael",
-          "fls_title": "Expression Precedence",
-          "score": 0.647,
-          "reason": "Per FLS: '- Assignment expression Compound assignment expression - - right-to...' (similarity: 0.65)"
-        },
-        {
-          "fls_id": "fls_kp747xqekyrr",
-          "category": -3,
-          "fls_section": "fls_abp6tjbz8tpn",
-          "fls_title": "Bit Expressions",
-          "score": 0.646,
-          "reason": "Per FLS: 'The left operand is evaluated. #.' (similarity: 0.65)"
-        },
-        {
-          "fls_id": "fls_vprp53kv64q6",
-          "category": -3,
-          "fls_section": "fls_abp6tjbz8tpn",
-          "fls_title": "Bit Expressions",
-          "score": 0.646,
-          "reason": "Per FLS: 'The left operand is evaluated. #.' (similarity: 0.65)"
-        },
-        {
-          "fls_id": "fls_htw2tpujktwt",
-          "category": -3,
-          "fls_section": "fls_abp6tjbz8tpn",
-          "fls_title": "Bit Expressions",
-          "score": 0.646,
-          "reason": "Per FLS: 'The left operand is evaluated. #.' (similarity: 0.65)"
-        },
-        {
-          "fls_id": "fls_abp6tjbz8tpn",
-          "category": 0,
-          "fls_section": "6.-2.20",
-          "fls_title": "Bit Expressions",
-          "score": 0.636,
-          "reason": "Section-level similarity match (score: 0.64)"
-        },
-        {
-          "fls_id": "fls_3ut3biyra4r9",
-          "category": 0,
-          "fls_section": "6.-2.2",
-          "fls_title": "Assignee Expressions",
-          "score": 0.615,
-          "reason": "Section-level similarity match (score: 0.61)"
+          "reason": "Chapter-level context for expression semantics and evaluation order."
         }
       ],
       "fls_rationale_type": "direct_mapping",
       "misra_rust_category": "recommended",
-      "confidence": "medium",
-      "notes": "Similarity-based mapping - requires manual verification"
+      "confidence": "high",
+      "notes": "MISRA recommends explicit parentheses for precedence clarity. FLS 6.21 (Expression Precedence) defines Rust's operator precedence. Rust's precedence is well-defined but MISRA's stylistic recommendation to use parentheses for clarity applies equally. Clippy lint 'precedence' can warn about complex expressions.",
+      "rejected_matches": [
+        {
+          "fls_id": "fls_290jmzfh7x4e",
+          "category": 0,
+          "fls_section": "6.3",
+          "fls_title": "Compound Assignment Expressions",
+          "score": 0.676,
+          "reason": "About compound assignment operators specifically, not about general precedence."
+        }
+      ]
     },
     {
       "guideline_id": "Rule 12.2",
-      "guideline_title": "The right hand operand of a shift operator shall lie in the range zero",
+      "guideline_title": "The right hand operand of a shift operator shall lie in the range zero to one less than the width in bits of the essential type of the left hand operand C90",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "partial",
@@ -9332,7 +8686,7 @@
     },
     {
       "guideline_id": "Rule 12.4",
-      "guideline_title": "Evaluation of constant expressions should not lead to unsigned integer",
+      "guideline_title": "Evaluation of constant expressions should not lead to unsigned integer wrap-around",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "not_applicable",
@@ -9466,7 +8820,7 @@
     },
     {
       "guideline_id": "Rule 12.5",
-      "guideline_title": "The sizeof operator shall not have an operand which is a function",
+      "guideline_title": "The sizeof operator shall not have an operand which is a function parameter declared as \u201carray of type\u201d",
       "guideline_type": "rule",
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",
@@ -9575,7 +8929,7 @@
     },
     {
       "guideline_id": "Rule 12.6",
-      "guideline_title": "Structure and union members of atomic objects shall not be directly",
+      "guideline_title": "Structure and union members of atomic objects shall not be directly accessed C11",
       "guideline_type": "rule",
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",
@@ -9708,141 +9062,38 @@
     },
     {
       "guideline_id": "Rule 13.1",
-      "guideline_title": "Initializer lists shall not contain persistent side effects",
+      "guideline_title": "Initializer lists shall not contain persistent side effects C99",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "direct",
       "accepted_matches": [
         {
-          "fls_id": "fls_cPlCLGCcl7EK",
-          "category": -2,
-          "fls_section": "fls_lv7w7aalpwm5",
-          "fls_title": "Type Inference",
-          "score": 0.703,
-          "reason": "Per FLS: 'The expression of a static initializer.' (similarity: 0.70)"
-        },
-        {
-          "fls_id": "fls_ib8p7dfwddx2",
-          "category": -2,
-          "fls_section": "fls_66m4rnbssgig",
-          "fls_title": "Constant Expressions",
-          "score": 0.7,
-          "reason": "Per FLS: 'The static initializer of a static.' (similarity: 0.70)"
-        },
-        {
-          "fls_id": "fls_htLp5J5ObgNh",
-          "category": -2,
-          "fls_section": "fls_lv7w7aalpwm5",
-          "fls_title": "Type Inference",
-          "score": 0.699,
-          "reason": "Per FLS: 'The expression of a constant initializer.' (similarity: 0.70)"
-        },
-        {
-          "fls_id": "fls_z3gj1v6g605r",
-          "category": -2,
-          "fls_section": "fls_8tsynkj2cufj",
-          "fls_title": "Struct Expressions",
-          "score": 0.692,
-          "reason": "Per FLS: 'The value of a named initializer is the value of its expression.' (similarity: 0.69)"
-        },
-        {
-          "fls_id": "fls_e5b9n910z1cp",
-          "category": -2,
-          "fls_section": "fls_8tsynkj2cufj",
-          "fls_title": "Struct Expressions",
-          "score": 0.69,
-          "reason": "Per FLS: 'The value of an indexed initializer is the value of its operand.' (similarity: 0.69)"
-        },
-        {
-          "fls_id": "fls_vnc3ttnid1qr",
-          "category": -2,
-          "fls_section": "fls_ixjc5jaamx84",
-          "fls_title": "Constants",
-          "score": 0.686,
-          "reason": "Per FLS: 'The expression of a constant initializer shall be a constant expres...' (similarity: 0.69)"
-        },
-        {
           "fls_id": "fls_8tsynkj2cufj",
           "category": 0,
-          "fls_section": "6.-2.34",
+          "fls_section": "6.4",
           "fls_title": "Struct Expressions",
           "score": 0.682,
-          "reason": "Section-level similarity match (score: 0.68)"
+          "reason": "Struct expressions define field initialization order. Per ADD-6: 'order of evaluation is strict in Rust' - field initializers are evaluated left-to-right."
         },
         {
-          "fls_id": "fls_ixjc5jaamx84",
+          "fls_id": "fls_ckvjj4tt1hh2",
           "category": 0,
-          "fls_section": "7.-2.2",
-          "fls_title": "Constants",
-          "score": 0.675,
-          "reason": "Section-level similarity match (score: 0.68)"
-        },
-        {
-          "fls_id": "fls_9s4znhi0u3ys",
-          "category": -2,
-          "fls_section": "fls_8tsynkj2cufj",
-          "fls_title": "Struct Expressions",
-          "score": 0.673,
-          "reason": "Per FLS: 'The value of a shorthand initializer is the value its identifier re...' (similarity: 0.67)"
-        },
-        {
-          "fls_id": "fls_67Bf5kR5OtYW",
-          "category": -2,
-          "fls_section": "fls_lv7w7aalpwm5",
-          "fls_title": "Type Inference",
-          "score": 0.673,
-          "reason": "Per FLS: 'The expression of a constant parameter initializer.' (similarity: 0.67)"
-        },
-        {
-          "fls_id": "fls_3xvm61x0t251",
-          "category": 0,
-          "fls_section": "15.-2.2",
-          "fls_title": "Initialization",
-          "score": 0.67,
-          "reason": "Section-level similarity match (score: 0.67)"
-        },
-        {
-          "fls_id": "fls_xdvdl2ssnhlo",
-          "category": 0,
-          "fls_section": "7.-2.3",
-          "fls_title": "Statics",
-          "score": 0.67,
-          "reason": "Section-level similarity match (score: 0.67)"
-        },
-        {
-          "fls_id": "fls_5d4hw3gj4w4n",
-          "category": -2,
-          "fls_section": "fls_lv7w7aalpwm5",
-          "fls_title": "Type Inference",
-          "score": 0.668,
-          "reason": "Per FLS: 'The expected type of the expression of a constant initializer is th...' (similarity: 0.67)"
-        },
-        {
-          "fls_id": "fls_dfajs3xaxbv",
-          "category": -2,
-          "fls_section": "fls_8tsynkj2cufj",
-          "fls_title": "Struct Expressions",
-          "score": 0.667,
-          "reason": "Per FLS: 'The type of the operand of an indexed initializer and the type of t...' (similarity: 0.67)"
-        },
-        {
-          "fls_id": "fls_wttihxen35as",
-          "category": 0,
-          "fls_section": "7.-2.6",
-          "fls_title": "Constant Promotion",
-          "score": 0.649,
-          "reason": "Section-level similarity match (score: 0.65)"
+          "fls_section": "6.0",
+          "fls_title": "Expressions",
+          "score": 0.6,
+          "reason": "Rust expressions have defined evaluation order, unlike C's unspecified order in initializer lists."
         }
       ],
       "fls_rationale_type": "direct_mapping",
       "misra_rust_category": "recommended",
       "misra_rust_comment": "order of evaluation is strict in Rust",
-      "confidence": "medium",
-      "notes": "MISRA ADD-6: order of evaluation is strict in Rust"
+      "confidence": "high",
+      "notes": "MISRA prohibits side effects in initializers due to C's unspecified evaluation order. Rust has strict left-to-right evaluation order (per ADD-6). Side effects in struct field initializers are well-defined, making the MISRA concern less critical but still relevant for readability.",
+      "rejected_matches": []
     },
     {
       "guideline_id": "Rule 13.2",
-      "guideline_title": "Required The value of an expression and its persistent side effects shall be the",
+      "guideline_title": "The value of an expression and its persistent side effects shall be the same under all permitted evaluation orders and shall be independent from thread interleaving C90",
       "guideline_type": "rule",
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",
@@ -9976,7 +9227,7 @@
     },
     {
       "guideline_id": "Rule 13.3",
-      "guideline_title": "A full expression containing an increment (++) or decrement (--)",
+      "guideline_title": "A full expression containing an increment (++) or decrement (--) operator should have no other potential side effects other than that caused by the increment or decrement operator C90",
       "guideline_type": "rule",
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",
@@ -10109,7 +9360,7 @@
     },
     {
       "guideline_id": "Rule 13.4",
-      "guideline_title": "Advisory The result of an assignment operator should not be used",
+      "guideline_title": "The result of an assignment operator should not be used C90",
       "guideline_type": "rule",
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",
@@ -10242,7 +9493,7 @@
     },
     {
       "guideline_id": "Rule 13.5",
-      "guideline_title": "Required The right hand operand of a logical && or || operator shall not contain",
+      "guideline_title": "The right hand operand of a logical && or || operator shall not contain persistent side effects",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "direct",
@@ -10375,7 +9626,7 @@
     },
     {
       "guideline_id": "Rule 13.6",
-      "guideline_title": "The operand of the sizeof operator shall not contain any expression",
+      "guideline_title": "The operand of the sizeof operator shall not contain any expression which has potential side effects C99",
       "guideline_type": "rule",
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",
@@ -10555,7 +9806,7 @@
     },
     {
       "guideline_id": "Rule 14.2",
-      "guideline_title": "Required A for loop shall be well-formed",
+      "guideline_title": "A for loop shall be well-formed",
       "guideline_type": "rule",
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",
@@ -10821,7 +10072,7 @@
     },
     {
       "guideline_id": "Rule 14.4",
-      "guideline_title": "The controlling expression of an if statement and the controlling",
+      "guideline_title": "The controlling expression of an if statement and the controlling expression of an iteration-statement shall have essentially Boolean type",
       "guideline_type": "rule",
       "applicability_all_rust": "rust_prevents",
       "applicability_safe_rust": "rust_prevents",
@@ -10965,7 +10216,7 @@
     },
     {
       "guideline_id": "Rule 15.2",
-      "guideline_title": "The goto statement shall jump to a label declared later in the same",
+      "guideline_title": "The goto statement shall jump to a label declared later in the same function",
       "guideline_type": "rule",
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",
@@ -11066,7 +10317,7 @@
     },
     {
       "guideline_id": "Rule 15.3",
-      "guideline_title": "Any label referenced by a goto statement shall be declared in the",
+      "guideline_title": "Any label referenced by a goto statement shall be declared in the same block, or in any block enclosing the goto statement",
       "guideline_type": "rule",
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",
@@ -11175,136 +10426,33 @@
     },
     {
       "guideline_id": "Rule 15.4",
-      "guideline_title": "There should be no more than one break or goto statement used to",
+      "guideline_title": "There should be no more than one break or goto statement used to terminate any iteration statement",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "direct",
       "accepted_matches": [
         {
-          "fls_id": "fls_3hI7FU42sVyX",
-          "category": -2,
-          "fls_section": "fls_jr4tpuyksr75",
-          "fls_title": "Break Expressions",
-          "score": 0.694,
-          "reason": "Per FLS: 'If a break expression appears within a loop expression, then the br...' (similarity: 0.69)"
-        },
-        {
-          "fls_id": "fls_2nmadhe3ismj",
-          "category": -3,
-          "fls_section": "fls_jr4tpuyksr75",
-          "fls_title": "Break Expressions",
-          "score": 0.668,
-          "reason": "Per FLS: 'All enclosing [loop expression]s upto and including the associated ...' (similarity: 0.67)"
-        },
-        {
           "fls_id": "fls_jr4tpuyksr75",
           "category": 0,
-          "fls_section": "6.-2.45",
+          "fls_section": "6.15",
           "fls_title": "Break Expressions",
           "score": 0.665,
-          "reason": "Section-level similarity match (score: 0.67)"
-        },
-        {
-          "fls_id": "fls_ghxns2nggffj",
-          "category": -2,
-          "fls_section": "fls_jr4tpuyksr75",
-          "fls_title": "Break Expressions",
-          "score": 0.663,
-          "reason": "Per FLS: 'A break expression without a label indication is associated with th...' (similarity: 0.66)"
-        },
-        {
-          "fls_id": "fls_gm74eo754rq9",
-          "category": -3,
-          "fls_section": "fls_sjwrlwvpulp",
-          "fls_title": "Continue Expressions",
-          "score": 0.655,
-          "reason": "Per FLS: 'If the continue expression appears with a label indication, then al...' (similarity: 0.66)"
-        },
-        {
-          "fls_id": "fls_r5ke7b9n7k3s",
-          "category": -2,
-          "fls_section": "fls_sjwrlwvpulp",
-          "fls_title": "Continue Expressions",
-          "score": 0.654,
-          "reason": "Per FLS: 'A continue expression without a label indication is associated with...' (similarity: 0.65)"
-        },
-        {
-          "fls_id": "fls_wzs6kz9ffqzt",
-          "category": -2,
-          "fls_section": "fls_sjwrlwvpulp",
-          "fls_title": "Continue Expressions",
-          "score": 0.644,
-          "reason": "Per FLS: 'A continue expression shall appear within a loop expression.' (similarity: 0.64)"
-        },
-        {
-          "fls_id": "fls_99imks9hj3kp",
-          "category": -2,
-          "fls_section": "fls_sf4qnd43z2wc",
-          "fls_title": "Infinite Loops",
-          "score": 0.638,
-          "reason": "Per FLS: 'If the infinite loop expression contains at least one break express...' (similarity: 0.64)"
-        },
-        {
-          "fls_id": "fls_jnpx8mx1oa7n",
-          "category": -3,
-          "fls_section": "fls_jr4tpuyksr75",
-          "fls_title": "Break Expressions",
-          "score": 0.636,
-          "reason": "Per FLS: 'If a break expression appears within a loop expression, then the ev...' (similarity: 0.64)"
-        },
-        {
-          "fls_id": "fls_jiykbp51909f",
-          "category": -2,
-          "fls_section": "fls_jr4tpuyksr75",
-          "fls_title": "Break Expressions",
-          "score": 0.622,
-          "reason": "Per FLS: 'A break expression shall appear within a loop body or a named block...' (similarity: 0.62)"
-        },
-        {
-          "fls_id": "fls_i5ko1t2wbgxe",
-          "category": -2,
-          "fls_section": "fls_jr4tpuyksr75",
-          "fls_title": "Break Expressions",
-          "score": 0.617,
-          "reason": "Per FLS: 'A break expression is an expression that terminates a loop expressi...' (similarity: 0.62)"
+          "reason": "Defines break expression semantics. Rust allows labeled breaks for loop control, making multi-level breaks explicit and traceable."
         },
         {
           "fls_id": "fls_sjwrlwvpulp",
           "category": 0,
-          "fls_section": "6.-2.46",
+          "fls_section": "6.16",
           "fls_title": "Continue Expressions",
-          "score": 0.613,
-          "reason": "Section-level similarity match (score: 0.61)"
-        },
-        {
-          "fls_id": "fls_sf4qnd43z2wc",
-          "category": 0,
-          "fls_section": "6.-2.41",
-          "fls_title": "Infinite Loops",
-          "score": 0.547,
-          "reason": "Section-level similarity match (score: 0.55)"
-        },
-        {
-          "fls_id": "fls_5jjm1kt43axd",
-          "category": 0,
-          "fls_section": "6.-2.42",
-          "fls_title": "While Loops",
-          "score": 0.538,
-          "reason": "Section-level similarity match (score: 0.54)"
-        },
-        {
-          "fls_id": "fls_zJOAmSr3Dbqk",
-          "category": 0,
-          "fls_section": "6.-2.4",
-          "fls_title": "Diverging Expressions",
-          "score": 0.512,
-          "reason": "Section-level similarity match (score: 0.51)"
+          "score": 0.55,
+          "reason": "Defines continue expression semantics. Like break, supports labels for multi-level continues."
         }
       ],
       "fls_rationale_type": "direct_mapping",
       "misra_rust_category": "recommended",
-      "confidence": "medium",
-      "notes": "Similarity-based mapping - requires manual verification"
+      "confidence": "high",
+      "notes": "MISRA limits break/goto to improve control flow clarity. Rust has no goto statement. Break and continue support labels for multi-level control flow (break 'label), making intent explicit. This is a stylistic guideline - Rust's labeled breaks are more structured than C's goto.",
+      "rejected_matches": []
     },
     {
       "guideline_id": "Rule 15.5",
@@ -11434,7 +10582,7 @@
     },
     {
       "guideline_id": "Rule 15.6",
-      "guideline_title": "Required The body of an iteration-statement or a selection-statement shall be a",
+      "guideline_title": "The body of an iteration-statement or a selection-statement shall be a compound-statement",
       "guideline_type": "rule",
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",
@@ -11573,122 +10721,27 @@
       "applicability_safe_rust": "direct",
       "accepted_matches": [
         {
-          "fls_id": "fls_mpq7gicosgkt",
-          "category": -2,
-          "fls_section": "fls_mkut7gut49gi",
-          "fls_title": "If Expressions",
-          "score": 0.665,
-          "reason": "Per FLS: 'The type of an if expression and the type of an else expression sha...' (similarity: 0.67)"
-        },
-        {
           "fls_id": "fls_mkut7gut49gi",
           "category": 0,
-          "fls_section": "6.-2.48",
+          "fls_section": "6.7",
           "fls_title": "If Expressions",
           "score": 0.653,
-          "reason": "Section-level similarity match (score: 0.65)"
+          "reason": "Defines if/else expression semantics. Rust if is an expression, which naturally encourages exhaustive handling when used for values."
         },
         {
-          "fls_id": "fls_p5pjxk5xfcbx",
-          "category": -2,
-          "fls_section": "fls_mkut7gut49gi",
-          "fls_title": "If Expressions",
-          "score": 0.643,
-          "reason": "Per FLS: 'The value of an else expression is the value of its block expressio...' (similarity: 0.64)"
-        },
-        {
-          "fls_id": "fls_asvuef2pc3m0",
-          "category": -2,
-          "fls_section": "fls_rm4ncoopcdvj",
-          "fls_title": "Drop Scopes",
-          "score": 0.638,
-          "reason": "Per FLS: 'The drop scope of an else expression.' (similarity: 0.64)"
-        },
-        {
-          "fls_id": "fls_r7gzxo16esri",
-          "category": -2,
-          "fls_section": "fls_mkut7gut49gi",
-          "fls_title": "If Expressions",
-          "score": 0.625,
-          "reason": "Per FLS: 'The type of the subject expression of an if expression shall be typ...' (similarity: 0.62)"
-        },
-        {
-          "fls_id": "fls_e8gd5lzcaifw",
-          "category": -3,
-          "fls_section": "fls_mkut7gut49gi",
-          "fls_title": "If Expressions",
-          "score": 0.619,
-          "reason": "Per FLS: 'The evaluation of an else expression evaluates its block expression...' (similarity: 0.62)"
-        },
-        {
-          "fls_id": "fls_67l4j48n6p7o",
-          "category": -3,
-          "fls_section": "fls_mkut7gut49gi",
-          "fls_title": "If Expressions",
-          "score": 0.61,
-          "reason": "Per FLS: 'If the subject expression evaluated to false and the if expression ...' (similarity: 0.61)"
-        },
-        {
-          "fls_id": "fls_Mcpwyvz47SoG",
-          "category": -2,
-          "fls_section": "fls_lv7w7aalpwm5",
-          "fls_title": "Type Inference",
-          "score": 0.601,
-          "reason": "Per FLS: 'If the else expression has an if expression, infer that nested if e...' (similarity: 0.60)"
-        },
-        {
-          "fls_id": "fls_560437qmeqtr",
-          "category": -2,
-          "fls_section": "fls_rm4ncoopcdvj",
-          "fls_title": "Drop Scopes",
-          "score": 0.597,
-          "reason": "Per FLS: 'The drop scope of the subject expression of an if expression.' (similarity: 0.60)"
-        },
-        {
-          "fls_id": "fls_i9sxf2q5jjqt",
-          "category": -2,
-          "fls_section": "fls_mkut7gut49gi",
-          "fls_title": "If Expressions",
-          "score": 0.596,
-          "reason": "Per FLS: 'The value of an if expression is the value of its block expression.' (similarity: 0.60)"
-        },
-        {
-          "fls_id": "fls_yhlyzef9h97q",
-          "category": -3,
-          "fls_section": "fls_mkut7gut49gi",
-          "fls_title": "If Expressions",
-          "score": 0.594,
-          "reason": "Per FLS: 'The evaluation of an if expression proceeds as follows: #.' (similarity: 0.59)"
-        },
-        {
-          "fls_id": "fls_jr4tpuyksr75",
+          "fls_id": "fls_e5td0fa92fay",
           "category": 0,
-          "fls_section": "6.-2.45",
-          "fls_title": "Break Expressions",
-          "score": 0.572,
-          "reason": "Section-level similarity match (score: 0.57)"
-        },
-        {
-          "fls_id": "fls_p0t1ch115tra",
-          "category": 0,
-          "fls_section": "6.-2.49",
-          "fls_title": "If Let Expressions",
-          "score": 0.537,
-          "reason": "Section-level similarity match (score: 0.54)"
-        },
-        {
-          "fls_id": "fls_sjwrlwvpulp",
-          "category": 0,
-          "fls_section": "6.-2.46",
-          "fls_title": "Continue Expressions",
-          "score": 0.525,
-          "reason": "Section-level similarity match (score: 0.52)"
+          "fls_section": "6.6",
+          "fls_title": "Match Expressions",
+          "score": 0.55,
+          "reason": "Match expressions require exhaustive pattern coverage, providing a stronger alternative to if-else chains."
         }
       ],
       "fls_rationale_type": "direct_mapping",
       "misra_rust_category": "advisory",
-      "confidence": "medium",
-      "notes": "Similarity-based mapping - requires manual verification"
+      "confidence": "high",
+      "notes": "MISRA requires else clause for defensive programming. Rust's if is an expression - when used for its value, both branches must return compatible types (implicit exhaustiveness). For statement-style if, this is a stylistic recommendation. Match expressions provide compiler-enforced exhaustiveness as an alternative to if-else chains.",
+      "rejected_matches": []
     },
     {
       "guideline_id": "Rule 16.1",
@@ -11769,7 +10822,7 @@
     },
     {
       "guideline_id": "Rule 16.2",
-      "guideline_title": "A switch label shall only be used when the most closely-enclosing",
+      "guideline_title": "A switch label shall only be used when the most closely-enclosing compound statement is the body of a switch statement",
       "guideline_type": "rule",
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",
@@ -11931,7 +10984,7 @@
     },
     {
       "guideline_id": "Rule 16.4",
-      "guideline_title": "Section 5: Rules",
+      "guideline_title": "Every switch statement shall have a default label",
       "guideline_type": "rule",
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",
@@ -11942,7 +10995,7 @@
     },
     {
       "guideline_id": "Rule 16.5",
-      "guideline_title": "A default label shall appear as either the first or the last switch label of",
+      "guideline_title": "A default label shall appear as either the first or the last switch label of a switch statement",
       "guideline_type": "rule",
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",
@@ -12088,7 +11141,7 @@
     },
     {
       "guideline_id": "Rule 17.1",
-      "guideline_title": "The standard header file <stdarg.h> shall not be used",
+      "guideline_title": "The standard header file <stdarg.h> shall not be used C90",
       "guideline_type": "rule",
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",
@@ -12159,7 +11212,7 @@
     },
     {
       "guideline_id": "Rule 17.3",
-      "guideline_title": "A function shall not be declared implicitly",
+      "guideline_title": "A function shall not be declared implicitly C90",
       "guideline_type": "rule",
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",
@@ -12292,7 +11345,7 @@
     },
     {
       "guideline_id": "Rule 17.4",
-      "guideline_title": "All exit paths from a function with non-void return type shall have an",
+      "guideline_title": "All exit paths from a function with non-void return type shall have an explicit return statement with an expression C90",
       "guideline_type": "rule",
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",
@@ -12426,7 +11479,7 @@
     },
     {
       "guideline_id": "Rule 17.5",
-      "guideline_title": "The function argument corresponding to a parameter declared to",
+      "guideline_title": "The function argument corresponding to a parameter declared to have an array type shall have an appropriate number of elements C99",
       "guideline_type": "rule",
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",
@@ -12558,19 +11611,8 @@
       "notes": "Similarity-based mapping - requires manual verification"
     },
     {
-      "guideline_id": "Rule 17.6",
-      "guideline_title": "Combined with Rule 17.5 MISRA C:2025",
-      "guideline_type": "rule",
-      "applicability_all_rust": "not_applicable",
-      "applicability_safe_rust": "not_applicable",
-      "misra_rust_category": "n_a",
-      "misra_rust_comment": "no longer endorsed by MISRA",
-      "confidence": "medium",
-      "notes": "MISRA ADD-6: no longer endorsed by MISRA"
-    },
-    {
       "guideline_id": "Rule 17.7",
-      "guideline_title": "The value returned by a function having non-void return type shall be",
+      "guideline_title": "The value returned by a function having non-void return type shall be used",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "direct",
@@ -12733,7 +11775,7 @@
     },
     {
       "guideline_id": "Rule 17.9",
-      "guideline_title": "A function declared with a _Noreturn function specifier shall not return",
+      "guideline_title": "A function declared with a _Noreturn function specifier shall not return to its caller C11",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "not_applicable",
@@ -12867,7 +11909,7 @@
     },
     {
       "guideline_id": "Rule 17.10",
-      "guideline_title": "Required A function declared with a _Noreturn function specifier shall have void",
+      "guideline_title": "A function declared with a _Noreturn function specifier shall have void return type",
       "guideline_type": "rule",
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",
@@ -13000,7 +12042,7 @@
     },
     {
       "guideline_id": "Rule 17.11",
-      "guideline_title": "A function that never returns should be declared with a _Noreturn",
+      "guideline_title": "A function that never returns should be declared with a _Noreturn function specifier",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "partial",
@@ -13062,7 +12104,7 @@
     },
     {
       "guideline_id": "Rule 17.12",
-      "guideline_title": "Advisory A function identifier should only be used with either a preceding &, or",
+      "guideline_title": "A function identifier should only be used with either a preceding &, or with a parenthesized parameter list",
       "guideline_type": "rule",
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",
@@ -13163,7 +12205,7 @@
     },
     {
       "guideline_id": "Rule 17.13",
-      "guideline_title": "A function type shall not be type qualified",
+      "guideline_title": "A function type shall not be type qualified C90",
       "guideline_type": "rule",
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",
@@ -13296,7 +12338,7 @@
     },
     {
       "guideline_id": "Rule 18.1",
-      "guideline_title": "A pointer resulting from arithmetic on a pointer operand shall address",
+      "guideline_title": "A pointer resulting from arithmetic on a pointer operand shall address an element of the same array as that pointer operand C90",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "not_applicable",
@@ -13430,7 +12472,7 @@
     },
     {
       "guideline_id": "Rule 18.2",
-      "guideline_title": "Subtraction between pointers shall only be applied to pointers that",
+      "guideline_title": "Subtraction between pointers shall only be applied to pointers that address elements of the same array C90",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "not_applicable",
@@ -13516,7 +12558,7 @@
     },
     {
       "guideline_id": "Rule 18.3",
-      "guideline_title": "The relational operators >, >=, < and <= shall not be applied to",
+      "guideline_title": "The relational operators >, >=, < and <= shall not be applied to expressions of pointer type except where they point into the same object C90",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "direct",
@@ -13649,7 +12691,7 @@
     },
     {
       "guideline_id": "Rule 18.4",
-      "guideline_title": "The +, -, += and -= operators should not be applied to an expression",
+      "guideline_title": "The +, -, += and -= operators should not be applied to an expression of pointer type",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "not_applicable",
@@ -13703,7 +12745,7 @@
     },
     {
       "guideline_id": "Rule 18.5",
-      "guideline_title": "Declarations should contain no more than two levels of pointer",
+      "guideline_title": "Declarations should contain no more than two levels of pointer nesting",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "direct",
@@ -13836,7 +12878,7 @@
     },
     {
       "guideline_id": "Rule 18.6",
-      "guideline_title": "The address of an object with automatic or thread-local storage shall",
+      "guideline_title": "The address of an object with automatic or thread-local storage shall not be copied to another object that persists after the first object has ceased to exist C90",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "not_applicable",
@@ -13969,7 +13011,7 @@
     },
     {
       "guideline_id": "Rule 18.7",
-      "guideline_title": "Flexible array members shall not be declared",
+      "guideline_title": "Flexible array members shall not be declared C99",
       "guideline_type": "rule",
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",
@@ -14094,7 +13136,7 @@
     },
     {
       "guideline_id": "Rule 18.8",
-      "guideline_title": "5.14 Control statement expressions",
+      "guideline_title": "Variable-length arrays shall not be used C99",
       "guideline_type": "rule",
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",
@@ -14227,7 +13269,7 @@
     },
     {
       "guideline_id": "Rule 18.9",
-      "guideline_title": "An object with temporary lifetime shall not undergo array-to-pointer",
+      "guideline_title": "An object with temporary lifetime shall not undergo array-to-pointer conversion C99",
       "guideline_type": "rule",
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",
@@ -14360,7 +13402,7 @@
     },
     {
       "guideline_id": "Rule 18.10",
-      "guideline_title": "Pointers to variably-modified array types shall not be used",
+      "guideline_title": "Pointers to variably-modified array types shall not be used C99",
       "guideline_type": "rule",
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",
@@ -14493,7 +13535,7 @@
     },
     {
       "guideline_id": "Rule 19.1",
-      "guideline_title": "An object shall not be assigned or copied to an overlapping object",
+      "guideline_title": "An object shall not be assigned or copied to an overlapping object C90 [Undefined 34, 55], C99 [Undefined 51, 94], C11 [Undefined 54, 100]",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "not_applicable",
@@ -14540,7 +13582,7 @@
     },
     {
       "guideline_id": "Rule 19.2",
-      "guideline_title": "The union keyword should not be used",
+      "guideline_title": "The union keyword should not be used C90 [Undefined 39, 40; Implementation G.3.9(1)] C99 [Unspecified 10; Undefined 61, 62] C11 [Unspecified 11; Undefined 64, 65]",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "direct",
@@ -14619,7 +13661,7 @@
     },
     {
       "guideline_id": "Rule 19.3",
-      "guideline_title": "A union member shall not be read unless it has been previously set",
+      "guideline_title": "A union member shall not be read unless it has been previously set C99 [Unspecified 10], C11 [Unspecified 11]",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "direct",
@@ -14722,7 +13764,7 @@
     },
     {
       "guideline_id": "Rule 20.1",
-      "guideline_title": "#include directives should only be preceded by preprocessor",
+      "guideline_title": "#include directives should only be preceded by preprocessor directives or comments C90",
       "guideline_type": "rule",
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",
@@ -14760,7 +13802,7 @@
     },
     {
       "guideline_id": "Rule 20.2",
-      "guideline_title": "The ', \" or \\ characters and the /* or // character sequences shall",
+      "guideline_title": "The ', \" or \\ characters and the /* or // character sequences shall not occur in a header file name C90",
       "guideline_type": "rule",
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",
@@ -14781,7 +13823,7 @@
     },
     {
       "guideline_id": "Rule 20.3",
-      "guideline_title": "The #include directive shall be followed by either a <filename> or",
+      "guideline_title": "The #include directive shall be followed by either a <filename> or \"filename\" sequence C90",
       "guideline_type": "rule",
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",
@@ -14791,7 +13833,7 @@
     },
     {
       "guideline_id": "Rule 20.4",
-      "guideline_title": "A macro shall not be defined with the same name as a keyword",
+      "guideline_title": "A macro shall not be defined with the same name as a keyword C90",
       "guideline_type": "rule",
       "applicability_all_rust": "partial",
       "applicability_safe_rust": "partial",
@@ -14946,7 +13988,7 @@
     },
     {
       "guideline_id": "Rule 20.6",
-      "guideline_title": "Tokens that look like a preprocessing directive shall not occur within a",
+      "guideline_title": "Tokens that look like a preprocessing directive shall not occur within a macro argument C90",
       "guideline_type": "rule",
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",
@@ -15079,7 +14121,7 @@
     },
     {
       "guideline_id": "Rule 20.7",
-      "guideline_title": "Expressions resulting from the expansion of macro parameters shall",
+      "guideline_title": "Expressions resulting from the expansion of macro parameters shall be appropriately delimited",
       "guideline_type": "rule",
       "applicability_all_rust": "partial",
       "applicability_safe_rust": "partial",
@@ -15213,7 +14255,7 @@
     },
     {
       "guideline_id": "Rule 20.8",
-      "guideline_title": "The controlling expression of a #if or #elif preprocessing directive",
+      "guideline_title": "The controlling expression of a #if or #elif preprocessing directive shall evaluate to 0 or 1",
       "guideline_type": "rule",
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",
@@ -15346,7 +14388,7 @@
     },
     {
       "guideline_id": "Rule 20.9",
-      "guideline_title": "Required All identifiers used in the controlling expression of #if or #elif",
+      "guideline_title": "All identifiers used in the controlling expression of #if or #elif preprocessing directives shall be #define\u2018d before evaluation",
       "guideline_type": "rule",
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",
@@ -15479,7 +14521,7 @@
     },
     {
       "guideline_id": "Rule 20.10",
-      "guideline_title": "The # and ## preprocessor operators should not be used",
+      "guideline_title": "The # and ## preprocessor operators should not be used C90",
       "guideline_type": "rule",
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",
@@ -15612,7 +14654,7 @@
     },
     {
       "guideline_id": "Rule 20.11",
-      "guideline_title": "Section 5: Rules",
+      "guideline_title": "A macro parameter immediately following a # operator shall not immediately be followed by a ## operator C90",
       "guideline_type": "rule",
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",
@@ -15745,7 +14787,7 @@
     },
     {
       "guideline_id": "Rule 20.12",
-      "guideline_title": "Required A macro parameter used as an operand to the # or ## operators, which",
+      "guideline_title": "A macro parameter used as an operand to the # or ## operators, which is itself subject to further macro replacement, shall only be used as an operand to these operators",
       "guideline_type": "rule",
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",
@@ -15971,7 +15013,7 @@
     },
     {
       "guideline_id": "Rule 20.14",
-      "guideline_title": "All #else, #elif and #endif preprocessor directives shall reside in the",
+      "guideline_title": "All #else, #elif and #endif preprocessor directives shall reside in the same file as the #if, #ifdef or #ifndef directive to which they are related",
       "guideline_type": "rule",
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",
@@ -16040,7 +15082,7 @@
     },
     {
       "guideline_id": "Rule 20.15",
-      "guideline_title": "5.6 Types",
+      "guideline_title": "#define and #undef shall not be used on a reserved identifier or reserved macro name C90",
       "guideline_type": "rule",
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",
@@ -16101,30 +15143,8 @@
       "notes": "MISRA ADD-6: previously Rule 21.1"
     },
     {
-      "guideline_id": "Rule 21.1",
-      "guideline_title": "Renumbered as Rule 20.15 MISRA C:2025",
-      "guideline_type": "rule",
-      "applicability_all_rust": "not_applicable",
-      "applicability_safe_rust": "not_applicable",
-      "misra_rust_category": "n_a",
-      "misra_rust_comment": "Renumbered moved to rule 20.15",
-      "confidence": "medium",
-      "notes": "MISRA ADD-6: Renumbered moved to rule 20.15"
-    },
-    {
-      "guideline_id": "Rule 21.2",
-      "guideline_title": "Renumbered as Rule 5.10 MISRA C:2025",
-      "guideline_type": "rule",
-      "applicability_all_rust": "not_applicable",
-      "applicability_safe_rust": "not_applicable",
-      "misra_rust_category": "n_a",
-      "misra_rust_comment": "Renumbered moved to Rule 5.10",
-      "confidence": "medium",
-      "notes": "MISRA ADD-6: Renumbered moved to Rule 5.10"
-    },
-    {
       "guideline_id": "Rule 21.3",
-      "guideline_title": "The memory allocation and deallocation functions of <stdlib.h>",
+      "guideline_title": "The memory allocation and deallocation functions of <stdlib.h> shall not be used C90",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "not_applicable",
@@ -16258,7 +15278,7 @@
     },
     {
       "guideline_id": "Rule 21.4",
-      "guideline_title": "The standard header file <setjmp.h> shall not be used",
+      "guideline_title": "The standard header file <setjmp.h> shall not be used C90",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "not_applicable",
@@ -16280,7 +15300,7 @@
     },
     {
       "guideline_id": "Rule 21.5",
-      "guideline_title": "The standard header file <signal.h> shall not be used",
+      "guideline_title": "The standard header file <signal.h> shall not be used C90",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "not_applicable",
@@ -16291,7 +15311,7 @@
     },
     {
       "guideline_id": "Rule 21.6",
-      "guideline_title": "The Standard Library input/output functions shall not be used",
+      "guideline_title": "The Standard Library input/output functions shall not be used C90",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "not_applicable",
@@ -16299,53 +15319,30 @@
         {
           "fls_id": "fls_usgd0xlijoxv",
           "category": 0,
-          "fls_section": "21.-2.2",
+          "fls_section": "21.4",
           "fls_title": "ABI",
-          "score": 0.653,
-          "reason": "Section-level similarity match (score: 0.65)"
+          "score": 0.65,
+          "reason": "C library functions require ABI specification. Standard Library input/output functions only accessible in Rust through unsafe extern 'C' blocks."
         },
         {
-          "fls_id": "fls_e0896uk0mdyl",
+          "fls_id": "fls_tmoh3y9oyqsy",
           "category": 0,
-          "fls_section": "22.-2.5",
-          "fls_title": "Assembly Instructions",
-          "score": 0.568,
-          "reason": "Section-level similarity match (score: 0.57)"
-        },
-        {
-          "fls_id": "fls_p090c5oTnElW",
-          "category": 0,
-          "fls_section": "2.-2.10",
-          "fls_title": "Simple C String Literals",
-          "score": 0.542,
-          "reason": "Section-level similarity match (score: 0.54)"
-        },
-        {
-          "fls_id": "fls_zJOAmSr3Dbqk",
-          "category": 0,
-          "fls_section": "6.-2.4",
-          "fls_title": "Diverging Expressions",
-          "score": 0.523,
-          "reason": "Section-level similarity match (score: 0.52)"
-        },
-        {
-          "fls_id": "fls_pz2ioqchjtym",
-          "category": 0,
-          "fls_section": "22.-2.3",
-          "fls_title": "Register Classes",
-          "score": 0.522,
-          "reason": "Section-level similarity match (score: 0.52)"
+          "fls_section": "21.1",
+          "fls_title": "External Blocks",
+          "score": 0.55,
+          "reason": "C library function declarations would appear in unsafe external blocks, requiring unsafe context to call."
         }
       ],
       "fls_rationale_type": "direct_mapping",
       "misra_rust_category": "required",
       "misra_rust_comment": "only accessible through unsafe extern \u201cC\u201d",
-      "confidence": "medium",
-      "notes": "MISRA ADD-6: only accessible through unsafe extern \u201cC\u201d. Only applicable in unsafe Rust"
+      "confidence": "high",
+      "notes": "MISRA prohibits C stdio functions. In Rust, C stdio is only accessible via unsafe extern 'C'. Rust has std::io for safe I/O. Per ADD-6: 'only accessible through unsafe extern \"C\"'.",
+      "rejected_matches": []
     },
     {
       "guideline_id": "Rule 21.7",
-      "guideline_title": "The Standard Library functions atof, atoi, atol and atoll of <stdlib.h>",
+      "guideline_title": "The Standard Library functions atof, atoi, atol and atoll of <stdlib.h> shall not be used C90",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "not_applicable",
@@ -16353,53 +15350,30 @@
         {
           "fls_id": "fls_usgd0xlijoxv",
           "category": 0,
-          "fls_section": "21.-2.2",
+          "fls_section": "21.4",
           "fls_title": "ABI",
-          "score": 0.66,
-          "reason": "Section-level similarity match (score: 0.66)"
+          "score": 0.65,
+          "reason": "C library functions require ABI specification. atof, atoi, atol, atoll functions only accessible in Rust through unsafe extern 'C' blocks."
         },
         {
-          "fls_id": "fls_p090c5oTnElW",
+          "fls_id": "fls_tmoh3y9oyqsy",
           "category": 0,
-          "fls_section": "2.-2.10",
-          "fls_title": "Simple C String Literals",
-          "score": 0.637,
-          "reason": "Section-level similarity match (score: 0.64)"
-        },
-        {
-          "fls_id": "fls_e0896uk0mdyl",
-          "category": 0,
-          "fls_section": "22.-2.5",
-          "fls_title": "Assembly Instructions",
-          "score": 0.576,
-          "reason": "Section-level similarity match (score: 0.58)"
-        },
-        {
-          "fls_id": "fls_2ifjqwnw03ms",
-          "category": 0,
-          "fls_section": "2.-2.5",
-          "fls_title": "Byte Literals",
-          "score": 0.551,
-          "reason": "Section-level similarity match (score: 0.55)"
-        },
-        {
-          "fls_id": "fls_hucd52suu6it",
-          "category": 0,
-          "fls_section": "2.-2.17",
-          "fls_title": "Simple String Literals",
+          "fls_section": "21.1",
+          "fls_title": "External Blocks",
           "score": 0.55,
-          "reason": "Section-level similarity match (score: 0.55)"
+          "reason": "C library function declarations would appear in unsafe external blocks, requiring unsafe context to call."
         }
       ],
       "fls_rationale_type": "direct_mapping",
       "misra_rust_category": "required",
       "misra_rust_comment": "only accessible through unsafe extern \u201cC\u201d",
-      "confidence": "medium",
-      "notes": "MISRA ADD-6: only accessible through unsafe extern \u201cC\u201d. Only applicable in unsafe Rust"
+      "confidence": "high",
+      "notes": "MISRA prohibits these due to undefined behavior on invalid input. In Rust, use str::parse() which returns Result for safe error handling. C functions only via unsafe extern 'C'. Per ADD-6: 'only accessible through unsafe extern \"C\"'.",
+      "rejected_matches": []
     },
     {
       "guideline_id": "Rule 21.8",
-      "guideline_title": "The Standard Library termination functions of <stdlib.h> shall not",
+      "guideline_title": "The Standard Library termination functions of <stdlib.h> shall not be used C90",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "not_applicable",
@@ -16477,7 +15451,7 @@
     },
     {
       "guideline_id": "Rule 21.9",
-      "guideline_title": "The Standard Library functions bsearch and qsort of <stdlib.h>",
+      "guideline_title": "The Standard Library functions bsearch and qsort of <stdlib.h> shall not be used C90",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "not_applicable",
@@ -16531,7 +15505,7 @@
     },
     {
       "guideline_id": "Rule 21.10",
-      "guideline_title": "The Standard Library time and date functions shall not be used",
+      "guideline_title": "The Standard Library time and date functions shall not be used C90",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "not_applicable",
@@ -16542,7 +15516,7 @@
     },
     {
       "guideline_id": "Rule 21.11",
-      "guideline_title": "The standard header file <tgmath.h> should not be used",
+      "guideline_title": "The standard header file <tgmath.h> should not be used C99",
       "guideline_type": "rule",
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",
@@ -16572,7 +15546,7 @@
     },
     {
       "guideline_id": "Rule 21.12",
-      "guideline_title": "The standard header file <fenv.h> shall not be used",
+      "guideline_title": "The standard header file <fenv.h> shall not be used C99",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "not_applicable",
@@ -16618,7 +15592,7 @@
     },
     {
       "guideline_id": "Rule 21.13",
-      "guideline_title": "Any value passed to a function in <ctype.h> shall be representable",
+      "guideline_title": "Any value passed to a function in <ctype.h> shall be representable as an unsigned char or be the value EOF C90",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "not_applicable",
@@ -16752,7 +15726,7 @@
     },
     {
       "guideline_id": "Rule 21.14",
-      "guideline_title": "Required The Standard Library function memcmp shall not be used to compare",
+      "guideline_title": "The Standard Library function memcmp shall not be used to compare null terminated strings",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "not_applicable",
@@ -16774,7 +15748,7 @@
     },
     {
       "guideline_id": "Rule 21.15",
-      "guideline_title": "The pointer arguments to the Standard Library functions memcpy",
+      "guideline_title": "The pointer arguments to the Standard Library functions memcpy, memmove and memcmp shall be pointers to qualified or unqualified versions of compatible types",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "not_applicable",
@@ -16804,7 +15778,7 @@
     },
     {
       "guideline_id": "Rule 21.16",
-      "guideline_title": "The pointer arguments to the Standard Library function memcmp",
+      "guideline_title": "The pointer arguments to the Standard Library function memcmp shall point to either a pointer type, an essentially signed type, an essentially unsigned type, an essentially Boolean type or an essentially enum type C99",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "not_applicable",
@@ -16882,101 +15856,38 @@
     },
     {
       "guideline_id": "Rule 21.17",
-      "guideline_title": "Use of the string handling functions from <string.h> shall not result",
+      "guideline_title": "Use of the string handling functions from <string.h> shall not result in accesses beyond the bounds of the objects referenced by their pointer parameters C90",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "not_applicable",
       "accepted_matches": [
         {
-          "fls_id": "fls_p090c5oTnElW",
-          "category": 0,
-          "fls_section": "2.-2.10",
-          "fls_title": "Simple C String Literals",
-          "score": 0.653,
-          "reason": "Section-level similarity match (score: 0.65)"
-        },
-        {
-          "fls_id": "fls_XJprzaEn82Xs",
-          "category": -2,
-          "fls_section": "fls_U1gHCy16emVe",
-          "fls_title": "C String Literals",
-          "score": 0.606,
-          "reason": "Per FLS: 'The character sequence 0x0D 0x0A (carriage return, new line) is rep...' (similarity: 0.61)"
-        },
-        {
-          "fls_id": "fls_U1gHCy16emVe",
-          "category": 0,
-          "fls_section": "2.-2.9",
-          "fls_title": "C String Literals",
-          "score": 0.593,
-          "reason": "Section-level similarity match (score: 0.59)"
-        },
-        {
-          "fls_id": "fls_9nJHsg9dCi66",
-          "category": -2,
-          "fls_section": "fls_G4LdypF3rL6i",
-          "fls_title": "Raw C String Literals",
-          "score": 0.589,
-          "reason": "Per FLS: 'The type of a simple string literal is &'static [core::ffi::CStr].' (similarity: 0.59)"
-        },
-        {
-          "fls_id": "fls_Ae7LM4Wg0NA7",
-          "category": -2,
-          "fls_section": "fls_p090c5oTnElW",
-          "fls_title": "Simple C String Literals",
-          "score": 0.582,
-          "reason": "Per FLS: 'The type of a simple string literal is &'static [core::ffi::CStr].' (similarity: 0.58)"
-        },
-        {
-          "fls_id": "fls_G4LdypF3rL6i",
-          "category": 0,
-          "fls_section": "2.-2.11",
-          "fls_title": "Raw C String Literals",
-          "score": 0.578,
-          "reason": "Section-level similarity match (score: 0.58)"
-        },
-        {
-          "fls_id": "fls_VKCW830CzhhN",
-          "category": -2,
-          "fls_section": "fls_U1gHCy16emVe",
-          "fls_title": "C String Literals",
-          "score": 0.573,
-          "reason": "Per FLS: 'A c string literal is a literal that consists of multiple character...' (similarity: 0.57)"
-        },
-        {
           "fls_id": "fls_usgd0xlijoxv",
           "category": 0,
-          "fls_section": "21.-2.2",
+          "fls_section": "21.4",
           "fls_title": "ABI",
-          "score": 0.572,
-          "reason": "Section-level similarity match (score: 0.57)"
+          "score": 0.65,
+          "reason": "C library functions require ABI specification. string.h buffer overflows only accessible in Rust through unsafe extern 'C' blocks."
         },
         {
-          "fls_id": "fls_9wgldua1u8yt",
-          "category": -4,
-          "fls_section": "fls_5cm4gkt55hjh",
-          "fls_title": "Dereference Expression",
-          "score": 0.571,
-          "reason": "Per FLS: 'It is undefined behavior to dereference a raw pointer that is eithe...' (similarity: 0.57)"
-        },
-        {
-          "fls_id": "fls_e0896uk0mdyl",
+          "fls_id": "fls_tmoh3y9oyqsy",
           "category": 0,
-          "fls_section": "22.-2.5",
-          "fls_title": "Assembly Instructions",
-          "score": 0.552,
-          "reason": "Section-level similarity match (score: 0.55)"
+          "fls_section": "21.1",
+          "fls_title": "External Blocks",
+          "score": 0.55,
+          "reason": "C library function declarations would appear in unsafe external blocks, requiring unsafe context to call."
         }
       ],
       "fls_rationale_type": "direct_mapping",
       "misra_rust_category": "required",
       "misra_rust_comment": "only accessible through unsafe extern \u201cC\u201d",
-      "confidence": "medium",
-      "notes": "MISRA ADD-6: only accessible through unsafe extern \u201cC\u201d. Only applicable in unsafe Rust"
+      "confidence": "high",
+      "notes": "MISRA prevents buffer overflows in string functions. Rust's String/&str are safe by design. C string functions only via unsafe extern 'C'. Use std::ffi::CStr/CString for FFI. Per ADD-6: 'only accessible through unsafe extern \"C\"'.",
+      "rejected_matches": []
     },
     {
       "guideline_id": "Rule 21.18",
-      "guideline_title": "Mandatory The size_t argument passed to any function in <string.h> shall have an",
+      "guideline_title": "The size_t argument passed to any function in <string.h> shall have an appropriate value C90",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "not_applicable",
@@ -17038,7 +15949,7 @@
     },
     {
       "guideline_id": "Rule 21.19",
-      "guideline_title": "Mandatory The pointers returned by the Standard Library functions localeconv",
+      "guideline_title": "The pointers returned by the Standard Library functions localeconv, getenv, setlocale or strerror shall only be used as if they have pointer to const-qualified type C90",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "not_applicable",
@@ -17172,7 +16083,7 @@
     },
     {
       "guideline_id": "Rule 21.20",
-      "guideline_title": "The pointer returned by the Standard Library functions asctime, ctime",
+      "guideline_title": "The pointer returned by the Standard Library functions asctime, ctime, gmtime, localtime, localeconv, getenv, setlocale or strerror shall not be used following a subsequent call to the same function",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "not_applicable",
@@ -17218,7 +16129,7 @@
     },
     {
       "guideline_id": "Rule 21.21",
-      "guideline_title": "The Standard Library function system of <stdlib.h> shall not be",
+      "guideline_title": "The Standard Library function system of <stdlib.h> shall not be used C90",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "not_applicable",
@@ -17336,7 +16247,7 @@
     },
     {
       "guideline_id": "Rule 21.22",
-      "guideline_title": "All operand arguments to any type-generic macros declared in",
+      "guideline_title": "All operand arguments to any type-generic macros declared in <tgmath.h> shall have an appropriate essential type C99",
       "guideline_type": "rule",
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",
@@ -17470,7 +16381,7 @@
     },
     {
       "guideline_id": "Rule 21.23",
-      "guideline_title": "All operand arguments to any multi-argument type-generic macros",
+      "guideline_title": "All operand arguments to any multi-argument type-generic macros declared in <tgmath.h> shall have the same standard type",
       "guideline_type": "rule",
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",
@@ -17604,7 +16515,7 @@
     },
     {
       "guideline_id": "Rule 21.24",
-      "guideline_title": "The random number generator functions of <stdlib.h> shall not be",
+      "guideline_title": "The random number generator functions of <stdlib.h> shall not be used",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "not_applicable",
@@ -17615,7 +16526,7 @@
     },
     {
       "guideline_id": "Rule 21.25",
-      "guideline_title": "All memory synchronization operations shall be executed in",
+      "guideline_title": "All memory synchronization operations shall be executed in sequentially consistent order C11",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "direct",
@@ -17636,7 +16547,7 @@
     },
     {
       "guideline_id": "Rule 21.26",
-      "guideline_title": "The Standard Library function mtx_timedlock() shall only be invoked on",
+      "guideline_title": "The Standard Library function mtx_timedlock() shall only be invoked on mutex objects of appropriate mutex type C11",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "not_applicable",
@@ -17647,7 +16558,7 @@
     },
     {
       "guideline_id": "Rule 22.1",
-      "guideline_title": "All resources obtained dynamically by means of Standard Library",
+      "guideline_title": "All resources obtained dynamically by means of Standard Library functions shall be explicitly released",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "not_applicable",
@@ -17658,7 +16569,7 @@
     },
     {
       "guideline_id": "Rule 22.2",
-      "guideline_title": "A block of memory shall only be freed if it was allocated by means of a",
+      "guideline_title": "A block of memory shall only be freed if it was allocated by means of a Standard Library function C90",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "not_applicable",
@@ -17696,7 +16607,7 @@
     },
     {
       "guideline_id": "Rule 22.3",
-      "guideline_title": "The same file shall not be open for read and write access at the same",
+      "guideline_title": "The same file shall not be open for read and write access at the same time on different streams C90",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "not_applicable",
@@ -17718,7 +16629,7 @@
     },
     {
       "guideline_id": "Rule 22.4",
-      "guideline_title": "There shall be no attempt to write to a stream which has been",
+      "guideline_title": "There shall be no attempt to write to a stream which has been opened as read-only",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "not_applicable",
@@ -17740,7 +16651,7 @@
     },
     {
       "guideline_id": "Rule 22.5",
-      "guideline_title": "Mandatory A pointer to a FILE object shall not be dereferenced",
+      "guideline_title": "A pointer to a FILE object shall not be dereferenced",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "not_applicable",
@@ -17818,7 +16729,7 @@
     },
     {
       "guideline_id": "Rule 22.6",
-      "guideline_title": "Mandatory The value of a pointer to a FILE shall not be used after the associated",
+      "guideline_title": "The value of a pointer to a FILE shall not be used after the associated stream has been closed C99",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "not_applicable",
@@ -17880,7 +16791,7 @@
     },
     {
       "guideline_id": "Rule 22.7",
-      "guideline_title": "The macro EOF shall only be compared with the unmodified return",
+      "guideline_title": "The macro EOF shall only be compared with the unmodified return value from any Standard Library function capable of returning EOF",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "not_applicable",
@@ -17934,7 +16845,7 @@
     },
     {
       "guideline_id": "Rule 22.8",
-      "guideline_title": "The value of errno shall be set to zero prior to a call to an errno-",
+      "guideline_title": "The value of errno shall be set to zero prior to a call to an errno- setting-function",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "not_applicable",
@@ -17945,7 +16856,7 @@
     },
     {
       "guideline_id": "Rule 22.9",
-      "guideline_title": "The value of errno shall be tested against zero after calling an errno-",
+      "guideline_title": "The value of errno shall be tested against zero after calling an errno- setting-function",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "not_applicable",
@@ -17956,7 +16867,7 @@
     },
     {
       "guideline_id": "Rule 22.10",
-      "guideline_title": "The value of errno shall only be tested when the last function to be",
+      "guideline_title": "The value of errno shall only be tested when the last function to be called was an errno-setting-function",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "not_applicable",
@@ -17967,7 +16878,7 @@
     },
     {
       "guideline_id": "Rule 22.11",
-      "guideline_title": "A thread that was previously either joined or detached shall not be",
+      "guideline_title": "A thread that was previously either joined or detached shall not be subsequently joined nor detached C11",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "partial",
@@ -17977,7 +16888,7 @@
     },
     {
       "guideline_id": "Rule 22.12",
-      "guideline_title": "Thread objects, thread synchronization objects, and thread-specific",
+      "guideline_title": "Thread objects, thread synchronization objects, and thread-specific storage pointers shall only be accessed by the appropriate Standard Library functions C11",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "not_applicable",
@@ -18023,7 +16934,7 @@
     },
     {
       "guideline_id": "Rule 22.13",
-      "guideline_title": "Thread objects, thread synchronization objects and thread-specific",
+      "guideline_title": "Thread objects, thread synchronization objects and thread-specific storage pointers shall have appropriate storage duration C11",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "direct",
@@ -18100,7 +17011,7 @@
     },
     {
       "guideline_id": "Rule 22.14",
-      "guideline_title": "Thread synchronization objects shall be initialized before being",
+      "guideline_title": "Thread synchronization objects shall be initialized before being accessed C11",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "partial",
@@ -18138,7 +17049,7 @@
     },
     {
       "guideline_id": "Rule 22.15",
-      "guideline_title": "Thread synchronization objects and thread-specific storage pointers",
+      "guideline_title": "Thread synchronization objects and thread-specific storage pointers shall not be destroyed until after all threads accessing them have terminated C11",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "partial",
@@ -18192,7 +17103,7 @@
     },
     {
       "guideline_id": "Rule 22.16",
-      "guideline_title": "Required All mutex objects locked by a thread shall be explicitly unlocked by the",
+      "guideline_title": "All mutex objects locked by a thread shall be explicitly unlocked by the same thread C11",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "not_applicable",
@@ -18222,7 +17133,7 @@
     },
     {
       "guideline_id": "Rule 22.17",
-      "guideline_title": "No thread shall unlock a mutex or call cnd_wait() or cnd_timedwait() for",
+      "guideline_title": "No thread shall unlock a mutex or call cnd_wait() or cnd_timedwait() for a mutex it has not locked before C11",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "not_applicable",
@@ -18233,7 +17144,7 @@
     },
     {
       "guideline_id": "Rule 22.18",
-      "guideline_title": "Non-recursive mutexes shall not be recursively locked",
+      "guideline_title": "Non-recursive mutexes shall not be recursively locked C11",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "direct",
@@ -18253,7 +17164,7 @@
     },
     {
       "guideline_id": "Rule 22.20",
-      "guideline_title": "Thread-specific storage pointers shall be created before being",
+      "guideline_title": "Thread-specific storage pointers shall be created before being accessed C11",
       "guideline_type": "rule",
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "partial",
@@ -18431,7 +17342,7 @@
     },
     {
       "guideline_id": "Rule 23.2",
-      "guideline_title": "A generic selection that is not expanded from a macro shall not",
+      "guideline_title": "A generic selection that is not expanded from a macro shall not contain potential side effects in the controlling expression",
       "guideline_type": "rule",
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",
@@ -18564,7 +17475,7 @@
     },
     {
       "guideline_id": "Rule 23.3",
-      "guideline_title": "A generic selection should contain at least one non-default",
+      "guideline_title": "A generic selection should contain at least one non-default association",
       "guideline_type": "rule",
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",
@@ -18822,7 +17733,7 @@
     },
     {
       "guideline_id": "Rule 23.5",
-      "guideline_title": "Section 5: Rules",
+      "guideline_title": "A generic selection should not depend on implicit pointer type conversion",
       "guideline_type": "rule",
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",
@@ -18955,7 +17866,7 @@
     },
     {
       "guideline_id": "Rule 23.6",
-      "guideline_title": "The controlling expression of a generic selection shall have an",
+      "guideline_title": "The controlling expression of a generic selection shall have an essential type that matches its standard type",
       "guideline_type": "rule",
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",
@@ -19088,7 +17999,7 @@
     },
     {
       "guideline_id": "Rule 23.7",
-      "guideline_title": "Advisory A generic selection that is expanded from a macro should evaluate its",
+      "guideline_title": "A generic selection that is expanded from a macro should evaluate its argument only once",
       "guideline_type": "rule",
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",
@@ -19165,7 +18076,7 @@
     },
     {
       "guideline_id": "Rule 23.8",
-      "guideline_title": "A default association shall appear as either the first or the last",
+      "guideline_title": "A default association shall appear as either the first or the last association of a generic selection",
       "guideline_type": "rule",
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",

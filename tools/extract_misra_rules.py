@@ -56,6 +56,9 @@ def clean_title(title: str) -> str:
     """Clean up extracted title text."""
     # Remove line breaks and extra whitespace
     title = re.sub(r"\s+", " ", title.strip())
+    # Remove leading category prefixes (from index/summary pages where format is
+    # "Rule X.Y Advisory <title>" instead of "Rule X.Y <title>")
+    title = re.sub(r"^(Advisory|Required|Mandatory)\s+", "", title, flags=re.IGNORECASE)
     # Remove trailing punctuation artifacts
     title = re.sub(r"[,;:]+$", "", title)
     # Remove source references like [ISO 26262-6 Section 9.4.5]
@@ -64,7 +67,18 @@ def clean_title(title: str) -> str:
 
 
 def extract_misra_c_guidelines(pdf_path: Path) -> tuple[list[Category], dict]:
-    """Extract guidelines from MISRA C:2025 PDF."""
+    """Extract guidelines from MISRA C:2025 PDF.
+    
+    Note on multi-line title extraction:
+    The MISRA C:2025 PDF has titles that can span multiple lines. The format is:
+    
+        Rule X.Y <title text that may
+        span multiple lines>
+        Category <Required|Advisory|Mandatory>
+    
+    We use a regex with re.DOTALL to capture everything from the rule ID until
+    the "Category" marker, which reliably follows every guideline title.
+    """
     reader = PdfReader(pdf_path)
     guidelines_by_section: dict[str, list[Guideline]] = defaultdict(list)
 
@@ -104,13 +118,30 @@ def extract_misra_c_guidelines(pdf_path: Path) -> tuple[list[Category], dict]:
         "5": "Concurrency considerations",
     }
 
-    # Pattern for rules: "Rule X.Y title"
-    # Pattern for directives: "Dir X.Y title"
+    # Patterns for multi-line title extraction.
+    # Use re.DOTALL so . matches newlines, and lookahead (?=\nCategory\s) to stop
+    # at the "Category" line that follows every guideline title in the PDF.
+    # The \xa0 handles non-breaking spaces that appear in the PDF.
+    #
+    # IMPORTANT: We use a negative lookahead (?!Rule|Dir) to ensure the title
+    # doesn't start with another Rule/Dir reference. This handles cases like:
+    #   "See also\nRule 5.3\nRule 5.9 Identifiers..."
+    # where "Rule 5.3" is a cross-reference followed by "Rule 5.9" definition.
+    # Without this, "Rule 5.3" would match and capture "Rule 5.9 Identifiers..."
+    # as its title.
+    #
+    # Title can start with:
+    #   - Uppercase letter [A-Z] (most titles)
+    #   - # for preprocessor rules like "#undef should not be used"
+    #   - Lowercase letter [a-z] for titles like "typedefs that indicate..."
+    # But NOT with "Rule" or "Dir" (cross-references).
     rule_pattern = re.compile(
-        r"^Rule\s+(\d+)\.(\d+)\s+(.+?)$", re.MULTILINE
+        r"^Rule[\s\xa0]+(\d+)\.(\d+)\s+((?!Rule[\s\xa0]|Dir[\s\xa0])[A-Za-z#].+?)(?=\nCategory\s)",
+        re.MULTILINE | re.DOTALL
     )
     dir_pattern = re.compile(
-        r"^Dir\s+(\d+)\.(\d+)\s+(.+?)$", re.MULTILINE
+        r"^Dir[\s\xa0]+(\d+)\.(\d+)\s+((?!Rule[\s\xa0]|Dir[\s\xa0])[A-Za-z#].+?)(?=\nCategory\s)",
+        re.MULTILINE | re.DOTALL
     )
 
     seen_rules = set()

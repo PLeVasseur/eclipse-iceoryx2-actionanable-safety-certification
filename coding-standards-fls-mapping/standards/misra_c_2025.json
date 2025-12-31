@@ -4,8 +4,8 @@
   "extraction_date": "2025-12-31",
   "source": "MISRA-C-2025.pdf",
   "statistics": {
-    "total_guidelines": 228,
-    "rules": 206,
+    "total_guidelines": 223,
+    "rules": 201,
     "directives": 22,
     "recommendations": 0,
     "categories": 28
@@ -17,7 +17,7 @@
       "guidelines": [
         {
           "id": "Dir 1.1",
-          "title": "Any implementation-defined behaviour on which the output of the",
+          "title": "Any implementation-defined behaviour on which the output of the program depends shall be documented and understood C90",
           "guideline_type": "directive"
         },
         {
@@ -55,7 +55,7 @@
       "guidelines": [
         {
           "id": "Dir 4.1",
-          "title": "Run-time failures shall be minimized",
+          "title": "Run-time failures shall be minimized C90",
           "guideline_type": "directive"
         },
         {
@@ -75,37 +75,37 @@
         },
         {
           "id": "Dir 4.5",
-          "title": "Identifiers in the same name space with overlapping visibility should",
+          "title": "Identifiers in the same name space with overlapping visibility should be typographically unambiguous",
           "guideline_type": "directive"
         },
         {
           "id": "Dir 4.6",
-          "title": "typedefs that indicate size and signedness should be used in place of",
+          "title": "typedefs that indicate size and signedness should be used in place of the basic integer types",
           "guideline_type": "directive"
         },
         {
           "id": "Dir 4.7",
-          "title": "If a function returns error information, then that error information",
+          "title": "If a function returns error information, then that error information shall be tested",
           "guideline_type": "directive"
         },
         {
           "id": "Dir 4.8",
-          "title": "If a pointer to a structure or union is never dereferenced within a",
+          "title": "If a pointer to a structure or union is never dereferenced within a translation unit, then the implementation of the object should be hidden",
           "guideline_type": "directive"
         },
         {
           "id": "Dir 4.9",
-          "title": "A function should be used in preference to a function-like macro",
+          "title": "A function should be used in preference to a function-like macro where they are interchangeable",
           "guideline_type": "directive"
         },
         {
           "id": "Dir 4.10",
-          "title": "Precautions shall be taken in order to prevent the contents of a",
+          "title": "Precautions shall be taken in order to prevent the contents of a header file being included more than once",
           "guideline_type": "directive"
         },
         {
           "id": "Dir 4.11",
-          "title": "The validity of values passed to library functions shall be checked",
+          "title": "The validity of values passed to library functions shall be checked C90",
           "guideline_type": "directive"
         },
         {
@@ -115,17 +115,17 @@
         },
         {
           "id": "Dir 4.13",
-          "title": "Functions which are designed to provide operations on a resource",
+          "title": "Functions which are designed to provide operations on a resource should be called in an appropriate sequence",
           "guideline_type": "directive"
         },
         {
           "id": "Dir 4.14",
-          "title": "The validity of values received from external sources shall be checked",
+          "title": "The validity of values received from external sources shall be checked C90",
           "guideline_type": "directive"
         },
         {
           "id": "Dir 4.15",
-          "title": "Evaluation of floating-point expressions shall not lead to the",
+          "title": "Evaluation of floating-point expressions shall not lead to the undetected generation of infinities and NaNs C90",
           "guideline_type": "directive"
         }
       ]
@@ -136,7 +136,7 @@
       "guidelines": [
         {
           "id": "Dir 5.1",
-          "title": "There shall be no data races between threads",
+          "title": "There shall be no data races between threads C11",
           "guideline_type": "directive"
         },
         {
@@ -146,7 +146,7 @@
         },
         {
           "id": "Dir 5.3",
-          "title": "There shall be no dynamic thread creation",
+          "title": "There shall be no dynamic thread creation C11",
           "guideline_type": "directive"
         }
       ]
@@ -157,17 +157,12 @@
       "guidelines": [
         {
           "id": "Rule 1.1",
-          "title": "4.2 Compilation and build",
-          "guideline_type": "rule"
-        },
-        {
-          "id": "Rule 1.2",
-          "title": "Renumbered as Directive 1.2 MISRA C:2025",
+          "title": "The program shall contain no violations of the standard C syntax and constraints, and shall not exceed the implementation\u2019s translation limits",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 1.3",
-          "title": "There shall be no occurrence of undefined or critical unspecified",
+          "title": "There shall be no occurrence of undefined or critical unspecified behaviour",
           "guideline_type": "rule"
         },
         {
@@ -198,7 +193,7 @@
         },
         {
           "id": "Rule 2.3",
-          "title": "Advisory A project should not contain unused type declarations",
+          "title": "A project should not contain unused type declarations",
           "guideline_type": "rule"
         },
         {
@@ -234,7 +229,7 @@
       "guidelines": [
         {
           "id": "Rule 3.1",
-          "title": "The character sequences /* and // shall not be used within a",
+          "title": "The character sequences /* and // shall not be used within a comment",
           "guideline_type": "rule"
         },
         {
@@ -250,7 +245,7 @@
       "guidelines": [
         {
           "id": "Rule 4.1",
-          "title": "Octal and hexadecimal escape sequences shall be terminated",
+          "title": "Octal and hexadecimal escape sequences shall be terminated C90",
           "guideline_type": "rule"
         },
         {
@@ -266,27 +261,27 @@
       "guidelines": [
         {
           "id": "Rule 5.1",
-          "title": "External identifiers shall be distinct",
+          "title": "External identifiers shall be distinct C90",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 5.2",
-          "title": "Identifiers declared in the same scope and name space shall be",
+          "title": "Identifiers declared in the same scope and name space shall be distinct C90",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 5.3",
-          "title": "An identifier declared in an inner scope shall not hide an identifier",
+          "title": "An identifier declared in an inner scope shall not hide an identifier declared in an outer scope",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 5.4",
-          "title": "Macro identifiers shall be distinct",
+          "title": "Macro identifiers shall be distinct C90",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 5.5",
-          "title": "Identifiers shall be distinct from macro names",
+          "title": "Identifiers shall be distinct from macro names C90",
           "guideline_type": "rule"
         },
         {
@@ -296,22 +291,22 @@
         },
         {
           "id": "Rule 5.7",
-          "title": "Required A tag name shall be a unique identifier",
+          "title": "A tag name shall be a unique identifier",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 5.8",
-          "title": "Required Identifiers that define objects or functions with external linkage shall be",
+          "title": "Identifiers that define objects or functions with external linkage shall be unique",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 5.9",
-          "title": "Advisory Identifiers that define objects or functions with internal linkage should",
+          "title": "Identifiers that define objects or functions with internal linkage should be unique",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 5.10",
-          "title": "A reserved identifier or reserved macro name shall not be declared",
+          "title": "A reserved identifier or reserved macro name shall not be declared C90",
           "guideline_type": "rule"
         }
       ]
@@ -322,7 +317,7 @@
       "guidelines": [
         {
           "id": "Rule 6.1",
-          "title": "Bit-fields shall only be declared with an appropriate type",
+          "title": "Bit-fields shall only be declared with an appropriate type C90",
           "guideline_type": "rule"
         },
         {
@@ -332,7 +327,7 @@
         },
         {
           "id": "Rule 6.3",
-          "title": "A bit-field shall not be declared as a member of a union",
+          "title": "A bit-field shall not be declared as a member of a union C90",
           "guideline_type": "rule"
         }
       ]
@@ -348,7 +343,7 @@
         },
         {
           "id": "Rule 7.2",
-          "title": "A \u201cu\u201d or \u201cU\u201d suffix shall be applied to all integer constants that are",
+          "title": "A \u201cu\u201d or \u201cU\u201d suffix shall be applied to all integer constants that are represented in an unsigned type",
           "guideline_type": "rule"
         },
         {
@@ -358,17 +353,17 @@
         },
         {
           "id": "Rule 7.4",
-          "title": "A string literal shall not be assigned to an object unless the object\u2019s",
+          "title": "A string literal shall not be assigned to an object unless the object\u2019s type is \u201cpointer to const-qualified char\u201d C90",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 7.5",
-          "title": "The argument of an integer constant macro shall have an appropriate",
+          "title": "The argument of an integer constant macro shall have an appropriate form C99",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 7.6",
-          "title": "Required The small integer variants of the minimum-width integer constant",
+          "title": "The small integer variants of the minimum-width integer constant macros shall not be used",
           "guideline_type": "rule"
         }
       ]
@@ -384,57 +379,57 @@
         },
         {
           "id": "Rule 8.2",
-          "title": "Required Function types shall be in prototype form with named parameters",
+          "title": "Function types shall be in prototype form with named parameters C90",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 8.3",
-          "title": "All declarations of an object or function shall use the same names and",
+          "title": "All declarations of an object or function shall use the same names and type qualifiers C90",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 8.4",
-          "title": "A compatible declaration shall be visible when an object or function",
+          "title": "A compatible declaration shall be visible when an object or function with external linkage is defined C90",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 8.5",
-          "title": "An external object or function shall be declared once in one and only",
+          "title": "An external object or function shall be declared once in one and only one file",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 8.6",
-          "title": "5.3 Comments",
+          "title": "An identifier with external linkage shall have exactly one external definition C90",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 8.7",
-          "title": "Advisory Functions and objects should not be defined with external linkage if they",
+          "title": "Functions and objects should not be defined with external linkage if they are referenced in only one translation unit",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 8.8",
-          "title": "The static storage class specifier shall be used in all declarations of",
+          "title": "The static storage class specifier shall be used in all declarations of objects and functions that have internal linkage",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 8.9",
-          "title": "Advisory An object should be declared at block scope if its identifier only appears",
+          "title": "An object should be declared at block scope if its identifier only appears in a single function",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 8.10",
-          "title": "Section 5: Rules",
+          "title": "An inline function shall be declared with the static storage class C99",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 8.11",
-          "title": "Advisory When an array with external linkage is declared, its size should be",
+          "title": "When an array with external linkage is declared, its size should be explicitly specified",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 8.12",
-          "title": "Within an enumerator list, the value of an implicitly-specified",
+          "title": "Within an enumerator list, the value of an implicitly-specified enumeration constant shall be unique",
           "guideline_type": "rule"
         },
         {
@@ -444,27 +439,27 @@
         },
         {
           "id": "Rule 8.14",
-          "title": "The restrict type qualifier shall not be used",
+          "title": "The restrict type qualifier shall not be used C99",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 8.15",
-          "title": "All declarations of an object with an explicit alignment specification",
+          "title": "All declarations of an object with an explicit alignment specification shall specify the same alignment C11",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 8.16",
-          "title": "The alignment specification of zero should not appear in an object",
+          "title": "The alignment specification of zero should not appear in an object declaration",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 8.17",
-          "title": "At most one explicit alignment specifier should appear in an object",
+          "title": "At most one explicit alignment specifier should appear in an object declaration",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 8.18",
-          "title": "There shall be no tentative definitions in a header file",
+          "title": "There shall be no tentative definitions in a header file C90",
           "guideline_type": "rule"
         },
         {
@@ -480,12 +475,12 @@
       "guidelines": [
         {
           "id": "Rule 9.1",
-          "title": "The value of an object with automatic storage duration shall not be",
+          "title": "The value of an object with automatic storage duration shall not be read before it has been set C90",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 9.2",
-          "title": "The initializer for an aggregate or union shall be enclosed in braces",
+          "title": "The initializer for an aggregate or union shall be enclosed in braces C90",
           "guideline_type": "rule"
         },
         {
@@ -500,17 +495,17 @@
         },
         {
           "id": "Rule 9.5",
-          "title": "Required Where designated initializers are used to initialize an array object the",
+          "title": "Where designated initializers are used to initialize an array object the size of the array shall be specified explicitly",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 9.6",
-          "title": "Section 5: Rules",
+          "title": "An initializer using chained designators shall not contain initializers without designators",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 9.7",
-          "title": "Atomic objects shall be appropriately initialized before being accessed",
+          "title": "Atomic objects shall be appropriately initialized before being accessed C11",
           "guideline_type": "rule"
         }
       ]
@@ -521,42 +516,42 @@
       "guidelines": [
         {
           "id": "Rule 10.1",
-          "title": "Operands shall not be of an inappropriate essential type",
+          "title": "Operands shall not be of an inappropriate essential type C90",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 10.2",
-          "title": "Expressions of essentially character type shall not be used",
+          "title": "Expressions of essentially character type shall not be used inappropriately in addition and subtraction operations",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 10.3",
-          "title": "Required The value of an expression shall not be assigned to an object with a",
+          "title": "The value of an expression shall not be assigned to an object with a narrower essential type or of a different essential type category C90",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 10.4",
-          "title": "Both operands of an operator in which the usual arithmetic",
+          "title": "Both operands of an operator in which the usual arithmetic conversions are performed shall have the same essential type category C90",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 10.5",
-          "title": "The value of an expression should not be cast to an inappropriate",
+          "title": "The value of an expression should not be cast to an inappropriate essential type",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 10.6",
-          "title": "The value of a composite expression shall not be assigned to an object",
+          "title": "The value of a composite expression shall not be assigned to an object with wider essential type",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 10.7",
-          "title": "If a composite expression is used as one operand of an operator in",
+          "title": "If a composite expression is used as one operand of an operator in which the usual arithmetic conversions are performed then the other operand shall not have wider essential type",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 10.8",
-          "title": "The value of a composite expression shall not be cast to a different",
+          "title": "The value of a composite expression shall not be cast to a different essential type category or a wider essential type",
           "guideline_type": "rule"
         }
       ]
@@ -567,57 +562,52 @@
       "guidelines": [
         {
           "id": "Rule 11.1",
-          "title": "Conversions shall not be performed between a pointer to a function",
+          "title": "Conversions shall not be performed between a pointer to a function and any other type C90",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 11.2",
-          "title": "Conversions shall not be performed between a pointer to an",
+          "title": "Conversions shall not be performed between a pointer to an incomplete type and any other type C90",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 11.3",
-          "title": "Required A conversion shall not be performed between a pointer to object type",
+          "title": "A conversion shall not be performed between a pointer to object type and a pointer to a different object type C90",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 11.4",
-          "title": "A conversion shall not be performed between a pointer to object and",
+          "title": "A conversion shall not be performed between a pointer to object and an arithmetic type C90",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 11.5",
-          "title": "A conversion should not be performed from pointer to void into",
+          "title": "A conversion should not be performed from pointer to void into pointer to object C90",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 11.6",
-          "title": "A cast shall not be performed between pointer to void and an",
-          "guideline_type": "rule"
-        },
-        {
-          "id": "Rule 11.7",
-          "title": "Combined with Rule 11.4 MISRA C:2025",
+          "title": "A cast shall not be performed between pointer to void and an arithmetic type C90",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 11.8",
-          "title": "Required A conversion shall not remove any const, volatile or _Atomic qualification",
+          "title": "A conversion shall not remove any const, volatile or _Atomic qualification from the type pointed to by a pointer C90",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 11.9",
-          "title": "The macro NULL shall be the only permitted form of integer null",
+          "title": "The macro NULL shall be the only permitted form of integer null pointer constant",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 11.10",
-          "title": "Required The _Atomic qualifier shall not be applied to the incomplete type void",
+          "title": "The _Atomic qualifier shall not be applied to the incomplete type void",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 11.11",
-          "title": "Required Pointers shall not be implicitly compared to NULL",
+          "title": "Pointers shall not be implicitly compared to NULL",
           "guideline_type": "rule"
         }
       ]
@@ -628,12 +618,12 @@
       "guidelines": [
         {
           "id": "Rule 12.1",
-          "title": "The precedence of operators within expressions should be made",
+          "title": "The precedence of operators within expressions should be made explicit",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 12.2",
-          "title": "The right hand operand of a shift operator shall lie in the range zero",
+          "title": "The right hand operand of a shift operator shall lie in the range zero to one less than the width in bits of the essential type of the left hand operand C90",
           "guideline_type": "rule"
         },
         {
@@ -643,17 +633,17 @@
         },
         {
           "id": "Rule 12.4",
-          "title": "Evaluation of constant expressions should not lead to unsigned integer",
+          "title": "Evaluation of constant expressions should not lead to unsigned integer wrap-around",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 12.5",
-          "title": "The sizeof operator shall not have an operand which is a function",
+          "title": "The sizeof operator shall not have an operand which is a function parameter declared as \u201carray of type\u201d",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 12.6",
-          "title": "Structure and union members of atomic objects shall not be directly",
+          "title": "Structure and union members of atomic objects shall not be directly accessed C11",
           "guideline_type": "rule"
         }
       ]
@@ -664,32 +654,32 @@
       "guidelines": [
         {
           "id": "Rule 13.1",
-          "title": "Initializer lists shall not contain persistent side effects",
+          "title": "Initializer lists shall not contain persistent side effects C99",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 13.2",
-          "title": "Required The value of an expression and its persistent side effects shall be the",
+          "title": "The value of an expression and its persistent side effects shall be the same under all permitted evaluation orders and shall be independent from thread interleaving C90",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 13.3",
-          "title": "A full expression containing an increment (++) or decrement (--)",
+          "title": "A full expression containing an increment (++) or decrement (--) operator should have no other potential side effects other than that caused by the increment or decrement operator C90",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 13.4",
-          "title": "Advisory The result of an assignment operator should not be used",
+          "title": "The result of an assignment operator should not be used C90",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 13.5",
-          "title": "Required The right hand operand of a logical && or || operator shall not contain",
+          "title": "The right hand operand of a logical && or || operator shall not contain persistent side effects",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 13.6",
-          "title": "The operand of the sizeof operator shall not contain any expression",
+          "title": "The operand of the sizeof operator shall not contain any expression which has potential side effects C99",
           "guideline_type": "rule"
         }
       ]
@@ -705,7 +695,7 @@
         },
         {
           "id": "Rule 14.2",
-          "title": "Required A for loop shall be well-formed",
+          "title": "A for loop shall be well-formed",
           "guideline_type": "rule"
         },
         {
@@ -715,7 +705,7 @@
         },
         {
           "id": "Rule 14.4",
-          "title": "The controlling expression of an if statement and the controlling",
+          "title": "The controlling expression of an if statement and the controlling expression of an iteration-statement shall have essentially Boolean type",
           "guideline_type": "rule"
         }
       ]
@@ -731,17 +721,17 @@
         },
         {
           "id": "Rule 15.2",
-          "title": "The goto statement shall jump to a label declared later in the same",
+          "title": "The goto statement shall jump to a label declared later in the same function",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 15.3",
-          "title": "Any label referenced by a goto statement shall be declared in the",
+          "title": "Any label referenced by a goto statement shall be declared in the same block, or in any block enclosing the goto statement",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 15.4",
-          "title": "There should be no more than one break or goto statement used to",
+          "title": "There should be no more than one break or goto statement used to terminate any iteration statement",
           "guideline_type": "rule"
         },
         {
@@ -751,7 +741,7 @@
         },
         {
           "id": "Rule 15.6",
-          "title": "Required The body of an iteration-statement or a selection-statement shall be a",
+          "title": "The body of an iteration-statement or a selection-statement shall be a compound-statement",
           "guideline_type": "rule"
         },
         {
@@ -772,7 +762,7 @@
         },
         {
           "id": "Rule 16.2",
-          "title": "A switch label shall only be used when the most closely-enclosing",
+          "title": "A switch label shall only be used when the most closely-enclosing compound statement is the body of a switch statement",
           "guideline_type": "rule"
         },
         {
@@ -782,12 +772,12 @@
         },
         {
           "id": "Rule 16.4",
-          "title": "Section 5: Rules",
+          "title": "Every switch statement shall have a default label",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 16.5",
-          "title": "A default label shall appear as either the first or the last switch label of",
+          "title": "A default label shall appear as either the first or the last switch label of a switch statement",
           "guideline_type": "rule"
         },
         {
@@ -808,7 +798,7 @@
       "guidelines": [
         {
           "id": "Rule 17.1",
-          "title": "The standard header file <stdarg.h> shall not be used",
+          "title": "The standard header file <stdarg.h> shall not be used C90",
           "guideline_type": "rule"
         },
         {
@@ -818,27 +808,22 @@
         },
         {
           "id": "Rule 17.3",
-          "title": "A function shall not be declared implicitly",
+          "title": "A function shall not be declared implicitly C90",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 17.4",
-          "title": "All exit paths from a function with non-void return type shall have an",
+          "title": "All exit paths from a function with non-void return type shall have an explicit return statement with an expression C90",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 17.5",
-          "title": "The function argument corresponding to a parameter declared to",
-          "guideline_type": "rule"
-        },
-        {
-          "id": "Rule 17.6",
-          "title": "Combined with Rule 17.5 MISRA C:2025",
+          "title": "The function argument corresponding to a parameter declared to have an array type shall have an appropriate number of elements C99",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 17.7",
-          "title": "The value returned by a function having non-void return type shall be",
+          "title": "The value returned by a function having non-void return type shall be used",
           "guideline_type": "rule"
         },
         {
@@ -848,27 +833,27 @@
         },
         {
           "id": "Rule 17.9",
-          "title": "A function declared with a _Noreturn function specifier shall not return",
+          "title": "A function declared with a _Noreturn function specifier shall not return to its caller C11",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 17.10",
-          "title": "Required A function declared with a _Noreturn function specifier shall have void",
+          "title": "A function declared with a _Noreturn function specifier shall have void return type",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 17.11",
-          "title": "A function that never returns should be declared with a _Noreturn",
+          "title": "A function that never returns should be declared with a _Noreturn function specifier",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 17.12",
-          "title": "Advisory A function identifier should only be used with either a preceding &, or",
+          "title": "A function identifier should only be used with either a preceding &, or with a parenthesized parameter list",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 17.13",
-          "title": "A function type shall not be type qualified",
+          "title": "A function type shall not be type qualified C90",
           "guideline_type": "rule"
         }
       ]
@@ -879,52 +864,52 @@
       "guidelines": [
         {
           "id": "Rule 18.1",
-          "title": "A pointer resulting from arithmetic on a pointer operand shall address",
+          "title": "A pointer resulting from arithmetic on a pointer operand shall address an element of the same array as that pointer operand C90",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 18.2",
-          "title": "Subtraction between pointers shall only be applied to pointers that",
+          "title": "Subtraction between pointers shall only be applied to pointers that address elements of the same array C90",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 18.3",
-          "title": "The relational operators >, >=, < and <= shall not be applied to",
+          "title": "The relational operators >, >=, < and <= shall not be applied to expressions of pointer type except where they point into the same object C90",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 18.4",
-          "title": "The +, -, += and -= operators should not be applied to an expression",
+          "title": "The +, -, += and -= operators should not be applied to an expression of pointer type",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 18.5",
-          "title": "Declarations should contain no more than two levels of pointer",
+          "title": "Declarations should contain no more than two levels of pointer nesting",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 18.6",
-          "title": "The address of an object with automatic or thread-local storage shall",
+          "title": "The address of an object with automatic or thread-local storage shall not be copied to another object that persists after the first object has ceased to exist C90",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 18.7",
-          "title": "Flexible array members shall not be declared",
+          "title": "Flexible array members shall not be declared C99",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 18.8",
-          "title": "5.14 Control statement expressions",
+          "title": "Variable-length arrays shall not be used C99",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 18.9",
-          "title": "An object with temporary lifetime shall not undergo array-to-pointer",
+          "title": "An object with temporary lifetime shall not undergo array-to-pointer conversion C99",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 18.10",
-          "title": "Pointers to variably-modified array types shall not be used",
+          "title": "Pointers to variably-modified array types shall not be used C99",
           "guideline_type": "rule"
         }
       ]
@@ -935,17 +920,17 @@
       "guidelines": [
         {
           "id": "Rule 19.1",
-          "title": "An object shall not be assigned or copied to an overlapping object",
+          "title": "An object shall not be assigned or copied to an overlapping object C90",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 19.2",
-          "title": "Advisory The union keyword should not be used",
+          "title": "The union keyword should not be used C90",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 19.3",
-          "title": "Required A union member shall not be read unless it has been previously set",
+          "title": "A union member shall not be read unless it has been previously set C99",
           "guideline_type": "rule"
         }
       ]
@@ -956,22 +941,22 @@
       "guidelines": [
         {
           "id": "Rule 20.1",
-          "title": "#include directives should only be preceded by preprocessor",
+          "title": "#include directives should only be preceded by preprocessor directives or comments C90",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 20.2",
-          "title": "The ', \" or \\ characters and the /* or // character sequences shall",
+          "title": "The ', \" or \\ characters and the /* or // character sequences shall not occur in a header file name C90",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 20.3",
-          "title": "The #include directive shall be followed by either a <filename> or",
+          "title": "The #include directive shall be followed by either a <filename> or \"filename\" sequence C90",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 20.4",
-          "title": "A macro shall not be defined with the same name as a keyword",
+          "title": "A macro shall not be defined with the same name as a keyword C90",
           "guideline_type": "rule"
         },
         {
@@ -981,37 +966,37 @@
         },
         {
           "id": "Rule 20.6",
-          "title": "Tokens that look like a preprocessing directive shall not occur within a",
+          "title": "Tokens that look like a preprocessing directive shall not occur within a macro argument C90",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 20.7",
-          "title": "Expressions resulting from the expansion of macro parameters shall",
+          "title": "Expressions resulting from the expansion of macro parameters shall be appropriately delimited",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 20.8",
-          "title": "The controlling expression of a #if or #elif preprocessing directive",
+          "title": "The controlling expression of a #if or #elif preprocessing directive shall evaluate to 0 or 1",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 20.9",
-          "title": "Required All identifiers used in the controlling expression of #if or #elif",
+          "title": "All identifiers used in the controlling expression of #if or #elif preprocessing directives shall be #define\u2018d before evaluation",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 20.10",
-          "title": "The # and ## preprocessor operators should not be used",
+          "title": "The # and ## preprocessor operators should not be used C90",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 20.11",
-          "title": "Section 5: Rules",
+          "title": "A macro parameter immediately following a # operator shall not immediately be followed by a ## operator C90",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 20.12",
-          "title": "Required A macro parameter used as an operand to the # or ## operators, which",
+          "title": "A macro parameter used as an operand to the # or ## operators, which is itself subject to further macro replacement, shall only be used as an operand to these operators",
           "guideline_type": "rule"
         },
         {
@@ -1021,12 +1006,12 @@
         },
         {
           "id": "Rule 20.14",
-          "title": "All #else, #elif and #endif preprocessor directives shall reside in the",
+          "title": "All #else, #elif and #endif preprocessor directives shall reside in the same file as the #if, #ifdef or #ifndef directive to which they are related",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 20.15",
-          "title": "5.6 Types",
+          "title": "#define and #undef shall not be used on a reserved identifier or reserved macro name C90",
           "guideline_type": "rule"
         }
       ]
@@ -1036,133 +1021,123 @@
       "name": "Standard libraries",
       "guidelines": [
         {
-          "id": "Rule 21.1",
-          "title": "Renumbered as Rule 20.15 MISRA C:2025",
-          "guideline_type": "rule"
-        },
-        {
-          "id": "Rule 21.2",
-          "title": "Renumbered as Rule 5.10 MISRA C:2025",
-          "guideline_type": "rule"
-        },
-        {
           "id": "Rule 21.3",
-          "title": "The memory allocation and deallocation functions of <stdlib.h>",
+          "title": "The memory allocation and deallocation functions of <stdlib.h> shall not be used C90",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 21.4",
-          "title": "The standard header file <setjmp.h> shall not be used",
+          "title": "The standard header file <setjmp.h> shall not be used C90",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 21.5",
-          "title": "The standard header file <signal.h> shall not be used",
+          "title": "The standard header file <signal.h> shall not be used C90",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 21.6",
-          "title": "The Standard Library input/output functions shall not be used",
+          "title": "The Standard Library input/output functions shall not be used C90",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 21.7",
-          "title": "The Standard Library functions atof, atoi, atol and atoll of <stdlib.h>",
+          "title": "The Standard Library functions atof, atoi, atol and atoll of <stdlib.h> shall not be used C90",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 21.8",
-          "title": "The Standard Library termination functions of <stdlib.h> shall not",
+          "title": "The Standard Library termination functions of <stdlib.h> shall not be used C90",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 21.9",
-          "title": "The Standard Library functions bsearch and qsort of <stdlib.h>",
+          "title": "The Standard Library functions bsearch and qsort of <stdlib.h> shall not be used C90",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 21.10",
-          "title": "The Standard Library time and date functions shall not be used",
+          "title": "The Standard Library time and date functions shall not be used C90",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 21.11",
-          "title": "The standard header file <tgmath.h> should not be used",
+          "title": "The standard header file <tgmath.h> should not be used C99",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 21.12",
-          "title": "The standard header file <fenv.h> shall not be used",
+          "title": "The standard header file <fenv.h> shall not be used C99",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 21.13",
-          "title": "Any value passed to a function in <ctype.h> shall be representable",
+          "title": "Any value passed to a function in <ctype.h> shall be representable as an unsigned char or be the value EOF C90",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 21.14",
-          "title": "Required The Standard Library function memcmp shall not be used to compare",
+          "title": "The Standard Library function memcmp shall not be used to compare null terminated strings",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 21.15",
-          "title": "The pointer arguments to the Standard Library functions memcpy",
+          "title": "The pointer arguments to the Standard Library functions memcpy, memmove and memcmp shall be pointers to qualified or unqualified versions of compatible types",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 21.16",
-          "title": "The pointer arguments to the Standard Library function memcmp",
+          "title": "The pointer arguments to the Standard Library function memcmp shall point to either a pointer type, an essentially signed type, an essentially unsigned type, an essentially Boolean type or an essentially enum type C99",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 21.17",
-          "title": "Use of the string handling functions from <string.h> shall not result",
+          "title": "Use of the string handling functions from <string.h> shall not result in accesses beyond the bounds of the objects referenced by their pointer parameters C90",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 21.18",
-          "title": "Mandatory The size_t argument passed to any function in <string.h> shall have an",
+          "title": "The size_t argument passed to any function in <string.h> shall have an appropriate value C90",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 21.19",
-          "title": "Mandatory The pointers returned by the Standard Library functions localeconv",
+          "title": "The pointers returned by the Standard Library functions localeconv, getenv, setlocale or strerror shall only be used as if they have pointer to const-qualified type C90",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 21.20",
-          "title": "The pointer returned by the Standard Library functions asctime, ctime",
+          "title": "The pointer returned by the Standard Library functions asctime, ctime, gmtime, localtime, localeconv, getenv, setlocale or strerror shall not be used following a subsequent call to the same function",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 21.21",
-          "title": "The Standard Library function system of <stdlib.h> shall not be",
+          "title": "The Standard Library function system of <stdlib.h> shall not be used C90",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 21.22",
-          "title": "All operand arguments to any type-generic macros declared in",
+          "title": "All operand arguments to any type-generic macros declared in <tgmath.h> shall have an appropriate essential type C99",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 21.23",
-          "title": "All operand arguments to any multi-argument type-generic macros",
+          "title": "All operand arguments to any multi-argument type-generic macros declared in <tgmath.h> shall have the same standard type",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 21.24",
-          "title": "The random number generator functions of <stdlib.h> shall not be",
+          "title": "The random number generator functions of <stdlib.h> shall not be used",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 21.25",
-          "title": "All memory synchronization operations shall be executed in",
+          "title": "All memory synchronization operations shall be executed in sequentially consistent order C11",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 21.26",
-          "title": "The Standard Library function mtx_timedlock() shall only be invoked on",
+          "title": "The Standard Library function mtx_timedlock() shall only be invoked on mutex objects of appropriate mutex type C11",
           "guideline_type": "rule"
         }
       ]
@@ -1173,92 +1148,92 @@
       "guidelines": [
         {
           "id": "Rule 22.1",
-          "title": "All resources obtained dynamically by means of Standard Library",
+          "title": "All resources obtained dynamically by means of Standard Library functions shall be explicitly released",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 22.2",
-          "title": "A block of memory shall only be freed if it was allocated by means of a",
+          "title": "A block of memory shall only be freed if it was allocated by means of a Standard Library function C90",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 22.3",
-          "title": "The same file shall not be open for read and write access at the same",
+          "title": "The same file shall not be open for read and write access at the same time on different streams C90",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 22.4",
-          "title": "There shall be no attempt to write to a stream which has been",
+          "title": "There shall be no attempt to write to a stream which has been opened as read-only",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 22.5",
-          "title": "Mandatory A pointer to a FILE object shall not be dereferenced",
+          "title": "A pointer to a FILE object shall not be dereferenced",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 22.6",
-          "title": "Mandatory The value of a pointer to a FILE shall not be used after the associated",
+          "title": "The value of a pointer to a FILE shall not be used after the associated stream has been closed C99",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 22.7",
-          "title": "The macro EOF shall only be compared with the unmodified return",
+          "title": "The macro EOF shall only be compared with the unmodified return value from any Standard Library function capable of returning EOF",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 22.8",
-          "title": "The value of errno shall be set to zero prior to a call to an errno-",
+          "title": "The value of errno shall be set to zero prior to a call to an errno- setting-function",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 22.9",
-          "title": "The value of errno shall be tested against zero after calling an errno-",
+          "title": "The value of errno shall be tested against zero after calling an errno- setting-function",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 22.10",
-          "title": "The value of errno shall only be tested when the last function to be",
+          "title": "The value of errno shall only be tested when the last function to be called was an errno-setting-function",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 22.11",
-          "title": "A thread that was previously either joined or detached shall not be",
+          "title": "A thread that was previously either joined or detached shall not be subsequently joined nor detached C11",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 22.12",
-          "title": "Thread objects, thread synchronization objects, and thread-specific",
+          "title": "Thread objects, thread synchronization objects, and thread-specific storage pointers shall only be accessed by the appropriate Standard Library functions C11",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 22.13",
-          "title": "Thread objects, thread synchronization objects and thread-specific",
+          "title": "Thread objects, thread synchronization objects and thread-specific storage pointers shall have appropriate storage duration C11",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 22.14",
-          "title": "Thread synchronization objects shall be initialized before being",
+          "title": "Thread synchronization objects shall be initialized before being accessed C11",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 22.15",
-          "title": "Thread synchronization objects and thread-specific storage pointers",
+          "title": "Thread synchronization objects and thread-specific storage pointers shall not be destroyed until after all threads accessing them have terminated C11",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 22.16",
-          "title": "Required All mutex objects locked by a thread shall be explicitly unlocked by the",
+          "title": "All mutex objects locked by a thread shall be explicitly unlocked by the same thread C11",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 22.17",
-          "title": "No thread shall unlock a mutex or call cnd_wait() or cnd_timedwait() for",
+          "title": "No thread shall unlock a mutex or call cnd_wait() or cnd_timedwait() for a mutex it has not locked before C11",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 22.18",
-          "title": "Non-recursive mutexes shall not be recursively locked",
+          "title": "Non-recursive mutexes shall not be recursively locked C11",
           "guideline_type": "rule"
         },
         {
@@ -1268,7 +1243,7 @@
         },
         {
           "id": "Rule 22.20",
-          "title": "Thread-specific storage pointers shall be created before being",
+          "title": "Thread-specific storage pointers shall be created before being accessed C11",
           "guideline_type": "rule"
         }
       ]
@@ -1284,12 +1259,12 @@
         },
         {
           "id": "Rule 23.2",
-          "title": "A generic selection that is not expanded from a macro shall not",
+          "title": "A generic selection that is not expanded from a macro shall not contain potential side effects in the controlling expression",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 23.3",
-          "title": "A generic selection should contain at least one non-default",
+          "title": "A generic selection should contain at least one non-default association",
           "guideline_type": "rule"
         },
         {
@@ -1299,22 +1274,22 @@
         },
         {
           "id": "Rule 23.5",
-          "title": "Section 5: Rules",
+          "title": "A generic selection should not depend on implicit pointer type conversion",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 23.6",
-          "title": "The controlling expression of a generic selection shall have an",
+          "title": "The controlling expression of a generic selection shall have an essential type that matches its standard type",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 23.7",
-          "title": "Advisory A generic selection that is expanded from a macro should evaluate its",
+          "title": "A generic selection that is expanded from a macro should evaluate its argument only once",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 23.8",
-          "title": "A default association shall appear as either the first or the last",
+          "title": "A default association shall appear as either the first or the last association of a generic selection",
           "guideline_type": "rule"
         }
       ]

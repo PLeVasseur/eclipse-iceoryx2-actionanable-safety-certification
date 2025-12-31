@@ -42,7 +42,7 @@
         },
         {
           "id": "Rule 0.2.3",
-          "title": "Advisory Types with limited visibility should be used at least once",
+          "title": "Types with limited visibility should be used at least once",
           "guideline_type": "rule"
         },
         {
@@ -109,7 +109,7 @@
         },
         {
           "id": "Rule 5.7.3",
-          "title": "Required Line-splicing shall not be used in // comments",
+          "title": "Line-splicing shall not be used in // comments",
           "guideline_type": "rule"
         },
         {
@@ -149,7 +149,7 @@
         },
         {
           "id": "Rule 5.13.7",
-          "title": "Required String literals with diCerent encoding pre9xes shall not be concatenated",
+          "title": "String literals with diCerent encoding pre9xes shall not be concatenated",
           "guideline_type": "rule"
         }
       ]
@@ -311,7 +311,7 @@
         },
         {
           "id": "Rule 7.11.3",
-          "title": "Required A conversion from function type to pointer-to-function type shall only",
+          "title": "A conversion from function type to pointer-to-function type shall only",
           "guideline_type": "rule"
         }
       ]
@@ -352,7 +352,7 @@
         },
         {
           "id": "Rule 8.2.4",
-          "title": "Required Casts shall not be performed between a pointer to function and any",
+          "title": "Casts shall not be performed between a pointer to function and any",
           "guideline_type": "rule"
         },
         {
@@ -407,7 +407,7 @@
         },
         {
           "id": "Rule 8.7.2",
-          "title": "Required Subtraction between pointers shall only be applied to pointers that",
+          "title": "Subtraction between pointers shall only be applied to pointers that",
           "guideline_type": "rule"
         },
         {
@@ -468,7 +468,7 @@
         },
         {
           "id": "Rule 9.5.2",
-          "title": "Required A for-range-initializer shall contain at most one function call",
+          "title": "A for-range-initializer shall contain at most one function call",
           "guideline_type": "rule"
         },
         {
@@ -555,12 +555,12 @@
         },
         {
           "id": "Rule 11.6.2",
-          "title": "Mandatory The value of an object must not be read before it has been set",
+          "title": "The value of an object must not be read before it has been set",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 11.6.3",
-          "title": "Required Within an enumerator list, the value of an implicitly-speci9ed",
+          "title": "Within an enumerator list, the value of an implicitly-speci9ed",
           "guideline_type": "rule"
         }
       ]
@@ -773,7 +773,7 @@
         },
         {
           "id": "Rule 19.0.3",
-          "title": "Advisory #include directives should only be preceded by preprocessor directives",
+          "title": "#include directives should only be preceded by preprocessor directives",
           "guideline_type": "rule"
         },
         {
@@ -889,7 +889,7 @@
         },
         {
           "id": "Rule 21.10.2",
-          "title": "Required The standard header 9le <csetjmp> shall not be used",
+          "title": "The standard header 9le <csetjmp> shall not be used",
           "guideline_type": "rule"
         },
         {
