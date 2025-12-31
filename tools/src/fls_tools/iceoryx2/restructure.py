@@ -15,19 +15,19 @@ Options:
     --chapter N Only process chapter N (for testing)
 """
 
+import argparse
 import json
 import os
 import sys
-import argparse
-from pathlib import Path
 from datetime import date
+from pathlib import Path
 from typing import Any
 
+from fls_tools.shared import get_fls_section_mapping_path, get_iceoryx2_fls_dir
+
 # Paths
-SCRIPT_DIR = Path(__file__).parent
-ROOT_DIR = SCRIPT_DIR.parent
-MAPPING_FILE = SCRIPT_DIR / "fls_section_mapping.json"
-FLS_MAPPING_DIR = ROOT_DIR / "iceoryx2-fls-mapping"
+MAPPING_FILE = get_fls_section_mapping_path()
+FLS_MAPPING_DIR = get_iceoryx2_fls_dir()
 BACKUP_DIR = FLS_MAPPING_DIR / "backup"
 
 # Chapter file name mapping

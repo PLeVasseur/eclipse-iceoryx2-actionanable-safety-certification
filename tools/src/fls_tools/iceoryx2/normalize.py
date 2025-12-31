@@ -13,18 +13,19 @@ This script:
 import json
 import re
 import sys
-from pathlib import Path
 from datetime import date
+from pathlib import Path
 from typing import Any, Dict, List, Optional, Union
 
-# Load FLS section mapping
-SCRIPT_DIR = Path(__file__).parent
-FLS_MAPPING_PATH = SCRIPT_DIR / "fls_section_mapping.json"
+from fls_tools.shared import get_fls_section_mapping_path, load_json
+
 
 def load_fls_mapping() -> Dict:
     """Load the FLS section mapping file."""
-    with open(FLS_MAPPING_PATH) as f:
-        return json.load(f)
+    data = load_json(get_fls_section_mapping_path())
+    if data is None:
+        raise FileNotFoundError("FLS section mapping not found")
+    return data
 
 FLS_MAPPING = load_fls_mapping()
 
@@ -559,9 +560,9 @@ def normalize_file(input_path: Path, output_path: Path) -> Dict:
 
 def main():
     """Main entry point."""
-    # Use project root relative path
-    project_root = Path(__file__).parent.parent
-    mapping_dir = project_root / "iceoryx2-fls-mapping"
+    from fls_tools.shared import get_project_root, get_iceoryx2_fls_dir
+    
+    mapping_dir = get_iceoryx2_fls_dir()
     
     # Find all JSON files (excluding schema and backup)
     json_files = sorted(mapping_dir.glob("fls_chapter*.json"))

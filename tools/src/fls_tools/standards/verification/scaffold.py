@@ -23,6 +23,13 @@ from datetime import date
 from pathlib import Path
 from typing import Any
 
+from fls_tools.shared import (
+    get_project_root,
+    get_misra_c_mappings_path,
+    get_misra_c_similarity_path,
+    get_verification_progress_path,
+)
+
 
 def load_json(path: Path) -> dict[str, Any]:
     """Load JSON file."""
@@ -332,10 +339,8 @@ def main() -> int:
     parser.add_argument(
         "--output",
         type=Path,
-        default=Path(__file__).parent.parent
-        / "coding-standards-fls-mapping"
-        / "verification_progress.json",
-        help="Output path (default: ../coding-standards-fls-mapping/verification_progress.json)",
+        default=None,  # Will be set to get_verification_progress_path() in main
+        help="Output path (default: coding-standards-fls-mapping/verification_progress.json)",
     )
     parser.add_argument(
         "--force",
@@ -355,17 +360,14 @@ def main() -> int:
 
     args = parser.parse_args()
 
+    # Set default output path if not specified
+    root = get_project_root()
+    if args.output is None:
+        args.output = get_verification_progress_path(root)
+
     # Load required data
-    tools_dir = Path(__file__).parent
-    mappings_path = (
-        tools_dir.parent
-        / "coding-standards-fls-mapping"
-        / "mappings"
-        / "misra_c_to_fls.json"
-    )
-    similarity_path = (
-        tools_dir.parent / "embeddings" / "similarity" / "misra_c_to_fls.json"
-    )
+    mappings_path = get_misra_c_mappings_path(root)
+    similarity_path = get_misra_c_similarity_path(root)
 
     if not mappings_path.exists():
         print(f"Error: Mappings file not found: {mappings_path}", file=sys.stderr)

@@ -46,13 +46,17 @@ from typing import Any, Dict, List, Optional, Set, Tuple
 
 import jsonschema
 
+from fls_tools.shared import (
+    get_project_root,
+    get_iceoryx2_fls_dir,
+    get_fls_section_mapping_path,
+    get_cache_dir,
+)
 
-SCRIPT_DIR = Path(__file__).parent
-ROOT_DIR = SCRIPT_DIR.parent
-MAPPING_DIR = ROOT_DIR / "iceoryx2-fls-mapping"
+MAPPING_DIR = get_iceoryx2_fls_dir()
 SCHEMA_PATH = MAPPING_DIR / "schema.json"
-FLS_MAPPING_PATH = SCRIPT_DIR / "fls_section_mapping.json"
-ICEORYX2_CACHE = ROOT_DIR / "cache" / "repos" / "iceoryx2"
+FLS_MAPPING_PATH = get_fls_section_mapping_path()
+ICEORYX2_CACHE = get_cache_dir() / "repos" / "iceoryx2"
 
 # Top-level keys in chapter JSON that are not FLS sections
 # These are valid per schema but not part of the FLS hierarchy
@@ -1337,7 +1341,7 @@ def main() -> int:
     print("\n" + report)
 
     # Write report to file
-    report_path = ROOT_DIR / "validation_report.txt"
+    report_path = get_project_root() / "validation_report.txt"
     with open(report_path, "w") as f:
         f.write(report)
     print(f"\nReport saved to: {report_path}")

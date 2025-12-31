@@ -22,6 +22,8 @@ import sys
 from pathlib import Path
 from typing import NamedTuple
 
+from fls_tools.shared import get_project_root, get_cache_dir
+
 
 class Version(NamedTuple):
     """Semantic version tuple."""
@@ -54,19 +56,9 @@ ICEORYX2_REPO = "https://github.com/eclipse-iceoryx/iceoryx2.git"
 FLS_REPO = "https://github.com/rust-lang/fls.git"
 
 
-def get_script_dir() -> Path:
-    """Get the directory containing this script."""
-    return Path(__file__).parent.resolve()
-
-
-def get_project_root() -> Path:
-    """Get the project root directory (parent of tools/)."""
-    return get_script_dir().parent
-
-
-def get_cache_dir() -> Path:
+def get_repos_cache_dir() -> Path:
     """Get the cache directory for cloned repositories."""
-    return get_project_root() / "cache" / "repos"
+    return get_cache_dir() / "repos"
 
 
 def run_git(
@@ -362,7 +354,7 @@ Examples:
     print(f"  Will clone: {', '.join(v.tag for v in versions)}")
 
     # Clone repositories
-    cache_dir = get_cache_dir()
+    cache_dir = get_repos_cache_dir()
     shallow = not args.full
 
     print("\nCloning iceoryx2 versions...")

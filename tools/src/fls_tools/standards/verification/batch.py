@@ -1,0 +1,503 @@
+#!/usr/bin/env python3
+"""
+verify_batch.py - Phase 1: Data Gathering for MISRA to FLS Verification
+
+This script extracts all relevant data for a batch of MISRA guidelines:
+- Deep search matches using all embedding types (default)
+- Similarity matches (section and paragraph) above thresholds
+- MISRA rationale from extracted text
+- Wide-shot FLS content (matched sections + siblings + all rubrics)
+- Current mapping state
+
+By default, uses deep search (search_fls_deep.py) which searches using:
+- Guideline-level embedding
+- Query-level embeddings (parsed concerns)
+- Rationale-level embedding
+- Amplification-level embedding
+
+Use --shallow to use original single-embedding search.
+
+Two output modes:
+- LLM mode: Full JSON optimized for LLM consumption
+- Human mode: Markdown report with JSON snippets for quick review
+
+Usage:
+    uv run python verification/verify_batch.py --batch 3 --mode llm --output cache/verification/batch3.json
+    uv run python verification/verify_batch.py --batch 3 --mode human --output cache/verification/batch3.md
+    uv run python verification/verify_batch.py --batch 3 --shallow  # Use original search
+"""
+
+import argparse
+import json
+import sys
+from datetime import date
+from pathlib import Path
+from typing import Any
+
+from fls_tools.shared import (
+    get_project_root,
+    get_fls_dir,
+    get_fls_index_path,
+    get_fls_chapter_path,
+    get_fls_section_mapping_path,
+    get_misra_c_mappings_path,
+    get_misra_c_similarity_path,
+    get_misra_c_extracted_text_path,
+    get_verification_progress_path,
+    CATEGORY_NAMES,
+    DEFAULT_SECTION_THRESHOLD,
+    DEFAULT_PARAGRAPH_THRESHOLD,
+)
+
+# Deep search will be imported dynamically to avoid circular imports
+# and to allow --shallow mode without loading embedding models
+
+
+def load_json(path: Path, description: str) -> dict:
+    """Load a JSON file with error handling."""
+    if not path.exists():
+        print(f"ERROR: {description} not found: {path}", file=sys.stderr)
+        sys.exit(1)
+    with open(path) as f:
+        return json.load(f)
+
+
+def load_all_data(root: Path) -> dict:
+    """Load all required data sources."""
+    data = {}
+    
+    # Required files - fail if missing
+    data["mappings"] = load_json(
+        get_misra_c_mappings_path(root),
+        "MISRA C to FLS mappings"
+    )
+    
+    data["similarity"] = load_json(
+        get_misra_c_similarity_path(root),
+        "Similarity results"
+    )
+    
+    data["progress"] = load_json(
+        get_verification_progress_path(root),
+        "Verification progress"
+    )
+    
+    # MISRA extracted text - required, fail immediately if missing
+    misra_text_path = get_misra_c_extracted_text_path(root)
+    if not misra_text_path.exists():
+        print("ERROR: MISRA extracted text not found.", file=sys.stderr)
+        print(f"       Expected at: {misra_text_path}", file=sys.stderr)
+        print("       Run the MISRA text extraction first.", file=sys.stderr)
+        sys.exit(1)
+    data["misra_text"] = load_json(misra_text_path, "MISRA extracted text")
+    
+    # FLS chapter files
+    fls_dir = get_fls_dir(root)
+    data["fls_chapters"] = {}
+    data["fls_index"] = load_json(get_fls_index_path(root), "FLS index")
+    
+    for chapter_info in data["fls_index"]["chapters"]:
+        chapter_num = chapter_info["chapter"]
+        chapter_path = get_fls_chapter_path(root, chapter_num)
+        if chapter_path.exists():
+            data["fls_chapters"][chapter_num] = load_json(chapter_path, f"FLS chapter {chapter_num}")
+    
+    # FLS section mapping
+    data["fls_section_mapping"] = load_json(
+        get_fls_section_mapping_path(root),
+        "FLS section mapping"
+    )
+    
+    return data
+
+
+def get_batch_guidelines(data: dict, batch_id: int) -> list[str]:
+    """Get the list of guideline IDs for a specific batch."""
+    for batch in data["progress"]["batches"]:
+        if batch["batch_id"] == batch_id:
+            return [g["guideline_id"] for g in batch["guidelines"]]
+    
+    print(f"ERROR: Batch {batch_id} not found in verification_progress.json", file=sys.stderr)
+    sys.exit(1)
+
+
+def get_mapping(data: dict, guideline_id: str) -> dict:
+    """Get the current mapping for a guideline."""
+    for m in data["mappings"]["mappings"]:
+        if m["guideline_id"] == guideline_id:
+            return m
+    return {}
+
+
+def get_misra_rationale(data: dict, guideline_id: str) -> str:
+    """Get the MISRA rationale text for a guideline."""
+    for g in data["misra_text"]["guidelines"]:
+        if g["guideline_id"] == guideline_id:
+            return g.get("rationale", "")
+    return ""
+
+
+def get_similarity_data(data: dict, guideline_id: str, section_threshold: float, paragraph_threshold: float) -> dict:
+    """Get filtered similarity matches for a guideline."""
+    sim = data["similarity"]["results"].get(guideline_id, {})
+    
+    section_matches = [
+        m for m in sim.get("top_matches", [])
+        if m["similarity"] >= section_threshold
+    ]
+    
+    paragraph_matches = [
+        m for m in sim.get("top_paragraph_matches", [])
+        if m["similarity"] >= paragraph_threshold
+    ]
+    
+    return {
+        "top_section_matches": section_matches,
+        "top_paragraph_matches": paragraph_matches,
+    }
+
+
+def find_section_in_chapters(data: dict, fls_id: str) -> dict | None:
+    """Find a section by FLS ID across all chapters."""
+    for chapter_num, chapter in data["fls_chapters"].items():
+        for section in chapter.get("sections", []):
+            if section.get("fls_id") == fls_id:
+                return {
+                    "chapter": chapter_num,
+                    "section": section,
+                    "chapter_fls_id": chapter.get("fls_id"),
+                }
+    return None
+
+
+def get_sibling_sections(data: dict, section_info: dict) -> list[dict]:
+    """Get sibling sections (same parent) for a section."""
+    if not section_info:
+        return []
+    
+    chapter_num = section_info["chapter"]
+    section = section_info["section"]
+    parent_fls_id = section.get("parent_fls_id")
+    section_fls_id = section.get("fls_id")
+    
+    if not parent_fls_id:
+        return []
+    
+    siblings = []
+    chapter = data["fls_chapters"].get(chapter_num, {})
+    
+    for s in chapter.get("sections", []):
+        if s.get("parent_fls_id") == parent_fls_id and s.get("fls_id") != section_fls_id:
+            siblings.append({
+                "chapter": chapter_num,
+                "section": s,
+            })
+    
+    return siblings
+
+
+def format_section_content(section_info: dict, match_source: str) -> dict:
+    """Format a section for the batch report."""
+    section = section_info["section"]
+    
+    # Format rubrics
+    rubrics = {}
+    for cat_key, cat_data in section.get("rubrics", {}).items():
+        cat_code = int(cat_key)
+        cat_name = CATEGORY_NAMES.get(cat_code, f"unknown_{cat_code}")
+        rubrics[cat_key] = {
+            "category_name": cat_name,
+            "paragraphs": cat_data.get("paragraphs", {}),
+        }
+    
+    return {
+        "fls_id": section.get("fls_id"),
+        "title": section.get("title"),
+        "chapter": section_info["chapter"],
+        "fls_section": section.get("fls_section", ""),
+        "content": section.get("content", ""),
+        "match_source": match_source,
+        "rubrics": rubrics,
+    }
+
+
+def extract_fls_content(data: dict, similarity_data: dict) -> dict:
+    """
+    Extract wide-shot FLS content for matched sections plus siblings.
+    
+    Strategy:
+    1. Collect all unique section FLS IDs from section matches and paragraph matches
+    2. For each matched section, include the section + all rubrics
+    3. Unconditionally include sibling sections (same parent)
+    """
+    sections_to_include = {}  # fls_id -> (section_info, match_source)
+    
+    # Collect from section matches
+    for match in similarity_data.get("top_section_matches", []):
+        fls_id = match["fls_id"]
+        if fls_id not in sections_to_include:
+            section_info = find_section_in_chapters(data, fls_id)
+            if section_info:
+                sections_to_include[fls_id] = (section_info, "section_match")
+    
+    # Collect from paragraph matches (use section_fls_id)
+    for match in similarity_data.get("top_paragraph_matches", []):
+        section_fls_id = match.get("section_fls_id")
+        if section_fls_id and section_fls_id not in sections_to_include:
+            section_info = find_section_in_chapters(data, section_fls_id)
+            if section_info:
+                sections_to_include[section_fls_id] = (section_info, "paragraph_match")
+    
+    # Add siblings for all matched sections
+    siblings_to_add = []
+    for fls_id, (section_info, _) in list(sections_to_include.items()):
+        siblings = get_sibling_sections(data, section_info)
+        for sibling in siblings:
+            sibling_fls_id = sibling["section"].get("fls_id")
+            if sibling_fls_id and sibling_fls_id not in sections_to_include:
+                siblings_to_add.append((sibling_fls_id, sibling, "sibling"))
+    
+    for sibling_fls_id, sibling_info, source in siblings_to_add:
+        if sibling_fls_id not in sections_to_include:
+            sections_to_include[sibling_fls_id] = (sibling_info, source)
+    
+    # Format all sections
+    formatted_sections = []
+    for fls_id, (section_info, match_source) in sections_to_include.items():
+        formatted_sections.append(format_section_content(section_info, match_source))
+    
+    # Sort by chapter and section number
+    formatted_sections.sort(key=lambda s: (s["chapter"], s.get("fls_section", "")))
+    
+    return {"sections": formatted_sections}
+
+
+def build_guideline_entry(
+    data: dict,
+    guideline_id: str,
+    section_threshold: float,
+    paragraph_threshold: float,
+) -> dict:
+    """Build a complete guideline entry for the batch report."""
+    mapping = get_mapping(data, guideline_id)
+    misra_rationale = get_misra_rationale(data, guideline_id)
+    similarity_data = get_similarity_data(data, guideline_id, section_threshold, paragraph_threshold)
+    fls_content = extract_fls_content(data, similarity_data)
+    
+    return {
+        "guideline_id": guideline_id,
+        "guideline_title": mapping.get("guideline_title", ""),
+        "current_state": {
+            "applicability_all_rust": mapping.get("applicability_all_rust"),
+            "applicability_safe_rust": mapping.get("applicability_safe_rust"),
+            "confidence": mapping.get("confidence"),
+            "fls_rationale_type": mapping.get("fls_rationale_type"),
+            "accepted_matches": mapping.get("accepted_matches", []),
+            "rejected_matches": mapping.get("rejected_matches", []),
+            "notes": mapping.get("notes"),
+        },
+        "misra_rationale": misra_rationale,
+        "similarity_data": similarity_data,
+        "fls_content": fls_content,
+        "verification_decision": None,  # To be filled by LLM in Phase 2
+    }
+
+
+def build_batch_report(
+    data: dict,
+    batch_id: int,
+    session_id: int,
+    section_threshold: float,
+    paragraph_threshold: float,
+) -> dict:
+    """Build the complete batch report."""
+    guideline_ids = get_batch_guidelines(data, batch_id)
+    
+    guidelines = []
+    for gid in guideline_ids:
+        entry = build_guideline_entry(data, gid, section_threshold, paragraph_threshold)
+        guidelines.append(entry)
+    
+    return {
+        "batch_id": batch_id,
+        "session_id": session_id,
+        "generated_date": date.today().isoformat(),
+        "standard": "misra_c",
+        "thresholds": {
+            "section": section_threshold,
+            "paragraph": paragraph_threshold,
+        },
+        "guidelines": guidelines,
+        "applicability_changes": [],  # To be populated in Phase 2
+        "summary": {
+            "total_guidelines": len(guidelines),
+            "verified_count": 0,
+            "applicability_changes_proposed": 0,
+            "applicability_changes_approved": 0,
+        },
+    }
+
+
+def generate_human_report(report: dict) -> str:
+    """Generate a human-readable Markdown report."""
+    lines = []
+    
+    lines.append(f"# Batch {report['batch_id']} Verification Report")
+    lines.append(f"")
+    lines.append(f"**Session:** {report['session_id']}")
+    lines.append(f"**Generated:** {report['generated_date']}")
+    lines.append(f"**Standard:** {report['standard']}")
+    lines.append(f"**Thresholds:** section={report['thresholds']['section']}, paragraph={report['thresholds']['paragraph']}")
+    lines.append(f"**Total Guidelines:** {report['summary']['total_guidelines']}")
+    lines.append(f"")
+    
+    # Summary table
+    lines.append("## Guidelines Summary")
+    lines.append("")
+    lines.append("| # | Guideline | Title | Appl (all) | Appl (safe) | Confidence | Section Matches | Paragraph Matches |")
+    lines.append("|---|-----------|-------|------------|-------------|------------|-----------------|-------------------|")
+    
+    for i, g in enumerate(report["guidelines"], 1):
+        gid = g["guideline_id"]
+        title = g["guideline_title"][:40] + "..." if len(g["guideline_title"]) > 40 else g["guideline_title"]
+        appl_all = g["current_state"].get("applicability_all_rust", "N/A")
+        appl_safe = g["current_state"].get("applicability_safe_rust", "N/A")
+        conf = g["current_state"].get("confidence", "N/A")
+        sec_matches = len(g["similarity_data"]["top_section_matches"])
+        para_matches = len(g["similarity_data"]["top_paragraph_matches"])
+        
+        lines.append(f"| {i} | {gid} | {title} | {appl_all} | {appl_safe} | {conf} | {sec_matches} | {para_matches} |")
+    
+    lines.append("")
+    
+    # Detailed sections for each guideline
+    lines.append("## Guideline Details")
+    lines.append("")
+    
+    for g in report["guidelines"]:
+        lines.append(f"### {g['guideline_id']}: {g['guideline_title']}")
+        lines.append("")
+        
+        # Current state
+        lines.append("**Current State:**")
+        lines.append(f"- Applicability (all Rust): `{g['current_state'].get('applicability_all_rust')}`")
+        lines.append(f"- Applicability (safe Rust): `{g['current_state'].get('applicability_safe_rust')}`")
+        lines.append(f"- Confidence: `{g['current_state'].get('confidence')}`")
+        lines.append(f"- FLS Rationale Type: `{g['current_state'].get('fls_rationale_type')}`")
+        lines.append("")
+        
+        # MISRA rationale (truncated for human report)
+        if g["misra_rationale"]:
+            rationale = g["misra_rationale"][:500]
+            if len(g["misra_rationale"]) > 500:
+                rationale += "..."
+            lines.append("**MISRA Rationale:**")
+            lines.append(f"> {rationale}")
+            lines.append("")
+        
+        # Top matches
+        if g["similarity_data"]["top_section_matches"]:
+            lines.append("**Top Section Matches:**")
+            for m in g["similarity_data"]["top_section_matches"][:5]:
+                lines.append(f"- `{m['fls_id']}`: {m['similarity']:.3f} - {m['title']}")
+            lines.append("")
+        
+        if g["similarity_data"]["top_paragraph_matches"]:
+            lines.append("**Top Paragraph Matches:**")
+            for m in g["similarity_data"]["top_paragraph_matches"][:5]:
+                preview = m["text_preview"][:80] + "..." if len(m["text_preview"]) > 80 else m["text_preview"]
+                lines.append(f"- `{m['fls_id']}`: {m['similarity']:.3f} [{m['category_name']}] {preview}")
+            lines.append("")
+        
+        # FLS content summary
+        fls_sections = g["fls_content"]["sections"]
+        if fls_sections:
+            lines.append(f"**FLS Sections Extracted:** {len(fls_sections)}")
+            for s in fls_sections[:10]:
+                source_badge = f"[{s['match_source']}]"
+                lines.append(f"- `{s['fls_id']}`: {s['title']} {source_badge}")
+            if len(fls_sections) > 10:
+                lines.append(f"- ... and {len(fls_sections) - 10} more")
+            lines.append("")
+        
+        lines.append("---")
+        lines.append("")
+    
+    return "\n".join(lines)
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        description="Phase 1: Data gathering for MISRA to FLS verification"
+    )
+    parser.add_argument(
+        "--batch",
+        type=int,
+        required=True,
+        help="Batch number from verification_progress.json",
+    )
+    parser.add_argument(
+        "--session",
+        type=int,
+        default=1,
+        help="Session ID for this verification run",
+    )
+    parser.add_argument(
+        "--mode",
+        choices=["llm", "human"],
+        default="llm",
+        help="Output mode: llm (full JSON) or human (Markdown summary)",
+    )
+    parser.add_argument(
+        "--output",
+        type=str,
+        help="Output file path (defaults to stdout for human mode)",
+    )
+    parser.add_argument(
+        "--section-threshold",
+        type=float,
+        default=DEFAULT_SECTION_THRESHOLD,
+        help=f"Minimum section similarity score (default: {DEFAULT_SECTION_THRESHOLD})",
+    )
+    parser.add_argument(
+        "--paragraph-threshold",
+        type=float,
+        default=DEFAULT_PARAGRAPH_THRESHOLD,
+        help=f"Minimum paragraph similarity score (default: {DEFAULT_PARAGRAPH_THRESHOLD})",
+    )
+    
+    args = parser.parse_args()
+    
+    root = get_project_root()
+    
+    print(f"Loading data from {root}...", file=sys.stderr)
+    data = load_all_data(root)
+    
+    print(f"Building batch {args.batch} report...", file=sys.stderr)
+    report = build_batch_report(
+        data,
+        args.batch,
+        args.session,
+        args.section_threshold,
+        args.paragraph_threshold,
+    )
+    
+    if args.mode == "llm":
+        output = json.dumps(report, indent=2)
+    else:
+        output = generate_human_report(report)
+    
+    if args.output:
+        output_path = Path(args.output)
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        with open(output_path, "w") as f:
+            f.write(output)
+        print(f"Report written to {output_path}", file=sys.stderr)
+    else:
+        print(output)
+    
+    print(f"Done. Processed {len(report['guidelines'])} guidelines.", file=sys.stderr)
+
+
+if __name__ == "__main__":
+    main()

@@ -1,7 +1,7 @@
 [project]
-name = "iceoryx2-fls-tools"
+name = "fls-tools"
 version = "0.1.0"
-description = "Tools for analyzing iceoryx2 FLS mappings across versions"
+description = "Tools for FLS mapping: iceoryx2 documentation and coding standards verification"
 requires-python = ">=3.10"
 dependencies = [
     "jsonschema>=4.0",
@@ -17,6 +17,51 @@ dev = [
     "ruff>=0.1.0",
     "pytest>=7.0",
 ]
+
+[project.scripts]
+# Pipeline 1: iceoryx2 -> FLS
+clone-iceoryx2 = "fls_tools.iceoryx2.clone:main"
+extract-fls-sections = "fls_tools.iceoryx2.extract:main"
+normalize-fls = "fls_tools.iceoryx2.normalize:main"
+restructure-fls = "fls_tools.iceoryx2.restructure:main"
+update-fls-counts = "fls_tools.iceoryx2.update:main"
+validate-fls = "fls_tools.iceoryx2.validate:main"
+
+# Pipeline 2: Standards -> FLS (extraction)
+extract-misra-rules = "fls_tools.standards.extraction.misra:main"
+scrape-cert-rules = "fls_tools.standards.extraction.cert:main"
+
+# Pipeline 2: Standards -> FLS (embeddings)
+extract-fls-content = "fls_tools.standards.embeddings.extract_fls:main"
+extract-misra-text = "fls_tools.standards.embeddings.extract_misra:main"
+generate-embeddings = "fls_tools.standards.embeddings.generate:main"
+compute-similarity = "fls_tools.standards.embeddings.similarity:main"
+orchestrate-embeddings = "fls_tools.standards.embeddings.orchestrate:main"
+
+# Pipeline 2: Standards -> FLS (mapping)
+map-misra-to-fls = "fls_tools.standards.mapping.generate:main"
+sync-fls-mapping = "fls_tools.standards.mapping.sync:main"
+
+# Pipeline 2: Standards -> FLS (verification)
+verify-batch = "fls_tools.standards.verification.batch:main"
+apply-verification = "fls_tools.standards.verification.apply:main"
+check-progress = "fls_tools.standards.verification.progress:main"
+search-fls = "fls_tools.standards.verification.search:main"
+search-fls-deep = "fls_tools.standards.verification.search_deep:main"
+recompute-similarity = "fls_tools.standards.verification.recompute:main"
+scaffold-progress = "fls_tools.standards.verification.scaffold:main"
+
+# Pipeline 2: Standards -> FLS (validation)
+validate-standards = "fls_tools.standards.validation.standards:main"
+validate-synthetic-ids = "fls_tools.standards.validation.synthetic:main"
+
+# Analysis
+analyze-coverage = "fls_tools.analysis.coverage:main"
+review-mappings = "fls_tools.analysis.review:main"
+
+[build-system]
+requires = ["uv_build>=0.9.21,<0.10.0"]
+build-backend = "uv_build"
 
 [tool.ruff]
 line-length = 100

@@ -49,28 +49,25 @@ from pathlib import Path
 import numpy as np
 
 
-# Category code to human-readable name mapping
-CATEGORY_NAMES = {
-    0: "section",
-    -1: "general",
-    -2: "legality_rules",
-    -3: "dynamic_semantics",
-    -4: "undefined_behavior",
-    -5: "implementation_requirements",
-    -6: "implementation_permissions",
-    -7: "examples",
-    -8: "syntax",
-}
-
-
-def get_project_root() -> Path:
-    """Get the project root directory."""
-    return Path(__file__).parent.parent.parent
+from fls_tools.shared import (
+    get_project_root,
+    get_fls_dir,
+    get_fls_index_path,
+    get_misra_embeddings_dir,
+    get_misra_c_extracted_text_path,
+    get_fls_section_embeddings_path,
+    get_fls_paragraph_embeddings_path,
+    get_misra_c_embeddings_path,
+    get_misra_c_query_embeddings_path,
+    get_misra_c_rationale_embeddings_path,
+    get_misra_c_amplification_embeddings_path,
+    CATEGORY_NAMES,
+)
 
 
 def load_misra_text(project_root: Path) -> list[dict]:
     """Load MISRA extracted text from cache."""
-    cache_path = project_root / "cache" / "misra_c_extracted_text.json"
+    cache_path = get_misra_c_extracted_text_path(project_root)
     if not cache_path.exists():
         raise FileNotFoundError(
             f"MISRA text not found at {cache_path}. "
@@ -88,8 +85,8 @@ def load_fls_sections(project_root: Path) -> list[dict]:
     The FLS content is split into per-chapter JSON files for easier
     management. This function loads all chapters and concatenates sections.
     """
-    fls_dir = project_root / "embeddings" / "fls"
-    index_path = fls_dir / "index.json"
+    fls_dir = get_fls_dir(project_root)
+    index_path = get_fls_index_path(project_root)
     
     if not index_path.exists():
         raise FileNotFoundError(
@@ -394,7 +391,7 @@ def main():
     print("\nGenerating MISRA embeddings...")
     misra_embeddings = generate_embeddings(misra_texts, model)
     
-    misra_output = project_root / "embeddings" / "misra_c" / "embeddings.pkl"
+    misra_output = get_misra_c_embeddings_path(project_root)
     misra_output.parent.mkdir(parents=True, exist_ok=True)
     
     with open(misra_output, 'wb') as f:
@@ -423,7 +420,7 @@ def main():
             print("\nGenerating MISRA query embeddings...")
             query_embeddings = generate_embeddings(query_texts, model)
             
-            query_output = project_root / "embeddings" / "misra_c" / "query_embeddings.pkl"
+            query_output = get_misra_c_query_embeddings_path(project_root)
             
             with open(query_output, 'wb') as f:
                 pickle.dump({
@@ -457,7 +454,7 @@ def main():
             print("\nGenerating MISRA rationale embeddings...")
             rationale_embeddings = generate_embeddings(rationale_texts, model)
             
-            rationale_output = project_root / "embeddings" / "misra_c" / "rationale_embeddings.pkl"
+            rationale_output = get_misra_c_rationale_embeddings_path(project_root)
             
             with open(rationale_output, 'wb') as f:
                 pickle.dump({
@@ -490,7 +487,7 @@ def main():
             print("\nGenerating MISRA amplification embeddings...")
             amplification_embeddings = generate_embeddings(amplification_texts, model)
             
-            amplification_output = project_root / "embeddings" / "misra_c" / "amplification_embeddings.pkl"
+            amplification_output = get_misra_c_amplification_embeddings_path(project_root)
             
             with open(amplification_output, 'wb') as f:
                 pickle.dump({
@@ -525,7 +522,7 @@ def main():
     print("\nGenerating FLS section embeddings...")
     fls_section_embeddings = generate_embeddings(fls_section_texts, model)
     
-    fls_section_output = project_root / "embeddings" / "fls" / "embeddings.pkl"
+    fls_section_output = get_fls_section_embeddings_path(project_root)
     fls_section_output.parent.mkdir(parents=True, exist_ok=True)
     
     with open(fls_section_output, 'wb') as f:
@@ -566,7 +563,7 @@ def main():
         print("\nGenerating FLS paragraph embeddings...")
         fls_para_embeddings = generate_embeddings(fls_para_texts, model)
         
-        fls_para_output = project_root / "embeddings" / "fls" / "paragraph_embeddings.pkl"
+        fls_para_output = get_fls_paragraph_embeddings_path(project_root)
         
         with open(fls_para_output, 'wb') as f:
             pickle.dump({

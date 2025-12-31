@@ -20,10 +20,10 @@ import sys
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
-SCRIPT_DIR = Path(__file__).parent
-ROOT_DIR = SCRIPT_DIR.parent
-MAPPING_DIR = ROOT_DIR / "iceoryx2-fls-mapping"
-ICEORYX2_REPO = ROOT_DIR / "cache" / "repos" / "iceoryx2" / "v0.8.0"
+from fls_tools.shared import get_project_root, get_iceoryx2_fls_dir, get_cache_dir
+
+MAPPING_DIR = get_iceoryx2_fls_dir()
+ICEORYX2_REPO = get_cache_dir() / "repos" / "iceoryx2" / "v0.8.0"
 
 # Minimum samples required
 MIN_SAMPLES = 3

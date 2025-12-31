@@ -51,23 +51,23 @@ This document describes the tools, workflows, and data structures for two relate
 
 Documents how iceoryx2 codebase uses Rust language constructs as defined by the FLS.
 
-| Script | Input | Output | Description |
-|--------|-------|--------|-------------|
-| `clone_iceoryx2.py` | GitHub | `cache/repos/iceoryx2/v{VERSION}/` | Clone iceoryx2 at specific version tags |
-| `extract_fls_sections.py` | FLS RST files | `fls_section_mapping.json` | Extract FLS section hierarchy |
-| `restructure_fls_json.py` | `fls_section_mapping.json` | `iceoryx2-fls-mapping/*.json` | Generate chapter JSON skeletons |
-| `normalize_fls_json.py` | Chapter JSON files | Normalized chapter JSON | Normalize field names and structure |
-| `update_fls_counts_samples.py` | iceoryx2 source + chapter JSON | Updated chapter JSON | Add counts and code samples |
-| `validate_fls_json.py` | `iceoryx2-fls-mapping/*.json` | Validation report | Schema, coverage, sample validation |
+| Command | Input | Output | Description |
+|---------|-------|--------|-------------|
+| `clone-iceoryx2` | GitHub | `cache/repos/iceoryx2/v{VERSION}/` | Clone iceoryx2 at specific version tags |
+| `extract-fls-sections` | FLS RST files | `fls_section_mapping.json` | Extract FLS section hierarchy |
+| `restructure-fls` | `fls_section_mapping.json` | `iceoryx2-fls-mapping/*.json` | Generate chapter JSON skeletons |
+| `normalize-fls` | Chapter JSON files | Normalized chapter JSON | Normalize field names and structure |
+| `update-fls-counts` | iceoryx2 source + chapter JSON | Updated chapter JSON | Add counts and code samples |
+| `validate-fls` | `iceoryx2-fls-mapping/*.json` | Validation report | Schema, coverage, sample validation |
 
 **Run Pipeline 1:**
 ```bash
 cd tools
-uv run python clone_iceoryx2.py --from 0.7.0 --to 0.8.0
-uv run python extract_fls_sections.py
-uv run python normalize_fls_json.py
-uv run python update_fls_counts_samples.py
-uv run python validate_fls_json.py
+uv run clone-iceoryx2 --from 0.7.0 --to 0.8.0
+uv run extract-fls-sections
+uv run normalize-fls
+uv run update-fls-counts
+uv run validate-fls
 ```
 
 ### Pipeline 2: Coding Standards Mapping
@@ -76,63 +76,64 @@ Maps MISRA C/C++ and CERT C/C++ guidelines to FLS sections using semantic simila
 
 **Standards Extraction:**
 
-| Script | Input | Output | Description |
-|--------|-------|--------|-------------|
-| `extract_misra_rules.py` | MISRA PDF | `standards/misra_c_2025.json` | Extract MISRA rule listings |
-| `scrape_cert_rules.py` | CERT Wiki | `standards/cert_*.json` | Scrape CERT rule listings |
+| Command | Input | Output | Description |
+|---------|-------|--------|-------------|
+| `extract-misra-rules` | MISRA PDF | `standards/misra_c_2025.json` | Extract MISRA rule listings |
+| `scrape-cert-rules` | CERT Wiki | `standards/cert_*.json` | Scrape CERT rule listings |
 
-**Embedding Pipeline (in `tools/embeddings/`):**
+**Embedding Pipeline:**
 
-| Script | Input | Output | Description |
-|--------|-------|--------|-------------|
-| `extract_fls_content.py` | FLS RST files | `embeddings/fls/chapter_NN.json`, `index.json` | Extract FLS with rubric-categorized paragraphs |
-| `extract_misra_text.py` | MISRA PDF | `cache/misra_c_extracted_text.json` | Extract MISRA guideline full text |
-| `generate_embeddings.py` | Extracted JSON files | `embeddings.pkl`, `paragraph_embeddings.pkl` | Generate section (338) and paragraph (3,733) embeddings |
-| `compute_similarity.py` | Embedding files | `embeddings/similarity/misra_c_to_fls.json` | Compute cosine similarity matrix |
-| `orchestrate.py` | (runs above) | All outputs | Convenience script for full pipeline |
+| Command | Input | Output | Description |
+|---------|-------|--------|-------------|
+| `extract-fls-content` | FLS RST files | `embeddings/fls/chapter_NN.json`, `index.json` | Extract FLS with rubric-categorized paragraphs |
+| `extract-misra-text` | MISRA PDF | `cache/misra_c_extracted_text.json` | Extract MISRA guideline full text |
+| `generate-embeddings` | Extracted JSON files | `embeddings.pkl`, `paragraph_embeddings.pkl` | Generate section (338) and paragraph (3,733) embeddings |
+| `compute-similarity` | Embedding files | `embeddings/similarity/misra_c_to_fls.json` | Compute cosine similarity matrix |
+| `orchestrate-embeddings` | (runs above) | All outputs | Convenience script for full pipeline |
 
 **Mapping Generation:**
 
-| Script | Input | Output | Description |
-|--------|-------|--------|-------------|
-| `sync_fls_section_mapping.py` | `embeddings/fls/chapter_NN.json` | Updated `fls_section_mapping.json` | Generate fabricated section entries |
-| `map_misra_to_fls.py` | Similarity + concepts | `mappings/misra_c_to_fls.json` | Generate automated mappings |
+| Command | Input | Output | Description |
+|---------|-------|--------|-------------|
+| `sync-fls-mapping` | `embeddings/fls/chapter_NN.json` | Updated `fls_section_mapping.json` | Generate fabricated section entries |
+| `map-misra-to-fls` | Similarity + concepts | `mappings/misra_c_to_fls.json` | Generate automated mappings |
 
 **Run Pipeline 2:**
 ```bash
 cd tools
 # Option A: Use orchestrator
-uv run python embeddings/orchestrate.py --force
+uv run orchestrate-embeddings --force
 
 # Option B: Run steps manually
-uv run python embeddings/extract_fls_content.py
-uv run python sync_fls_section_mapping.py
-uv run python embeddings/generate_embeddings.py
-uv run python embeddings/compute_similarity.py
-uv run python map_misra_to_fls.py
+uv run extract-fls-content
+uv run sync-fls-mapping
+uv run generate-embeddings
+uv run compute-similarity
+uv run map-misra-to-fls
 
 # Validate
-uv run python validate_coding_standards.py
-uv run python validate_synthetic_ids.py
+uv run validate-standards
+uv run validate-synthetic-ids
 ```
 
 ### Pipeline 3: Cross-Reference & Analysis
 
-| Script | Purpose | Usage |
-|--------|---------|-------|
-| `analyze_fls_coverage.py` | Cross-reference FLS usage across all mappings | `uv run python analyze_fls_coverage.py` |
-| `review_fls_mappings.py` | Interactive/batch review of coding standard mappings | `uv run python review_fls_mappings.py --standard misra-c --interactive` |
+| Command | Purpose | Usage |
+|---------|---------|-------|
+| `analyze-coverage` | Cross-reference FLS usage across all mappings | `uv run analyze-coverage` |
+| `review-mappings` | Interactive/batch review of coding standard mappings | `uv run review-mappings --standard misra-c --interactive` |
 
 **Future:** Pipeline 3 will cross-reference iceoryx2-FLS mappings with coding standards mappings to prioritize which coding guidelines to verify based on frequency of construct usage in iceoryx2.
 
 ### Shared Resources
 
-| File | Used By | Description |
-|------|---------|-------------|
-| `fls_section_mapping.json` | Most scripts | Canonical FLS section hierarchy with fabricated sections |
-| `concept_to_fls.json` | `map_misra_to_fls.py` | C concept to FLS ID keyword mappings |
-| `misra_rust_applicability.json` | `map_misra_to_fls.py` | MISRA ADD-6 Rust applicability data |
-| `synthetic_fls_ids.json` | `validate_synthetic_ids.py` | Tracks generated FLS IDs |
+| File | Location | Description |
+|------|----------|-------------|
+| `fls_section_mapping.json` | `tools/data/` | Canonical FLS section hierarchy with fabricated sections |
+| `fls_id_to_section.json` | `tools/data/` | Reverse lookup from FLS ID to section |
+| `synthetic_fls_ids.json` | `tools/data/` | Tracks generated FLS IDs |
+| `concept_to_fls.json` | `coding-standards-fls-mapping/` | C concept to FLS ID keyword mappings |
+| `misra_rust_applicability.json` | `coding-standards-fls-mapping/` | MISRA ADD-6 Rust applicability data |
 
 ---
 
@@ -151,17 +152,21 @@ eclipse-iceoryx2-actionanable-safety-certification/
 ├── coding-standards-fls-mapping/       # Pipeline 2 output: standards to FLS mappings
 │   ├── schema/
 │   │   ├── coding_standard_rules.schema.json
-│   │   └── fls_mapping.schema.json
+│   │   ├── fls_mapping.schema.json
+│   │   └── verification_progress.schema.json
 │   ├── standards/                      # Extracted rule listings
 │   │   ├── misra_c_2025.json
 │   │   ├── misra_cpp_2023.json
 │   │   ├── cert_c.json
 │   │   └── cert_cpp.json
-│   └── mappings/                       # FLS mappings (deliverables)
-│       ├── misra_c_to_fls.json
-│       ├── misra_cpp_to_fls.json
-│       ├── cert_c_to_fls.json
-│       └── cert_cpp_to_fls.json
+│   ├── mappings/                       # FLS mappings (deliverables)
+│   │   ├── misra_c_to_fls.json
+│   │   ├── misra_cpp_to_fls.json
+│   │   ├── cert_c_to_fls.json
+│   │   └── cert_cpp_to_fls.json
+│   ├── concept_to_fls.json             # C concept to FLS ID mappings
+│   ├── misra_rust_applicability.json   # MISRA ADD-6 Rust applicability
+│   └── verification_progress.json      # Verification batch tracking
 │
 ├── embeddings/                         # Extracted content and embeddings
 │   ├── fls/
@@ -172,41 +177,57 @@ eclipse-iceoryx2-actionanable-safety-certification/
 │   │   ├── embeddings.pkl              # FLS section-level embeddings (338)
 │   │   └── paragraph_embeddings.pkl    # FLS paragraph-level embeddings (3,733)
 │   ├── misra_c/
-│   │   └── embeddings.pkl              # MISRA C vector embeddings
+│   │   ├── embeddings.pkl              # MISRA C guideline-level embeddings
+│   │   ├── query_embeddings.pkl        # MISRA C query-level embeddings
+│   │   ├── rationale_embeddings.pkl    # MISRA C rationale embeddings
+│   │   └── amplification_embeddings.pkl # MISRA C amplification embeddings
 │   └── similarity/
 │       └── misra_c_to_fls.json         # Similarity computation results
 │
-├── cache/                              # Cached source repositories (gitignored)
+├── cache/                              # Cached data (gitignored)
 │   ├── repos/
 │   │   ├── iceoryx2/v0.8.0/            # iceoryx2 source at specific versions
 │   │   └── fls/                        # FLS RST source files
-│   └── misra_c_extracted_text.json     # Extracted MISRA text (gitignored)
+│   ├── verification/                   # Batch verification reports
+│   │   └── batch{N}_session{M}.json
+│   └── misra_c_extracted_text.json     # Extracted MISRA text
 │
-└── tools/                              # All scripts
-    ├── embeddings/                     # Embedding pipeline scripts
-    │   ├── extract_fls_content.py
-    │   ├── extract_misra_text.py
-    │   ├── generate_embeddings.py
-    │   ├── compute_similarity.py
-    │   └── orchestrate.py
-    ├── clone_iceoryx2.py
-    ├── extract_fls_sections.py
-    ├── extract_misra_rules.py
-    ├── scrape_cert_rules.py
-    ├── map_misra_to_fls.py
-    ├── sync_fls_section_mapping.py
-    ├── normalize_fls_json.py
-    ├── restructure_fls_json.py
-    ├── update_fls_counts_samples.py
-    ├── analyze_fls_coverage.py
-    ├── review_fls_mappings.py
-    ├── validate_fls_json.py
-    ├── validate_coding_standards.py
-    ├── validate_synthetic_ids.py
-    ├── fls_section_mapping.json        # Canonical FLS section hierarchy
-    ├── concept_to_fls.json
-    ├── misra_rust_applicability.json
-    └── synthetic_fls_ids.json
+└── tools/                              # All tools
+    ├── pyproject.toml                  # Package config with entry points
+    ├── src/fls_tools/                  # Main package
+    │   ├── shared/                     # Shared utilities
+    │   │   ├── paths.py                # Path helpers
+    │   │   ├── constants.py            # Category codes, thresholds
+    │   │   ├── io.py                   # JSON/pickle I/O
+    │   │   ├── fls.py                  # FLS chapter loading
+    │   │   └── similarity.py           # Search utilities
+    │   ├── iceoryx2/                   # Pipeline 1: iceoryx2 FLS mapping
+    │   │   ├── clone.py
+    │   │   ├── extract.py
+    │   │   ├── normalize.py
+    │   │   ├── restructure.py
+    │   │   ├── update.py
+    │   │   └── validate.py
+    │   ├── standards/                  # Pipeline 2: Standards to FLS
+    │   │   ├── extraction/             # MISRA/CERT extraction
+    │   │   ├── embeddings/             # Embedding generation
+    │   │   ├── mapping/                # Mapping generation
+    │   │   ├── validation/             # Validation scripts
+    │   │   └── verification/           # Verification workflow
+    │   │       ├── batch.py            # verify-batch
+    │   │       ├── apply.py            # apply-verification
+    │   │       ├── progress.py         # check-progress
+    │   │       ├── scaffold.py         # scaffold-progress
+    │   │       ├── search.py           # search-fls
+    │   │       ├── search_deep.py      # search-fls-deep
+    │   │       └── recompute.py        # recompute-similarity
+    │   └── analysis/                   # Pipeline 3: Cross-reference
+    │       ├── coverage.py
+    │       └── review.py
+    └── data/                           # Configuration files
+        ├── fls_section_mapping.json    # Canonical FLS hierarchy
+        ├── fls_id_to_section.json      # Reverse FLS ID lookup
+        └── synthetic_fls_ids.json      # Generated FLS IDs
 ```
 
 ---
@@ -437,7 +458,7 @@ When a new iceoryx2 version is released:
 
 ```bash
 cd tools
-uv run python clone_iceoryx2.py --from 0.8.0 --to 0.9.0
+uv run clone-iceoryx2 --from 0.8.0 --to 0.9.0
 ```
 
 This clones both versions to `cache/repos/iceoryx2/v{VERSION}/` for comparison.
@@ -489,7 +510,7 @@ Update each chapter's JSON with:
 
 ```bash
 cd tools
-uv run python validate_fls_json.py
+uv run validate-fls
 ```
 
 ### Code Sample Guidelines
@@ -510,9 +531,9 @@ uv run python validate_fls_json.py
 
 ```bash
 cd tools
-uv run python validate_fls_json.py                    # All checks
-uv run python validate_fls_json.py --file=fls_chapter15_ownership_destruction.json
-uv run python validate_fls_json.py --audit-samples    # Sample quality audit
+uv run validate-fls                                    # All checks
+uv run validate-fls --file=fls_chapter15_ownership_destruction.json
+uv run validate-fls --audit-samples                    # Sample quality audit
 ```
 
 **Checks performed:**
@@ -554,148 +575,205 @@ uv run python validate_fls_json.py --audit-samples    # Sample quality audit
 
 ### MISRA to FLS Verification Workflow
 
-For each MISRA guideline requiring manual verification, follow these steps rigorously:
+The verification workflow uses a 4-phase process with dedicated tooling.
 
-#### Step 1: Get Similarity Results
+#### Phase 0: Check Progress
 
-```bash
-cd tools && uv run python -c "
-import json
-with open('../embeddings/similarity/misra_c_to_fls.json') as f:
-    sim = json.load(f)
-rule = 'Rule X.Y'  # Replace with actual rule
-
-print('=== Section Matches ===')
-for m in sim['results'][rule]['top_matches'][:5]:
-    print(f'{m[\"fls_id\"]}: {m[\"similarity\"]:.3f} - {m[\"title\"]}')
-
-print('\\n=== Paragraph Matches ===')
-for m in sim['results'][rule]['top_paragraph_matches'][:5]:
-    print(f'{m[\"fls_id\"]}: {m[\"similarity\"]:.3f} [{m[\"category_name\"]}] {m[\"text_preview\"][:60]}...')
-"
-```
-
-#### Step 2: Evaluate Similarity Quality
-
-**Section Matches (threshold: 0.5):**
-
-| Score | Interpretation | Action |
-|-------|----------------|--------|
-| **>=0.6** | Strong match | MUST investigate. Document if rejected. |
-| **0.5-0.6** | Medium match | Investigate and document decision |
-
-**Paragraph Matches (threshold: 0.55):**
-
-| Score | Interpretation | Action |
-|-------|----------------|--------|
-| **>=0.65** | Strong match | Quote this paragraph in reason field |
-| **0.55-0.65** | Medium match | Investigate the parent section |
-
-All matches above threshold that are NOT accepted MUST be added to `rejected_matches` with explanation.
-
-#### Understanding Match Types
-
-The similarity results contain two types of matches:
-
-1. **Section matches (`top_matches`)**: Match against cleaned section-level content (338 sections). Identify which FLS topics are relevant.
-
-2. **Paragraph matches (`top_paragraph_matches`)**: Match against individual rubric paragraphs (3,733 paragraphs). Provide specific quotable evidence.
-
-**Paragraph match fields:**
-
-| Field | Description |
-|-------|-------------|
-| `fls_id` | Paragraph's FLS ID (use in `reason` for quotes) |
-| `section_fls_id` | Parent section's FLS ID |
-| `section_title` | Parent section title |
-| `category` | -2=legality_rules, -3=dynamic_semantics, -4=undefined_behavior, etc. |
-| `category_name` | Human-readable category name |
-| `text_preview` | First 200 chars of paragraph text |
-
-**Best practice:** Use paragraph matches to find quotable evidence, then include the paragraph's `fls_id` directly in `accepted_matches`.
-
-#### Step 3: Read FLS Content
-
-Look up the FLS section content:
-
-```python
-import json
-with open('embeddings/fls/chapter_15.json') as f:
-    chapter = json.load(f)
-
-section = next(s for s in chapter['sections'] if s['fls_id'] == 'fls_xxx')
-
-# Focus on legality rules (-2) and UB (-4)
-for cat in ['-2', '-4']:
-    for pid, text in section['rubrics'].get(cat, {}).get('paragraphs', {}).items():
-        print(f"[{cat}] {pid}: {text}")
-```
-
-Focus on:
-- Legality rules (what the compiler enforces)
-- Undefined behavior definitions
-- Dynamic semantics (runtime behavior)
-
-#### Step 4: Compare MISRA Rationale to FLS
+Before starting, run `check-progress` to determine current state:
 
 ```bash
-cd tools && uv run python -c "
-import json
-with open('../cache/misra_c_extracted_text.json') as f:
-    misra = json.load(f)
-for g in misra['guidelines']:
-    if g['guideline_id'] == 'Rule X.Y':
-        print(g['rationale'])
-"
+cd tools
+uv run check-progress
 ```
 
-Ask:
-- Does the FLS section actually address the MISRA concern?
-- Is Rust's approach the same, different, or does it prevent the issue?
-- Are multiple FLS sections needed together?
+This shows:
+- Last session ID and next session ID to use
+- Current batch and its status
+- Whether a batch report exists in `cache/verification/`
+- If resuming, which guideline to continue from
+- Suggested command for Phase 1 (if batch report doesn't exist)
 
-#### Step 5: Make Mapping Decision
+**Crash recovery:** If a session was interrupted, `check-progress` will detect an existing batch report with partial work and indicate where to resume.
 
-1. **Accept similarity suggestion:** Add to `accepted_matches` with score and reason quoting specific FLS paragraphs
-2. **Override with different FLS IDs:** Add rejected matches (>=0.5) to `rejected_matches` with explanation
-3. **No FLS mapping needed:** Set `accepted_matches` to empty array with explanation
+#### Phase 1: Data Gathering
 
-#### Step 6: Update Mapping with Evidence
+If no batch report exists, run `verify-batch` to generate one:
 
-```json
-{
-  "guideline_id": "Rule X.Y",
-  "accepted_matches": [
-    {
-      "fls_id": "fls_xxx",
-      "category": -2,
-      "fls_section": "15.2",
-      "fls_title": "References",
-      "score": 0.65,
-      "reason": "Per FLS fls_ev4a82fdhwr8: 'A reference shall point to an initialized referent.' This directly addresses MISRA's concern about..."
-    }
-  ],
-  "rejected_matches": [
-    {
-      "fls_id": "fls_yyy",
-      "category": 0,
-      "fls_section": "15.3",
-      "score": 0.62,
-      "reason": "Section is about X, not Y - semantic similarity due to shared terminology"
-    }
-  ],
-  "confidence": "high",
-  "notes": "High-level summary: Rust's borrow checker prevents the uninitialized access that MISRA is trying to prevent."
-}
+```bash
+cd tools
+uv run verify-batch \
+    --batch BATCH_ID \
+    --session SESSION_ID \
+    --mode llm \
+    --output ../cache/verification/batchBATCH_ID_sessionSESSION_ID.json
 ```
+
+**What it extracts:**
+- Similarity matches (section and paragraph) above thresholds
+- MISRA rationale from extracted text
+- Wide-shot FLS content (matched sections + siblings + all rubrics)
+- Current mapping state
+
+All guidelines start with `verification_decision: null`.
+
+**Output modes:**
+- `--mode llm`: Full JSON optimized for LLM consumption
+- `--mode human`: Markdown summary for quick review
+
+**Thresholds** (configurable via CLI):
+
+| Option | Default | Description |
+|--------|---------|-------------|
+| `--section-threshold` | 0.5 | Minimum section similarity score |
+| `--paragraph-threshold` | 0.55 | Minimum paragraph similarity score |
+
+**Failure conditions:** Script fails immediately if `cache/misra_c_extracted_text.json` is missing.
+
+#### Phase 2: Analysis & Decision (LLM)
+
+If resuming an interrupted session, output "Resuming from Rule X.Y (N/M complete)" at the start.
+
+Process the batch report JSON and for each guideline:
+
+1. **Review extracted data** in the batch report
+2. **Investigate further as needed** using these sources:
+
+| Source | Path | Purpose |
+|--------|------|---------|
+| FLS Chapter Files | `embeddings/fls/chapter_NN.json` | Full section content with all rubrics |
+| FLS Section Mapping | `tools/data/fls_section_mapping.json` | Section hierarchy and fabricated sections |
+| MISRA Extracted Text | `cache/misra_c_extracted_text.json` | Full MISRA rationale and amplification |
+| MISRA Rust Applicability | `coding-standards-fls-mapping/misra_rust_applicability.json` | MISRA ADD-6 Rust applicability data |
+| Concept to FLS | `coding-standards-fls-mapping/concept_to_fls.json` | C concept to FLS ID keyword mappings |
+| Current Mappings | `coding-standards-fls-mapping/mappings/misra_c_to_fls.json` | Current mapping state |
+| Standards Definitions | `coding-standards-fls-mapping/standards/misra_c_2025.json` | MISRA rule definitions |
+| Similarity Results | `embeddings/similarity/misra_c_to_fls.json` | Full similarity scores |
+
+3. **Search FLS for relevant content:**
+
+   Use at least one of these search tools as part of analysis, and additional methods as needed:
+
+   ```bash
+   # Semantic search across all FLS content
+   uv run search-fls --query "memory allocation" --top 10
+
+   # Deep search using all MISRA embedding types for a guideline
+   uv run search-fls-deep --guideline "Rule 21.3"
+
+   # Recompute similarity for specific guideline
+   uv run recompute-similarity --guideline "Rule 21.3"
+   ```
+
+   **Guidelines for search tools** (use discretion):
+
+   | Condition | Consider Using |
+   |-----------|----------------|
+   | Quick concept lookup (e.g., "pointer arithmetic") | `search-fls` |
+   | Exploring tangential concepts not in MISRA text | `search-fls` |
+   | Batch report shows no/few matches but MISRA rationale is substantive | `search-fls-deep` or `recompute-similarity` |
+   | Pre-computed similarity seems to have missed obvious FLS sections | `recompute-similarity` |
+
+   **Additional methods** if search tools are not sufficient:
+   - Read FLS chapter files directly (`embeddings/fls/chapter_NN.json`)
+   - Grep across FLS content for keywords
+   - Check `tools/data/fls_section_mapping.json` for section hierarchy
+   - Check `coding-standards-fls-mapping/concept_to_fls.json` for known concept mappings
+
+4. **Make decisions:**
+   - Accept matches with score and detailed reason (quote FLS paragraphs)
+   - Reject matches above threshold with explanation
+   - **May propose FLS sections not in similarity results** - clearly document why in the `reason` field
+
+5. **Flag applicability changes** (do not apply yet):
+   
+   When analysis suggests an applicability change is warranted:
+   - In the guideline's `verification_decision`, set `proposed_applicability_change`:
+     ```json
+     "proposed_applicability_change": {
+       "field": "applicability_all_rust",
+       "current_value": "direct",
+       "proposed_value": "rust_prevents",
+       "rationale": "Rust's ownership system prevents this issue entirely. See FLS fls_xxx."
+     }
+     ```
+   - The change is also recorded in the top-level `applicability_changes` array for Phase 3 review
+   
+   All changes remain in the batch report (`cache/verification/`) until approved in Phase 3.
+
+6. **Populate** the `verification_decision` section in batch report JSON
+
+**Crash recovery:** If the session is interrupted, the batch report in `cache/verification/` preserves all completed work. Run `check-progress` to see where to resume.
+
+#### Phase 3: Review & Approval (Human)
+
+At the end of Phase 2, the LLM presents a summary of all proposed applicability changes:
+
+```
+## Proposed Applicability Changes
+
+| Guideline | Field | Current | Proposed | Rationale |
+|-----------|-------|---------|----------|-----------|
+| Rule 21.3 | applicability_all_rust | direct | rust_prevents | [brief reason] |
+```
+
+Human reviews and confirms verbally (e.g., "approve all", "approve Rule 21.3, reject Rule 21.5").
+
+The LLM then updates the batch report JSON:
+- Sets `approved: true` or `approved: false` for each entry in `applicability_changes`
+- Confirms batch is ready for Phase 4
+
+#### Phase 4: Apply Changes
+
+Run `apply-verification` to commit verified decisions:
+
+```bash
+cd tools
+uv run apply-verification \
+    --batch-report ../cache/verification/batchBATCH_ID_sessionSESSION_ID.json \
+    --session SESSION_ID \
+    --apply-applicability-changes  # Only include if changes were approved
+```
+
+**Actions:**
+- Updates `misra_c_to_fls.json` with verified mappings (`confidence: "high"`)
+- Updates `verification_progress.json` with verified status and session
+- Runs validation scripts automatically
+
+**Options:**
+- `--dry-run`: Show changes without writing files
+- `--skip-validation`: Skip running validation after changes
 
 #### Verification Guidelines
 
-1. **Reclassification requires approval:** If analysis suggests changing `applicability_all_rust`, `applicability_safe_rust`, or `fls_rationale_type` from existing values, check with the user before making the change.
+1. **Applicability changes require explicit approval:** If analysis suggests changing `applicability_all_rust`, `applicability_safe_rust`, or `fls_rationale_type` from existing values:
+   - **DO NOT** make the change during normal verification
+   - **DO** track the proposed change with rationale
+   - **DO** include all proposed changes in a summary report at the end of the verification session
+   - **WAIT** for explicit user confirmation before applying any applicability changes
+   
+   This ensures traceability and prevents unintended reclassifications.
 
-2. **Trust MISRA ADD-6 classifications:** When MISRA ADD-6 marks a guideline as `n_a`, keep it as `not_applicable` unless there's a compelling reason to reclassify. Focus verification on adding FLS justification and setting confidence to `high`.
+2. **Compelling reasons for applicability changes:** Only propose a change when there is clear evidence:
+   - FLS demonstrates that Rust's type system or borrow checker prevents the issue entirely (→ `rust_prevents`)
+   - The C/C++ concept has no meaningful Rust equivalent (→ `not_applicable`)
+   - The MISRA ADD-6 classification appears incorrect based on FLS analysis
+   - A `direct` mapping is more accurately characterized as `partial` due to Rust handling it differently
 
-3. **Confidence updates are always okay:** Changing from `medium` to `high` confidence is the expected outcome of verification.
+3. **Trust MISRA ADD-6 classifications:** When MISRA ADD-6 marks a guideline as `n_a`, keep it as `not_applicable` unless there's a compelling reason to reclassify. Focus verification on adding FLS justification and setting confidence to `high`.
+
+4. **Confidence updates are always okay:** Changing from `medium` to `high` confidence is the expected outcome of verification.
+
+5. **Applicability change report format:** At session end, after processing all guidelines, if any applicability changes are proposed, output a report:
+   
+   ```
+   ## Proposed Applicability Changes
+   
+   | Guideline | Field | Current | Proposed | Rationale |
+   |-----------|-------|---------|----------|-----------|
+   | Rule X.Y  | applicability_all_rust | direct | rust_prevents | [brief reason] |
+   ```
+   
+   After user approval, apply the changes in a separate update pass.
 
 ### Applicability Values
 
@@ -721,11 +799,13 @@ Ask:
 
 ```bash
 cd tools
-uv run python validate_coding_standards.py
-uv run python validate_synthetic_ids.py
+uv run validate-standards
+uv run validate-synthetic-ids
 ```
 
-### map_misra_to_fls.py CLI Options
+### map-misra-to-fls CLI Options
+
+Used for initial mapping generation (Pipeline 2). Not typically needed during verification.
 
 | Option | Default | Description |
 |--------|---------|-------------|
@@ -746,24 +826,6 @@ Progress is tracked in `coding-standards-fls-mapping/verification_progress.json`
 
 Schema: `coding-standards-fls-mapping/schema/verification_progress.schema.json`
 
-#### Generating/Updating Progress File
-
-```bash
-cd tools
-
-# Initial creation
-uv run python scaffold_verification_progress.py
-
-# Preview batch assignments without writing
-uv run python scaffold_verification_progress.py --dry-run
-
-# Regenerate from scratch (loses progress)
-uv run python scaffold_verification_progress.py --force
-
-# Regenerate batches but preserve completed work
-uv run python scaffold_verification_progress.py --preserve-completed
-```
-
 #### Batch Structure
 
 | Batch | Name | Criteria |
@@ -774,34 +836,23 @@ uv run python scaffold_verification_progress.py --preserve-completed
 | 4 | Medium-score direct | Remaining `direct` with score 0.5-0.65 |
 | 5 | Edge cases | `partial`, `rust_prevents`, and any remaining |
 
-#### Per-Guideline Workflow
-
-For each guideline:
-
-1. Get similarity results (section + paragraph matches)
-2. Read FLS content (legality rules, UB, dynamic semantics)
-3. Read MISRA rationale from extracted text
-4. Present analysis with accept/reject decisions
-5. Update `misra_c_to_fls.json` (set `confidence: "high"`)
-6. Update `verification_progress.json` (mark guideline as `verified`, record `session_id`)
-
-#### Validation Checkpoints
-
-Run every 5-10 guidelines:
+#### Generating/Updating Progress File
 
 ```bash
 cd tools
-uv run python validate_coding_standards.py
-uv run python validate_synthetic_ids.py
+
+# Initial creation
+uv run scaffold-progress
+
+# Preview batch assignments without writing
+uv run scaffold-progress --dry-run
+
+# Regenerate from scratch (loses progress)
+uv run scaffold-progress --force
+
+# Regenerate batches but preserve completed work
+uv run scaffold-progress --preserve-completed
 ```
-
-#### Resuming Across Sessions
-
-1. Read `verification_progress.json` to find current batch and next pending guideline
-2. Create new session entry with incremented `session_id`
-3. Continue per-guideline workflow
-4. Update progress file after each guideline
-5. Run validation checkpoints periodically
 
 ---
 

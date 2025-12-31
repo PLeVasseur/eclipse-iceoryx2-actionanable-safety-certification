@@ -69,14 +69,17 @@ CATEGORY_TITLES = {
 }
 
 
-def get_project_root() -> Path:
-    """Get the project root directory."""
-    return Path(__file__).parent.parent
+from fls_tools.shared import (
+    get_project_root,
+    get_fls_dir,
+    get_fls_index_path,
+    get_fls_section_mapping_path,
+)
 
 
 def load_fls_index(project_root: Path) -> dict:
     """Load FLS index.json."""
-    index_path = project_root / "embeddings" / "fls" / "index.json"
+    index_path = get_fls_index_path(project_root)
     if not index_path.exists():
         raise FileNotFoundError(
             f"FLS index not found at {index_path}. "
@@ -88,14 +91,14 @@ def load_fls_index(project_root: Path) -> dict:
 
 def load_chapter_file(project_root: Path, filename: str) -> dict:
     """Load a chapter JSON file."""
-    chapter_path = project_root / "embeddings" / "fls" / filename
+    chapter_path = get_fls_dir(project_root) / filename
     with open(chapter_path, encoding='utf-8') as f:
         return json.load(f)
 
 
 def load_section_mapping(project_root: Path) -> dict:
     """Load existing fls_section_mapping.json."""
-    mapping_path = project_root / "tools" / "fls_section_mapping.json"
+    mapping_path = get_fls_section_mapping_path(project_root)
     if not mapping_path.exists():
         raise FileNotFoundError(f"Section mapping not found at {mapping_path}")
     with open(mapping_path, encoding='utf-8') as f:
@@ -104,7 +107,7 @@ def load_section_mapping(project_root: Path) -> dict:
 
 def save_section_mapping(project_root: Path, mapping: dict):
     """Save updated fls_section_mapping.json."""
-    mapping_path = project_root / "tools" / "fls_section_mapping.json"
+    mapping_path = get_fls_section_mapping_path(project_root)
     with open(mapping_path, 'w', encoding='utf-8') as f:
         json.dump(mapping, f, indent=2, ensure_ascii=False)
 
@@ -266,7 +269,7 @@ def main():
         # Save updated mapping
         print("\nSaving updated section mapping...")
         save_section_mapping(project_root, mapping)
-        print(f"  Saved to: {project_root / 'tools' / 'fls_section_mapping.json'}")
+        print(f"  Saved to: {get_fls_section_mapping_path(project_root)}")
     
     return 0
 

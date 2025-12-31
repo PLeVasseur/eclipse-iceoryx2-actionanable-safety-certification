@@ -75,9 +75,13 @@ C_STDLIB_IDENTIFIERS = {
 }
 
 
-def get_project_root() -> Path:
-    """Get the project root directory."""
-    return Path(__file__).parent.parent.parent
+from fls_tools.shared import (
+    get_project_root,
+    get_concept_to_fls_path,
+    get_misra_c_standards_path,
+    get_misra_c_extracted_text_path,
+    get_misra_pdf_path,
+)
 
 
 def load_concept_keywords(project_root: Path) -> dict[str, list[str]]:
@@ -86,7 +90,7 @@ def load_concept_keywords(project_root: Path) -> dict[str, list[str]]:
     
     Returns dict mapping concept_name -> list of keywords.
     """
-    concept_path = project_root / "coding-standards-fls-mapping" / "concept_to_fls.json"
+    concept_path = get_concept_to_fls_path(project_root)
     if not concept_path.exists():
         print(f"Warning: concept_to_fls.json not found at {concept_path}")
         return {}
@@ -327,7 +331,7 @@ def generate_search_queries(guideline: dict, parsed_rationale: dict) -> list[dic
 
 def load_expected_guidelines(project_root: Path) -> list[dict]:
     """Load the list of expected guideline IDs from the standards file."""
-    standards_path = project_root / "coding-standards-fls-mapping" / "standards" / "misra_c_2025.json"
+    standards_path = get_misra_c_standards_path(project_root)
     with open(standards_path, encoding="utf-8") as f:
         data = json.load(f)
     
@@ -534,8 +538,8 @@ def parse_guideline_fields(
 def main():
     """Main extraction function."""
     project_root = get_project_root()
-    pdf_path = project_root / "cache" / "misra-standards" / "MISRA-C-2025.pdf"
-    output_path = project_root / "cache" / "misra_c_extracted_text.json"
+    pdf_path = get_misra_pdf_path(project_root)
+    output_path = get_misra_c_extracted_text_path(project_root)
     
     if not pdf_path.exists():
         print(f"Error: MISRA PDF not found at {pdf_path}")
