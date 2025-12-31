@@ -87,7 +87,7 @@ Maps MISRA C/C++ and CERT C/C++ guidelines to FLS sections using semantic simila
 |--------|-------|--------|-------------|
 | `extract_fls_content.py` | FLS RST files | `embeddings/fls/chapter_NN.json`, `index.json` | Extract FLS with rubric-categorized paragraphs |
 | `extract_misra_text.py` | MISRA PDF | `cache/misra_c_extracted_text.json` | Extract MISRA guideline full text |
-| `generate_embeddings.py` | Extracted JSON files | `embeddings/*/embeddings.pkl` | Generate sentence-transformer embeddings |
+| `generate_embeddings.py` | Extracted JSON files | `embeddings.pkl`, `paragraph_embeddings.pkl` | Generate section (338) and paragraph (3,733) embeddings |
 | `compute_similarity.py` | Embedding files | `embeddings/similarity/misra_c_to_fls.json` | Compute cosine similarity matrix |
 | `orchestrate.py` | (runs above) | All outputs | Convenience script for full pipeline |
 
@@ -122,6 +122,8 @@ uv run python validate_synthetic_ids.py
 |--------|---------|-------|
 | `analyze_fls_coverage.py` | Cross-reference FLS usage across all mappings | `uv run python analyze_fls_coverage.py` |
 | `review_fls_mappings.py` | Interactive/batch review of coding standard mappings | `uv run python review_fls_mappings.py --standard misra-c --interactive` |
+
+**Future:** Pipeline 3 will cross-reference iceoryx2-FLS mappings with coding standards mappings to prioritize which coding guidelines to verify based on frequency of construct usage in iceoryx2.
 
 ### Shared Resources
 
@@ -167,7 +169,8 @@ eclipse-iceoryx2-actionanable-safety-certification/
 │   │   ├── chapter_01.json             # Per-chapter extracted content
 │   │   ├── ...
 │   │   ├── chapter_22.json
-│   │   └── embeddings.pkl              # FLS vector embeddings
+│   │   ├── embeddings.pkl              # FLS section-level embeddings (338)
+│   │   └── paragraph_embeddings.pkl    # FLS paragraph-level embeddings (3,733)
 │   ├── misra_c/
 │   │   └── embeddings.pkl              # MISRA C vector embeddings
 │   └── similarity/
@@ -538,9 +541,14 @@ uv run python validate_fls_json.py --audit-samples    # Sample quality audit
 ### Current Status (2025-12-31)
 
 **MISRA C:2025 Mapping - Complete (Draft):**
-- All 212 guidelines mapped with MISRA ADD-6 Rust applicability
-- 107 unique FLS IDs referenced
-- All mappings have `medium` confidence (automated) - require manual review for `high`
+- All 228 guidelines processed with MISRA ADD-6 Rust applicability
+- 196 guidelines with FLS matches, 32 without
+- 11 high-confidence entries (manually verified)
+- 217 medium-confidence entries (automated, require LLM verification workflow)
+
+**Confidence Levels:**
+- `medium` = Generated automatically by `map_misra_to_fls.py`
+- `high` = After completing the MISRA to FLS Verification Workflow below
 
 **Other Standards:** Scaffolds only (MISRA C++, CERT C/C++)
 
@@ -556,22 +564,55 @@ import json
 with open('../embeddings/similarity/misra_c_to_fls.json') as f:
     sim = json.load(f)
 rule = 'Rule X.Y'  # Replace with actual rule
-matches = sim['results'][rule]['top_matches'][:5]
-for m in matches:
-    print(f'{m[\"fls_id\"]}: {m[\"similarity\"]:.3f}')
+
+print('=== Section Matches ===')
+for m in sim['results'][rule]['top_matches'][:5]:
+    print(f'{m[\"fls_id\"]}: {m[\"similarity\"]:.3f} - {m[\"title\"]}')
+
+print('\\n=== Paragraph Matches ===')
+for m in sim['results'][rule]['top_paragraph_matches'][:5]:
+    print(f'{m[\"fls_id\"]}: {m[\"similarity\"]:.3f} [{m[\"category_name\"]}] {m[\"text_preview\"][:60]}...')
 "
 ```
 
 #### Step 2: Evaluate Similarity Quality
 
+**Section Matches (threshold: 0.5):**
+
 | Score | Interpretation | Action |
 |-------|----------------|--------|
 | **>=0.6** | Strong match | MUST investigate. Document if rejected. |
-| **0.5-0.6** | Medium match | Worth investigating |
-| **0.4-0.5** | Weak match | Lower priority |
-| **<0.4** | Very weak | Probably not relevant |
+| **0.5-0.6** | Medium match | Investigate and document decision |
 
-Also check `missing_siblings` for related sections.
+**Paragraph Matches (threshold: 0.55):**
+
+| Score | Interpretation | Action |
+|-------|----------------|--------|
+| **>=0.65** | Strong match | Quote this paragraph in reason field |
+| **0.55-0.65** | Medium match | Investigate the parent section |
+
+All matches above threshold that are NOT accepted MUST be added to `rejected_matches` with explanation.
+
+#### Understanding Match Types
+
+The similarity results contain two types of matches:
+
+1. **Section matches (`top_matches`)**: Match against cleaned section-level content (338 sections). Identify which FLS topics are relevant.
+
+2. **Paragraph matches (`top_paragraph_matches`)**: Match against individual rubric paragraphs (3,733 paragraphs). Provide specific quotable evidence.
+
+**Paragraph match fields:**
+
+| Field | Description |
+|-------|-------------|
+| `fls_id` | Paragraph's FLS ID (use in `reason` for quotes) |
+| `section_fls_id` | Parent section's FLS ID |
+| `section_title` | Parent section title |
+| `category` | -2=legality_rules, -3=dynamic_semantics, -4=undefined_behavior, etc. |
+| `category_name` | Human-readable category name |
+| `text_preview` | First 200 chars of paragraph text |
+
+**Best practice:** Use paragraph matches to find quotable evidence, then include the paragraph's `fls_id` directly in `accepted_matches`.
 
 #### Step 3: Read FLS Content
 
@@ -628,6 +669,7 @@ Ask:
     {
       "fls_id": "fls_xxx",
       "category": -2,
+      "fls_section": "15.2",
       "fls_title": "References",
       "score": 0.65,
       "reason": "Per FLS fls_ev4a82fdhwr8: 'A reference shall point to an initialized referent.' This directly addresses MISRA's concern about..."
@@ -637,6 +679,7 @@ Ask:
     {
       "fls_id": "fls_yyy",
       "category": 0,
+      "fls_section": "15.3",
       "score": 0.62,
       "reason": "Section is about X, not Y - semantic similarity due to shared terminology"
     }
@@ -673,6 +716,18 @@ cd tools
 uv run python validate_coding_standards.py
 uv run python validate_synthetic_ids.py
 ```
+
+### map_misra_to_fls.py CLI Options
+
+| Option | Default | Description |
+|--------|---------|-------------|
+| `--section-threshold` | 0.5 | Minimum section similarity score |
+| `--paragraph-threshold` | 0.55 | Minimum paragraph similarity score |
+| `--max-section-matches` | 5 | Max section matches per guideline |
+| `--max-paragraph-matches` | 10 | Max paragraph matches per guideline |
+| `--no-similarity` | - | Use legacy keyword matching (not recommended) |
+| `--no-preserve` | - | Overwrite existing high-confidence entries |
+| `--verbose` | - | Print detailed matching info |
 
 ---
 
