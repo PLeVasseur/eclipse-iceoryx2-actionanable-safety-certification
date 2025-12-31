@@ -1,36 +1,41 @@
 #!/usr/bin/env python3
 """
-record_decision.py - Record a verification decision for a guideline in a batch report.
+record_decision.py - Record a verification decision for a guideline.
 
-This tool updates the verification_decision field for a single guideline in a batch report,
-supporting the Phase 2 verification workflow where an LLM analyzes guidelines and records decisions.
+This tool records verification decisions either:
+1. In-place mode: Updates verification_decision field in a batch report
+2. Per-guideline mode: Writes individual decision files (for parallel verification)
 
 Features:
-- Validates decisions against batch_report.schema.json
+- Validates decisions against appropriate schema
 - Supports accepted and rejected matches with full metadata
 - Handles optional applicability change proposals
-- Overwrites existing decisions (idempotent within a session)
-- Updates batch summary statistics after recording
+- Per-guideline mode enables parallel verification by multiple workers
 
-Usage:
+Usage (in-place mode - updates batch report):
     uv run record-decision \\
         --batch-report cache/verification/batch4_session6.json \\
         --guideline "Dir 1.1" \\
         --decision accept_with_modifications \\
         --confidence high \\
         --rationale-type direct_mapping \\
-        --accept-match "fls_abc123:0:-2:0.65:FLS states X which addresses MISRA concern Y" \\
-        --reject-match "fls_xyz789:0:-1:0.55:Section about Z, not relevant to this guideline" \\
-        --notes "Optional notes about the decision"
+        --accept-match "fls_abc123:Section Title:0:0.65:FLS states X which addresses MISRA concern Y"
 
-    # With applicability change proposal:
+Usage (per-guideline mode - parallel-safe):
     uv run record-decision \\
-        --batch-report cache/verification/batch4_session6.json \\
-        --guideline "Rule 11.1" \\
+        --output-dir cache/verification/batch4_decisions/ \\
+        --guideline "Dir 1.1" \\
         --decision accept_with_modifications \\
         --confidence high \\
-        --rationale-type rust_prevents \\
-        --propose-change "applicability_all_rust:direct:rust_prevents:Rust's type system prevents this"
+        --rationale-type direct_mapping \\
+        --accept-match "fls_abc123:Section Title:0:0.65:FLS states X which addresses MISRA concern Y"
+
+    # Optionally include batch report for validation context:
+    uv run record-decision \\
+        --output-dir cache/verification/batch4_decisions/ \\
+        --batch-report cache/verification/batch4_session6.json \\
+        --guideline "Dir 1.1" \\
+        ...
 
 Match format: fls_id:fls_title:category:score:reason
   - fls_id: FLS identifier (e.g., fls_abc123)
@@ -49,6 +54,7 @@ Change format: field:current_value:proposed_value:rationale
 import argparse
 import json
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
 
 import jsonschema
@@ -83,12 +89,25 @@ def save_json(path: Path, data: dict) -> None:
         f.write("\n")
 
 
-def load_schema(root: Path) -> dict | None:
+def load_batch_report_schema(root: Path) -> dict | None:
     """Load the batch report schema."""
     schema_path = get_coding_standards_dir(root) / "schema" / "batch_report.schema.json"
     if not schema_path.exists():
         return None
     return load_json(schema_path)
+
+
+def load_decision_file_schema(root: Path) -> dict | None:
+    """Load the decision file schema."""
+    schema_path = get_coding_standards_dir(root) / "schema" / "decision_file.schema.json"
+    if not schema_path.exists():
+        return None
+    return load_json(schema_path)
+
+
+def guideline_id_to_filename(guideline_id: str) -> str:
+    """Convert guideline ID to filename (spaces to underscores)."""
+    return guideline_id.replace(" ", "_") + ".json"
 
 
 def validate_report(report: dict, schema: dict) -> list[str]:
@@ -209,15 +228,35 @@ def update_summary(report: dict) -> None:
     }
 
 
+def validate_decision_file(decision: dict, schema: dict) -> list[str]:
+    """Validate a decision file against the schema. Returns list of errors."""
+    errors = []
+    try:
+        jsonschema.validate(instance=decision, schema=schema)
+    except jsonschema.ValidationError as e:
+        errors.append(f"Schema validation error: {e.message}")
+        if e.path:
+            errors.append(f"  Path: {'.'.join(str(p) for p in e.path)}")
+    except jsonschema.SchemaError as e:
+        errors.append(f"Schema error: {e.message}")
+    return errors
+
+
 def main():
     parser = argparse.ArgumentParser(
-        description="Record a verification decision for a guideline in a batch report"
+        description="Record a verification decision for a guideline"
     )
     parser.add_argument(
         "--batch-report",
         type=str,
-        required=True,
-        help="Path to the batch report JSON file",
+        default=None,
+        help="Path to the batch report JSON file (required for in-place mode, optional for per-guideline mode)",
+    )
+    parser.add_argument(
+        "--output-dir",
+        type=str,
+        default=None,
+        help="Write decision to individual file in this directory (enables parallel mode)",
     )
     parser.add_argument(
         "--guideline",
@@ -282,28 +321,47 @@ def main():
     
     args = parser.parse_args()
     
-    # Resolve paths
     root = get_project_root()
-    report_path = Path(args.batch_report)
-    if not report_path.is_absolute():
-        report_path = root / report_path
     
-    # Load batch report
-    if not report_path.exists():
-        print(f"ERROR: Batch report not found: {report_path}", file=sys.stderr)
+    # Determine mode: per-guideline (--output-dir) or in-place (--batch-report)
+    per_guideline_mode = args.output_dir is not None
+    
+    if not per_guideline_mode and args.batch_report is None:
+        print("ERROR: Either --output-dir or --batch-report must be provided", file=sys.stderr)
         sys.exit(1)
     
-    report = load_json(report_path)
+    # Resolve paths
+    output_dir = None
+    if args.output_dir:
+        output_dir = Path(args.output_dir)
+        if not output_dir.is_absolute():
+            output_dir = root / output_dir
     
-    # Find guideline
-    result = find_guideline(report, args.guideline)
-    if result is None:
-        print(f"ERROR: Guideline '{args.guideline}' not found in batch report", file=sys.stderr)
-        available = [g["guideline_id"] for g in report.get("guidelines", [])[:10]]
-        print(f"  Available guidelines (first 10): {available}", file=sys.stderr)
-        sys.exit(1)
+    report_path = None
+    report = None
+    if args.batch_report:
+        report_path = Path(args.batch_report)
+        if not report_path.is_absolute():
+            report_path = root / report_path
+        
+        if report_path.exists():
+            report = load_json(report_path)
+        elif not per_guideline_mode:
+            # In-place mode requires batch report to exist
+            print(f"ERROR: Batch report not found: {report_path}", file=sys.stderr)
+            sys.exit(1)
     
-    guideline_idx, guideline = result
+    # Validate guideline exists in batch report (if available)
+    if report:
+        result = find_guideline(report, args.guideline)
+        if result is None:
+            if per_guideline_mode:
+                print(f"WARNING: Guideline '{args.guideline}' not found in batch report", file=sys.stderr)
+            else:
+                print(f"ERROR: Guideline '{args.guideline}' not found in batch report", file=sys.stderr)
+                available = [g["guideline_id"] for g in report.get("guidelines", [])[:10]]
+                print(f"  Available guidelines (first 10): {available}", file=sys.stderr)
+                sys.exit(1)
     
     # Parse matches
     try:
@@ -313,87 +371,176 @@ def main():
         print(f"ERROR: {e}", file=sys.stderr)
         sys.exit(1)
     
-    # Build verification decision
-    verification_decision = {
-        "decision": args.decision,
-        "confidence": args.confidence,
-        "fls_rationale_type": args.rationale_type,
-        "accepted_matches": accepted_matches,
-        "rejected_matches": rejected_matches,
-        "notes": args.notes,
-    }
-    
     # Handle applicability change proposal
-    applicability_change = None
+    proposed_change = None
     if args.propose_change:
         try:
-            applicability_change = parse_applicability_change(args.propose_change, args.guideline)
-            verification_decision["proposed_applicability_change"] = {
-                "field": applicability_change["field"],
-                "current_value": applicability_change["current_value"],
-                "proposed_value": applicability_change["proposed_value"],
-                "rationale": applicability_change["rationale"],
+            change_data = parse_applicability_change(args.propose_change, args.guideline)
+            proposed_change = {
+                "field": change_data["field"],
+                "current_value": change_data["current_value"],
+                "proposed_value": change_data["proposed_value"],
+                "rationale": change_data["rationale"],
             }
         except ValueError as e:
             print(f"ERROR: {e}", file=sys.stderr)
             sys.exit(1)
     
-    # Update guideline
-    report["guidelines"][guideline_idx]["verification_decision"] = verification_decision
+    if per_guideline_mode:
+        # === PER-GUIDELINE MODE ===
+        assert output_dir is not None
+        
+        # Build decision file
+        decision_file = {
+            "guideline_id": args.guideline,
+            "decision": args.decision,
+            "confidence": args.confidence,
+            "fls_rationale_type": args.rationale_type,
+            "accepted_matches": accepted_matches,
+            "rejected_matches": rejected_matches,
+            "notes": args.notes,
+            "proposed_applicability_change": proposed_change,
+            "recorded_at": datetime.now(timezone.utc).isoformat(),
+        }
+        
+        # Validate against decision file schema
+        schema = load_decision_file_schema(root)
+        if schema:
+            errors = validate_decision_file(decision_file, schema)
+            if errors:
+                print("ERROR: Decision file fails schema validation:", file=sys.stderr)
+                for err in errors:
+                    print(f"  {err}", file=sys.stderr)
+                sys.exit(1)
+        
+        # Prepare output path
+        filename = guideline_id_to_filename(args.guideline)
+        output_path = output_dir / filename
+        
+        # Output or save
+        if args.dry_run:
+            print("DRY RUN - Would write decision file:")
+            print(f"  Path: {output_path}")
+            print(f"  Guideline: {args.guideline}")
+            print(f"  Decision: {args.decision}")
+            print(f"  Confidence: {args.confidence}")
+            print(f"  Rationale Type: {args.rationale_type}")
+            print(f"  Accepted Matches: {len(accepted_matches)}")
+            for m in accepted_matches:
+                reason_preview = m['reason'][:60] + '...' if len(m['reason']) > 60 else m['reason']
+                print(f"    - {m['fls_id']} ({m['score']:.3f}): {reason_preview}")
+            print(f"  Rejected Matches: {len(rejected_matches)}")
+            for m in rejected_matches:
+                reason_preview = m['reason'][:60] + '...' if len(m['reason']) > 60 else m['reason']
+                print(f"    - {m['fls_id']} ({m['score']:.3f}): {reason_preview}")
+            if args.notes:
+                print(f"  Notes: {args.notes}")
+            if proposed_change:
+                print(f"  Proposed Change: {proposed_change['field']}: "
+                      f"{proposed_change['current_value']} -> {proposed_change['proposed_value']}")
+        else:
+            # Create output directory if needed
+            output_dir.mkdir(parents=True, exist_ok=True)
+            
+            save_json(output_path, decision_file)
+            print(f"Recorded decision for {args.guideline}")
+            print(f"  Output: {output_path}")
+            print(f"  Decision: {args.decision}, Confidence: {args.confidence}")
+            print(f"  Accepted: {len(accepted_matches)}, Rejected: {len(rejected_matches)}")
+            if proposed_change:
+                print(f"  Proposed change: {proposed_change['field']}: "
+                      f"{proposed_change['current_value']} -> {proposed_change['proposed_value']}")
     
-    # Add applicability change to top-level array if proposed
-    if applicability_change:
-        # Remove any existing change for this guideline/field combination
-        existing_changes = report.get("applicability_changes", [])
-        filtered_changes = [
-            c for c in existing_changes
-            if not (c["guideline_id"] == args.guideline and c["field"] == applicability_change["field"])
-        ]
-        filtered_changes.append(applicability_change)
-        report["applicability_changes"] = filtered_changes
-    
-    # Update summary
-    update_summary(report)
-    
-    # Validate against schema
-    schema = load_schema(root)
-    if schema:
-        errors = validate_report(report, schema)
-        if errors:
-            print("ERROR: Updated report fails schema validation:", file=sys.stderr)
-            for err in errors:
-                print(f"  {err}", file=sys.stderr)
-            sys.exit(1)
-    
-    # Output or save
-    if args.dry_run:
-        print("DRY RUN - Would record the following decision:")
-        print(f"  Guideline: {args.guideline}")
-        print(f"  Decision: {args.decision}")
-        print(f"  Confidence: {args.confidence}")
-        print(f"  Rationale Type: {args.rationale_type}")
-        print(f"  Accepted Matches: {len(accepted_matches)}")
-        for m in accepted_matches:
-            print(f"    - {m['fls_id']} ({m['score']:.3f}): {m['reason'][:60]}...")
-        print(f"  Rejected Matches: {len(rejected_matches)}")
-        for m in rejected_matches:
-            print(f"    - {m['fls_id']} ({m['score']:.3f}): {m['reason'][:60]}...")
-        if args.notes:
-            print(f"  Notes: {args.notes}")
-        if applicability_change:
-            print(f"  Proposed Change: {applicability_change['field']}: "
-                  f"{applicability_change['current_value']} -> {applicability_change['proposed_value']}")
-        print()
-        print(f"  Updated summary: {report['summary']}")
     else:
-        save_json(report_path, report)
-        print(f"Recorded decision for {args.guideline}")
-        print(f"  Decision: {args.decision}, Confidence: {args.confidence}")
-        print(f"  Accepted: {len(accepted_matches)}, Rejected: {len(rejected_matches)}")
-        if applicability_change:
-            print(f"  Proposed change: {applicability_change['field']}: "
-                  f"{applicability_change['current_value']} -> {applicability_change['proposed_value']}")
-        print(f"  Progress: {report['summary']['verified_count']}/{report['summary']['total_guidelines']}")
+        # === IN-PLACE MODE ===
+        # At this point, we know report and report_path are not None
+        assert report is not None
+        assert report_path is not None
+        
+        # Find guideline index
+        result = find_guideline(report, args.guideline)
+        assert result is not None  # Already validated above
+        guideline_idx, guideline = result
+        
+        # Build verification decision
+        verification_decision = {
+            "decision": args.decision,
+            "confidence": args.confidence,
+            "fls_rationale_type": args.rationale_type,
+            "accepted_matches": accepted_matches,
+            "rejected_matches": rejected_matches,
+            "notes": args.notes,
+        }
+        
+        if proposed_change:
+            verification_decision["proposed_applicability_change"] = proposed_change
+        
+        # Update guideline
+        report["guidelines"][guideline_idx]["verification_decision"] = verification_decision
+        
+        # Add applicability change to top-level array if proposed
+        if proposed_change:
+            applicability_change = {
+                "guideline_id": args.guideline,
+                "field": proposed_change["field"],
+                "current_value": proposed_change["current_value"],
+                "proposed_value": proposed_change["proposed_value"],
+                "rationale": proposed_change["rationale"],
+                "approved": None,
+            }
+            # Remove any existing change for this guideline/field combination
+            existing_changes = report.get("applicability_changes", [])
+            filtered_changes = [
+                c for c in existing_changes
+                if not (c["guideline_id"] == args.guideline and c["field"] == applicability_change["field"])
+            ]
+            filtered_changes.append(applicability_change)
+            report["applicability_changes"] = filtered_changes
+        
+        # Update summary
+        update_summary(report)
+        
+        # Validate against schema
+        schema = load_batch_report_schema(root)
+        if schema:
+            errors = validate_report(report, schema)
+            if errors:
+                print("ERROR: Updated report fails schema validation:", file=sys.stderr)
+                for err in errors:
+                    print(f"  {err}", file=sys.stderr)
+                sys.exit(1)
+        
+        # Output or save
+        if args.dry_run:
+            print("DRY RUN - Would record the following decision:")
+            print(f"  Guideline: {args.guideline}")
+            print(f"  Decision: {args.decision}")
+            print(f"  Confidence: {args.confidence}")
+            print(f"  Rationale Type: {args.rationale_type}")
+            print(f"  Accepted Matches: {len(accepted_matches)}")
+            for m in accepted_matches:
+                reason_preview = m['reason'][:60] + '...' if len(m['reason']) > 60 else m['reason']
+                print(f"    - {m['fls_id']} ({m['score']:.3f}): {reason_preview}")
+            print(f"  Rejected Matches: {len(rejected_matches)}")
+            for m in rejected_matches:
+                reason_preview = m['reason'][:60] + '...' if len(m['reason']) > 60 else m['reason']
+                print(f"    - {m['fls_id']} ({m['score']:.3f}): {reason_preview}")
+            if args.notes:
+                print(f"  Notes: {args.notes}")
+            if proposed_change:
+                print(f"  Proposed Change: {proposed_change['field']}: "
+                      f"{proposed_change['current_value']} -> {proposed_change['proposed_value']}")
+            print()
+            print(f"  Updated summary: {report['summary']}")
+        else:
+            save_json(report_path, report)
+            print(f"Recorded decision for {args.guideline}")
+            print(f"  Decision: {args.decision}, Confidence: {args.confidence}")
+            print(f"  Accepted: {len(accepted_matches)}, Rejected: {len(rejected_matches)}")
+            if proposed_change:
+                print(f"  Proposed change: {proposed_change['field']}: "
+                      f"{proposed_change['current_value']} -> {proposed_change['proposed_value']}")
+            print(f"  Progress: {report['summary']['verified_count']}/{report['summary']['total_guidelines']}")
 
 
 if __name__ == "__main__":

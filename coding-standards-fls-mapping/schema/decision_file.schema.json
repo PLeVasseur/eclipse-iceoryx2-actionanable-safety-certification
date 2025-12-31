@@ -1,0 +1,118 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "decision_file.schema.json",
+  "title": "Verification Decision File",
+  "description": "Schema for individual guideline verification decision files used in parallel verification workflow",
+  "type": "object",
+  "required": [
+    "guideline_id",
+    "decision",
+    "confidence",
+    "fls_rationale_type",
+    "accepted_matches",
+    "rejected_matches",
+    "recorded_at"
+  ],
+  "properties": {
+    "guideline_id": {
+      "type": "string",
+      "description": "MISRA guideline ID (e.g., 'Rule 10.1', 'Dir 4.1')"
+    },
+    "decision": {
+      "type": "string",
+      "enum": ["accept_with_modifications", "accept_no_matches", "accept_existing", "reject"],
+      "description": "The verification decision type"
+    },
+    "confidence": {
+      "type": "string",
+      "enum": ["high", "medium", "low"],
+      "description": "Confidence level in the verification decision"
+    },
+    "fls_rationale_type": {
+      "type": "string",
+      "enum": ["direct_mapping", "rust_alternative", "rust_prevents", "no_equivalent", "partial_mapping"],
+      "description": "Type of relationship between the guideline and FLS"
+    },
+    "accepted_matches": {
+      "type": "array",
+      "description": "FLS sections accepted as matches",
+      "items": {
+        "$ref": "#/$defs/fls_match"
+      }
+    },
+    "rejected_matches": {
+      "type": "array",
+      "description": "FLS sections explicitly rejected",
+      "items": {
+        "$ref": "#/$defs/fls_match"
+      }
+    },
+    "notes": {
+      "type": ["string", "null"],
+      "description": "Additional notes about the decision"
+    },
+    "proposed_applicability_change": {
+      "type": ["object", "null"],
+      "description": "Proposed change to applicability fields (requires human approval)",
+      "if": {
+        "type": "object"
+      },
+      "then": {
+        "required": ["field", "current_value", "proposed_value", "rationale"],
+        "properties": {
+          "field": {
+            "type": "string",
+            "enum": ["applicability_all_rust", "applicability_safe_rust", "fls_rationale_type"]
+          },
+          "current_value": {
+            "type": "string"
+          },
+          "proposed_value": {
+            "type": "string"
+          },
+          "rationale": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "recorded_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp when decision was recorded"
+    }
+  },
+  "$defs": {
+    "fls_match": {
+      "type": "object",
+      "required": ["fls_id", "fls_title", "category", "score", "reason"],
+      "properties": {
+        "fls_id": {
+          "type": "string",
+          "pattern": "^fls_[a-zA-Z0-9]+$",
+          "description": "FLS identifier"
+        },
+        "fls_title": {
+          "type": "string",
+          "description": "Human-readable title of the FLS section"
+        },
+        "category": {
+          "type": "integer",
+          "enum": [0, -1, -2, -3, -4, -5, -6, -7, -8],
+          "description": "Category code: 0=section, -1=general, -2=legality_rules, -3=dynamic_semantics, -4=undefined_behavior, -5=implementation_requirements, -6=implementation_permissions, -7=examples, -8=syntax"
+        },
+        "score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Similarity score (0-1)"
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Justification for accepting/rejecting - must not be empty"
+        }
+      }
+    }
+  }
+}

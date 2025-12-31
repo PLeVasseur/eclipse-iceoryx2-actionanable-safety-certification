@@ -47,6 +47,7 @@ verify-batch = "fls_tools.standards.verification.batch:main"
 apply-verification = "fls_tools.standards.verification.apply:main"
 check-progress = "fls_tools.standards.verification.progress:main"
 record-decision = "fls_tools.standards.verification.record:main"
+merge-decisions = "fls_tools.standards.verification.merge:main"
 enrich-fls-matches = "fls_tools.standards.verification.enrich:main"
 reset-batch = "fls_tools.standards.verification.reset:main"
 search-fls = "fls_tools.standards.verification.search:main"
@@ -57,6 +58,7 @@ scaffold-progress = "fls_tools.standards.verification.scaffold:main"
 # Pipeline 2: Standards -> FLS (validation)
 validate-standards = "fls_tools.standards.validation.standards:main"
 validate-synthetic-ids = "fls_tools.standards.validation.synthetic:main"
+validate-decisions = "fls_tools.standards.validation.decisions:main"
 
 # Analysis
 analyze-coverage = "fls_tools.analysis.coverage:main"

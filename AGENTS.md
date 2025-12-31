@@ -218,6 +218,7 @@ eclipse-iceoryx2-actionanable-safety-certification/
 │   │       ├── batch.py            # verify-batch
 │   │       ├── apply.py            # apply-verification
 │   │       ├── enrich.py           # enrich-fls-matches
+│   │       ├── merge.py            # merge-decisions
 │   │       ├── progress.py         # check-progress
 │   │       ├── record.py           # record-decision
 │   │       ├── reset.py            # reset-batch
@@ -237,8 +238,9 @@ eclipse-iceoryx2-actionanable-safety-certification/
 > **Copyright Notice:** The `cache/` directory contains files with copyrighted MISRA content:
 > - `cache/misra_c_extracted_text.json` - Full MISRA rationale/amplification text (required for verification)
 > - `cache/verification/*.json` - Batch reports with MISRA rationale (delete after verification applied)
+> - `cache/verification/batch*_decisions/` - Per-guideline decision files (delete after merge and apply)
 > 
-> These files are gitignored and must NEVER be committed. Batch reports should be deleted immediately after successful application via `apply-verification`.
+> These files are gitignored and must NEVER be committed. Batch reports and decision directories should be deleted immediately after successful application via `apply-verification`.
 
 ---
 
@@ -594,16 +596,20 @@ Before starting, run `check-progress` to determine current state:
 ```bash
 cd tools
 uv run check-progress
+uv run check-progress --workers 4  # Adjust worker count for parallel mode
 ```
 
 This shows:
 - Last session ID and next session ID to use
 - Current batch and its status
 - Whether a batch report exists in `cache/verification/`
+- Whether a decisions directory exists (for parallel mode)
+- Progress from decision files (valid/invalid counts)
+- Suggested worker assignments for remaining guidelines
 - If resuming, which guideline to continue from
 - Suggested command for Phase 1 (if batch report doesn't exist)
 
-**Crash recovery:** If a session was interrupted, `check-progress` will detect an existing batch report with partial work and indicate where to resume.
+**Crash recovery:** If a session was interrupted, `check-progress` will detect existing work in either the batch report or decisions directory and indicate where to resume.
 
 #### Phase 1: Data Gathering
 
@@ -639,6 +645,87 @@ See `coding-standards-fls-mapping/schema/batch_report.schema.json` for required 
 | `--paragraph-threshold` | 0.55 | Minimum paragraph similarity score |
 
 **Failure conditions:** Script fails immediately if `cache/misra_c_extracted_text.json` is missing.
+
+#### Parallel Verification Workflow (Optional)
+
+For large batches, verification can be parallelized across multiple workers. Each worker processes a subset of guidelines independently, writing decisions to a shared directory.
+
+##### Determining Worker Count
+
+Before starting parallel verification, ask the user how many workers they want to use:
+
+> "Batch N has X guidelines to verify. How many parallel workers would you like to use?
+> 
+> Recommendations:
+> - **3 workers** - Good balance, recommended for most cases
+> - **4 workers** - More parallelism
+> - **2 workers** - Conservative, less coordination
+> 
+> Enter number of workers (default: 3):"
+
+Then run `check-progress --workers N` to show the specific guideline assignments for each worker.
+
+##### Setup
+
+```bash
+cd tools
+
+# 1. Generate batch report (becomes READ-ONLY reference)
+uv run verify-batch \
+    --batch 4 \
+    --session 6 \
+    --mode llm \
+    --output ../cache/verification/batch4_session6.json
+
+# 2. Create decisions directory
+mkdir -p cache/verification/batch4_decisions
+
+# 3. Check worker assignments
+uv run check-progress --workers 3
+```
+
+##### Recording Decisions (Parallel-Safe)
+
+Use `--output-dir` instead of updating the batch report directly:
+
+```bash
+uv run record-decision \
+    --output-dir cache/verification/batch4_decisions/ \
+    --guideline "Dir 1.1" \
+    --decision accept_with_modifications \
+    --confidence high \
+    --rationale-type direct_mapping \
+    --accept-match "fls_abc123:ABI:0:0.64:FLS states X addressing MISRA concern Y"
+```
+
+Each decision is written to a separate file (e.g., `Dir_1.1.json`), enabling parallel workers to operate without conflicts.
+
+##### Progress Tracking
+
+```bash
+# Check progress (counts valid decision files)
+uv run check-progress
+
+# Validate decision files
+uv run validate-decisions \
+    --decisions-dir cache/verification/batch4_decisions/ \
+    --batch-report cache/verification/batch4_session6.json
+```
+
+##### Merging Decisions (Before Phase 3)
+
+After all workers complete, merge decisions back into the batch report:
+
+```bash
+uv run merge-decisions \
+    --batch-report cache/verification/batch4_session6.json \
+    --decisions-dir cache/verification/batch4_decisions/ \
+    --validate
+```
+
+This populates `verification_decision` fields in the batch report and aggregates any `proposed_applicability_change` entries for Phase 3 review.
+
+**Incremental merge:** Can merge partial progress (e.g., 30/54 decisions) and continue later.
 
 #### Phase 2: Analysis & Decision (LLM)
 
@@ -824,16 +911,21 @@ After `apply-verification` completes successfully:
 
 4. **Prompt for cleanup:**
    
-   Batch reports contain copyrighted MISRA rationale text extracted from the MISRA PDF and must not be retained after verification is complete.
+   Batch reports and decision directories contain copyrighted MISRA rationale text extracted from the MISRA PDF and must not be retained after verification is complete.
    
    Prompt the user:
-   > "The batch report `cache/verification/batch3_session5.json` contains copyrighted MISRA text. Shall I delete it?"
+   > "The following files contain copyrighted MISRA text:
+   > - `cache/verification/batch3_session5.json` (batch report)
+   > - `cache/verification/batch3_decisions/` (decision files, if exists)
+   > 
+   > Shall I delete them?"
    
    **Wait for explicit user approval before deleting.**
 
-5. **Upon approval, delete the batch report:**
+5. **Upon approval, delete the files:**
    ```bash
    rm cache/verification/batchN_sessionM.json
+   rm -rf cache/verification/batchN_decisions/
    ```
 
 #### Verification Guidelines
