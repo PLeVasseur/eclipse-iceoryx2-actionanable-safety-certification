@@ -1,0 +1,146 @@
+{
+  "chapter": 8,
+  "title": "Statements",
+  "fls_id": "fls_wdicg3sqa98e",
+  "file": "statements",
+  "extraction_date": "2025-12-31",
+  "category_codes": {
+    "0": "section",
+    "-1": "general",
+    "-2": "legality_rules",
+    "-3": "dynamic_semantics",
+    "-4": "undefined_behavior",
+    "-5": "implementation_requirements",
+    "-6": "implementation_permissions",
+    "-7": "examples",
+    "-8": "syntax"
+  },
+  "statistics": {
+    "total_sections": 3,
+    "total_paragraphs": 36,
+    "paragraphs_by_category": {
+      "-8": 3,
+      "-7": 3,
+      "-3": 9,
+      "-2": 21
+    }
+  },
+  "sections": [
+    {
+      "fls_id": "fls_wdicg3sqa98e",
+      "title": "Statements",
+      "category": 0,
+      "level": 1,
+      "file": "statements",
+      "content": "Statements\n\nAn expression statement is an expression whose result is ignored.\n\nAn item statement is a statement that is expressed as an item.\n\nAn empty statement is a statement expressed as character 0x3B\n(semicolon).\n\nA macro statement is a statement expressed as a\nterminated macro invocation.\n\nExecution is the process by which a statement achieves its runtime\neffects.\n\nThe execution of an empty statement has no effect.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_7zh6ziglo5iy": "An expression statement is an expression whose result is ignored.",
+            "fls_kdxe1ukmgl1": "An item statement is a statement that is expressed as an item.",
+            "fls_fftdnwe22xrb": "An empty statement is a statement expressed as character 0x3B (semicolon).",
+            "fls_or125cqtxg9j": "A macro statement is a statement expressed as a terminated macro invocation."
+          }
+        },
+        "-3": {
+          "paragraphs": {
+            "fls_estqu395zxgk": "Execution is the process by which a statement achieves its runtime effects.",
+            "fls_dl763ssb54q1": "The execution of an empty statement has no effect."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "Statement ::=\n       ExpressionStatement\n     | Item\n     | LetStatement\n     | TerminatedMacroInvocation\n     | $$;$$"
+          }
+        }
+      },
+      "parent_fls_id": null,
+      "sibling_fls_ids": []
+    },
+    {
+      "fls_id": "fls_yivm43r5wnp1",
+      "title": "Let Statements",
+      "category": 0,
+      "level": 2,
+      "file": "statements",
+      "content": "Let Statements\n\n LetInitializer ::=\n $$=$$ Expression ($$else$$ BlockExpression)?\n\nA let statement is a statement that introduces new [binding]s\nproduced by its pattern-without-alternation that are optionally\ninitialized to a value.\n\nA let initializer is a construct that provides the value of\nthe [binding]s of the let statement using an expression, or\nalternatively executes a block expression.\n\nIf a let statement lacks a block expression, then the pattern of\nthe let statement shall be an irrefutable pattern.\n\nIf a let statement has a block expression, then the Expression of\nthe LetInitializer shall not be a LazyBooleanExpression or end with\ntoken }.\n\nThe expected type of the pattern of the let statement is determined as follows:\n\n* If the let statement lacks a type ascription and a let initializer, then the expected type is the inferred type.\n\n* If the let statement lacks a type ascription, then the expected type is the type of the let initializer.\n\n* Otherwise the expected type is the type specified by the type ascription.\n\nThe type of a binding introduced by a let statement is\ndetermined as follows:\n\n* If the let statement appears with a type ascription, then the\n type is the type specified by the type ascription.\n\n* If the let statement lacks a type ascription, then the type is\n inferred using type inference.\n\nThe type of the block expression of a let statement shall be the\nnever type.\n\nThe value of a binding introduced by a let statement is\ndetermined as follows:\n\n* If the let statement appears with a let initializer, then the\n value is the value of the expression of the\n let initializer.\n\n* Otherwise the binding is uninitialized.\n\nThe execution of a let statement with a let initializer proceeds\nas follows:\n\n#. The expression of the let initializer is evaluated.\n\n#. If the value of the expression is matched successfully against the\n pattern of the let statement, then the value is assigned to\n each binding introduced by the let statement.\n\n#. Otherwise the block expression of the let initializer is evaluated.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_ct7pp7jnfr86": "A let statement is a statement that introduces new [binding]s produced by its pattern-without-alternation that are optionally initialized to a value.",
+            "fls_SR3dIgR5K0Kq": "A let initializer is a construct that provides the value of the [binding]s of the let statement using an expression, or alternatively executes a block expression.",
+            "fls_iqar7vvtw22c": "If a let statement lacks a block expression, then the pattern of the let statement shall be an irrefutable pattern.",
+            "fls_1s1UikGU5YQb": "If a let statement has a block expression, then the Expression of the LetInitializer shall not be a LazyBooleanExpression or end with token }.",
+            "fls_iB25BeFys0j8": "The expected type of the pattern of the let statement is determined as follows:",
+            "fls_zObyLdya4DYc": "If the let statement lacks a type ascription and a let initializer, then the expected type is the inferred type.",
+            "fls_r38TXWKQPjxv": "If the let statement lacks a type ascription, then the expected type is the type of the let initializer.",
+            "fls_6QSdwF4pzjoe": "Otherwise the expected type is the type specified by the type ascription.",
+            "fls_1prqh1trybwz": "The type of a binding introduced by a let statement is determined as follows:",
+            "fls_djkm8r2iuu6u": "If the let statement appears with a type ascription, then the type is the type specified by the type ascription.",
+            "fls_ppj9gvhp8wcj": "If the let statement lacks a type ascription, then the type is inferred using type inference.",
+            "fls_1eBQDZdBuDsN": "The type of the block expression of a let statement shall be the never type.",
+            "fls_m8a7gesa4oim": "The value of a binding introduced by a let statement is determined as follows:",
+            "fls_oaxnre7m9s10": "If the let statement appears with a let initializer, then the value is the value of the expression of the let initializer.",
+            "fls_t5bjwluyv8za": "Otherwise the binding is uninitialized."
+          }
+        },
+        "-3": {
+          "paragraphs": {
+            "fls_4j9riqyf4p9": "The execution of a let statement with a let initializer proceeds as follows: #.",
+            "fls_t53g5hlabqw1": "The expression of the let initializer is evaluated. #.",
+            "fls_7j4qlwg72ege": "If the value of the expression is matched successfully against the pattern of the let statement, then the value is assigned to each binding introduced by the let statement. #.",
+            "fls_ea9bRFZjH8Im": "Otherwise the block expression of the let initializer is evaluated."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "LetStatement ::=\n       OuterAttributeOrDoc* $$let$$ PatternWithoutAlternation TypeAscription? LetInitializer? $$;$$\n\n   LetInitializer ::=\n       $$=$$ Expression ($$else$$ BlockExpression)?"
+          }
+        }
+      },
+      "parent_fls_id": "fls_wdicg3sqa98e",
+      "sibling_fls_ids": [
+        "fls_1pg5ig740tg1"
+      ]
+    },
+    {
+      "fls_id": "fls_1pg5ig740tg1",
+      "title": "Expression Statements",
+      "category": 0,
+      "level": 2,
+      "file": "statements",
+      "content": "Expression Statements\n\nAn expression statement is an expression whose result is ignored.\n\nThe expected type of an expression statement without character 0x3B\n(semicolon) is the unit type.\n\nThe execution of an expression statement proceeds as follows:\n\n#. The operand is evaluated.\n\n#. The value of the operand is dropped.\n\nThe following expression statement ignores the result from pop().\n\nThe following expression statement does not require a semicolon.\n\nThe following expression statement is not an index expression.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_xmdj8uj7ixoe": "An expression statement is an expression whose result is ignored.",
+            "fls_gzzmudc1hl6s": "The expected type of an expression statement without character 0x3B (semicolon) is the unit type."
+          }
+        },
+        "-3": {
+          "paragraphs": {
+            "fls_kc99n8qrszxh": "The execution of an expression statement proceeds as follows: #.",
+            "fls_r8poocwqaglf": "The operand is evaluated. #.",
+            "fls_88e6s3erk8tj": "The value of the operand is dropped."
+          }
+        },
+        "-7": {
+          "paragraphs": {
+            "fls_4q90jb39apwr": "The following expression statement ignores the result from pop(). .. code-block:: rust values.pop();",
+            "fls_xqtztcu8ibwq": "The following expression statement does not require a semicolon. .. code-block:: rust if values.is_empty() { values.push(42); } else { values.remove(0); }",
+            "fls_2p9xnt519nbw": "The following expression statement is not an index expression. .. code-block:: rust [42];"
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "ExpressionStatement ::=\n       ExpressionWithBlock $$;$$?\n     | ExpressionWithoutBlock $$;$$"
+          }
+        }
+      },
+      "parent_fls_id": "fls_wdicg3sqa98e",
+      "sibling_fls_ids": [
+        "fls_yivm43r5wnp1"
+      ]
+    }
+  ]
+}

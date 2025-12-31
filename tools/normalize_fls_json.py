@@ -559,7 +559,9 @@ def normalize_file(input_path: Path, output_path: Path) -> Dict:
 
 def main():
     """Main entry point."""
-    mapping_dir = Path("iceoryx2-fls-mapping")
+    # Use project root relative path
+    project_root = Path(__file__).parent.parent
+    mapping_dir = project_root / "iceoryx2-fls-mapping"
     
     # Find all JSON files (excluding schema and backup)
     json_files = sorted(mapping_dir.glob("fls_chapter*.json"))

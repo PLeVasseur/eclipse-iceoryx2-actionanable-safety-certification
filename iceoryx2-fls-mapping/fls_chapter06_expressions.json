@@ -45,6 +45,14 @@
       "description": "Expression Classification",
       "status": "demonstrated",
       "findings": {
+        "count": null,
+        "count_methodology": "Conceptual - classification is semantic",
+        "samples_waiver": {
+          "reason": "conceptual_section",
+          "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+          "approved_by": "automated",
+          "date": "2025-12-30"
+        },
         "analyzed": true
       },
       "samples": [],
@@ -57,6 +65,7 @@
           "description": "Assignee Expressions",
           "status": "demonstrated",
           "findings": {
+            "count": 24780,
             "description": "Assignee expressions can appear on the left side of assignment. Used for variables, fields, and array indexing."
           },
           "samples": [
@@ -79,13 +88,14 @@
             {
               "file": "iceoryx2-bb/lock-free/src/mpmc/unique_index_set.rs",
               "line": [
-                283, 284, 285
+                283,
+                284,
+                285
               ],
               "code": "capacity: capacity as u32,\nhead: AtomicU64::new(0),\nis_memory_initialized: AtomicBool::new(false),",
               "purpose": "Field assignments initializing struct members for lock-free unique index set"
             }
-          ],
-          "count": 24780
+          ]
         },
         "constant_expressions": {
           "fls_section": "6.1.2",
@@ -95,6 +105,7 @@
           "description": "Constant Expressions",
           "status": "demonstrated",
           "findings": {
+            "count": 3964,
             "description": "Expressions evaluable at compile time. Used for const declarations, array lengths, and const generics.",
             "patterns": [
               "const fn calls",
@@ -122,13 +133,13 @@
             {
               "file": "iceoryx2/src/port/details/channel_management.rs",
               "line": [
-                17, 18
+                17,
+                18
               ],
               "code": "pub(crate) const INVALID_CHANNEL_STATE: u64 = u64::MAX;\nconst DISCONNECT_HINT_BIT: u64 = 1u64 << 63;",
               "purpose": "Compile-time constants with arithmetic expressions for channel state management"
             }
-          ],
-          "count": 3964
+          ]
         },
         "diverging_expressions": {
           "fls_section": "6.1.3",
@@ -136,6 +147,7 @@
           "description": "Diverging Expressions",
           "status": "demonstrated",
           "findings": {
+            "count": 607,
             "description": "Expressions that never complete normally (panic!, return, break, continue).",
             "patterns": [
               "panic! for invariant violations",
@@ -147,7 +159,9 @@
             {
               "file": "iceoryx2-bb/posix/src/scheduler.rs",
               "line": [
-                59, 60, 61
+                59,
+                60,
+                61
               ],
               "code": "-1 => {\n                fatal_panic!(\"This should never happen! Unable to acquire minimum priority for scheduler {:#?}.\", self);\n            }",
               "purpose": "Diverging expression handling impossible error case when acquiring scheduler priority"
@@ -155,7 +169,9 @@
             {
               "file": "iceoryx2-bb/posix/src/process_state.rs",
               "line": [
-                568, 569, 570
+                568,
+                569,
+                570
               ],
               "code": "None => {\n                unreachable!()\n            }",
               "purpose": "Unreachable diverging expression for path that should never be taken"
@@ -168,8 +184,7 @@
               "code": "fatal_panic!(from self, \"Memory already initialized. Initializing it twice may lead to undefined behavior.\");",
               "purpose": "Fatal panic to prevent double initialization which would cause undefined behavior"
             }
-          ],
-          "count": 607
+          ]
         },
         "place_expressions": {
           "fls_section": "6.1.4",
@@ -179,17 +194,17 @@
           "description": "Place Expressions",
           "status": "demonstrated",
           "findings": {
+            "count": null,
+            "count_methodology": "Conceptual - place is semantic",
+            "samples_waiver": {
+              "reason": "conceptual_section",
+              "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+              "approved_by": "automated",
+              "date": "2025-12-30"
+            },
             "description": "Expressions representing memory locations. Variables, dereferences, field accesses, and indexing."
           },
-          "samples": [],
-          "count": null,
-          "count_methodology": "Conceptual - place is semantic",
-          "samples_waiver": {
-            "reason": "conceptual_section",
-            "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
-            "approved_by": "automated",
-            "date": "2025-12-30"
-          }
+          "samples": []
         },
         "value_expressions": {
           "fls_section": "6.1.5",
@@ -199,26 +214,18 @@
           "description": "Value Expressions",
           "status": "demonstrated",
           "findings": {
+            "count": null,
+            "count_methodology": "Conceptual - value is semantic",
+            "samples_waiver": {
+              "reason": "conceptual_section",
+              "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+              "approved_by": "automated",
+              "date": "2025-12-30"
+            },
             "description": "Expressions that produce values rather than locations. Literals, function calls, operators."
           },
-          "samples": [],
-          "count": null,
-          "count_methodology": "Conceptual - value is semantic",
-          "samples_waiver": {
-            "reason": "conceptual_section",
-            "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
-            "approved_by": "automated",
-            "date": "2025-12-30"
-          }
+          "samples": []
         }
-      },
-      "count": null,
-      "count_methodology": "Conceptual - classification is semantic",
-      "samples_waiver": {
-        "reason": "conceptual_section",
-        "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
-        "approved_by": "automated",
-        "date": "2025-12-30"
       }
     },
     "literal_expressions": {
@@ -229,13 +236,16 @@
       "description": "Literal Expressions",
       "status": "demonstrated",
       "findings": {
+        "count": 51054,
         "analyzed": true
       },
       "samples": [
         {
           "file": "iceoryx2-bb/container/src/string/utils.rs",
           "line": [
-            40, 41, 42
+            40,
+            41,
+            42
           ],
           "code": "b'\\t' => vec![b'\\\\', b't'].into_iter(),\nb'\\r' => vec![b'\\\\', b'r'].into_iter(),\nb'\\n' => vec![b'\\\\', b'n'].into_iter(),",
           "purpose": "Byte character literals for escape sequence handling in string utilities"
@@ -243,7 +253,8 @@
         {
           "file": "iceoryx2/src/constants.rs",
           "line": [
-            14, 18
+            14,
+            18
           ],
           "code": "pub const MAX_SERVICE_NAME_LENGTH: usize = 255;\npub const MAX_ATTRIBUTES: usize = 8;",
           "purpose": "Numeric literals defining configuration limits for services and attributes"
@@ -256,8 +267,7 @@
           "code": "pub const INTERNAL_SERVICE_PREFIX: &str = \"iox2://\";",
           "purpose": "String literal defining the internal service name prefix"
         }
-      ],
-      "count": 51054
+      ]
     },
     "path_expressions": {
       "fls_section": "6.3",
@@ -267,6 +277,7 @@
       "description": "Path Expressions",
       "status": "demonstrated",
       "findings": {
+        "count": 39291,
         "analyzed": true
       },
       "samples": [
@@ -281,7 +292,9 @@
         {
           "file": "iceoryx2-cal/src/shared_memory/posix.rs",
           "line": [
-            15, 16, 17
+            15,
+            16,
+            17
           ],
           "code": "pub type Memory<Allocator> = crate::shared_memory::common::details::Memory<\n    Allocator,\n    crate::dynamic_storage::posix_shared_memory::Storage<AllocatorDetails<Allocator>>,\n>;",
           "purpose": "Qualified path expressions for type alias with nested module paths"
@@ -289,13 +302,14 @@
         {
           "file": "iceoryx2-bb/posix/src/scheduler.rs",
           "line": [
-            77, 78, 79
+            77,
+            78,
+            79
           ],
           "code": "posix::SCHED_FIFO => Ok(Scheduler::Fifo),\nposix::SCHED_RR => Ok(Scheduler::RoundRobin),\nposix::SCHED_OTHER => Ok(Scheduler::Other),",
           "purpose": "Path expressions referencing POSIX scheduler constants in match arms"
         }
-      ],
-      "count": 39291
+      ]
     },
     "block_expressions": {
       "fls_section": "6.4",
@@ -305,24 +319,45 @@
       "description": "Block Expressions",
       "status": "demonstrated",
       "findings": {
+        "count": 4934,
         "analyzed": true
       },
       "samples": [
         {
           "file": "iceoryx2-bb/memory/src/bump_allocator.rs",
-          "line": [48, 49, 50, 51, 52, 53, 54],
+          "line": [
+            48,
+            49,
+            50,
+            51,
+            52,
+            53,
+            54
+          ],
           "code": "pub fn new(ptr: NonNull<u8>, size: usize) -> Self {\n    Self {\n        start: ptr.as_ptr() as usize,\n        size,\n        current_position: AtomicUsize::new(0),\n    }\n}",
           "purpose": "Block expression initializing BumpAllocator struct with field assignments for memory management"
         },
         {
           "file": "iceoryx2-cal/src/dynamic_storage/posix_shared_memory.rs",
-          "line": [207, 208, 209, 210],
+          "line": [
+            207,
+            208,
+            209,
+            210
+          ],
           "code": "let shm = loop {\n    match SharedMemoryBuilder::new(&full_name).open_existing(AccessMode::ReadWrite) {\n        Ok(v) => break v,",
           "purpose": "Block expression with loop returning shared memory handle through break expression"
         },
         {
           "file": "iceoryx2/src/waitset.rs",
-          "line": [594, 595, 596, 597, 598, 599],
+          "line": [
+            594,
+            595,
+            596,
+            597,
+            598,
+            599
+          ],
           "code": "let call = |idx: DeadlineQueueIndex| -> CallbackProgression {\n    let progression = if let Some(reactor_idx) = deadline_to_attachment.get(&idx) {\n        fn_call(WaitSetAttachmentId::deadline(self, *reactor_idx, idx))\n    } else {\n        fn_call(WaitSetAttachmentId::tick(self, idx))\n    };",
           "purpose": "Block expression in closure handling deadline queue callbacks for waitset event processing"
         }
@@ -337,11 +372,10 @@
           "status": "not_used",
           "findings": {
             "count": 0,
+            "count_methodology": "Pattern not defined for this section",
             "rationale": "Async intentionally avoided for deterministic real-time behavior"
           },
-          "samples": [],
-          "count": null,
-          "count_methodology": "Pattern not defined for this section"
+          "samples": []
         },
         "const_blocks": {
           "fls_section": "6.4.2",
@@ -350,20 +384,19 @@
           "status": "demonstrated",
           "findings": {
             "count": 4,
+            "count_methodology": "Pattern not defined for this section",
+            "samples_waiver": {
+              "reason": "conceptual_section",
+              "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+              "approved_by": "automated",
+              "date": "2025-12-30"
+            },
             "description": "const { } blocks for compile-time evaluation in array initialization.",
             "patterns": [
               "[const { MaybeUninit::uninit() }; N]"
             ]
           },
-          "samples": [],
-          "count": null,
-          "count_methodology": "Pattern not defined for this section",
-          "samples_waiver": {
-            "reason": "conceptual_section",
-            "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
-            "approved_by": "automated",
-            "date": "2025-12-30"
-          }
+          "samples": []
         },
         "named_blocks": {
           "fls_section": "6.4.3",
@@ -371,17 +404,17 @@
           "description": "Named Blocks",
           "status": "limited_use",
           "findings": {
+            "count": null,
+            "count_methodology": "Pattern not defined for this section",
+            "samples_waiver": {
+              "reason": "conceptual_section",
+              "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+              "approved_by": "automated",
+              "date": "2025-12-30"
+            },
             "description": "Named blocks ('label: { }) for break targets. Limited use in iceoryx2."
           },
-          "samples": [],
-          "count": null,
-          "count_methodology": "Pattern not defined for this section",
-          "samples_waiver": {
-            "reason": "conceptual_section",
-            "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
-            "approved_by": "automated",
-            "date": "2025-12-30"
-          }
+          "samples": []
         },
         "unsafe_blocks": {
           "fls_section": "6.4.4",
@@ -392,6 +425,13 @@
           "status": "demonstrated",
           "findings": {
             "count": 2372,
+            "count_methodology": "Pattern not defined for this section",
+            "samples_waiver": {
+              "reason": "conceptual_section",
+              "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+              "approved_by": "automated",
+              "date": "2025-12-30"
+            },
             "change": "+39% from v0.7.0",
             "description": "Unsafe blocks enable unsafe operations within safe code.",
             "contexts": [
@@ -401,18 +441,9 @@
               "Static mut access"
             ]
           },
-          "samples": [],
-          "count": null,
-          "count_methodology": "Pattern not defined for this section",
-          "samples_waiver": {
-            "reason": "conceptual_section",
-            "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
-            "approved_by": "automated",
-            "date": "2025-12-30"
-          }
+          "samples": []
         }
-      },
-      "count": 4934
+      }
     },
     "operator_expressions": {
       "fls_section": "6.5",
@@ -422,6 +453,14 @@
       "description": "Operator Expressions",
       "status": "demonstrated",
       "findings": {
+        "count": null,
+        "count_methodology": "Aggregate of operator subtypes",
+        "samples_waiver": {
+          "reason": "conceptual_section",
+          "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+          "approved_by": "automated",
+          "date": "2025-12-30"
+        },
         "error_propagation": 3443,
         "type_casts": 2312,
         "dereferences": 6176
@@ -436,21 +475,21 @@
           "description": "Borrow Expression",
           "status": "demonstrated",
           "findings": {
+            "count": null,
+            "count_methodology": "Pattern not defined for this section",
+            "samples_waiver": {
+              "reason": "conceptual_section",
+              "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+              "approved_by": "automated",
+              "date": "2025-12-30"
+            },
             "description": "Borrow expressions (&expr, &mut expr) create references. Extensively used.",
             "patterns": [
               "&self for shared access",
               "&mut self for mutable access"
             ]
           },
-          "samples": [],
-          "count": null,
-          "count_methodology": "Pattern not defined for this section",
-          "samples_waiver": {
-            "reason": "conceptual_section",
-            "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
-            "approved_by": "automated",
-            "date": "2025-12-30"
-          }
+          "samples": []
         },
         "dereference_expression": {
           "fls_section": "6.5.2",
@@ -461,18 +500,17 @@
           "status": "demonstrated",
           "findings": {
             "count": 6176,
+            "count_methodology": "Pattern not defined for this section",
+            "samples_waiver": {
+              "reason": "conceptual_section",
+              "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+              "approved_by": "automated",
+              "date": "2025-12-30"
+            },
             "description": "Dereference (*expr) accesses the value behind a pointer/reference.",
             "note": "Raw pointer deref requires unsafe"
           },
-          "samples": [],
-          "count": null,
-          "count_methodology": "Pattern not defined for this section",
-          "samples_waiver": {
-            "reason": "conceptual_section",
-            "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
-            "approved_by": "automated",
-            "date": "2025-12-30"
-          }
+          "samples": []
         },
         "error_propagation_expression": {
           "fls_section": "6.5.3",
@@ -483,18 +521,17 @@
           "status": "demonstrated",
           "findings": {
             "count": 3443,
+            "count_methodology": "Pattern not defined for this section",
+            "samples_waiver": {
+              "reason": "conceptual_section",
+              "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+              "approved_by": "automated",
+              "date": "2025-12-30"
+            },
             "change": "+67% from v0.7.0",
             "description": "The ? operator propagates errors up the call stack."
           },
-          "samples": [],
-          "count": null,
-          "count_methodology": "Pattern not defined for this section",
-          "samples_waiver": {
-            "reason": "conceptual_section",
-            "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
-            "approved_by": "automated",
-            "date": "2025-12-30"
-          }
+          "samples": []
         },
         "negation_expression": {
           "fls_section": "6.5.4",
@@ -504,17 +541,17 @@
           "description": "Negation Expression",
           "status": "demonstrated",
           "findings": {
+            "count": null,
+            "count_methodology": "Pattern not defined for this section",
+            "samples_waiver": {
+              "reason": "conceptual_section",
+              "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+              "approved_by": "automated",
+              "date": "2025-12-30"
+            },
             "description": "Unary negation (- for numeric, ! for boolean/bitwise)."
           },
-          "samples": [],
-          "count": null,
-          "count_methodology": "Pattern not defined for this section",
-          "samples_waiver": {
-            "reason": "conceptual_section",
-            "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
-            "approved_by": "automated",
-            "date": "2025-12-30"
-          }
+          "samples": []
         },
         "arithmetic_expressions": {
           "fls_section": "6.5.5",
@@ -524,30 +561,37 @@
           "description": "Arithmetic Expressions",
           "status": "demonstrated",
           "findings": {
+            "count": 43589,
             "description": "Binary arithmetic (+, -, *, /, %) used for numeric calculations.",
             "note": "Division/modulo can panic on zero"
           },
           "samples": [
             {
               "file": "iceoryx2-bb/memory/src/bump_allocator.rs",
-              "line": [87],
+              "line": [
+                87
+              ],
               "code": "aligned_position = align(self.start + current_position, layout.align()) - self.start;",
               "purpose": "Arithmetic addition and subtraction for memory alignment calculation in bump allocator"
             },
             {
               "file": "iceoryx2-bb/lock-free/src/mpmc/unique_index_set.rs",
-              "line": [296],
+              "line": [
+                296
+              ],
               "code": "core::mem::size_of::<u32>() * (self.capacity + 1) as usize,",
               "purpose": "Arithmetic multiplication for calculating memory size of unique index set"
             },
             {
               "file": "iceoryx2-bb/elementary/src/math.rs",
-              "line": [61, 62],
+              "line": [
+                61,
+                62
+              ],
               "code": "remainder = quotient % 64;\nquotient /= 64;",
               "purpose": "Modulo and division for base64 encoding conversion"
             }
-          ],
-          "count": 43589
+          ]
         },
         "bit_expressions": {
           "fls_section": "6.5.6",
@@ -557,29 +601,40 @@
           "description": "Bit Expressions",
           "status": "demonstrated",
           "findings": {
+            "count": 15747,
             "description": "Bitwise operators (&, |, ^, <<, >>) used for flags and low-level manipulation."
           },
           "samples": [
             {
               "file": "iceoryx2-bb/lock-free/src/mpmc/unique_index_set.rs",
-              "line": [261, 262, 263],
+              "line": [
+                261,
+                262,
+                263
+              ],
               "code": "head: ((value >> 40) as u32) & 0xffffff,\naba: (value >> 24) as u16,\nborrowed_indices: (value as u32) & 0xffffff,",
               "purpose": "Right shift and bitwise AND for extracting packed fields from 64-bit head details"
             },
             {
               "file": "iceoryx2-bb/lock-free/src/mpmc/unique_index_set.rs",
-              "line": [268, 269, 270],
+              "line": [
+                268,
+                269,
+                270
+              ],
               "code": "(((self.head & 0x00ffffff) as u64) << 40)\n    | ((self.aba as u64) << 24)\n    | ((self.borrowed_indices & 0x00ffffff) as u64)",
               "purpose": "Left shift and bitwise OR for packing head, aba counter, and borrowed indices into u64"
             },
             {
               "file": "iceoryx2-cal/src/shm_allocator/pointer_offset.rs",
-              "line": [72, 73],
+              "line": [
+                72,
+                73
+              ],
               "code": "self.0 &= !((1u64 << SegmentIdUnderlyingType::BITS) - 1);\nself.0 |= value.0 as u64;",
               "purpose": "Bitwise AND-NOT and OR for setting segment ID in pointer offset encoding"
             }
-          ],
-          "count": 15747
+          ]
         },
         "comparison_expressions": {
           "fls_section": "6.5.7",
@@ -589,29 +644,36 @@
           "description": "Comparison Expressions",
           "status": "demonstrated",
           "findings": {
+            "count": 39847,
             "description": "Comparison operators (==, !=, <, >, <=, >=) for ordering and equality."
           },
           "samples": [
             {
               "file": "iceoryx2-bb/memory/src/bump_allocator.rs",
-              "line": [88],
+              "line": [
+                88
+              ],
               "code": "if aligned_position + layout.size() > self.size {",
               "purpose": "Greater-than comparison checking if allocation would exceed available memory"
             },
             {
               "file": "iceoryx2-bb/system-types/src/ipv4_address.rs",
-              "line": [62, 63],
+              "line": [
+                62,
+                63
+              ],
               "code": "if counter != 4 {\n    fail!(from origin, with Ipv4AddressParseError::WrongFormat,",
               "purpose": "Not-equal comparison validating IPv4 address has exactly 4 octets"
             },
             {
               "file": "iceoryx2-cal/src/dynamic_storage/posix_shared_memory.rs",
-              "line": [246],
+              "line": [
+                246
+              ],
               "code": "if package_version.to_u64() == 0 {",
               "purpose": "Equality comparison checking if dynamic storage version is uninitialized"
             }
-          ],
-          "count": 39847
+          ]
         },
         "lazy_boolean_expressions": {
           "fls_section": "6.5.8",
@@ -621,29 +683,42 @@
           "description": "Lazy Boolean Expressions",
           "status": "demonstrated",
           "findings": {
+            "count": 602,
             "description": "Short-circuit operators (&&, ||) for boolean logic with lazy evaluation."
           },
           "samples": [
             {
               "file": "iceoryx2-bb/system-types/src/ipv4_address.rs",
-              "line": [97, 98, 99, 100],
+              "line": [
+                97,
+                98,
+                99,
+                100
+              ],
               "code": "pub const fn is_private(&self) -> bool {\n    self.compare([10, 0, 0, 0], 8)\n        || self.compare([192, 168, 0, 0], 16)\n        || self.compare([172, 16, 0, 0], 12)\n}",
               "purpose": "Lazy OR evaluation for checking if IPv4 address is in any private range"
             },
             {
               "file": "iceoryx2-bb/posix/src/unix_datagram_socket.rs",
-              "line": [343, 344, 345],
+              "line": [
+                343,
+                344,
+                345
+              ],
               "code": "let new_flags = match value {\n    true => current_flags | posix::O_NONBLOCK,\n    false => current_flags & !posix::O_NONBLOCK,\n};",
               "purpose": "Boolean match for setting or clearing non-blocking flag on socket"
             },
             {
               "file": "iceoryx2-bb/memory/src/pool_allocator.rs",
-              "line": [176, 177, 178],
+              "line": [
+                176,
+                177,
+                178
+              ],
               "code": "!(position < self.start\n    || position > self.start + self.size\n    || (position - self.start) % self.bucket_size != 0)",
               "purpose": "Lazy OR evaluation checking if pointer is outside allocator bounds or misaligned"
             }
-          ],
-          "count": 602
+          ]
         },
         "raw_borrow_expression": {
           "fls_section": "6.5.9",
@@ -651,18 +726,18 @@
           "description": "Raw Borrow Expression",
           "status": "demonstrated",
           "findings": {
+            "count": null,
+            "count_methodology": "Pattern not defined for this section",
+            "samples_waiver": {
+              "reason": "conceptual_section",
+              "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+              "approved_by": "automated",
+              "date": "2025-12-30"
+            },
             "description": "&raw const and &raw mut for creating raw pointers without going through references.",
             "note": "Used in unsafe code for low-level memory operations"
           },
-          "samples": [],
-          "count": null,
-          "count_methodology": "Pattern not defined for this section",
-          "samples_waiver": {
-            "reason": "conceptual_section",
-            "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
-            "approved_by": "automated",
-            "date": "2025-12-30"
-          }
+          "samples": []
         },
         "type_cast_expressions": {
           "fls_section": "6.5.10",
@@ -683,24 +758,33 @@
           "samples": [
             {
               "file": "iceoryx2-bb/posix/src/unix_datagram_socket.rs",
-              "line": [364, 365],
+              "line": [
+                364,
+                365
+              ],
               "code": "(value as *const T) as *const posix::void,\ncore::mem::size_of::<T>() as u32,",
               "purpose": "Type cast for pointer conversion and size conversion in socket option setting"
             },
             {
               "file": "iceoryx2-bb/memory/src/pool_allocator.rs",
-              "line": [185, 186, 187],
+              "line": [
+                185,
+                186,
+                187
+              ],
               "code": "let position = ptr.as_ptr() as usize;\n\n((position - self.start) / self.bucket_size) as u32",
               "purpose": "Type cast converting calculated bucket index to u32 after pointer arithmetic"
             },
             {
               "file": "iceoryx2-bb/system-types/src/ipv4_address.rs",
-              "line": [72, 73],
+              "line": [
+                72,
+                73
+              ],
               "code": "pub const fn new(a: u8, b: u8, c: u8, d: u8) -> Self {\n    Self(((a as u32) << 24) | ((b as u32) << 16) | ((c as u32) << 8) | d as u32)",
               "purpose": "Type cast converting u8 octets to u32 for IPv4 address packing"
             }
-          ],
-          "count": 5278
+          ]
         },
         "assignment_expressions": {
           "fls_section": "6.5.11",
@@ -710,24 +794,34 @@
           "description": "Assignment Expressions",
           "status": "demonstrated",
           "findings": {
+            "count": 24780,
             "description": "Assignment (=) stores a value in a place expression."
           },
           "samples": [
             {
               "file": "iceoryx2-bb/posix/src/unix_datagram_socket.rs",
-              "line": [349],
+              "line": [
+                349
+              ],
               "code": "self.is_non_blocking.store(value, Ordering::Relaxed);",
               "purpose": "Assignment storing non-blocking flag value in atomic boolean"
             },
             {
               "file": "iceoryx2-bb/memory/src/bump_allocator.rs",
-              "line": [87],
+              "line": [
+                87
+              ],
               "code": "aligned_position = align(self.start + current_position, layout.align()) - self.start;",
               "purpose": "Assignment of calculated aligned memory position for allocation"
             },
             {
               "file": "iceoryx2-bb/container/src/vec.rs",
-              "line": [186, 187, 188, 189],
+              "line": [
+                186,
+                187,
+                188,
+                189
+              ],
               "code": ".write(MaybeUninit::new(value))\n};\n\nself.len += 1;",
               "purpose": "Assignment incrementing vector length after pushing element via MaybeUninit"
             }
@@ -741,17 +835,17 @@
               "description": "Basic Assignment",
               "status": "demonstrated",
               "findings": {
+                "count": null,
+                "count_methodology": "Pattern not defined for this section",
+                "samples_waiver": {
+                  "reason": "conceptual_section",
+                  "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+                  "approved_by": "automated",
+                  "date": "2025-12-30"
+                },
                 "description": "Simple assignment to a single place (x = expr)."
               },
-              "samples": [],
-              "count": null,
-              "count_methodology": "Pattern not defined for this section",
-              "samples_waiver": {
-                "reason": "conceptual_section",
-                "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
-                "approved_by": "automated",
-                "date": "2025-12-30"
-              }
+              "samples": []
             },
             "destructuring_assignment": {
               "fls_section": "6.5.11.2",
@@ -761,20 +855,19 @@
               "description": "Destructuring Assignment",
               "status": "demonstrated",
               "findings": {
+                "count": null,
+                "count_methodology": "Pattern not defined for this section",
+                "samples_waiver": {
+                  "reason": "conceptual_section",
+                  "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+                  "approved_by": "automated",
+                  "date": "2025-12-30"
+                },
                 "description": "Assignment with pattern destructuring ((a, b) = expr)."
               },
-              "samples": [],
-              "count": null,
-              "count_methodology": "Pattern not defined for this section",
-              "samples_waiver": {
-                "reason": "conceptual_section",
-                "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
-                "approved_by": "automated",
-                "date": "2025-12-30"
-              }
+              "samples": []
             }
-          },
-          "count": 24780
+          }
         },
         "compound_assignment_expressions": {
           "fls_section": "6.5.12",
@@ -784,38 +877,40 @@
           "description": "Compound Assignment Expressions",
           "status": "demonstrated",
           "findings": {
+            "count": 278,
             "description": "Compound assignment (+=, -=, *=, etc.) combines operation with assignment."
           },
           "samples": [
             {
               "file": "iceoryx2-bb/system-types/src/ipv4_address.rs",
-              "line": [57, 58, 59],
+              "line": [
+                57,
+                58,
+                59
+              ],
               "code": "ipv4[n] = fail!(from origin, when value.parse::<u8>(),\n                \"{msg} \\\"{input}\\\" since some entries are not an u8 number.\");\ncounter += 1;",
               "purpose": "Compound addition assignment incrementing counter after parsing IPv4 octet"
             },
             {
               "file": "iceoryx2-bb/posix/src/socket_ancillary.rs",
-              "line": [385, 386],
+              "line": [
+                385,
+                386
+              ],
               "code": "self.file_descriptors.push(fd);\n}\n\ni += SIZE_OF_FD;",
               "purpose": "Compound addition advancing index by file descriptor size when extracting from ancillary data"
             },
             {
               "file": "iceoryx2-cal/src/shm_allocator/pointer_offset.rs",
-              "line": [72, 73],
+              "line": [
+                72,
+                73
+              ],
               "code": "self.0 &= !((1u64 << SegmentIdUnderlyingType::BITS) - 1);\nself.0 |= value.0 as u64;",
               "purpose": "Compound AND-assign and OR-assign for updating segment ID bits in pointer offset"
             }
-          ],
-          "count": 278
+          ]
         }
-      },
-      "count": null,
-      "count_methodology": "Aggregate of operator subtypes",
-      "samples_waiver": {
-        "reason": "conceptual_section",
-        "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
-        "approved_by": "automated",
-        "date": "2025-12-30"
       }
     },
     "underscore_expressions": {
@@ -826,29 +921,36 @@
       "description": "Underscore Expressions",
       "status": "demonstrated",
       "findings": {
+        "count": 4533,
         "analyzed": true
       },
       "samples": [
         {
           "file": "iceoryx2-bb/posix/src/directory.rs",
-          "line": [292],
+          "line": [
+            292
+          ],
           "code": "let _ = Directory::remove(path);",
           "purpose": "Underscore expression discarding Result from cleanup operation during error handling"
         },
         {
           "file": "iceoryx2/src/port/notifier.rs",
-          "line": [142, 143],
+          "line": [
+            142,
+            143
+          ],
           "code": "for _ in 0..size {\n    new_self.connections.push(UnsafeCell::new(None))",
           "purpose": "Underscore pattern in for loop ignoring iteration index when initializing connections"
         },
         {
           "file": "iceoryx2/src/port/details/channel_management.rs",
-          "line": [35],
+          "line": [
+            35
+          ],
           "code": "let _ = self.channel_state(channel_id).compare_exchange(",
           "purpose": "Underscore discarding compare_exchange result in channel state transition"
         }
-      ],
-      "count": 4533
+      ]
     },
     "parenthesized_expressions": {
       "fls_section": "6.7",
@@ -858,29 +960,35 @@
       "description": "Parenthesized Expressions",
       "status": "demonstrated",
       "findings": {
+        "count": 15399,
         "analyzed": true
       },
       "samples": [
         {
           "file": "iceoryx2-bb/memory/src/pool_allocator.rs",
-          "line": [170],
+          "line": [
+            170
+          ],
           "code": "(ptr.as_ptr() as usize + size - adjusted_start) / bucket_size",
           "purpose": "Parenthesized expression grouping arithmetic for bucket count calculation"
         },
         {
           "file": "iceoryx2-cal/src/shm_allocator/pointer_offset.rs",
-          "line": [57],
+          "line": [
+            57
+          ],
           "code": "Self(((offset as u64) << (SegmentIdUnderlyingType::BITS)) | segment_id.value() as u64)",
           "purpose": "Nested parentheses for bit shift precedence in pointer offset construction"
         },
         {
           "file": "iceoryx2-bb/lock-free/src/mpmc/unique_index_set.rs",
-          "line": [268],
+          "line": [
+            268
+          ],
           "code": "(((self.head & 0x00ffffff) as u64) << 40)",
           "purpose": "Multiple parentheses ensuring correct evaluation order for bit packing"
         }
-      ],
-      "count": 15399
+      ]
     },
     "array_expressions": {
       "fls_section": "6.8",
@@ -890,29 +998,36 @@
       "description": "Array Expressions",
       "status": "demonstrated",
       "findings": {
+        "count": 489,
         "analyzed": true
       },
       "samples": [
         {
           "file": "iceoryx2-bb/container/src/vector/static_vec.rs",
-          "line": [160],
+          "line": [
+            160
+          ],
           "code": "data: [const { MaybeUninit::uninit() }; CAPACITY],",
           "purpose": "Array repeat expression with const block initializing StaticVec storage"
         },
         {
           "file": "iceoryx2-bb/posix/src/socket_ancillary.rs",
-          "line": [254, 255],
+          "line": [
+            254,
+            255
+          ],
           "code": "message_buffer: [0u8; BUFFER_CAPACITY],\niovec_buffer: [0u8; IOVEC_BUFFER_CAPACITY],",
           "purpose": "Array repeat expressions initializing zero-filled buffers for socket ancillary data"
         },
         {
           "file": "iceoryx2-bb/posix/src/user.rs",
-          "line": [226],
+          "line": [
+            226
+          ],
           "code": "let mut buffer: [posix::c_char; PASSWD_BUFFER_SIZE] = [0; PASSWD_BUFFER_SIZE];",
           "purpose": "Array repeat expression creating zero-initialized password buffer"
         }
-      ],
-      "count": 489
+      ]
     },
     "indexing_expressions": {
       "fls_section": "6.9",
@@ -922,29 +1037,36 @@
       "description": "Indexing Expressions",
       "status": "demonstrated",
       "findings": {
+        "count": 8943,
         "analyzed": true
       },
       "samples": [
         {
           "file": "iceoryx2-bb/system-types/src/path.rs",
-          "line": [103, 104],
+          "line": [
+            103,
+            104
+          ],
           "code": "raw_path[n] = PATH_SEPARATOR;\nn += 1;",
           "purpose": "Array indexing for writing path separator during path normalization"
         },
         {
           "file": "iceoryx2-bb/system-types/src/path.rs",
-          "line": [108],
+          "line": [
+            108
+          ],
           "code": "raw_path[n..new_n].copy_from_slice(entry);",
           "purpose": "Range indexing for copying path entry bytes into buffer"
         },
         {
           "file": "iceoryx2-bb/system-types/src/file_path.rs",
-          "line": [146],
+          "line": [
+            146
+          ],
           "code": "if 0 < buffer_len && path.as_bytes_const()[buffer_len - 1] != PATH_SEPARATOR {",
           "purpose": "Array indexing to check if path ends with separator"
         }
-      ],
-      "count": 8943
+      ]
     },
     "tuple_expressions": {
       "fls_section": "6.10",
@@ -954,29 +1076,43 @@
       "description": "Tuple Expressions",
       "status": "demonstrated",
       "findings": {
+        "count": 4677,
         "analyzed": true
       },
       "samples": [
         {
           "file": "iceoryx2-bb/lock-free/src/mpmc/container.rs",
-          "line": [132, 133, 134, 135, 136, 137],
+          "line": [
+            132,
+            133,
+            134,
+            135,
+            136,
+            137
+          ],
           "code": "Self {\n    container_id,\n    current_change_counter: 0,\n    data: vec![MaybeUninit::uninit(); capacity],\n    active_index: vec![0; capacity],\n}",
           "purpose": "Struct expression initializing ContainerState with id and capacity"
         },
         {
           "file": "iceoryx2-bb/posix/src/socket_ancillary.rs",
-          "line": [399, 400, 401, 402],
+          "line": [
+            399,
+            400,
+            401,
+            402
+          ],
           "code": "self.credentials = Some(SocketCred {\n    pid: ProcessId::new(raw_cred.pid),\n    uid: Uid::new_from_native(raw_cred.uid),\n    gid: Gid::new_from_native(raw_cred.gid),\n});",
           "purpose": "Tuple-like credentials struct constructed from raw POSIX credential data"
         },
         {
           "file": "iceoryx2-bb/posix/src/memory_mapping.rs",
-          "line": [226],
+          "line": [
+            226
+          ],
           "code": "File((FilePath, AccessMode)),",
           "purpose": "Tuple variant in enum for file-backed memory mapping with path and access mode"
         }
-      ],
-      "count": 4677
+      ]
     },
     "struct_expressions": {
       "fls_section": "6.11",
@@ -986,29 +1122,50 @@
       "description": "Struct Expressions",
       "status": "demonstrated",
       "findings": {
+        "count": 583,
         "analyzed": true
       },
       "samples": [
         {
           "file": "iceoryx2-bb/memory/src/bump_allocator.rs",
-          "line": [48, 49, 50, 51, 52, 53],
+          "line": [
+            48,
+            49,
+            50,
+            51,
+            52,
+            53
+          ],
           "code": "pub fn new(ptr: NonNull<u8>, size: usize) -> Self {\n    Self {\n        start: ptr.as_ptr() as usize,\n        size,\n        current_position: AtomicUsize::new(0),\n    }\n}",
           "purpose": "Struct expression constructing BumpAllocator with field initializers"
         },
         {
           "file": "iceoryx2-bb/lock-free/src/mpmc/unique_index_set.rs",
-          "line": [259, 260, 261, 262, 263, 264],
+          "line": [
+            259,
+            260,
+            261,
+            262,
+            263,
+            264
+          ],
           "code": "fn from(value: u64) -> Self {\n    Self {\n        head: ((value >> 40) as u32) & 0xffffff,\n        aba: (value >> 24) as u16,\n        borrowed_indices: (value as u32) & 0xffffff,\n    }\n}",
           "purpose": "Struct expression constructing HeadDetails from packed u64 value"
         },
         {
           "file": "iceoryx2-bb/posix/src/memory_mapping.rs",
-          "line": [241, 242, 243, 244, 245, 246],
+          "line": [
+            241,
+            242,
+            243,
+            244,
+            245,
+            246
+          ],
           "code": "fn new() -> Self {\n    Self {\n        initial_permission: MappingPermission::ReadWrite,\n        mapping_address_hint: 0,\n        enforce_mapping_address_hint: false,\n        size: 0,\n        offset: 0,\n    }\n}",
           "purpose": "Struct expression initializing MemoryMappingBuilder with default values"
         }
-      ],
-      "count": 583
+      ]
     },
     "invocation_expressions": {
       "fls_section": "6.12",
@@ -1016,24 +1173,39 @@
       "description": "Invocation Expressions",
       "status": "demonstrated",
       "findings": {
+        "count": null,
+        "count_methodology": "Pattern not defined for this section",
+        "samples_waiver": {
+          "reason": "conceptual_section",
+          "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+          "approved_by": "automated",
+          "date": "2025-12-30"
+        },
         "analyzed": true
       },
       "samples": [
         {
           "file": "iceoryx2-bb/system-types/src/path.rs",
-          "line": [114],
+          "line": [
+            114
+          ],
           "code": "unsafe { Path::new_unchecked(&raw_path[0..n]) }",
           "purpose": "Unsafe function call constructing Path from normalized raw bytes"
         },
         {
           "file": "iceoryx2-bb/system-types/src/ipv4_address.rs",
-          "line": [67],
+          "line": [
+            67
+          ],
           "code": "Ok(Self::new(ipv4[0], ipv4[1], ipv4[2], ipv4[3]))",
           "purpose": "Associated function call constructing Ipv4Address from parsed octets"
         },
         {
           "file": "iceoryx2-bb/posix/src/unix_datagram_socket.rs",
-          "line": [409, 410],
+          "line": [
+            409,
+            410
+          ],
           "code": "let mut socket_address = posix::sockaddr_un::new_zeroed();\nsocket_address.sun_family = posix::AF_UNIX;",
           "purpose": "Function call creating zero-initialized socket address structure"
         }
@@ -1047,6 +1219,7 @@
           "description": "Call Expressions",
           "status": "demonstrated",
           "findings": {
+            "count": 75389,
             "description": "Function call expressions invoke functions and closures.",
             "patterns": [
               "Function::new()",
@@ -1056,24 +1229,29 @@
           "samples": [
             {
               "file": "iceoryx2-bb/memory/src/bump_allocator.rs",
-              "line": [87],
+              "line": [
+                87
+              ],
               "code": "aligned_position = align(self.start + current_position, layout.align()) - self.start;",
               "purpose": "Function call to align() for calculating aligned memory position"
             },
             {
               "file": "iceoryx2-bb/lock-free/src/mpmc/unique_index_set.rs",
-              "line": [327],
+              "line": [
+                327
+              ],
               "code": "core::mem::size_of::<UnsafeCell<u32>>() * (capacity + 1) + core::mem::align_of::<u32>() - 1",
               "purpose": "Calls to size_of and align_of for calculating memory requirements"
             },
             {
               "file": "iceoryx2-cal/src/dynamic_storage/posix_shared_memory.rs",
-              "line": [208],
+              "line": [
+                208
+              ],
               "code": "match SharedMemoryBuilder::new(&full_name).open_existing(AccessMode::ReadWrite) {",
               "purpose": "Chained call expressions for building and opening shared memory"
             }
-          ],
-          "count": 75389
+          ]
         },
         "method_call_expressions": {
           "fls_section": "6.12.2",
@@ -1090,24 +1268,36 @@
           "samples": [
             {
               "file": "iceoryx2-bb/memory/src/bump_allocator.rs",
-              "line": [83, 84, 85],
+              "line": [
+                83,
+                84,
+                85
+              ],
               "code": "let mut current_position = self\n    .current_position\n    .load(core::sync::atomic::Ordering::Relaxed);",
               "purpose": "Method call loading atomic position value with relaxed ordering"
             },
             {
               "file": "iceoryx2-bb/posix/src/unix_datagram_socket.rs",
-              "line": [338, 339, 340, 341, 342],
+              "line": [
+                338,
+                339,
+                340,
+                341,
+                342
+              ],
               "code": "let current_flags = self.fcntl(\n    posix::F_GETFL,\n    0,\n    \"Unable to acquire current socket filedescriptor flags\",\n)?;",
               "purpose": "Method call to fcntl for getting socket file descriptor flags"
             },
             {
               "file": "iceoryx2-bb/system-types/src/ipv4_address.rs",
-              "line": [57, 58],
+              "line": [
+                57,
+                58
+              ],
               "code": "ipv4[n] = fail!(from origin, when value.parse::<u8>(),\n                \"{msg} \\\"{input}\\\" since some entries are not an u8 number.\");",
               "purpose": "Method call parse::<u8>() for converting string to IPv4 octet"
             }
-          ],
-          "count": 36467
+          ]
         },
         "call_conformance": {
           "fls_section": "6.12.3",
@@ -1115,26 +1305,18 @@
           "description": "Call Conformance",
           "status": "demonstrated",
           "findings": {
+            "count": null,
+            "count_methodology": "Pattern not defined for this section",
+            "samples_waiver": {
+              "reason": "conceptual_section",
+              "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+              "approved_by": "automated",
+              "date": "2025-12-30"
+            },
             "description": "Call conformance rules ensure arguments match function signatures."
           },
-          "samples": [],
-          "count": null,
-          "count_methodology": "Pattern not defined for this section",
-          "samples_waiver": {
-            "reason": "conceptual_section",
-            "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
-            "approved_by": "automated",
-            "date": "2025-12-30"
-          }
+          "samples": []
         }
-      },
-      "count": null,
-      "count_methodology": "Pattern not defined for this section",
-      "samples_waiver": {
-        "reason": "conceptual_section",
-        "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
-        "approved_by": "automated",
-        "date": "2025-12-30"
       }
     },
     "field_access_expressions": {
@@ -1145,29 +1327,39 @@
       "description": "Field Access Expressions",
       "status": "demonstrated",
       "findings": {
+        "count": 52244,
         "analyzed": true
       },
       "samples": [
         {
           "file": "iceoryx2-bb/memory/src/pool_allocator.rs",
-          "line": [69, 70],
+          "line": [
+            69,
+            70
+          ],
           "code": "bucket_size: usize,\nbucket_alignment: usize,",
           "purpose": "Field access expressions reading bucket configuration from PoolAllocator"
         },
         {
           "file": "iceoryx2-bb/memory/src/bump_allocator.rs",
-          "line": [56, 57],
+          "line": [
+            56,
+            57
+          ],
           "code": "pub fn start_address(&self) -> usize {\n    self.start\n}",
           "purpose": "Field access returning start address of bump allocator memory region"
         },
         {
           "file": "iceoryx2-bb/lock-free/src/mpmc/container.rs",
-          "line": [115, 116, 117],
+          "line": [
+            115,
+            116,
+            117
+          ],
           "code": "pub fn index(&self) -> u32 {\n    self.index\n}",
           "purpose": "Field access returning underlying index from ContainerHandle"
         }
-      ],
-      "count": 52244
+      ]
     },
     "closure_expressions": {
       "fls_section": "6.14",
@@ -1183,24 +1375,45 @@
       "samples": [
         {
           "file": "iceoryx2/src/waitset.rs",
-          "line": [594, 595, 596, 597, 598],
+          "line": [
+            594,
+            595,
+            596,
+            597,
+            598
+          ],
           "code": "let call = |idx: DeadlineQueueIndex| -> CallbackProgression {\n    let progression = if let Some(reactor_idx) = deadline_to_attachment.get(&idx) {\n        fn_call(WaitSetAttachmentId::deadline(self, *reactor_idx, idx))\n    } else {\n        fn_call(WaitSetAttachmentId::tick(self, idx))\n    };",
           "purpose": "Closure expression handling deadline queue events with typed parameter and return"
         },
         {
           "file": "iceoryx2-bb/elementary/src/math.rs",
-          "line": [46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+          "line": [
+            46,
+            47,
+            48,
+            49,
+            50,
+            51,
+            52,
+            53,
+            54,
+            55,
+            56,
+            57
+          ],
           "code": "let remainder_to_char = |value| -> char {\n    if value < 10 {\n        ((48 + value) as u8) as char\n    } else if value < 26 + 10 {\n        ((65 + value - 10) as u8) as char\n    } else if value < 62 {\n        ((97 + value - 10 - 26) as u8) as char\n    } else if value == 62 {\n        45 as char\n    } else {\n        95 as char\n    }\n};",
           "purpose": "Closure converting remainder to base64 character for encoding"
         },
         {
           "file": "iceoryx2/src/port/server.rs",
-          "line": [390, 391],
+          "line": [
+            390,
+            391
+          ],
           "code": "connections: (0..client_list.capacity())\n    .map(|_| UnsafeCell::new(None))\n    .collect(),",
           "purpose": "Closure in map creating UnsafeCell for each connection slot"
         }
-      ],
-      "count": 1617
+      ]
     },
     "loop_expressions": {
       "fls_section": "6.15",
@@ -1210,6 +1423,7 @@
       "description": "Loop Expressions",
       "status": "demonstrated",
       "findings": {
+        "count": 130,
         "for": 1438,
         "while": 356,
         "loop": 130,
@@ -1219,19 +1433,46 @@
       "samples": [
         {
           "file": "iceoryx2-bb/memory/src/bump_allocator.rs",
-          "line": [86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102],
+          "line": [
+            86,
+            87,
+            88,
+            89,
+            90,
+            91,
+            92,
+            93,
+            94,
+            95,
+            96,
+            97,
+            98,
+            99,
+            100,
+            101,
+            102
+          ],
           "code": "loop {\n    aligned_position = align(self.start + current_position, layout.align()) - self.start;\n    if aligned_position + layout.size() > self.size {\n        fail!(from self, with AllocationError::OutOfMemory,\n            \"{} {:?} since there is not enough memory available.\", msg, layout);\n    }\n\n    match self.current_position.compare_exchange_weak(\n        current_position,\n        aligned_position + layout.size(),\n        core::sync::atomic::Ordering::Relaxed,\n        core::sync::atomic::Ordering::Relaxed,\n    ) {\n        Ok(_) => break,\n        Err(v) => current_position = v,\n    }\n}",
           "purpose": "Loop expression for lock-free allocation with compare-exchange retry"
         },
         {
           "file": "iceoryx2-cal/src/dynamic_storage/posix_shared_memory.rs",
-          "line": [207, 208, 209],
+          "line": [
+            207,
+            208,
+            209
+          ],
           "code": "let shm = loop {\n    match SharedMemoryBuilder::new(&full_name).open_existing(AccessMode::ReadWrite) {\n        Ok(v) => break v,",
           "purpose": "Loop expression returning shared memory handle through value-carrying break"
         },
         {
           "file": "iceoryx2/src/waitset.rs",
-          "line": [760, 761, 762, 763],
+          "line": [
+            760,
+            761,
+            762,
+            763
+          ],
           "code": "loop {\n    match self.wait_and_process_once(&mut fn_call) {\n        Ok(WaitSetRunResult::AllEventsHandled) => (),\n        Ok(v) => return Ok(v),",
           "purpose": "Infinite loop for waitset event processing with callback-driven termination"
         }
@@ -1246,18 +1487,17 @@
           "status": "demonstrated",
           "findings": {
             "count": 1438,
+            "count_methodology": "Pattern not defined for this section",
+            "samples_waiver": {
+              "reason": "conceptual_section",
+              "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+              "approved_by": "automated",
+              "date": "2025-12-30"
+            },
             "change": "+24% from v0.7.0",
             "description": "For loops iterate over collections implementing IntoIterator."
           },
-          "samples": [],
-          "count": null,
-          "count_methodology": "Pattern not defined for this section",
-          "samples_waiver": {
-            "reason": "conceptual_section",
-            "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
-            "approved_by": "automated",
-            "date": "2025-12-30"
-          }
+          "samples": []
         },
         "infinite_loops": {
           "fls_section": "6.15.2",
@@ -1268,6 +1508,13 @@
           "status": "demonstrated",
           "findings": {
             "count": 130,
+            "count_methodology": "Pattern not defined for this section",
+            "samples_waiver": {
+              "reason": "conceptual_section",
+              "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+              "approved_by": "automated",
+              "date": "2025-12-30"
+            },
             "description": "loop {} for intentional infinite loops with break exit.",
             "patterns": [
               "Event loops",
@@ -1275,15 +1522,7 @@
               "State machines"
             ]
           },
-          "samples": [],
-          "count": null,
-          "count_methodology": "Pattern not defined for this section",
-          "samples_waiver": {
-            "reason": "conceptual_section",
-            "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
-            "approved_by": "automated",
-            "date": "2025-12-30"
-          }
+          "samples": []
         },
         "while_loops": {
           "fls_section": "6.15.3",
@@ -1294,17 +1533,16 @@
           "status": "demonstrated",
           "findings": {
             "count": 356,
+            "count_methodology": "Pattern not defined for this section",
+            "samples_waiver": {
+              "reason": "conceptual_section",
+              "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+              "approved_by": "automated",
+              "date": "2025-12-30"
+            },
             "description": "Condition-controlled loops."
           },
-          "samples": [],
-          "count": null,
-          "count_methodology": "Pattern not defined for this section",
-          "samples_waiver": {
-            "reason": "conceptual_section",
-            "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
-            "approved_by": "automated",
-            "date": "2025-12-30"
-          }
+          "samples": []
         },
         "while_let_loops": {
           "fls_section": "6.15.4",
@@ -1315,17 +1553,16 @@
           "status": "demonstrated",
           "findings": {
             "count": 70,
+            "count_methodology": "Pattern not defined for this section",
+            "samples_waiver": {
+              "reason": "conceptual_section",
+              "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+              "approved_by": "automated",
+              "date": "2025-12-30"
+            },
             "description": "while let pattern = expr loops for iterating Option/Result."
           },
-          "samples": [],
-          "count": null,
-          "count_methodology": "Pattern not defined for this section",
-          "samples_waiver": {
-            "reason": "conceptual_section",
-            "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
-            "approved_by": "automated",
-            "date": "2025-12-30"
-          }
+          "samples": []
         },
         "loop_labels": {
           "fls_section": "6.15.5",
@@ -1335,17 +1572,17 @@
           "description": "Loop Labels",
           "status": "limited_use",
           "findings": {
+            "count": null,
+            "count_methodology": "Pattern not defined for this section",
+            "samples_waiver": {
+              "reason": "conceptual_section",
+              "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+              "approved_by": "automated",
+              "date": "2025-12-30"
+            },
             "description": "Loop labels ('label: loop) for nested loop control. Rarely used."
           },
-          "samples": [],
-          "count": null,
-          "count_methodology": "Pattern not defined for this section",
-          "samples_waiver": {
-            "reason": "conceptual_section",
-            "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
-            "approved_by": "automated",
-            "date": "2025-12-30"
-          }
+          "samples": []
         },
         "break_expressions": {
           "fls_section": "6.15.6",
@@ -1361,24 +1598,34 @@
           "samples": [
             {
               "file": "iceoryx2-bb/memory/src/bump_allocator.rs",
-              "line": [98, 99, 100],
+              "line": [
+                98,
+                99,
+                100
+              ],
               "code": ") {\n    Ok(_) => break,\n    Err(v) => current_position = v,",
               "purpose": "Break exiting allocation loop after successful compare-exchange"
             },
             {
               "file": "iceoryx2-cal/src/dynamic_storage/posix_shared_memory.rs",
-              "line": [208, 209, 210],
+              "line": [
+                208,
+                209,
+                210
+              ],
               "code": "match SharedMemoryBuilder::new(&full_name).open_existing(AccessMode::ReadWrite) {\n    Ok(v) => break v,\n    Err(SharedMemoryCreationError::DoesNotExist) => {",
               "purpose": "Break with value returning opened shared memory from loop expression"
             },
             {
               "file": "iceoryx2-bb/elementary/src/math.rs",
-              "line": [66, 67],
+              "line": [
+                66,
+                67
+              ],
               "code": "if quotient == 0 {\n    break;\n}",
               "purpose": "Break exiting base64 encoding loop when quotient reaches zero"
             }
-          ],
-          "count": 128
+          ]
         },
         "continue_expressions": {
           "fls_section": "6.15.7",
@@ -1394,27 +1641,40 @@
           "samples": [
             {
               "file": "iceoryx2/src/pending_response.rs",
-              "line": [314, 315, 316],
+              "line": [
+                314,
+                315,
+                316
+              ],
               "code": "if response.header().request_id != self.request.header().request_id {\n    continue;\n}",
               "purpose": "Continue skipping responses with non-matching request IDs"
             },
             {
               "file": "iceoryx2-bb/posix/src/socket_ancillary.rs",
-              "line": [354, 355, 356, 357],
+              "line": [
+                354,
+                355,
+                356,
+                357
+              ],
               "code": "if unsafe { (*cmsghdr).cmsg_level != CMSG_SOCKET_LEVEL } {\n    warn!(from receiver, \"A cmsghdr with the wrong cmsg_level was received...\");\n    continue;\n}",
               "purpose": "Continue to next cmsghdr when cmsg_level doesn't match expected socket level"
             },
             {
               "file": "iceoryx2/src/service/builder/request_response.rs",
-              "line": [840, 841, 842, 843, 844],
+              "line": [
+                840,
+                841,
+                842,
+                843,
+                844
+              ],
               "code": "\"{} since the dynamic service information could not be opened ({:?}).\",\nmsg, e);\n}\n\ncontinue;",
               "purpose": "Continue to retry service creation loop after handling open error"
             }
-          ],
-          "count": 66
+          ]
         }
-      },
-      "count": 130
+      }
     },
     "range_expressions": {
       "fls_section": "6.16",
@@ -1424,29 +1684,35 @@
       "description": "Range Expressions",
       "status": "demonstrated",
       "findings": {
+        "count": 1158,
         "analyzed": true
       },
       "samples": [
         {
           "file": "iceoryx2/src/port/publisher.rs",
-          "line": [259],
+          "line": [
+            259
+          ],
           "code": "for i in history_start..history.len() {",
           "purpose": "Exclusive range expression iterating over sample history for delivery"
         },
         {
           "file": "iceoryx2-bb/lock-free/src/mpmc/unique_index_set.rs",
-          "line": [301],
+          "line": [
+            301
+          ],
           "code": "for i in 0..self.capacity + 1 {",
           "purpose": "Range expression initializing index set data with sequential values"
         },
         {
           "file": "iceoryx2-bb/system-types/src/user_name.rs",
-          "line": [52],
+          "line": [
+            52
+          ],
           "code": "matches!(string[0], b'-' | b'0'..=b'9')",
           "purpose": "Inclusive range pattern in match checking for invalid username start characters"
         }
-      ],
-      "count": 1158
+      ]
     },
     "if_and_if_let_expressions": {
       "fls_section": "6.17",
@@ -1456,24 +1722,45 @@
       "description": "If and If Let Expressions",
       "status": "demonstrated",
       "findings": {
+        "count": null,
+        "count_methodology": "Pattern not defined for this section",
+        "samples_waiver": {
+          "reason": "conceptual_section",
+          "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+          "approved_by": "automated",
+          "date": "2025-12-30"
+        },
         "analyzed": true
       },
       "samples": [
         {
           "file": "iceoryx2-bb/memory/src/bump_allocator.rs",
-          "line": [88, 89, 90],
+          "line": [
+            88,
+            89,
+            90
+          ],
           "code": "if aligned_position + layout.size() > self.size {\n    fail!(from self, with AllocationError::OutOfMemory,\n        \"{} {:?} since there is not enough memory available.\", msg, layout);",
           "purpose": "If expression checking allocation would exceed available memory"
         },
         {
           "file": "iceoryx2/src/waitset.rs",
-          "line": [595, 596, 597, 598],
+          "line": [
+            595,
+            596,
+            597,
+            598
+          ],
           "code": "let progression = if let Some(reactor_idx) = deadline_to_attachment.get(&idx) {\n    fn_call(WaitSetAttachmentId::deadline(self, *reactor_idx, idx))\n} else {\n    fn_call(WaitSetAttachmentId::tick(self, idx))\n};",
           "purpose": "If-let expression distinguishing deadline vs tick attachments in waitset"
         },
         {
           "file": "iceoryx2-cal/src/dynamic_storage/posix_shared_memory.rs",
-          "line": [246, 247, 248],
+          "line": [
+            246,
+            247,
+            248
+          ],
           "code": "if package_version.to_u64() == 0 {\n    if elapsed_time >= self.timeout {\n        fail!(from self, with DynamicStorageOpenError::InitializationNotYetFinalized,",
           "purpose": "Nested if expressions checking initialization state and timeout"
         }
@@ -1493,24 +1780,35 @@
           "samples": [
             {
               "file": "iceoryx2-bb/memory/src/bump_allocator.rs",
-              "line": [78, 79, 80],
+              "line": [
+                78,
+                79,
+                80
+              ],
               "code": "if layout.size() == 0 {\n    fail!(from self, with AllocationError::SizeIsZero,\n        \"{} {:?} since the requested size was zero.\", msg, layout);",
               "purpose": "If expression validating allocation size is non-zero"
             },
             {
               "file": "iceoryx2-bb/posix/src/unix_datagram_socket.rs",
-              "line": [334, 335, 336],
+              "line": [
+                334,
+                335,
+                336
+              ],
               "code": "if self.is_non_blocking.load(Ordering::Relaxed) == value {\n    return Ok(());\n}",
               "purpose": "If expression for early return when non-blocking mode unchanged"
             },
             {
               "file": "iceoryx2-bb/system-types/src/ipv4_address.rs",
-              "line": [62, 63, 64],
+              "line": [
+                62,
+                63,
+                64
+              ],
               "code": "if counter != 4 {\n    fail!(from origin, with Ipv4AddressParseError::WrongFormat,\n        \"{msg} \\\"{input}\\\" since the address is incomplete.\");",
               "purpose": "If expression validating IPv4 address has all four octets"
             }
-          ],
-          "count": 2448
+          ]
         },
         "if_let_expressions": {
           "fls_section": "6.17.2",
@@ -1530,33 +1828,34 @@
           "samples": [
             {
               "file": "iceoryx2-bb/system-types/src/path.rs",
-              "line": [87, 88, 89],
+              "line": [
+                87,
+                88,
+                89
+              ],
               "code": "let mut n = if let Some(&PATH_SEPARATOR) = value.first() {\n    raw_path[0] = PATH_SEPARATOR;\n    1",
               "purpose": "If-let expression checking if path starts with separator for normalization"
             },
             {
               "file": "iceoryx2/src/waitset.rs",
-              "line": [595, 596, 597],
+              "line": [
+                595,
+                596,
+                597
+              ],
               "code": "let progression = if let Some(reactor_idx) = deadline_to_attachment.get(&idx) {\n    fn_call(WaitSetAttachmentId::deadline(self, *reactor_idx, idx))\n} else {",
               "purpose": "If-let expression extracting reactor index from deadline attachment map"
             },
             {
               "file": "iceoryx2-bb/posix/src/file.rs",
-              "line": [621],
+              "line": [
+                621
+              ],
               "code": "if let Some(v) = file_descriptor {",
               "purpose": "If-let expression checking for valid file descriptor before use"
             }
-          ],
-          "count": 337
+          ]
         }
-      },
-      "count": null,
-      "count_methodology": "Pattern not defined for this section",
-      "samples_waiver": {
-        "reason": "conceptual_section",
-        "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
-        "approved_by": "automated",
-        "date": "2025-12-30"
       }
     },
     "match_expressions": {
@@ -1573,24 +1872,41 @@
       "samples": [
         {
           "file": "iceoryx2-bb/lock-free/src/mpmc/container.rs",
-          "line": [97, 98, 99, 100, 101, 102],
+          "line": [
+            97,
+            98,
+            99,
+            100,
+            101,
+            102
+          ],
           "code": "fn from(value: UniqueIndexSetAcquireFailure) -> Self {\n    match value {\n        UniqueIndexSetAcquireFailure::IsLocked => ContainerAddFailure::IsLocked,\n        UniqueIndexSetAcquireFailure::OutOfIndices => ContainerAddFailure::OutOfSpace,\n    }\n}",
           "purpose": "Match expression converting index set failure to container add failure"
         },
         {
           "file": "iceoryx2-bb/posix/src/unix_datagram_socket.rs",
-          "line": [343, 344, 345, 346],
+          "line": [
+            343,
+            344,
+            345,
+            346
+          ],
           "code": "let new_flags = match value {\n    true => current_flags | posix::O_NONBLOCK,\n    false => current_flags & !posix::O_NONBLOCK,\n};",
           "purpose": "Match expression setting or clearing non-blocking socket flag"
         },
         {
           "file": "iceoryx2-cal/src/dynamic_storage/posix_shared_memory.rs",
-          "line": [208, 209, 210, 211, 212],
+          "line": [
+            208,
+            209,
+            210,
+            211,
+            212
+          ],
           "code": "match SharedMemoryBuilder::new(&full_name).open_existing(AccessMode::ReadWrite) {\n    Ok(v) => break v,\n    Err(SharedMemoryCreationError::DoesNotExist) => {\n        fail!(from self, with DynamicStorageOpenError::DoesNotExist,\n        \"{} since a shared memory with that name does not exists.\", msg);",
           "purpose": "Match expression handling shared memory open result with error variants"
         }
-      ],
-      "count": 1657
+      ]
     },
     "return_expressions": {
       "fls_section": "6.19",
@@ -1600,29 +1916,39 @@
       "description": "Return Expressions",
       "status": "demonstrated",
       "findings": {
+        "count": 960,
         "analyzed": true
       },
       "samples": [
         {
           "file": "iceoryx2-bb/posix/src/unix_datagram_socket.rs",
-          "line": [320, 321, 322],
+          "line": [
+            320,
+            321,
+            322
+          ],
           "code": "if result >= 0 {\n    return Ok(result);\n}",
           "purpose": "Early return with successful fcntl result when operation succeeds"
         },
         {
           "file": "iceoryx2-bb/posix/src/unix_datagram_socket.rs",
-          "line": [334, 335, 336],
+          "line": [
+            334,
+            335,
+            336
+          ],
           "code": "if self.is_non_blocking.load(Ordering::Relaxed) == value {\n    return Ok(());\n}",
           "purpose": "Early return when non-blocking mode is already set to desired value"
         },
         {
           "file": "iceoryx2/src/pending_response.rs",
-          "line": [318],
+          "line": [
+            318
+          ],
           "code": "return Ok(Some(response));",
           "purpose": "Return expression yielding received response matching request ID"
         }
-      ],
-      "count": 960
+      ]
     },
     "await_expressions": {
       "fls_section": "6.20",
@@ -1635,8 +1961,7 @@
         "count": 0,
         "rationale": "Async intentionally avoided for deterministic real-time IPC"
       },
-      "samples": [],
-      "count": 0
+      "samples": []
     },
     "expression_precedence": {
       "fls_section": "6.21",
@@ -1646,17 +1971,17 @@
       "description": "Expression Precedence",
       "status": "demonstrated",
       "findings": {
+        "count": null,
+        "count_methodology": "Pattern not defined for this section",
+        "samples_waiver": {
+          "reason": "conceptual_section",
+          "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+          "approved_by": "automated",
+          "date": "2025-12-30"
+        },
         "analyzed": true
       },
-      "samples": [],
-      "count": null,
-      "count_methodology": "Pattern not defined for this section",
-      "samples_waiver": {
-        "reason": "conceptual_section",
-        "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
-        "approved_by": "automated",
-        "date": "2025-12-30"
-      }
+      "samples": []
     },
     "capturing": {
       "fls_section": "6.22",
@@ -1666,17 +1991,17 @@
       "description": "Capturing",
       "status": "demonstrated",
       "findings": {
+        "count": null,
+        "count_methodology": "Pattern not defined for this section",
+        "samples_waiver": {
+          "reason": "conceptual_section",
+          "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+          "approved_by": "automated",
+          "date": "2025-12-30"
+        },
         "analyzed": true
       },
-      "samples": [],
-      "count": null,
-      "count_methodology": "Pattern not defined for this section",
-      "samples_waiver": {
-        "reason": "conceptual_section",
-        "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
-        "approved_by": "automated",
-        "date": "2025-12-30"
-      }
+      "samples": []
     },
     "arithmetic_overflow": {
       "fls_section": "6.23",
@@ -1684,17 +2009,17 @@
       "description": "Arithmetic Overflow",
       "status": "demonstrated",
       "findings": {
+        "count": null,
+        "count_methodology": "Pattern not defined for this section",
+        "samples_waiver": {
+          "reason": "conceptual_section",
+          "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+          "approved_by": "automated",
+          "date": "2025-12-30"
+        },
         "analyzed": true
       },
-      "samples": [],
-      "count": null,
-      "count_methodology": "Pattern not defined for this section",
-      "samples_waiver": {
-        "reason": "conceptual_section",
-        "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
-        "approved_by": "automated",
-        "date": "2025-12-30"
-      }
+      "samples": []
     }
   },
   "safety_critical_summary": {

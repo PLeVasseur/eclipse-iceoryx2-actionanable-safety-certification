@@ -109,26 +109,31 @@
           "description": "FLS sections that were matched to this guideline during manual review, with justification for each",
           "items": {
             "type": "object",
-            "required": ["fls_id", "fls_title", "score", "reason"],
+            "required": ["fls_id", "category", "score", "reason"],
             "properties": {
               "fls_id": {
                 "type": "string",
                 "pattern": "^fls_[a-zA-Z0-9]+$",
-                "description": "The accepted FLS ID"
+                "description": "The accepted FLS ID (section-level or paragraph-level)"
+              },
+              "category": {
+                "type": "integer",
+                "enum": [0, -1, -2, -3, -4, -5, -6, -7, -8],
+                "description": "Category code: 0=section, -1=general, -2=legality_rules, -3=dynamic_semantics, -4=undefined_behavior, -5=implementation_requirements, -6=implementation_permissions, -7=examples, -8=syntax"
               },
               "fls_section": {
                 "type": ["string", "null"],
-                "description": "Human-readable FLS section number (e.g., '6.15'). May be null for FLS IDs that don't map to numbered sections."
+                "description": "Human-readable FLS section number (e.g., '6.15' or '6.-2.1'). May be null for FLS IDs that don't map to numbered sections."
               },
               "fls_title": {
                 "type": "string",
                 "description": "Human-readable title of the FLS section"
               },
               "score": {
-                "type": "number",
+                "type": ["number", "null"],
                 "minimum": 0,
                 "maximum": 1,
-                "description": "The similarity score (0-1) that was calculated for this match"
+                "description": "The similarity score (0-1) that was calculated for this match. Null for manually-added paragraph IDs."
               },
               "reason": {
                 "type": "string",
@@ -142,12 +147,17 @@
           "description": "High-similarity FLS matches (≥0.5) that were rejected during manual review. Used to improve similarity calculation.",
           "items": {
             "type": "object",
-            "required": ["fls_id", "fls_title", "score", "reason"],
+            "required": ["fls_id", "category", "score", "reason"],
             "properties": {
               "fls_id": {
                 "type": "string",
                 "pattern": "^fls_[a-zA-Z0-9]+$",
                 "description": "The rejected FLS ID"
+              },
+              "category": {
+                "type": "integer",
+                "enum": [0, -1, -2, -3, -4, -5, -6, -7, -8],
+                "description": "Category code: 0=section, -1=general, -2=legality_rules, -3=dynamic_semantics, -4=undefined_behavior, -5=implementation_requirements, -6=implementation_permissions, -7=examples, -8=syntax"
               },
               "fls_section": {
                 "type": ["string", "null"],

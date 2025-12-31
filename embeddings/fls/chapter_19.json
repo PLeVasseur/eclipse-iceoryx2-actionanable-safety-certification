@@ -1,0 +1,54 @@
+{
+  "chapter": 19,
+  "title": "Unsafety",
+  "fls_id": "fls_jep7p27kaqlp",
+  "file": "unsafety",
+  "extraction_date": "2025-12-31",
+  "category_codes": {
+    "0": "section",
+    "-1": "general",
+    "-2": "legality_rules",
+    "-3": "dynamic_semantics",
+    "-4": "undefined_behavior",
+    "-5": "implementation_requirements",
+    "-6": "implementation_permissions",
+    "-7": "examples",
+    "-8": "syntax"
+  },
+  "statistics": {
+    "total_sections": 1,
+    "total_paragraphs": 11,
+    "paragraphs_by_category": {
+      "-2": 11
+    }
+  },
+  "sections": [
+    {
+      "fls_id": "fls_jep7p27kaqlp",
+      "title": "Unsafety",
+      "category": 0,
+      "level": 1,
+      "file": "unsafety",
+      "content": "Unsafety\n\nUnsafety is the presence of [unsafe operation]s and [unsafe trait\nimplementation]s in program text.\n\nAn unsafe operation is an operation that may result in\nundefined behavior that is not diagnosed as a static error.\n[Unsafe operation]s are referred to as unsafe Rust.\n\nThe [unsafe operation]s are:\n\n* Dereferencing a value of a raw pointer type.\n\n* Reading or writing an external static.\n\n* Reading or writing a mutable static.\n\n* Accessing a field of a union, other than to assign to it.\n\n* Calling an unsafe function.\n\n* Calling macro core::arch::asm.\n\nAn unsafe context is either an unsafe block or an\nunsafe function.\n\nAn unsafe operation shall be used only within an unsafe context.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_8kqo952gjhaf": "Unsafety is the presence of [unsafe operation]s and [unsafe trait implementation]s in program text.",
+            "fls_ovn9czwnwxue": "An unsafe operation is an operation that may result in undefined behavior that is not diagnosed as a static error. [Unsafe operation]s are referred to as unsafe Rust.",
+            "fls_pfhmcafsjyf7": "The [unsafe operation]s are:",
+            "fls_jd1inwz7ulyw": "Dereferencing a value of a raw pointer type.",
+            "fls_3ra8s1v1vbek": "Reading or writing an external static.",
+            "fls_6ipl0xo5qjyl": "Reading or writing a mutable static.",
+            "fls_ucghxcnpaq2t": "Accessing a field of a union, other than to assign to it.",
+            "fls_ljocmnaz2m49": "Calling an unsafe function.",
+            "fls_s5nfhBFOk8Bu": "Calling macro core::arch::asm.",
+            "fls_jb6krd90tjmc": "An unsafe context is either an unsafe block or an unsafe function.",
+            "fls_ybnpe7ppq1vh": "An unsafe operation shall be used only within an unsafe context."
+          }
+        }
+      },
+      "parent_fls_id": null,
+      "sibling_fls_ids": []
+    }
+  ]
+}

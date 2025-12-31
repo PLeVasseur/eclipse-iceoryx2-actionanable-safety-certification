@@ -1,0 +1,951 @@
+{
+  "chapter": 14,
+  "title": "Entities and Resolution",
+  "fls_id": "fls_gdeyap4or1db",
+  "file": "entities-and-resolution",
+  "extraction_date": "2025-12-31",
+  "category_codes": {
+    "0": "section",
+    "-1": "general",
+    "-2": "legality_rules",
+    "-3": "dynamic_semantics",
+    "-4": "undefined_behavior",
+    "-5": "implementation_requirements",
+    "-6": "implementation_permissions",
+    "-7": "examples",
+    "-8": "syntax"
+  },
+  "statistics": {
+    "total_sections": 24,
+    "total_paragraphs": 364,
+    "paragraphs_by_category": {
+      "-8": 4,
+      "-7": 8,
+      "-2": 352
+    }
+  },
+  "sections": [
+    {
+      "fls_id": "fls_gdeyap4or1db",
+      "title": "Entities and Resolution",
+      "category": 0,
+      "level": 1,
+      "file": "entities-and-resolution",
+      "content": "Entities and Resolution",
+      "rubrics": {},
+      "parent_fls_id": null,
+      "sibling_fls_ids": []
+    },
+    {
+      "fls_id": "fls_151r19d7xbgz",
+      "title": "Entities",
+      "category": 0,
+      "level": 2,
+      "file": "entities-and-resolution",
+      "content": "Entities\n\nAn entity is a construct that can be referred to within program text,\nusually via a field access expression or a path.\n\nA name is an identifier that refers to an entity.\n\nA declaration is a construct that introduces a name for an\nentity.\n\nAn explicitly declared entity is an entity that has a\ndeclaration. The following entities <entity> are\nexplicitly declared entities <explicitly declared entity>:\n\n* [Associated item]s,\n\n* [Binding]s,\n\n* [Constant]s,\n\n* [Declarative macro]s,\n\n* [Enum type]s,\n\n* [Enum variant]s,\n\n* [Field]s,\n\n* [Function]s,\n\n* [Generic parameter]s,\n\n* [Implementation]s,\n\n* [Label]s,\n\n* [Module]s,\n\n* [Static]s,\n\n* [Struct type]s,\n\n* [Trait]s,\n\n* [Type alias]es,\n\n* [Union type]s.\n\nAn implicitly declared entity is an entity that lacks an explicit\ndeclaration. The following entities <entity> are\nimplicitly declared entities <implicitly declared entity>:\n\n* [Built-in attribute]s.\n\n* Language prelude entities <entity>.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_x7j6wcigqt7u": "An entity is a construct that can be referred to within program text, usually via a field access expression or a path.",
+            "fls_40d2g0hvq2il": "A name is an identifier that refers to an entity.",
+            "fls_lcca91wjwnpx": "A declaration is a construct that introduces a name for an entity.",
+            "fls_94l2d7ti0hjw": "An explicitly declared entity is an entity that has a declaration. The following entities <entity> are explicitly declared entities <explicitly declared entity>:",
+            "fls_kvdqmo8gmdxi": "[Associated item]s,",
+            "fls_b3cdg74utyvo": "[Binding]s,",
+            "fls_njcmeqxzvfsa": "[Constant]s,",
+            "fls_63ul8sgf6dgr": "[Declarative macro]s,",
+            "fls_6hxf0rn9j1sr": "[Enum type]s,",
+            "fls_2qitjk5ssaau": "[Enum variant]s,",
+            "fls_4li2c5qc31c7": "[Field]s,",
+            "fls_nq8n7w2s3bja": "[Function]s,",
+            "fls_jv7qi34flit0": "[Generic parameter]s,",
+            "fls_rutlgmzh3tnz": "[Implementation]s,",
+            "fls_1owx5ch7sidm": "[Label]s,",
+            "fls_8ldy7lec9bcd": "[Module]s,",
+            "fls_3mt2p4ssqt0a": "[Static]s,",
+            "fls_qqwu3e98lktb": "[Struct type]s,",
+            "fls_fup6984lxdfy": "[Trait]s,",
+            "fls_ji9iem1c7ekq": "[Type alias]es,",
+            "fls_v7w8ptbyxv9w": "[Union type]s.",
+            "fls_ig1l38gpy5gy": "An implicitly declared entity is an entity that lacks an explicit declaration. The following entities <entity> are implicitly declared entities <implicitly declared entity>:",
+            "fls_ed0t6u7fo3fi": "[Built-in attribute]s.",
+            "fls_gjps01c8l6aa": "Language prelude entities <entity>."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "Name ::=\n       Identifier"
+          }
+        }
+      },
+      "parent_fls_id": "fls_gdeyap4or1db",
+      "sibling_fls_ids": [
+        "fls_jdknpu3kf865",
+        "fls_9i5msiuuyihf",
+        "fls_izl8iuhoz9e0",
+        "fls_dq403wq5yrs",
+        "fls_ld0ize96cm6m",
+        "fls_9gprp17h6t1q",
+        "fls_ydmnb7qnmzzq",
+        "fls_40xoego2thsp"
+      ]
+    },
+    {
+      "fls_id": "fls_jdknpu3kf865",
+      "title": "Visibility",
+      "category": 0,
+      "level": 2,
+      "file": "entities-and-resolution",
+      "content": "Visibility\n\n CratePublicModifier ::=\n $$pub$$ $$($$ $$crate$$ $$)$$\n\n SelfPublicModifier ::=\n $$pub$$ $$($$ $$self$$ $$)$$\n\n SimplePathPublicModifier ::=\n $$pub$$ $$($$ $$in$$ SimplePath $$)$$\n\n SimplePublicModifier ::=\n $$pub$$\n\n SuperPublicModifier ::=\n $$pub$$ $$($$ $$super$$ $$)$$\n\nVisibility is a property of [field]s and [item]s that determines\nwhich [module]s can refer to the name of the field or item.\n\nPublic visibility is a kind of visibility that allows for a name\nto be referred to from arbitrary module M as long as the ancestor\n[module]s of the related entity can be referred to from M.\n\nPrivate visibility is a kind of visibility that allows a name\nto be referred to only by the current module of the entity, and its\ndescendant [module]s.\n\nA visibility modifier sets the visibility of a name.\n\nA crate public modifier is a visibility modifier that grants a\nname public visibility within the current crate only.\n\nA self public modifier is a visibility modifier that grants a\nname private visibility. A self public modifier is equivalent\nto a simple path public modifier where the simple path denotes\nkeyword self.\n\nA simple path public modifier is a visibility modifier that grants a\nname public visibility within the provided simple path only.\n\nThe simple path of a simple path public modifier shall start\nwith a path segment expressed by either keyword crate,\nkeyword self, or keyword super.\n\nThe simple path of a simple path public modifier shall resolve to\nan ancestor module of the current module or the current module\nitself.\n\nA simple public modifier is a visibility modifier that grants a\nname public visibility.\n\nA super public modifier is a visibility modifier that grants a\nname public visibility within the parent module only. A\nsuper public modifier is equivalent to a simple path public modifier\nwhere the simple path denotes keyword super.\n\nAn external item, a field, or an item that appears without a\nvisibility modifier has private visibility by default.\n\nAn associated item of a trait has the same visibility as the\ntrait.\n\nAn enum variant and its [field]s have the same visibility as the\ncontaining enum type.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_7kpepal8ghuj": "Visibility is a property of [field]s and [item]s that determines which [module]s can refer to the name of the field or item.",
+            "fls_qo0itr5il1kk": "Public visibility is a kind of visibility that allows for a name to be referred to from arbitrary module M as long as the ancestor [module]s of the related entity can be referred to from M.",
+            "fls_knjruq5wppv": "Private visibility is a kind of visibility that allows a name to be referred to only by the current module of the entity, and its descendant [module]s.",
+            "fls_t7i4n19qdgn4": "A visibility modifier sets the visibility of a name.",
+            "fls_aa4f3rvir9lm": "A crate public modifier is a visibility modifier that grants a name public visibility within the current crate only.",
+            "fls_tnh7o3pb4e22": "A self public modifier is a visibility modifier that grants a name private visibility. A self public modifier is equivalent to a simple path public modifier where the simple path denotes keyword self.",
+            "fls_yymgpyi67dty": "A simple path public modifier is a visibility modifier that grants a name public visibility within the provided simple path only.",
+            "fls_hc121mxknq03": "The simple path of a simple path public modifier shall start with a path segment expressed by either keyword crate, keyword self, or keyword super.",
+            "fls_icztzxjpm1du": "The simple path of a simple path public modifier shall resolve to an ancestor module of the current module or the current module itself.",
+            "fls_np8aghofjqhm": "A simple public modifier is a visibility modifier that grants a name public visibility.",
+            "fls_quzvhzpr0124": "A super public modifier is a visibility modifier that grants a name public visibility within the parent module only. A super public modifier is equivalent to a simple path public modifier where the simple path denotes keyword super.",
+            "fls_utgjx6l5zwfl": "An external item, a field, or an item that appears without a visibility modifier has private visibility by default.",
+            "fls_jifg2st5bfd6": "An associated item of a trait has the same visibility as the trait.",
+            "fls_dm0xr424ine1": "An enum variant and its [field]s have the same visibility as the containing enum type."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "VisibilityModifier ::=\n       CratePublicModifier\n     | SelfPublicModifier\n     | SimplePathPublicModifier\n     | SimplePublicModifier\n     | SuperPublicModifier\n\n   CratePublicModifier ::=\n       $$pub$$ $$($$ $$crate$$ $$)$$\n\n   SelfPublicModifier ::=\n       $$pub$$ $$($$ $$self$$ $$)$$\n\n   SimplePathPublicModifier ::=\n       $$pub$$ $$($$ $$in$$ SimplePath $$)$$\n\n   SimplePublicModifier ::=\n       $$pub$$\n\n   SuperPublicModifier ::=\n       $$pub$$ $$($$ $$super$$ $$)$$"
+          }
+        }
+      },
+      "parent_fls_id": "fls_gdeyap4or1db",
+      "sibling_fls_ids": [
+        "fls_151r19d7xbgz",
+        "fls_9i5msiuuyihf",
+        "fls_izl8iuhoz9e0",
+        "fls_dq403wq5yrs",
+        "fls_ld0ize96cm6m",
+        "fls_9gprp17h6t1q",
+        "fls_ydmnb7qnmzzq",
+        "fls_40xoego2thsp"
+      ]
+    },
+    {
+      "fls_id": "fls_9i5msiuuyihf",
+      "title": "Paths",
+      "category": 0,
+      "level": 2,
+      "file": "entities-and-resolution",
+      "content": "Paths\n\n SimplePathSegment ::=\n Identifier\n | $$crate$$\n | $$$crate$$\n | $$self$$\n | $$super$$\n\n SimplePathList ::=\n SimplePath ($$,$$ SimplePath)* $$,$$?\n\n QualifiedType ::=\n $$<$$ TypeSpecification QualifyingTrait? $$>$$\n\n QualifyingTrait ::=\n $$as$$ TypePath\n\n UnqualifiedPathExpression ::=\n $$::$$? PathExpressionSegment ($$::$$ PathExpressionSegment)*\n\n PathExpressionSegment ::=\n PathSegment ($$::$$ GenericArgumentList)?\n\n PathSegment ::=\n SimplePathSegment\n | $$Self$$\n\n QualifiedPathExpression ::=\n QualifiedType ($$::$$ PathExpressionSegment)+\n\n TypePath ::=\n $$::$$? TypePathSegment ($$::$$ TypePathSegment)*\n\n TypePathSegment ::=\n PathSegment $$::$$? (GenericArgumentList | QualifiedFnTrait)?\n\n QualifiedFnTrait ::=\n $$($$ TypeSpecificationList? $$)$$ ReturnType?\n\n QualifiedTypePath ::=\n QualifiedType ($$::$$ TypePathSegment)+\n\nA path is a sequence of [path segment]s logically separated by\nnamespace qualifier :: that resolves to an entity.\n\nA path segment is an element of a path.\n\nA path is subject to path resolution.\n\nIf a path segment is expressed as either keyword crate,\nkeyword $crate, keyword self, or keyword Self, then\nthe path segment shall be the first path segment of a path.\n\nA path that starts with a path segment that is expressed as\nkeyword $crate shall appear only within a macro transcriber.\n\nIf a path segment is expressed as keyword super, then the\npath segment shall either be the first path segment of a path,\nor the previous path segment of the path shall also be expressed as\nkeyword super.\n\nA global path is a path that starts with namespace qualifier\n::.\n\nA simple path is a path whose [path segment]s consist of either\n[identifier]s or certain [keyword]s as defined in the syntax rules\nabove.\n\nA path prefix is a path with its last path segment and\nnamespace qualifier :: stripped.\n\nIf a simple path appears in a use import and starts with a\npath segment expressed as either keyword crate, keyword\n$crate, keyword self, or keyword super, then the\npath shall be the simple path prefix of a glob import or a\nnesting import, or the simple path of a simple import.\n\nIf a simple path appears in a use import and starts with a\npath segment expressed as keyword self, then the path shall\nbe part of the UseImportContent of a nesting import as long as the\npath is a single segment path.\n\nA simple path is subject to simple path resolution.\n\nA single segment path is a path consisting of exactly one\npath segment.\n\nA multi segment path is a path consisting of more than one\npath segment.\n\nAn unqualified path expression is a path expression without a qualified type.\n\nA path expression is subject to path expression resolution.\n\nA type path is a path that acts as a type specification.\n\nA type path is subject to type path resolution.\n\nA qualifying trait is a trait that imposes a restriction on a\nqualified type.\n\nA qualifying trait shall resolve to a trait.\n\nA qualified type is a type that is restricted to a set of\n[implementation]s that exhibit implementation conformance to a\nqualifying trait.\n\nA qualified type shall resolve to a type.\n\nA qualified type shall implement its related qualifying trait.\n\nA qualified path expression is a path expression that resolves\nthrough a qualified type.\n\nA qualified type path is a type path that resolves through a\nqualified type.\n\nAn associated type projection is a qualified type path of the form\n<type as trait>::associated_type, where type is a type, trait\nis a qualifying trait, and associated type is an associated type.\n\nA qualified fn trait is a construct that refers to the\ncore::ops::Fn, core::ops::FnMut, or core::ops::FnOnce\ntrait.\n\nIf a path contains a path segment with a qualified fn trait,\nthen the path segment shall be the last path segment of the\npath.\n\nThe following is a simple path. See fls_jdknpu3kf865 for the\ndeclaration of crate_visible_function.\n\nThe following is an unqualified path expression with a generic argument.\n\nThe following is a type path with a generic argument.\n\nThe following is a qualified path expression. The call expression\ninvokes the associated function of S's trait implementation of\ntrait T.\n\nThe following is a qualified type path. It resolves to the associated\ntype of S's trait implementation of trait T.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_klcltwcwrw6i": "A path is a sequence of [path segment]s logically separated by namespace qualifier :: that resolves to an entity.",
+            "fls_y1z7kougmahd": "A path segment is an element of a path.",
+            "fls_8q8nqfpSz7Ly": "A path is subject to path resolution.",
+            "fls_opn5n5t2mo3m": "If a path segment is expressed as either keyword crate, keyword $crate, keyword self, or keyword Self, then the path segment shall be the first path segment of a path.",
+            "fls_774uryecc2sx": "A path that starts with a path segment that is expressed as keyword $crate shall appear only within a macro transcriber.",
+            "fls_7k88ypcgaoff": "If a path segment is expressed as keyword super, then the path segment shall either be the first path segment of a path, or the previous path segment of the path shall also be expressed as keyword super.",
+            "fls_7kb6ltajgiou": "A global path is a path that starts with namespace qualifier ::.",
+            "fls_n77icl6idazp": "A simple path is a path whose [path segment]s consist of either [identifier]s or certain [keyword]s as defined in the syntax rules above.",
+            "fls_YnUsdSM4x9eq": "A path prefix is a path with its last path segment and namespace qualifier :: stripped.",
+            "fls_iuzvtr3oax1o": "If a simple path appears in a use import and starts with a path segment expressed as either keyword crate, keyword $crate, keyword self, or keyword super, then the path shall be the simple path prefix of a glob import or a nesting import, or the simple path of a simple import.",
+            "fls_cw006jhlboa": "If a simple path appears in a use import and starts with a path segment expressed as keyword self, then the path shall be part of the UseImportContent of a nesting import as long as the path is a single segment path.",
+            "fls_kv5bpq8rf1j9": "A simple path is subject to simple path resolution.",
+            "fls_chtj3hcfe3ap": "A single segment path is a path consisting of exactly one path segment.",
+            "fls_wm61yeclairz": "A multi segment path is a path consisting of more than one path segment.",
+            "fls_nRgjCLYZL3iX": "An unqualified path expression is a path expression without a qualified type.",
+            "fls_tvvycup09b51": "A path expression is subject to path expression resolution.",
+            "fls_h2zikgmazoxx": "A type path is a path that acts as a type specification.",
+            "fls_nj7s6xmzx55f": "A type path is subject to type path resolution.",
+            "fls_e65q3iz50j6a": "A qualifying trait is a trait that imposes a restriction on a qualified type.",
+            "fls_Ai1jN5a8h3Dz": "A qualifying trait shall resolve to a trait.",
+            "fls_ybv0tdu7dnj5": "A qualified type is a type that is restricted to a set of [implementation]s that exhibit implementation conformance to a qualifying trait.",
+            "fls_qkYF2J7GVah8": "A qualified type shall resolve to a type.",
+            "fls_QjNQbQhUcRTT": "A qualified type shall implement its related qualifying trait.",
+            "fls_7sm3206va03c": "A qualified path expression is a path expression that resolves through a qualified type.",
+            "fls_huynsyx13gsz": "A qualified type path is a type path that resolves through a qualified type.",
+            "fls_RZvIsApi4WQm": "An associated type projection is a qualified type path of the form <type as trait>::associated_type, where type is a type, trait is a qualifying trait, and associated type is an associated type.",
+            "fls_f1ciozzetj5a": "A qualified fn trait is a construct that refers to the core::ops::Fn, core::ops::FnMut, or core::ops::FnOnce trait.",
+            "fls_cy7vza3flqi9": "If a path contains a path segment with a qualified fn trait, then the path segment shall be the last path segment of the path."
+          }
+        },
+        "-7": {
+          "paragraphs": {
+            "fls_cul31g1kkz5c": "The following is a simple path. See for the declaration of crate_visible_function. .. code-block:: rust crate::outer_module::inner_module::crate_visible_function();",
+            "fls_no853u27p4f3": "The following is an unqualified path expression with a generic argument. .. code-block:: rust Vec::<u8>::with_capacity(42);",
+            "fls_28c21rzc6rsp": "The following is a type path with a generic argument. .. code-block:: rust std::boxed::Box<dyn std::ops::FnOnce(isize) -> size>; struct S; impl S { fn f() { println!(\"f of S\"); } } trait T { fn f() { println!(\"f of T\"); } } impl T for S {}",
+            "fls_4s2n95h4rd1q": "The following is a qualified path expression. The call expression invokes the associated function of S's trait implementation of trait T. .. code-block:: rust <S as T>::f();",
+            "fls_ojdntg5i79pb": "The following is a qualified type path. It resolves to the associated type of S's trait implementation of trait T. .. code-block:: rust type T = <S as T>::Assoc;"
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "SimplePath ::=\n       $$::$$? SimplePathSegment ($$::$$ SimplePathSegment)*\n\n   SimplePathSegment ::=\n       Identifier\n     | $$crate$$\n     | $$$crate$$\n     | $$self$$\n     | $$super$$\n\n   SimplePathList ::=\n       SimplePath ($$,$$ SimplePath)* $$,$$?\n\n   QualifiedType ::=\n       $$<$$ TypeSpecification QualifyingTrait? $$>$$\n\n   QualifyingTrait ::=\n       $$as$$ TypePath\n\n   UnqualifiedPathExpression ::=\n       $$::$$? PathExpressionSegment ($$::$$ PathExpressionSegment)*\n\n   PathExpression..."
+          }
+        }
+      },
+      "parent_fls_id": "fls_gdeyap4or1db",
+      "sibling_fls_ids": [
+        "fls_151r19d7xbgz",
+        "fls_jdknpu3kf865",
+        "fls_izl8iuhoz9e0",
+        "fls_dq403wq5yrs",
+        "fls_ld0ize96cm6m",
+        "fls_9gprp17h6t1q",
+        "fls_ydmnb7qnmzzq",
+        "fls_40xoego2thsp"
+      ]
+    },
+    {
+      "fls_id": "fls_izl8iuhoz9e0",
+      "title": "Scopes",
+      "category": 0,
+      "level": 2,
+      "file": "entities-and-resolution",
+      "content": "Scopes\n\nA scope is a region of program text where an entity can be referred\nto. An entity is in scope when it can be referred to.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_5x5xykocwyiy": "A scope is a region of program text where an entity can be referred to. An entity is in scope when it can be referred to."
+          }
+        }
+      },
+      "parent_fls_id": "fls_gdeyap4or1db",
+      "sibling_fls_ids": [
+        "fls_151r19d7xbgz",
+        "fls_jdknpu3kf865",
+        "fls_9i5msiuuyihf",
+        "fls_dq403wq5yrs",
+        "fls_ld0ize96cm6m",
+        "fls_9gprp17h6t1q",
+        "fls_ydmnb7qnmzzq",
+        "fls_40xoego2thsp"
+      ]
+    },
+    {
+      "fls_id": "fls_6ozthochxz1i",
+      "title": "Binding Scopes",
+      "category": 0,
+      "level": 3,
+      "file": "entities-and-resolution",
+      "content": "Binding Scopes\n\nA binding scope is a scope for [binding]s.\n\nThe binding of a closure parameter is in scope within the\nrelated closure body.\n\nThe binding of a function parameter is in scope within the\nrelated function body.\n\nThe binding of a for loop or a while let loop is in scope\nwithin the related loop body.\n\nThe binding of an if let expression is in scope within the\nrelated block expression.\n\nThe binding of a let statement is in scope after the related\nlet statement, until the end of the block expression where the\nrelated let statement appears.\n\nThe binding of a match arm is in scope within its related\n[expression]s and related match arm guard.\n\nA binding declared outside of a const block expression is not in\nscope within such a const block expression.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_ncg9etb3x7k0": "A binding scope is a scope for [binding]s.",
+            "fls_u52mx4xw8zod": "The binding of a closure parameter is in scope within the related closure body.",
+            "fls_t9mk8kasobea": "The binding of a function parameter is in scope within the related function body.",
+            "fls_h9cvs854ae34": "The binding of a for loop or a while let loop is in scope within the related loop body.",
+            "fls_vl1qk0odouyb": "The binding of an if let expression is in scope within the related block expression.",
+            "fls_74nk389rk075": "The binding of a let statement is in scope after the related let statement, until the end of the block expression where the related let statement appears.",
+            "fls_xbnki64un70v": "The binding of a match arm is in scope within its related [expression]s and related match arm guard.",
+            "fls_eBacCVlDaKYK": "A binding declared outside of a const block expression is not in scope within such a const block expression."
+          }
+        }
+      },
+      "parent_fls_id": "fls_izl8iuhoz9e0",
+      "sibling_fls_ids": [
+        "fls_ftphlagzd2te",
+        "fls_m0z7omni9hp0",
+        "fls_769b4p8v3cwu",
+        "fls_kgbi26212eof",
+        "fls_octf6sf7yso",
+        "fls_lnpyb285qdiy"
+      ]
+    },
+    {
+      "fls_id": "fls_ftphlagzd2te",
+      "title": "Generic Parameter Scope",
+      "category": 0,
+      "level": 3,
+      "file": "entities-and-resolution",
+      "content": "Generic Parameter Scope\n\nA generic parameter scope is a scope for [generic parameter]s.\n\nA generic parameter is in scope of a GenericParameterList.\n\nA generic parameter of an enum type is in scope within the\nrelated [enum variant]s and where clause.\n\nA generic parameter of a function pointer type is in scope\nwithin the related type specification.\n\nA generic parameter of an implementation is in scope within the\nrelated implementation body and where clause.\n\nA generic parameter of a struct type is in scope within the\nrelated [field]s and where clause.\n\nA generic parameter of a trait is in scope within the related\ntrait body and where clause.\n\nA generic parameter of a trait bound is in scope within the\nrelated [generic parameter]s or the related type path.\n\nA generic parameter of a type alias is in scope within the\nrelated initialization type and where clause.\n\nA generic parameter of a type bound predicate is in scope within\nthe related TypeBoundList.\n\nA generic parameter of a union type is in scope within the\nrelated [field]s and where clause.\n\nA generic parameter is not in scope within nested [item]s,\nexcept within [associated item]s.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_amoh8r4gghyj": "A generic parameter scope is a scope for [generic parameter]s.",
+            "fls_6o38qhbna46z": "A generic parameter is in scope of a GenericParameterList.",
+            "fls_jqevvpndxzdz": "A generic parameter of an enum type is in scope within the related [enum variant]s and where clause.",
+            "fls_t9ztg017itkp": "A generic parameter of a function pointer type is in scope within the related type specification.",
+            "fls_pmo939jw9m1m": "A generic parameter of an implementation is in scope within the related implementation body and where clause.",
+            "fls_67dtv1z3arbl": "A generic parameter of a struct type is in scope within the related [field]s and where clause.",
+            "fls_y8j4isk9libl": "A generic parameter of a trait is in scope within the related trait body and where clause.",
+            "fls_ow5ih7q3xxfx": "A generic parameter of a trait bound is in scope within the related [generic parameter]s or the related type path.",
+            "fls_h9rpwxpz72v0": "A generic parameter of a type alias is in scope within the related initialization type and where clause.",
+            "fls_3qm3vh97bvpb": "A generic parameter of a type bound predicate is in scope within the related TypeBoundList.",
+            "fls_xuxbpv5b2ym9": "A generic parameter of a union type is in scope within the related [field]s and where clause.",
+            "fls_95z5mytvfjia": "A generic parameter is not in scope within nested [item]s, except within [associated item]s."
+          }
+        }
+      },
+      "parent_fls_id": "fls_izl8iuhoz9e0",
+      "sibling_fls_ids": [
+        "fls_6ozthochxz1i",
+        "fls_m0z7omni9hp0",
+        "fls_769b4p8v3cwu",
+        "fls_kgbi26212eof",
+        "fls_octf6sf7yso",
+        "fls_lnpyb285qdiy"
+      ]
+    },
+    {
+      "fls_id": "fls_m0z7omni9hp0",
+      "title": "Item Scope",
+      "category": 0,
+      "level": 3,
+      "file": "entities-and-resolution",
+      "content": "Item Scope\n\nAn item scope is a scope for [item]s.\n\nAn item declared within the block expression of an\nexpression-with-block is in scope within the related\nblock expression.\n\nAn item declared within a module is in scope within the\nrelated module. Such an item is not in scope within nested\n[module]s.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_p5o243hhe1y3": "An item scope is a scope for [item]s.",
+            "fls_huvo0mp2i6fb": "An item declared within the block expression of an expression-with-block is in scope within the related block expression.",
+            "fls_x8r0oppuc1t6": "An item declared within a module is in scope within the related module. Such an item is not in scope within nested [module]s."
+          }
+        }
+      },
+      "parent_fls_id": "fls_izl8iuhoz9e0",
+      "sibling_fls_ids": [
+        "fls_6ozthochxz1i",
+        "fls_ftphlagzd2te",
+        "fls_769b4p8v3cwu",
+        "fls_kgbi26212eof",
+        "fls_octf6sf7yso",
+        "fls_lnpyb285qdiy"
+      ]
+    },
+    {
+      "fls_id": "fls_769b4p8v3cwu",
+      "title": "Label Scope",
+      "category": 0,
+      "level": 3,
+      "file": "entities-and-resolution",
+      "content": "Label Scope\n\nA label scope is a scope for [label]s.\n\nA label is in scope within the block expression of the related\nloop expression.\n\nA label is not in scope within nested [async block]s,\n[closure expression]s, [constant context]s, and [item]s.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_96kczd4zhpco": "A label scope is a scope for [label]s.",
+            "fls_8sevg1sa82h4": "A label is in scope within the block expression of the related loop expression.",
+            "fls_ep5smja1rxdv": "A label is not in scope within nested [async block]s, [closure expression]s, [constant context]s, and [item]s."
+          }
+        }
+      },
+      "parent_fls_id": "fls_izl8iuhoz9e0",
+      "sibling_fls_ids": [
+        "fls_6ozthochxz1i",
+        "fls_ftphlagzd2te",
+        "fls_m0z7omni9hp0",
+        "fls_kgbi26212eof",
+        "fls_octf6sf7yso",
+        "fls_lnpyb285qdiy"
+      ]
+    },
+    {
+      "fls_id": "fls_kgbi26212eof",
+      "title": "Self Scope",
+      "category": 0,
+      "level": 3,
+      "file": "entities-and-resolution",
+      "content": "Self Scope\n\nA Self scope is a scope for Self.\n\nSelf of an enum type is in scope within the related\n[enum variant]s, [generic parameter]s, and where clause.\n\nSelf of an implementation is in scope within the related\n[generic parameter]s, implementation body, and where clause.\n\nSelf of a struct type is in scope within the related\n[field]s, [generic parameter]s, and where clause.\n\nSelf of a trait is in scope within the related\n[generic parameter]s, trait body, and where clause.\n\nSelf of a union type is in scope within the related\n[field]s, [generic parameter]s, and where clause.\n\nSelf is not in scope within [attribute]s.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_kgt81m4f72ne": "A Self scope is a scope for Self.",
+            "fls_kxdwq4b136tl": "Self of an enum type is in scope within the related [enum variant]s, [generic parameter]s, and where clause.",
+            "fls_nf4g82gi12ij": "Self of an implementation is in scope within the related [generic parameter]s, implementation body, and where clause.",
+            "fls_dy4gyepebe7b": "Self of a struct type is in scope within the related [field]s, [generic parameter]s, and where clause.",
+            "fls_cha4ddwfqwvj": "Self of a trait is in scope within the related [generic parameter]s, trait body, and where clause.",
+            "fls_ql4i021ut2n8": "Self of a union type is in scope within the related [field]s, [generic parameter]s, and where clause.",
+            "fls_mj9vlxnf44oi": "Self is not in scope within [attribute]s."
+          }
+        }
+      },
+      "parent_fls_id": "fls_izl8iuhoz9e0",
+      "sibling_fls_ids": [
+        "fls_6ozthochxz1i",
+        "fls_ftphlagzd2te",
+        "fls_m0z7omni9hp0",
+        "fls_769b4p8v3cwu",
+        "fls_octf6sf7yso",
+        "fls_lnpyb285qdiy"
+      ]
+    },
+    {
+      "fls_id": "fls_octf6sf7yso",
+      "title": "Textual Macro Scope",
+      "category": 0,
+      "level": 3,
+      "file": "entities-and-resolution",
+      "content": "Textual Macro Scope\n\nA textual macro scope is a scope for [declarative macro]s.\n\nA declarative macro is in scope after the related macro\ndeclaration, until the end of the block expression or the enclosing\nmodule where the macro declaration appears.\n\nIf the textual macro scope is introduced by a module and the\nmodule is subject to attribute macro_use, then the\ntextual macro scope extends until the end of the scope introduced by\nthe enclosing block expression or module.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_xkh8cqubhxad": "A textual macro scope is a scope for [declarative macro]s.",
+            "fls_iec3otx863yp": "A declarative macro is in scope after the related macro declaration, until the end of the block expression or the enclosing module where the macro declaration appears.",
+            "fls_cbfuh9y87y6i": "If the textual macro scope is introduced by a module and the module is subject to attribute macro_use, then the textual macro scope extends until the end of the scope introduced by the enclosing block expression or module."
+          }
+        }
+      },
+      "parent_fls_id": "fls_izl8iuhoz9e0",
+      "sibling_fls_ids": [
+        "fls_6ozthochxz1i",
+        "fls_ftphlagzd2te",
+        "fls_m0z7omni9hp0",
+        "fls_769b4p8v3cwu",
+        "fls_kgbi26212eof",
+        "fls_lnpyb285qdiy"
+      ]
+    },
+    {
+      "fls_id": "fls_lnpyb285qdiy",
+      "title": "Scope Hierarchy",
+      "category": 0,
+      "level": 3,
+      "file": "entities-and-resolution",
+      "content": "Scope Hierarchy\n\nThe scope hierarchy reflects the nesting of [scope]s as introduced\nby [scoping construct]s. An inner scope introduced by a nested\nscoping construct is the child of an outer scope introduced by an\nenclosing scoping construct.\n\nA scoping construct is a construct that introduces [scope]s\ninto the scope hierarchy. The following [construct]s are\n[scoping construct]s:\n\n* [Block expression]s,\n\n* [Closure expression]s,\n\n* [Declarative macro]s,\n\n* Enum type [declaration]s,\n\n* Function [declaration]s,\n\n* Function pointer type specifications <type specification>,\n\n* [If let expression]s,\n\n* Implementation [declaration]s,\n\n* [Let statement]s,\n\n* [Loop expression]s,\n\n* [Match arm]s,\n\n* Module [declaration]s,\n\n* Struct type [declaration]s,\n\n* [Trait bound]s,\n\n* Trait [declaration]s,\n\n* Type alias [declaration]s,\n\n* [Type bound predicate]s,\n\n* Union type [declaration]s.\n\nA closure expression introduces a binding scope into the\nscope hierarchy.\n\nA declarative macro introduces a textual macro scope into the\nscope hierarchy.\n\nThe declaration of an enum type introduces a\ngeneric parameter scope and a Self scope into the\nscope hierarchy.\n\nThe declaration of a function introduces a binding scope and a\ngeneric parameter scope into the scope hierarchy.\n\nThe type specification of a function pointer type introduces a\ngeneric parameter scope into the scope hierarchy.\n\nAn if let expression introduces a binding scope into the\nscope hierarchy.\n\nThe declaration of an implementation introduces a\ngeneric parameter scope and a Self scope into the\nscope hierarchy.\n\nA let statement introduces a binding scope into the\nscope hierarchy.\n\nA for loop expression or a while let loop expression introduces a\nbinding scope and a label scope into the scope hierarchy.\n\nAn infinite loop expression or a while loop expression introduces a\nlabel scope into the scope hierarchy.\n\nA match arm introduces a binding scope into the\nscope hierarchy.\n\nThe declaration of a module introduces an item scope into the\nscope hierarchy.\n\nThe declaration of a struct type introduces a\ngeneric parameter scope and a Self scope into the\nscope hierarchy.\n\nThe declaration of a trait introduces a generic parameter scope\nand a Self scope into the scope hierarchy.\n\nA trait bound introduces a generic parameter scope into the\nscope hierarchy.\n\nThe declaration of a type alias introduces a\ngeneric parameter scope.\n\nA type bound predicate introduces a generic parameter scope into the\nscope hierarchy.\n\nThe declaration of a union type introduces a\ngeneric parameter scope and a Self scope into the\nscope hierarchy.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_4o7vfo6v39l7": "The scope hierarchy reflects the nesting of [scope]s as introduced by [scoping construct]s. An inner scope introduced by a nested scoping construct is the child of an outer scope introduced by an enclosing scoping construct.",
+            "fls_ns4eog3od4kw": "A scoping construct is a construct that introduces [scope]s into the scope hierarchy. The following [construct]s are [scoping construct]s:",
+            "fls_kqmykyzdb1k6": "[Block expression]s,",
+            "fls_g86d5v14sxxv": "[Closure expression]s,",
+            "fls_ldwencd8zp9a": "[Declarative macro]s,",
+            "fls_jz7hgkvocc9r": "Enum type [declaration]s,",
+            "fls_p4g8sxba7at9": "Function [declaration]s,",
+            "fls_d1cp5pt5wn0z": "Function pointer type specifications <type specification>,",
+            "fls_ibmm8y748z4": "[If let expression]s,",
+            "fls_39011vsy2vxx": "Implementation [declaration]s,",
+            "fls_m81hyd154yun": "[Let statement]s,",
+            "fls_fvgzmsaox4z3": "[Loop expression]s,",
+            "fls_rj8uld11o1br": "[Match arm]s,",
+            "fls_hyp4dnpqe620": "Module [declaration]s,",
+            "fls_zgied4qysk2a": "Struct type [declaration]s,",
+            "fls_cn6dzmrxdp1w": "[Trait bound]s,",
+            "fls_9n7m0tv7w2np": "Trait [declaration]s,",
+            "fls_sj2ivbf2l2dp": "Type alias [declaration]s,",
+            "fls_cejfio3ddy0j": "[Type bound predicate]s,",
+            "fls_j3rot386teec": "Union type [declaration]s.",
+            "fls_nuobrpnymym1": "A closure expression introduces a binding scope into the scope hierarchy.",
+            "fls_r0x9sw7dwnww": "A declarative macro introduces a textual macro scope into the scope hierarchy.",
+            "fls_ve7svuy7xvh0": "The declaration of an enum type introduces a generic parameter scope and a Self scope into the scope hierarchy.",
+            "fls_pvfqhtts3qsa": "The declaration of a function introduces a binding scope and a generic parameter scope into the scope hierarchy.",
+            "fls_9k9hourczbv7": "The type specification of a function pointer type introduces a generic parameter scope into the scope hierarchy.",
+            "fls_p6wiuhkeypzs": "An if let expression introduces a binding scope into the scope hierarchy.",
+            "fls_34usianesmf6": "The declaration of an implementation introduces a generic parameter scope and a Self scope into the scope hierarchy.",
+            "fls_n1a41d8i0rot": "A let statement introduces a binding scope into the scope hierarchy.",
+            "fls_amhi3d9dd3i3": "A for loop expression or a while let loop expression introduces a binding scope and a label scope into the scope hierarchy.",
+            "fls_nu8xj3vza55j": "An infinite loop expression or a while loop expression introduces a label scope into the scope hierarchy.",
+            "fls_fiyj50u6cg2n": "A match arm introduces a binding scope into the scope hierarchy.",
+            "fls_azjx3y5yezoi": "The declaration of a module introduces an item scope into the scope hierarchy.",
+            "fls_puly43s4x360": "The declaration of a struct type introduces a generic parameter scope and a Self scope into the scope hierarchy.",
+            "fls_pxtlu7ud6w2h": "The declaration of a trait introduces a generic parameter scope and a Self scope into the scope hierarchy.",
+            "fls_ddxxt11u0yal": "A trait bound introduces a generic parameter scope into the scope hierarchy.",
+            "fls_qofr9vme46wp": "The declaration of a type alias introduces a generic parameter scope.",
+            "fls_gjvfty9m84a9": "A type bound predicate introduces a generic parameter scope into the scope hierarchy.",
+            "fls_xr9wors6oa7w": "The declaration of a union type introduces a generic parameter scope and a Self scope into the scope hierarchy."
+          }
+        }
+      },
+      "parent_fls_id": "fls_izl8iuhoz9e0",
+      "sibling_fls_ids": [
+        "fls_6ozthochxz1i",
+        "fls_ftphlagzd2te",
+        "fls_m0z7omni9hp0",
+        "fls_769b4p8v3cwu",
+        "fls_kgbi26212eof",
+        "fls_octf6sf7yso"
+      ]
+    },
+    {
+      "fls_id": "fls_dq403wq5yrs",
+      "title": "Namespaces",
+      "category": 0,
+      "level": 2,
+      "file": "entities-and-resolution",
+      "content": "Namespaces\n\nA namespace is a logical grouping of [name]s such that the occurrence\nof a name in one namespace does not conflict with an occurrence of\nthe same name in another namespace.\n\n[Name]s are segregated into one of five [namespace]s based on the\nkind of entity the name refers to.\n\nA label namespace contains [label]s.\n\nA lifetime namespace contains the [name]s of\n[lifetime parameter]s.\n\nA macro namespace contains the [name]s of the following kinds of\nentities <entity>:\n\n* [Attribute macro]s,\n\n* [Built-in attribute]s,\n\n* [Declarative macro]s,\n\n* [Derive macro]s,\n\n* [Function-like macro]s.\n\nA type namespace contains the [name]s of the following kinds of\nentities <entity>:\n\n* [Associated type]s,\n\n* bool [type]s,\n\n* [Enum type]s,\n\n* [Enum variant]s,\n\n* [Module]s,\n\n* [Numeric type]s,\n\n* Self,\n\n* [Struct type]s,\n\n* [Textual type]s,\n\n* [Trait]s,\n\n* [Type alias]es,\n\n* [Type parameter]s,\n\n* [Union type]s.\n\nA value namespace contains the [name]s of the following kinds of\nentities <entity>:\n\n* [Associated constant]s,\n\n* [Associated function]s,\n\n* [Binding]s,\n\n* [Constant]s,\n\n* [Constant parameter]s,\n\n* Enum variant constructors,\n\n* [Function]s,\n\n* Self constructors,\n\n* [Static]s,\n\n* Struct constructors.\n\nThe [name]s of the following kinds of entities <entity> are not part\nof any namespace:\n\n* [Enum field]s,\n\n* [Struct field]s,\n\n* [Union field]s.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_1d4jm61qnt4l": "A namespace is a logical grouping of [name]s such that the occurrence of a name in one namespace does not conflict with an occurrence of the same name in another namespace.",
+            "fls_avsua7bho205": "[Name]s are segregated into one of five [namespace]s based on the kind of entity the name refers to.",
+            "fls_9e3xeza853wx": "A label namespace contains [label]s.",
+            "fls_w625tk3ogdui": "A lifetime namespace contains the [name]s of [lifetime parameter]s.",
+            "fls_crwfafrmydr7": "A macro namespace contains the [name]s of the following kinds of entities <entity>:",
+            "fls_t8fcpm8ldv1y": "[Attribute macro]s,",
+            "fls_7pkex797rkeu": "[Built-in attribute]s,",
+            "fls_v32f2evgqt5q": "[Declarative macro]s,",
+            "fls_f6yrzwu6yi30": "[Derive macro]s,",
+            "fls_nk0swexy2ztm": "[Function-like macro]s.",
+            "fls_ckptn88o6lla": "A type namespace contains the [name]s of the following kinds of entities <entity>:",
+            "fls_3ma5v1fop98p": "[Associated type]s,",
+            "fls_nj7sep7ht7lg": "bool [type]s,",
+            "fls_g8h6t5x6yprm": "[Enum type]s,",
+            "fls_2l1o7vqfr4m7": "[Enum variant]s,",
+            "fls_6q8rjv1jmu84": "[Module]s,",
+            "fls_lx2tx1jt8t3a": "[Numeric type]s,",
+            "fls_8o3izim4zf8t": "[Struct type]s,",
+            "fls_fweohszgbuj4": "[Textual type]s,",
+            "fls_ry02dzisxz3h": "[Trait]s,",
+            "fls_dcz1bxjjfsq": "[Type alias]es,",
+            "fls_wt9kgsi6n6ep": "[Type parameter]s,",
+            "fls_w29t5njbe46s": "[Union type]s.",
+            "fls_u1533bngb0yv": "A value namespace contains the [name]s of the following kinds of entities <entity>:",
+            "fls_e8v4g45v5ry2": "[Associated constant]s,",
+            "fls_pq8bzav84q3z": "[Associated function]s,",
+            "fls_ttr6v8ca4av0": "[Binding]s,",
+            "fls_aivi97hhfxy2": "[Constant]s,",
+            "fls_pie4ltdtzkl3": "[Constant parameter]s,",
+            "fls_qmf7lk6h96sv": "Enum variant constructors,",
+            "fls_ufp3btk8pet5": "[Function]s,",
+            "fls_t3bnpkfazw4z": "Self constructors,",
+            "fls_y0shlli54n5y": "[Static]s,",
+            "fls_tghgxcju5u2t": "Struct constructors.",
+            "fls_yesesxynpq6s": "The [name]s of the following kinds of entities <entity> are not part of any namespace:",
+            "fls_40o8y6exr3df": "[Enum field]s,",
+            "fls_y76o5ug7dtv": "[Struct field]s,",
+            "fls_3np518s1su4w": "[Union field]s."
+          }
+        }
+      },
+      "parent_fls_id": "fls_gdeyap4or1db",
+      "sibling_fls_ids": [
+        "fls_151r19d7xbgz",
+        "fls_jdknpu3kf865",
+        "fls_9i5msiuuyihf",
+        "fls_izl8iuhoz9e0",
+        "fls_ld0ize96cm6m",
+        "fls_9gprp17h6t1q",
+        "fls_ydmnb7qnmzzq",
+        "fls_40xoego2thsp"
+      ]
+    },
+    {
+      "fls_id": "fls_ld0ize96cm6m",
+      "title": "Preludes",
+      "category": 0,
+      "level": 2,
+      "file": "entities-and-resolution",
+      "content": "Preludes\n\nA prelude is a collection of entities <entity> that are automatically\nbrought in scope of every module in a crate. Such\nentities <entity> are referred to as\nprelude entities <prelude entity>. The name of a prelude entity\nis referred to as a prelude name.\n\nThe core prelude is a prelude that brings in scope of every\nmodule all re-exported entities <entity> from the\ncore::prelude::rust_2021 module.\n\nAn external prelude is a prelude that brings in scope of the\ncrate root module the entities <entity> of the [crate]s imported\nusing external [crate import]s or supplied by a tool. If the external\ncrate import uses a renaming, then the identifier of the\nrenaming is instead added to the external prelude. The core\ncrate is always added to the external prelude unless the crate\nroot is subject to attribute no_core.\n\nThe language prelude is a prelude that brings in scope of every\nmodule the following entities <entity>:\n\n* Boolean type bool.\n\n* [Built-in attribute]s.\n\n* [Floating-point type]s f32 and f64.\n\n* [Integer type]s i8, i16, i32, i64, i128,\n isize, u8, u16, u32, u64, u128, and usize.\n\n* [Textual type]s char and str.\n\nThe macro_use prelude is a prelude that brings in scope of the\ncrate root module the entities <entity> of [macro]s from\nexternal [crate]s that were imported using an external crate import.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_po4gw6t2ptwu": "A prelude is a collection of entities <entity> that are automatically brought in scope of every module in a crate. Such entities <entity> are referred to as prelude entities <prelude entity>. The name of a prelude entity is referred to as a prelude name.",
+            "fls_n4102qskkmz2": "The core prelude is a prelude that brings in scope of every module all re-exported entities <entity> from the core::prelude::rust_2021 module.",
+            "fls_atvnwly4w8g2": "An external prelude is a prelude that brings in scope of the crate root module the entities <entity> of the [crate]s imported using external [crate import]s or supplied by a tool. If the external crate import uses a renaming, then the identifier of the renaming is instead added to the external prelude. The core crate is always added to the external prelude unless the crate root is subject to attribute no_core.",
+            "fls_pbc7ktlu0pl": "The language prelude is a prelude that brings in scope of every module the following entities <entity>:",
+            "fls_frjv68kqqxfh": "Boolean type bool.",
+            "fls_rf6a2ae3y7vu": "[Built-in attribute]s.",
+            "fls_sxnnkzmuvexa": "[Floating-point type]s f32 and f64.",
+            "fls_qsyorqjkdh2t": "[Integer type]s i8, i16, i32, i64, i128, isize, u8, u16, u32, u64, u128, and usize.",
+            "fls_aolj6abvp9sa": "[Textual type]s char and str.",
+            "fls_of4n3vv15l5z": "The macro_use prelude is a prelude that brings in scope of the crate root module the entities <entity> of [macro]s from external [crate]s that were imported using an external crate import."
+          }
+        }
+      },
+      "parent_fls_id": "fls_gdeyap4or1db",
+      "sibling_fls_ids": [
+        "fls_151r19d7xbgz",
+        "fls_jdknpu3kf865",
+        "fls_9i5msiuuyihf",
+        "fls_izl8iuhoz9e0",
+        "fls_dq403wq5yrs",
+        "fls_9gprp17h6t1q",
+        "fls_ydmnb7qnmzzq",
+        "fls_40xoego2thsp"
+      ]
+    },
+    {
+      "fls_id": "fls_9gprp17h6t1q",
+      "title": "Use Imports",
+      "category": 0,
+      "level": 2,
+      "file": "entities-and-resolution",
+      "content": "Use Imports\n\n UseImportContent ::=\n GlobImport\n | NestingImport\n | SimpleImport\n\n GlobImport ::=\n SimplePathPrefix? $$*$$\n\n NestingImport ::=\n SimplePathPrefix? $${$$ UseImportContentList? $$}$$\n\n SimpleImport ::=\n SimplePath Renaming?\n\n SimplePathPrefix ::=\n SimplePath? $$::$$\n\n UseImportContentList ::=\n UseImportContent ($$,$$ UseImportContent)* $$,$$?\n\nA use import brings entities <entity> in scope within the\nblock expression of an expression-with-block or module where the\nuse import resides.\n\nA simple path prefix is the leading simple path of a glob import\nor a nesting import.\n\nAn import path prefix is the fully constructed path prefix of a\nuse import. An import path prefix for a given\nsimple import or glob import is constructed as follows:\n\n#. Start the import path prefix as follows:\n\n * If the use import is a simple import then start with the\n [path segment]s of the simple import's simple path\n path prefix.\n\n * If the use import is a glob import then start with the\n [path segment]s of the glob import's simple path prefix.\n\n * If the use import is a nesting import then start with the\n [path segment]s of the nesting import's simple path prefix.\n\n#. Then if the current use import is the child of a nesting import,\n prepend the nesting import's simple path prefix to the\n import path prefix. Repeat this step with the nesting import as\n the current use import.\n\nA simple import is a use import that brings all entities <entity>\nit refers to into scope, optionally with a different\nname than they are declared with by using a renaming.\n\nA glob import is a use import that brings all entities <entity>\nexported by the module or enum its import path prefix resolves to\ninto scope.\n\nAn import path prefix shall resolve to a module or enum.\n\nA glob import brings [name]s into scope as follows:\n\n* If the import path prefix resolves to a module, bring all\n [name]s in the module that are visible from the location of the\n glob import into scope.\n\n* If the import path prefix resolves to an enum, bring the\n [name]s of all of the enum's [enum variant]s into scope.\n\nA simple import path is the path constructed by appending the last\npath segment of a simple import's simple path to the\nimport path prefix.\n\nA simple import brings [name]s into scope as follows:\n\n* If the simple path is keyword self and:\n\n * The simple import is in a nesting import, then bring the\n entity in type namespace that the import path prefix resolves\n to into scope.\n\n * Otherwise bring the containing module into scope.\n\n* Otherwise bring all entities <entity> that the simple import path\n resolves to that are visible from the location of the\n simple import into scope.\n\nAn Entity imported by a simple import subject to a\nrenaming with identifier is brought into scope under the\nname declared by the renaming.\n\nA trait imported by a simple import subject to a\nrenaming with character underscore _ is added into scope without\na name.\n\nA nesting import is a use import that provides a common\nsimple path prefix for its nested [use import]s.\n\nA glob import outside of a nesting import without a simple path\nprefix is rejected, but may still be consumed by [macro]s.\n\nA simple import with a simple path with a single path segment of\nkeyword self shall be subject to the following:\n\n* It shall either appear in a nesting import with a non-empty\n import path prefix, or\n\n* It shall be subject to a renaming.\n\nIt is a static error if two [glob import]s import the same name in the\nsame namespace but refer to different entities <entity> if the\nname is used or shadowed <shadowing>.\n\nIf two [glob import]s import the same entity under the same name,\nthe visibility of the name is the most permissive one.\n\nThe following is a glob import. See fls_jdknpu3kf865\nfor the declaration of modules and functions. The imported functions\nare create_visible_function, outer_module_visible_function,\nvisible_function.\n\nThe following is a renaming import. The imported function is\nvisible_function under the name f.\n\nThe following is a selective import. The imported functions are\ncrate_visible_function and visible_function.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_lyw4t098sxrj": "A use import brings entities <entity> in scope within the block expression of an expression-with-block or module where the use import resides.",
+            "fls_sxo1jb25pl8a": "A simple path prefix is the leading simple path of a glob import or a nesting import.",
+            "fls_WAA4WmohGu6T": "An import path prefix is the fully constructed path prefix of a use import. An import path prefix for a given simple import or glob import is constructed as follows: #.",
+            "fls_IPYvldMqduf4": "Start the import path prefix as follows:",
+            "fls_MOXId37fcNPY": "If the use import is a simple import then start with the [path segment]s of the simple import's simple path path prefix.",
+            "fls_2UyFcB6Our1v": "If the use import is a glob import then start with the [path segment]s of the glob import's simple path prefix.",
+            "fls_irdKqoYzBM0M": "If the use import is a nesting import then start with the [path segment]s of the nesting import's simple path prefix. #.",
+            "fls_gAWsqibl4GLq": "Then if the current use import is the child of a nesting import, prepend the nesting import's simple path prefix to the import path prefix. Repeat this step with the nesting import as the current use import.",
+            "fls_2bkcn83smy2y": "A simple import is a use import that brings all entities <entity> it refers to into scope, optionally with a different name than they are declared with by using a renaming.",
+            "fls_v3a6y2ze44v2": "A glob import is a use import that brings all entities <entity> exported by the module or enum its import path prefix resolves to into scope.",
+            "fls_JHU0ersYB6eL": "An import path prefix shall resolve to a module or enum.",
+            "fls_jlNKxkuhsvX4": "A glob import brings [name]s into scope as follows:",
+            "fls_q0KFfNALMslq": "If the import path prefix resolves to a module, bring all [name]s in the module that are visible from the location of the glob import into scope.",
+            "fls_Hy17LzOFGfOp": "If the import path prefix resolves to an enum, bring the [name]s of all of the enum's [enum variant]s into scope.",
+            "fls_90hQvSh7Bfyg": "A simple import path is the path constructed by appending the last path segment of a simple import's simple path to the import path prefix.",
+            "fls_wRmvtgQkFA6w": "A simple import brings [name]s into scope as follows:",
+            "fls_kz2Gij5wHXnl": "If the simple path is keyword self and:",
+            "fls_yY58pFpkig9o": "The simple import is in a nesting import, then bring the entity in type namespace that the import path prefix resolves to into scope.",
+            "fls_ar03D5rxjzy0": "Otherwise bring the containing module into scope.",
+            "fls_ce73bg0BqV1X": "Otherwise bring all entities <entity> that the simple import path resolves to that are visible from the location of the simple import into scope.",
+            "fls_FILuR3pfwjw3": "An Entity imported by a simple import subject to a renaming with identifier is brought into scope under the name declared by the renaming.",
+            "fls_iQOgxNihUEr7": "A trait imported by a simple import subject to a renaming with character underscore _ is added into scope without a name.",
+            "fls_ldr7tsuqw34s": "A nesting import is a use import that provides a common simple path prefix for its nested [use import]s.",
+            "fls_iNUBX5fJAI1N": "A glob import outside of a nesting import without a simple path prefix is rejected, but may still be consumed by [macro]s.",
+            "fls_RUiFQ17bmRLt": "A simple import with a simple path with a single path segment of keyword self shall be subject to the following:",
+            "fls_hv3xT2CjZuxc": "It shall either appear in a nesting import with a non-empty import path prefix, or",
+            "fls_Pxc0Ts8Y7pfW": "It shall be subject to a renaming.",
+            "fls_wB3fVglLOqbZ": "It is a static error if two [glob import]s import the same name in the same namespace but refer to different entities <entity> if the name is used or shadowed <shadowing>.",
+            "fls_zmYSBW995kSN": "If two [glob import]s import the same entity under the same name, the visibility of the name is the most permissive one."
+          }
+        },
+        "-7": {
+          "paragraphs": {
+            "fls_5dlnffim6fso": "The following is a glob import. See for the declaration of modules and functions. The imported functions are create_visible_function, outer_module_visible_function, visible_function. .. code-block:: rust use outer_module::inner_module::*;",
+            "fls_9rhflreuubhq": "The following is a renaming import. The imported function is visible_function under the name f. .. code-block:: rust use outer_module::inner_module::visible_function as f;",
+            "fls_s86dgrdpl1w4": "The following is a selective import. The imported functions are crate_visible_function and visible_function. .. code-block:: rust use outer_module::inner_module {crate_visible_function, visible_function}"
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "UseImport ::=\n       $$use$$ UseImportContent $$;$$\n\n   UseImportContent ::=\n       GlobImport\n     | NestingImport\n     | SimpleImport\n\n   GlobImport ::=\n       SimplePathPrefix? $$*$$\n\n   NestingImport ::=\n       SimplePathPrefix? $${$$ UseImportContentList? $$}$$\n\n   SimpleImport ::=\n       SimplePath Renaming?\n\n   SimplePathPrefix ::=\n       SimplePath? $$::$$\n\n   UseImportContentList ::=\n       UseImportContent ($$,$$ UseImportContent)* $$,$$?"
+          }
+        }
+      },
+      "parent_fls_id": "fls_gdeyap4or1db",
+      "sibling_fls_ids": [
+        "fls_151r19d7xbgz",
+        "fls_jdknpu3kf865",
+        "fls_9i5msiuuyihf",
+        "fls_izl8iuhoz9e0",
+        "fls_dq403wq5yrs",
+        "fls_ld0ize96cm6m",
+        "fls_ydmnb7qnmzzq",
+        "fls_40xoego2thsp"
+      ]
+    },
+    {
+      "fls_id": "fls_ydmnb7qnmzzq",
+      "title": "Shadowing",
+      "category": 0,
+      "level": 2,
+      "file": "entities-and-resolution",
+      "content": "Shadowing\n\nShadowing is a property of [name]s. A name is said to be\nshadowed when another name with the same characters is introduced\nin the same scope within the same namespace, effectively hiding it.\nA name cannot be referred to by any means once it is shadowed.\n\nNo name shall be shadowed except for\n\n* [Prelude name]s,\n\n* The [name]s of [macro]s within textual macro scope,\n\n* The [name]s of [variable]s.\n\nA prelude name shadows other [prelude name]s depending on which\n[prelude]s are included in a module. The order of shadowing is as\nfollows, where a later prelude name shadows earlier prelude name:\n\n#. Language prelude names <prelude name>.\n\n#. Standard library prelude names <prelude name>.\n\n#. macro_use prelude names <prelude name>.\n\n#. Tool prelude names <prelude name>.\n\n#. External prelude names <prelude name>.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_ob0riinmitkl": "Shadowing is a property of [name]s. A name is said to be shadowed when another name with the same characters is introduced in the same scope within the same namespace, effectively hiding it. A name cannot be referred to by any means once it is shadowed.",
+            "fls_fslg89a70e3n": "No name shall be shadowed except for",
+            "fls_hp3f4r3399kt": "[Prelude name]s,",
+            "fls_z8qjpskt13yq": "The [name]s of [macro]s within textual macro scope,",
+            "fls_i0gp1y38lr73": "The [name]s of [variable]s.",
+            "fls_7pif12rt4s4s": "A prelude name shadows other [prelude name]s depending on which [prelude]s are included in a module. The order of shadowing is as follows, where a later prelude name shadows earlier prelude name: #.",
+            "fls_are9qz67p7b6": "Language prelude names <prelude name>. #.",
+            "fls_4tis5syofyg0": "Standard library prelude names <prelude name>. #.",
+            "fls_u0tsnkhacr06": "macro_use prelude names <prelude name>. #.",
+            "fls_iaklf84guczc": "Tool prelude names <prelude name>. #.",
+            "fls_a0zovslu2v4u": "External prelude names <prelude name>."
+          }
+        }
+      },
+      "parent_fls_id": "fls_gdeyap4or1db",
+      "sibling_fls_ids": [
+        "fls_151r19d7xbgz",
+        "fls_jdknpu3kf865",
+        "fls_9i5msiuuyihf",
+        "fls_izl8iuhoz9e0",
+        "fls_dq403wq5yrs",
+        "fls_ld0ize96cm6m",
+        "fls_9gprp17h6t1q",
+        "fls_40xoego2thsp"
+      ]
+    },
+    {
+      "fls_id": "fls_40xoego2thsp",
+      "title": "Resolution",
+      "category": 0,
+      "level": 2,
+      "file": "entities-and-resolution",
+      "content": "Resolution\n\nResolution is the process of finding a unique interpretation for a\nfield access expression, a method call expression, a call\nexpression or a path.\n\nA construct that is being resolved is said to be under resolution.\n\nA dereference type is either a reference type or a type that\nimplements the core::ops::Deref trait.\n\nA dereference type chain is a sequence of [dereference type]s. A\ndereference type chain starts with an initial dereference type. From\nthen on, the dereference type chain continues as follows:\n\n* If the previous dereference type is a reference type, then the\n dereference type chain continues with the inner type of the\n previous dereference type.\n\n* Otherwise the dereference type chain continues with type\n core::ops::Deref::Target of the previous dereference type.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_ho4kem1slcxg": "Resolution is the process of finding a unique interpretation for a field access expression, a method call expression, a call expression or a path.",
+            "fls_7le2vcdbtxbq": "A construct that is being resolved is said to be under resolution.",
+            "fls_x3alg07yd7hx": "A dereference type is either a reference type or a type that implements the core::ops::Deref trait.",
+            "fls_4hulwazdu20i": "A dereference type chain is a sequence of [dereference type]s. A dereference type chain starts with an initial dereference type. From then on, the dereference type chain continues as follows:",
+            "fls_ptocwx5p25lj": "If the previous dereference type is a reference type, then the dereference type chain continues with the inner type of the previous dereference type.",
+            "fls_ygam5nisv98c": "Otherwise the dereference type chain continues with type core::ops::Deref::Target of the previous dereference type."
+          }
+        }
+      },
+      "parent_fls_id": "fls_gdeyap4or1db",
+      "sibling_fls_ids": [
+        "fls_151r19d7xbgz",
+        "fls_jdknpu3kf865",
+        "fls_9i5msiuuyihf",
+        "fls_izl8iuhoz9e0",
+        "fls_dq403wq5yrs",
+        "fls_ld0ize96cm6m",
+        "fls_9gprp17h6t1q",
+        "fls_ydmnb7qnmzzq"
+      ]
+    },
+    {
+      "fls_id": "fls_xcwfotmq2e5d",
+      "title": "Field Resolution",
+      "category": 0,
+      "level": 3,
+      "file": "entities-and-resolution",
+      "content": "Field Resolution\n\nField resolution is a form of resolution that applies to a\nfield access expression.\n\nA candidate container type is the type of the container operand\nof a field access expression under resolution.\n\nA candidate container type chain is a sequence of\n[candidate container type]s. The candidate container type chain\nstarts with the type of the container operand of the\nfield access expression under resolution. From then on, the\ncandidate container type chain is treated as a\ndereference type chain.\n\nA candidate field is a field of a candidate container type\nthat is visible from the location of the field access expression\nunder resolution.\n\nA candidate indexed field is a candidate field whose position in the\ntype of the container operand matches the index of an\nindexed field selector.\n\nA candidate named field is a candidate field whose name matches\nthe characters of a named field selector.\n\nField resolution of a field access expression with an\nindexed field selector proceeds as follows:\n\n#. For each candidate container type of the\n candidate container type chain\n\n #. Try to locate a candidate indexed field of the\n candidate container type.\n\n #. If such a candidate indexed field exists and is visible at the point\n of the field access expression, then the field access expression\n resolves to that candidate indexed field and field resolution\n stops.\n\nField resolution of a field access expression with a\nnamed field selector proceeds as follows:\n\n#. For each candidate container type of the\n candidate container type chain\n\n #. Try to locate a candidate named field of the\n candidate container type.\n\n #. If such a candidate named field exists and is visible at the point\n of the field access expression, then the field access expression\n resolves to that candidate named field and field resolution\n stops.\n\nA field access expression shall resolve to exactly one field.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_1nxknwjdp0am": "Field resolution is a form of resolution that applies to a field access expression.",
+            "fls_j1bip4w30q8": "A candidate container type is the type of the container operand of a field access expression under resolution.",
+            "fls_jrk3gzqvqr8e": "A candidate container type chain is a sequence of [candidate container type]s. The candidate container type chain starts with the type of the container operand of the field access expression under resolution. From then on, the candidate container type chain is treated as a dereference type chain.",
+            "fls_asn20qx16sr6": "A candidate field is a field of a candidate container type that is visible from the location of the field access expression under resolution.",
+            "fls_jzoon4x89zp7": "A candidate indexed field is a candidate field whose position in the type of the container operand matches the index of an indexed field selector.",
+            "fls_r80pixfoe5hk": "A candidate named field is a candidate field whose name matches the characters of a named field selector.",
+            "fls_40oa0j6aiop3": "Field resolution of a field access expression with an indexed field selector proceeds as follows: #.",
+            "fls_2bp1zs7qaz7o": "For each candidate container type of the candidate container type chain #.",
+            "fls_s14fegwhwnc8": "Try to locate a candidate indexed field of the candidate container type. #.",
+            "fls_tfjm27ydiake": "If such a candidate indexed field exists and is visible at the point of the field access expression, then the field access expression resolves to that candidate indexed field and field resolution stops.",
+            "fls_p6hgoqo0kcx": "Field resolution of a field access expression with a named field selector proceeds as follows: #.",
+            "fls_e7sj392ohvbd": "For each candidate container type of the candidate container type chain #.",
+            "fls_z6qt9obbhhcg": "Try to locate a candidate named field of the candidate container type. #.",
+            "fls_ljnjxex3u5o": "If such a candidate named field exists and is visible at the point of the field access expression, then the field access expression resolves to that candidate named field and field resolution stops.",
+            "fls_nm06mru40tyg": "A field access expression shall resolve to exactly one field."
+          }
+        }
+      },
+      "parent_fls_id": "fls_40xoego2thsp",
+      "sibling_fls_ids": [
+        "fls_wqazkzle0ix9",
+        "fls_TelBKNKodx3d",
+        "fls_i6qzga6dyaee"
+      ]
+    },
+    {
+      "fls_id": "fls_wqazkzle0ix9",
+      "title": "Method Resolution",
+      "category": 0,
+      "level": 3,
+      "file": "entities-and-resolution",
+      "content": "Method Resolution\n\nMethod resolution is a kind of resolution that applies to a\nmethod call expression.\n\nA receiver type is the type of the receiver operand\nof a method call expression.\n\nA candidate receiver type is the type of the receiver operand\nof a method call expression under resolution.\n\nA candidate receiver type chain is a sequence of\n[candidate receiver type]s. The candidate receiver type chain starts\nwith the type of the receiver operand of the\nmethod call expression under resolution. From then on, the\ncandidate receiver type chain is treated as a dereference type chain.\n\nA candidate method is a method of a candidate receiver type that\nis visible from the location of the method call expression\nunder resolution.\n\nMethod resolution proceeds as follows:\n\n#. For each candidate receiver type of the\n candidate receiver type chain\n\n #. Perform method resolution receiver candidate lookup for the\n candidate receiver type.\n\n #. If the last candidate receiver type is an array type, then\n perform method resolution receiver candidate lookup for a\n slice type where the slice type has the same element type\n as the array type.\n\nMethod resolution receiver candidate lookup for a receiver type\nproceeds as follows:\n\n#. Perform method resolution implementation candidate lookup for the\n receiver type.\n\n#. Perform method resolution implementation candidate lookup for the\n immutable borrow of the receiver type.\n\n#. Perform method resolution implementation candidate lookup for the\n mutable borrow of the receiver type.\n\nMethod resolution implementation candidate lookup for a\nreceiver type proceeds as follows:\n\n#. Perform method resolution inherent implementation candidate lookup for\n the receiver type.\n\n#. Perform method resolution trait implementation candidate lookup for the\n receiver type.\n\nMethod resolution inherent implementation candidate lookup for a\nreceiver type proceeds as follows:\n\n#. Construct the dereference type chain for the receiver type.\n\n#. For each dereference type in the dereference type chain\n\n #. For each inherent implementation in the set of\n [inherent implementation]s of the dereference type where the\n implementing type unifies <unify> with the\n dereference type\n\n #. Try to locate a candidate method in the inherent\n implementation, where the type of the self parameter\n unifies <unify> with the receiver type.\n\n #. If such a candidate method exists, then the\n method call expression resolves to that candidate method and\n method resolution stops.\n\nMethod resolution trait implementation candidate lookup for a\nreceiver type proceeds as follows:\n\n#. Construct the dereference type chain for the receiver type.\n\n#. For each dereference type in the dereference type chain\n\n #. For each trait implementation of the dereference type where the\n implemented trait is in scope\n\n #. Try to locate a candidate method in the\n trait implementation, where the type of the\n self parameter unifies <unify> with the receiver type.\n\n #. If such a candidate method exists, then the\n method call expression resolves to that candidate method and\n method resolution stops.\n\nA method call expression shall resolve to exactly one method.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_e5a5z5yht26l": "Method resolution is a kind of resolution that applies to a method call expression.",
+            "fls_mbdS0xiNlj92": "A receiver type is the type of the receiver operand of a method call expression.",
+            "fls_z80ylmlu1f3q": "A candidate receiver type is the type of the receiver operand of a method call expression under resolution.",
+            "fls_e1029pvq706h": "A candidate receiver type chain is a sequence of [candidate receiver type]s. The candidate receiver type chain starts with the type of the receiver operand of the method call expression under resolution. From then on, the candidate receiver type chain is treated as a dereference type chain.",
+            "fls_w3ik83d43fr1": "A candidate method is a method of a candidate receiver type that is visible from the location of the method call expression under resolution.",
+            "fls_pybv4krsvktv": "Method resolution proceeds as follows: #.",
+            "fls_m2njj6no0p1i": "For each candidate receiver type of the candidate receiver type chain #.",
+            "fls_16l2q1wpcnbp": "Perform method resolution receiver candidate lookup for the candidate receiver type. #.",
+            "fls_fcnahkqxomuo": "If the last candidate receiver type is an array type, then perform method resolution receiver candidate lookup for a slice type where the slice type has the same element type as the array type.",
+            "fls_ii0fdpekn1qt": "Method resolution receiver candidate lookup for a receiver type proceeds as follows: #.",
+            "fls_ohjmxhbw3nx3": "Perform method resolution implementation candidate lookup for the receiver type. #.",
+            "fls_lgpdicxxwq13": "Perform method resolution implementation candidate lookup for the immutable borrow of the receiver type. #.",
+            "fls_ugl3x4y3lli2": "Perform method resolution implementation candidate lookup for the mutable borrow of the receiver type.",
+            "fls_bb4cbmvui8fk": "Method resolution implementation candidate lookup for a receiver type proceeds as follows: #.",
+            "fls_5wny1yxbyuz0": "Perform method resolution inherent implementation candidate lookup for the receiver type. #.",
+            "fls_gsc8pt4tlsqv": "Perform method resolution trait implementation candidate lookup for the receiver type.",
+            "fls_tfglce1wuq5q": "Method resolution inherent implementation candidate lookup for a receiver type proceeds as follows: #.",
+            "fls_64bfcn9okeve": "Construct the dereference type chain for the receiver type. #.",
+            "fls_om90v9re8b2l": "For each dereference type in the dereference type chain #.",
+            "fls_bsf4hy9x7c2e": "For each inherent implementation in the set of [inherent implementation]s of the dereference type where the implementing type unifies <unify> with the dereference type #.",
+            "fls_cnn5hkf1z5q4": "Try to locate a candidate method in the inherent implementation, where the type of the self parameter unifies <unify> with the receiver type. #.",
+            "fls_j9ho6xc2fj0w": "If such a candidate method exists, then the method call expression resolves to that candidate method and method resolution stops.",
+            "fls_1y94elgpg0uk": "Method resolution trait implementation candidate lookup for a receiver type proceeds as follows: #.",
+            "fls_npsdxrtcslcf": "Construct the dereference type chain for the receiver type. #.",
+            "fls_yv5l823lwdsv": "For each dereference type in the dereference type chain #.",
+            "fls_ckdoyvbaybe0": "For each trait implementation of the dereference type where the implemented trait is in scope #.",
+            "fls_1azkiu20r0e4": "Try to locate a candidate method in the trait implementation, where the type of the self parameter unifies <unify> with the receiver type. #.",
+            "fls_ose5m4bhkg57": "If such a candidate method exists, then the method call expression resolves to that candidate method and method resolution stops.",
+            "fls_jw2yv23cduu4": "A method call expression shall resolve to exactly one method."
+          }
+        }
+      },
+      "parent_fls_id": "fls_40xoego2thsp",
+      "sibling_fls_ids": [
+        "fls_xcwfotmq2e5d",
+        "fls_TelBKNKodx3d",
+        "fls_i6qzga6dyaee"
+      ]
+    },
+    {
+      "fls_id": "fls_TelBKNKodx3d",
+      "title": "Call Resolution",
+      "category": 0,
+      "level": 3,
+      "file": "entities-and-resolution",
+      "content": "Call Resolution\n\nCall resolution is a form of resolution that applies to a\ncall expression.\n\nA candidate callee type is the type of the call operand\nof a call expression under resolution.\n\nA candidate callee type chain is a sequence of [candidate callee type]s.\nThe candidate callee type chain starts with the type of the call\noperand of thecall expression under resolution. From then on, the\ncandidate callee type chain is treated as a dereference type chain.\n\nCall resolution of a call expression proceeds as follows:\n\n#. For each candidate callee type of the\n candidate callee type chain\n\n #. If the candidate callee type is a callee type, then the callee\n type of the call expression is that candidate callee type and\n call resolution stops.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_ZjJ7y9r6QQMW": "Call resolution is a form of resolution that applies to a call expression.",
+            "fls_zBSloU2Gjv7x": "A candidate callee type is the type of the call operand of a call expression under resolution.",
+            "fls_XBakDylF7aOG": "A candidate callee type chain is a sequence of [candidate callee type]s. The candidate callee type chain starts with the type of the call operand of thecall expression under resolution. From then on, the candidate callee type chain is treated as a dereference type chain.",
+            "fls_kzovwqIw7ghc": "Call resolution of a call expression proceeds as follows: #.",
+            "fls_4iBdtE0Ji4Tf": "For each candidate callee type of the candidate callee type chain #.",
+            "fls_TWR5GIUxPcaJ": "If the candidate callee type is a callee type, then the callee type of the call expression is that candidate callee type and call resolution stops."
+          }
+        }
+      },
+      "parent_fls_id": "fls_40xoego2thsp",
+      "sibling_fls_ids": [
+        "fls_xcwfotmq2e5d",
+        "fls_wqazkzle0ix9",
+        "fls_i6qzga6dyaee"
+      ]
+    },
+    {
+      "fls_id": "fls_i6qzga6dyaee",
+      "title": "Path Resolution",
+      "category": 0,
+      "level": 3,
+      "file": "entities-and-resolution",
+      "content": "Path Resolution\n\nPath resolution is a form of resolution that applies to a path.\n\nPath resolution resolves a path by resolving individual\n[path segment]s in sequence, starting from the leftmost path segment.\n\nA path segment shall resolve to exactly one entity.\n\nA candidate direct entity is an entity that is visible from the\nlocation of a path under resolution and is located by first examining\n[textual macro scope]s, followed by examining the scope hierarchy\nfrom the innermost scope enclosing the path to the outermost\nscope, followed by examining [prelude]s.\n\nA candidate external prelude entity is an entity that is visible\nfrom the location of a path under resolution and is located by\nexamining the external prelude.\n\nA candidate selected entity is an entity that is visible from\nthe location of a path under resolution and is located within a\nresolution context.\n\nA namespace context is a set of [namespace]s where the [name]s\nof candidate selected entities <candidate selected entity> reside.\n\nA resolution context is a set of entities <entity> that informs\npath resolution by restricting the number of\ncandidate selected entities <candidate selected entity>.\n\nThe resolution of the leftmost path segment of a path proceeds as\nfollows:\n\n* If the leftmost path segment is expressed as keyword crate,\n then what the leftmost path segment resolves to and its\n resolution context is the entity of the current crate.\n\n* If the leftmost path segment is expressed as keyword $crate,\n then what the leftmost path segment resolves to and its\n resolution context is the entity of the crate that declares\n the macro that is being expanded.\n\n* If the leftmost path segment is expressed as keyword self,\n then what the leftmost path segment resolves to and its\n resolution context is the entity of the current module.\n\n* If the leftmost path segment is expressed as keyword Self,\n then what the leftmost path segment resolves to and its\n resolution context is\n\n * The entity of the abstract data type, if the path appears\n within an abstract data type, or\n\n * The entity of the implementing type, if the path appears\n within an implementation, or\n\n * The entity of the trait, if the path appears within a\n trait.\n\n* If the leftmost path segment is expressed as keyword super,\n then what the leftmost path segment resolves to and its\n resolution context is the entity of the parent module of the\n current module.\n\n* If the leftmost path segment is an identifier, then\n\n * If the path is a global path, then try to find a\n candidate external prelude entity whose name matches the\n characters of the leftmost path segment. What the leftmost\n path segment resolves to and its resolution context is that\n candidate external prelude entity.\n\n * Otherwise try to find a candidate direct entity whose name\n matches the characters of the leftmost path segment and\n\n * If the candidate direct entity is a module, and the\n namespace context is the type namespace or the path has\n more than one [path segment]s, and the identifier is a name\n of a type of the language prelude, then resolution of the\n leftmost path segment and its resolution context is the\n type of the language prelude.\n\n * Otherwise the resolution of the leftmost path segment and its\n resolution context is that candidate direct entity.\n\n* If the leftmost path segment starts with a qualified type, then\n\n * The leftmost path segment resolves to the qualified type, and\n\n * If the qualified type is subject to a qualifying trait, then the\n resolution context of the leftmost path segment consists of the\n entities <entity> of all [implementation]s of the\n qualified type that implement the qualifying trait.\n\n * Otherwise the resolution context of the leftmost path segment\n consists of the entity of the qualified type, the\n entities <entity> of all its [inherent implementation]s, and the\n entities <entity> of all its [trait implementation]s of\n [trait]s that are in scope.\n\nThe resolution of the rightmost path segment is determined based on the\npath resolution kind, where the name of the\ncandidate selected entity is restricted by the namespace context.\n\nIt is a static error if the leftmost path segment is an identifier\nintroduced by the external prelude that is also shadowed <shadowing>.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_8slvisr3jfja": "Path resolution is a form of resolution that applies to a path.",
+            "fls_nmev0tnzgw35": "Path resolution resolves a path by resolving individual [path segment]s in sequence, starting from the leftmost path segment.",
+            "fls_p23q1ob2qitz": "A path segment shall resolve to exactly one entity.",
+            "fls_e9rv8dfa0arl": "A candidate direct entity is an entity that is visible from the location of a path under resolution and is located by first examining [textual macro scope]s, followed by examining the scope hierarchy from the innermost scope enclosing the path to the outermost scope, followed by examining [prelude]s.",
+            "fls_yule33qm1ok": "A candidate external prelude entity is an entity that is visible from the location of a path under resolution and is located by examining the external prelude.",
+            "fls_7xmhm2lf2h8f": "A candidate selected entity is an entity that is visible from the location of a path under resolution and is located within a resolution context.",
+            "fls_ec4wo8odusqp": "A namespace context is a set of [namespace]s where the [name]s of candidate selected entities <candidate selected entity> reside.",
+            "fls_9tedg9lpewqa": "A resolution context is a set of entities <entity> that informs path resolution by restricting the number of candidate selected entities <candidate selected entity>.",
+            "fls_mvymlhp7192e": "The resolution of the leftmost path segment of a path proceeds as follows:",
+            "fls_cs485plo4z49": "If the leftmost path segment is expressed as keyword crate, then what the leftmost path segment resolves to and its resolution context is the entity of the current crate.",
+            "fls_yrpem8vhxpr5": "If the leftmost path segment is expressed as keyword $crate, then what the leftmost path segment resolves to and its resolution context is the entity of the crate that declares the macro that is being expanded.",
+            "fls_ri50nc2dg7c4": "If the leftmost path segment is expressed as keyword self, then what the leftmost path segment resolves to and its resolution context is the entity of the current module.",
+            "fls_to52oma1bvx3": "If the leftmost path segment is expressed as keyword Self, then what the leftmost path segment resolves to and its resolution context is",
+            "fls_kpn2y7xb3s8q": "The entity of the abstract data type, if the path appears within an abstract data type, or",
+            "fls_z71op1vdnazq": "The entity of the implementing type, if the path appears within an implementation, or",
+            "fls_2km29ekj9464": "The entity of the trait, if the path appears within a trait.",
+            "fls_l2y464skbuta": "If the leftmost path segment is expressed as keyword super, then what the leftmost path segment resolves to and its resolution context is the entity of the parent module of the current module.",
+            "fls_n2x13sg5szbl": "If the leftmost path segment is an identifier, then",
+            "fls_53kd7eb1qzuz": "If the path is a global path, then try to find a candidate external prelude entity whose name matches the characters of the leftmost path segment. What the leftmost path segment resolves to and its resolution context is that candidate external prelude entity.",
+            "fls_3spnlz9tqnhj": "Otherwise try to find a candidate direct entity whose name matches the characters of the leftmost path segment and",
+            "fls_Mt6xKI08viYw": "If the candidate direct entity is a module, and the namespace context is the type namespace or the path has more than one [path segment]s, and the identifier is a name of a type of the language prelude, then resolution of the leftmost path segment and its resolution context is the type of the language prelude.",
+            "fls_7hK059djudGN": "Otherwise the resolution of the leftmost path segment and its resolution context is that candidate direct entity.",
+            "fls_lxa7uhmdoy9d": "If the leftmost path segment starts with a qualified type, then",
+            "fls_EcaZauRXEGcs": "The leftmost path segment resolves to the qualified type, and",
+            "fls_xujlscsir05f": "If the qualified type is subject to a qualifying trait, then the resolution context of the leftmost path segment consists of the entities <entity> of all [implementation]s of the qualified type that implement the qualifying trait.",
+            "fls_wypnvfklnmc1": "Otherwise the resolution context of the leftmost path segment consists of the entity of the qualified type, the entities <entity> of all its [inherent implementation]s, and the entities <entity> of all its [trait implementation]s of [trait]s that are in scope.",
+            "fls_zi46lmwsn4rg": "The resolution of the rightmost path segment is determined based on the path resolution kind, where the name of the candidate selected entity is restricted by the namespace context.",
+            "fls_bATFGtxjKq0B": "It is a static error if the leftmost path segment is an identifier introduced by the external prelude that is also shadowed <shadowing>."
+          }
+        }
+      },
+      "parent_fls_id": "fls_40xoego2thsp",
+      "sibling_fls_ids": [
+        "fls_xcwfotmq2e5d",
+        "fls_wqazkzle0ix9",
+        "fls_TelBKNKodx3d"
+      ]
+    },
+    {
+      "fls_id": "fls_bbso3c45kr9z",
+      "title": "Simple Path Resolution",
+      "category": 0,
+      "level": 4,
+      "file": "entities-and-resolution",
+      "content": "Simple Path Resolution\n\nSimple path resolution is a kind of path resolution that applies to\na simple path.\n\nThe namespace context of simple path resolution is determined as\nfollows:\n\n* If the simple path is part of an attribute or a\n macro invocation, then the namespace context is the\n macro namespace.\n\n* If the simple path is part of a use import, then the\n namespace context consists of the macro namespace, the\n type namespace, and the value namespace.\n\n* If the simple path is part of a visibility modifier, then the\n namespace context consists of the type namespace.\n\nThe leftmost path segment of a simple path is resolved using general\npath resolution. The remaining [path segment]s are resolved in\nleft-to-right order, as follows:\n\n* If the current path segment is expressed as keyword super, then\n what the current path segment resolves to and its\n resolution context is the entity of the parent module of the\n previous [path segment]'s resolution context.\n\n* Otherwise try to find a candidate selected entity whose name\n matches the characters of the current path segment within the previous\n [path segment]'s resolution context, where if the current\n path segment is not the rightmost path segment, the\n resolution context is restricted to the entities <entity> of\n [module]s. What the current path segment resolves to and its\n resolution context is that candidate selected entity.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_uml24jw5jo7a": "Simple path resolution is a kind of path resolution that applies to a simple path.",
+            "fls_59wd7loxst43": "The namespace context of simple path resolution is determined as follows:",
+            "fls_mk0ufkeggot6": "If the simple path is part of an attribute or a macro invocation, then the namespace context is the macro namespace.",
+            "fls_ayv8okec9fwb": "If the simple path is part of a use import, then the namespace context consists of the macro namespace, the type namespace, and the value namespace.",
+            "fls_ppoc6wcplab6": "If the simple path is part of a visibility modifier, then the namespace context consists of the type namespace.",
+            "fls_dc0yv4306p82": "The leftmost path segment of a simple path is resolved using general path resolution. The remaining [path segment]s are resolved in left-to-right order, as follows:",
+            "fls_jhivcca0xcqj": "If the current path segment is expressed as keyword super, then what the current path segment resolves to and its resolution context is the entity of the parent module of the previous [path segment]'s resolution context.",
+            "fls_tfsgutcpube2": "Otherwise try to find a candidate selected entity whose name matches the characters of the current path segment within the previous [path segment]'s resolution context, where if the current path segment is not the rightmost path segment, the resolution context is restricted to the entities <entity> of [module]s. What the current path segment resolves to and its resolution context is that candidate selected entity."
+          }
+        }
+      },
+      "parent_fls_id": "fls_i6qzga6dyaee",
+      "sibling_fls_ids": [
+        "fls_o9u2h5m17kpz",
+        "fls_1h0olpc7vbui"
+      ]
+    },
+    {
+      "fls_id": "fls_o9u2h5m17kpz",
+      "title": "Path Expression Resolution",
+      "category": 0,
+      "level": 4,
+      "file": "entities-and-resolution",
+      "content": "Path Expression Resolution\n\nPath expression resolution is a form of path resolution that applies\nto a unqualified path expression.\n\nThe namespace context of path expression resolution is the\nvalue namespace.\n\nThe leftmost path segment of a unqualified path expression is resolved using\ngeneral path resolution. The remaining [path segment]s are resolved\nin left-to-right order, as follows:\n\n* If the current path segment is expressed as keyword super, then\n what the current path segment resolves to and its\n resolution context is the entity of the parent module of the\n previous [path segment]'s resolution context.\n\n* If the current path segment is the rightmost path segment, then\n\n * If the previous [path segment]'s resolution context is an\n enum type, then try to find a candidate selected entity whose\n name matches the characters of the current path segment, where\n the resolution context is restricted to the entities <entity> of\n the [enum variant]s of that enum type. What the current\n path segment resolves to and its resolution context is that\n candidate selected entity.\n\n * If the previous [path segment]'s resolution context is a\n module, then try to find a candidate selected entity whose\n name matches the characters of the current path segment within\n that module. What the current path segment resolves to and its\n resolution context is that candidate selected entity.\n\n * If the previous [path segment]'s resolution context is a\n trait or a type, then perform\n path expression resolution implementation candidate lookup for the\n current path segment and that trait or type.\n\n* Otherwise\n\n * If the previous [path segment]'s resolution context is a\n module, then try to find a candidate selected entity whose\n name matches the characters of the current path segment within\n that module, where the resolution context is restricted to the\n entities <entity> whose [name]s reside in the\n type namespace. What the current path segment resolves to and its\n resolution context is that candidate selected entity.\n\n * If the previous [path segment]'s resolution context is a\n trait, then try to find a candidate selected entity whose\n name matches the characters of the current path segment within\n that trait, where the resolution context is restricted to the\n entities <entity> of all [associated item]s of that trait.\n What the current path segment resolves to and its\n resolution context is that candidate selected entity.\n\n * If the previous [path segment]'s resolution context is a\n type, then try to find a candidate selected entity whose\n name matches the characters of the current path segment within\n that type, where the resolution context is restricted to the\n entities <entity> of all [associated item]s from its\n [inherent implementation]s, and the entities <entity> of all its\n [trait implementation]s of [trait]s that are in scope. What\n the current path segment resolves to and its resolution context\n is that candidate selected entity.\n\nPath expression resolution implementation candidate lookup for a\npath segment and a trait or type proceeds as follows:\n\n#. Perform\n path expression resolution inherent implementation candidate lookup for\n the path segment and the trait or type.\n\n#. Perform\n path expression resolution trait implementation candidate lookup for\n the path segment and the trait or type.\n\nPath expression resolution inherent implementation candidate lookup for a\npath segment and a trait or type proceeds as follows:\n\n#. For each inherent implementation in the set of\n [inherent implementation]s of the trait or type where the\n implementing type unifies <unify> with the trait or type\n\n #. Try to locate a visible constant or a visible function in the\n inherent implementation whose name matches the characters of\n the path segment.\n\n #. If such a constant or function exists, then the\n path segment resolves to that constant or function and\n path expression resolution stops.\n\nPath expression resolution trait implementation candidate lookup for a\npath segment and a trait or type proceeds as follows:\n\n#. For each trait implementation of the trait or type where the\n implemented trait is in scope\n\n #. Try to locate a visible constant or a visible function in the\n trait implementation whose name matches the characters of the\n path segment.\n\n #. If such a constant or function exists, then the\n path segment resolves to that constant or function and\n path expression resolution stops.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_akjlqm3a2lb1": "Path expression resolution is a form of path resolution that applies to a unqualified path expression.",
+            "fls_xyzdajtf4u2t": "The namespace context of path expression resolution is the value namespace.",
+            "fls_d45vu3iazi3": "The leftmost path segment of a unqualified path expression is resolved using general path resolution. The remaining [path segment]s are resolved in left-to-right order, as follows:",
+            "fls_9pjhok9rctty": "If the current path segment is expressed as keyword super, then what the current path segment resolves to and its resolution context is the entity of the parent module of the previous [path segment]'s resolution context.",
+            "fls_2wbpr9lvz5yq": "If the current path segment is the rightmost path segment, then",
+            "fls_u5nyv6ii1g2l": "If the previous [path segment]'s resolution context is an enum type, then try to find a candidate selected entity whose name matches the characters of the current path segment, where the resolution context is restricted to the entities <entity> of the [enum variant]s of that enum type. What the current path segment resolves to and its resolution context is that candidate selected entity.",
+            "fls_bscg48os5otx": "If the previous [path segment]'s resolution context is a module, then try to find a candidate selected entity whose name matches the characters of the current path segment within that module. What the current path segment resolves to and its resolution context is that candidate selected entity.",
+            "fls_qbmp0blpoxx9": "If the previous [path segment]'s resolution context is a trait or a type, then perform path expression resolution implementation candidate lookup for the current path segment and that trait or type.",
+            "fls_ydni5laqv6gp": "Otherwise",
+            "fls_lsxbl6ep3150": "If the previous [path segment]'s resolution context is a module, then try to find a candidate selected entity whose name matches the characters of the current path segment within that module, where the resolution context is restricted to the entities <entity> whose [name]s reside in the type namespace. What the current path segment resolves to and its resolution context is that candidate selected entity.",
+            "fls_x1n7w8w6lwm": "If the previous [path segment]'s resolution context is a trait, then try to find a candidate selected entity whose name matches the characters of the current path segment within that trait, where the resolution context is restricted to the entities <entity> of all [associated item]s of that trait. What the current path segment resolves to and its resolution context is that candidate selected entity.",
+            "fls_v1h4frnbqruu": "If the previous [path segment]'s resolution context is a type, then try to find a candidate selected entity whose name matches the characters of the current path segment within that type, where the resolution context is restricted to the entities <entity> of all [associated item]s from its [inherent implementation]s, and the entities <entity> of all its [trait implementation]s of [trait]s that are in scope. What the current path segment resolves to and its resolution context is that candidate selected entity.",
+            "fls_utfpnwlo0v99": "Path expression resolution implementation candidate lookup for a path segment and a trait or type proceeds as follows: #.",
+            "fls_1p8ocf1w5bp4": "Perform path expression resolution inherent implementation candidate lookup for the path segment and the trait or type. #.",
+            "fls_qb5yo7j5gnvf": "Perform path expression resolution trait implementation candidate lookup for the path segment and the trait or type.",
+            "fls_o1g0forw6xw": "Path expression resolution inherent implementation candidate lookup for a path segment and a trait or type proceeds as follows: #.",
+            "fls_bcqe13q696zg": "For each inherent implementation in the set of [inherent implementation]s of the trait or type where the implementing type unifies <unify> with the trait or type #.",
+            "fls_3sceutaqpqha": "Try to locate a visible constant or a visible function in the inherent implementation whose name matches the characters of the path segment. #.",
+            "fls_6q9cwqlvxmd1": "If such a constant or function exists, then the path segment resolves to that constant or function and path expression resolution stops.",
+            "fls_qeym3vbi36iv": "Path expression resolution trait implementation candidate lookup for a path segment and a trait or type proceeds as follows: #.",
+            "fls_8x0pqwpm80sj": "For each trait implementation of the trait or type where the implemented trait is in scope #.",
+            "fls_pp09gmrnasjp": "Try to locate a visible constant or a visible function in the trait implementation whose name matches the characters of the path segment. #.",
+            "fls_q0jt6n2j1hsx": "If such a constant or function exists, then the path segment resolves to that constant or function and path expression resolution stops."
+          }
+        }
+      },
+      "parent_fls_id": "fls_i6qzga6dyaee",
+      "sibling_fls_ids": [
+        "fls_bbso3c45kr9z",
+        "fls_1h0olpc7vbui"
+      ]
+    },
+    {
+      "fls_id": "fls_1h0olpc7vbui",
+      "title": "Type Path Resolution",
+      "category": 0,
+      "level": 4,
+      "file": "entities-and-resolution",
+      "content": "Type Path Resolution\n\nType path resolution is a form of path resolution that applies to\na type path.\n\nThe namespace context of type path resolution is the\ntype namespace.\n\nThe leftmost path segment of a type path is resolved using general\npath resolution. The remaining [path segment]s are resolved in\nleft-to-right order, as follows:\n\n* If the current path segment is expressed as keyword super, then\n what the current path segment resolves to and its\n resolution context is the entity of the parent module of the\n previous [path segment]'s resolution context.\n\n* If the previous [path segment]'s resolution context is a\n module, then try to find a candidate selected entity whose\n name matches the characters of the current path segment within\n that module. What the current path segment resolves to and its\n resolution context is that candidate selected entity.\n\n* If the previous [path segment]'s resolution context is a\n trait, then try to find a candidate selected entity whose name\n matches the characters of the current path segment within that\n trait, where the resolution context is restricted to the\n entities <entity> of all [associated item]s of that trait.\n What the current path segment resolves to and its\n resolution context is that candidate selected entity.\n\n* If the previous [path segment]'s resolution context is a type,\n then try to find a candidate selected entity whose name matches\n the characters of the current path segment within that type,\n where the resolution context is restricted to the entities <entity>\n of all [associated item]s from its [inherent implementation]s, and\n the entities <entity> of all its [trait implementation]s of\n [trait]s that are in scope. What the current path segment\n resolves to and its resolution context is that\n candidate selected entity.\n\n* If the current path segment has a qualified fn trait, then the\n current path segment shall resolve to either the core::ops::Fn,\n core::ops::FnMut, or core::ops::FnOnce trait.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_2zuncql8ir5k": "Type path resolution is a form of path resolution that applies to a type path.",
+            "fls_bv5cj918dqqe": "The namespace context of type path resolution is the type namespace.",
+            "fls_bsakzuteuh5s": "The leftmost path segment of a type path is resolved using general path resolution. The remaining [path segment]s are resolved in left-to-right order, as follows:",
+            "fls_j1ewjisx0mc2": "If the current path segment is expressed as keyword super, then what the current path segment resolves to and its resolution context is the entity of the parent module of the previous [path segment]'s resolution context.",
+            "fls_o4snu1him277": "If the previous [path segment]'s resolution context is a module, then try to find a candidate selected entity whose name matches the characters of the current path segment within that module. What the current path segment resolves to and its resolution context is that candidate selected entity.",
+            "fls_goe8q52toik2": "If the previous [path segment]'s resolution context is a trait, then try to find a candidate selected entity whose name matches the characters of the current path segment within that trait, where the resolution context is restricted to the entities <entity> of all [associated item]s of that trait. What the current path segment resolves to and its resolution context is that candidate selected entity.",
+            "fls_4rs35f6ydckj": "If the previous [path segment]'s resolution context is a type, then try to find a candidate selected entity whose name matches the characters of the current path segment within that type, where the resolution context is restricted to the entities <entity> of all [associated item]s from its [inherent implementation]s, and the entities <entity> of all its [trait implementation]s of [trait]s that are in scope. What the current path segment resolves to and its resolution context is that candidate selected entity.",
+            "fls_jh4db1p7or0x": "If the current path segment has a qualified fn trait, then the current path segment shall resolve to either the core::ops::Fn, core::ops::FnMut, or core::ops::FnOnce trait."
+          }
+        }
+      },
+      "parent_fls_id": "fls_i6qzga6dyaee",
+      "sibling_fls_ids": [
+        "fls_bbso3c45kr9z",
+        "fls_o9u2h5m17kpz"
+      ]
+    }
+  ]
+}

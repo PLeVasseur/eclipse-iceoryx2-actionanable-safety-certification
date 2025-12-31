@@ -26,9 +26,18 @@
       ],
       "description": "Refutability expresses the ability to match all possible values of a type. Irrefutable patterns always match; refutable patterns may fail to match.",
       "findings": {
+        "count": null,
+        "count_methodology": "Conceptual - refutability is pattern property",
+        "samples_waiver": {
+          "reason": "conceptual_section",
+          "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+          "approved_by": "automated",
+          "date": "2025-12-30"
+        },
         "irrefutable_patterns": "let bindings use irrefutable patterns (identifier, underscore)",
         "refutable_patterns": "match arms and if let use refutable patterns (literals, enums, ranges)"
       },
+      "samples": [],
       "subsections": {
         "identifier_patterns": {
           "fls_section": "5.1.1",
@@ -38,29 +47,38 @@
           "description": "Identifier Patterns",
           "status": "demonstrated",
           "findings": {
+            "count": 14175,
             "description": "Identifier Patterns patterns are used throughout iceoryx2 in match expressions and destructuring."
           },
           "samples": [
             {
               "file": "iceoryx2/src/service/mod.rs",
-              "line": [421, 422],
+              "line": [
+                421,
+                422
+              ],
               "code": "let origin = \"ServiceState::drop()\";\nlet id = self.static_config.service_id();",
               "purpose": "Identifier patterns binding string literal and method call results to local variables"
             },
             {
               "file": "iceoryx2/src/port/subscriber.rs",
-              "line": [162, 163, 164],
+              "line": [
+                162,
+                163,
+                164
+              ],
               "code": "pub(crate) fn new(\n    service: Arc<ServiceState<Service, NoResource>>,\n    static_config: &StaticConfig,",
               "purpose": "Identifier patterns in function parameters binding arguments to named parameters"
             },
             {
               "file": "iceoryx2/src/port/details/sender.rs",
-              "line": [332],
+              "line": [
+                332
+              ],
               "code": "let (ref_count, sample_size) = self.borrow_sample(shm_pointer.offset);",
               "purpose": "Identifier patterns in tuple destructuring binding method return values"
             }
-          ],
-          "count": 14175
+          ]
         },
         "literal_patterns": {
           "fls_section": "5.1.2",
@@ -70,29 +88,39 @@
           "description": "Literal Patterns",
           "status": "demonstrated",
           "findings": {
+            "count": 47,
             "description": "Literal Patterns patterns are used throughout iceoryx2 in match expressions and destructuring."
           },
           "samples": [
             {
               "file": "iceoryx2-bb/posix/src/file_lock.rs",
-              "line": [484, 485, 486],
+              "line": [
+                484,
+                485,
+                486
+              ],
               "code": "LockType::Read => 1,\nLockType::Write => -1,\nLockType::Unlock => {",
               "purpose": "Literal integer patterns in match arms for lock type to numeric value conversion"
             },
             {
               "file": "iceoryx2-bb/posix/src/access_mode.rs",
-              "line": [62],
+              "line": [
+                62
+              ],
               "code": "AccessMode::None => 0,",
               "purpose": "Literal zero pattern in match arm for AccessMode enum to integer mapping"
             },
             {
               "file": "iceoryx2-bb/posix/src/file_lock.rs",
-              "line": [466, 467, 468],
+              "line": [
+                466,
+                467,
+                468
+              ],
               "code": "let msg = match lock_type {\n    LockType::Read => \"Unable to acquire read file-lock\",\n    _ => \"Unable to acquire write file-lock\",",
               "purpose": "Literal string patterns in match arms for lock type error messages"
             }
-          ],
-          "count": 47
+          ]
         },
         "parenthesized_patterns": {
           "fls_section": "5.1.3",
@@ -102,29 +130,40 @@
           "description": "Parenthesized Patterns",
           "status": "demonstrated",
           "findings": {
+            "count": 216,
             "description": "Parenthesized Patterns patterns are used throughout iceoryx2 in match expressions and destructuring."
           },
           "samples": [
             {
               "file": "iceoryx2/src/service/naming_scheme.rs",
-              "line": [39, 40],
+              "line": [
+                39,
+                40
+              ],
               "code": "let (sender_port_id, _) = name.split_once('_')?;\nsender_port_id.parse::<u128>().ok()",
               "purpose": "Parenthesized tuple pattern with underscore ignoring second element of split result"
             },
             {
               "file": "iceoryx2-log/loggers/src/file.rs",
-              "line": [73, 74],
+              "line": [
+                73,
+                74
+              ],
               "code": "let (sender, receiver) = channel();\n\nlet write_buffer_to_file = move || loop {",
               "purpose": "Parenthesized tuple pattern destructuring channel sender and receiver pair"
             },
             {
               "file": "iceoryx2-pal/posix/src/windows/win32_security_attributes.rs",
-              "line": [222, 223, 224, 225],
+              "line": [
+                222,
+                223,
+                224,
+                225
+              ],
               "code": "let (read_bit, write_bit, exec_bit) = match ident {\n    IDENT_OTHERS => (S_IROTH, S_IWOTH, S_IXOTH),\n    IDENT_GROUP => (S_IRGRP, S_IWGRP, S_IXGRP),\n    IDENT_OWNER => (S_IRUSR, S_IWUSR, S_IXUSR),",
               "purpose": "Parenthesized triple pattern destructuring permission bits from match result tuple"
             }
-          ],
-          "count": 216
+          ]
         },
         "path_patterns": {
           "fls_section": "5.1.4",
@@ -134,29 +173,45 @@
           "description": "Path Patterns",
           "status": "demonstrated",
           "findings": {
+            "count": 609,
             "description": "Path Patterns patterns are used throughout iceoryx2 in match expressions and destructuring."
           },
           "samples": [
             {
               "file": "iceoryx2/src/waitset.rs",
-              "line": [339, 340, 341, 342, 343, 344],
+              "line": [
+                339,
+                340,
+                341,
+                342,
+                343,
+                344
+              ],
               "code": "GuardType::Tick(t) => WaitSetAttachmentId::tick(guard.waitset, t.index()),\nGuardType::Deadline(r, t) => WaitSetAttachmentId::deadline(\n    guard.waitset,\n    unsafe { r.file_descriptor().native_handle() },\n    t.index(),\n),",
               "purpose": "Path patterns matching GuardType enum variants with tuple destructuring in arms"
             },
             {
               "file": "iceoryx2-cli/lib/src/filter.rs",
-              "line": [84, 85, 86],
+              "line": [
+                84,
+                85,
+                86
+              ],
               "code": "NodeState::Alive(view) => NodeIdString::from(view.id()) == **id,\nNodeState::Dead(view) => NodeIdString::from(view.id()) == **id,\nNodeState::Inaccessible(node_id) => NodeIdString::from(node_id) == **id,",
               "purpose": "Path patterns matching NodeState enum variants with bound identifiers"
             },
             {
               "file": "iceoryx2-cli/iox2-tunnel/src/command/zenoh.rs",
-              "line": [32, 33, 34, 35],
+              "line": [
+                32,
+                33,
+                34,
+                35
+              ],
               "code": "let zenoh_config = match zenoh_config {\n    Some(path) => zenoh::Config::from_file(&path)\n        .map_err(|e| anyhow::anyhow!(\"failed to read zenoh config file '{path}': {e}\"))?,\n    None => zenoh::Config::default(),",
               "purpose": "Path patterns matching Option::Some and Option::None variants"
             }
-          ],
-          "count": 609
+          ]
         },
         "range_patterns": {
           "fls_section": "5.1.5",
@@ -166,29 +221,44 @@
           "description": "Range Patterns",
           "status": "demonstrated",
           "findings": {
+            "count": 65,
             "description": "Range Patterns patterns are used throughout iceoryx2 in match expressions and destructuring."
           },
           "samples": [
             {
               "file": "iceoryx2-bb/system-types/src/path.rs",
-              "line": [71, 72, 73, 74],
+              "line": [
+                71,
+                72,
+                73,
+                74
+              ],
               "code": "// windows only\n1..=31 => return true,\nb'<' => return true,\nb'>' => return true,",
               "purpose": "Inclusive range pattern 1..=31 matching control characters in path validation"
             },
             {
               "file": "iceoryx2-bb/system-types/src/group_name.rs",
-              "line": [53, 54, 55, 56],
+              "line": [
+                53,
+                54,
+                55,
+                56
+              ],
               "code": "match value {\n    b'a'..=b'z' | b'A'..=b'Z' | b'0'..=b'9' | b'-' | b'_' => (),\n    _ => return true,\n}",
               "purpose": "Multiple inclusive range patterns for alphanumeric character validation"
             },
             {
               "file": "iceoryx2-bb/posix/src/unix_datagram_socket.rs",
-              "line": [970, 971, 972, 973],
+              "line": [
+                970,
+                971,
+                972,
+                973
+              ],
               "code": "1..=isize::MAX => {\n    socket_msg.extract_received_data(self);\n    Ok(true)\n}",
               "purpose": "Inclusive range pattern matching positive return values from system call"
             }
-          ],
-          "count": 65
+          ]
         },
         "reference_patterns": {
           "fls_section": "5.1.6",
@@ -198,16 +268,16 @@
           "description": "Reference Patterns",
           "status": "demonstrated",
           "findings": {
+            "count": 0,
+            "samples_waiver": {
+              "reason": "insufficient_patterns",
+              "explanation": "Only 0 instance(s) found in codebase, fewer than 3 required samples",
+              "approved_by": "automated",
+              "date": "2025-12-30"
+            },
             "description": "Reference Patterns patterns are used throughout iceoryx2 in match expressions and destructuring."
           },
-          "samples": [],
-          "count": 0,
-          "samples_waiver": {
-            "reason": "insufficient_patterns",
-            "explanation": "Only 0 instance(s) found in codebase, fewer than 3 required samples",
-            "approved_by": "automated",
-            "date": "2025-12-30"
-          }
+          "samples": []
         },
         "rest_patterns": {
           "fls_section": "5.1.7",
@@ -217,29 +287,37 @@
           "description": "Rest Patterns",
           "status": "demonstrated",
           "findings": {
+            "count": 1158,
             "description": "Rest Patterns patterns are used throughout iceoryx2 in match expressions and destructuring."
           },
           "samples": [
             {
               "file": "iceoryx2-bb/derive-macros/src/lib.rs",
-              "line": [256, 257, 258],
+              "line": [
+                256,
+                257,
+                258
+              ],
               "code": "Self::#variant_name { #field_name, .. } => {\n    ZeroCopySend::__is_zero_copy_send(#field_name);\n}",
               "purpose": "Rest pattern (..) ignoring remaining struct fields in enum variant match"
             },
             {
               "file": "iceoryx2-bb/derive-macros/src/lib.rs",
-              "line": [264],
+              "line": [
+                264
+              ],
               "code": "Self::#variant_name { .. } => {}",
               "purpose": "Rest pattern matching any empty struct variant fields in generated code"
             },
             {
               "file": "iceoryx2-ffi/ffi-macros/src/lib.rs",
-              "line": [275],
+              "line": [
+                275
+              ],
               "code": "Expr::Lit(ExprLit { lit: Lit::Str(lit), .. }) => Some(null_terminated(&lit.value())),",
               "purpose": "Rest pattern in nested struct match extracting string literal from expression"
             }
-          ],
-          "count": 1158
+          ]
         },
         "slice_patterns": {
           "fls_section": "5.1.8",
@@ -249,39 +327,37 @@
           "description": "Slice Patterns",
           "status": "demonstrated",
           "findings": {
+            "count": 100,
             "description": "Slice Patterns patterns are used throughout iceoryx2 in match expressions and destructuring."
           },
           "samples": [
             {
               "file": "iceoryx2-pal/posix/src/freebsd/mman.rs",
-              "line": [55],
+              "line": [
+                55
+              ],
               "code": "state_file_path[..SHM_STATE_DIRECTORY.len()].copy_from_slice(SHM_STATE_DIRECTORY);",
               "purpose": "Slice pattern [..len] for copying directory path prefix into buffer"
             },
             {
               "file": "iceoryx2-bb/system-types/src/path.rs",
-              "line": [108, 109],
+              "line": [
+                108,
+                109
+              ],
               "code": "raw_path[n..new_n].copy_from_slice(entry);\nn = new_n;",
               "purpose": "Slice pattern [n..new_n] for copying path entry into buffer at offset"
             },
             {
               "file": "iceoryx2-pal/posix/src/windows/win32_security_attributes.rs",
-              "line": [352],
+              "line": [
+                352
+              ],
               "code": "ace_entries.push(&value[entry_start..i])",
               "purpose": "Slice pattern extracting ACE entry substring from security descriptor"
             }
-          ],
-          "count": 100
+          ]
         }
-      },
-      "count": null,
-      "count_methodology": "Conceptual - refutability is pattern property",
-      "samples": [],
-      "samples_waiver": {
-        "reason": "conceptual_section",
-        "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
-        "approved_by": "automated",
-        "date": "2025-12-30"
       }
     },
     "struct_patterns": {
@@ -291,10 +367,44 @@
       ],
       "description": "Struct pattern matches enum values, struct values, or union values.",
       "findings": {
+        "count": 4,
         "enum_matching": "Extensive use for Result and Option",
         "struct_destructuring": "Used with custom types",
         "union_matching": "NEW in v0.8.0 - for FFI unions"
       },
+      "samples": [
+        {
+          "file": "iceoryx2-cli/iox2-config/src/main.rs",
+          "line": [
+            50,
+            51,
+            52,
+            53,
+            54,
+            55
+          ],
+          "code": "Action::Show { config } => match config {\n    Some(ShowSubcommand::System) => {\n        if let Err(e) = command::show_system_config() {\n            eprintln!(\"Failed to show options: {e}\");\n        }\n    }",
+          "purpose": "Struct pattern matching Action::Show variant with named config field, nested match on inner Option"
+        },
+        {
+          "file": "iceoryx2-bb/derive-macros/src/lib.rs",
+          "line": [
+            256,
+            257,
+            258
+          ],
+          "code": "Self::#variant_name { #field_name, .. } => {\n    ZeroCopySend::__is_zero_copy_send(#field_name);\n}",
+          "purpose": "Struct pattern in macro-generated code matching enum variant with named field and rest pattern"
+        },
+        {
+          "file": "iceoryx2-ffi/ffi-macros/src/lib.rs",
+          "line": [
+            275
+          ],
+          "code": "Expr::Lit(ExprLit { lit: Lit::Str(lit), .. }) => Some(null_terminated(&lit.value())),",
+          "purpose": "Nested struct patterns matching expression literal with string literal inner field"
+        }
+      ],
       "subsections": {
         "record_struct_patterns": {
           "fls_section": "5.2.1",
@@ -304,29 +414,41 @@
           "description": "Record Struct Patterns",
           "status": "demonstrated",
           "findings": {
+            "count": 583,
             "description": "Record Struct Patterns used in destructuring and pattern matching."
           },
           "samples": [
             {
               "file": "iceoryx2/src/waitset.rs",
-              "line": [382, 383, 384, 385, 386, 387, 388],
+              "line": [
+                382,
+                383,
+                384,
+                385,
+                386,
+                387,
+                388
+              ],
               "code": "Self {\n    attachment_type: AttachmentIdType::Tick(\n        waitset as *const WaitSet<Service> as u64,\n        deadline_queue_idx,\n    ),\n    _data: PhantomData,\n}",
               "purpose": "Record struct pattern with named fields in Self construction"
             },
             {
               "file": "iceoryx2-ffi/ffi-macros/src/lib.rs",
-              "line": [275],
+              "line": [
+                275
+              ],
               "code": "Expr::Lit(ExprLit { lit: Lit::Str(lit), .. }) => Some(null_terminated(&lit.value())),",
               "purpose": "Nested record struct pattern matching ExprLit with named lit field"
             },
             {
               "file": "iceoryx2-bb/derive-macros/src/lib.rs",
-              "line": [256],
+              "line": [
+                256
+              ],
               "code": "Self::#variant_name { #field_name, .. } => {",
               "purpose": "Record struct pattern in macro-generated enum variant match"
             }
-          ],
-          "count": 583
+          ]
         },
         "tuple_struct_patterns": {
           "fls_section": "5.2.2",
@@ -336,29 +458,44 @@
           "description": "Tuple Struct Patterns",
           "status": "demonstrated",
           "findings": {
+            "count": 28630,
             "description": "Tuple Struct Patterns used in destructuring and pattern matching."
           },
           "samples": [
             {
               "file": "iceoryx2-bb/container/src/string/mod.rs",
-              "line": [370, 371, 372, 373, 374],
+              "line": [
+                370,
+                371,
+                372,
+                373,
+                374
+              ],
               "code": "Some(0) => {\n    self.remove_range(0, bytes.len());\n    true\n}\n_ => false,",
               "purpose": "Tuple struct pattern Some(0) matching Option with specific inner value"
             },
             {
               "file": "iceoryx2-pal/posix/src/windows/time.rs",
-              "line": [32, 33, 34, 35, 36],
+              "line": [
+                32,
+                33,
+                34,
+                35,
+                36
+              ],
               "code": "Ok(v) => {\n    (*tp).tv_sec = v.as_secs() as _;\n    (*tp).tv_nsec = v.subsec_nanos() as _;\n    Errno::ESUCCES as _\n}",
               "purpose": "Tuple struct pattern Ok(v) matching Result and binding inner value"
             },
             {
               "file": "iceoryx2-cal/src/zero_copy_connection/common.rs",
-              "line": [701, 702],
+              "line": [
+                701,
+                702
+              ],
               "code": "Some(v) => {\n    let channel_id = ChannelId::new(v);",
               "purpose": "Tuple struct pattern Some(v) extracting value from Option in connection handling"
             }
-          ],
-          "count": 28630
+          ]
         },
         "tuple_patterns": {
           "fls_section": "5.2.3",
@@ -368,29 +505,45 @@
           "description": "Tuple Patterns",
           "status": "demonstrated",
           "findings": {
+            "count": 2263,
             "description": "Tuple Patterns used in destructuring and pattern matching."
           },
           "samples": [
             {
               "file": "iceoryx2-cli/iox2-config/src/command/mod.rs",
-              "line": [89, 90, 91, 92, 93, 94, 95, 96],
+              "line": [
+                89,
+                90,
+                91,
+                92,
+                93,
+                94,
+                95,
+                96
+              ],
               "code": "match (soft_limit_result, hard_limit_result) {\n    (Ok(soft), Ok(hard)) => {\n        println!(\n            \"  {:<43} soft:  {:<24} hard:  {}\",\n            format!(\"{i:?}\").white(),\n            format!(\"{soft}\").bright_blue(),\n            format!(\"{hard}\").bright_blue()\n        );",
               "purpose": "Tuple pattern matching pair of Results with nested Ok tuple struct patterns"
             },
             {
               "file": "iceoryx2-pal/posix/src/windows/win32_security_attributes.rs",
-              "line": [222, 223, 224, 225],
+              "line": [
+                222,
+                223,
+                224,
+                225
+              ],
               "code": "let (read_bit, write_bit, exec_bit) = match ident {\n    IDENT_OTHERS => (S_IROTH, S_IWOTH, S_IXOTH),\n    IDENT_GROUP => (S_IRGRP, S_IWGRP, S_IXGRP),\n    IDENT_OWNER => (S_IRUSR, S_IWUSR, S_IXUSR),",
               "purpose": "Tuple pattern destructuring triple from match expression result"
             },
             {
               "file": "iceoryx2/src/service/naming_scheme.rs",
-              "line": [39],
+              "line": [
+                39
+              ],
               "code": "let (sender_port_id, _) = name.split_once('_')?;",
               "purpose": "Tuple pattern with underscore placeholder for unwanted element"
             }
-          ],
-          "count": 2263
+          ]
         },
         "underscore_patterns": {
           "fls_section": "5.2.4",
@@ -400,53 +553,43 @@
           "description": "Underscore Patterns",
           "status": "demonstrated",
           "findings": {
+            "count": 255,
             "description": "Underscore Patterns used in destructuring and pattern matching."
           },
           "samples": [
             {
               "file": "iceoryx2-cli/iox2-config/src/command/explain.rs",
-              "line": [476],
+              "line": [
+                476
+              ],
               "code": "_ => continue, // skip non-string keys",
               "purpose": "Underscore wildcard pattern as catch-all match arm for non-string keys"
             },
             {
               "file": "iceoryx2-bb/system-types/src/user_name.rs",
-              "line": [56, 57, 58, 59],
+              "line": [
+                56,
+                57,
+                58,
+                59
+              ],
               "code": "match value {\n    b'a'..=b'z' | b'A'..=b'Z' | b'0'..=b'9' | b'-' | b'_' => (),\n    _ => return true,\n}",
               "purpose": "Underscore wildcard pattern with range alternatives for invalid character detection"
             },
             {
               "file": "iceoryx2-bb/system-types/src/group_name.rs",
-              "line": [53, 54, 55, 56],
+              "line": [
+                53,
+                54,
+                55,
+                56
+              ],
               "code": "match value {\n    b'a'..=b'z' | b'A'..=b'Z' | b'0'..=b'9' | b'-' | b'_' => (),\n    _ => return true,\n}",
               "purpose": "Underscore wildcard pattern as catch-all for non-alphanumeric characters in group name"
             }
-          ],
-          "count": 255
+          ]
         }
-      },
-      "count": 4,
-      "samples": [
-        {
-          "file": "iceoryx2-cli/iox2-config/src/main.rs",
-          "line": [50, 51, 52, 53, 54, 55],
-          "code": "Action::Show { config } => match config {\n    Some(ShowSubcommand::System) => {\n        if let Err(e) = command::show_system_config() {\n            eprintln!(\"Failed to show options: {e}\");\n        }\n    }",
-          "purpose": "Struct pattern matching Action::Show variant with named config field, nested match on inner Option"
-        },
-        {
-          "file": "iceoryx2-bb/derive-macros/src/lib.rs",
-          "line": [256, 257, 258],
-          "code": "Self::#variant_name { #field_name, .. } => {\n    ZeroCopySend::__is_zero_copy_send(#field_name);\n}",
-          "purpose": "Struct pattern in macro-generated code matching enum variant with named field and rest pattern"
-        },
-        {
-          "file": "iceoryx2-ffi/ffi-macros/src/lib.rs",
-          "line": [275],
-          "code": "Expr::Lit(ExprLit { lit: Lit::Str(lit), .. }) => Some(null_terminated(&lit.value())),",
-          "purpose": "Nested struct patterns matching expression literal with string literal inner field"
-        }
-      ],
-      "count": 4
+      }
     },
     "binding_modes": {
       "fls_section": "5.3",
@@ -455,6 +598,7 @@
       ],
       "description": "Binding modes determine how matched values are bound: by value, by reference, or by mutable reference.",
       "findings": {
+        "count": 99,
         "by_value": "Default binding mode - moves or copies value",
         "by_reference": "ref keyword for immutable borrow",
         "by_mutable_reference": "99 ref mut patterns for mutable borrow"
@@ -462,24 +606,32 @@
       "samples": [
         {
           "file": "iceoryx2-pal/posix/src/windows/win32_handle_translator.rs",
-          "line": [392, 393, 394],
+          "line": [
+            392,
+            393,
+            394
+          ],
           "code": "if let FdHandleEntry::UdsDatagramSocket(ref mut s) = *self.fd2handle[fd as usize].get()\n{\n    s.address = Some(address);",
           "purpose": "ref mut binding mode for mutable borrow of socket in tuple struct pattern"
         },
         {
           "file": "iceoryx2-pal/posix/src/macos/pthread.rs",
-          "line": [120, 121],
+          "line": [
+            120,
+            121
+          ],
           "code": "if let Some(ref mut v) = *state.get() {\n    // mutate v",
           "purpose": "ref mut binding in Option pattern for mutable access to inner value"
         },
         {
           "file": "iceoryx2/src/service/builder/publish_subscribe.rs",
-          "line": [290],
+          "line": [
+            290
+          ],
           "code": "MessagingPattern::PublishSubscribe(ref mut v) => v,",
           "purpose": "ref mut binding extracting mutable reference from enum variant"
         }
-      ],
-      "count": 99
+      ]
     },
     "pattern_matching": {
       "fls_section": "5.4",
@@ -488,10 +640,45 @@
       ],
       "description": "Pattern matching process involving a pattern and a context value.",
       "findings": {
+        "count": 1663,
         "match_expressions": "1663 match expressions (primary pattern matching construct)",
         "if_let": "337 if let expressions for conditional pattern matching",
         "while_let": "70 while let expressions for loop with pattern matching"
       },
+      "samples": [
+        {
+          "file": "iceoryx2/src/config.rs",
+          "line": [
+            551,
+            552,
+            553,
+            554,
+            555,
+            556
+          ],
+          "code": "match user.details() {\n    Some(details) => {\n        let mut user_config = *details.config_dir();\n        fail!(from origin,\n            when user_config.add_path_entry(&Self::relative_config_path()),\n            with ConfigIterationFailure::TooLongUserConfigDirectory,",
+          "purpose": "match expression with Option pattern matching for user details configuration"
+        },
+        {
+          "file": "iceoryx2/src/waitset.rs",
+          "line": [
+            338,
+            339,
+            340
+          ],
+          "code": "match &guard.guard_type {\n    GuardType::Tick(t) => WaitSetAttachmentId::tick(guard.waitset, t.index()),\n    GuardType::Deadline(r, t) => WaitSetAttachmentId::deadline(",
+          "purpose": "match expression with enum variant patterns extracting inner values"
+        },
+        {
+          "file": "iceoryx2-cli/iox2-config/src/command/mod.rs",
+          "line": [
+            89,
+            90
+          ],
+          "code": "match (soft_limit_result, hard_limit_result) {\n    (Ok(soft), Ok(hard)) => {",
+          "purpose": "match expression with tuple pattern combining multiple Results"
+        }
+      ],
       "subsections": {
         "identifier_pattern_matching": {
           "fls_section": "5.4.1",
@@ -501,29 +688,37 @@
           "description": "Identifier Pattern Matching",
           "status": "demonstrated",
           "findings": {
+            "count": 12040,
             "description": "Identifier Pattern Matching semantics applied in 1663+ match expressions."
           },
           "samples": [
             {
               "file": "iceoryx2/src/service/mod.rs",
-              "line": [421, 422],
+              "line": [
+                421,
+                422
+              ],
               "code": "let origin = \"ServiceState::drop()\";\nlet id = self.static_config.service_id();",
               "purpose": "Identifier pattern binding in let statements with string literal and method call"
             },
             {
               "file": "iceoryx2/src/config.rs",
-              "line": [552, 553],
+              "line": [
+                552,
+                553
+              ],
               "code": "Some(details) => {\n    let mut user_config = *details.config_dir();",
               "purpose": "Identifier pattern 'details' in Some arm, then 'user_config' in let binding"
             },
             {
               "file": "iceoryx2/src/port/details/sender.rs",
-              "line": [332],
+              "line": [
+                332
+              ],
               "code": "let (ref_count, sample_size) = self.borrow_sample(shm_pointer.offset);",
               "purpose": "Identifier patterns in tuple destructuring binding multiple return values"
             }
-          ],
-          "count": 12040
+          ]
         },
         "literal_pattern_matching": {
           "fls_section": "5.4.2",
@@ -533,17 +728,17 @@
           "description": "Literal Pattern Matching",
           "status": "demonstrated",
           "findings": {
+            "count": null,
+            "count_methodology": "Pattern not defined for this section",
+            "samples_waiver": {
+              "reason": "conceptual_section",
+              "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+              "approved_by": "automated",
+              "date": "2025-12-30"
+            },
             "description": "Literal Pattern Matching semantics applied in 1663+ match expressions."
           },
-          "samples": [],
-          "count": null,
-          "count_methodology": "Pattern not defined for this section",
-          "samples_waiver": {
-            "reason": "conceptual_section",
-            "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
-            "approved_by": "automated",
-            "date": "2025-12-30"
-          }
+          "samples": []
         },
         "parenthesized_pattern_matching": {
           "fls_section": "5.4.3",
@@ -553,17 +748,17 @@
           "description": "Parenthesized Pattern Matching",
           "status": "demonstrated",
           "findings": {
+            "count": null,
+            "count_methodology": "Pattern not defined for this section",
+            "samples_waiver": {
+              "reason": "conceptual_section",
+              "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+              "approved_by": "automated",
+              "date": "2025-12-30"
+            },
             "description": "Parenthesized Pattern Matching semantics applied in 1663+ match expressions."
           },
-          "samples": [],
-          "count": null,
-          "count_methodology": "Pattern not defined for this section",
-          "samples_waiver": {
-            "reason": "conceptual_section",
-            "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
-            "approved_by": "automated",
-            "date": "2025-12-30"
-          }
+          "samples": []
         },
         "path_pattern_matching": {
           "fls_section": "5.4.4",
@@ -573,17 +768,17 @@
           "description": "Path Pattern Matching",
           "status": "demonstrated",
           "findings": {
+            "count": null,
+            "count_methodology": "Pattern not defined for this section",
+            "samples_waiver": {
+              "reason": "conceptual_section",
+              "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+              "approved_by": "automated",
+              "date": "2025-12-30"
+            },
             "description": "Path Pattern Matching semantics applied in 1663+ match expressions."
           },
-          "samples": [],
-          "count": null,
-          "count_methodology": "Pattern not defined for this section",
-          "samples_waiver": {
-            "reason": "conceptual_section",
-            "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
-            "approved_by": "automated",
-            "date": "2025-12-30"
-          }
+          "samples": []
         },
         "range_pattern_matching": {
           "fls_section": "5.4.5",
@@ -593,17 +788,17 @@
           "description": "Range Pattern Matching",
           "status": "demonstrated",
           "findings": {
+            "count": null,
+            "count_methodology": "Pattern not defined for this section",
+            "samples_waiver": {
+              "reason": "conceptual_section",
+              "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+              "approved_by": "automated",
+              "date": "2025-12-30"
+            },
             "description": "Range Pattern Matching semantics applied in 1663+ match expressions."
           },
-          "samples": [],
-          "count": null,
-          "count_methodology": "Pattern not defined for this section",
-          "samples_waiver": {
-            "reason": "conceptual_section",
-            "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
-            "approved_by": "automated",
-            "date": "2025-12-30"
-          }
+          "samples": []
         },
         "reference_pattern_matching": {
           "fls_section": "5.4.6",
@@ -613,17 +808,17 @@
           "description": "Reference Pattern Matching",
           "status": "demonstrated",
           "findings": {
+            "count": null,
+            "count_methodology": "Pattern not defined for this section",
+            "samples_waiver": {
+              "reason": "conceptual_section",
+              "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+              "approved_by": "automated",
+              "date": "2025-12-30"
+            },
             "description": "Reference Pattern Matching semantics applied in 1663+ match expressions."
           },
-          "samples": [],
-          "count": null,
-          "count_methodology": "Pattern not defined for this section",
-          "samples_waiver": {
-            "reason": "conceptual_section",
-            "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
-            "approved_by": "automated",
-            "date": "2025-12-30"
-          }
+          "samples": []
         },
         "slice_pattern_matching": {
           "fls_section": "5.4.7",
@@ -633,17 +828,17 @@
           "description": "Slice Pattern Matching",
           "status": "demonstrated",
           "findings": {
+            "count": null,
+            "count_methodology": "Pattern not defined for this section",
+            "samples_waiver": {
+              "reason": "conceptual_section",
+              "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+              "approved_by": "automated",
+              "date": "2025-12-30"
+            },
             "description": "Slice Pattern Matching semantics applied in 1663+ match expressions."
           },
-          "samples": [],
-          "count": null,
-          "count_methodology": "Pattern not defined for this section",
-          "samples_waiver": {
-            "reason": "conceptual_section",
-            "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
-            "approved_by": "automated",
-            "date": "2025-12-30"
-          }
+          "samples": []
         },
         "record_struct_pattern_matching": {
           "fls_section": "5.4.8",
@@ -653,17 +848,17 @@
           "description": "Record Struct Pattern Matching",
           "status": "demonstrated",
           "findings": {
+            "count": null,
+            "count_methodology": "Pattern not defined for this section",
+            "samples_waiver": {
+              "reason": "conceptual_section",
+              "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+              "approved_by": "automated",
+              "date": "2025-12-30"
+            },
             "description": "Record Struct Pattern Matching semantics applied in 1663+ match expressions."
           },
-          "samples": [],
-          "count": null,
-          "count_methodology": "Pattern not defined for this section",
-          "samples_waiver": {
-            "reason": "conceptual_section",
-            "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
-            "approved_by": "automated",
-            "date": "2025-12-30"
-          }
+          "samples": []
         },
         "tuple_struct_pattern_matching": {
           "fls_section": "5.4.9",
@@ -673,17 +868,17 @@
           "description": "Tuple Struct Pattern Matching",
           "status": "demonstrated",
           "findings": {
+            "count": null,
+            "count_methodology": "Pattern not defined for this section",
+            "samples_waiver": {
+              "reason": "conceptual_section",
+              "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+              "approved_by": "automated",
+              "date": "2025-12-30"
+            },
             "description": "Tuple Struct Pattern Matching semantics applied in 1663+ match expressions."
           },
-          "samples": [],
-          "count": null,
-          "count_methodology": "Pattern not defined for this section",
-          "samples_waiver": {
-            "reason": "conceptual_section",
-            "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
-            "approved_by": "automated",
-            "date": "2025-12-30"
-          }
+          "samples": []
         },
         "tuple_pattern_matching": {
           "fls_section": "5.4.10",
@@ -693,17 +888,17 @@
           "description": "Tuple Pattern Matching",
           "status": "demonstrated",
           "findings": {
+            "count": null,
+            "count_methodology": "Pattern not defined for this section",
+            "samples_waiver": {
+              "reason": "conceptual_section",
+              "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+              "approved_by": "automated",
+              "date": "2025-12-30"
+            },
             "description": "Tuple Pattern Matching semantics applied in 1663+ match expressions."
           },
-          "samples": [],
-          "count": null,
-          "count_methodology": "Pattern not defined for this section",
-          "samples_waiver": {
-            "reason": "conceptual_section",
-            "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
-            "approved_by": "automated",
-            "date": "2025-12-30"
-          }
+          "samples": []
         },
         "underscore_pattern_matching": {
           "fls_section": "5.4.11",
@@ -713,40 +908,19 @@
           "description": "Underscore Pattern Matching",
           "status": "demonstrated",
           "findings": {
+            "count": null,
+            "count_methodology": "Pattern not defined for this section",
+            "samples_waiver": {
+              "reason": "conceptual_section",
+              "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+              "approved_by": "automated",
+              "date": "2025-12-30"
+            },
             "description": "Underscore Pattern Matching semantics applied in 1663+ match expressions."
           },
-          "samples": [],
-          "count": null,
-          "count_methodology": "Pattern not defined for this section",
-          "samples_waiver": {
-            "reason": "conceptual_section",
-            "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
-            "approved_by": "automated",
-            "date": "2025-12-30"
-          }
+          "samples": []
         }
-      },
-      "count": 1663,
-      "samples": [
-        {
-          "file": "iceoryx2/src/config.rs",
-          "line": [551, 552, 553, 554, 555, 556],
-          "code": "match user.details() {\n    Some(details) => {\n        let mut user_config = *details.config_dir();\n        fail!(from origin,\n            when user_config.add_path_entry(&Self::relative_config_path()),\n            with ConfigIterationFailure::TooLongUserConfigDirectory,",
-          "purpose": "match expression with Option pattern matching for user details configuration"
-        },
-        {
-          "file": "iceoryx2/src/waitset.rs",
-          "line": [338, 339, 340],
-          "code": "match &guard.guard_type {\n    GuardType::Tick(t) => WaitSetAttachmentId::tick(guard.waitset, t.index()),\n    GuardType::Deadline(r, t) => WaitSetAttachmentId::deadline(",
-          "purpose": "match expression with enum variant patterns extracting inner values"
-        },
-        {
-          "file": "iceoryx2-cli/iox2-config/src/command/mod.rs",
-          "line": [89, 90],
-          "code": "match (soft_limit_result, hard_limit_result) {\n    (Ok(soft), Ok(hard)) => {",
-          "purpose": "match expression with tuple pattern combining multiple Results"
-        }
-      ]
+      }
     }
   },
   "safety_critical_summary": {

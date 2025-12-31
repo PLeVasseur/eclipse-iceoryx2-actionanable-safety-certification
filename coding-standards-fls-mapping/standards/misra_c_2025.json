@@ -4,8 +4,8 @@
   "extraction_date": "2025-12-31",
   "source": "MISRA-C-2025.pdf",
   "statistics": {
-    "total_guidelines": 212,
-    "rules": 190,
+    "total_guidelines": 228,
+    "rules": 206,
     "directives": 22,
     "recommendations": 0,
     "categories": 28
@@ -157,12 +157,12 @@
       "guidelines": [
         {
           "id": "Rule 1.1",
-          "title": "The program shall contain no violations of the standard C syntax and constraints, and shall not exceed the implementation's translation limits",
+          "title": "4.2 Compilation and build",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 1.2",
-          "title": "[DELETED - Renumbered to Directive 1.2 in MISRA C:2025]",
+          "title": "Renumbered as Directive 1.2 MISRA C:2025",
           "guideline_type": "rule"
         },
         {
@@ -280,6 +280,11 @@
           "guideline_type": "rule"
         },
         {
+          "id": "Rule 5.4",
+          "title": "Macro identifiers shall be distinct",
+          "guideline_type": "rule"
+        },
+        {
           "id": "Rule 5.5",
           "title": "Identifiers shall be distinct from macro names",
           "guideline_type": "rule"
@@ -290,8 +295,18 @@
           "guideline_type": "rule"
         },
         {
+          "id": "Rule 5.7",
+          "title": "Required A tag name shall be a unique identifier",
+          "guideline_type": "rule"
+        },
+        {
           "id": "Rule 5.8",
           "title": "Required Identifiers that define objects or functions with external linkage shall be",
+          "guideline_type": "rule"
+        },
+        {
+          "id": "Rule 5.9",
+          "title": "Advisory Identifiers that define objects or functions with internal linkage should",
           "guideline_type": "rule"
         },
         {
@@ -350,6 +365,11 @@
           "id": "Rule 7.5",
           "title": "The argument of an integer constant macro shall have an appropriate",
           "guideline_type": "rule"
+        },
+        {
+          "id": "Rule 7.6",
+          "title": "Required The small integer variants of the minimum-width integer constant",
+          "guideline_type": "rule"
         }
       ]
     },
@@ -360,6 +380,11 @@
         {
           "id": "Rule 8.1",
           "title": "Types shall be explicitly specified",
+          "guideline_type": "rule"
+        },
+        {
+          "id": "Rule 8.2",
+          "title": "Required Function types shall be in prototype form with named parameters",
           "guideline_type": "rule"
         },
         {
@@ -379,7 +404,7 @@
         },
         {
           "id": "Rule 8.6",
-          "title": "An identifier with external linkage shall have exactly one external definition",
+          "title": "5.3 Comments",
           "guideline_type": "rule"
         },
         {
@@ -420,6 +445,11 @@
         {
           "id": "Rule 8.14",
           "title": "The restrict type qualifier shall not be used",
+          "guideline_type": "rule"
+        },
+        {
+          "id": "Rule 8.15",
+          "title": "All declarations of an object with an explicit alignment specification",
           "guideline_type": "rule"
         },
         {
@@ -500,6 +530,11 @@
           "guideline_type": "rule"
         },
         {
+          "id": "Rule 10.3",
+          "title": "Required The value of an expression shall not be assigned to an object with a",
+          "guideline_type": "rule"
+        },
+        {
           "id": "Rule 10.4",
           "title": "Both operands of an operator in which the usual arithmetic",
           "guideline_type": "rule"
@@ -551,6 +586,11 @@
           "guideline_type": "rule"
         },
         {
+          "id": "Rule 11.5",
+          "title": "A conversion should not be performed from pointer to void into",
+          "guideline_type": "rule"
+        },
+        {
           "id": "Rule 11.6",
           "title": "A cast shall not be performed between pointer to void and an",
           "guideline_type": "rule"
@@ -558,6 +598,11 @@
         {
           "id": "Rule 11.7",
           "title": "Combined with Rule 11.4 MISRA C:2025",
+          "guideline_type": "rule"
+        },
+        {
+          "id": "Rule 11.8",
+          "title": "Required A conversion shall not remove any const, volatile or _Atomic qualification",
           "guideline_type": "rule"
         },
         {
@@ -623,6 +668,11 @@
           "guideline_type": "rule"
         },
         {
+          "id": "Rule 13.2",
+          "title": "Required The value of an expression and its persistent side effects shall be the",
+          "guideline_type": "rule"
+        },
+        {
           "id": "Rule 13.3",
           "title": "A full expression containing an increment (++) or decrement (--)",
           "guideline_type": "rule"
@@ -651,6 +701,11 @@
         {
           "id": "Rule 14.1",
           "title": "A loop counter shall not have essentially floating type",
+          "guideline_type": "rule"
+        },
+        {
+          "id": "Rule 14.2",
+          "title": "Required A for loop shall be well-formed",
           "guideline_type": "rule"
         },
         {
@@ -767,6 +822,11 @@
           "guideline_type": "rule"
         },
         {
+          "id": "Rule 17.4",
+          "title": "All exit paths from a function with non-void return type shall have an",
+          "guideline_type": "rule"
+        },
+        {
           "id": "Rule 17.5",
           "title": "The function argument corresponding to a parameter declared to",
           "guideline_type": "rule"
@@ -774,6 +834,11 @@
         {
           "id": "Rule 17.6",
           "title": "Combined with Rule 17.5 MISRA C:2025",
+          "guideline_type": "rule"
+        },
+        {
+          "id": "Rule 17.7",
+          "title": "The value returned by a function having non-void return type shall be",
           "guideline_type": "rule"
         },
         {
@@ -789,6 +854,11 @@
         {
           "id": "Rule 17.10",
           "title": "Required A function declared with a _Noreturn function specifier shall have void",
+          "guideline_type": "rule"
+        },
+        {
+          "id": "Rule 17.11",
+          "title": "A function that never returns should be declared with a _Noreturn",
           "guideline_type": "rule"
         },
         {
@@ -844,7 +914,7 @@
         },
         {
           "id": "Rule 18.8",
-          "title": "Variable-length array types shall not be used",
+          "title": "5.14 Control statement expressions",
           "guideline_type": "rule"
         },
         {
@@ -866,6 +936,11 @@
         {
           "id": "Rule 19.1",
           "title": "An object shall not be assigned or copied to an overlapping object",
+          "guideline_type": "rule"
+        },
+        {
+          "id": "Rule 19.2",
+          "title": "Advisory The union keyword should not be used",
           "guideline_type": "rule"
         },
         {
@@ -951,7 +1026,7 @@
         },
         {
           "id": "Rule 20.15",
-          "title": "#undef shall not be used",
+          "title": "5.6 Types",
           "guideline_type": "rule"
         }
       ]
@@ -962,12 +1037,12 @@
       "guidelines": [
         {
           "id": "Rule 21.1",
-          "title": "[DELETED - Renumbered to Rule 20.15 in MISRA C:2025]",
+          "title": "Renumbered as Rule 20.15 MISRA C:2025",
           "guideline_type": "rule"
         },
         {
           "id": "Rule 21.2",
-          "title": "[DELETED - Renumbered to Rule 5.10 in MISRA C:2025]",
+          "title": "Renumbered as Rule 5.10 MISRA C:2025",
           "guideline_type": "rule"
         },
         {
@@ -1043,6 +1118,11 @@
         {
           "id": "Rule 21.17",
           "title": "Use of the string handling functions from <string.h> shall not result",
+          "guideline_type": "rule"
+        },
+        {
+          "id": "Rule 21.18",
+          "title": "Mandatory The size_t argument passed to any function in <string.h> shall have an",
           "guideline_type": "rule"
         },
         {

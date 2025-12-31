@@ -1,0 +1,258 @@
+{
+  "chapter": 18,
+  "title": "Program Structure and Compilation",
+  "fls_id": "fls_hdwwrsyunir",
+  "file": "program-structure-and-compilation",
+  "extraction_date": "2025-12-31",
+  "category_codes": {
+    "0": "section",
+    "-1": "general",
+    "-2": "legality_rules",
+    "-3": "dynamic_semantics",
+    "-4": "undefined_behavior",
+    "-5": "implementation_requirements",
+    "-6": "implementation_permissions",
+    "-7": "examples",
+    "-8": "syntax"
+  },
+  "statistics": {
+    "total_sections": 8,
+    "total_paragraphs": 46,
+    "paragraphs_by_category": {
+      "-8": 3,
+      "-2": 43
+    }
+  },
+  "sections": [
+    {
+      "fls_id": "fls_hdwwrsyunir",
+      "title": "Program Structure and Compilation",
+      "category": 0,
+      "level": 1,
+      "file": "program-structure-and-compilation",
+      "content": "Program Structure and Compilation",
+      "rubrics": {},
+      "parent_fls_id": null,
+      "sibling_fls_ids": []
+    },
+    {
+      "fls_id": "fls_s35hob3i7lr",
+      "title": "Source Files",
+      "category": 0,
+      "level": 2,
+      "file": "program-structure-and-compilation",
+      "content": "Source Files\n\n ZeroWidthNoBreakSpace ::=\n $$\\u{FEFF}$$\n\n Shebang ::=\n $$#!$$ ~[NewLine]*\n\n NewLine ::=\n $$\\n$$\n\nA source file contains the program text consisting of [inner\nattribute]s, [inner doc comment]s, and [item]s. The location of a\nsource file is tool defined.\n\nA Shebang does not have an effect on the compilation.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_4vicosdeaqmp": "A source file contains the program text consisting of [inner attribute]s, [inner doc comment]s, and [item]s. The location of a source file is tool defined.",
+            "fls_ann3cha1xpek": "A Shebang does not have an effect on the compilation."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "SourceFile ::=\n       ZeroWidthNoBreakSpace?\n       Shebang?\n       InnerAttributeOrDoc*\n       Item*\n\n   ZeroWidthNoBreakSpace ::=\n       $$\\u{FEFF}$$\n\n   Shebang ::=\n       $$#!$$ ~[NewLine]*\n\n   NewLine ::=\n       $$\\n$$"
+          }
+        }
+      },
+      "parent_fls_id": "fls_hdwwrsyunir",
+      "sibling_fls_ids": [
+        "fls_e9hwvqsib5d5",
+        "fls_maw4u1o8q37u",
+        "fls_gklst7joeo33",
+        "fls_5w50kf83oo1u",
+        "fls_u1afezy1ye99",
+        "fls_8JB3SJqamdpU"
+      ]
+    },
+    {
+      "fls_id": "fls_e9hwvqsib5d5",
+      "title": "Modules",
+      "category": 0,
+      "level": 2,
+      "file": "program-structure-and-compilation",
+      "content": "Modules\n\n ModuleSpecification ::=\n InlineModuleSpecification\n | OutlineModuleSpecification\n\n InlineModuleSpecification ::=\n $${$$\n InnerAttributeOrDoc*\n Item*\n $$}$$\n\n OutlineModuleSpecification ::=\n $$;$$\n\nA module is a container for zero or more [item]s.\n\nThe unsafe keyword of a module is rejected, but may still\nbe consumed by [macro]s.\n\nAn inline module is a module with an InlineModuleSpecification.\n\nAn outline module is a module with an OutlineModuleSpecification.\n\nAn outline module loads a source file and considers the text of the\nsource file to be inlined within the context of the outline module.\n\nThe location of a module source file can be specified using\nattribute path.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_odd1hj3y1mgu": "A module is a container for zero or more [item]s.",
+            "fls_whgv72emrm47": "The unsafe keyword of a module is rejected, but may still be consumed by [macro]s.",
+            "fls_qypjjpcf8uwq": "An inline module is a module with an InlineModuleSpecification.",
+            "fls_cavwpr1ybk37": "An outline module is a module with an OutlineModuleSpecification.",
+            "fls_plepew2319g4": "An outline module loads a source file and considers the text of the source file to be inlined within the context of the outline module.",
+            "fls_1aruwps62c4p": "The location of a module source file can be specified using attribute path."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "ModuleDeclaration ::=\n       $$unsafe$$? $$mod$$ Name ModuleSpecification\n\n   ModuleSpecification ::=\n       InlineModuleSpecification\n     | OutlineModuleSpecification\n\n   InlineModuleSpecification ::=\n       $${$$\n         InnerAttributeOrDoc*\n         Item*\n       $$}$$\n\n   OutlineModuleSpecification ::=\n       $$;$$"
+          }
+        }
+      },
+      "parent_fls_id": "fls_hdwwrsyunir",
+      "sibling_fls_ids": [
+        "fls_s35hob3i7lr",
+        "fls_maw4u1o8q37u",
+        "fls_gklst7joeo33",
+        "fls_5w50kf83oo1u",
+        "fls_u1afezy1ye99",
+        "fls_8JB3SJqamdpU"
+      ]
+    },
+    {
+      "fls_id": "fls_maw4u1o8q37u",
+      "title": "Crates",
+      "category": 0,
+      "level": 2,
+      "file": "program-structure-and-compilation",
+      "content": "Crates\n\nA crate is a unit of compilation and linking that contains a tree of\nnested [module]s.\n\nThe crate type of a crate is the value of the attribute\ncrate_type of a crate or the value of --crate-type flag passed to\nthe tool compiling the crate.\n\nThe crate type of a crate if not specified is bin.\n\nA crate may be subject to multiple [crate type]s, treating each type\nas a separate crate.\n\nA binary crate is a crate whose crate type is bin.\n\nA binary crate that is not subject to attribute no_main shall have\na function in scope of its crate root module under the name\nmain with a main function signature.\n\nThe function in scope of a binary crate's crate root module under\nthe name main with a main function signature is the binary\ncrate's program entry point.\n\nA library crate is a crate whose crate type is lib, rlib,\nstaticlib, dylib, or cdylib.\n\nA proc-macro crate is a crate whose crate type is proc-macro.\n\nA proc-macro crate shall not declare [item]s in its crate root\nmodule with public visibility unless the item is a procedural\nmacro.\n\nOnly a proc-macro crate shall declare [procedural macro]s.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_qwghk79ok5h0": "A crate is a unit of compilation and linking that contains a tree of nested [module]s.",
+            "fls_unxalgMqIr3v": "The crate type of a crate is the value of the attribute crate_type of a crate or the value of --crate-type flag passed to the tool compiling the crate.",
+            "fls_e7jGvXvTsFpC": "The crate type of a crate if not specified is bin.",
+            "fls_kQiJPwb2Hjcc": "A crate may be subject to multiple [crate type]s, treating each type as a separate crate.",
+            "fls_9ub6ks8qrang": "A binary crate is a crate whose crate type is bin.",
+            "fls_OyFwBtDGVimT": "A binary crate that is not subject to attribute no_main shall have a function in scope of its crate root module under the name main with a main function signature.",
+            "fls_jQqXxPyND1ds": "The function in scope of a binary crate's crate root module under the name main with a main function signature is the binary crate's program entry point.",
+            "fls_d9nn4yuiw1ja": "A library crate is a crate whose crate type is lib, rlib, staticlib, dylib, or cdylib.",
+            "fls_Mf62VqAhoZ3c": "A proc-macro crate is a crate whose crate type is proc-macro.",
+            "fls_RJJmN4tP7j4m": "A proc-macro crate shall not declare [item]s in its crate root module with public visibility unless the item is a procedural macro.",
+            "fls_h93C3wfbAoz1": "Only a proc-macro crate shall declare [procedural macro]s."
+          }
+        }
+      },
+      "parent_fls_id": "fls_hdwwrsyunir",
+      "sibling_fls_ids": [
+        "fls_s35hob3i7lr",
+        "fls_e9hwvqsib5d5",
+        "fls_gklst7joeo33",
+        "fls_5w50kf83oo1u",
+        "fls_u1afezy1ye99",
+        "fls_8JB3SJqamdpU"
+      ]
+    },
+    {
+      "fls_id": "fls_gklst7joeo33",
+      "title": "Crate Imports",
+      "category": 0,
+      "level": 2,
+      "file": "program-structure-and-compilation",
+      "content": "Crate Imports\n\n CrateIndication ::=\n Identifier\n | $$self$$\n\nA crate import specifies a required dependency on an external crate.\n\nA crate indication is a construct that indicates a crate.\n\nA crate import binds an external crate to its crate indication.\n\nCrate indication self shall require a renaming.\n\nA crate import with a renaming with an identifier binds the\nexternal crate to a local name and introduces the local name into\nthe enclosing scope.\n\nIf a crate import appears at the crate root module, then the\ncrate indication is added to the external prelude.\n\nA crate indication shall resolve to an external crate. The process of\nresolving a crate indication to an external crate is tool-defined.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_d0pa807s5d5h": "A crate import specifies a required dependency on an external crate.",
+            "fls_vfam3wzeAiah": "A crate indication is a construct that indicates a crate.",
+            "fls_ft860vkz0lkc": "A crate import binds an external crate to its crate indication.",
+            "fls_k90qtnf8kgu1": "Crate indication self shall require a renaming.",
+            "fls_siv8bl6s2ndu": "A crate import with a renaming with an identifier binds the external crate to a local name and introduces the local name into the enclosing scope.",
+            "fls_7vz5n3x6jo1s": "If a crate import appears at the crate root module, then the crate indication is added to the external prelude.",
+            "fls_3bgpc8m8yk4p": "A crate indication shall resolve to an external crate. The process of resolving a crate indication to an external crate is tool-defined."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "ExternalCrateImport ::=\n       $$extern$$ $$crate$$ CrateIndication Renaming? $$;$$\n\n   CrateIndication ::=\n       Identifier\n     | $$self$$"
+          }
+        }
+      },
+      "parent_fls_id": "fls_hdwwrsyunir",
+      "sibling_fls_ids": [
+        "fls_s35hob3i7lr",
+        "fls_e9hwvqsib5d5",
+        "fls_maw4u1o8q37u",
+        "fls_5w50kf83oo1u",
+        "fls_u1afezy1ye99",
+        "fls_8JB3SJqamdpU"
+      ]
+    },
+    {
+      "fls_id": "fls_5w50kf83oo1u",
+      "title": "Compilation Roots",
+      "category": 0,
+      "level": 2,
+      "file": "program-structure-and-compilation",
+      "content": "Compilation Roots\n\nA crate root module is the root of the nested module tree of a\ncrate.\n\nA tool can define a crate root module for a single crate.\n\nA compilation root is an input to a compilation performed by a tool. A\ncrate root module is a compilation root.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_fhiqvgdamq5": "A crate root module is the root of the nested module tree of a crate.",
+            "fls_tk8tl2e0a34": "A tool can define a crate root module for a single crate.",
+            "fls_bsyfxdk3ap1t": "A compilation root is an input to a compilation performed by a tool. A crate root module is a compilation root."
+          }
+        }
+      },
+      "parent_fls_id": "fls_hdwwrsyunir",
+      "sibling_fls_ids": [
+        "fls_s35hob3i7lr",
+        "fls_e9hwvqsib5d5",
+        "fls_maw4u1o8q37u",
+        "fls_gklst7joeo33",
+        "fls_u1afezy1ye99",
+        "fls_8JB3SJqamdpU"
+      ]
+    },
+    {
+      "fls_id": "fls_u1afezy1ye99",
+      "title": "Conditional Compilation",
+      "category": 0,
+      "level": 2,
+      "file": "program-structure-and-compilation",
+      "content": "Conditional Compilation\n\nConditionally-compiled source code is source code that may or may\nnot be considered a part of a Rust program depending on\n[configuration predicate]s.\n\nConditional compilation is the process of compiling\nconditionally-compiled source code.\n\nA construct subject to attribute cfg where the related\nconfiguration predicate evaluates to false is not considered part of a\nRust program.\n\nA crate root module subject to attribute cfg where the related\nconfiguration predicate evaluates to false is considered empty except\nfor all [attribute]s up to the invoked attribute cfg.\n\nAn attribute cfg_attr where the related configuration predicate\nevaluates to false is not considered part of a Rust program.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_9stc6nul6vq9": "Conditionally-compiled source code is source code that may or may not be considered a part of a Rust program depending on [configuration predicate]s.",
+            "fls_a0u9nnaf6drz": "Conditional compilation is the process of compiling conditionally-compiled source code.",
+            "fls_pf1v89h7pjhh": "A construct subject to attribute cfg where the related configuration predicate evaluates to false is not considered part of a Rust program.",
+            "fls_y56RGw3cbFex": "A crate root module subject to attribute cfg where the related configuration predicate evaluates to false is considered empty except for all [attribute]s up to the invoked attribute cfg.",
+            "fls_h6b1fuw4nvi1": "An attribute cfg_attr where the related configuration predicate evaluates to false is not considered part of a Rust program."
+          }
+        }
+      },
+      "parent_fls_id": "fls_hdwwrsyunir",
+      "sibling_fls_ids": [
+        "fls_s35hob3i7lr",
+        "fls_e9hwvqsib5d5",
+        "fls_maw4u1o8q37u",
+        "fls_gklst7joeo33",
+        "fls_5w50kf83oo1u",
+        "fls_8JB3SJqamdpU"
+      ]
+    },
+    {
+      "fls_id": "fls_8JB3SJqamdpU",
+      "title": "Program Entry Point",
+      "category": 0,
+      "level": 2,
+      "file": "program-structure-and-compilation",
+      "content": "Program Entry Point\n\nA program entry point is a function that is invoked at the start of\na Rust program.\n\nA main function signature is a function signature subject to the\nfollowing restrictions:\n\n* It lacks [function qualifier]s async and unsafe,\n\n* Its ABI is Rust,\n\n* It lacks [generic parameter]s,\n\n* It lacks [function parameter]s,\n\n* It lacks a return type,\n\n* It lacks a where clause,\n\n* It has a function body.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_dp64b08em9BJ": "A program entry point is a function that is invoked at the start of a Rust program.",
+            "fls_sbGnkm8Ephiu": "A main function signature is a function signature subject to the following restrictions:",
+            "fls_o4fxok23134r": "It lacks [function qualifier]s async and unsafe,",
+            "fls_bk755pvc1l53": "Its ABI is Rust,",
+            "fls_a3je4wc53bmo": "It lacks [generic parameter]s,",
+            "fls_w8q15zp7kyl0": "It lacks [function parameter]s,",
+            "fls_4psnfphsgdek": "It lacks a return type,",
+            "fls_m7xfrhqif74": "It lacks a where clause,",
+            "fls_qq9fzrw4aykd": "It has a function body."
+          }
+        }
+      },
+      "parent_fls_id": "fls_hdwwrsyunir",
+      "sibling_fls_ids": [
+        "fls_s35hob3i7lr",
+        "fls_e9hwvqsib5d5",
+        "fls_maw4u1o8q37u",
+        "fls_gklst7joeo33",
+        "fls_5w50kf83oo1u",
+        "fls_u1afezy1ye99"
+      ]
+    }
+  ]
+}

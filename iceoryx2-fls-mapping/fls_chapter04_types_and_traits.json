@@ -43,17 +43,17 @@
       "description": "Types",
       "status": "demonstrated",
       "findings": {
+        "count": null,
+        "count_methodology": "Conceptual - types are pervasive",
+        "samples_waiver": {
+          "reason": "conceptual_section",
+          "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+          "approved_by": "automated",
+          "date": "2025-12-30"
+        },
         "analyzed": true
       },
-      "samples": [],
-      "count": null,
-      "count_methodology": "Conceptual - types are pervasive",
-      "samples_waiver": {
-        "reason": "conceptual_section",
-        "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
-        "approved_by": "automated",
-        "date": "2025-12-30"
-      }
+      "samples": []
     },
     "type_classification": {
       "fls_section": "4.2",
@@ -63,17 +63,17 @@
       "description": "Type Classification",
       "status": "demonstrated",
       "findings": {
+        "count": null,
+        "count_methodology": "Conceptual - classification is compiler behavior",
+        "samples_waiver": {
+          "reason": "conceptual_section",
+          "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+          "approved_by": "automated",
+          "date": "2025-12-30"
+        },
         "analyzed": true
       },
-      "samples": [],
-      "count": null,
-      "count_methodology": "Conceptual - classification is compiler behavior",
-      "samples_waiver": {
-        "reason": "conceptual_section",
-        "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
-        "approved_by": "automated",
-        "date": "2025-12-30"
-      }
+      "samples": []
     },
     "scalar_types": {
       "fls_section": "4.3",
@@ -83,6 +83,14 @@
       "description": "Scalar Types",
       "status": "demonstrated",
       "findings": {
+        "count": null,
+        "count_methodology": "Aggregate of scalar subtypes",
+        "samples_waiver": {
+          "reason": "conceptual_section",
+          "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+          "approved_by": "automated",
+          "date": "2025-12-30"
+        },
         "usize": 2787,
         "u64": 1521,
         "u8": 1227,
@@ -110,24 +118,33 @@
           "samples": [
             {
               "file": "iceoryx2/src/port/details/receiver.rs",
-              "line": [151, 152, 153, 154],
+              "line": [
+                151,
+                152,
+                153,
+                154
+              ],
               "code": "pub(crate) fn set_channel_state(&self, channel_id: ChannelId, state: u64) -> bool {\n    let mut ret_val = true;\n    let connection_storage = unsafe { &mut *self.connection_storage.get() };\n    for (_, connection) in connection_storage.iter() {",
               "purpose": "Bool return type for channel state update success indicator"
             },
             {
               "file": "iceoryx2/src/port/details/receiver.rs",
-              "line": [262],
+              "line": [
+                262
+              ],
               "code": "pub(crate) fn has_samples(&self, channel_id: ChannelId) -> bool {",
               "purpose": "Bool return type for checking sample availability in receiver"
             },
             {
               "file": "iceoryx2-pal/concurrency-sync/src/once.rs",
-              "line": [109, 110],
+              "line": [
+                109,
+                110
+              ],
               "code": "pub fn is_completed(&self) -> bool {\n    self.load_state() == State::Complete",
               "purpose": "Bool return type for once-cell completion status check"
             }
-          ],
-          "count": 789
+          ]
         },
         "char_type": {
           "fls_section": "4.3.2",
@@ -138,30 +155,40 @@
           "status": "limited_use",
           "findings": {
             "count": 20,
+            "samples_waiver": {
+              "reason": "single_location",
+              "explanation": "Pattern found in limited locations (2 unique files) despite 3 total matches",
+              "approved_by": "automated",
+              "date": "2025-12-30"
+            },
             "description": "Char type is minimally used - byte types (u8) preferred for ASCII operations.",
             "rationale": "IPC data uses byte arrays; char is Unicode which adds complexity"
           },
           "samples": [
             {
               "file": "iceoryx2-cli/iox2/src/command/mod.rs",
-              "line": [30, 31, 32, 33, 34, 35],
+              "line": [
+                30,
+                31,
+                32,
+                33,
+                34,
+                35
+              ],
               "code": "const PATH_ENV_VAR_SEPARATOR: char = ';';\n#[cfg(windows)]\nconst COMMAND_EXT: &str = \"exe\";\n\n#[cfg(not(windows))]\nconst PATH_ENV_VAR_SEPARATOR: char = ':';",
               "purpose": "Char type constants for platform-specific path separator characters"
             },
             {
               "file": "iceoryx2-bb/elementary/src/math.rs",
-              "line": [46, 47, 48],
+              "line": [
+                46,
+                47,
+                48
+              ],
               "code": "let remainder_to_char = |value| -> char {\n    if value < 10 {\n        ((48 + value) as u8) as char",
               "purpose": "Char return type in closure converting numeric remainder to digit character"
             }
-          ],
-          "count": 3,
-          "samples_waiver": {
-            "reason": "single_location",
-            "explanation": "Pattern found in limited locations (2 unique files) despite 3 total matches",
-            "approved_by": "automated",
-            "date": "2025-12-30"
-          }
+          ]
         },
         "numeric_types": {
           "fls_section": "4.3.3",
@@ -171,6 +198,14 @@
           "description": "Numeric Types",
           "status": "demonstrated",
           "findings": {
+            "count": null,
+            "count_methodology": "Aggregate of numeric subtypes",
+            "samples_waiver": {
+              "reason": "conceptual_section",
+              "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+              "approved_by": "automated",
+              "date": "2025-12-30"
+            },
             "description": "Integer types are extensively used with explicit sizing for safety-critical code.",
             "usize": 2787,
             "u64": 1521,
@@ -193,24 +228,31 @@
               "samples": [
                 {
                   "file": "iceoryx2-pal/configuration/src/lib.rs",
-                  "line": [46, 47, 48],
+                  "line": [
+                    46,
+                    47,
+                    48
+                  ],
                   "code": "#[cfg(not(target_os = \"macos\"))]\npub const AT_LEAST_TIMING_VARIANCE: f32 = 0.25;\n#[cfg(target_os = \"macos\")]",
                   "purpose": "f32 const for platform-specific timing variance threshold"
                 },
                 {
                   "file": "iceoryx2-pal/configuration/src/lib.rs",
-                  "line": [64],
+                  "line": [
+                    64
+                  ],
                   "code": "pub const AT_LEAST_TIMING_VARIANCE: f32 = 0.25;",
                   "purpose": "f32 const for Windows timing variance threshold"
                 },
                 {
                   "file": "iceoryx2-pal/configuration/src/lib.rs",
-                  "line": [80],
+                  "line": [
+                    80
+                  ],
                   "code": "pub const AT_LEAST_TIMING_VARIANCE: f32 = 1.0;",
                   "purpose": "f32 const for FreeBSD timing variance threshold"
                 }
-              ],
-              "count": 18
+              ]
             },
             "integer_types": {
               "fls_section": "4.3.3.2",
@@ -220,6 +262,7 @@
               "description": "Integer Types",
               "status": "demonstrated",
               "findings": {
+                "count": 2920,
                 "description": "All integer types used with explicit sizing.",
                 "unsigned": [
                   "u8",
@@ -240,43 +283,37 @@
               "samples": [
                 {
                   "file": "iceoryx2/src/service/dynamic_config/request_response.rs",
-                  "line": [40, 41, 42, 43, 44, 45],
+                  "line": [
+                    40,
+                    41,
+                    42,
+                    43,
+                    44,
+                    45
+                  ],
                   "code": "pub request_buffer_size: usize,\n/// The total number of responses available in the\n/// [`Server`](crate::port::server::Server)s data segment\npub number_of_responses: usize,\n/// The current maximum length of a slice.\npub max_slice_len: usize,",
                   "purpose": "usize fields for buffer sizes and counts in request-response configuration"
                 },
                 {
                   "file": "iceoryx2/src/port/details/receiver.rs",
-                  "line": [151],
+                  "line": [
+                    151
+                  ],
                   "code": "pub(crate) fn set_channel_state(&self, channel_id: ChannelId, state: u64) -> bool {",
                   "purpose": "u64 parameter type for channel state value"
                 },
                 {
                   "file": "iceoryx2-bb/system-types/src/ipv4_address.rs",
-                  "line": [145],
+                  "line": [
+                    145
+                  ],
                   "code": "const fn compare(&self, value: [u8; 4], netmask: u8) -> bool {",
                   "purpose": "u8 types for IPv4 octets and netmask in address comparison"
                 }
-              ],
-              "count": 2920
+              ]
             }
-          },
-          "count": null,
-          "count_methodology": "Aggregate of numeric subtypes",
-          "samples_waiver": {
-            "reason": "conceptual_section",
-            "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
-            "approved_by": "automated",
-            "date": "2025-12-30"
           }
         }
-      },
-      "count": null,
-      "count_methodology": "Aggregate of scalar subtypes",
-      "samples_waiver": {
-        "reason": "conceptual_section",
-        "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
-        "approved_by": "automated",
-        "date": "2025-12-30"
       }
     },
     "sequence_types": {
@@ -287,6 +324,14 @@
       "description": "Sequence Types",
       "status": "demonstrated",
       "findings": {
+        "count": null,
+        "count_methodology": "Aggregate of sequence subtypes",
+        "samples_waiver": {
+          "reason": "conceptual_section",
+          "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+          "approved_by": "automated",
+          "date": "2025-12-30"
+        },
         "analyzed": true
       },
       "samples": [],
@@ -310,24 +355,37 @@
           "samples": [
             {
               "file": "iceoryx2-bb/system-types/src/ipv4_address.rs",
-              "line": [80, 81, 82, 83, 84],
+              "line": [
+                80,
+                81,
+                82,
+                83,
+                84
+              ],
               "code": "pub const fn octets(&self) -> [u8; 4] {\n    [\n        (self.0 >> 24) as u8,\n        ((self.0 << 8) >> 24) as u8,\n        ((self.0 << 16) >> 24) as u8,",
               "purpose": "Fixed-size [u8; 4] array return type for IPv4 address octets"
             },
             {
               "file": "iceoryx2-bb/container/src/string/utils.rs",
-              "line": [45, 46, 47, 48, 49],
+              "line": [
+                45,
+                46,
+                47,
+                48,
+                49
+              ],
               "code": "let hex_digits: &[u8; 16] = b\"0123456789abcdef\";\nvec![\n    b'\\\\',\n    b'x',\n    hex_digits[(c >> 4) as usize],",
               "purpose": "Fixed-size [u8; 16] array for hexadecimal digit lookup table"
             },
             {
               "file": "iceoryx2-bb/elementary/src/math.rs",
-              "line": [99],
+              "line": [
+                99
+              ],
               "code": "impl<const N: usize> ToB64 for [u8; N] {",
               "purpose": "Generic const N array type impl for base64 encoding trait"
             }
-          ],
-          "count": 171
+          ]
         },
         "slice_types": {
           "fls_section": "4.4.2",
@@ -337,6 +395,7 @@
           "description": "Slice Types",
           "status": "demonstrated",
           "findings": {
+            "count": 387,
             "description": "Slice types (&[T]) used extensively for dynamic views into arrays and vectors.",
             "patterns": [
               "&[u8] for byte data",
@@ -347,24 +406,33 @@
           "samples": [
             {
               "file": "iceoryx2/src/service/attribute.rs",
-              "line": [129, 130, 131, 132],
+              "line": [
+                129,
+                130,
+                131,
+                132
+              ],
               "code": "invalid_content: |string: &[u8]| {\n    // empty keys are not allowed to be empty\n    string.is_empty()\n},",
               "purpose": "&[u8] slice parameter in closure for byte string validation"
             },
             {
               "file": "iceoryx2-bb/system-types/src/user_name.rs",
-              "line": [47, 48],
+              "line": [
+                47,
+                48
+              ],
               "code": "invalid_content: |string: &[u8]| {\n    matches!(string[0], b'-' | b'0'..=b'9')",
               "purpose": "&[u8] slice parameter for user name content validation"
             },
             {
               "file": "iceoryx2/src/config.rs",
-              "line": [94],
+              "line": [
+                94
+              ],
               "code": "const DEFAULT_CONFIG_FILE_NAME: &[u8] = b\"iceoryx2.toml\";",
               "purpose": "&[u8] const slice for default configuration file name bytes"
             }
-          ],
-          "count": 387
+          ]
         },
         "str_type": {
           "fls_section": "4.4.3",
@@ -374,6 +442,7 @@
           "description": "Str Type",
           "status": "demonstrated",
           "findings": {
+            "count": 179,
             "description": "String slices (&str) used for string literals and borrowed string data.",
             "patterns": [
               "&str for string parameters",
@@ -383,24 +452,35 @@
           "samples": [
             {
               "file": "iceoryx2/src/waitset.rs",
-              "line": [590, 591, 592],
+              "line": [
+                590,
+                591,
+                592
+              ],
               "code": "error_msg: &str,\n) -> Result<WaitSetRunResult, WaitSetRunError> {\n    let deadline_to_attachment = self.deadline_to_attachment.borrow();",
               "purpose": "&str parameter for error message in waitset run function"
             },
             {
               "file": "iceoryx2/src/node/mod.rs",
-              "line": [962],
+              "line": [
+                962
+              ],
               "code": "fn handle_termination_request(&self, error_msg: &str) -> Result<(), NodeWaitFailure> {",
               "purpose": "&str parameter for termination error message in node handling"
             },
             {
               "file": "iceoryx2/src/service/stale_resource_cleanup.rs",
-              "line": [59, 60, 61, 62, 63],
+              "line": [
+                59,
+                60,
+                61,
+                62,
+                63
+              ],
               "code": "fn connections<Service: service::Service>(\n    origin: &str,\n    msg: &str,\n    config: &<Service::Connection as NamedConceptMgmt>::Configuration,\n) -> Result<Vec<FileName>, RemovePortFromAllConnectionsError> {",
               "purpose": "Multiple &str parameters for origin and message in cleanup function"
             }
-          ],
-          "count": 179
+          ]
         },
         "tuple_types": {
           "fls_section": "4.4.4",
@@ -410,6 +490,7 @@
           "description": "Tuple Types",
           "status": "demonstrated",
           "findings": {
+            "count": 5464,
             "description": "Tuple types used for multiple return values and pattern matching.",
             "patterns": [
               "Result<(A, B), E>",
@@ -420,33 +501,34 @@
           "samples": [
             {
               "file": "iceoryx2/src/port/subscriber.rs",
-              "line": [332, 333, 334],
+              "line": [
+                332,
+                333,
+                334
+              ],
               "code": "fn receive_impl(&self) -> Result<Option<(ChunkDetails, Chunk)>, ReceiveError> {\n    fail!(from self, when self.update_connections(),\n            \"Some samples are not being received since not all connections to publishers could be established.\");",
               "purpose": "Private function returning tuple pair with chunk metadata and data"
             },
             {
               "file": "iceoryx2/src/port/details/sender.rs",
-              "line": [332, 333, 334],
+              "line": [
+                332,
+                333,
+                334
+              ],
               "code": "let (ref_count, sample_size) = self.borrow_sample(shm_pointer.offset);\nif ref_count != 0 {\n    fatal_panic!(from self,",
               "purpose": "Tuple destructuring of (ref_count, sample_size) from borrow_sample return"
             },
             {
               "file": "iceoryx2/src/service/builder/mod.rs",
-              "line": [279],
+              "line": [
+                279
+              ],
               "code": ") -> Result<Option<(StaticConfig, ServiceType::StaticStorage)>, ServiceState> {",
               "purpose": "Tuple type in generic Result return for config and storage pair"
             }
-          ],
-          "count": 5464
+          ]
         }
-      },
-      "count": null,
-      "count_methodology": "Aggregate of sequence subtypes",
-      "samples_waiver": {
-        "reason": "conceptual_section",
-        "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
-        "approved_by": "automated",
-        "date": "2025-12-30"
       }
     },
     "abstract_data_types": {
@@ -457,6 +539,14 @@
       "description": "Abstract Data Types",
       "status": "demonstrated",
       "findings": {
+        "count": null,
+        "count_methodology": "Aggregate of ADT subtypes",
+        "samples_waiver": {
+          "reason": "conceptual_section",
+          "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+          "approved_by": "automated",
+          "date": "2025-12-30"
+        },
         "analyzed": true
       },
       "samples": [],
@@ -481,24 +571,37 @@
           "samples": [
             {
               "file": "iceoryx2/src/port/writer.rs",
-              "line": [100, 101, 102, 103, 104, 105, 106, 107, 108],
+              "line": [
+                100,
+                101,
+                102,
+                103,
+                104,
+                105,
+                106,
+                107,
+                108
+              ],
               "code": "pub enum WriterCreateError {\n    /// The maximum amount of [`Writer`]s that can connect to a\n    /// [`Service`](crate::service::Service) is\n    /// defined in [`crate::config::Config`]. When this is exceeded no more [`Writer`]s\n    /// can be created for a specific [`Service`](crate::service::Service).\n    ExceedsMaxSupportedWriters,\n    /// Errors that indicate either an implementation issue or a wrongly configured system.\n    InternalFailure,\n}",
               "purpose": "Public enum defining writer creation error variants with documentation"
             },
             {
               "file": "iceoryx2/src/port/update_connections.rs",
-              "line": [20],
+              "line": [
+                20
+              ],
               "code": "pub enum ConnectionFailure {",
               "purpose": "Public enum for connection failure error types"
             },
             {
               "file": "iceoryx2/src/port/subscriber.rs",
-              "line": [74],
+              "line": [
+                74
+              ],
               "code": "pub enum SubscriberCreateError {",
               "purpose": "Public enum for subscriber creation error types"
             }
-          ],
-          "count": 350
+          ]
         },
         "struct_types": {
           "fls_section": "4.5.2",
@@ -521,24 +624,33 @@
           "samples": [
             {
               "file": "iceoryx2/src/node/mod.rs",
-              "line": [326, 327, 328, 329, 330],
+              "line": [
+                326,
+                327,
+                328,
+                329,
+                330
+              ],
               "code": "pub struct NodeDetails {\n    executable: FileName,\n    name: NodeName,\n    config: Config,\n}",
               "purpose": "Public struct with named fields for node metadata"
             },
             {
               "file": "iceoryx2/src/node/mod.rs",
-              "line": [211],
+              "line": [
+                211
+              ],
               "code": "pub struct NodeId(UniqueSystemId);",
               "purpose": "Tuple struct newtype wrapping UniqueSystemId for type safety"
             },
             {
               "file": "iceoryx2/src/node/mod.rs",
-              "line": [443],
+              "line": [
+                443
+              ],
               "code": "pub struct CleanupState {",
               "purpose": "Public struct for tracking node cleanup state"
             }
-          ],
-          "count": 1026
+          ]
         },
         "union_types": {
           "fls_section": "4.5.3",
@@ -549,6 +661,12 @@
           "status": "demonstrated",
           "findings": {
             "count": 42,
+            "samples_waiver": {
+              "reason": "insufficient_patterns",
+              "explanation": "Only 2 instance(s) found in codebase, fewer than 3 required samples",
+              "approved_by": "automated",
+              "date": "2025-12-30"
+            },
             "description": "NEW in v0.8.0 - Unions used exclusively for FFI C API discriminated unions.",
             "pattern": "ManuallyDrop<T> wraps variants for explicit lifetime control",
             "location": "iceoryx2-ffi/c crate"
@@ -556,33 +674,29 @@
           "samples": [
             {
               "file": "iceoryx2-ffi/c/src/api/static_config.rs",
-              "line": [31, 32, 33, 34, 35],
+              "line": [
+                31,
+                32,
+                33,
+                34,
+                35
+              ],
               "code": "pub union iox2_static_config_details_t {\n    pub event: iox2_static_config_event_t,\n    pub publish_subscribe: iox2_static_config_publish_subscribe_t,\n    pub request_response: iox2_static_config_request_response_t,\n    pub blackboard: iox2_static_config_blackboard_t,",
               "purpose": "C FFI union with messaging pattern-specific static config variants"
             },
             {
               "file": "iceoryx2-ffi/c/src/api/waitset_attachment_id.rs",
-              "line": [28, 29, 30, 31],
+              "line": [
+                28,
+                29,
+                30,
+                31
+              ],
               "code": "pub(crate) union AttachmentIdUnion {\n    ipc: ManuallyDrop<WaitSetAttachmentId<crate::IpcService>>,\n    local: ManuallyDrop<WaitSetAttachmentId<crate::LocalService>>,\n}",
               "purpose": "FFI union with ManuallyDrop variants for IPC vs local service types"
             }
-          ],
-          "count": 42,
-          "samples_waiver": {
-            "reason": "insufficient_patterns",
-            "explanation": "Only 2 instance(s) found in codebase, fewer than 3 required samples",
-            "approved_by": "automated",
-            "date": "2025-12-30"
-          }
+          ]
         }
-      },
-      "count": null,
-      "count_methodology": "Aggregate of ADT subtypes",
-      "samples_waiver": {
-        "reason": "conceptual_section",
-        "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
-        "approved_by": "automated",
-        "date": "2025-12-30"
       }
     },
     "function_types": {
@@ -593,6 +707,14 @@
       "description": "Function Types",
       "status": "demonstrated",
       "findings": {
+        "count": null,
+        "count_methodology": "Aggregate of function type subtypes",
+        "samples_waiver": {
+          "reason": "conceptual_section",
+          "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+          "approved_by": "automated",
+          "date": "2025-12-30"
+        },
         "analyzed": true
       },
       "samples": [],
@@ -621,24 +743,33 @@
           "samples": [
             {
               "file": "iceoryx2/src/waitset.rs",
-              "line": [594, 595, 596, 597, 598],
+              "line": [
+                594,
+                595,
+                596,
+                597,
+                598
+              ],
               "code": "let call = |idx: DeadlineQueueIndex| -> CallbackProgression {\n    let progression = if let Some(reactor_idx) = deadline_to_attachment.get(&idx) {\n        fn_call(WaitSetAttachmentId::deadline(self, *reactor_idx, idx))\n    } else {\n        fn_call(WaitSetAttachmentId::tick(self, idx))",
               "purpose": "Closure with typed parameter and return type for deadline handling"
             },
             {
               "file": "iceoryx2/src/node/mod.rs",
-              "line": [553],
+              "line": [
+                553
+              ],
               "code": "let remove_node_from_service = |service_id: &ServiceId| {",
               "purpose": "Closure capturing environment for service cleanup callback"
             },
             {
               "file": "iceoryx2-services/discovery/src/service_discovery/tracker.rs",
-              "line": [95],
+              "line": [
+                95
+              ],
               "code": "S::list(&self.config, |service| {",
               "purpose": "Closure as callback parameter in service listing"
             }
-          ],
-          "count": 1723
+          ]
         },
         "function_item_types": {
           "fls_section": "4.6.2",
@@ -648,6 +779,7 @@
           "description": "Function Item Types",
           "status": "demonstrated",
           "findings": {
+            "count": 9977,
             "description": "Function items are zero-sized types representing specific functions.",
             "patterns": [
               "Function as generic parameter",
@@ -657,33 +789,30 @@
           "samples": [
             {
               "file": "iceoryx2/src/port/notifier.rs",
-              "line": [400],
+              "line": [
+                400
+              ],
               "code": "pub fn id(&self) -> UniqueNotifierId {",
               "purpose": "Public function returning notifier identifier"
             },
             {
               "file": "iceoryx2/src/port/notifier.rs",
-              "line": [409],
+              "line": [
+                409
+              ],
               "code": "pub fn notify(&self) -> Result<usize, NotifierNotifyError> {",
               "purpose": "Public function with Result return type for notification"
             },
             {
               "file": "iceoryx2/src/port/notifier.rs",
-              "line": [414],
+              "line": [
+                414
+              ],
               "code": "pub fn deadline(&self) -> Option<Duration> {",
               "purpose": "Public function with Option return type for deadline query"
             }
-          ],
-          "count": 9977
+          ]
         }
-      },
-      "count": null,
-      "count_methodology": "Aggregate of function type subtypes",
-      "samples_waiver": {
-        "reason": "conceptual_section",
-        "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
-        "approved_by": "automated",
-        "date": "2025-12-30"
       }
     },
     "indirection_types": {
@@ -694,6 +823,14 @@
       "description": "Indirection Types",
       "status": "demonstrated",
       "findings": {
+        "count": null,
+        "count_methodology": "Aggregate of indirection subtypes",
+        "samples_waiver": {
+          "reason": "conceptual_section",
+          "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+          "approved_by": "automated",
+          "date": "2025-12-30"
+        },
         "raw_pointers": 3539,
         "Box": 319,
         "Arc": 58,
@@ -719,24 +856,31 @@
           "samples": [
             {
               "file": "iceoryx2-ffi/c/src/api/listener.rs",
-              "line": [163, 164, 165],
+              "line": [
+                163,
+                164,
+                165
+              ],
               "code": "pub type iox2_listener_wait_all_callback =\n    extern \"C\" fn(*const iox2_event_id_t, iox2_callback_context);",
               "purpose": "FFI function pointer type alias for C callback with event ID"
             },
             {
               "file": "iceoryx2-bb/memory/src/pool_allocator.rs",
-              "line": [343],
+              "line": [
+                343
+              ],
               "code": "next_free_index: core::array::from_fn(|i| UnsafeCell::new(i as u32 + 1)),",
               "purpose": "core::array::from_fn function used for array initialization"
             },
             {
               "file": "iceoryx2-bb/lock-free/src/spsc/safely_overflowing_index_queue.rs",
-              "line": [450],
+              "line": [
+                450
+              ],
               "code": "data: core::array::from_fn(|_| UnsafeCell::new(0)),",
               "purpose": "core::array::from_fn for zero-initializing UnsafeCell array"
             }
-          ],
-          "count": 259
+          ]
         },
         "raw_pointer_types": {
           "fls_section": "4.7.2",
@@ -756,24 +900,36 @@
           "samples": [
             {
               "file": "iceoryx2/src/raw_sample.rs",
-              "line": [17, 18, 19, 20, 21],
+              "line": [
+                17,
+                18,
+                19,
+                20,
+                21
+              ],
               "code": "pub(crate) struct RawSample<Header, UserHeader, Payload: ?Sized> {\n    header: *const Header,\n    user_header: *const UserHeader,\n    payload: *const Payload,\n}",
               "purpose": "FFI struct with multiple *const raw pointer fields for sample header and payload"
             },
             {
               "file": "iceoryx2/src/port/writer.rs",
-              "line": [417, 418, 419],
+              "line": [
+                417,
+                418,
+                419
+              ],
               "code": "> {\n    ptr: *mut ValueType,\n    entry_handle_mut: EntryHandleMut<Service, KeyType, ValueType>,",
               "purpose": "*mut raw pointer field for mutable access to entry value in zero-copy update"
             },
             {
               "file": "iceoryx2/src/port/subscriber.rs",
-              "line": [404, 405],
+              "line": [
+                404,
+                405
+              ],
               "code": "let header_ptr = chunk.header as *const Header;\nlet number_of_elements = unsafe { (*header_ptr).number_of_elements() };",
               "purpose": "Cast to *const pointer and unsafe dereference for sample header access"
             }
-          ],
-          "count": 3834
+          ]
         },
         "reference_types": {
           "fls_section": "4.7.3",
@@ -792,33 +948,37 @@
           "samples": [
             {
               "file": "iceoryx2/src/port/notifier.rs",
-              "line": [187, 188, 189],
+              "line": [
+                187,
+                188,
+                189
+              ],
               "code": "fn get(&self, index: usize) -> &Option<Connection<Service>> {\n    unsafe { &(*self.connections[index].get()) }\n}",
               "purpose": "Shared reference &Option return from internal connection storage"
             },
             {
               "file": "iceoryx2/src/port/notifier.rs",
-              "line": [191, 192, 193, 194],
+              "line": [
+                191,
+                192,
+                193,
+                194
+              ],
               "code": "#[allow(clippy::mut_from_ref)]\nfn get_mut(&self, index: usize) -> &mut Option<Connection<Service>> {\n    unsafe { &mut (*self.connections[index].get()) }\n}",
               "purpose": "Mutable reference &mut Option return for interior mutability pattern"
             },
             {
               "file": "iceoryx2/src/service/port_factory/notifier.rs",
-              "line": [44, 45, 46],
+              "line": [
+                44,
+                45,
+                46
+              ],
               "code": "pub struct PortFactoryNotifier<'factory, Service: service::Service> {\n    pub(crate) factory: &'factory PortFactory<Service>,\n    default_event_id: EventId,",
               "purpose": "Lifetime-annotated reference field &'factory for borrowed factory access"
             }
-          ],
-          "count": 12376
+          ]
         }
-      },
-      "count": null,
-      "count_methodology": "Aggregate of indirection subtypes",
-      "samples_waiver": {
-        "reason": "conceptual_section",
-        "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
-        "approved_by": "automated",
-        "date": "2025-12-30"
       }
     },
     "trait_types": {
@@ -829,6 +989,14 @@
       "description": "Trait Types",
       "status": "demonstrated",
       "findings": {
+        "count": null,
+        "count_methodology": "Aggregate of trait type subtypes",
+        "samples_waiver": {
+          "reason": "conceptual_section",
+          "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+          "approved_by": "automated",
+          "date": "2025-12-30"
+        },
         "analyzed": true
       },
       "samples": [],
@@ -841,6 +1009,7 @@
           "description": "Impl Trait Types",
           "status": "limited_use",
           "findings": {
+            "count": 2050,
             "description": "impl Trait minimally used - explicit types preferred for clarity.",
             "return_position": "Limited use in return types",
             "argument_position": "Rare - generics preferred"
@@ -848,24 +1017,46 @@
           "samples": [
             {
               "file": "iceoryx2/src/service/static_config/messaging_pattern.rs",
-              "line": [54, 55, 56, 57, 58, 59, 60, 61, 62, 63],
+              "line": [
+                54,
+                55,
+                56,
+                57,
+                58,
+                59,
+                60,
+                61,
+                62,
+                63
+              ],
               "code": "impl Display for MessagingPattern {\n    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {\n        match self {\n            MessagingPattern::RequestResponse(_) => write!(f, \"RequestResponse\"),\n            MessagingPattern::Event(_) => write!(f, \"Event\"),\n            MessagingPattern::PublishSubscribe(_) => write!(f, \"PublishSubscribe\"),\n            MessagingPattern::Blackboard(_) => write!(f, \"Blackboard\"),\n        }\n    }\n}",
               "purpose": "impl Display trait for enum formatting with pattern matching"
             },
             {
               "file": "iceoryx2/src/service/builder/blackboard.rs",
-              "line": [283, 284, 285, 286, 287],
+              "line": [
+                283,
+                284,
+                285,
+                286,
+                287
+              ],
               "code": "impl Debug for BuilderInternals {\n    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {\n        write!(f, \"\")\n    }\n}",
               "purpose": "impl Debug trait for internal builder state with empty format"
             },
             {
               "file": "iceoryx2/src/service/builder/blackboard.rs",
-              "line": [289, 290, 291, 292, 293],
+              "line": [
+                289,
+                290,
+                291,
+                292,
+                293
+              ],
               "code": "impl Drop for BuilderInternals {\n    fn drop(&mut self) {\n        (self.internal_value_cleanup_callback)();\n    }\n}",
               "purpose": "impl Drop trait for cleanup callback execution on builder destruction"
             }
-          ],
-          "count": 2050
+          ]
         },
         "trait_object_types": {
           "fls_section": "4.8.2",
@@ -887,33 +1078,36 @@
           "samples": [
             {
               "file": "iceoryx2-log/log/src/lib.rs",
-              "line": [144],
+              "line": [
+                144
+              ],
               "code": "static mut LOGGER: Option<&'static dyn Log> = None;",
               "purpose": "Static mutable Option containing trait object reference &'static dyn Log"
             },
             {
               "file": "iceoryx2-log/log/src/lib.rs",
-              "line": [174, 175, 176, 177, 178, 179, 180],
+              "line": [
+                174,
+                175,
+                176,
+                177,
+                178,
+                179,
+                180
+              ],
               "code": "fn get_logger() -> &'static dyn Log {\n    INIT.call_once(|| unsafe {\n        #[allow(static_mut_refs)]\n        if LOGGER.is_none() {\n            LOGGER = Some(__internal_default_logger());\n        }\n    });",
               "purpose": "Function returning &'static dyn Log trait object for logger access"
             },
             {
               "file": "iceoryx2-log/log/src/lib.rs",
-              "line": [195],
+              "line": [
+                195
+              ],
               "code": "pub fn set_logger(logger: &'static dyn Log) -> bool {",
               "purpose": "Public function accepting &'static dyn Log trait object parameter"
             }
-          ],
-          "count": 318
+          ]
         }
-      },
-      "count": null,
-      "count_methodology": "Aggregate of trait type subtypes",
-      "samples_waiver": {
-        "reason": "conceptual_section",
-        "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
-        "approved_by": "automated",
-        "date": "2025-12-30"
       }
     },
     "other_types": {
@@ -924,6 +1118,14 @@
       "description": "Other Types",
       "status": "demonstrated",
       "findings": {
+        "count": null,
+        "count_methodology": "Aggregate of other type subtypes",
+        "samples_waiver": {
+          "reason": "conceptual_section",
+          "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+          "approved_by": "automated",
+          "date": "2025-12-30"
+        },
         "analyzed": true
       },
       "samples": [],
@@ -936,6 +1138,7 @@
           "description": "Inferred Types",
           "status": "demonstrated",
           "findings": {
+            "count": 12040,
             "description": "Type inference used via _ placeholder where types are clear from context.",
             "patterns": [
               "let x: Vec<_> = ...",
@@ -946,24 +1149,34 @@
           "samples": [
             {
               "file": "iceoryx2/src/port/notifier.rs",
-              "line": [150, 151, 152],
+              "line": [
+                150,
+                151,
+                152
+              ],
               "code": "let msg = \"Unable to establish connection to listener\";\nlet event_name = event_concept_name(&listener_id);\nlet event_config = event_config::<Service>(self.service_state.shared_node.config());",
               "purpose": "Type inference for string literal, function return, and generic function call"
             },
             {
               "file": "iceoryx2/src/port/subscriber.rs",
-              "line": [403, 404, 405],
+              "line": [
+                403,
+                404,
+                405
+              ],
               "code": "Ok(self.receive_impl()?.map(|(details, chunk)| {\n    let header_ptr = chunk.header as *const Header;\n    let number_of_elements = unsafe { (*header_ptr).number_of_elements() };",
               "purpose": "Type inference for pointer cast and unsafe method call return"
             },
             {
               "file": "iceoryx2/src/waitset.rs",
-              "line": [541, 542],
+              "line": [
+                541,
+                542
+              ],
               "code": "attachment_to_deadline: RefCell<BTreeMap<i32, DeadlineQueueIndex>>,\ndeadline_to_attachment: RefCell<BTreeMap<DeadlineQueueIndex, i32>>,",
               "purpose": "Explicit types for RefCell fields showing when inference is not used"
             }
-          ],
-          "count": 12040
+          ]
         },
         "type_parameters": {
           "fls_section": "4.9.2",
@@ -971,6 +1184,7 @@
           "description": "Type Parameters",
           "status": "demonstrated",
           "findings": {
+            "count": 5062,
             "description": "Generics extensively used for type-safe abstractions.",
             "patterns": [
               "<T>",
@@ -982,24 +1196,40 @@
           "samples": [
             {
               "file": "iceoryx2/src/service/mod.rs",
-              "line": [365, 366, 367, 368],
+              "line": [
+                365,
+                366,
+                367,
+                368
+              ],
               "code": "pub struct ServiceDynamicDetails<S: Service> {\n    /// A list of all [`Node`](crate::node::Node)s that are registered at the [`Service`]\n    pub nodes: Vec<NodeState<S>>,\n}",
               "purpose": "Generic struct with type parameter S bounded by Service trait"
             },
             {
               "file": "iceoryx2/src/service/mod.rs",
-              "line": [371, 372, 373, 374, 375, 376, 377, 378],
+              "line": [
+                371,
+                372,
+                373,
+                374,
+                375,
+                376,
+                377,
+                378
+              ],
               "code": "/// Represents all the [`Service`] information that one can acquire with [`Service::list()`].\n#[derive(Debug)]\npub struct ServiceDetails<S: Service> {\n    /// The static configuration of the [`Service`] that never changes during the [`Service`]\n    /// lifetime.\n    pub static_details: StaticConfig,\n    /// The dynamic configuration of the [`Service`] that can conaints runtime informations.\n    pub dynamic_details: Option<ServiceDynamicDetails<S>>,",
               "purpose": "Generic struct with nested generic type ServiceDynamicDetails<S>"
             },
             {
               "file": "iceoryx2/src/service/mod.rs",
-              "line": [381, 382],
+              "line": [
+                381,
+                382
+              ],
               "code": "#[derive(Debug)]\npub struct ServiceState<S: Service, R: ServiceResource> {",
               "purpose": "Generic struct with multiple type parameters S and R with trait bounds"
             }
-          ],
-          "count": 5062
+          ]
         },
         "never_type": {
           "fls_section": "4.9.3",
@@ -1009,11 +1239,11 @@
           "description": "Never Type",
           "status": "not_used",
           "findings": {
+            "count": 0,
             "description": "The never type (!) is not explicitly used in iceoryx2 function signatures.",
             "note": "Implicitly returned by panic!, unreachable!"
           },
-          "samples": [],
-          "count": 0
+          "samples": []
         },
         "parenthesized_types": {
           "fls_section": "4.9.4",
@@ -1023,6 +1253,7 @@
           "description": "Parenthesized Types",
           "status": "demonstrated",
           "findings": {
+            "count": 9295,
             "description": "Parenthesized types used for disambiguation.",
             "patterns": [
               "&(dyn Trait)",
@@ -1032,33 +1263,40 @@
           "samples": [
             {
               "file": "iceoryx2/src/service/attribute.rs",
-              "line": [456, 457, 458, 459, 460],
+              "line": [
+                456,
+                457,
+                458,
+                459,
+                460
+              ],
               "code": "pub fn iter_key_values<F: FnMut(&AttributeValue) -> CallbackProgression>(\n    &self,\n    key: &AttributeKey,\n    mut callback: F,\n) {",
               "purpose": "FnMut trait bound with parenthesized closure signature in generic constraint"
             },
             {
               "file": "iceoryx2/src/service/dynamic_config/event.rs",
-              "line": [121, 122, 123, 124],
+              "line": [
+                121,
+                122,
+                123,
+                124
+              ],
               "code": "pub fn list_listeners<F: FnMut(&ListenerDetails) -> CallbackProgression>(\n    &self,\n    mut callback: F,\n) {",
               "purpose": "FnMut closure parameter with parenthesized reference argument type"
             },
             {
               "file": "iceoryx2/src/service/dynamic_config/event.rs",
-              "line": [134, 135, 136, 137],
+              "line": [
+                134,
+                135,
+                136,
+                137
+              ],
               "code": "pub fn list_notifiers<F: FnMut(&NotifierDetails) -> CallbackProgression>(\n    &self,\n    mut callback: F,\n) {",
               "purpose": "Generic function with FnMut bound for notifier iteration callback"
             }
-          ],
-          "count": 9295
+          ]
         }
-      },
-      "count": null,
-      "count_methodology": "Aggregate of other type subtypes",
-      "samples_waiver": {
-        "reason": "conceptual_section",
-        "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
-        "approved_by": "automated",
-        "date": "2025-12-30"
       }
     },
     "type_aliases": {
@@ -1069,30 +1307,36 @@
       "description": "Type Aliases",
       "status": "demonstrated",
       "findings": {
+        "count": 578,
+        "count_methodology": "Count of 'type X = ...' declarations",
         "analyzed": true
       },
       "samples": [
         {
           "file": "iceoryx2-bb/lock-free/src/mpmc/bit_set.rs",
-          "line": [53],
+          "line": [
+            53
+          ],
           "code": "pub type BitSet = details::BitSet<OwningPointer<details::BitsetElement>>;",
           "purpose": "Type alias for owned pointer bitset container"
         },
         {
           "file": "iceoryx2-bb/lock-free/src/mpmc/bit_set.rs",
-          "line": [55],
+          "line": [
+            55
+          ],
           "code": "pub type RelocatableBitSet = details::BitSet<RelocatablePointer<details::BitsetElement>>;",
           "purpose": "Type alias for shared-memory relocatable bitset variant"
         },
         {
           "file": "iceoryx2/src/service/static_config/message_type_details.rs",
-          "line": [54],
+          "line": [
+            54
+          ],
           "code": "pub type TypeName = StaticString<MAX_TYPE_NAME_LENGTH>;",
           "purpose": "Type alias for fixed-size string storing type name information"
         }
-      ],
-      "count": 578,
-      "count_methodology": "Count of 'type X = ...' declarations"
+      ]
     },
     "representation": {
       "fls_section": "4.11",
@@ -1102,6 +1346,14 @@
       "description": "Representation",
       "status": "demonstrated",
       "findings": {
+        "count": null,
+        "count_methodology": "Conceptual - representation is compiler behavior",
+        "samples_waiver": {
+          "reason": "conceptual_section",
+          "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+          "approved_by": "automated",
+          "date": "2025-12-30"
+        },
         "repr_C": 393,
         "repr_transparent": 35,
         "repr_align": 59
@@ -1116,6 +1368,14 @@
           "description": "Type Layout",
           "status": "demonstrated",
           "findings": {
+            "count": null,
+            "count_methodology": "Conceptual - layout is compiler behavior",
+            "samples_waiver": {
+              "reason": "conceptual_section",
+              "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+              "approved_by": "automated",
+              "date": "2025-12-30"
+            },
             "description": "Type layout (size, alignment) is critical for shared memory and FFI.",
             "repr_align": 59,
             "patterns": [
@@ -1123,15 +1383,7 @@
               "mem::size_of for layout queries"
             ]
           },
-          "samples": [],
-          "count": null,
-          "count_methodology": "Conceptual - layout is compiler behavior",
-          "samples_waiver": {
-            "reason": "conceptual_section",
-            "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
-            "approved_by": "automated",
-            "date": "2025-12-30"
-          }
+          "samples": []
         },
         "type_representation": {
           "fls_section": "4.11.2",
@@ -1141,6 +1393,7 @@
           "description": "Type Representation",
           "status": "demonstrated",
           "findings": {
+            "count": 512,
             "repr_C": 393,
             "repr_transparent": 35,
             "description": "Type representation controlled via #[repr] attributes for FFI and IPC."
@@ -1148,19 +1401,38 @@
           "samples": [
             {
               "file": "iceoryx2/src/service/static_config/message_type_details.rs",
-              "line": [57, 58, 59, 60, 61, 62, 63, 64],
+              "line": [
+                57,
+                58,
+                59,
+                60,
+                61,
+                62,
+                63,
+                64
+              ],
               "code": "#[derive(Default, Debug, Clone, Eq, Hash, PartialEq, ZeroCopySend, Serialize, Deserialize)]\n#[repr(C)]\npub struct TypeDetail {\n    pub(crate) variant: TypeVariant,\n    pub(crate) type_name: TypeName,\n    pub(crate) size: usize,\n    pub(crate) alignment: usize,\n}",
               "purpose": "#[repr(C)] struct for FFI-compatible type metadata with known layout"
             },
             {
               "file": "iceoryx2/src/service/static_config/message_type_details.rs",
-              "line": [107, 108, 109],
+              "line": [
+                107,
+                108,
+                109
+              ],
               "code": "#[derive(Default, Debug, Clone, Eq, Hash, PartialEq, ZeroCopySend, Serialize, Deserialize)]\n#[repr(C)]\npub struct MessageTypeDetails {",
               "purpose": "#[repr(C)] for message type information shared across FFI boundary"
             },
             {
               "file": "iceoryx2/src/service/service_name.rs",
-              "line": [74, 75, 76, 77, 78],
+              "line": [
+                74,
+                75,
+                76,
+                77,
+                78
+              ],
               "code": "#[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord, ZeroCopySend)]\n#[repr(C)]\npub struct ServiceName {\n    value: ServiceNameString,\n}",
               "purpose": "#[repr(C)] struct for C-compatible service name with fixed string field"
             }
@@ -1174,16 +1446,16 @@
               "description": "Enum Type Representation",
               "status": "demonstrated",
               "findings": {
+                "count": 0,
+                "samples_waiver": {
+                  "reason": "insufficient_patterns",
+                  "explanation": "Only 0 instance(s) found in codebase, fewer than 3 required samples",
+                  "approved_by": "automated",
+                  "date": "2025-12-30"
+                },
                 "description": "#[repr(C)] or #[repr(u8/u32)] for FFI enums with stable discriminants."
               },
-              "samples": [],
-              "count": 0,
-              "samples_waiver": {
-                "reason": "insufficient_patterns",
-                "explanation": "Only 0 instance(s) found in codebase, fewer than 3 required samples",
-                "approved_by": "automated",
-                "date": "2025-12-30"
-              }
+              "samples": []
             },
             "struct_type_representation": {
               "fls_section": "4.11.2.2",
@@ -1193,18 +1465,18 @@
               "description": "Struct Type Representation",
               "status": "demonstrated",
               "findings": {
+                "count": 0,
+                "samples_waiver": {
+                  "reason": "insufficient_patterns",
+                  "explanation": "Only 0 instance(s) found in codebase, fewer than 3 required samples",
+                  "approved_by": "automated",
+                  "date": "2025-12-30"
+                },
                 "repr_C": 393,
                 "repr_transparent": 35,
                 "description": "#[repr(C)] for FFI/IPC types, #[repr(transparent)] for newtypes."
               },
-              "samples": [],
-              "count": 0,
-              "samples_waiver": {
-                "reason": "insufficient_patterns",
-                "explanation": "Only 0 instance(s) found in codebase, fewer than 3 required samples",
-                "approved_by": "automated",
-                "date": "2025-12-30"
-              }
+              "samples": []
             },
             "union_type_representation": {
               "fls_section": "4.11.2.3",
@@ -1215,29 +1487,19 @@
               "status": "demonstrated",
               "findings": {
                 "count": 42,
+                "samples_waiver": {
+                  "reason": "insufficient_patterns",
+                  "explanation": "Only 0 instance(s) found in codebase, fewer than 3 required samples",
+                  "approved_by": "automated",
+                  "date": "2025-12-30"
+                },
                 "description": "All unions use #[repr(C)] for C API compatibility.",
                 "note": "NEW in v0.8.0"
               },
-              "samples": [],
-              "count": 0,
-              "samples_waiver": {
-                "reason": "insufficient_patterns",
-                "explanation": "Only 0 instance(s) found in codebase, fewer than 3 required samples",
-                "approved_by": "automated",
-                "date": "2025-12-30"
-              }
+              "samples": []
             }
-          },
-          "count": 512
+          }
         }
-      },
-      "count": null,
-      "count_methodology": "Conceptual - representation is compiler behavior",
-      "samples_waiver": {
-        "reason": "conceptual_section",
-        "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
-        "approved_by": "automated",
-        "date": "2025-12-30"
       }
     },
     "type_model": {
@@ -1248,6 +1510,14 @@
       "description": "Type Model",
       "status": "demonstrated",
       "findings": {
+        "count": null,
+        "count_methodology": "Conceptual - type model is compiler behavior",
+        "samples_waiver": {
+          "reason": "conceptual_section",
+          "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+          "approved_by": "automated",
+          "date": "2025-12-30"
+        },
         "analyzed": true
       },
       "samples": [],
@@ -1260,12 +1530,12 @@
           "description": "Recursive Types",
           "status": "not_used",
           "findings": {
+            "count": null,
+            "count_methodology": "Pattern not defined for this section",
             "description": "Self-referential types requiring Box indirection are not used in iceoryx2.",
             "rationale": "Shared memory types require known sizes at compile time"
           },
-          "samples": [],
-          "count": null,
-          "count_methodology": "Pattern not defined for this section"
+          "samples": []
         },
         "type_unification": {
           "fls_section": "4.12.2",
@@ -1275,17 +1545,17 @@
           "description": "Type Unification",
           "status": "demonstrated",
           "findings": {
+            "count": null,
+            "count_methodology": "Conceptual - unification is compiler behavior",
+            "samples_waiver": {
+              "reason": "conceptual_section",
+              "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+              "approved_by": "automated",
+              "date": "2025-12-30"
+            },
             "description": "Type unification occurs during type inference. Explicit types minimize unification complexity."
           },
-          "samples": [],
-          "count": null,
-          "count_methodology": "Conceptual - unification is compiler behavior",
-          "samples_waiver": {
-            "reason": "conceptual_section",
-            "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
-            "approved_by": "automated",
-            "date": "2025-12-30"
-          }
+          "samples": []
         },
         "type_coercion": {
           "fls_section": "4.12.3",
@@ -1295,6 +1565,7 @@
           "description": "Type Coercion",
           "status": "demonstrated",
           "findings": {
+            "count": 1525,
             "description": "Implicit coercions occur for reference deref, unsizing, and subtyping.",
             "patterns": [
               "&mut T -> &T",
@@ -1305,24 +1576,32 @@
           "samples": [
             {
               "file": "iceoryx2/src/port/subscriber.rs",
-              "line": [404, 405, 406],
+              "line": [
+                404,
+                405,
+                406
+              ],
               "code": "let header_ptr = chunk.header as *const Header;\nlet number_of_elements = unsafe { (*header_ptr).number_of_elements() };\n",
               "purpose": "Type coercion via 'as *const' for raw pointer cast from chunk header"
             },
             {
               "file": "iceoryx2/src/port/notifier.rs",
-              "line": [501],
+              "line": [
+                501
+              ],
               "code": ".swap(duration_since_creation.as_nanos() as u64, Ordering::Relaxed);",
               "purpose": "Type coercion via 'as u64' for duration nanoseconds atomic swap"
             },
             {
               "file": "iceoryx2/src/port/writer.rs",
-              "line": [339, 340],
+              "line": [
+                339,
+                340
+              ],
               "code": ".payload_start_address() as u64\n+ offset) as *mut UnrestrictedAtomic<ValueType>;",
               "purpose": "Chained type coercions: address to u64, then to typed raw pointer"
             }
-          ],
-          "count": 1525
+          ]
         },
         "structural_equality": {
           "fls_section": "4.12.4",
@@ -1330,29 +1609,35 @@
           "description": "Structural Equality",
           "status": "demonstrated",
           "findings": {
+            "count": 385,
             "description": "Types with same structure are structurally equal. Used in generic contexts."
           },
           "samples": [
             {
               "file": "iceoryx2/src/service/static_config/request_response.rs",
-              "line": [53],
+              "line": [
+                53
+              ],
               "code": "#[derive(Debug, Clone, Eq, Hash, PartialEq, ZeroCopySend, Serialize, Deserialize)]",
               "purpose": "Derive PartialEq and Eq for structural equality comparison of request-response config"
             },
             {
               "file": "iceoryx2/src/service/static_config/messaging_pattern.rs",
-              "line": [33],
+              "line": [
+                33
+              ],
               "code": "#[derive(Debug, Clone, Eq, Hash, PartialEq, ZeroCopySend, Serialize, Deserialize)]",
               "purpose": "Derive PartialEq for messaging pattern enum equality testing"
             },
             {
               "file": "iceoryx2/src/service/stale_resource_cleanup.rs",
-              "line": [32],
+              "line": [
+                32
+              ],
               "code": "#[derive(Debug, Eq, PartialEq, Clone, Copy)]",
               "purpose": "Derive PartialEq and Eq for cleanup action result comparison"
             }
-          ],
-          "count": 385
+          ]
         },
         "interior_mutability": {
           "fls_section": "4.12.5",
@@ -1362,6 +1647,7 @@
           "description": "Interior Mutability",
           "status": "demonstrated",
           "findings": {
+            "count": 275,
             "UnsafeCell": 231,
             "description": "UnsafeCell enables interior mutability for lock-free structures and shared memory.",
             "patterns": [
@@ -1373,24 +1659,33 @@
           "samples": [
             {
               "file": "iceoryx2/src/waitset.rs",
-              "line": [541, 542],
+              "line": [
+                541,
+                542
+              ],
               "code": "attachment_to_deadline: RefCell<BTreeMap<i32, DeadlineQueueIndex>>,\ndeadline_to_attachment: RefCell<BTreeMap<DeadlineQueueIndex, i32>>,",
               "purpose": "RefCell fields for runtime-borrowed interior mutability in waitset mappings"
             },
             {
               "file": "iceoryx2/src/port/publisher.rs",
-              "line": [182, 183],
+              "line": [
+                182,
+                183
+              ],
               "code": "subscriber_list_state: UnsafeCell<ContainerState<SubscriberDetails>>,\nhistory: Option<UnsafeCell<Queue<OffsetAndSize>>>,",
               "purpose": "UnsafeCell fields for lock-free interior mutability in publisher state"
             },
             {
               "file": "iceoryx2/src/port/notifier.rs",
-              "line": [192, 193, 194],
+              "line": [
+                192,
+                193,
+                194
+              ],
               "code": "fn get_mut(&self, index: usize) -> &mut Option<Connection<Service>> {\n    unsafe { &mut (*self.connections[index].get()) }\n}",
               "purpose": "UnsafeCell.get() for interior mutability allowing &mut from &self"
             }
-          ],
-          "count": 275
+          ]
         },
         "visible_emptiness": {
           "fls_section": "4.12.6",
@@ -1398,11 +1693,11 @@
           "description": "Visible Emptiness",
           "status": "not_used",
           "findings": {
+            "count": null,
+            "count_methodology": "Pattern not defined for this section",
             "description": "Uninhabited types (empty enums) are not used in iceoryx2."
           },
-          "samples": [],
-          "count": null,
-          "count_methodology": "Pattern not defined for this section"
+          "samples": []
         },
         "type_inference": {
           "fls_section": "4.12.7",
@@ -1412,30 +1707,22 @@
           "description": "Type Inference",
           "status": "demonstrated",
           "findings": {
+            "count": null,
+            "count_methodology": "Conceptual - inference is compiler behavior",
+            "samples_waiver": {
+              "reason": "conceptual_section",
+              "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+              "approved_by": "automated",
+              "date": "2025-12-30"
+            },
             "description": "Type inference used for local bindings; explicit types for public APIs.",
             "patterns": [
               "let x = expr; (inferred)",
               "fn foo() -> T (explicit)"
             ]
           },
-          "samples": [],
-          "count": null,
-          "count_methodology": "Conceptual - inference is compiler behavior",
-          "samples_waiver": {
-            "reason": "conceptual_section",
-            "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
-            "approved_by": "automated",
-            "date": "2025-12-30"
-          }
+          "samples": []
         }
-      },
-      "count": null,
-      "count_methodology": "Conceptual - type model is compiler behavior",
-      "samples_waiver": {
-        "reason": "conceptual_section",
-        "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
-        "approved_by": "automated",
-        "date": "2025-12-30"
       }
     },
     "traits": {
@@ -1446,6 +1733,7 @@
       "description": "Traits",
       "status": "demonstrated",
       "findings": {
+        "count": 121,
         "total_traits": 124,
         "unsafe_traits": 1,
         "ZeroCopySend": 859
@@ -1453,19 +1741,37 @@
       "samples": [
         {
           "file": "iceoryx2-bb/elementary-traits/src/zero_copy_send.rs",
-          "line": [32],
+          "line": [
+            32
+          ],
           "code": "pub unsafe trait ZeroCopySend { }",
           "purpose": "Unsafe marker trait for types safe to send via zero-copy IPC"
         },
         {
           "file": "iceoryx2/src/service/port_factory/mod.rs",
-          "line": [62, 63, 64, 65, 66, 67, 68],
+          "line": [
+            62,
+            63,
+            64,
+            65,
+            66,
+            67,
+            68
+          ],
           "code": "pub trait PortFactory {\n    /// The underlying [`crate::service::Service`] of the port factory.\n    type Service: crate::service::Service;\n\n    /// The underlying type that is used for all static configurations, meaning properties that\n    /// never change during the lifetime.\n    type StaticConfig;",
           "purpose": "Public trait with associated types for port factory abstraction"
         },
         {
           "file": "iceoryx2/src/port/update_connections.rs",
-          "line": [47, 48, 49, 50, 51, 52, 53],
+          "line": [
+            47,
+            48,
+            49,
+            50,
+            51,
+            52,
+            53
+          ],
           "code": "/// Explicitly triggers and update of all connections and performs underlying management work.\npub trait UpdateConnections {\n    /// Explicitly updates all connections to the [`crate::port::subscriber::Subscriber`]s. This is\n    /// required to be called whenever a new [`crate::port::subscriber::Subscriber`] connected to\n    /// the service. It is done implicitly whenever [`crate::sample_mut::SampleMut::send()`] or\n    /// [`crate::port::publisher::Publisher::send_copy()`] is called.\n    /// When a [`crate::port::subscriber::Subscriber`] is connected that requires a history this",
           "purpose": "Public trait defining connection update interface for ports"
         }
@@ -1479,6 +1785,7 @@
           "description": "Object Safety",
           "status": "demonstrated",
           "findings": {
+            "count": 318,
             "description": "Object-safe traits can be used as trait objects (dyn Trait).",
             "dyn_usage": 318,
             "patterns": [
@@ -1491,27 +1798,33 @@
           "samples": [
             {
               "file": "iceoryx2-log/log/src/lib.rs",
-              "line": [144],
+              "line": [
+                144
+              ],
               "code": "static mut LOGGER: Option<&'static dyn Log> = None;",
               "purpose": "Object-safe dyn Log trait object for pluggable logging"
             },
             {
               "file": "iceoryx2-log/log/src/lib.rs",
-              "line": [266, 267],
+              "line": [
+                266,
+                267
+              ],
               "code": "pub fn stdout() -> &'static mut dyn Write {\n    unsafe { __internal_stdout() }",
               "purpose": "Object-safe dyn Write trait object for stdout abstraction"
             },
             {
               "file": "iceoryx2-log/log/src/lib.rs",
-              "line": [271, 272],
+              "line": [
+                271,
+                272
+              ],
               "code": "pub fn stderr() -> &'static mut dyn Write {\n    unsafe { __internal_stderr() }",
               "purpose": "Object-safe dyn Write trait object for stderr abstraction"
             }
-          ],
-          "count": 318
+          ]
         }
-      },
-      "count": 121
+      }
     },
     "trait_and_lifetime_bounds": {
       "fls_section": "4.14",
@@ -1521,24 +1834,40 @@
       "description": "Trait and Lifetime Bounds",
       "status": "demonstrated",
       "findings": {
+        "count": 779,
         "analyzed": true
       },
       "samples": [
         {
           "file": "iceoryx2/src/service/port_factory/writer.rs",
-          "line": [48, 49, 50, 51, 52, 53, 54],
+          "line": [
+            48,
+            49,
+            50,
+            51,
+            52,
+            53,
+            54
+          ],
           "code": "pub struct PortFactoryWriter<\n    'factory,\n    Service: service::Service,\n    KeyType: Send + Sync + Eq + Clone + Copy + Debug + 'static + Hash + ZeroCopySend,\n> {\n    pub(crate) factory: &'factory PortFactory<Service, KeyType>,\n}",
           "purpose": "Struct with lifetime parameter 'factory and multiple trait bounds on KeyType"
         },
         {
           "file": "iceoryx2/src/service/port_factory/notifier.rs",
-          "line": [44, 45, 46],
+          "line": [
+            44,
+            45,
+            46
+          ],
           "code": "pub struct PortFactoryNotifier<'factory, Service: service::Service> {\n    pub(crate) factory: &'factory PortFactory<Service>,\n    default_event_id: EventId,",
           "purpose": "Generic struct with lifetime 'factory for borrowed factory reference"
         },
         {
           "file": "iceoryx2/src/service/port_factory/subscriber.rs",
-          "line": [61, 62],
+          "line": [
+            61,
+            62
+          ],
           "code": "PayloadType: Debug + ZeroCopySend + ?Sized,\nUserHeader: Debug + ZeroCopySend,",
           "purpose": "Multiple trait bounds with Debug, ZeroCopySend, and ?Sized relaxed sizing"
         }
@@ -1552,6 +1881,7 @@
           "description": "Lifetimes",
           "status": "demonstrated",
           "findings": {
+            "count": 1582,
             "description": "Explicit lifetimes used for complex borrowing relationships.",
             "patterns": [
               "'a, 'b generic lifetimes",
@@ -1563,24 +1893,33 @@
           "samples": [
             {
               "file": "iceoryx2/src/service/port_factory/writer.rs",
-              "line": [48, 49, 50],
+              "line": [
+                48,
+                49,
+                50
+              ],
               "code": "pub struct PortFactoryWriter<\n    'factory,\n    Service: service::Service,",
               "purpose": "Explicit lifetime 'factory in generic struct parameters"
             },
             {
               "file": "iceoryx2/src/service/port_factory/notifier.rs",
-              "line": [44, 45],
+              "line": [
+                44,
+                45
+              ],
               "code": "pub struct PortFactoryNotifier<'factory, Service: service::Service> {\n    pub(crate) factory: &'factory PortFactory<Service>,",
               "purpose": "Lifetime annotation 'factory for borrowed reference in struct field"
             },
             {
               "file": "iceoryx2/src/service/port_factory/notifier.rs",
-              "line": [51, 52],
+              "line": [
+                51,
+                52
+              ],
               "code": "impl<'factory, Service: service::Service> PortFactoryNotifier<'factory, Service> {\n    pub(crate) fn new(factory: &'factory PortFactory<Service>) -> Self {",
               "purpose": "Lifetime in impl block connecting constructor parameter to struct lifetime"
             }
-          ],
-          "count": 1582
+          ]
         },
         "subtyping_and_variance": {
           "fls_section": "4.14.2",
@@ -1590,6 +1929,14 @@
           "description": "Subtyping and Variance",
           "status": "demonstrated",
           "findings": {
+            "count": null,
+            "count_methodology": "Conceptual - variance is compiler behavior",
+            "samples_waiver": {
+              "reason": "conceptual_section",
+              "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+              "approved_by": "automated",
+              "date": "2025-12-30"
+            },
             "description": "Lifetime subtyping used implicitly. PhantomData for variance control.",
             "PhantomData": 256,
             "patterns": [
@@ -1597,15 +1944,7 @@
               "PhantomData<*const T> for invariance"
             ]
           },
-          "samples": [],
-          "count": null,
-          "count_methodology": "Conceptual - variance is compiler behavior",
-          "samples_waiver": {
-            "reason": "conceptual_section",
-            "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
-            "approved_by": "automated",
-            "date": "2025-12-30"
-          }
+          "samples": []
         },
         "lifetime_elision": {
           "fls_section": "4.14.3",
@@ -1615,6 +1954,14 @@
           "description": "Lifetime Elision",
           "status": "demonstrated",
           "findings": {
+            "count": null,
+            "count_methodology": "Conceptual - elision is compiler behavior",
+            "samples_waiver": {
+              "reason": "conceptual_section",
+              "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+              "approved_by": "automated",
+              "date": "2025-12-30"
+            },
             "description": "Lifetime elision applied where rules permit; explicit lifetimes for clarity."
           },
           "samples": [],
@@ -1625,17 +1972,17 @@
               "description": "Function Lifetime Elision",
               "status": "demonstrated",
               "findings": {
+                "count": null,
+                "count_methodology": "Conceptual - elision is compiler behavior",
+                "samples_waiver": {
+                  "reason": "conceptual_section",
+                  "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+                  "approved_by": "automated",
+                  "date": "2025-12-30"
+                },
                 "description": "Standard elision rules applied: single input lifetime -> output lifetime."
               },
-              "samples": [],
-              "count": null,
-              "count_methodology": "Conceptual - elision is compiler behavior",
-              "samples_waiver": {
-                "reason": "conceptual_section",
-                "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
-                "approved_by": "automated",
-                "date": "2025-12-30"
-              }
+              "samples": []
             },
             "static_lifetime_elision": {
               "fls_section": "4.14.3.2",
@@ -1643,29 +1990,37 @@
               "description": "Static Lifetime Elision",
               "status": "demonstrated",
               "findings": {
+                "count": 268,
                 "description": "const and static items have implicit 'static lifetime."
               },
               "samples": [
                 {
                   "file": "iceoryx2/src/config.rs",
-                  "line": [668, 669, 670],
+                  "line": [
+                    668,
+                    669,
+                    670
+                  ],
                   "code": "pub fn setup_global_config_from_file(\n    config_file: &FilePath,\n) -> Result<&'static Config, ConfigCreationError> {",
                   "purpose": "'static lifetime return for globally-initialized configuration reference"
                 },
                 {
                   "file": "iceoryx2/src/config.rs",
-                  "line": [693],
+                  "line": [
+                    693
+                  ],
                   "code": "pub fn global_config() -> &'static Config {",
                   "purpose": "'static lifetime return for global configuration accessor"
                 },
                 {
                   "file": "iceoryx2-log/log/src/lib.rs",
-                  "line": [144],
+                  "line": [
+                    144
+                  ],
                   "code": "static mut LOGGER: Option<&'static dyn Log> = None;",
                   "purpose": "'static lifetime in static variable for global logger storage"
                 }
-              ],
-              "count": 268
+              ]
             },
             "trait_object_lifetime_elision": {
               "fls_section": "4.14.3.3",
@@ -1673,17 +2028,17 @@
               "description": "Trait Object Lifetime Elision",
               "status": "demonstrated",
               "findings": {
+                "count": null,
+                "count_methodology": "Conceptual - elision is compiler behavior",
+                "samples_waiver": {
+                  "reason": "conceptual_section",
+                  "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+                  "approved_by": "automated",
+                  "date": "2025-12-30"
+                },
                 "description": "dyn Trait defaults to 'static or enclosing lifetime based on context."
               },
-              "samples": [],
-              "count": null,
-              "count_methodology": "Conceptual - elision is compiler behavior",
-              "samples_waiver": {
-                "reason": "conceptual_section",
-                "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
-                "approved_by": "automated",
-                "date": "2025-12-30"
-              }
+              "samples": []
             },
             "impl_header_lifetime_elision": {
               "fls_section": "4.14.3.4",
@@ -1691,30 +2046,21 @@
               "description": "Impl Header Lifetime Elision",
               "status": "demonstrated",
               "findings": {
+                "count": null,
+                "count_methodology": "Conceptual - elision is compiler behavior",
+                "samples_waiver": {
+                  "reason": "conceptual_section",
+                  "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+                  "approved_by": "automated",
+                  "date": "2025-12-30"
+                },
                 "description": "impl<'a> Trait for Type<'a> elides to impl Trait for Type<'_>."
               },
-              "samples": [],
-              "count": null,
-              "count_methodology": "Conceptual - elision is compiler behavior",
-              "samples_waiver": {
-                "reason": "conceptual_section",
-                "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
-                "approved_by": "automated",
-                "date": "2025-12-30"
-              }
+              "samples": []
             }
-          },
-          "count": null,
-          "count_methodology": "Conceptual - elision is compiler behavior",
-          "samples_waiver": {
-            "reason": "conceptual_section",
-            "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
-            "approved_by": "automated",
-            "date": "2025-12-30"
           }
         }
-      },
-      "count": 779
+      }
     }
   },
   "safety_critical_summary": {

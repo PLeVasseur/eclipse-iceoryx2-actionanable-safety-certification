@@ -52,7 +52,9 @@
       ],
       "description": "Attribute Properties",
       "status": "demonstrated",
-      "findings": {},
+      "findings": {
+        "count": 6376
+      },
       "samples": [
         {
           "file": "iceoryx2-cal/src/lib.rs",
@@ -82,8 +84,7 @@
           "code": "#[cfg(not(feature = \"dev_permissions\"))]\nconst FINAL_PERMISSIONS: Permission = Permission::OWNER_READ;",
           "purpose": "Outer attribute for conditional compilation based on feature flags"
         }
-      ],
-      "count": 6376
+      ]
     },
     "builtin_attributes": {
       "fls_section": "13.2",
@@ -92,7 +93,9 @@
       ],
       "description": "Built-in Attributes",
       "status": "demonstrated",
-      "findings": {},
+      "findings": {
+        "count": 5782
+      },
       "samples": [
         {
           "file": "iceoryx2-bb/linux/src/signalfd.rs",
@@ -134,6 +137,7 @@
           "description": "Code Generation Attributes",
           "status": "demonstrated",
           "findings": {
+            "count": 32,
             "description": "Attributes that control code generation and optimization.",
             "inline_count": 32
           },
@@ -178,10 +182,10 @@
               "description": "Attribute ``cold``",
               "status": "not_used",
               "findings": {
+                "count": 0,
                 "description": "#[cold] not used in iceoryx2."
               },
-              "samples": [],
-              "count": 0
+              "samples": []
             },
             "attribute_inline": {
               "fls_section": "13.2.1.2",
@@ -228,8 +232,7 @@
                   "code": "#[inline(always)]\npub fn stderr() -> &'static mut dyn Write {\n    unsafe { __internal_stderr() }",
                   "purpose": "Force inline stderr accessor for zero-overhead logging"
                 }
-              ],
-              "count": 32
+              ]
             },
             "attribute_no_builtins": {
               "fls_section": "13.2.1.3",
@@ -239,10 +242,10 @@
               "description": "Attribute ``no_builtins``",
               "status": "not_used",
               "findings": {
+                "count": 0,
                 "description": "#[no_builtins] not used."
               },
-              "samples": [],
-              "count": 0
+              "samples": []
             },
             "attribute_target_feature": {
               "fls_section": "13.2.1.4",
@@ -252,10 +255,10 @@
               "description": "Attribute ``target_feature``",
               "status": "not_used",
               "findings": {
+                "count": 0,
                 "description": "#[target_feature] not used - portable code."
               },
-              "samples": [],
-              "count": 0
+              "samples": []
             },
             "attribute_track_caller": {
               "fls_section": "13.2.1.5",
@@ -265,10 +268,10 @@
               "description": "Attribute ``track_caller``",
               "status": "not_used",
               "findings": {
+                "count": 0,
                 "description": "#[track_caller] not used."
               },
-              "samples": [],
-              "count": 0
+              "samples": []
             },
             "attribute_naked": {
               "fls_section": "13.2.1.6",
@@ -276,13 +279,12 @@
               "description": "Attribute ``naked``",
               "status": "not_used",
               "findings": {
+                "count": 0,
                 "description": "#[naked] not used - no bare-metal function prologues."
               },
-              "samples": [],
-              "count": 0
+              "samples": []
             }
-          },
-          "count": 32
+          }
         },
         "conditional_compilation_attributes": {
           "fls_section": "13.2.2",
@@ -370,8 +372,7 @@
                   "code": "#[cfg(target_env = \"nto80\")]",
                   "purpose": "QNX Neutrino 8.0 specific type definitions"
                 }
-              ],
-              "count": 360
+              ]
             },
             "attribute_cfg_attr": {
               "fls_section": "13.2.2.2",
@@ -381,6 +382,7 @@
               "description": "Attribute ``cfg_attr``",
               "status": "demonstrated",
               "findings": {
+                "count": 6,
                 "description": "Conditional attribute application."
               },
               "samples": [
@@ -408,11 +410,9 @@
                   "code": "#[cfg_attr(target_os = \"freebsd\", link(name = \"c\"))]",
                   "purpose": "Conditionally link libc on FreeBSD for errno access"
                 }
-              ],
-              "count": 6
+              ]
             }
-          },
-          "count": 366
+          }
         },
         "derivation_attributes": {
           "fls_section": "13.2.3",
@@ -464,11 +464,11 @@
               "description": "Attribute ``automatically_derived``",
               "status": "implicit",
               "findings": {
+                "count": 0,
+                "count_methodology": "Generated by compiler, not in source",
                 "description": "Generated by derive macros, not used directly."
               },
-              "samples": [],
-              "count": 0,
-              "count_methodology": "Generated by compiler, not in source"
+              "samples": []
             },
             "attribute_derive": {
               "fls_section": "13.2.3.2",
@@ -512,11 +512,9 @@
                   "code": "#[non_exhaustive]\n#[derive(Debug, Clone, Eq, Hash, PartialEq, ZeroCopySend, Serialize, Deserialize)]\n#[repr(C)]",
                   "purpose": "Multiple derives including custom ZeroCopySend and serde traits for IPC config"
                 }
-              ],
-              "count": 998
+              ]
             }
-          },
-          "count": 998
+          }
         },
         "diagnostics_attributes": {
           "fls_section": "13.2.4",
@@ -526,6 +524,7 @@
           "description": "Diagnostics Attributes",
           "status": "demonstrated",
           "findings": {
+            "count": 159,
             "allow_count": 142,
             "must_use_count": 8
           },
@@ -559,8 +558,7 @@
               "code": "#[allow(clippy::large_enum_variant)]\npub enum MessagingPattern {",
               "purpose": "Allow large enum variant for messaging pattern config (heap allocation forbidden)"
             }
-          ],
-          "count": 159
+          ]
         },
         "documentation_attributes": {
           "fls_section": "13.2.5",
@@ -570,6 +568,7 @@
           "description": "Documentation Attributes",
           "status": "demonstrated",
           "findings": {
+            "count": 23696,
             "doc_comments": 22784
           },
           "samples": [
@@ -647,11 +646,9 @@
                   "code": "#[doc(hidden)]\npub mod testing;",
                   "purpose": "Hide internal testing utilities from generated documentation"
                 }
-              ],
-              "count": 156
+              ]
             }
-          },
-          "count": 23696
+          }
         },
         "foreign_function_interface_attributes": {
           "fls_section": "13.2.6",
@@ -661,6 +658,7 @@
           "description": "Foreign Function Interface Attributes",
           "status": "demonstrated",
           "findings": {
+            "count": 1119,
             "no_mangle": 602,
             "repr": 512,
             "repr_c": 393
@@ -706,10 +704,10 @@
               "description": "Attribute ``crate_name``",
               "status": "not_used",
               "findings": {
+                "count": 0,
                 "description": "Crate names set via Cargo.toml."
               },
-              "samples": [],
-              "count": 0
+              "samples": []
             },
             "attribute_crate_type": {
               "fls_section": "13.2.6.2",
@@ -719,10 +717,10 @@
               "description": "Attribute ``crate_type``",
               "status": "not_used",
               "findings": {
+                "count": 0,
                 "description": "Crate types set via Cargo.toml."
               },
-              "samples": [],
-              "count": 0
+              "samples": []
             },
             "attribute_export_name": {
               "fls_section": "13.2.6.3",
@@ -732,10 +730,10 @@
               "description": "Attribute ``export_name``",
               "status": "not_used",
               "findings": {
+                "count": 0,
                 "description": "Not used - #[no_mangle] used instead."
               },
-              "samples": [],
-              "count": 0
+              "samples": []
             },
             "attribute_link": {
               "fls_section": "13.2.6.4",
@@ -746,6 +744,12 @@
               "status": "demonstrated",
               "findings": {
                 "count": 1,
+                "samples_waiver": {
+                  "reason": "insufficient_patterns",
+                  "explanation": "Only 1 instance(s) found in codebase, fewer than 3 required samples",
+                  "approved_by": "automated",
+                  "date": "2025-12-30"
+                },
                 "description": "Links to external libraries."
               },
               "samples": [
@@ -760,14 +764,7 @@
                   "code": "#[link(name = \"c++\")]\nextern \"C\" {\n    #[link_name = \"_ZNSt3__123__libcpp_atomic_monitorEPVKv\"]\n    fn __libcpp_atomic_monitor(ptr: *const void) -> i64;",
                   "purpose": "Link macOS libc++ library for atomic wait/notify primitives used in condvar"
                 }
-              ],
-              "count": 1,
-              "samples_waiver": {
-                "reason": "insufficient_patterns",
-                "explanation": "Only 1 instance(s) found in codebase, fewer than 3 required samples",
-                "approved_by": "automated",
-                "date": "2025-12-30"
-              }
+              ]
             },
             "attribute_link_name": {
               "fls_section": "13.2.6.5",
@@ -778,6 +775,12 @@
               "status": "demonstrated",
               "findings": {
                 "count": 4,
+                "samples_waiver": {
+                  "reason": "single_location",
+                  "explanation": "Pattern found in limited locations (1 unique files) despite 4 total matches",
+                  "approved_by": "automated",
+                  "date": "2025-12-30"
+                },
                 "description": "Renames symbols for linking."
               },
               "samples": [
@@ -790,14 +793,7 @@
                   "code": "#[link_name = \"_ZNSt3__123__libcpp_atomic_monitorEPVKv\"]\nfn __libcpp_atomic_monitor(ptr: *const void) -> i64;",
                   "purpose": "Map Rust function to mangled C++ symbol for libc++ atomic monitor"
                 }
-              ],
-              "count": 4,
-              "samples_waiver": {
-                "reason": "single_location",
-                "explanation": "Pattern found in limited locations (1 unique files) despite 4 total matches",
-                "approved_by": "automated",
-                "date": "2025-12-30"
-              }
+              ]
             },
             "attribute_link_section": {
               "fls_section": "13.2.6.6",
@@ -807,10 +803,10 @@
               "description": "Attribute ``link_section``",
               "status": "not_used",
               "findings": {
+                "count": 0,
                 "description": "Not used."
               },
-              "samples": [],
-              "count": 0
+              "samples": []
             },
             "attribute_link_ordinal": {
               "fls_section": "13.2.6.7",
@@ -818,10 +814,10 @@
               "description": "Attribute ``link_ordinal``",
               "status": "not_used",
               "findings": {
+                "count": 0,
                 "description": "Windows-specific, not used."
               },
-              "samples": [],
-              "count": 0
+              "samples": []
             },
             "attribute_no_link": {
               "fls_section": "13.2.6.8",
@@ -831,10 +827,10 @@
               "description": "Attribute ``no_link``",
               "status": "not_used",
               "findings": {
+                "count": 0,
                 "description": "Not used."
               },
-              "samples": [],
-              "count": 0
+              "samples": []
             },
             "attribute_no_main": {
               "fls_section": "13.2.6.9",
@@ -844,10 +840,10 @@
               "description": "Attribute ``no_main``",
               "status": "not_used",
               "findings": {
+                "count": 0,
                 "description": "#![no_main] is only used in examples directory, not production code. Production crates use standard main entry points."
               },
-              "samples": [],
-              "count": 0
+              "samples": []
             },
             "attribute_no_mangle": {
               "fls_section": "13.2.6.10",
@@ -894,8 +890,7 @@
                   "code": "#[no_mangle]\npub extern \"Rust\" fn __internal_default_logger() -> &'static dyn Log {\n    {\n        static CONSOLE_LOGGER: console::Logger = console::Logger::new();\n        &CONSOLE_LOGGER",
                   "purpose": "Export default logger accessor with stable symbol for logger selection"
                 }
-              ],
-              "count": 602
+              ]
             },
             "attribute_repr": {
               "fls_section": "13.2.6.11",
@@ -905,6 +900,7 @@
               "description": "Attribute ``repr``",
               "status": "demonstrated",
               "findings": {
+                "count": 512,
                 "total": 512,
                 "repr_c": 393,
                 "repr_transparent": 35,
@@ -941,8 +937,7 @@
                   "code": "#[repr(C)]\n#[iceoryx2_ffi(WriterUnion)]\npub struct iox2_writer_t {",
                   "purpose": "C-compatible layout for FFI writer type with union storage"
                 }
-              ],
-              "count": 512
+              ]
             },
             "attribute_unsafe": {
               "fls_section": "13.2.6.12",
@@ -950,10 +945,10 @@
               "description": "Attribute ``unsafe``",
               "status": "not_used",
               "findings": {
+                "count": 0,
                 "description": "unsafe attribute for extern blocks not used."
               },
-              "samples": [],
-              "count": 0
+              "samples": []
             },
             "attribute_used": {
               "fls_section": "13.2.6.13",
@@ -963,19 +958,18 @@
               "description": "Attribute ``used``",
               "status": "limited_use",
               "findings": {
+                "count": 0,
+                "samples_waiver": {
+                  "reason": "insufficient_patterns",
+                  "explanation": "Only 0 instance(s) found in codebase, fewer than 3 required samples",
+                  "approved_by": "automated",
+                  "date": "2025-12-30"
+                },
                 "description": "Used in bare-metal examples for startup code."
               },
-              "samples": [],
-              "count": 0,
-              "samples_waiver": {
-                "reason": "insufficient_patterns",
-                "explanation": "Only 0 instance(s) found in codebase, fewer than 3 required samples",
-                "approved_by": "automated",
-                "date": "2025-12-30"
-              }
+              "samples": []
             }
-          },
-          "count": 1119
+          }
         },
         "limits_attributes": {
           "fls_section": "13.2.7",
@@ -985,6 +979,7 @@
           "description": "Limits Attributes",
           "status": "not_used",
           "findings": {
+            "count": 0,
             "description": "Limit attributes not used - defaults sufficient."
           },
           "samples": [],
@@ -997,10 +992,10 @@
               "description": "Attribute ``recursion_limit``",
               "status": "not_used",
               "findings": {
+                "count": 0,
                 "description": "Not used."
               },
-              "samples": [],
-              "count": 0
+              "samples": []
             },
             "attribute_type_length_limit": {
               "fls_section": "13.2.7.2",
@@ -1010,13 +1005,12 @@
               "description": "Attribute ``type_length_limit``",
               "status": "not_used",
               "findings": {
+                "count": 0,
                 "description": "Not used."
               },
-              "samples": [],
-              "count": 0
+              "samples": []
             }
-          },
-          "count": 0
+          }
         },
         "macros_attributes": {
           "fls_section": "13.2.8",
@@ -1026,6 +1020,7 @@
           "description": "Macros Attributes",
           "status": "demonstrated",
           "findings": {
+            "count": 31,
             "macro_export": 20,
             "proc_macro_derive": 3,
             "proc_macro_attribute": 3
@@ -1068,10 +1063,10 @@
               "description": "Attribute ``collapse_debuginfo``",
               "status": "not_used",
               "findings": {
+                "count": 0,
                 "description": "Not used."
               },
-              "samples": [],
-              "count": 0
+              "samples": []
             },
             "attribute_macro_export": {
               "fls_section": "13.2.8.2",
@@ -1113,8 +1108,7 @@
                   "code": "#[macro_export(local_inner_macros)]\nmacro_rules! semantic_string {",
                   "purpose": "Export macro for creating custom semantic string types with validation"
                 }
-              ],
-              "count": 5
+              ]
             },
             "attribute_macro_use": {
               "fls_section": "13.2.8.3",
@@ -1124,6 +1118,7 @@
               "description": "Attribute ``macro_use``",
               "status": "demonstrated",
               "findings": {
+                "count": 5,
                 "description": "Imports macros from dependencies."
               },
               "samples": [
@@ -1154,8 +1149,7 @@
                   "code": "#[macro_use]\npub mod semantic_string;",
                   "purpose": "Import semantic_string! macro for use in container crate"
                 }
-              ],
-              "count": 5
+              ]
             },
             "attribute_proc_macro": {
               "fls_section": "13.2.8.4",
@@ -1165,10 +1159,10 @@
               "description": "Attribute ``proc_macro``",
               "status": "not_used",
               "findings": {
+                "count": 0,
                 "description": "Function-like proc macros not used."
               },
-              "samples": [],
-              "count": 0
+              "samples": []
             },
             "attribute_proc_macro_attribute": {
               "fls_section": "13.2.8.5",
@@ -1179,6 +1173,12 @@
               "status": "demonstrated",
               "findings": {
                 "count": 3,
+                "samples_waiver": {
+                  "reason": "single_location",
+                  "explanation": "Pattern found in limited locations (2 unique files) despite 3 total matches",
+                  "approved_by": "automated",
+                  "date": "2025-12-30"
+                },
                 "macros": [
                   "iceoryx2_ffi",
                   "implement_conformance_test"
@@ -1205,14 +1205,7 @@
                   "code": "#[proc_macro_attribute]\npub fn conformance_test(_attr: TokenStream, item: TokenStream) -> TokenStream {\n    item",
                   "purpose": "Define conformance_test attribute for marking conformance test functions"
                 }
-              ],
-              "count": 3,
-              "samples_waiver": {
-                "reason": "single_location",
-                "explanation": "Pattern found in limited locations (2 unique files) despite 3 total matches",
-                "approved_by": "automated",
-                "date": "2025-12-30"
-              }
+              ]
             },
             "attribute_proc_macro_derive": {
               "fls_section": "13.2.8.6",
@@ -1223,6 +1216,12 @@
               "status": "demonstrated",
               "findings": {
                 "count": 3,
+                "samples_waiver": {
+                  "reason": "single_location",
+                  "explanation": "Pattern found in limited locations (2 unique files) despite 3 total matches",
+                  "approved_by": "automated",
+                  "date": "2025-12-30"
+                },
                 "macros": [
                   "PlacementDefault",
                   "ZeroCopySend",
@@ -1250,17 +1249,9 @@
                   "code": "#[proc_macro_derive(ZeroCopySend, attributes(type_name))]\npub fn zero_copy_send_derive(input: TokenStream) -> TokenStream {\n    let ast = parse_macro_input!(input as DeriveInput);",
                   "purpose": "Define derive macro for ZeroCopySend trait with custom type_name attribute"
                 }
-              ],
-              "count": 3,
-              "samples_waiver": {
-                "reason": "single_location",
-                "explanation": "Pattern found in limited locations (2 unique files) despite 3 total matches",
-                "approved_by": "automated",
-                "date": "2025-12-30"
-              }
+              ]
             }
-          },
-          "count": 31
+          }
         },
         "modules_attributes": {
           "fls_section": "13.2.9",
@@ -1270,6 +1261,7 @@
           "description": "Modules Attributes",
           "status": "demonstrated",
           "findings": {
+            "count": 24,
             "description": "Module attributes used for file organization."
           },
           "samples": [
@@ -1316,6 +1308,7 @@
               "description": "Attribute ``path``",
               "status": "demonstrated",
               "findings": {
+                "count": 24,
                 "description": "Used for platform-specific module selection."
               },
               "samples": [
@@ -1346,11 +1339,9 @@
                   "code": "#[path = \"qnx/os.rs\"]\nmod os;",
                   "purpose": "Select QNX Neutrino POSIX implementation for target_os = nto"
                 }
-              ],
-              "count": 24
+              ]
             }
-          },
-          "count": 24
+          }
         },
         "prelude_attributes": {
           "fls_section": "13.2.10",
@@ -1360,6 +1351,7 @@
           "description": "Prelude Attributes",
           "status": "demonstrated",
           "findings": {
+            "count": 23,
             "no_std_count": 23
           },
           "samples": [
@@ -1404,10 +1396,10 @@
               "description": "Attribute ``no_implicit_prelude``",
               "status": "not_used",
               "findings": {
+                "count": 0,
                 "description": "Not used."
               },
-              "samples": [],
-              "count": 0
+              "samples": []
             },
             "attribute_no_std": {
               "fls_section": "13.2.10.2",
@@ -1455,11 +1447,9 @@
                   "code": "#![no_std]\n\n#[cfg(target_os = \"linux\")]\npub mod epoll;",
                   "purpose": "Linux-specific primitives are no_std for bare-metal Linux"
                 }
-              ],
-              "count": 23
+              ]
             }
-          },
-          "count": 23
+          }
         },
         "runtime_attributes": {
           "fls_section": "13.2.11",
@@ -1469,10 +1459,10 @@
           "description": "Runtime Attributes",
           "status": "not_used",
           "findings": {
+            "count": 7,
             "description": "Runtime attributes (#[global_allocator], #[panic_handler]) are only used in examples directory, not in production library code. Production crates use default allocator and panic behavior."
           },
           "samples": [],
-          "count": 0,
           "subsections": {
             "attribute_global_allocator": {
               "fls_section": "13.2.11.1",
@@ -1482,10 +1472,10 @@
               "description": "Attribute ``global_allocator``",
               "status": "not_used",
               "findings": {
+                "count": 0,
                 "description": "#[global_allocator] is only used in examples (nostd examples), not in production library code. Production code uses the default allocator."
               },
-              "samples": [],
-              "count": 0
+              "samples": []
             },
             "attribute_panic_handler": {
               "fls_section": "13.2.11.2",
@@ -1495,10 +1485,10 @@
               "description": "Attribute ``panic_handler``",
               "status": "not_used",
               "findings": {
+                "count": 0,
                 "description": "#[panic_handler] is only used in examples (nostd examples), not in production library code. Production code uses default panic behavior."
               },
-              "samples": [],
-              "count": 0
+              "samples": []
             },
             "attribute_windows_subsystem": {
               "fls_section": "13.2.11.3",
@@ -1508,13 +1498,12 @@
               "description": "Attribute ``windows_subsystem``",
               "status": "not_used",
               "findings": {
+                "count": 0,
                 "description": "Not used - console applications."
               },
-              "samples": [],
-              "count": 0
+              "samples": []
             }
-          },
-          "count": 7
+          }
         },
         "testing_attributes": {
           "fls_section": "13.2.12",
@@ -1524,13 +1513,13 @@
           "description": "Testing Attributes",
           "status": "not_applicable",
           "findings": {
+            "count": 1001,
             "test": 960,
             "should_panic": 36,
             "ignore": 5,
             "description": "Testing attributes (#[test], #[should_panic], #[ignore]) are by definition only used in test code, not production code. Statistics reflect test suite coverage."
           },
           "samples": [],
-          "count": 0,
           "subsections": {
             "attribute_ignore": {
               "fls_section": "13.2.12.1",
@@ -1543,8 +1532,7 @@
                 "count": 5,
                 "description": "#[ignore] is a testing attribute only used in test code, not production code."
               },
-              "samples": [],
-              "count": 0
+              "samples": []
             },
             "attribute_should_panic": {
               "fls_section": "13.2.12.2",
@@ -1557,8 +1545,7 @@
                 "count": 36,
                 "description": "#[should_panic] is a testing attribute only used in test code, not production code."
               },
-              "samples": [],
-              "count": 0
+              "samples": []
             },
             "attribute_test": {
               "fls_section": "13.2.12.3",
@@ -1571,11 +1558,9 @@
                 "count": 960,
                 "description": "#[test] is a testing attribute only used in test code, not production code."
               },
-              "samples": [],
-              "count": 0
+              "samples": []
             }
-          },
-          "count": 1001
+          }
         },
         "type_attributes": {
           "fls_section": "13.2.13",
@@ -1585,6 +1570,13 @@
           "description": "Type Attributes",
           "status": "demonstrated",
           "findings": {
+            "count": 10,
+            "samples_waiver": {
+              "reason": "single_location",
+              "explanation": "Pattern found in limited locations (2 unique files) despite 10 total matches",
+              "approved_by": "automated",
+              "date": "2025-12-30"
+            },
             "non_exhaustive": 10
           },
           "samples": [
@@ -1631,6 +1623,12 @@
               "status": "demonstrated",
               "findings": {
                 "count": 10,
+                "samples_waiver": {
+                  "reason": "single_location",
+                  "explanation": "Pattern found in limited locations (2 unique files) despite 10 total matches",
+                  "approved_by": "automated",
+                  "date": "2025-12-30"
+                },
                 "description": "Marks enums/structs as non-exhaustive for future extension."
               },
               "samples": [
@@ -1665,26 +1663,11 @@
                   "code": "/// The global settings\n#[non_exhaustive]\n#[derive(Serialize, Deserialize, Debug, Clone, Eq, PartialEq)]\n#[serde(rename_all = \"kebab-case\")]",
                   "purpose": "Mark Global config struct non_exhaustive for future additions"
                 }
-              ],
-              "count": 10,
-              "samples_waiver": {
-                "reason": "single_location",
-                "explanation": "Pattern found in limited locations (2 unique files) despite 10 total matches",
-                "approved_by": "automated",
-                "date": "2025-12-30"
-              }
+              ]
             }
-          },
-          "count": 10,
-          "samples_waiver": {
-            "reason": "single_location",
-            "explanation": "Pattern found in limited locations (2 unique files) despite 10 total matches",
-            "approved_by": "automated",
-            "date": "2025-12-30"
           }
         }
-      },
-      "count": 5782
+      }
     }
   },
   "design_patterns": {

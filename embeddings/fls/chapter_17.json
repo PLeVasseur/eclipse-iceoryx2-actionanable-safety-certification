@@ -1,0 +1,139 @@
+{
+  "chapter": 17,
+  "title": "Concurrency",
+  "fls_id": "fls_3v733mnewssy",
+  "file": "concurrency",
+  "extraction_date": "2025-12-31",
+  "category_codes": {
+    "0": "section",
+    "-1": "general",
+    "-2": "legality_rules",
+    "-3": "dynamic_semantics",
+    "-4": "undefined_behavior",
+    "-5": "implementation_requirements",
+    "-6": "implementation_permissions",
+    "-7": "examples",
+    "-8": "syntax"
+  },
+  "statistics": {
+    "total_sections": 4,
+    "total_paragraphs": 29,
+    "paragraphs_by_category": {
+      "-4": 1,
+      "-2": 27,
+      "-1": 1
+    }
+  },
+  "sections": [
+    {
+      "fls_id": "fls_3v733mnewssy",
+      "title": "Concurrency",
+      "category": 0,
+      "level": 1,
+      "file": "concurrency",
+      "content": "Concurrency\n\nThe Rust programming language provides features for concurrent programming\nwithout [data race]s, whose rules are presented in this chapter.\n\nA data race is a scenario where two or more threads access a shared memory\nlocation concurrently without any synchronization, where one of the accesses is\na modification.\n\nIt is undefined behavior if two or more threads engage in a data race.",
+      "rubrics": {
+        "-1": {
+          "paragraphs": {
+            "fls_opt7v0mopxc8": "The Rust programming language provides features for concurrent programming without [data race]s, whose rules are presented in this chapter."
+          }
+        },
+        "-2": {
+          "paragraphs": {
+            "fls_tx4b8r6i93n4": "A data race is a scenario where two or more threads access a shared memory location concurrently without any synchronization, where one of the accesses is a modification."
+          }
+        },
+        "-4": {
+          "paragraphs": {
+            "fls_isypweqewe78": "It is undefined behavior if two or more threads engage in a data race."
+          }
+        }
+      },
+      "parent_fls_id": null,
+      "sibling_fls_ids": []
+    },
+    {
+      "fls_id": "fls_eiw4by8z75di",
+      "title": "Send and Sync",
+      "category": 0,
+      "level": 2,
+      "file": "concurrency",
+      "content": "Send and Sync\n\nThe Rust programming language provides the core::marker::Send and\ncore::marker::Sync [trait]s for preventing data races at the\ntype level.\n\nA send type is a type that implements the core::marker::Send\ntrait.\n\nAn abstract data type automatically implements the\ncore::marker::Send trait if the [type]s of all its\n[field]s are [send type]s.\n\nA send type shall have [value]s that are safe to transfer across\nthread boundaries.\n\nA sync type is a type that implements the core::marker::Sync\ntrait.\n\nAn abstract data type automatically implements the\ncore::marker::Sync trait if the [type]s of all its\n[field]s are [sync type]s.\n\nA sync type shall have [value]s that are allowed to be shared across\nmultiple threads at any given time without incurring data races.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_n5l17mlglq11": "The Rust programming language provides the core::marker::Send and core::marker::Sync [trait]s for preventing data races at the type level.",
+            "fls_2jujsujpjp3w": "A send type is a type that implements the core::marker::Send trait.",
+            "fls_cax6fe4em23k": "An abstract data type automatically implements the core::marker::Send trait if the [type]s of all its [field]s are [send type]s.",
+            "fls_4ypqdehn7b0v": "A send type shall have [value]s that are safe to transfer across thread boundaries.",
+            "fls_dekskhk4g895": "A sync type is a type that implements the core::marker::Sync trait.",
+            "fls_y0iqr5ibnbfe": "An abstract data type automatically implements the core::marker::Sync trait if the [type]s of all its [field]s are [sync type]s.",
+            "fls_zgemofbs5q2x": "A sync type shall have [value]s that are allowed to be shared across multiple threads at any given time without incurring data races."
+          }
+        }
+      },
+      "parent_fls_id": "fls_3v733mnewssy",
+      "sibling_fls_ids": [
+        "fls_vyc9vcuamlph",
+        "fls_mtuwzinpfvkl"
+      ]
+    },
+    {
+      "fls_id": "fls_vyc9vcuamlph",
+      "title": "Atomics",
+      "category": 0,
+      "level": 2,
+      "file": "concurrency",
+      "content": "Atomics\n\nAn atomic type is a type defined in module\ncore::sync::atomic. [Atomic type]s provide primitive shared-memory\ncommunication between threads.\n\n[Atomic type]s are related to [type]s as follows:",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_3pjla9s93mhd": "An atomic type is a type defined in module core::sync::atomic. [Atomic type]s provide primitive shared-memory communication between threads.",
+            "fls_wn4ynaio8u47": "[Atomic type]s are related to [type]s as follows: .. list-table:: -",
+            "fls_q7mn6pdd8bix": "- **Type** - **Atomic Type** -",
+            "fls_jx0784jzxy00": "- bool - core::sync::atomic::AtomicBool -",
+            "fls_vzuwnpx7mt08": "- i8 - core::sync::atomic::AtomicI8 -",
+            "fls_cpcd0vexfbhj": "- i16 - core::sync::atomic::AtomicI16 -",
+            "fls_jt7rfq9atbiv": "- i32 - core::sync::atomic::AtomicI32 -",
+            "fls_2hqmfwswc6k": "- i64 - core::sync::atomic::AtomicI64 -",
+            "fls_5ab2sw3gwmt3": "- isize - core::sync::atomic::AtomicIsize -",
+            "fls_w2mw833g28eb": "- *mut T - core::sync::atomic::AtomicPtr -",
+            "fls_mjq1l1y0vmz4": "- u8 - core::sync::atomic::AtomicU8 -",
+            "fls_906978wtss6n": "- u16 - core::sync::atomic::AtomicU16 -",
+            "fls_4urmnh4mfehl": "- u32 - core::sync::atomic::AtomicU32 -",
+            "fls_2qkrcd5eovpe": "- u64 - core::sync::atomic::AtomicU64 -",
+            "fls_cry1e78gp19q": "- usize - core::sync::atomic::AtomicUsize"
+          }
+        }
+      },
+      "parent_fls_id": "fls_3v733mnewssy",
+      "sibling_fls_ids": [
+        "fls_eiw4by8z75di",
+        "fls_mtuwzinpfvkl"
+      ]
+    },
+    {
+      "fls_id": "fls_mtuwzinpfvkl",
+      "title": "Asynchronous Computation",
+      "category": 0,
+      "level": 2,
+      "file": "concurrency",
+      "content": "Asynchronous Computation\n\nThe Rust programming language provides asynchronous computation through\nmodule core::task and the core::future::Future trait.\n\nA future represents a value of a type that implements the\ncore::future::Future trait which may not have finished computing\nyet.\n\nThe computed value of a future is obtained by using an\nawait expression or by invoking core::future::Future::poll.\n\ncore::future::Future::poll shall not be invoked on a future that has\nalready returned core::task::Poll::Ready.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_g40xp4andj5g": "The Rust programming language provides asynchronous computation through module core::task and the core::future::Future trait.",
+            "fls_fte085hi1yqj": "A future represents a value of a type that implements the core::future::Future trait which may not have finished computing yet.",
+            "fls_7muubin2wn1v": "The computed value of a future is obtained by using an await expression or by invoking core::future::Future::poll.",
+            "fls_ftzey2156ha": "core::future::Future::poll shall not be invoked on a future that has already returned core::task::Poll::Ready."
+          }
+        }
+      },
+      "parent_fls_id": "fls_3v733mnewssy",
+      "sibling_fls_ids": [
+        "fls_eiw4by8z75di",
+        "fls_vyc9vcuamlph"
+      ]
+    }
+  ]
+}

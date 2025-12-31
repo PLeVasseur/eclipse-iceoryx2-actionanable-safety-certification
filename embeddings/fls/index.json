@@ -1,0 +1,207 @@
+{
+  "source": "FLS RST files",
+  "extraction_date": "2025-12-31",
+  "category_codes": {
+    "0": "section",
+    "-1": "general",
+    "-2": "legality_rules",
+    "-3": "dynamic_semantics",
+    "-4": "undefined_behavior",
+    "-5": "implementation_requirements",
+    "-6": "implementation_permissions",
+    "-7": "examples",
+    "-8": "syntax"
+  },
+  "chapters": [
+    {
+      "chapter": 1,
+      "title": "General",
+      "fls_id": "fls_48qldfwwh493",
+      "file": "chapter_01.json",
+      "sections": 8,
+      "paragraphs": 89
+    },
+    {
+      "chapter": 2,
+      "title": "Lexical Elements",
+      "fls_id": "fls_411up5z0b6n6",
+      "file": "chapter_02.json",
+      "sections": 25,
+      "paragraphs": 221
+    },
+    {
+      "chapter": 3,
+      "title": "Items",
+      "fls_id": "fls_wb86edg02t6a",
+      "file": "chapter_03.json",
+      "sections": 1,
+      "paragraphs": 3
+    },
+    {
+      "chapter": 4,
+      "title": "Types and Traits",
+      "fls_id": "fls_vgb6ev541b2r",
+      "file": "chapter_04.json",
+      "sections": 58,
+      "paragraphs": 685
+    },
+    {
+      "chapter": 5,
+      "title": "Patterns",
+      "fls_id": "fls_xgqh0ju6bmbn",
+      "file": "chapter_05.json",
+      "sections": 28,
+      "paragraphs": 279
+    },
+    {
+      "chapter": 6,
+      "title": "Expressions",
+      "fls_id": "fls_ckvjj4tt1hh2",
+      "file": "chapter_06.json",
+      "sections": 59,
+      "paragraphs": 934
+    },
+    {
+      "chapter": 7,
+      "title": "Values",
+      "fls_id": "fls_94a8v54bufn8",
+      "file": "chapter_07.json",
+      "sections": 6,
+      "paragraphs": 67
+    },
+    {
+      "chapter": 8,
+      "title": "Statements",
+      "fls_id": "fls_wdicg3sqa98e",
+      "file": "chapter_08.json",
+      "sections": 3,
+      "paragraphs": 36
+    },
+    {
+      "chapter": 9,
+      "title": "Functions",
+      "fls_id": "fls_qcb1n9c0e5hz",
+      "file": "chapter_09.json",
+      "sections": 1,
+      "paragraphs": 49
+    },
+    {
+      "chapter": 10,
+      "title": "Associated Items",
+      "fls_id": "fls_l21tjqjkkaa0",
+      "file": "chapter_10.json",
+      "sections": 1,
+      "paragraphs": 39
+    },
+    {
+      "chapter": 11,
+      "title": "Implementations",
+      "fls_id": "fls_fk2m2irwpeof",
+      "file": "chapter_11.json",
+      "sections": 3,
+      "paragraphs": 49
+    },
+    {
+      "chapter": 12,
+      "title": "Generics",
+      "fls_id": "fls_y2k5paj8m8ug",
+      "file": "chapter_12.json",
+      "sections": 5,
+      "paragraphs": 86
+    },
+    {
+      "chapter": 13,
+      "title": "Attributes",
+      "fls_id": "fls_gvwd0kf72jt",
+      "file": "chapter_13.json",
+      "sections": 58,
+      "paragraphs": 334
+    },
+    {
+      "chapter": 14,
+      "title": "Entities and Resolution",
+      "fls_id": "fls_gdeyap4or1db",
+      "file": "chapter_14.json",
+      "sections": 24,
+      "paragraphs": 364
+    },
+    {
+      "chapter": 15,
+      "title": "Ownership and Destruction",
+      "fls_id": "fls_ronnwodjjjsh",
+      "file": "chapter_15.json",
+      "sections": 11,
+      "paragraphs": 151
+    },
+    {
+      "chapter": 16,
+      "title": "Exceptions and Errors",
+      "fls_id": "fls_dzq9cdz4ibsz",
+      "file": "chapter_16.json",
+      "sections": 3,
+      "paragraphs": 14
+    },
+    {
+      "chapter": 17,
+      "title": "Concurrency",
+      "fls_id": "fls_3v733mnewssy",
+      "file": "chapter_17.json",
+      "sections": 4,
+      "paragraphs": 29
+    },
+    {
+      "chapter": 18,
+      "title": "Program Structure and Compilation",
+      "fls_id": "fls_hdwwrsyunir",
+      "file": "chapter_18.json",
+      "sections": 8,
+      "paragraphs": 46
+    },
+    {
+      "chapter": 19,
+      "title": "Unsafety",
+      "fls_id": "fls_jep7p27kaqlp",
+      "file": "chapter_19.json",
+      "sections": 1,
+      "paragraphs": 11
+    },
+    {
+      "chapter": 20,
+      "title": "Macros",
+      "fls_id": "fls_83182bfa9uqb",
+      "file": "chapter_20.json",
+      "sections": 15,
+      "paragraphs": 190
+    },
+    {
+      "chapter": 21,
+      "title": "FFI",
+      "fls_id": "fls_osd6c4utyjb3",
+      "file": "chapter_21.json",
+      "sections": 5,
+      "paragraphs": 51
+    },
+    {
+      "chapter": 22,
+      "title": "Inline Assembly",
+      "fls_id": "fls_z1il3w9nulzy",
+      "file": "chapter_22.json",
+      "sections": 11,
+      "paragraphs": 327
+    }
+  ],
+  "aggregate_statistics": {
+    "total_sections": 338,
+    "total_paragraphs": 4054,
+    "paragraphs_by_category": {
+      "-8": 233,
+      "-7": 88,
+      "-6": 13,
+      "-5": 13,
+      "-4": 29,
+      "-3": 355,
+      "-2": 3256,
+      "-1": 67
+    }
+  }
+}

@@ -40,6 +40,7 @@
       "description": "Panic",
       "status": "deliberately_avoided",
       "findings": {
+        "count": 5772,
         "direct_panic_macro": {
           "count": 0,
           "note": "All panics go through fatal_panic! wrapper for audit trail"
@@ -85,8 +86,7 @@
         "Production code uses fatal_panic! (321 calls) instead of raw panic! for logging",
         "fail! macro (1,082 calls) is preferred for recoverable errors",
         "unwrap() primarily confined to tests (~4,300 test vs ~494 production)"
-      ],
-      "count": 5772
+      ]
     },
     "abort": {
       "fls_section": "16.2",
@@ -96,6 +96,7 @@
       "description": "Abort",
       "status": "demonstrated",
       "findings": {
+        "count": 20,
         "abort_wrapper": {
           "count": 10,
           "note": "Platform abstraction layer provides abort()"
@@ -125,13 +126,22 @@
         },
         {
           "file": "examples/nostd/posix/rust/publish-subscribe/src/subscriber.rs",
-          "line": [95, 96, 97, 98],
+          "line": [
+            95,
+            96,
+            97,
+            98
+          ],
           "code": "SignalHandler::abort();\n\nloop {\n    core::hint::spin_loop();\n}",
           "purpose": "no_std panic handler calls abort then loops to prevent return"
         },
         {
           "file": "iceoryx2-pal/posix/src/android/signal.rs",
-          "line": [71, 72, 73],
+          "line": [
+            71,
+            72,
+            73
+          ],
           "code": "pub unsafe fn abort() {\n    libc::abort()\n}",
           "purpose": "Platform abstraction layer abort wrapper calling libc abort on Android"
         }
@@ -139,8 +149,7 @@
       "safety_notes": [
         "Abort only exposed through SignalHandler::abort() safe wrapper",
         "Used exclusively in no_std panic handlers as last resort"
-      ],
-      "count": 20
+      ]
     }
   }
 }

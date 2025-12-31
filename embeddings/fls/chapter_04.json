@@ -1,0 +1,2083 @@
+{
+  "chapter": 4,
+  "title": "Types and Traits",
+  "fls_id": "fls_vgb6ev541b2r",
+  "file": "types-and-traits",
+  "extraction_date": "2025-12-31",
+  "category_codes": {
+    "0": "section",
+    "-1": "general",
+    "-2": "legality_rules",
+    "-3": "dynamic_semantics",
+    "-4": "undefined_behavior",
+    "-5": "implementation_requirements",
+    "-6": "implementation_permissions",
+    "-7": "examples",
+    "-8": "syntax"
+  },
+  "statistics": {
+    "total_sections": 58,
+    "total_paragraphs": 685,
+    "paragraphs_by_category": {
+      "-8": 19,
+      "-7": 14,
+      "-4": 7,
+      "-3": 1,
+      "-2": 644
+    }
+  },
+  "sections": [
+    {
+      "fls_id": "fls_vgb6ev541b2r",
+      "title": "Types and Traits",
+      "category": 0,
+      "level": 1,
+      "file": "types-and-traits",
+      "content": "Types and Traits",
+      "rubrics": {},
+      "parent_fls_id": null,
+      "sibling_fls_ids": []
+    },
+    {
+      "fls_id": "fls_kwsBxMQNTRnL",
+      "title": "Types",
+      "category": 0,
+      "level": 2,
+      "file": "types-and-traits",
+      "content": "Types\n\n TypeSpecificationList ::=\n TypeSpecification ($$,$$ TypeSpecification)* $$,$$?\n\n TypeSpecificationWithoutBounds ::=\n ArrayTypeSpecification\n | FunctionPointerTypeSpecification\n | ImplTraitTypeSpecificationOneBound\n | InferredType\n | MacroInvocation\n | NeverType\n | ParenthesizedTypeSpecification\n | QualifiedTypePath\n | RawPointerTypeSpecification\n | ReferenceTypeSpecification\n | SliceTypeSpecification\n | TraitObjectTypeSpecificationOneBound\n | TupleTypeSpecification\n | TypePath\n\n TypeAscription ::=\n $$:$$ TypeSpecification\n\nA type defines a set of [value]s and a set of operations that act on\nthose [value]s.\n\nA local type is a type that is defined in the current crate.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_4rhjpdu4zfqj": "A type defines a set of [value]s and a set of operations that act on those [value]s.",
+            "fls_0yaYKnFrJkhG": "A local type is a type that is defined in the current crate."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "TypeSpecification ::=\n       ImplTraitTypeSpecification\n     | TraitObjectTypeSpecification\n     | TypeSpecificationWithoutBounds\n\n   TypeSpecificationList ::=\n       TypeSpecification ($$,$$ TypeSpecification)* $$,$$?\n\n   TypeSpecificationWithoutBounds ::=\n       ArrayTypeSpecification\n     | FunctionPointerTypeSpecification\n     | ImplTraitTypeSpecificationOneBound\n     | InferredType\n     | MacroInvocation\n     | NeverType\n     | ParenthesizedTypeSpecification\n     | QualifiedTypePath\n     | ..."
+          }
+        }
+      },
+      "parent_fls_id": "fls_vgb6ev541b2r",
+      "sibling_fls_ids": [
+        "fls_963gsjp2jas2",
+        "fls_id66vnaqw0zt",
+        "fls_fbchw64p6n2x",
+        "fls_wdec78luqh5b",
+        "fls_hbbek3z4wtcs",
+        "fls_3i4ou0dq64ny",
+        "fls_1ompd93w7c9f",
+        "fls_3pbipk8ki18d",
+        "fls_kgvleup5mdhq",
+        "fls_7pby13muw48o",
+        "fls_j02707n615z0",
+        "fls_85vx1qfa061i",
+        "fls_jeoas4n6su4"
+      ]
+    },
+    {
+      "fls_id": "fls_963gsjp2jas2",
+      "title": "Type Classification",
+      "category": 0,
+      "level": 2,
+      "file": "types-and-traits",
+      "content": "Type Classification\n\n[Type]s are organized in the following categories:\n\n* [Scalar type]s\n\n * Bool type\n\n * Char type\n\n * [Numeric type]s\n\n * Floating-point type\n\n * Integer type\n\n* [Sequence type]s\n\n * [Array type]s\n\n * [Slice type]s\n\n * Str type\n\n * [Tuple type]s\n\n* [Abstract data type]s\n\n * [Enum type]s\n\n * [Struct type]s\n\n * [Union type]s\n\n* [Function type]s\n\n * [Closure type]s\n\n * [Function item type]s\n\n* [Indirection type]s\n\n * [Function pointer type]s\n\n * [Raw pointer type]s\n\n * [Reference type]s\n\n* [Trait type]s\n\n * [Impl trait type]s\n\n * [Trait object type]s\n\n* Other [type]s\n\n * [Inferred type]s\n\n * Never type\n\n * [Parenthesized type]s",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_c4xe3pkn0n3o": "[Type]s are organized in the following categories:",
+            "fls_69zyas59o8ff": "[Scalar type]s",
+            "fls_65hcyqizo1da": "Bool type",
+            "fls_zge99l49az8w": "Char type",
+            "fls_vizoconv3ir": "[Numeric type]s",
+            "fls_ne6bgnh1eyrj": "Floating-point type",
+            "fls_jvj8l8366kl2": "Integer type",
+            "fls_eek1jn1rwjh9": "[Sequence type]s",
+            "fls_s0aduyvz4i7f": "[Array type]s",
+            "fls_zb5e79ai7w5i": "[Slice type]s",
+            "fls_yjp19vt46asy": "Str type",
+            "fls_xflj5df6upc7": "[Tuple type]s",
+            "fls_u43jnp9jnw29": "[Abstract data type]s",
+            "fls_lric8bf631nw": "[Enum type]s",
+            "fls_98djh9avlqc0": "[Struct type]s",
+            "fls_b3ymsm8dmo4": "[Union type]s",
+            "fls_9x5atvhdq0j2": "[Function type]s",
+            "fls_n5rgqgnxk9to": "[Closure type]s",
+            "fls_s7ndqc5sizdy": "[Function item type]s",
+            "fls_jrohsv7hx7yw": "[Indirection type]s",
+            "fls_1kg1mknf4yx7": "[Function pointer type]s",
+            "fls_bw8zutjcteki": "[Raw pointer type]s",
+            "fls_nqezuc9u6wpn": "[Reference type]s",
+            "fls_lh52q6f6snfh": "[Trait type]s",
+            "fls_qqg0uixrd1a4": "[Impl trait type]s",
+            "fls_b8ecqp2argmn": "[Trait object type]s",
+            "fls_m5vtcars8aga": "Other [type]s",
+            "fls_lw38557rqikt": "[Inferred type]s",
+            "fls_jxn63ow9xby3": "Never type",
+            "fls_a81tweobvm0p": "[Parenthesized type]s"
+          }
+        }
+      },
+      "parent_fls_id": "fls_vgb6ev541b2r",
+      "sibling_fls_ids": [
+        "fls_kwsBxMQNTRnL",
+        "fls_id66vnaqw0zt",
+        "fls_fbchw64p6n2x",
+        "fls_wdec78luqh5b",
+        "fls_hbbek3z4wtcs",
+        "fls_3i4ou0dq64ny",
+        "fls_1ompd93w7c9f",
+        "fls_3pbipk8ki18d",
+        "fls_kgvleup5mdhq",
+        "fls_7pby13muw48o",
+        "fls_j02707n615z0",
+        "fls_85vx1qfa061i",
+        "fls_jeoas4n6su4"
+      ]
+    },
+    {
+      "fls_id": "fls_id66vnaqw0zt",
+      "title": "Scalar Types",
+      "category": 0,
+      "level": 2,
+      "file": "types-and-traits",
+      "content": "Scalar Types",
+      "rubrics": {},
+      "parent_fls_id": "fls_vgb6ev541b2r",
+      "sibling_fls_ids": [
+        "fls_kwsBxMQNTRnL",
+        "fls_963gsjp2jas2",
+        "fls_fbchw64p6n2x",
+        "fls_wdec78luqh5b",
+        "fls_hbbek3z4wtcs",
+        "fls_3i4ou0dq64ny",
+        "fls_1ompd93w7c9f",
+        "fls_3pbipk8ki18d",
+        "fls_kgvleup5mdhq",
+        "fls_7pby13muw48o",
+        "fls_j02707n615z0",
+        "fls_85vx1qfa061i",
+        "fls_jeoas4n6su4"
+      ]
+    },
+    {
+      "fls_id": "fls_tiqp1gxf116z",
+      "title": "Bool Type",
+      "category": 0,
+      "level": 3,
+      "file": "types-and-traits",
+      "content": "Bool Type\n\nBool is a type whose [value]s denote the truth [value]s of\nlogic and Boolean algebra.\n\nType bool appears in the language prelude under the name\nbool.\n\nBoolean value false has bit pattern 0x00. Boolean value\ntrue has bit pattern 0x01.\n\nThe following operations are defined on type bool:\n\n**Logical not**\n\n**Logical and**\n\n**Logical or**\n\n**Logical exclusive or (xor)**\n\n**Equality**\n\n**Greater than**\n\nOperation a != b is equivalent to !(a == b).\n\nOperation a >= b is equivalent to a == b | a > b.\n\nOperation a < b is equivalent to !(a >= b).\n\nOperation a <= b is equivalent to a == b | a < b.\n\nIt is a validity invariant for a value of type bool to have\na bit pattern of 0x00 and 0x01.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_h5994su1yft3": "Bool is a type whose [value]s denote the truth [value]s of logic and Boolean algebra.",
+            "fls_v8atmrwz6wzk": "Type bool appears in the language prelude under the name bool.",
+            "fls_iye7ho2ynyhn": "Boolean value false has bit pattern 0x00. Boolean value true has bit pattern 0x01.",
+            "fls_7nd5tixyqir8": "The following operations are defined on type bool:",
+            "fls_w2dzqq54fjhb": "**Logical not** .. list-table:: -",
+            "fls_ufmd38hi9t9y": "- **a** - **!a** -",
+            "fls_5allcjkjnon2": "- true - false -",
+            "fls_3bibysz95ktn": "- false - true",
+            "fls_fxq19dqtmifj": "**Logical and** .. list-table:: -",
+            "fls_drhpcwoblcux": "- **a** - **b** - **a & b** -",
+            "fls_v86qrsqcs3nd": "- true - true - true -",
+            "fls_dd49lb2k3erc": "- true - false - false -",
+            "fls_t6ef5x4x5poi": "- false - true - false -",
+            "fls_kqtgjgn1hqrj": "- false - false - false",
+            "fls_ws15ilzf8n6z": "**Logical or** .. list-table:: -",
+            "fls_ni4mgq3mouek": "- **a** - **b** - **a | b** -",
+            "fls_6c9ax4qsr1gy": "- true - true - true -",
+            "fls_sqcgvpr4egtx": "- true - false - true -",
+            "fls_9ys0itbp4okd": "- false - true - true -",
+            "fls_b46gbyid15zx": "- false - false - false",
+            "fls_f8ag276ecbze": "**Logical exclusive or (xor)** .. list-table:: -",
+            "fls_twwjcrcfirdi": "- **a** - **b** - **a ^ b** -",
+            "fls_wovu7330vdrq": "- true - true - false -",
+            "fls_7xopdco6iy74": "- true - false - true -",
+            "fls_nb5cb6en2p5w": "- false - true - true -",
+            "fls_gd28wfcfs2pv": "- false - false - false",
+            "fls_67a7p57nzbul": "**Equality** .. list-table:: -",
+            "fls_cq0qunw51m94": "- **a** - **b** - **a == b** -",
+            "fls_o1e4tnh7v3db": "- true - true - true -",
+            "fls_6vnv3ygisjr": "- true - false - false -",
+            "fls_s6m9abmmtc9i": "- false - true - false -",
+            "fls_s19vu65z96y5": "- false - false - true",
+            "fls_2d4aqspw0wlt": "**Greater than** .. list-table:: -",
+            "fls_msjo2zd67zn1": "- **a** - **b** - **a > b** -",
+            "fls_w1oti03tm1y6": "- true - true - false -",
+            "fls_9gqd7eevbknt": "- true - false - true -",
+            "fls_r4o2rmhqg4br": "- false - true - false -",
+            "fls_1n7p6ij1dpm": "- false - false - false",
+            "fls_4x27kfiodb8": "Operation a != b is equivalent to !(a == b).",
+            "fls_me6bf9m2ypt": "Operation a >= b is equivalent to a == b | a > b.",
+            "fls_2j659ns8wop4": "Operation a < b is equivalent to !(a >= b).",
+            "fls_d09l2rl0161l": "Operation a <= b is equivalent to a == b | a < b."
+          }
+        },
+        "-4": {
+          "paragraphs": {
+            "fls_2sd39mj05mb9": "It is a validity invariant for a value of type bool to have a bit pattern of 0x00 and 0x01."
+          }
+        }
+      },
+      "parent_fls_id": "fls_id66vnaqw0zt",
+      "sibling_fls_ids": [
+        "fls_wrvjizrqf3po",
+        "fls_qwljwqr07slp"
+      ]
+    },
+    {
+      "fls_id": "fls_wrvjizrqf3po",
+      "title": "Char Type",
+      "category": 0,
+      "level": 3,
+      "file": "types-and-traits",
+      "content": "Char Type\n\nChar is a type whose [value]s are represented as a 32-bit\nunsigned word in the 0x000 - 0xD7FF or the 0xE000 - 0x10FFFF inclusive ranges\nof Unicode.\n\nIt is a validity invariant for a value of type char to be\ninside the 0x000 - 0xD7FF or the 0xE000 - 0x10FFFF inclusive ranges of\nUnicode.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_vnwbs0exbwcn": "Char is a type whose [value]s are represented as a 32-bit unsigned word in the 0x000 - 0xD7FF or the 0xE000 - 0x10FFFF inclusive ranges of Unicode."
+          }
+        },
+        "-4": {
+          "paragraphs": {
+            "fls_juysxea25owj": "It is a validity invariant for a value of type char to be inside the 0x000 - 0xD7FF or the 0xE000 - 0x10FFFF inclusive ranges of Unicode."
+          }
+        }
+      },
+      "parent_fls_id": "fls_id66vnaqw0zt",
+      "sibling_fls_ids": [
+        "fls_tiqp1gxf116z",
+        "fls_qwljwqr07slp"
+      ]
+    },
+    {
+      "fls_id": "fls_qwljwqr07slp",
+      "title": "Numeric Types",
+      "category": 0,
+      "level": 3,
+      "file": "types-and-traits",
+      "content": "Numeric Types",
+      "rubrics": {},
+      "parent_fls_id": "fls_id66vnaqw0zt",
+      "sibling_fls_ids": [
+        "fls_tiqp1gxf116z",
+        "fls_wrvjizrqf3po"
+      ]
+    },
+    {
+      "fls_id": "fls_b4xporvr64s",
+      "title": "Floating Point Types",
+      "category": 0,
+      "level": 4,
+      "file": "types-and-traits",
+      "content": "Floating Point Types\n\nType f32 is equivalent to the IEEE 754-2008 binary32 type.\n\nType f64 is equivalent to the IEEE 754-2008 binary64 type.\n\nOperations on values of [floating point type]s may not preserve the sign bit in case of the value being a IEEE floating-point NaN.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_30yny2xb9b6b": "Type f32 is equivalent to the IEEE 754-2008 binary32 type.",
+            "fls_yqflrq9s6p6n": "Type f64 is equivalent to the IEEE 754-2008 binary64 type."
+          }
+        },
+        "-3": {
+          "paragraphs": {
+            "fls_nuFAwLHOdQBx": "Operations on values of [floating point type]s may not preserve the sign bit in case of the value being a IEEE floating-point NaN."
+          }
+        }
+      },
+      "parent_fls_id": "fls_qwljwqr07slp",
+      "sibling_fls_ids": [
+        "fls_3qnpv2z7yjil"
+      ]
+    },
+    {
+      "fls_id": "fls_3qnpv2z7yjil",
+      "title": "Integer Types",
+      "category": 0,
+      "level": 4,
+      "file": "types-and-traits",
+      "content": "Integer Types\n\n[Unsigned integer type]s define the following inclusive ranges over the\ndomain of whole numbers:\n\nType usize has the same number of bits as the platform's\npointer type, and is at least 16-bits wide.\n\n[Signed integer type]s define the following inclusive ranges over the\ndomain of whole numbers:\n\nType isize has the same number of bits as the platform's\npointer type, and is at least 16-bits wide.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_cokwseo3nnr": "[Unsigned integer type]s define the following inclusive ranges over the domain of whole numbers: .. list-table:: -",
+            "fls_vk1skn6ek36u": "- **Type** - **Minimum** - **Maximum** -",
+            "fls_iikexw8ps6mk": "- u8 - 0 - 2\\ :sup:8 - 1 -",
+            "fls_cavasxxlgs7g": "- u16 - 0 - 2\\ :sup:16 - 1 -",
+            "fls_7sx92xsjx3pl": "- u32 - 0 - 2\\ :sup:32 - 1 -",
+            "fls_q9f95uet7gq4": "- u64 - 0 - 2\\ :sup:64 - 1 -",
+            "fls_yjb3kzijd19v": "- u128 - 0 - 2\\ :sup:128 - 1",
+            "fls_75lntwhg20l": "Type usize has the same number of bits as the platform's pointer type, and is at least 16-bits wide.",
+            "fls_p2shoji3xg5a": "[Signed integer type]s define the following inclusive ranges over the domain of whole numbers: .. list-table:: -",
+            "fls_fsyt05u9y4sl": "- **Type** - **Minimum** - **Maximum** -",
+            "fls_p9ffvtajr832": "- i8 - \\- (2\\ :sup:7) - 2\\ :sup:7 - 1 -",
+            "fls_j6xan9f8udw7": "- i16 - \\- (2\\ :sup:15) - 2\\ :sup:15 - 1 -",
+            "fls_4t39p3ibkzu7": "- i32 - \\- (2\\ :sup:31) - 2\\ :sup:31 - 1 -",
+            "fls_egfoxke0lzje": "- i64 - \\- (2\\ :sup:63) - 2\\ :sup:63 - 1 -",
+            "fls_4c4qpel1tbqs": "- i128 - \\- (2\\ :sup:127) - 2\\ :sup:127 - 1",
+            "fls_t9oyfmgqka6u": "Type isize has the same number of bits as the platform's pointer type, and is at least 16-bits wide."
+          }
+        }
+      },
+      "parent_fls_id": "fls_qwljwqr07slp",
+      "sibling_fls_ids": [
+        "fls_b4xporvr64s"
+      ]
+    },
+    {
+      "fls_id": "fls_fbchw64p6n2x",
+      "title": "Sequence Types",
+      "category": 0,
+      "level": 2,
+      "file": "types-and-traits",
+      "content": "Sequence Types",
+      "rubrics": {},
+      "parent_fls_id": "fls_vgb6ev541b2r",
+      "sibling_fls_ids": [
+        "fls_kwsBxMQNTRnL",
+        "fls_963gsjp2jas2",
+        "fls_id66vnaqw0zt",
+        "fls_wdec78luqh5b",
+        "fls_hbbek3z4wtcs",
+        "fls_3i4ou0dq64ny",
+        "fls_1ompd93w7c9f",
+        "fls_3pbipk8ki18d",
+        "fls_kgvleup5mdhq",
+        "fls_7pby13muw48o",
+        "fls_j02707n615z0",
+        "fls_85vx1qfa061i",
+        "fls_jeoas4n6su4"
+      ]
+    },
+    {
+      "fls_id": "fls_uj0kpjwyld60",
+      "title": "Array Types",
+      "category": 0,
+      "level": 3,
+      "file": "types-and-traits",
+      "content": "Array Types\n\n ElementType ::=\n TypeSpecification\n\nAn array type is a sequence type that represents a fixed sequence\nof elements.\n\nThe element type shall be a fixed sized type.\n\nThe size operand shall be a constant expression\nor an inferred constant.\n\nThe type of the size operand is type usize.\n\nAn array type in the context of a let statement:",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_fx7b3qv3ghca": "An array type is a sequence type that represents a fixed sequence of elements.",
+            "fls_pkts1p2dnxo": "The element type shall be a fixed sized type.",
+            "fls_imr2jx6cbuzq": "The size operand shall be a constant expression or an inferred constant.",
+            "fls_r8nqxry2dlww": "The type of the size operand is type usize."
+          }
+        },
+        "-7": {
+          "paragraphs": {
+            "fls_9vjijqi9w8wn": "An array type in the context of a let statement: .. code-block:: rust let array: [i32; 3] = [1, 2, 3];"
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "ArrayTypeSpecification ::=\n       $$[$$ ElementType $$;$$ SizeOperand $$]$$\n\n   ElementType ::=\n       TypeSpecification"
+          }
+        }
+      },
+      "parent_fls_id": "fls_fbchw64p6n2x",
+      "sibling_fls_ids": [
+        "fls_vpbikb73dw4k",
+        "fls_4agmmu5al6gt",
+        "fls_4ckl3n2ko3i4"
+      ]
+    },
+    {
+      "fls_id": "fls_vpbikb73dw4k",
+      "title": "Slice Types",
+      "category": 0,
+      "level": 3,
+      "file": "types-and-traits",
+      "content": "Slice Types\n\nA slice type is a sequence type that provides a view into a sequence\nof elements.\n\nThe element type shall be a fixed sized type.\n\nA slice type is a dynamically sized type.\n\nA slice type in the context of a let statement:",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_ftvua2hlvr08": "A slice type is a sequence type that provides a view into a sequence of elements.",
+            "fls_acgtczhk8ci0": "The element type shall be a fixed sized type.",
+            "fls_5gl67ftc3m21": "A slice type is a dynamically sized type."
+          }
+        },
+        "-7": {
+          "paragraphs": {
+            "fls_nsny832ap4v1": "A slice type in the context of a let statement: .. code-block:: rust let array: [i32; 3] = [1, 2, 3]; let slice: &[i32] = &array[0..1];"
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "SliceTypeSpecification ::=\n       $$[$$ ElementType $$]$$"
+          }
+        }
+      },
+      "parent_fls_id": "fls_fbchw64p6n2x",
+      "sibling_fls_ids": [
+        "fls_uj0kpjwyld60",
+        "fls_4agmmu5al6gt",
+        "fls_4ckl3n2ko3i4"
+      ]
+    },
+    {
+      "fls_id": "fls_4agmmu5al6gt",
+      "title": "Str Type",
+      "category": 0,
+      "level": 3,
+      "file": "types-and-traits",
+      "content": "Str Type\n\nStr is a sequence type that represents a slice of 8-bit unsigned\nbytes.\n\nType str is a dynamically sized type.\n\nA value of type str shall denote a valid UTF-8 sequence of\ncharacters.\n\nIt is a safety invariant for a value of type str to denote\na valid UTF-8 sequence of characters.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_wlnoq1qoq2kr": "Str is a sequence type that represents a slice of 8-bit unsigned bytes.",
+            "fls_1xa6fas6laha": "Type str is a dynamically sized type.",
+            "fls_yu7r2077n9m7": "A value of type str shall denote a valid UTF-8 sequence of characters."
+          }
+        },
+        "-4": {
+          "paragraphs": {
+            "fls_wacoqrtzvrwu": "It is a safety invariant for a value of type str to denote a valid UTF-8 sequence of characters."
+          }
+        }
+      },
+      "parent_fls_id": "fls_fbchw64p6n2x",
+      "sibling_fls_ids": [
+        "fls_uj0kpjwyld60",
+        "fls_vpbikb73dw4k",
+        "fls_4ckl3n2ko3i4"
+      ]
+    },
+    {
+      "fls_id": "fls_4ckl3n2ko3i4",
+      "title": "Tuple Types",
+      "category": 0,
+      "level": 3,
+      "file": "types-and-traits",
+      "content": "Tuple Types\n\n TupleFieldList ::=\n TupleField ($$,$$ TupleField)* $$,$$?\n\n TupleField ::=\n TypeSpecification\n\nA tuple type is a sequence type that represents a heterogeneous list\nof other [type]s.\n\nIf the type of a tuple field is a dynamically-sized type, then\nthe tuple field shall be the last tuple field in the\nTupleFieldList.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_bn7wmf681ngt": "A tuple type is a sequence type that represents a heterogeneous list of other [type]s.",
+            "fls_s9a36zsrfqew": "If the type of a tuple field is a dynamically-sized type, then the tuple field shall be the last tuple field in the TupleFieldList."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "TupleTypeSpecification ::=\n       $$($$ TupleFieldList? $$)$$\n\n   TupleFieldList ::=\n       TupleField ($$,$$ TupleField)* $$,$$?\n\n   TupleField ::=\n       TypeSpecification"
+          }
+        }
+      },
+      "parent_fls_id": "fls_fbchw64p6n2x",
+      "sibling_fls_ids": [
+        "fls_uj0kpjwyld60",
+        "fls_vpbikb73dw4k",
+        "fls_4agmmu5al6gt"
+      ]
+    },
+    {
+      "fls_id": "fls_wdec78luqh5b",
+      "title": "Abstract Data Types",
+      "category": 0,
+      "level": 2,
+      "file": "types-and-traits",
+      "content": "Abstract Data Types",
+      "rubrics": {},
+      "parent_fls_id": "fls_vgb6ev541b2r",
+      "sibling_fls_ids": [
+        "fls_kwsBxMQNTRnL",
+        "fls_963gsjp2jas2",
+        "fls_id66vnaqw0zt",
+        "fls_fbchw64p6n2x",
+        "fls_hbbek3z4wtcs",
+        "fls_3i4ou0dq64ny",
+        "fls_1ompd93w7c9f",
+        "fls_3pbipk8ki18d",
+        "fls_kgvleup5mdhq",
+        "fls_7pby13muw48o",
+        "fls_j02707n615z0",
+        "fls_85vx1qfa061i",
+        "fls_jeoas4n6su4"
+      ]
+    },
+    {
+      "fls_id": "fls_szibmtfv117b",
+      "title": "Enum Types",
+      "category": 0,
+      "level": 3,
+      "file": "types-and-traits",
+      "content": "Enum Types\n\n EnumVariantList ::=\n EnumVariant ($$,$$ EnumVariant)* $$,$$?\n\n EnumVariant ::=\n OuterAttributeOrDoc* VisibilityModifier? Name EnumVariantKind?\n\n EnumVariantKind ::=\n DiscriminantInitializer\n | RecordStructFieldList\n | TupleStructFieldList\n\n DiscriminantInitializer ::=\n $$=$$ Expression\n\nAn enum type is an abstract data type that contains\n[enum variant]s.\n\nA zero-variant enum type has no [value]s.\n\nAn enum variant is a construct that declares one of the\npossible variations of an enum.\n\nThe name of an enum variant shall be unique within the related\nEnumDeclaration.\n\nA discriminant is an opaque integer that identifies an enum variant.\n\nA discriminant initializer shall be specified only when all [enum\nvariant]s appear without an EnumVariantKind.\n\nThe type of the expression of a discriminant initializer shall\nbe either:\n\n* The type of the primitive representation specified by attribute\n repr, or\n\n* Type isize.\n\nThe value of the expression of a discriminant initializer shall\nbe a constant expression.\n\nThe value of a discriminant of an enum variant is determined\nas follows:\n\n#. If the enum variant contains a discriminant initializer, then the\n value is the value of its expression.\n\n#. Otherwise, if the enum variant is the first enum variant in the\n EnumVariantList, then the value is zero.\n\n#. Otherwise the value is one greater than the value of the\n discriminant of the previous enum variant.\n\nIt is a static error if two [enum variant]s have [discriminant]s\nwith the same value.\n\nIt is a static error if the value of a discriminant exceeds the\nmaximum value of the type of the expression of a discriminant\ninitializer.\n\nIt is a validity invariant for a value of an enum type to have a\ndiscriminant specified by the enum type.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_gbdd37seqoab": "An enum type is an abstract data type that contains [enum variant]s.",
+            "fls_il9a1olqmu38": "A zero-variant enum type has no [value]s.",
+            "fls_wQTFwl88VujQ": "An enum variant is a construct that declares one of the possible variations of an enum.",
+            "fls_g5qle7xzaoif": "The name of an enum variant shall be unique within the related EnumDeclaration.",
+            "fls_t4yeovFm83Wo": "A discriminant is an opaque integer that identifies an enum variant.",
+            "fls_hp5frc752dam": "A discriminant initializer shall be specified only when all [enum variant]s appear without an EnumVariantKind.",
+            "fls_pijczoq4k9ij": "The type of the expression of a discriminant initializer shall be either:",
+            "fls_x7nh42on06bg": "The type of the primitive representation specified by attribute repr, or",
+            "fls_duqbzvpuehvv": "Type isize.",
+            "fls_ly183pj4fkgh": "The value of the expression of a discriminant initializer shall be a constant expression.",
+            "fls_w7sggezgq9o4": "The value of a discriminant of an enum variant is determined as follows: #.",
+            "fls_93l5o6qar5p2": "If the enum variant contains a discriminant initializer, then the value is the value of its expression. #.",
+            "fls_t36rk3wikq28": "Otherwise, if the enum variant is the first enum variant in the EnumVariantList, then the value is zero. #.",
+            "fls_8ajw5trd23wi": "Otherwise the value is one greater than the value of the discriminant of the previous enum variant.",
+            "fls_w9xj26ej869w": "It is a static error if two [enum variant]s have [discriminant]s with the same value.",
+            "fls_wqbuof7kxsrg": "It is a static error if the value of a discriminant exceeds the maximum value of the type of the expression of a discriminant initializer."
+          }
+        },
+        "-4": {
+          "paragraphs": {
+            "fls_f046du2fkgr6": "It is a validity invariant for a value of an enum type to have a discriminant specified by the enum type."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "EnumDeclaration ::=\n       $$enum$$ Name GenericParameterList? WhereClause? $${$$ EnumVariantList? $$}$$\n\n   EnumVariantList ::=\n       EnumVariant ($$,$$ EnumVariant)* $$,$$?\n\n   EnumVariant ::=\n       OuterAttributeOrDoc* VisibilityModifier? Name EnumVariantKind?\n\n   EnumVariantKind ::=\n       DiscriminantInitializer\n     | RecordStructFieldList\n     | TupleStructFieldList\n\n   DiscriminantInitializer ::=\n       $$=$$ Expression"
+          }
+        }
+      },
+      "parent_fls_id": "fls_wdec78luqh5b",
+      "sibling_fls_ids": [
+        "fls_9ucqbbd0s2yo",
+        "fls_fmdn7n7s413d"
+      ]
+    },
+    {
+      "fls_id": "fls_9ucqbbd0s2yo",
+      "title": "Struct Types",
+      "category": 0,
+      "level": 3,
+      "file": "types-and-traits",
+      "content": "Struct Types\n\n RecordStructDeclaration ::=\n $$struct$$ Name GenericParameterList? WhereClause? RecordStructFieldList\n\n RecordStructFieldList ::=\n $${$$ (RecordStructField ($$,$$ RecordStructField)* $$,$$?)? $$}$$\n\n RecordStructField ::=\n OuterAttributeOrDoc* VisibilityModifier? Name TypeAscription\n\n TupleStructDeclaration ::=\n $$struct$$ Name GenericParameterList? TupleStructFieldList WhereClause? $$;$$\n\n TupleStructFieldList ::=\n $$($$ (TupleStructField ($$,$$ TupleStructField)* $$,$$?)? $$)$$\n\n TupleStructField ::=\n OuterAttributeOrDoc* VisibilityModifier? TypeSpecification\n\n UnitStructDeclaration ::=\n $$struct$$ Name GenericParameterList? WhereClause? $$;$$\n\nA struct type is an abstract data type that is a product of other\n[type]s.\n\nThe name of a record struct field shall be unique within the\nrelated RecordStructDeclaration.\n\nIf the type of a record struct field is a dynamically sized type,\nthen the record struct field shall be the last record struct field in\nthe RecordStructFieldList.\n\nIf the type of a tuple struct field is a dynamically sized type,\nthen the tuple struct field shall be the last tuple struct field in\nthe TupleStructFieldList.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_g1azfj548136": "A struct type is an abstract data type that is a product of other [type]s.",
+            "fls_r885av95eivp": "The name of a record struct field shall be unique within the related RecordStructDeclaration.",
+            "fls_auurdv1zvzb": "If the type of a record struct field is a dynamically sized type, then the record struct field shall be the last record struct field in the RecordStructFieldList.",
+            "fls_vce7w0904du5": "If the type of a tuple struct field is a dynamically sized type, then the tuple struct field shall be the last tuple struct field in the TupleStructFieldList."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "StructDeclaration ::=\n       RecordStructDeclaration\n     | TupleStructDeclaration\n     | UnitStructDeclaration\n\n   RecordStructDeclaration ::=\n       $$struct$$ Name GenericParameterList? WhereClause? RecordStructFieldList\n\n   RecordStructFieldList ::=\n       $${$$ (RecordStructField ($$,$$ RecordStructField)* $$,$$?)? $$}$$\n\n   RecordStructField ::=\n       OuterAttributeOrDoc* VisibilityModifier? Name TypeAscription\n\n   TupleStructDeclaration ::=\n       $$struct$$ Name GenericParameterList? Tu..."
+          }
+        }
+      },
+      "parent_fls_id": "fls_wdec78luqh5b",
+      "sibling_fls_ids": [
+        "fls_szibmtfv117b",
+        "fls_fmdn7n7s413d"
+      ]
+    },
+    {
+      "fls_id": "fls_fmdn7n7s413d",
+      "title": "Union Types",
+      "category": 0,
+      "level": 3,
+      "file": "types-and-traits",
+      "content": "Union Types\n\nA union type is an abstract data type that is a sum of other\n[type]s.\n\nA union without any [union field]s is rejected, but may still be consumed by\n[macro]s.\n\nThe name of a union field shall be unique within the related\nRecordStructDeclaration.\n\nThe type of a union field shall be either:\n\n* A copy type, or\n\n* A mutable reference type, or\n\n* core::mem::ManuallyDrop, or\n\n* A tuple type whose [tuple field]s' [type]s are all valid\n union field [type]s, or\n\n* An array type whose element type is a valid union field\n [type]s.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_nskmnzq95yqm": "A union type is an abstract data type that is a sum of other [type]s.",
+            "fls_I5fN5Fmo5CyK": "A union without any [union field]s is rejected, but may still be consumed by [macro]s.",
+            "fls_1caus8ybmfli": "The name of a union field shall be unique within the related RecordStructDeclaration.",
+            "fls_ZJG2Q6lJYXhY": "The type of a union field shall be either:",
+            "fls_hLTnHnZuaHve": "A copy type, or",
+            "fls_JWgSckDtN13c": "A mutable reference type, or",
+            "fls_sXZknxozJxtC": "core::mem::ManuallyDrop, or",
+            "fls_vgNK01SXacnx": "A tuple type whose [tuple field]s' [type]s are all valid union field [type]s, or",
+            "fls_bQhh3zHAKjSu": "An array type whose element type is a valid union field [type]s."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "UnionDeclaration ::=\n       $$union$$ Name GenericParameterList? WhereClause? RecordStructFieldList"
+          }
+        }
+      },
+      "parent_fls_id": "fls_wdec78luqh5b",
+      "sibling_fls_ids": [
+        "fls_szibmtfv117b",
+        "fls_9ucqbbd0s2yo"
+      ]
+    },
+    {
+      "fls_id": "fls_hbbek3z4wtcs",
+      "title": "Function Types",
+      "category": 0,
+      "level": 2,
+      "file": "types-and-traits",
+      "content": "Function Types",
+      "rubrics": {},
+      "parent_fls_id": "fls_vgb6ev541b2r",
+      "sibling_fls_ids": [
+        "fls_kwsBxMQNTRnL",
+        "fls_963gsjp2jas2",
+        "fls_id66vnaqw0zt",
+        "fls_fbchw64p6n2x",
+        "fls_wdec78luqh5b",
+        "fls_3i4ou0dq64ny",
+        "fls_1ompd93w7c9f",
+        "fls_3pbipk8ki18d",
+        "fls_kgvleup5mdhq",
+        "fls_7pby13muw48o",
+        "fls_j02707n615z0",
+        "fls_85vx1qfa061i",
+        "fls_jeoas4n6su4"
+      ]
+    },
+    {
+      "fls_id": "fls_xd2oxlebhs14",
+      "title": "Closure Types",
+      "category": 0,
+      "level": 3,
+      "file": "types-and-traits",
+      "content": "Closure Types\n\nA closure type is a unique anonymous function type that encapsulates\nall [capture target]s of a closure expression.\n\nA closure type implements the core::ops::FnOnce trait.\n\nA closure type that does not move out its [capture target]s\nimplements the core::ops::FnMut trait.\n\nA closure type that does not move out or mutate its [capture target]s\nimplements the core::ops::Fn trait.\n\nA closure type that does not encapsulate [capture target]s is\ncoercible to a function pointer type.\n\nA closure type implicitly implements the core::marker::Copy\ntrait if all the [type]s of the [value]s of the\ncapturing environment implement the core::marker::Copy trait.\n\nA closure type implicitly implements the core::clone::Clone\ntrait if all the [type]s of the [value]s of the\ncapturing environment implement the core::clone::Clone trait.\n\nA closure type implicitly implements the core::marker::Send\ntrait if all the [type]s of the [value]s of the\ncapturing environment implement the core::marker::Send trait.\n\nA closure type implicitly implements the core::marker::Sync\ntrait if all the [type]s of the [value]s of the capturing\nenvironment implement the core::marker::Send trait.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_bsykgnbatpmi": "A closure type is a unique anonymous function type that encapsulates all [capture target]s of a closure expression.",
+            "fls_zfj4l8bigdg0": "A closure type implements the core::ops::FnOnce trait.",
+            "fls_bn0ueivujnqk": "A closure type that does not move out its [capture target]s implements the core::ops::FnMut trait.",
+            "fls_u01kt5glbuz8": "A closure type that does not move out or mutate its [capture target]s implements the core::ops::Fn trait.",
+            "fls_3jeootwe6ucu": "A closure type that does not encapsulate [capture target]s is coercible to a function pointer type.",
+            "fls_63jqtyw0rz8c": "A closure type implicitly implements the core::marker::Copy trait if all the [type]s of the [value]s of the capturing environment implement the core::marker::Copy trait.",
+            "fls_3c4g9njja5s5": "A closure type implicitly implements the core::clone::Clone trait if all the [type]s of the [value]s of the capturing environment implement the core::clone::Clone trait.",
+            "fls_2nuhy0ujgq18": "A closure type implicitly implements the core::marker::Send trait if all the [type]s of the [value]s of the capturing environment implement the core::marker::Send trait.",
+            "fls_5jh07heok8sy": "A closure type implicitly implements the core::marker::Sync trait if all the [type]s of the [value]s of the capturing environment implement the core::marker::Send trait."
+          }
+        }
+      },
+      "parent_fls_id": "fls_hbbek3z4wtcs",
+      "sibling_fls_ids": [
+        "fls_airvr79xkcag"
+      ]
+    },
+    {
+      "fls_id": "fls_airvr79xkcag",
+      "title": "Function Item Types",
+      "category": 0,
+      "level": 3,
+      "file": "types-and-traits",
+      "content": "Function Item Types\n\nA function item type is a unique anonymous function type that\nidentifies a function.\n\nAn external function item type is a function item type where the\nrelated function is an external function.\n\nAn unsafe function item type is a function item type where the related\nfunction is an unsafe function.\n\nA function item type is coercible to a function pointer type.\n\nA function item type implements the core::clone::Clone trait,\nthe core::marker::Copy trait, the core::ops::Fn trait,\nthe core::ops::FnMut trait, the core::ops::FnOnce trait,\nthe core::marker::Send trait, and the core::marker::Sync\ntrait.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_t24iojx7yc23": "A function item type is a unique anonymous function type that identifies a function.",
+            "fls_sas3ahcshnrh": "An external function item type is a function item type where the related function is an external function.",
+            "fls_liwnzwu1el1i": "An unsafe function item type is a function item type where the related function is an unsafe function.",
+            "fls_e9x4f7qxvvjv": "A function item type is coercible to a function pointer type.",
+            "fls_1941wid94hlg": "A function item type implements the core::clone::Clone trait, the core::marker::Copy trait, the core::ops::Fn trait, the core::ops::FnMut trait, the core::ops::FnOnce trait, the core::marker::Send trait, and the core::marker::Sync trait."
+          }
+        }
+      },
+      "parent_fls_id": "fls_hbbek3z4wtcs",
+      "sibling_fls_ids": [
+        "fls_xd2oxlebhs14"
+      ]
+    },
+    {
+      "fls_id": "fls_3i4ou0dq64ny",
+      "title": "Indirection Types",
+      "category": 0,
+      "level": 2,
+      "file": "types-and-traits",
+      "content": "Indirection Types",
+      "rubrics": {},
+      "parent_fls_id": "fls_vgb6ev541b2r",
+      "sibling_fls_ids": [
+        "fls_kwsBxMQNTRnL",
+        "fls_963gsjp2jas2",
+        "fls_id66vnaqw0zt",
+        "fls_fbchw64p6n2x",
+        "fls_wdec78luqh5b",
+        "fls_hbbek3z4wtcs",
+        "fls_1ompd93w7c9f",
+        "fls_3pbipk8ki18d",
+        "fls_kgvleup5mdhq",
+        "fls_7pby13muw48o",
+        "fls_j02707n615z0",
+        "fls_85vx1qfa061i",
+        "fls_jeoas4n6su4"
+      ]
+    },
+    {
+      "fls_id": "fls_xztr1kebz8bo",
+      "title": "Function Pointer Types",
+      "category": 0,
+      "level": 3,
+      "file": "types-and-traits",
+      "content": "Function Pointer Types\n\n FunctionPointerTypeQualifierList ::=\n $$unsafe$$? AbiSpecification?\n\n FunctionPointerTypeParameterList ::=\n FunctionPointerTypeParameter ($$,$$ FunctionPointerTypeParameter)*\n ($$,$$ VariadicPart | $$,$$?)\n\n VariadicPart ::=\n OuterAttributeOrDoc* $$...$$\n\n FunctionPointerTypeParameter ::=\n OuterAttributeOrDoc* (IdentifierOrUnderscore $$:$$)? TypeSpecification\n\nA function pointer type is an indirection type that refers to a\nfunction.\n\nAn unsafe function pointer type is a function pointer type subject to\nkeyword unsafe.\n\nA variadic part indicates the presence of C-like optional\nparameters.\n\nA variadic part can only be used in a variadic function.\n\nThe return type of a function pointer type is determined as follows:\n\n* If the function pointer type specifies a ReturnTypeWithoutBounds, then the return type is the specified ReturnTypeWithoutBounds.\n\n* Otherwise the return type is the unit type.\n\nIt is a validity invariant for a value of a function pointer type\nto be not null.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_v2wrytr3t04h": "A function pointer type is an indirection type that refers to a function.",
+            "fls_5dd7icjcl3nt": "An unsafe function pointer type is a function pointer type subject to keyword unsafe.",
+            "fls_B0SMXRqQMS1E": "A variadic part indicates the presence of C-like optional parameters.",
+            "fls_hbn1l42xmr3h": "A variadic part can only be used in a variadic function.",
+            "fls_g1iYVw7upBnH": "The return type of a function pointer type is determined as follows:",
+            "fls_8gpvNJfVlyaD": "If the function pointer type specifies a ReturnTypeWithoutBounds, then the return type is the specified ReturnTypeWithoutBounds.",
+            "fls_KcI6yK0P8Onn": "Otherwise the return type is the unit type."
+          }
+        },
+        "-4": {
+          "paragraphs": {
+            "fls_52thmi9hnoks": "It is a validity invariant for a value of a function pointer type to be not null."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "FunctionPointerTypeSpecification ::=\n       ForGenericParameterList? FunctionPointerTypeQualifierList $$fn$$\n         $$($$ FunctionPointerTypeParameterList? $$)$$ ReturnTypeWithoutBounds?\n\n   FunctionPointerTypeQualifierList ::=\n       $$unsafe$$? AbiSpecification?\n\n   FunctionPointerTypeParameterList ::=\n       FunctionPointerTypeParameter ($$,$$ FunctionPointerTypeParameter)*\n         ($$,$$ VariadicPart | $$,$$?)\n\n   VariadicPart ::=\n       OuterAttributeOrDoc* $$...$$\n\n   FunctionPointerTyp..."
+          }
+        }
+      },
+      "parent_fls_id": "fls_3i4ou0dq64ny",
+      "sibling_fls_ids": [
+        "fls_ppd1xwve3tr7",
+        "fls_142vncdktbin"
+      ]
+    },
+    {
+      "fls_id": "fls_ppd1xwve3tr7",
+      "title": "Raw Pointer Types",
+      "category": 0,
+      "level": 3,
+      "file": "types-and-traits",
+      "content": "Raw Pointer Types\n\nA raw pointer type is an indirection type without validity guarantees.\n\nA mutable raw pointer type is a raw pointer type subject to\nkeyword mut.\n\nAn immutable raw pointer type is a raw pointer type subject to\nkeyword const.\n\nComparing two [value]s of [raw pointer type]s compares the addresses\nof the [value]s.\n\nComparing a value of a raw pointer type to a value of a\ndynamically sized type compares the data being pointed to.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_rpbhr0xukbx9": "A raw pointer type is an indirection type without validity guarantees.",
+            "fls_bYWfGDAQcWfA": "A mutable raw pointer type is a raw pointer type subject to keyword mut.",
+            "fls_8uWfFAsZeRCs": "An immutable raw pointer type is a raw pointer type subject to keyword const.",
+            "fls_hrum767l6dte": "Comparing two [value]s of [raw pointer type]s compares the addresses of the [value]s.",
+            "fls_k6ues2936pjq": "Comparing a value of a raw pointer type to a value of a dynamically sized type compares the data being pointed to."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "RawPointerTypeSpecification ::=\n       $$*$$ ($$const$$ | $$mut$$) TypeSpecificationWithoutBounds"
+          }
+        }
+      },
+      "parent_fls_id": "fls_3i4ou0dq64ny",
+      "sibling_fls_ids": [
+        "fls_xztr1kebz8bo",
+        "fls_142vncdktbin"
+      ]
+    },
+    {
+      "fls_id": "fls_142vncdktbin",
+      "title": "Reference Types",
+      "category": 0,
+      "level": 3,
+      "file": "types-and-traits",
+      "content": "Reference Types\n\nA reference type is an indirection type with ownership.\n\nA shared reference type is a reference type not subject to\nkeyword mut.\n\nA shared reference type prevents the direct mutation of a referenced\nvalue.\n\nA shared reference type implements the core::marker::Copy\ntrait. Copying a shared reference performs a shallow copy.\n\nReleasing a shared reference has no effect on the value it refers to.\n\nA mutable reference type is a reference type subject to keyword\nmut.\n\nA mutable reference type allows the direct mutation of a referenced\nvalue.\n\nA mutable reference type does not implement the copy::marker::Copy\ntrait.\n\nIt is validity invariant for a value of a reference type to be\nnot null.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_twhq24s8kchh": "A reference type is an indirection type with ownership.",
+            "fls_w4NbA7WhZfR2": "A shared reference type is a reference type not subject to keyword mut.",
+            "fls_ie0avzljmxfm": "A shared reference type prevents the direct mutation of a referenced value.",
+            "fls_15zdiqsm1q3p": "A shared reference type implements the core::marker::Copy trait. Copying a shared reference performs a shallow copy.",
+            "fls_csdjfwczlzfd": "Releasing a shared reference has no effect on the value it refers to.",
+            "fls_GUZuiST7ucib": "A mutable reference type is a reference type subject to keyword mut.",
+            "fls_vaas9kns4zo6": "A mutable reference type allows the direct mutation of a referenced value.",
+            "fls_n6ffcms5pr0r": "A mutable reference type does not implement the copy::marker::Copy trait."
+          }
+        },
+        "-4": {
+          "paragraphs": {
+            "fls_ezh8aq6fmdvz": "It is validity invariant for a value of a reference type to be not null."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "ReferenceTypeSpecification ::=\n       $$&$$ LifetimeIndication? $$mut$$? TypeSpecificationWithoutBounds"
+          }
+        }
+      },
+      "parent_fls_id": "fls_3i4ou0dq64ny",
+      "sibling_fls_ids": [
+        "fls_xztr1kebz8bo",
+        "fls_ppd1xwve3tr7"
+      ]
+    },
+    {
+      "fls_id": "fls_1ompd93w7c9f",
+      "title": "Trait Types",
+      "category": 0,
+      "level": 2,
+      "file": "types-and-traits",
+      "content": "Trait Types",
+      "rubrics": {},
+      "parent_fls_id": "fls_vgb6ev541b2r",
+      "sibling_fls_ids": [
+        "fls_kwsBxMQNTRnL",
+        "fls_963gsjp2jas2",
+        "fls_id66vnaqw0zt",
+        "fls_fbchw64p6n2x",
+        "fls_wdec78luqh5b",
+        "fls_hbbek3z4wtcs",
+        "fls_3i4ou0dq64ny",
+        "fls_3pbipk8ki18d",
+        "fls_kgvleup5mdhq",
+        "fls_7pby13muw48o",
+        "fls_j02707n615z0",
+        "fls_85vx1qfa061i",
+        "fls_jeoas4n6su4"
+      ]
+    },
+    {
+      "fls_id": "fls_3xqobbu7wfsf",
+      "title": "Impl Trait Types",
+      "category": 0,
+      "level": 3,
+      "file": "types-and-traits",
+      "content": "Impl Trait Types\n\n ImplTraitTypeSpecificationOneBound ::=\n $$impl$$ UseCaptures? TraitBound\n\n UseCaptures ::=\n $$use$$ $$<$$ UseCapturesGenericArgs? $$>$$\n\n UseCapturesGenericArgs ::=\n UseCapturesGenericArg ($$,$$ UseCapturesGenericArg)* $$,$$?\n\n UseCapturesGenericArg ::=\n Lifetime\n | Identifier\n\nAn impl trait type is a type that implements a trait, where the\ntype is known at compile time.\n\nAn impl trait type shall appear only within a function parameter or\nthe return type of a function.\n\nAn anonymous return type is an impl trait type ascribed to a\nfunction return type.\n\nAn anonymous return type behaves as if it contained all declared [type\nparameter]s of the return type's function and its parent trait\nor implementation.\n\nAn anonymous return type derived from an async function behaves as if\nit contained all declared [type parameter]s and [lifetime parameter]s\nof the return type's function and its parent trait or\nimplementation.\n\nAn impl trait type shall not contain [opt-out trait bound]s.\n\nAn use capture is a generic parameter referenced within an anonymous return type.\n\nAn anonymous return type that does not specify a list of [use capture]s implicitly [use capture]s all [type parameter]s and [constant parameter]s that are in scope.\n\nAn anonymous return type behaves as if it contained all its [use capture]s.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_a6zlvyxpgsew": "An impl trait type is a type that implements a trait, where the type is known at compile time.",
+            "fls_ieyqx5vzas2m": "An impl trait type shall appear only within a function parameter or the return type of a function.",
+            "fls_3aKZB0ILIkZw": "An anonymous return type is an impl trait type ascribed to a function return type.",
+            "fls_Xo1ODwOyX7Vm": "An anonymous return type behaves as if it contained all declared [type parameter]s of the return type's function and its parent trait or implementation.",
+            "fls_kTGFLFymTWch": "An anonymous return type derived from an async function behaves as if it contained all declared [type parameter]s and [lifetime parameter]s of the return type's function and its parent trait or implementation.",
+            "fls_ECjhEI7eCwAj": "An impl trait type shall not contain [opt-out trait bound]s.",
+            "fls_69hqMjvNno9u": "An use capture is a generic parameter referenced within an anonymous return type.",
+            "fls_KgH6c5cC4S0G": "An anonymous return type that does not specify a list of [use capture]s implicitly [use capture]s all [type parameter]s and [constant parameter]s that are in scope.",
+            "fls_iT9WCNfUZQnC": "An anonymous return type behaves as if it contained all its [use capture]s."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "ImplTraitTypeSpecification ::=\n       $$impl$$ UseCaptures? TypeBoundList\n\n   ImplTraitTypeSpecificationOneBound ::=\n       $$impl$$ UseCaptures? TraitBound\n\n   UseCaptures ::=\n       $$use$$ $$<$$ UseCapturesGenericArgs? $$>$$\n\n   UseCapturesGenericArgs ::=\n       UseCapturesGenericArg ($$,$$ UseCapturesGenericArg)* $$,$$?\n\n   UseCapturesGenericArg ::=\n       Lifetime\n     | Identifier"
+          }
+        }
+      },
+      "parent_fls_id": "fls_1ompd93w7c9f",
+      "sibling_fls_ids": [
+        "fls_qa98qdi42orq"
+      ]
+    },
+    {
+      "fls_id": "fls_qa98qdi42orq",
+      "title": "Trait Object Types",
+      "category": 0,
+      "level": 3,
+      "file": "types-and-traits",
+      "content": "Trait Object Types\n\n TraitObjectTypeSpecificationOneBound ::=\n $$dyn$$ TraitBound\n\nA trait object type is a type that implements a trait, where the\ntype is not known at compile time.\n\nThe principal trait of trait object type is the first trait bound.\n\nThe principal trait shall denote an object safe trait.\n\nAll non-principal trait [trait bound]s shall denote [auto trait]s.\n\nA trait object type shall not contain [opt-out trait bound]s.\n\nA trait object type shall contain at most one lifetime bound.\n\nA trait object type is a dynamically sized type. A\ntrait object type permits late binding of [method]s. A method\ninvoked via a trait object type involves dynamic dispatching.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_sgrvona1nb6h": "A trait object type is a type that implements a trait, where the type is not known at compile time.",
+            "fls_eWac7zOda3lh": "The principal trait of trait object type is the first trait bound.",
+            "fls_9z8oleh0wdel": "The principal trait shall denote an object safe trait.",
+            "fls_hJII8XYAtZeY": "All non-principal trait [trait bound]s shall denote [auto trait]s.",
+            "fls_s0oy2c8t4yz9": "A trait object type shall not contain [opt-out trait bound]s.",
+            "fls_CcoUug6b9ohU": "A trait object type shall contain at most one lifetime bound.",
+            "fls_88b9bmhra55f": "A trait object type is a dynamically sized type. A trait object type permits late binding of [method]s. A method invoked via a trait object type involves dynamic dispatching."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "TraitObjectTypeSpecification ::=\n       $$dyn$$ TypeBoundList\n\n   TraitObjectTypeSpecificationOneBound ::=\n       $$dyn$$ TraitBound"
+          }
+        }
+      },
+      "parent_fls_id": "fls_1ompd93w7c9f",
+      "sibling_fls_ids": [
+        "fls_3xqobbu7wfsf"
+      ]
+    },
+    {
+      "fls_id": "fls_3pbipk8ki18d",
+      "title": "Other Types",
+      "category": 0,
+      "level": 2,
+      "file": "types-and-traits",
+      "content": "Other Types",
+      "rubrics": {},
+      "parent_fls_id": "fls_vgb6ev541b2r",
+      "sibling_fls_ids": [
+        "fls_kwsBxMQNTRnL",
+        "fls_963gsjp2jas2",
+        "fls_id66vnaqw0zt",
+        "fls_fbchw64p6n2x",
+        "fls_wdec78luqh5b",
+        "fls_hbbek3z4wtcs",
+        "fls_3i4ou0dq64ny",
+        "fls_1ompd93w7c9f",
+        "fls_kgvleup5mdhq",
+        "fls_7pby13muw48o",
+        "fls_j02707n615z0",
+        "fls_85vx1qfa061i",
+        "fls_jeoas4n6su4"
+      ]
+    },
+    {
+      "fls_id": "fls_s45k21yn4qur",
+      "title": "Inferred Types",
+      "category": 0,
+      "level": 3,
+      "file": "types-and-traits",
+      "content": "Inferred Types\n\nAn inferred type is a placeholder for a type deduced by\ntype inference.\n\nAn inferred type shall not appear in the following positions:\n\n* Within the InitializationType of a TypeAliasDeclaration,\n\n* Within the ReturnType of a FunctionDeclaration,\n\n* Within the TypeAscription of a ConstantDeclaration, a\n ConstantParameter, a FunctionParameterPattern, a\n RecordStructField, a StaticDeclaration, or a TypedSelf,\n\n* Within the TypeSpecification of a FunctionParameter, an\n ImplementingType, a TupleStructField, a TypeBoundPredicate, or\n a TypeParameter.\n\nAn inferred type forces a tool to deduce a type, if possible.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_xdtgr5toulpb": "An inferred type is a placeholder for a type deduced by type inference.",
+            "fls_3abhsuaa8nas": "An inferred type shall not appear in the following positions:",
+            "fls_hBXlJhbhuoHY": "Within the InitializationType of a TypeAliasDeclaration,",
+            "fls_Vxlr9ZcqiOvY": "Within the ReturnType of a FunctionDeclaration,",
+            "fls_gE9VC8JXrl1N": "Within the TypeAscription of a ConstantDeclaration, a ConstantParameter, a FunctionParameterPattern, a RecordStructField, a StaticDeclaration, or a TypedSelf,",
+            "fls_ybyQjFamI1Q5": "Within the TypeSpecification of a FunctionParameter, an ImplementingType, a TupleStructField, a TypeBoundPredicate, or a TypeParameter.",
+            "fls_9d8wbugmar1m": "An inferred type forces a tool to deduce a type, if possible."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "InferredType ::=\n       $$_$$"
+          }
+        }
+      },
+      "parent_fls_id": "fls_3pbipk8ki18d",
+      "sibling_fls_ids": [
+        "fls_XJCXBAJHzP3D",
+        "fls_98lnexk53ru4",
+        "fls_olbj67eyxz2k"
+      ]
+    },
+    {
+      "fls_id": "fls_XJCXBAJHzP3D",
+      "title": "Type Parameters",
+      "category": 0,
+      "level": 3,
+      "file": "types-and-traits",
+      "content": "Type Parameters\n\nA type parameter type is a placeholder type of a type parameter\nto be substituted by generic substitution.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_dCIIVXGhXDlO": "A type parameter type is a placeholder type of a type parameter to be substituted by generic substitution."
+          }
+        }
+      },
+      "parent_fls_id": "fls_3pbipk8ki18d",
+      "sibling_fls_ids": [
+        "fls_s45k21yn4qur",
+        "fls_98lnexk53ru4",
+        "fls_olbj67eyxz2k"
+      ]
+    },
+    {
+      "fls_id": "fls_98lnexk53ru4",
+      "title": "Never Type",
+      "category": 0,
+      "level": 3,
+      "file": "types-and-traits",
+      "content": "Never Type\n\nThe never type is a type that represents the result of a computation\nthat never completes.\n\nThe never type has no [value]s.\n\nIt is validity invariant to not have a value of the never type.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_4u0v5uy95pyf": "The never type is a type that represents the result of a computation that never completes.",
+            "fls_xmtc10qzw0ui": "The never type has no [value]s."
+          }
+        },
+        "-4": {
+          "paragraphs": {
+            "fls_22e8quna7ed5": "It is validity invariant to not have a value of the never type."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "NeverType ::=\n       $$!$$"
+          }
+        }
+      },
+      "parent_fls_id": "fls_3pbipk8ki18d",
+      "sibling_fls_ids": [
+        "fls_s45k21yn4qur",
+        "fls_XJCXBAJHzP3D",
+        "fls_olbj67eyxz2k"
+      ]
+    },
+    {
+      "fls_id": "fls_olbj67eyxz2k",
+      "title": "Parenthesized Types",
+      "category": 0,
+      "level": 3,
+      "file": "types-and-traits",
+      "content": "Parenthesized Types\n\nA parenthesized type is a type that disambiguates the interpretation\nof [lexical element]s.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_1dvo1epstrdv": "A parenthesized type is a type that disambiguates the interpretation of [lexical element]s."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "ParenthesizedTypeSpecification ::=\n       $$($$ TypeSpecification $$)$$"
+          }
+        }
+      },
+      "parent_fls_id": "fls_3pbipk8ki18d",
+      "sibling_fls_ids": [
+        "fls_s45k21yn4qur",
+        "fls_XJCXBAJHzP3D",
+        "fls_98lnexk53ru4"
+      ]
+    },
+    {
+      "fls_id": "fls_kgvleup5mdhq",
+      "title": "Type Aliases",
+      "category": 0,
+      "level": 2,
+      "file": "types-and-traits",
+      "content": "Type Aliases\n\n InitializationType ::=\n TypeSpecification\n\nA type alias is an item that defines a name for a type.\n\nA type alias shall not have a TypeBoundList unless it is an\nassociated item.\n\nThe last where clause is rejected, but may still be consumed by\n[macro]s.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_bibigic4jjad": "A type alias is an item that defines a name for a type.",
+            "fls_rosdkeck5ax2": "A type alias shall not have a TypeBoundList unless it is an associated item.",
+            "fls_drxl7u3etfp9": "The last where clause is rejected, but may still be consumed by [macro]s."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "TypeAliasDeclaration ::=\n       $$type$$ Name GenericParameterList? ($$:$$ TypeBoundList)? WhereClause?\n         ($$=$$ InitializationType WhereClause?)? $$;$$\n\n   InitializationType ::=\n       TypeSpecification"
+          }
+        }
+      },
+      "parent_fls_id": "fls_vgb6ev541b2r",
+      "sibling_fls_ids": [
+        "fls_kwsBxMQNTRnL",
+        "fls_963gsjp2jas2",
+        "fls_id66vnaqw0zt",
+        "fls_fbchw64p6n2x",
+        "fls_wdec78luqh5b",
+        "fls_hbbek3z4wtcs",
+        "fls_3i4ou0dq64ny",
+        "fls_1ompd93w7c9f",
+        "fls_3pbipk8ki18d",
+        "fls_7pby13muw48o",
+        "fls_j02707n615z0",
+        "fls_85vx1qfa061i",
+        "fls_jeoas4n6su4"
+      ]
+    },
+    {
+      "fls_id": "fls_7pby13muw48o",
+      "title": "Representation",
+      "category": 0,
+      "level": 2,
+      "file": "types-and-traits",
+      "content": "Representation",
+      "rubrics": {},
+      "parent_fls_id": "fls_vgb6ev541b2r",
+      "sibling_fls_ids": [
+        "fls_kwsBxMQNTRnL",
+        "fls_963gsjp2jas2",
+        "fls_id66vnaqw0zt",
+        "fls_fbchw64p6n2x",
+        "fls_wdec78luqh5b",
+        "fls_hbbek3z4wtcs",
+        "fls_3i4ou0dq64ny",
+        "fls_1ompd93w7c9f",
+        "fls_3pbipk8ki18d",
+        "fls_kgvleup5mdhq",
+        "fls_j02707n615z0",
+        "fls_85vx1qfa061i",
+        "fls_jeoas4n6su4"
+      ]
+    },
+    {
+      "fls_id": "fls_g1z6bpyjqxkz",
+      "title": "Type Layout",
+      "category": 0,
+      "level": 3,
+      "file": "types-and-traits",
+      "content": "Type Layout\n\nAll [value]s have an alignment and a size.\n\nA dynamically sized type is a type that does not implement the core::marker::Sized trait.\n\nA fat pointer type is an indirection type whose contained type specification is a dynamically sized type.\n\nThe alignment of a value specifies which addresses are valid for\nstoring the value. Alignment is measured in bytes, is at least one,\nand always a power of two. A value of alignment N is stored at an\naddress that is a multiple of N.\n\nThe size of a type is the offset in bytes between successive elements\nin array type [T, N] where T is the type of the value,\nincluding any padding for alignment. Size is a multiple of the\nalignment.\n\nThe size of [scalar type]s is as follows:\n\nTypes usize and isize have size big enough to contain every\naddress on the target platform.\n\nFor type str, the layout is that of slice type\n[u8].\n\nFor array type [T; N] where T is the element type and N\nis size operand, the alignment is that of T, and the size is\ncalculated as core::mem::size_of::<T>() * N.\n\nFor a slice type, the layout is that of the array type it slices.\n\nFor a tuple type, the layout is tool-defined. For a unit tuple,\nthe size is zero and the alignment is one.\n\nFor a closure type, the layout is tool-defined.\n\nFor a thin pointer, the size and alignment are those of type\nusize.\n\nFor a function pointer type, the size and alignment are those of\na thin pointer.\n\nFor a fat pointer type, the size and alignment are tool-defined, but\nare at least those of a thin pointer.\nFor a fat pointer type whose contained type is that of a slice or trait object type the size is that of two times the size of type usize and the alignment is that of type usize.\n\nFor a trait object type, the layout is the same as the value\nbeing coerced into the trait object type at runtime.\n\nFor a struct type, the memory layout is undefined, unless the\nstruct type is subject to attribute repr.\n\nFor a union type, the memory layout is undefined, unless the\nunion type is subject to attribute repr. All [union field]s\nshare a common storage.\n\nThe size of a recursive type shall be finite.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_kdbq02iguzgl": "All [value]s have an alignment and a size.",
+            "fls_26Xgem831Nqg": "A dynamically sized type is a type that does not implement the core::marker::Sized trait.",
+            "fls_ozYgHEHFTT5c": "A fat pointer type is an indirection type whose contained type specification is a dynamically sized type.",
+            "fls_muxfn9soi47l": "The alignment of a value specifies which addresses are valid for storing the value. Alignment is measured in bytes, is at least one, and always a power of two. A value of alignment N is stored at an address that is a multiple of N.",
+            "fls_1pbwigq6f3ha": "The size of a type is the offset in bytes between successive elements in array type [T, N] where T is the type of the value, including any padding for alignment. Size is a multiple of the alignment.",
+            "fls_bk3nm2n47afu": "The size of [scalar type]s is as follows: .. list-table:: -",
+            "fls_z3i758jshvhx": "- **Type** - **Size** -",
+            "fls_uixe1ruv52be": "- bool - 1 -",
+            "fls_7at60xlxm9u4": "- u8, i8 - 1 -",
+            "fls_395247pkxv48": "- u16, i16 - 2 -",
+            "fls_tbe9sc75timc": "- u32, i32 - 4 -",
+            "fls_7jaqx33re3hg": "- u64, i64 - 8 -",
+            "fls_asys0iz6m0md": "- u128, i128 - 16 -",
+            "fls_wfv5vcxl2lc7": "- f32 - 4 -",
+            "fls_x8dfw50z9c": "- f64 - 8 -",
+            "fls_nyxnnlwmt5gu": "- char - 4",
+            "fls_lwmrljw9m0pb": "Types usize and isize have size big enough to contain every address on the target platform.",
+            "fls_pzi6izljfv0f": "For type str, the layout is that of slice type [u8].",
+            "fls_7cjbxleo998q": "For array type [T; N] where T is the element type and N is size operand, the alignment is that of T, and the size is calculated as core::mem::size_of::<T>() * N.",
+            "fls_veotnstzigw2": "For a slice type, the layout is that of the array type it slices.",
+            "fls_nmoqk7jo1kzf": "For a tuple type, the layout is tool-defined. For a unit tuple, the size is zero and the alignment is one.",
+            "fls_gd7wozpn2ecp": "For a closure type, the layout is tool-defined.",
+            "fls_18ke90udyp67": "For a thin pointer, the size and alignment are those of type usize.",
+            "fls_nrqG8i3fmpm4": "For a function pointer type, the size and alignment are those of a thin pointer.",
+            "fls_e5hivr6m5s3h": "For a fat pointer type, the size and alignment are tool-defined, but are at least those of a thin pointer. For a fat pointer type whose contained type is that of a slice or trait object type the size is that of two times the size of type usize and the alignment is that of type usize.",
+            "fls_hlbsjggfxnt2": "For a trait object type, the layout is the same as the value being coerced into the trait object type at runtime.",
+            "fls_sdrb0k2r18my": "For a struct type, the memory layout is undefined, unless the struct type is subject to attribute repr.",
+            "fls_gt3tkbn4bsa6": "For a union type, the memory layout is undefined, unless the union type is subject to attribute repr. All [union field]s share a common storage.",
+            "fls_njvdevz0xqc0": "The size of a recursive type shall be finite."
+          }
+        }
+      },
+      "parent_fls_id": "fls_7pby13muw48o",
+      "sibling_fls_ids": [
+        "fls_ohhsmifo0urd"
+      ]
+    },
+    {
+      "fls_id": "fls_ohhsmifo0urd",
+      "title": "Type Representation",
+      "category": 0,
+      "level": 3,
+      "file": "types-and-traits",
+      "content": "Type Representation\n\nType representation specifies the layout of [field]s of\n[abstract data type]s. Type representation changes the bit padding\nbetween [field]s of [abstract data type]s as well as their order, but\ndoes not change the layout of the [field]s themselves.\n\nType representation is classified into:\n\n* C representation,\n\n* Default representation,\n\n* Primitive representation,\n\n* Transparent representation.\n\nC representation lays out a type such that the type is\ninteroperable with the C language.\n\nDefault representation makes no guarantees about the layout.\n\nPrimitive representation is the type representation of individual\n[integer type]s. Primitive representation applies only to an\nenum type that is not a zero-variant enum type. It is possible to\ncombine C representation and primitive representation.\n\nTransparent representation applies only to an enum type with a\nsingle enum variant or a struct type where the struct type or\nenum variant has a single field of non-zero size and any number\nof [field]s of size zero and alignment one.\n\n[Type]s subject to transparent representation have the same\ntype representation as the type of their field with non-zero\nsize.\n\nType representation may be specified using attribute repr. An\nenum type, a struct type, or a union type that is not subject to\nattribute repr has default representation.\n\nType representation may be specified using attribute [repr] and\nmodified further using attribute [repr]'s Alignment\n[representation modifier]s. A representation modifier shall apply only\nto a struct type or a union type subject to C representation or\ndefault representation.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_mpqlyi3lgrfv": "Type representation specifies the layout of [field]s of [abstract data type]s. Type representation changes the bit padding between [field]s of [abstract data type]s as well as their order, but does not change the layout of the [field]s themselves.",
+            "fls_9dhnanv21y9z": "Type representation is classified into:",
+            "fls_3dwtkr7vzha0": "C representation,",
+            "fls_q465p1xuzxi": "Default representation,",
+            "fls_hrsdn21jmgx2": "Primitive representation,",
+            "fls_ergdb18tpx25": "Transparent representation.",
+            "fls_8s1vddh8vdhy": "C representation lays out a type such that the type is interoperable with the C language.",
+            "fls_b005bktrkrxy": "Default representation makes no guarantees about the layout.",
+            "fls_7plbkqlmed0r": "Primitive representation is the type representation of individual [integer type]s. Primitive representation applies only to an enum type that is not a zero-variant enum type. It is possible to combine C representation and primitive representation.",
+            "fls_ml4khttq3w5k": "Transparent representation applies only to an enum type with a single enum variant or a struct type where the struct type or enum variant has a single field of non-zero size and any number of [field]s of size zero and alignment one.",
+            "fls_9q2iqzbup8oy": "[Type]s subject to transparent representation have the same type representation as the type of their field with non-zero size.",
+            "fls_fsbf6ist38ix": "Type representation may be specified using attribute repr. An enum type, a struct type, or a union type that is not subject to attribute repr has default representation.",
+            "fls_qkkc8x2oghst": "Type representation may be specified using attribute [repr] and modified further using attribute [repr]'s Alignment [representation modifier]s. A representation modifier shall apply only to a struct type or a union type subject to C representation or default representation."
+          }
+        }
+      },
+      "parent_fls_id": "fls_7pby13muw48o",
+      "sibling_fls_ids": [
+        "fls_g1z6bpyjqxkz"
+      ]
+    },
+    {
+      "fls_id": "fls_xc1hof4qbf6p",
+      "title": "Enum Type Representation",
+      "category": 0,
+      "level": 4,
+      "file": "types-and-traits",
+      "content": "Enum Type Representation\n\n[Zero-variant enum type]s shall not be subject to C representation.\n\nThe size and alignment of an enum type without [field]s\nsubject to C representation, default representation, or\nprimitive representation are those of its discriminant.\n\nThe discriminant type of an enum type with C representation is\nthe corresponding c signed int type for the target platform's C\nABI.\n\nThe discriminant type of an enum type with default representation\nis tool-defined.\n\nThe discriminant type of an enum type with\nprimitive representation is the integer type specified by the\nprimitive representation.\n\nIt is a static error if the discriminant type cannot hold all the\ndiscriminant [value]s of an enum type.\n\nAn enum type subject to transparent representation shall have a single\nenum variant with\n\n* a single field of non-zero size, or\n\n* any number of [field]s of zero size and alignment one.\n\nAn enum type subject to C representation or primitive\nrepresentation has the same type representation as a union type with\nC representation that is laid out as follows:\n\n* Each enum variant corresponds to a struct whose struct type is\n subject to C representation and laid out as follows:\n\n * The type of the first field of the struct type is the\n discriminant type of the enum type.\n\n * The remaining [field]s of the struct type are the [field]s of\n the enum variant, in the same declarative order.\n\nAn enum type subject to transparent representation has the same\ntype representation as the single field of non-zero size of its\nenum variant if one is present, otherwise the enum type has size\nzero and alignment one.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_p0c62ejo1u1t": "[Zero-variant enum type]s shall not be subject to C representation.",
+            "fls_efp1kfgkpba8": "The size and alignment of an enum type without [field]s subject to C representation, default representation, or primitive representation are those of its discriminant.",
+            "fls_s9c0a0lg6c0p": "The discriminant type of an enum type with C representation is the corresponding c signed int type for the target platform's C ABI.",
+            "fls_slhvf3gmqz4h": "The discriminant type of an enum type with default representation is tool-defined.",
+            "fls_u1zy06510m56": "The discriminant type of an enum type with primitive representation is the integer type specified by the primitive representation.",
+            "fls_ryvqkcx48u74": "It is a static error if the discriminant type cannot hold all the discriminant [value]s of an enum type.",
+            "fls_zhle0rb0vhpc": "An enum type subject to transparent representation shall have a single enum variant with",
+            "fls_45f57s1gmmh5": "a single field of non-zero size, or",
+            "fls_hz012yus6b4g": "any number of [field]s of zero size and alignment one.",
+            "fls_q5akku2idrwh": "An enum type subject to C representation or primitive representation has the same type representation as a union type with C representation that is laid out as follows:",
+            "fls_r6o1wv76yw6m": "Each enum variant corresponds to a struct whose struct type is subject to C representation and laid out as follows:",
+            "fls_3k1tcfxp0g63": "The type of the first field of the struct type is the discriminant type of the enum type.",
+            "fls_ebs77rxvk9st": "The remaining [field]s of the struct type are the [field]s of the enum variant, in the same declarative order.",
+            "fls_k907i6w83s2": "An enum type subject to transparent representation has the same type representation as the single field of non-zero size of its enum variant if one is present, otherwise the enum type has size zero and alignment one."
+          }
+        }
+      },
+      "parent_fls_id": "fls_ohhsmifo0urd",
+      "sibling_fls_ids": [
+        "fls_rjxpof29a3nl",
+        "fls_cmq8ogs84ivh"
+      ]
+    },
+    {
+      "fls_id": "fls_rjxpof29a3nl",
+      "title": "Struct Type Representation",
+      "category": 0,
+      "level": 4,
+      "file": "types-and-traits",
+      "content": "Struct Type Representation\n\nThe alignment of a struct type subject to C representation is\nthe alignment of the most-aligned field in it.\n\nThe size of a struct type subject to C representation is\ndetermined as follows:\n\n#. Initialize a current offset to zero.\n\n#. For each field of the struct type in declarative order:\n\n #. Calculate the size and alignment of the field.\n\n #. If the current offset is not a multiple of the [field]'s\n alignment, add byte padding to the current offset until it is a\n multiple of the alignment. The offset of the field is the\n current offset.\n\n #. Increase the current offset by the size of the field.\n\n #. Proceed with the next field.\n\n#. Round up the current offset to the nearest multiple of the [struct\n type]'s alignment.\n\n#. The size of the struct type is the current offset.\n\nA struct type subject to transparent representation shall have:\n\n* A single field of non-zero size, or\n\n* Any number of [field]s of size zero and alignment one.\n\nA struct type subject to transparent representation has the same\ntype representation as the single field of non-zero size if one\nis present, otherwise the struct type has size zero and alignment\none.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_jr9dykj6rydn": "The alignment of a struct type subject to C representation is the alignment of the most-aligned field in it.",
+            "fls_6ck71twmnbg5": "The size of a struct type subject to C representation is determined as follows: #.",
+            "fls_hydq3pvm00bn": "Initialize a current offset to zero. #.",
+            "fls_yzcdffahxcz": "For each field of the struct type in declarative order: #.",
+            "fls_t2yqmphfd6he": "Calculate the size and alignment of the field. #.",
+            "fls_fa5nkvu07jlp": "If the current offset is not a multiple of the [field]'s alignment, add byte padding to the current offset until it is a multiple of the alignment. The offset of the field is the current offset. #.",
+            "fls_x2pkmgbp63xx": "Increase the current offset by the size of the field. #.",
+            "fls_y6dwc1ndm395": "Proceed with the next field. #.",
+            "fls_2npku94ookdn": "Round up the current offset to the nearest multiple of the [struct type]'s alignment. #.",
+            "fls_h7nvs25rsi0y": "The size of the struct type is the current offset.",
+            "fls_iu93vpyihrpj": "A struct type subject to transparent representation shall have:",
+            "fls_7sjkej5otxo": "A single field of non-zero size, or",
+            "fls_gwhceoy0m3or": "Any number of [field]s of size zero and alignment one.",
+            "fls_hvkalvr4e2v0": "A struct type subject to transparent representation has the same type representation as the single field of non-zero size if one is present, otherwise the struct type has size zero and alignment one."
+          }
+        }
+      },
+      "parent_fls_id": "fls_ohhsmifo0urd",
+      "sibling_fls_ids": [
+        "fls_xc1hof4qbf6p",
+        "fls_cmq8ogs84ivh"
+      ]
+    },
+    {
+      "fls_id": "fls_cmq8ogs84ivh",
+      "title": "Union Type Representation",
+      "category": 0,
+      "level": 4,
+      "file": "types-and-traits",
+      "content": "Union Type Representation\n\nThe size of a union type subject to C representation is\nthe maximum of the [size]s of all its [field]s, rounded up to\nalignment of the union type.\n\nThe alignment of a union type subject to C representation is the\nmaximum of the [alignment]s of all of its [field]s.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_opz1p1neldsg": "The size of a union type subject to C representation is the maximum of the [size]s of all its [field]s, rounded up to alignment of the union type.",
+            "fls_y5qtvbx5m90g": "The alignment of a union type subject to C representation is the maximum of the [alignment]s of all of its [field]s."
+          }
+        }
+      },
+      "parent_fls_id": "fls_ohhsmifo0urd",
+      "sibling_fls_ids": [
+        "fls_xc1hof4qbf6p",
+        "fls_rjxpof29a3nl"
+      ]
+    },
+    {
+      "fls_id": "fls_j02707n615z0",
+      "title": "Type Model",
+      "category": 0,
+      "level": 2,
+      "file": "types-and-traits",
+      "content": "Type Model",
+      "rubrics": {},
+      "parent_fls_id": "fls_vgb6ev541b2r",
+      "sibling_fls_ids": [
+        "fls_kwsBxMQNTRnL",
+        "fls_963gsjp2jas2",
+        "fls_id66vnaqw0zt",
+        "fls_fbchw64p6n2x",
+        "fls_wdec78luqh5b",
+        "fls_hbbek3z4wtcs",
+        "fls_3i4ou0dq64ny",
+        "fls_1ompd93w7c9f",
+        "fls_3pbipk8ki18d",
+        "fls_kgvleup5mdhq",
+        "fls_7pby13muw48o",
+        "fls_85vx1qfa061i",
+        "fls_jeoas4n6su4"
+      ]
+    },
+    {
+      "fls_id": "fls_3gapgqys3ceb",
+      "title": "Recursive Types",
+      "category": 0,
+      "level": 3,
+      "file": "types-and-traits",
+      "content": "Recursive Types\n\nA recursive type is a type whose contained [type]s refer back to\nthe containing type, either directly or by referring to another type\nwhich refers back to the original recursive type.\n\nA type that is not an abstract data type shall not be recursive.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_z22std1crl49": "A recursive type is a type whose contained [type]s refer back to the containing type, either directly or by referring to another type which refers back to the original recursive type.",
+            "fls_eddnwlr0rz59": "A type that is not an abstract data type shall not be recursive."
+          }
+        }
+      },
+      "parent_fls_id": "fls_j02707n615z0",
+      "sibling_fls_ids": [
+        "fls_exe4zodlwfez",
+        "fls_dw33yt5g6m0k",
+        "fls_wsfw8xF3vniL",
+        "fls_omaq7psg83n3",
+        "fls_mcxF9y5u66sZ",
+        "fls_lv7w7aalpwm5"
+      ]
+    },
+    {
+      "fls_id": "fls_exe4zodlwfez",
+      "title": "Type Unification",
+      "category": 0,
+      "level": 3,
+      "file": "types-and-traits",
+      "content": "Type Unification\n\nType unification is the process by which type inference propagates\nknown [type]s across the type inference root and assigns concrete\n[type]s to [type variable]s, as well as a general mechanism to check\nfor compatibility between two [type]s during method resolution.\n\nA type is said to unify with another type when the domains,\nranges, and structures of both [type]s are compatible according to the\nrules detailed below.\n\nTwo types that unify are said to be [unifiable type]s.\n\nType unification is a symmetric operation. If type A unifies\nwith type B, then B also unifies with A and such\ntype unification results in the same observable effects.\n\nIf one of the two [type]s is a type variable, type unification\nproceeds as follows:\n\n#. If either type is a global type variable, the\n global type variable is assigned the type of the other unification\n operand.\n\n#. Otherwise, if either type is a diverging type variable, the\n diverging type variable is assigned the type of the other\n unification operand.\n\n#. Otherwise, if one type T is an integer type variable, behavior\n depends on the other type U:\n\n #. If U is an integer type or an integer type variable, the\n integer type variable T is assigned type U.\n\n #. Otherwise, type unification fails.\n\n#. Otherwise, if one type T is a floating-point type variable,\n behavior depends on the other type U:\n\n #. If U is a floating-point type or an\n floating-point type variable, the floating-point type variable\n T is assigned type U.\n\n #. Otherwise, type unification fails.\n\n#. Otherwise, neither type is a type variable, and the rules below\n are in effect.\n\nA scalar type is unifiable only with itself.\n\nThe never type is unifiable with any other type.\n\nAn array type is unifiable only with another array type when\n\n* The [element type]s of both [array type]s are unifiable, and\n\n* The sizes of both [array type]s are the same.\n\nA slice type is unifiable only with another slice type when the\n[element type]s of both [slice type]s are unifiable.\n\nType str is unifiable only with itself.\n\nA tuple type is unifiable only with another tuple type when:\n\n* The arity of both [tuple type]s is the same, and\n\n* The [type]s of the corresponding [tuple field]s are unifiable.\n\nAn abstract data type is unifiable only with another\nabstract data type when:\n\n* The two [abstract data type]s are the same type, and\n\n* The corresponding [generic substitution]s are unifiable.\n\nA closure type is unifiable only with another closure type when:\n\n* The two [closure type]s are the same closure, and\n\n* The corresponding [generic substitution]s are unifiable.\n\nA function item type is unifiable only with another function item type\nwhen:\n\n* The two [function item type]s are the same function, and\n\n* The corresponding [generic substitution]s are unifiable.\n\nA function pointer type is unifiable only with another\nfunction pointer type when:\n\n* The [lifetime]s are variance-conformant, and\n\n* The unsafety is the same, and\n\n* The ABI is the same, and\n\n* The number of [function parameter]s is the same, and\n\n* The [type]s of the corresponding [function parameter]s are\n unifiable, and\n\n* The presence of a variadic part is the same, and\n\n* The [return type]s are unifiable.\n\nA raw pointer type is unifiable only with another raw pointer type\nwhen:\n\n* The mutability is the same, and\n\n* The [target type]s are unifiable.\n\nA reference type is unifiable only with another reference type when:\n\n* The mutability is the same, and\n\n* The [target type]s are unifiable.\n\nAn anonymous return type is unifiable with another type when:\n\n* The [lifetime]s are variance-conformant, and\n\n* The other type implements all [trait]s specified by the\n anonymous return type.\n\nAn impl trait type is unifiable only with itself.\n\nA trait object type is unifiable only with another trait object type\nwhen:\n\n* The [bound]s are unifiable, and\n\n* The [lifetime]s are unifiable.\n\nA type alias is unifiable with another type when the aliased type\nis unifiable with the other type.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_ryvdhkgm7vzj": "Type unification is the process by which type inference propagates known [type]s across the type inference root and assigns concrete [type]s to [type variable]s, as well as a general mechanism to check for compatibility between two [type]s during method resolution.",
+            "fls_67VZrx6dw68H": "A type is said to unify with another type when the domains, ranges, and structures of both [type]s are compatible according to the rules detailed below.",
+            "fls_aie0tr62vhw5": "Two types that unify are said to be [unifiable type]s.",
+            "fls_3U7Ue6Xzuv9M": "Type unification is a symmetric operation. If type A unifies with type B, then B also unifies with A and such type unification results in the same observable effects.",
+            "fls_tIiw5WkTRNf7": "If one of the two [type]s is a type variable, type unification proceeds as follows: #.",
+            "fls_EoEbldkKBQW0": "If either type is a global type variable, the global type variable is assigned the type of the other unification operand. #.",
+            "fls_16ZDp8PaKi5P": "Otherwise, if either type is a diverging type variable, the diverging type variable is assigned the type of the other unification operand. #.",
+            "fls_pGRLTACDvzv2": "Otherwise, if one type T is an integer type variable, behavior depends on the other type U: #.",
+            "fls_fTy3FVt0fK9g": "If U is an integer type or an integer type variable, the integer type variable T is assigned type U. #.",
+            "fls_7IsrfUoPXSZU": "Otherwise, type unification fails. #.",
+            "fls_Hb95CPyUpCmc": "Otherwise, if one type T is a floating-point type variable, behavior depends on the other type U: #.",
+            "fls_jEZVWlfVPevb": "If U is a floating-point type or an floating-point type variable, the floating-point type variable T is assigned type U. #.",
+            "fls_nKcqFo7yIDBe": "Otherwise, type unification fails. #.",
+            "fls_jkaiBnApJAtt": "Otherwise, neither type is a type variable, and the rules below are in effect.",
+            "fls_dhksyjrvx9a": "A scalar type is unifiable only with itself.",
+            "fls_hf0cfkrmt655": "The never type is unifiable with any other type.",
+            "fls_k9dag68qpe93": "An array type is unifiable only with another array type when",
+            "fls_m6d9qj9q9u1i": "The [element type]s of both [array type]s are unifiable, and",
+            "fls_gg3x25qvymmq": "The sizes of both [array type]s are the same.",
+            "fls_ni296ev8x9v9": "A slice type is unifiable only with another slice type when the [element type]s of both [slice type]s are unifiable.",
+            "fls_i1m41c4wkfc0": "Type str is unifiable only with itself.",
+            "fls_mpq64eal9jo3": "A tuple type is unifiable only with another tuple type when:",
+            "fls_kcr8npsmy0e5": "The arity of both [tuple type]s is the same, and",
+            "fls_kq3lv1zbangz": "The [type]s of the corresponding [tuple field]s are unifiable.",
+            "fls_so2cgqmawlm7": "An abstract data type is unifiable only with another abstract data type when:",
+            "fls_vsax8w6y794m": "The two [abstract data type]s are the same type, and",
+            "fls_1j1wc3uxs7h6": "The corresponding [generic substitution]s are unifiable.",
+            "fls_9dpea9ty0c2l": "A closure type is unifiable only with another closure type when:",
+            "fls_42oj1ekjihq1": "The two [closure type]s are the same closure, and",
+            "fls_gebpqqqvvklf": "The corresponding [generic substitution]s are unifiable.",
+            "fls_i221hm7rssik": "A function item type is unifiable only with another function item type when:",
+            "fls_74cug5zfv2wv": "The two [function item type]s are the same function, and",
+            "fls_keezxl8v4snf": "The corresponding [generic substitution]s are unifiable.",
+            "fls_wz2etmkpvxed": "A function pointer type is unifiable only with another function pointer type when:",
+            "fls_rmqcbb5ja4va": "The [lifetime]s are variance-conformant, and",
+            "fls_uu8je75y5pss": "The unsafety is the same, and",
+            "fls_oksjiq3nmq2k": "The ABI is the same, and",
+            "fls_52ymp79ert2": "The number of [function parameter]s is the same, and",
+            "fls_g2u1dfhphrrg": "The [type]s of the corresponding [function parameter]s are unifiable, and",
+            "fls_2xgq66qp3h95": "The presence of a variadic part is the same, and",
+            "fls_5dh8c5gg0hmk": "The [return type]s are unifiable.",
+            "fls_ismr7wwvek4q": "A raw pointer type is unifiable only with another raw pointer type when:",
+            "fls_x9933rjecrna": "The mutability is the same, and",
+            "fls_mizmcykgdisb": "The [target type]s are unifiable.",
+            "fls_paoh0wttde2z": "A reference type is unifiable only with another reference type when:",
+            "fls_akko4dmp4nkw": "The mutability is the same, and",
+            "fls_8gldjjxbyyb4": "The [target type]s are unifiable.",
+            "fls_8jad1ztcuxha": "An anonymous return type is unifiable with another type when:",
+            "fls_j3w9ap9zaqud": "The [lifetime]s are variance-conformant, and",
+            "fls_yvllot5qnc4s": "The other type implements all [trait]s specified by the anonymous return type.",
+            "fls_hza5n5eb18ta": "An impl trait type is unifiable only with itself.",
+            "fls_ww16urcjrj6i": "A trait object type is unifiable only with another trait object type when:",
+            "fls_bnp6or49voxp": "The [bound]s are unifiable, and",
+            "fls_hdo4c849q3lo": "The [lifetime]s are unifiable.",
+            "fls_w9dx5h7m31sj": "A type alias is unifiable with another type when the aliased type is unifiable with the other type."
+          }
+        }
+      },
+      "parent_fls_id": "fls_j02707n615z0",
+      "sibling_fls_ids": [
+        "fls_3gapgqys3ceb",
+        "fls_dw33yt5g6m0k",
+        "fls_wsfw8xF3vniL",
+        "fls_omaq7psg83n3",
+        "fls_mcxF9y5u66sZ",
+        "fls_lv7w7aalpwm5"
+      ]
+    },
+    {
+      "fls_id": "fls_dw33yt5g6m0k",
+      "title": "Type Coercion",
+      "category": 0,
+      "level": 3,
+      "file": "types-and-traits",
+      "content": "Type Coercion\n\nType coercion is an implicit operation that changes the type of a\nvalue. Any implicit conversion allowed by type coercion can be made\nexplicit using a type cast expression.\n\nA type coercion takes place at a coercion site or within a\ncoercion-propagating expression.\n\nThe following [construct]s constitute a coercion site:\n\n* The [argument operand]s of a call expression or a\n method call expression.\n\n* A constant declaration.\n\n* A field of an abstract data type.\n\n* A function result.\n\n* A let statement with an explicit type specification.\n\n* A static declaration.\n\nThe following [expression]s constitute a\ncoercion-propagating expression:\n\n* Each operand of an array expression.\n\n* The tail expression of a block expression.\n\n* The operand of a parenthesized expression.\n\n* Each operand of a tuple expression.\n\nType coercion from a source type to a target type is allowed to\noccur when:\n\n* The source type is a subtype of the target type.\n\n* The source type T coerces to intermediate type W, and\n intermediate type W coerces to target type U.\n\n* The source type is &T and the target type is *const T.\n\n* The source type is &T and the target type is &U, where T\n implements the core::ops::Deref<Target = U> trait.\n\n* The source type is &mut T and the target type is &T.\n\n* The source type is &mut T and the target type is *mut T.\n\n* The source type is &mut T and the target type is &U, where\n T implements the core::ops::Deref<Target = U> trait.\n\n* The source type is &mut T and the target type is &mut U,\n where T implements the core::ops::DerefMut<Target = U> trait.\n\n* The source type is *mut T and the target type is *const T.\n\n* The source type is type_constructor(T) and the target type is\n type_constructor(U), where type_constructor is one of &W,\n &mut W, *const W, or *mut W, and U can be obtained from T\n using unsized coercion.\n\n* The source type is a function item type, the target type is\n a function pointer type and the source's function signature is a subtype of the target's function signature.\n\n* The source type is a non-capturing closure type, the target\n type is a function pointer type and the source's function signature is a subtype of the target's function signature.\n\n* The source type is the never type and the target type is any\n type.\n\n* The source type is a trait object type and the target type is a trait object type with the same or no principal trait, and the target type has the same or less non-principal trait [trait bound]s.\n\n* The source type is a trait object type with some principal trait T\n and the target type is a trait object type with some principal trait U,\n where U is a supertrait of T.\n\nAn unsized coercion is a type coercion that converts a sized type\ninto an unsized type. Unsized coercion from a source type to a\ntarget type is allowed to occur when:\n\n* The source type is array type [T; N] and the target type is\n slice type [T].\n\n* The source type is T and the target type is dyn U, where\n T implements U + core::marker::Sized, and U is object safe.\n\n* The source type is\n\nwhere\n\n* S is a struct type,\n\n* T implements core::marker::Unsize<U>,\n\n* last_field is a struct field of S,\n\n* The type of last_field involves T and if the type of\n last_field is W<T>, then W<T> implements\n core::marker::Unsize<W<U>>,\n\n* T is not part of any other struct field of S.\n\nand the target type is S<..., U, ...>.\n\nLeast upper bound coercion is a multi-[type coercion] that is used in\nthe following scenarios:\n\n* To find the common type of multiple if expression branches.\n\n* To find the common type of multiple if let expression branches.\n\n* To find the common type for multiple match expression\n [match arm]s.\n\n* To find the common type of array expression [operand]s.\n\n* To find the return type of a closure expression with multiple\n [return expression]s.\n\n* To find the return type of a function with multiple\n [return expression]s.\n\nLeast upper bound coercion considers a set of source [type]s T1,\nT2, ..., TN and target type U. The target type is\nobtained as follows:\n\n#. Initialize target type U to source type T1.\n\n#. For each current source type TC in the inclusive range T1 to\n TN\n\n #. If TC can be coerced to U, then continue with the next source\n type.\n\n #. Otherwise, if U can be coerced to TC, make TC the target\n type U.\n\n #. Otherwise, if TC and U are non-capturing [closure type]s,\n [function item type]s, [function pointer type]s, or a\n combination of those [type]s, and a function pointer type exists\n that both TC and U can coerce to, make that\n function pointer type be target type U.\n\n #. Otherwise, no coercion is performed.\n\n #. Continue with the next source type.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_w5pjcj9qmgbv": "Type coercion is an implicit operation that changes the type of a value. Any implicit conversion allowed by type coercion can be made explicit using a type cast expression.",
+            "fls_5v0n2a32bk95": "A type coercion takes place at a coercion site or within a coercion-propagating expression.",
+            "fls_j3kbaf43sgpj": "The following [construct]s constitute a coercion site:",
+            "fls_wxrugvlazy6v": "The [argument operand]s of a call expression or a method call expression.",
+            "fls_bhzmble1itog": "A constant declaration.",
+            "fls_eu4bt3dw1b8c": "A field of an abstract data type.",
+            "fls_apstt4elv2k7": "A function result.",
+            "fls_sp794uzfiofr": "A let statement with an explicit type specification.",
+            "fls_xfqny6bwzsu9": "A static declaration.",
+            "fls_u0e42y7nvn7e": "The following [expression]s constitute a coercion-propagating expression:",
+            "fls_p8hp5y506nam": "Each operand of an array expression.",
+            "fls_fjc9xev8rcu6": "The tail expression of a block expression.",
+            "fls_n1kh3z8d4q8y": "The operand of a parenthesized expression.",
+            "fls_dgoypa3hcxc0": "Each operand of a tuple expression.",
+            "fls_h8dkehit8rza": "Type coercion from a source type to a target type is allowed to occur when:",
+            "fls_z00wtlna6grk": "The source type is a subtype of the target type.",
+            "fls_rfjdh79k0wou": "The source type T coerces to intermediate type W, and intermediate type W coerces to target type U.",
+            "fls_e3lgrtqb7jwe": "The source type is &T and the target type is *const T.",
+            "fls_fwy2z11c1sji": "The source type is &T and the target type is &U, where T implements the core::ops::Deref<Target = U> trait.",
+            "fls_aujb44849tq1": "The source type is &mut T and the target type is &T.",
+            "fls_p3ym3ycrnd5m": "The source type is &mut T and the target type is *mut T.",
+            "fls_jmo42qgix5uw": "The source type is &mut T and the target type is &U, where T implements the core::ops::Deref<Target = U> trait.",
+            "fls_tbt4236igdzb": "The source type is &mut T and the target type is &mut U, where T implements the core::ops::DerefMut<Target = U> trait.",
+            "fls_7ri4jk2dydfn": "The source type is *mut T and the target type is *const T.",
+            "fls_6r3kn0nk5b8o": "The source type is type_constructor(T) and the target type is type_constructor(U), where type_constructor is one of &W, &mut W, *const W, or *mut W, and U can be obtained from T using unsized coercion.",
+            "fls_ulcdetwp6x96": "The source type is a function item type, the target type is a function pointer type and the source's function signature is a subtype of the target's function signature.",
+            "fls_2uv1r0gni1fk": "The source type is a non-capturing closure type, the target type is a function pointer type and the source's function signature is a subtype of the target's function signature.",
+            "fls_sf0c3fbx8z57": "The source type is the never type and the target type is any type.",
+            "fls_SYnFJBhi0IWj": "The source type is a trait object type and the target type is a trait object type with the same or no principal trait, and the target type has the same or less non-principal trait [trait bound]s.",
+            "fls_QB4c6FNKxaPl": "The source type is a trait object type with some principal trait T and the target type is a trait object type with some principal trait U, where U is a supertrait of T.",
+            "fls_iiiu2q7pym4p": "An unsized coercion is a type coercion that converts a sized type into an unsized type. Unsized coercion from a source type to a target type is allowed to occur when:",
+            "fls_jte6n2js32af": "The source type is array type [T; N] and the target type is slice type [T].",
+            "fls_20pvqqayzqra": "The source type is T and the target type is dyn U, where T implements U + core::marker::Sized, and U is object safe.",
+            "fls_j8rcy0xvd155": "The source type is .. code-block:: rust S<..., T, ...> { ... last_field: X }",
+            "fls_w15yo8yvuxq3": "S is a struct type,",
+            "fls_7aw3ifbvfgbd": "T implements core::marker::Unsize<U>,",
+            "fls_cnkth59djwgl": "last_field is a struct field of S,",
+            "fls_4wbk7pqj010i": "The type of last_field involves T and if the type of last_field is W<T>, then W<T> implements core::marker::Unsize<W<U>>,",
+            "fls_47u0039t0l8f": "T is not part of any other struct field of S.",
+            "fls_bmh6g3jju7eq": "and the target type is S<..., U, ...>.",
+            "fls_da4w32rsrwxc": "Least upper bound coercion is a multi-[type coercion] that is used in the following scenarios:",
+            "fls_zi5311z1w7re": "To find the common type of multiple if expression branches.",
+            "fls_zst5pa29rpt": "To find the common type of multiple if let expression branches.",
+            "fls_agw1aej616vf": "To find the common type for multiple match expression [match arm]s.",
+            "fls_tnbga5dl4gz8": "To find the common type of array expression [operand]s.",
+            "fls_yoreux8tn65x": "To find the return type of a closure expression with multiple [return expression]s.",
+            "fls_r11shke69uu6": "To find the return type of a function with multiple [return expression]s.",
+            "fls_ky7ykpufb95t": "Least upper bound coercion considers a set of source [type]s T1, T2, ..., TN and target type U. The target type is obtained as follows: #.",
+            "fls_8kvme0u4u8r6": "Initialize target type U to source type T1. #.",
+            "fls_rl9yrdfwnu03": "For each current source type TC in the inclusive range T1 to TN #.",
+            "fls_iqtmhn8flws7": "If TC can be coerced to U, then continue with the next source type. #.",
+            "fls_sr8d5har4s03": "Otherwise, if U can be coerced to TC, make TC the target type U. #.",
+            "fls_92pwnd1xbp5r": "Otherwise, if TC and U are non-capturing [closure type]s, [function item type]s, [function pointer type]s, or a combination of those [type]s, and a function pointer type exists that both TC and U can coerce to, make that function pointer type be target type U. #.",
+            "fls_bWHQIL4DSN4S": "Otherwise, no coercion is performed. #.",
+            "fls_ju4ypa5ysga0": "Continue with the next source type."
+          }
+        }
+      },
+      "parent_fls_id": "fls_j02707n615z0",
+      "sibling_fls_ids": [
+        "fls_3gapgqys3ceb",
+        "fls_exe4zodlwfez",
+        "fls_wsfw8xF3vniL",
+        "fls_omaq7psg83n3",
+        "fls_mcxF9y5u66sZ",
+        "fls_lv7w7aalpwm5"
+      ]
+    },
+    {
+      "fls_id": "fls_wsfw8xF3vniL",
+      "title": "Structural Equality",
+      "category": 0,
+      "level": 3,
+      "file": "types-and-traits",
+      "content": "Structural Equality\n\nA type is structurally equal when its [value]s can be compared\nfor equality by structure.\n\nThe following [type]s are structurally equal:\n\n* Bool, char, [function pointer type]s, [integer type]s,\n str, and [raw pointer type]s.\n\n* An abstract data type, if it implements the\n core::cmp::Eq and core::cmp::PartialEq [trait]s using\n [derive macro]s core::cmp::Eq and core::cmp::PartialEq.\n\n* [Array type]s and [slice type]s, if the [element type] is\n structurally equal.\n\n* [Reference type]s, if their inner type is structurally equal.\n\n* [Tuple type]s, if the [type]s of the [tuple field]s are\n structurally equal.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_uVTpA7gbLCYX": "A type is structurally equal when its [value]s can be compared for equality by structure.",
+            "fls_2DZAP6JJjJ9h": "The following [type]s are structurally equal:",
+            "fls_emcNJzl2tHSA": "Bool, char, [function pointer type]s, [integer type]s, str, and [raw pointer type]s.",
+            "fls_HpWSAfaTA1Dz": "An abstract data type, if it implements the core::cmp::Eq and core::cmp::PartialEq [trait]s using [derive macro]s core::cmp::Eq and core::cmp::PartialEq.",
+            "fls_5RcnETrW6f9m": "[Array type]s and [slice type]s, if the [element type] is structurally equal.",
+            "fls_jMeWhn4sNTPF": "[Reference type]s, if their inner type is structurally equal.",
+            "fls_hBFlaUrrhqZ6": "[Tuple type]s, if the [type]s of the [tuple field]s are structurally equal."
+          }
+        }
+      },
+      "parent_fls_id": "fls_j02707n615z0",
+      "sibling_fls_ids": [
+        "fls_3gapgqys3ceb",
+        "fls_exe4zodlwfez",
+        "fls_dw33yt5g6m0k",
+        "fls_omaq7psg83n3",
+        "fls_mcxF9y5u66sZ",
+        "fls_lv7w7aalpwm5"
+      ]
+    },
+    {
+      "fls_id": "fls_omaq7psg83n3",
+      "title": "Interior Mutability",
+      "category": 0,
+      "level": 3,
+      "file": "types-and-traits",
+      "content": "Interior Mutability\n\nInterior mutability is a property of [type]s whose [value]s can\nbe modified through [immutable reference]s.\n\nA type is subject to interior mutability when it contains a\ncore::cell::UnsafeCell.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_khy2e23i9o7z": "Interior mutability is a property of [type]s whose [value]s can be modified through [immutable reference]s.",
+            "fls_sWiU26n2xS3r": "A type is subject to interior mutability when it contains a core::cell::UnsafeCell."
+          }
+        }
+      },
+      "parent_fls_id": "fls_j02707n615z0",
+      "sibling_fls_ids": [
+        "fls_3gapgqys3ceb",
+        "fls_exe4zodlwfez",
+        "fls_dw33yt5g6m0k",
+        "fls_wsfw8xF3vniL",
+        "fls_mcxF9y5u66sZ",
+        "fls_lv7w7aalpwm5"
+      ]
+    },
+    {
+      "fls_id": "fls_mcxF9y5u66sZ",
+      "title": "Visible Emptiness",
+      "category": 0,
+      "level": 3,
+      "file": "types-and-traits",
+      "content": "Visible Emptiness\n\nVisible emptiness <visible emptiness> is a property of [type]s and [enum variant]s that have no [value]s that are fully observable.\n\nA visible empty type is a type subject to visible emptiness.\n\nA visible empty enum variant is an enum variant subject to visible emptiness.\n\nA type is subject to visible emptiness as follows:\n\n* The type is the never type.\n\n* The type is a zero-variant enum type.\n\n* The type is an enum type not subject to attribute non_exhaustive where all [enum variant]s are subject to visible emptiness.\n\n* The type is a struct type with at least one visible <visibility> field whose type is subject to visible emptiness.\n\n* The type is a tuple type with at least one of the contained [type]s is subject to visible emptiness.\n\n* The type is an array type with a non-zero size operand and an element type that is subject to visible emptiness.\n\nA enum variant is subject to visible emptiness when the type of at least one of the enum variant's visible <visibility> [field]s is subject to visible emptiness.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_SD4yUEQ9hHa3": "Visible emptiness <visible emptiness> is a property of [type]s and [enum variant]s that have no [value]s that are fully observable.",
+            "fls_GeoneCP5TYwf": "A visible empty type is a type subject to visible emptiness.",
+            "fls_A2W4v53ihTGx": "A visible empty enum variant is an enum variant subject to visible emptiness.",
+            "fls_AXOtKdSQR4AF": "A type is subject to visible emptiness as follows:",
+            "fls_ZfnYORORz40y": "The type is the never type.",
+            "fls_TE2GBnZX2YFW": "The type is a zero-variant enum type.",
+            "fls_GNFzLMH8RBUC": "The type is an enum type not subject to attribute non_exhaustive where all [enum variant]s are subject to visible emptiness.",
+            "fls_fSNrRsgzLd0E": "The type is a struct type with at least one visible <visibility> field whose type is subject to visible emptiness.",
+            "fls_R65LmGTvSlIm": "The type is a tuple type with at least one of the contained [type]s is subject to visible emptiness.",
+            "fls_yiPv3wKYkSRl": "The type is an array type with a non-zero size operand and an element type that is subject to visible emptiness.",
+            "fls_S9QL6yVF5LFI": "A enum variant is subject to visible emptiness when the type of at least one of the enum variant's visible <visibility> [field]s is subject to visible emptiness."
+          }
+        }
+      },
+      "parent_fls_id": "fls_j02707n615z0",
+      "sibling_fls_ids": [
+        "fls_3gapgqys3ceb",
+        "fls_exe4zodlwfez",
+        "fls_dw33yt5g6m0k",
+        "fls_wsfw8xF3vniL",
+        "fls_omaq7psg83n3",
+        "fls_lv7w7aalpwm5"
+      ]
+    },
+    {
+      "fls_id": "fls_lv7w7aalpwm5",
+      "title": "Type Inference",
+      "category": 0,
+      "level": 3,
+      "file": "types-and-traits",
+      "content": "Type Inference\n\nType inference is the process of automatically determining the type of\n[expression]s and [pattern]s within a type inference root.\n\nA type inference root is an expression whose inner [expression]s\nand [pattern]s are subject to type inference independently of those\nfound in other [type inference root]s.\n\nThe following [expression]s are considered [type inference root]s:\n\n* A constant argument.\n\n* The expression of a constant initializer.\n\n* The expression of a static initializer.\n\n* The expression of a discriminant initializer.\n\n* The expression of a constant parameter initializer.\n\n* The expression of a constant argument.\n\n* A function body.\n\n* The size operand of an array expression or an array type.\n\nA type inference root imposes an expected type on its expression\ndepending on the type inference root as follows:\n\n* The expected type of a constant argument is the type ascription\n of the constant parameter.\n\n* The expected type of the expression of a constant initializer\n is the type specified by the type ascription of the related\n constant.\n\n* The expected type of the expression of a static initializer is\n the type specified by the type ascription of the related\n static.\n\n* The expected type of the expression of a\n discriminant initializer is determined as follows:\n\n * If the enum type that contains the discriminant is subject to\n attribute repr that specifies a primitive representation, the\n expected type is the specified integer type.\n\n * Otherwise, the expected type is isize.\n\n* The expected type of a function body is the return type of the\n function.\n\n* The expected type of a size operand of an array expression or\n an array type is usize.\n\nA type variable is a placeholder used during type inference to stand\nin for an undetermined type of an expression or a pattern.\n\nA global type variable is a type variable that can refer to any\ntype.\n\nAn integer type variable is a type variable that can refer only to\n[integer type]s.\n\nA floating-point type variable is a type variable that can refer only\nto [floating-point type]s.\n\nA diverging type variable is a type variable that can refer to any\ntype and originates from a diverging expression.\n\nA lifetime variable is a placeholder used during type inference to\nstand in for an undetermined lifetime of a type.\n\nThe type inference algorithm uses type unification to propagate known\n[type]s of [expression]s and [pattern]s across the\ntype inference root being inferred. In the rules detailed below, a static\nerror occurs when type unification fails.\n\nPerforming type inference may introduce a requirement that some type\nmust implement a trait, or that a type or lifetime must outlive\nsome other lifetime. Such requirements are referred to as\n[obligation]s and are detailed in the inference rules below.\n\nIf insufficient type information is available at the time an\nobligation is introduced, it may be deferred to be resolved later.\nAny time new type information is derived during type inference, the\ntool attempts to resolve all outstanding [obligation]s and propagate\nany resulting type information via type unification.\n\nWhen an associated type <Type as Trait>::Assoc is referenced within a\ntype inference root (either explicitly within the source code, or via the\ninference rules below), an obligation requiring that Type implements\nTrait is introduced.\n\nType inference for a type inference root proceeds as follows:\n\n#. Recursively process all [expression]s and [statement]s in the\n type inference root in program order.\n\n #. For each statement, apply the statement inference rules outlined below.\n\n #. For each expression, apply the expression inference rules outlined below.\n\n#. If there are any remaining [integer type variable]s that have not been\n unified with a concrete integer type, perform integer type fallback by\n unifying them with i32.\n\n#. If there are any remaining [floating-point type variable]s that have not\n been unified with a concrete floating-point type, perform floating-point\n type fallback by unifying them with f64.\n\n#. If there are any remaining [diverging type variable]s that have not been\n unified with a concrete type, unify them with the unit type.\n\n#. If there are any remaining [global type variable]s that have not been\n unified with a concrete type, raise a static error.\n\n#. If there are any remaining [obligation]s that do not hold or cannot be\n resolved with the available type information, raise a static error.\n\nThe type inference rules for [statement]s are as follows:\n\n* [Item statement]s are not subject to type inference.\n\n* [Expression statement]s apply the expression inference rules outlined below\n to the related expression, with the expected type set to the\n unit type if the expression statement lacks the character 0x3B\n (semicolon), unset otherwise.\n\n* [Let statement]s are inferred as follows:\n\n #. If the let statement has a type ascription, unify that\n type with the type of the pattern.\n\n #. If the let statement has a let initializer, apply the\n expression inference rules outlined below to the contained expression,\n with the expected type set to the type of the pattern.\n\n #. If the let statement has a let initializer with a\n block expression, apply the expression inference rules outlined below to\n the contained block expression, with the expected type set to\n the never type.\n\nType inference of [expression]s may incorporate an expected type,\nderived from the context the expression appears in. If the expression\nis a coercion site or a coercion-propagating expression, the type\nderived via type inference may be coerced to the expected type. If no\ntype coercion to the expected type is possible, or the expression\nis not a coercion site or a coercion-propagating expression, the\ninferred expression type is unified with the expected type.\n\nThe type inference rules for [expression]s are as follows:\n\n* An if expression is inferred by inferring its subject expression\n with an expected type of bool, then inferring its\n block expression with the expected type of the if expression.\n Then, if the if expression has an else expression, apply the\n inference rules below to it.\n\n* An if let expression is inferred by inferring its\n subject let expression with the expected type set to the type\n of its pattern, then inferring its block expression with the\n expected type of the if-let expression. If the\n if let expression has an else expression, apply the inference rules\n below to it.\n\n* An else expression that is part of an if expression or\n if let expression is inferred as follows:\n\n * If the else expression has a block expression, infer the\n block expression with the expected type of the if expression\n or if let expression.\n\n * If the else expression has an if expression, infer that nested\n if expression with the expected type of the original\n if expression, then unify its type with the type of\n the original if expression or if let expression.\n\n * Otherwise, the else expression has an if let expression. Infer\n that nested if let expression with the expected type of the\n original if expression, then unify its type with the\n type of the original if expression or if let expression.\n\n* A match expression is inferred as follows:\n\n #. Unify the [type]s of the [pattern]s of every match arm,\n then infer the subject expression with the expected type set to\n the type of the [pattern]s.\n\n #. Infer the [operand]s of all [match arm guard]s with\n expected type bool.\n\n #. Infer the match arm body of every match arm with the\n expected type of the match expression.\n\n* A for loop expression is inferred by unifying the type of its\n pattern with the type <T as core::iter::IntoIterator>::Item,\n where T is the type of the subject expression, and then\n inferring its loop body.\n\n* A while let loop expression is inferred by unifying the type of its\n subject let expression with the type of its pattern, and then\n inferring its loop body.\n\n* An array expression using an array element constructor is inferred\n by attempting a least upper bound coercion from each element type to\n the expected type. If no such type coercion is possible, all element\n [type]s are unified instead.\n\n* A negation expression is inferred as follows:\n\n #. Determine the trait corresponding to the operator according to the\n following table:\n\n \n\n* A bit expression or arithmetic expression is inferred as follows:\n\n #. Determine the trait corresponding to the operator according to the\n following table:\n\n \n\n* A compound assignment expression is inferred as follows:\n\n #. Determine the trait corresponding to the operator according to the\n following table:\n\n \n\n* A comparison expression is inferred by introducing an obligation\n L: PartialEq<R>, where L is the type of the left operand,\n and R is the type of the right operand. The type of the\n expression is bool.\n\n* An assignment expression is inferred by unifying the type of its\n assignee operand with the type of its value operand.\n\n* A closure expression is inferred by deducing its signature from the\n surrounding context, unifying the deduced closure parameter [type]s\n and return type with the user-written closure parameter\n [pattern]s and [type ascription]s and return type, and then\n inferring the closure body with the expected type set to the\n closure's return type. The closure signature is deduced as follows:\n\n * If the expected type is a function pointer type, the closure\n signature is the signature of that function pointer type.\n\n * Otherwise, if there is a pending obligation requiring that the\n expected type implements core::ops::FnOnce or a trait that\n has core::ops::FnOnce as one of its [supertrait]s, derive the\n closure signature from the parameters and return type of the\n core::ops::FnOnce bound or supertrait.\n\n * Otherwise, the closure signature remains undeduced. No outside type\n information is provided and the parameter [type]s and return type\n are subject to regular type inference.\n\n* Other [expression]s are inferred by applying the typing rules specified\n in the section for that expression.\n\nIf an expression is a diverging expression, its type is a new\ndiverging type variable.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_h8sedxew0d4u": "Type inference is the process of automatically determining the type of [expression]s and [pattern]s within a type inference root.",
+            "fls_ybvrhh96fc7y": "A type inference root is an expression whose inner [expression]s and [pattern]s are subject to type inference independently of those found in other [type inference root]s.",
+            "fls_EWBilpepaDcX": "The following [expression]s are considered [type inference root]s:",
+            "fls_NYSzcvf5nQpi": "A constant argument.",
+            "fls_htLp5J5ObgNh": "The expression of a constant initializer.",
+            "fls_cPlCLGCcl7EK": "The expression of a static initializer.",
+            "fls_KphY5qHev0Dc": "The expression of a discriminant initializer.",
+            "fls_67Bf5kR5OtYW": "The expression of a constant parameter initializer.",
+            "fls_sAS3vQpkjksr": "The expression of a constant argument.",
+            "fls_Sowatt1V988J": "A function body.",
+            "fls_A1NVYkepoaMk": "The size operand of an array expression or an array type.",
+            "fls_J77VeAlD8rsv": "A type inference root imposes an expected type on its expression depending on the type inference root as follows:",
+            "fls_P9uiamxA4HE3": "The expected type of a constant argument is the type ascription of the constant parameter.",
+            "fls_5d4hw3gj4w4n": "The expected type of the expression of a constant initializer is the type specified by the type ascription of the related constant.",
+            "fls_qlovdtcj1v1b": "The expected type of the expression of a static initializer is the type specified by the type ascription of the related static.",
+            "fls_Z5gKFjZW5rRA": "The expected type of the expression of a discriminant initializer is determined as follows:",
+            "fls_vYvumjTQH9Xg": "If the enum type that contains the discriminant is subject to attribute repr that specifies a primitive representation, the expected type is the specified integer type.",
+            "fls_QaGKt99CmvF6": "Otherwise, the expected type is isize.",
+            "fls_RJIeW597XRvS": "The expected type of a function body is the return type of the function.",
+            "fls_veG2D64fIXvo": "The expected type of a size operand of an array expression or an array type is usize.",
+            "fls_uvvn4usfsbhr": "A type variable is a placeholder used during type inference to stand in for an undetermined type of an expression or a pattern.",
+            "fls_gDalJm1XS0mi": "A global type variable is a type variable that can refer to any type.",
+            "fls_7ov36fpd9mwe": "An integer type variable is a type variable that can refer only to [integer type]s.",
+            "fls_3hv3wxkhjjp1": "A floating-point type variable is a type variable that can refer only to [floating-point type]s.",
+            "fls_bXQ63GYYDuMp": "A diverging type variable is a type variable that can refer to any type and originates from a diverging expression.",
+            "fls_JryXiKBIFvF3": "A lifetime variable is a placeholder used during type inference to stand in for an undetermined lifetime of a type.",
+            "fls_rvj3XspFZ1u3": "The type inference algorithm uses type unification to propagate known [type]s of [expression]s and [pattern]s across the type inference root being inferred. In the rules detailed below, a static error occurs when type unification fails.",
+            "fls_6GrNr2izovRN": "Performing type inference may introduce a requirement that some type must implement a trait, or that a type or lifetime must outlive some other lifetime. Such requirements are referred to as [obligation]s and are detailed in the inference rules below.",
+            "fls_9dSltJ6U98Fo": "If insufficient type information is available at the time an obligation is introduced, it may be deferred to be resolved later. Any time new type information is derived during type inference, the tool attempts to resolve all outstanding [obligation]s and propagate any resulting type information via type unification.",
+            "fls_v5dWGuBKvQSJ": "When an associated type <Type as Trait>::Assoc is referenced within a type inference root (either explicitly within the source code, or via the inference rules below), an obligation requiring that Type implements Trait is introduced.",
+            "fls_SZgixDCAx6PQ": "Type inference for a type inference root proceeds as follows: #.",
+            "fls_XYY1U9h9HlAa": "Recursively process all [expression]s and [statement]s in the type inference root in program order. #.",
+            "fls_1rnssw39aRWn": "For each statement, apply the statement inference rules outlined below. #.",
+            "fls_aYJaZXcOVVyk": "For each expression, apply the expression inference rules outlined below. #.",
+            "fls_X8kLC7JwiF0A": "If there are any remaining [integer type variable]s that have not been unified with a concrete integer type, perform integer type fallback by unifying them with i32. #.",
+            "fls_ZFQhOxO3jpby": "If there are any remaining [floating-point type variable]s that have not been unified with a concrete floating-point type, perform floating-point type fallback by unifying them with f64. #.",
+            "fls_l1G52a0qqEes": "If there are any remaining [diverging type variable]s that have not been unified with a concrete type, unify them with the unit type. #.",
+            "fls_Tx4Sx4Qy8y2d": "If there are any remaining [global type variable]s that have not been unified with a concrete type, raise a static error. #.",
+            "fls_Nbdth8N0PSRq": "If there are any remaining [obligation]s that do not hold or cannot be resolved with the available type information, raise a static error.",
+            "fls_hISRWZUuqE4Q": "The type inference rules for [statement]s are as follows:",
+            "fls_ygi1ACJ0RkfS": "[Item statement]s are not subject to type inference.",
+            "fls_97Fxlv2KN6QF": "[Expression statement]s apply the expression inference rules outlined below to the related expression, with the expected type set to the unit type if the expression statement lacks the character 0x3B (semicolon), unset otherwise.",
+            "fls_hzXqj6YT1mFr": "[Let statement]s are inferred as follows: #.",
+            "fls_Kv0dzoMODtdy": "If the let statement has a type ascription, unify that type with the type of the pattern. #.",
+            "fls_5v6TR7oqOwFM": "If the let statement has a let initializer, apply the expression inference rules outlined below to the contained expression, with the expected type set to the type of the pattern. #.",
+            "fls_Gwx0Kfx68DXL": "If the let statement has a let initializer with a block expression, apply the expression inference rules outlined below to the contained block expression, with the expected type set to the never type.",
+            "fls_J6ydUCCJp1Sn": "Type inference of [expression]s may incorporate an expected type, derived from the context the expression appears in. If the expression is a coercion site or a coercion-propagating expression, the type derived via type inference may be coerced to the expected type. If no type coercion to the expected type is possible, or the expression is not a coercion site or a coercion-propagating expression, the inferred expression type is unified with the expected type.",
+            "fls_FSQqHs8T4bUx": "The type inference rules for [expression]s are as follows:",
+            "fls_0HHC1iOk5dwz": "An if expression is inferred by inferring its subject expression with an expected type of bool, then inferring its block expression with the expected type of the if expression. Then, if the if expression has an else expression, apply the inference rules below to it.",
+            "fls_QZWTS0Giy3I3": "An if let expression is inferred by inferring its subject let expression with the expected type set to the type of its pattern, then inferring its block expression with the expected type of the if-let expression. If the if let expression has an else expression, apply the inference rules below to it.",
+            "fls_KJsIu1lgVZxP": "An else expression that is part of an if expression or if let expression is inferred as follows:",
+            "fls_KRQxdSav1KBA": "If the else expression has a block expression, infer the block expression with the expected type of the if expression or if let expression.",
+            "fls_Mcpwyvz47SoG": "If the else expression has an if expression, infer that nested if expression with the expected type of the original if expression, then unify its type with the type of the original if expression or if let expression.",
+            "fls_34AQ9g7xhdUj": "Otherwise, the else expression has an if let expression. Infer that nested if let expression with the expected type of the original if expression, then unify its type with the type of the original if expression or if let expression.",
+            "fls_4ZT35povCL04": "A match expression is inferred as follows: #.",
+            "fls_62OcWZaVN9hh": "Unify the [type]s of the [pattern]s of every match arm, then infer the subject expression with the expected type set to the type of the [pattern]s. #.",
+            "fls_st9onPgDrc8y": "Infer the [operand]s of all [match arm guard]s with expected type bool. #.",
+            "fls_F999gqcBfff9": "Infer the match arm body of every match arm with the expected type of the match expression.",
+            "fls_Esa4ST7lLp8T": "A for loop expression is inferred by unifying the type of its pattern with the type <T as core::iter::IntoIterator>::Item, where T is the type of the subject expression, and then inferring its loop body.",
+            "fls_9GDElCkL1UbH": "A while let loop expression is inferred by unifying the type of its subject let expression with the type of its pattern, and then inferring its loop body.",
+            "fls_0eATa6RtDNtA": "An array expression using an array element constructor is inferred by attempting a least upper bound coercion from each element type to the expected type. If no such type coercion is possible, all element [type]s are unified instead.",
+            "fls_q1JZZMxqWXCk": "A negation expression is inferred as follows: #.",
+            "fls_hH58ftCxBYzm": "Determine the trait corresponding to the operator according to the following table: .. list-table:: -",
+            "fls_aiSI99pbAYqT": "- **Operator** - **Trait** -",
+            "fls_zRdxowO4eDMN": "- ! - core::ops::Not -",
+            "fls_IoceMi7HfqsK": "- - - core::ops::Neg #.",
+            "fls_lDkPMB5UI58B": "Infer the type of the expression to be the associated type <T as Trait>::Output, where T is the type of the operand, and Trait is the operator trait determined from the table above.",
+            "fls_JKZHF3ZDHshw": "A bit expression or arithmetic expression is inferred as follows: #.",
+            "fls_rT6zpG3cYhaF": "Determine the trait corresponding to the operator according to the following table: .. list-table:: -",
+            "fls_UFMyHzk6ucsT": "- **Operator** - **Trait** -",
+            "fls_hPZmcfQiNasT": "- + - core::ops::Add -",
+            "fls_rgC3Iea5p9Kr": "- - - core::ops::Sub -",
+            "fls_5jDBPymVKzDv": "- * - core::ops::Mul -",
+            "fls_f21GNntBOxaz": "- / - core::ops::Div -",
+            "fls_NpwLzJJH9cGw": "- % - core::ops::Mod -",
+            "fls_56J8BlLOuvr4": "- & - core::ops::BitAnd -",
+            "fls_jK2pIVxOmtJ8": "- | - core::ops::BitOr -",
+            "fls_fjV22WcosNnt": "- ^ - core::ops::BitXor -",
+            "fls_h3OVuCdsKPhV": "- << - core::ops::Shl -",
+            "fls_be2djziKJw3I": "- >> - core::ops::Shr #.",
+            "fls_nHt0LVSiwTB3": "If the expression is a shift left expression or a shift right expression, and the expected type is an integer type, unify the type of the left operand with the expected type. #.",
+            "fls_sLCBZ3vG1AWs": "If the expression is neither a shift left expression nor a shift right expression, and the expected type is a numeric type, unify the [type]s of both [operand]s with the expected type. #.",
+            "fls_mCISAdm7sjRs": "Infer the type of the expression to be the associated type <L as Trait<R>>::Output, where L is the type of the left operand, Trait is the operator trait determined from the table above, and R is the type of the right operand.",
+            "fls_Fv8fj9R8prUV": "A compound assignment expression is inferred as follows: #.",
+            "fls_QDWVv2nTufX7": "Determine the trait corresponding to the operator according to the following table: .. list-table:: -",
+            "fls_O2r51Xrmmj38": "- **Operator** - **Trait** -",
+            "fls_b96Zca6oFn82": "- += - core::ops::AddAssign -",
+            "fls_07AIc06bGnZt": "- -= - core::ops::SubAssign -",
+            "fls_A36NBOl1FTCb": "- *= - core::ops::MulAssign -",
+            "fls_h3mmmIBR72kV": "- /= - core::ops::DivAssign -",
+            "fls_8edzBBIo7jF7": "- %= - core::ops::ModAssign -",
+            "fls_lUg26vFuSePP": "- &= - core::ops::BitAndAssign -",
+            "fls_21ay7EUUUmhx": "- |= - core::ops::BitOrAssign -",
+            "fls_8VgAhOgDOk0y": "- ^= - core::ops::BitXorAssign -",
+            "fls_OVVY9CE0pGtJ": "- <<= - core::ops::ShlAssign -",
+            "fls_FojOvB6l3lAh": "- >>= - core::ops::ShrAssign #.",
+            "fls_CVfHkJq1PixR": "Introduce an obligation L: $Trait<R>, where L is the type of the assigned operand, Trait is the operator trait determined from the table above, and R is the type of the modifying operand. #.",
+            "fls_0RZ7w0YqmzE3": "The type of the expression is the unit type.",
+            "fls_YppNCEPMYqWJ": "A comparison expression is inferred by introducing an obligation L: PartialEq<R>, where L is the type of the left operand, and R is the type of the right operand. The type of the expression is bool.",
+            "fls_SZmiJjI43fQL": "An assignment expression is inferred by unifying the type of its assignee operand with the type of its value operand.",
+            "fls_ipWTrhF4xakC": "A closure expression is inferred by deducing its signature from the surrounding context, unifying the deduced closure parameter [type]s and return type with the user-written closure parameter [pattern]s and [type ascription]s and return type, and then inferring the closure body with the expected type set to the closure's return type. The closure signature is deduced as follows:",
+            "fls_zgRFKbfdI6ro": "If the expected type is a function pointer type, the closure signature is the signature of that function pointer type.",
+            "fls_z2UkZX5Qdmws": "Otherwise, if there is a pending obligation requiring that the expected type implements core::ops::FnOnce or a trait that has core::ops::FnOnce as one of its [supertrait]s, derive the closure signature from the parameters and return type of the core::ops::FnOnce bound or supertrait.",
+            "fls_U46IXItEKMCB": "Otherwise, the closure signature remains undeduced. No outside type information is provided and the parameter [type]s and return type are subject to regular type inference.",
+            "fls_TAJ3JJwIeDbQ": "Other [expression]s are inferred by applying the typing rules specified in the section for that expression.",
+            "fls_VrpaTruoBwtF": "If an expression is a diverging expression, its type is a new diverging type variable."
+          }
+        }
+      },
+      "parent_fls_id": "fls_j02707n615z0",
+      "sibling_fls_ids": [
+        "fls_3gapgqys3ceb",
+        "fls_exe4zodlwfez",
+        "fls_dw33yt5g6m0k",
+        "fls_wsfw8xF3vniL",
+        "fls_omaq7psg83n3",
+        "fls_mcxF9y5u66sZ"
+      ]
+    },
+    {
+      "fls_id": "fls_85vx1qfa061i",
+      "title": "Traits",
+      "category": 0,
+      "level": 2,
+      "file": "types-and-traits",
+      "content": "Traits\n\n SupertraitList ::=\n TypeBoundList\n\n TraitBody ::=\n $${$$\n InnerAttributeOrDoc*\n AssociatedItem*\n $$}$$\n\nA trait is an item that describes an interface a type can\nimplement.\n\nA trait body is a construct that encapsulates the\n[associated item]s, [inner attribute]s, and\n[inner doc comment]s of a trait.\n\nWithin a trait, the type Self acts as a placeholder for a\ntype implementing the trait, and behaves like a type parameter.\n\nA local trait is a trait that is defined in the current crate.\n\nA subtrait is a trait with a supertrait.\n\nA supertrait is a transitive trait that a type must additionally\nimplement.\n\nA subtrait shall not be its own supertrait.\n\nA trait of the form\n\nis equivalent to a where clause of the following form:\n\nAn auto trait is a trait that is implicitly and automatically\nimplemented by a type when the types of its constituent [field]s\nimplement the trait.\n\nA type that has no [field]s implements all [auto trait]s.\n\nIf determining whether a type T implements an auto trait\nwould recursively depend on whether T implements said auto trait, this\nrequirement is ignored and assumed to hold.\n\nThe following [trait]s are [auto trait]s:\n\n* core::marker::Send\n\n* core::marker::Sync\n\n* core::marker::Unpin\n\n* core::panic::UnwindSafe\n\n* core::panic::RefUnwindSafe\n\nNo other [trait]s are [auto trait]s.\n\nShape is a supertrait of Circle.\n\nCircle is a subtrait of Shape.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_tani6lesan9u": "A trait is an item that describes an interface a type can implement.",
+            "fls_PiAR1B26SoZV": "A trait body is a construct that encapsulates the [associated item]s, [inner attribute]s, and [inner doc comment]s of a trait.",
+            "fls_Y28596CVBzDG": "Within a trait, the type Self acts as a placeholder for a type implementing the trait, and behaves like a type parameter.",
+            "fls_AdbbUZZgMEsQ": "A local trait is a trait that is defined in the current crate.",
+            "fls_I9JaKZelMiby": "A subtrait is a trait with a supertrait.",
+            "fls_CYtxPjK3zq2T": "A supertrait is a transitive trait that a type must additionally implement.",
+            "fls_ytn5cdonytyn": "A subtrait shall not be its own supertrait.",
+            "fls_vucd1u38sq7i": "A trait of the form .. code-block:: rust trait T: Bound {}",
+            "fls_kyr81mi01me2": "is equivalent to a where clause of the following form: .. code-block:: rust trait T where Self: Bound {}",
+            "fls_YynbrIceKmsJ": "An auto trait is a trait that is implicitly and automatically implemented by a type when the types of its constituent [field]s implement the trait.",
+            "fls_Bd4HwdrRuXMm": "A type that has no [field]s implements all [auto trait]s.",
+            "fls_UzfG5ic8PUIH": "If determining whether a type T implements an auto trait would recursively depend on whether T implements said auto trait, this requirement is ignored and assumed to hold.",
+            "fls_02D6ku4Sd6yL": "The following [trait]s are [auto trait]s:",
+            "fls_RLFIzQeAPhG6": "core::marker::Send",
+            "fls_avSxO0LEka2x": "core::marker::Sync",
+            "fls_ft8axGGOe3aL": "core::marker::Unpin",
+            "fls_M4EoT1NMyxJS": "core::panic::UnwindSafe",
+            "fls_Tir2kpKNP1KC": "core::panic::RefUnwindSafe",
+            "fls_WxHiKr8BGGvz": "No other [trait]s are [auto trait]s."
+          }
+        },
+        "-7": {
+          "paragraphs": {
+            "fls_mjg7yrq66hh0": "Shape is a supertrait of Circle. .. code-block:: rust trait Shape { fn area(&self) -> f64; }",
+            "fls_ydowwijzirmm": "Circle is a subtrait of Shape. .. code-block:: rust trait Circle: Shape { fn radius(&self) -> f64; }"
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "TraitDeclaration ::=\n       $$unsafe$$? $$trait$$ Name GenericParameterList? ($$:$$ SupertraitList?)? WhereClause? TraitBody\n\n   SupertraitList ::=\n       TypeBoundList\n\n   TraitBody ::=\n       $${$$\n         InnerAttributeOrDoc*\n         AssociatedItem*\n       $$}$$"
+          }
+        }
+      },
+      "parent_fls_id": "fls_vgb6ev541b2r",
+      "sibling_fls_ids": [
+        "fls_kwsBxMQNTRnL",
+        "fls_963gsjp2jas2",
+        "fls_id66vnaqw0zt",
+        "fls_fbchw64p6n2x",
+        "fls_wdec78luqh5b",
+        "fls_hbbek3z4wtcs",
+        "fls_3i4ou0dq64ny",
+        "fls_1ompd93w7c9f",
+        "fls_3pbipk8ki18d",
+        "fls_kgvleup5mdhq",
+        "fls_7pby13muw48o",
+        "fls_j02707n615z0",
+        "fls_jeoas4n6su4"
+      ]
+    },
+    {
+      "fls_id": "fls_4ikc07mfrez5",
+      "title": "Object Safety",
+      "category": 0,
+      "level": 3,
+      "file": "types-and-traits",
+      "content": "Object Safety\n\nA trait is object safe when:\n\n* Its [supertrait]s are object safe, and\n\n* core::marker::Sized is not a supertrait, and\n\n* It lacks [associated constant]s, and\n\n* Its [associated function]s are object safe, and\n\n* Its [associated type]s specify a core::marker::Sized\n [trait bound] for Self in a type bound predicate.\n\nAn associated function is object safe when it is either an\nobject safe dispatchable function or an object safe\nnon-dispatchable function.\n\nA dispatchable function is object safe when:\n\n* It lacks [generic parameter]s, and\n\n* Is a method that does not use Self in its function signature\n except in the type of its self parameter or as the type of a\n type bound predicate, and\n\n* It lacks [type bound predicate]s with Self as the predicate's\n type and [trait]s as the predicate's [trait bound]s other than\n core::marker::Send, core::marker::Sync and\n core::marker::Unpin\n\nA function is object safe when it specifies a\ncore::marker::Sized [trait bound] for Self in a\ntype bound predicate.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_lrdki56hpc3k": "A trait is object safe when:",
+            "fls_5wlltclogfkw": "Its [supertrait]s are object safe, and",
+            "fls_droy0w5gtqaw": "core::marker::Sized is not a supertrait, and",
+            "fls_46gd1q80c6bn": "It lacks [associated constant]s, and",
+            "fls_kwo4cknx0yat": "Its [associated function]s are object safe, and",
+            "fls_vmLLL82EQasI": "Its [associated type]s specify a core::marker::Sized [trait bound] for Self in a type bound predicate.",
+            "fls_uixekv82g2e5": "An associated function is object safe when it is either an object safe dispatchable function or an object safe non-dispatchable function.",
+            "fls_72tvfoemwpyy": "A dispatchable function is object safe when:",
+            "fls_j7nb34o87l1z": "It lacks [generic parameter]s, and",
+            "fls_k1vc9vd8at92": "Is a method that does not use Self in its function signature except in the type of its self parameter or as the type of a type bound predicate, and",
+            "fls_kqylg31sm5wv": "It lacks [type bound predicate]s with Self as the predicate's type and [trait]s as the predicate's [trait bound]s other than core::marker::Send, core::marker::Sync and core::marker::Unpin",
+            "fls_aer3gaur7avp": "A function is object safe when it specifies a core::marker::Sized [trait bound] for Self in a type bound predicate."
+          }
+        }
+      },
+      "parent_fls_id": "fls_85vx1qfa061i",
+      "sibling_fls_ids": []
+    },
+    {
+      "fls_id": "fls_jeoas4n6su4",
+      "title": "Trait and Lifetime Bounds",
+      "category": 0,
+      "level": 2,
+      "file": "types-and-traits",
+      "content": "Trait and Lifetime Bounds\n\n TypeBound ::=\n LifetimeIndication\n | ParenthesizedTraitBound\n | TraitBound\n | UseCaptures\n\n LifetimeIndication ::=\n Lifetime\n | $$'_$$\n | $$'static$$\n\n LifetimeIndicationList ::=\n LifetimeIndication ($$+$$ LifetimeIndication)* $$+$$?\n\n ParenthesizedTraitBound ::=\n $$($$ TraitBound $$)$$\n\n TraitBound ::=\n ($$?$$ | ForGenericParameterList)? TypePath\n\n ForGenericParameterList ::=\n $$for$$ GenericParameterList\n\nA bound imposes a constraint on a generic parameter by limiting the\nset of possible [generic substitution]s.\n\nA bound does not impose a constraint on a generic parameter of a\ntype alias unless it is an associated item.\n\nA lifetime bound is a bound that imposes a constraint on the\n[lifetime]s of [generic parameter]s.\n\nA trait bound is a bound that imposes a constraint on the\n[trait]s of [generic parameter]s.\n\nA ForGenericParameterList shall not specify [ConstantParameter]s or\n[TypeParameter]s.\n\nA higher-ranked trait bound is a bound that specifies an infinite\nlist of [bound]s for all possible [lifetime]s specified by the\nForGenericParameterList.\n\nAn opt-out trait bound is a trait bound with Punctuation ?\nthat nullifies an implicitly added trait bound.\n\nAn outlives bound is a trait bound which requires that a\nlifetime parameter or type outlives a lifetime parameter.\n\nOutlives bound 'a: 'b indicates that 'a outlives 'b.\n\nOutlives bound T: 'a indicates that all [lifetime parameter]s of\nT outlive 'a.\n\nAn implied bound is a bound that is not expressed in syntax, but is\nis the byproduct of relations between [lifetime parameter]s and\n[function parameter]s, between [lifetime parameter]s and a\nreturn type, and between [lifetime parameter]s and [field]s.\n\nA reference of the form &'a T, where 'a is a\nlifetime parameter and T is a type, yields implied bound\nT: 'a.\n\nIf an outlives bound applies to the type of a field, then this\nbound also applies to the related abstract data type as an\nimplied bound.\n\nIf an outlives bound applies to the type of a function parameter\nor to a return type, then this bound also applies to the related\nfunction as an implied bound.\n\n[Use capture] [bound]s shall only be used within [anonymous return type]s.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_5g508z6c7q5f": "A bound imposes a constraint on a generic parameter by limiting the set of possible [generic substitution]s.",
+            "fls_BqLPVaSyyXRG": "A bound does not impose a constraint on a generic parameter of a type alias unless it is an associated item.",
+            "fls_grby8tmmd8sb": "A lifetime bound is a bound that imposes a constraint on the [lifetime]s of [generic parameter]s.",
+            "fls_knut10hoz6wc": "A trait bound is a bound that imposes a constraint on the [trait]s of [generic parameter]s.",
+            "fls_sf6zg0ez9hbb": "A ForGenericParameterList shall not specify [ConstantParameter]s or [TypeParameter]s.",
+            "fls_vujl3fblz6x2": "A higher-ranked trait bound is a bound that specifies an infinite list of [bound]s for all possible [lifetime]s specified by the ForGenericParameterList.",
+            "fls_AzuZmR9DXSQh": "An opt-out trait bound is a trait bound with Punctuation ? that nullifies an implicitly added trait bound.",
+            "fls_1Sm2Yq1Ow76f": "An outlives bound is a trait bound which requires that a lifetime parameter or type outlives a lifetime parameter.",
+            "fls_tx4uspewnk7w": "Outlives bound 'a: 'b indicates that 'a outlives 'b.",
+            "fls_5kj8bmvb8xfc": "Outlives bound T: 'a indicates that all [lifetime parameter]s of T outlive 'a.",
+            "fls_J9DEsd06Ttu9": "An implied bound is a bound that is not expressed in syntax, but is is the byproduct of relations between [lifetime parameter]s and [function parameter]s, between [lifetime parameter]s and a return type, and between [lifetime parameter]s and [field]s.",
+            "fls_IfHRxSasGAih": "A reference of the form &'a T, where 'a is a lifetime parameter and T is a type, yields implied bound T: 'a.",
+            "fls_K8nPGP5xbLb7": "If an outlives bound applies to the type of a field, then this bound also applies to the related abstract data type as an implied bound.",
+            "fls_Uw6y5ZlaK6RY": "If an outlives bound applies to the type of a function parameter or to a return type, then this bound also applies to the related function as an implied bound.",
+            "fls_OnyR0Wsfk7KI": "[Use capture] [bound]s shall only be used within [anonymous return type]s."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "TypeBoundList ::=\n       TypeBound ($$+$$ TypeBound)* $$+$$?\n\n   TypeBound ::=\n       LifetimeIndication\n     | ParenthesizedTraitBound\n     | TraitBound\n     | UseCaptures\n\n   LifetimeIndication ::=\n       Lifetime\n     | $$'_$$\n     | $$'static$$\n\n   LifetimeIndicationList ::=\n       LifetimeIndication ($$+$$ LifetimeIndication)* $$+$$?\n\n   ParenthesizedTraitBound ::=\n       $$($$ TraitBound $$)$$\n\n   TraitBound ::=\n       ($$?$$ | ForGenericParameterList)? TypePath\n\n   ForGenericParameterList..."
+          }
+        }
+      },
+      "parent_fls_id": "fls_vgb6ev541b2r",
+      "sibling_fls_ids": [
+        "fls_kwsBxMQNTRnL",
+        "fls_963gsjp2jas2",
+        "fls_id66vnaqw0zt",
+        "fls_fbchw64p6n2x",
+        "fls_wdec78luqh5b",
+        "fls_hbbek3z4wtcs",
+        "fls_3i4ou0dq64ny",
+        "fls_1ompd93w7c9f",
+        "fls_3pbipk8ki18d",
+        "fls_kgvleup5mdhq",
+        "fls_7pby13muw48o",
+        "fls_j02707n615z0",
+        "fls_85vx1qfa061i"
+      ]
+    },
+    {
+      "fls_id": "fls_yqcygq3y6m5j",
+      "title": "Lifetimes",
+      "category": 0,
+      "level": 3,
+      "file": "types-and-traits",
+      "content": "Lifetimes\n\n AttributedLifetime ::=\n OuterAttributeOrDoc* Lifetime\n\n AttributedLifetimeList ::=\n AttributedLifetime ($$,$$ AttributedLifetime)* $$,$$?\n\nA lifetime specifies the expected longevity of a value.\n\nA lifetime bound shall apply to [type]s and other [lifetime]s.\n\nSee fls_85vx1qfa061i for the declaration of Shape.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_nne91at3143t": "A lifetime specifies the expected longevity of a value.",
+            "fls_vbclxg9dq4yo": "A lifetime bound shall apply to [type]s and other [lifetime]s."
+          }
+        },
+        "-7": {
+          "paragraphs": {
+            "fls_gcszhqg6hnva": "See for the declaration of Shape."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "Lifetime ::=\n       $$'$$ (NonKeywordIdentifier | RawIdentifierKeyword)\n\n   AttributedLifetime ::=\n       OuterAttributeOrDoc* Lifetime\n\n   AttributedLifetimeList ::=\n       AttributedLifetime ($$,$$ AttributedLifetime)* $$,$$?"
+          }
+        }
+      },
+      "parent_fls_id": "fls_jeoas4n6su4",
+      "sibling_fls_ids": [
+        "fls_ikfvbeewame7",
+        "fls_l9ebxrlxyawd"
+      ]
+    },
+    {
+      "fls_id": "fls_ikfvbeewame7",
+      "title": "Subtyping and Variance",
+      "category": 0,
+      "level": 3,
+      "file": "types-and-traits",
+      "content": "Subtyping and Variance\n\nSubtyping is a property of [type]s, allowing one type to be used\nwhere another type is expected.\n\nVariance is a property of [lifetime parameter]s and\n[type parameter]s that describes the circumstances under which a\ngeneric type is a subtype of an instantiation of itself with\ndifferent [generic argument]s.\n\nA type is its own subtype.\n\nF<T> is said to be\n\n* Covariant over T, when T being a subtype of U implies\n that F<T> is a subtype of F<U>, or\n\n* Contravariant over T, when T being a subtype of U\n implies that F<U> is a subtype of F<T>, or\n\n* Invariant over T.\n\nVariance is determined as follows:\n\nA trait is invariant in all inputs, including the Self parameter.\n\n[Lifetime parameter]s and [type parameter]s are subject to\nvariance.\n\nThe variance of a generic parameter of an abstract data type or\na tuple type is determined as follows:\n\n#. For each generic parameter G:\n\n #. Initialize variance V of the generic parameter to any.\n\n #. For each field of the abstract data type or the\n tuple type:\n\n #. If field type T uses G, then\n\n #. If V is any, set V to the variance of T over\n G.\n\n #. Otherwise if V and the variance of T over G differ,\n set V to invariant.\n\n #. It is a static error if variance V is any.\n\n[Expression]s and [statement]s may impose subtyping requirements\non their [subexpression]s. Such requirements are applied after\ntype inference, on the [inferred type]s of the respective\n[expression]s and [pattern]s.\n\nIt is a static error if any subtyping requirements are not met.\n\nThe subtyping requirements for [statement]s are as follows:\n\n* [Item statement]s impose no additional subtyping requirements.\n\n* [Let statement]s require that the type of the expression of the\n let initializer (if any) is a subtype of the type of the\n let statement's pattern.\n\n* [Expression statement]s impose the subtyping requirements for the\n contained expression, as outlined below.\n\nThe subtyping requirements for [expression]s are as follows:\n\n* The requirements for any arithmetic expression, bit expression,\n comparison expression, compound assignment expression,\n index expression, or negation expression are the same requirements\n as for an explicit invocation of the corresponding operator trait\n method.\n\n* An assignment expression requires that the type of its\n value operand is a subtype of the type of its\n assignee operand.\n\n* A type cast expression requires that the type of its operand is\n a subtype of its target type.\n\n* A call expression or method call expression requires that the\n [type]s of its [argument operand]s are [subtype]s of the\n [type]s of the corresponding parameter.\n\n* A return expression requires that the type of its operand is\n a subtype of the return type of the containing function or\n closure expression.\n\n* A break expression requires that its break type is a subtype of\n the type of the block expression or loop expression that the\n break expression breaks out of.\n\n* Other [expression]s do not impose any additional subtyping\n requirements.\n\nAny type coercion resulting in a method invocation imposes the same\nsubtyping requirements as an explicit invocation of that method would.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_atq2cltx487m": "Subtyping is a property of [type]s, allowing one type to be used where another type is expected.",
+            "fls_df87d44kgwcv": "Variance is a property of [lifetime parameter]s and [type parameter]s that describes the circumstances under which a generic type is a subtype of an instantiation of itself with different [generic argument]s.",
+            "fls_7ex941yysuhq": "A type is its own subtype.",
+            "fls_7qud6i05ze2": "F<T> is said to be",
+            "fls_wpm0p0gtctvi": "Covariant over T, when T being a subtype of U implies that F<T> is a subtype of F<U>, or",
+            "fls_3rfs58i2kg6l": "Contravariant over T, when T being a subtype of U implies that F<U> is a subtype of F<T>, or",
+            "fls_kbo3e3bosr0m": "Invariant over T.",
+            "fls_n36p6w2a75sm": "Variance is determined as follows: .. list-table:: -",
+            "fls_xw7eo3us0ow4": "- **Type** - **Variance in 'a** - **Variance in T** -",
+            "fls_qc6jma5g9vpn": "- &'a T - covariant - covariant -",
+            "fls_hpiiwxzg16rj": "- &'a mut T - covariant - invariant -",
+            "fls_aspdlqluwh9w": "- *const T - - covariant -",
+            "fls_8ohuze7hqtc1": "- *mut T - - invariant -",
+            "fls_7pkqgxabojkn": "- [T] - - covariant -",
+            "fls_ln9pqd4xu5e": "- [T; N] - - covariant -",
+            "fls_z4jo3ojkcu9v": "- fn() -> T - - covariant -",
+            "fls_67w6yslr3e25": "- fn(T) -> () - - contravariant -",
+            "fls_ojal3qytkqql": "- fn(T) -> T - - invariant -",
+            "fls_owp42z12l4lc": "- core::call::UnsafeCell<T> - - invariant -",
+            "fls_i1vuix3gj9ej": "- core::marker::PhantomData<T> - - covariant -",
+            "fls_mlf39pl0b931": "- dyn Trait<T> + 'a - covariant - invariant",
+            "fls_yknymnlsasyw": "A trait is invariant in all inputs, including the Self parameter.",
+            "fls_xkzo7nj40rbn": "[Lifetime parameter]s and [type parameter]s are subject to variance.",
+            "fls_abn5ycx11zpm": "The variance of a generic parameter of an abstract data type or a tuple type is determined as follows: #.",
+            "fls_hvfyog9ygn6q": "For each generic parameter G: #.",
+            "fls_mduolmcawb30": "Initialize variance V of the generic parameter to any. #.",
+            "fls_y81gmqweqc9w": "For each field of the abstract data type or the tuple type: #.",
+            "fls_etgfvgvymn8o": "If field type T uses G, then #.",
+            "fls_4kjxxrsk1igf": "If V is any, set V to the variance of T over G. #.",
+            "fls_y4zmb3vrym7p": "Otherwise if V and the variance of T over G differ, set V to invariant. #.",
+            "fls_9ae3idezsths": "It is a static error if variance V is any.",
+            "fls_WD6uyTCziRac": "[Expression]s and [statement]s may impose subtyping requirements on their [subexpression]s. Such requirements are applied after type inference, on the [inferred type]s of the respective [expression]s and [pattern]s.",
+            "fls_xURR0owesaIE": "It is a static error if any subtyping requirements are not met.",
+            "fls_CvZNYIfnOUcc": "The subtyping requirements for [statement]s are as follows:",
+            "fls_xrLYQX7W9OnR": "[Item statement]s impose no additional subtyping requirements.",
+            "fls_DWPN8DRysgMa": "[Let statement]s require that the type of the expression of the let initializer (if any) is a subtype of the type of the let statement's pattern.",
+            "fls_tOn5oKtp300J": "[Expression statement]s impose the subtyping requirements for the contained expression, as outlined below.",
+            "fls_HqXTVi7gr9wR": "The subtyping requirements for [expression]s are as follows:",
+            "fls_lxfPvK7NDNlj": "The requirements for any arithmetic expression, bit expression, comparison expression, compound assignment expression, index expression, or negation expression are the same requirements as for an explicit invocation of the corresponding operator trait method.",
+            "fls_awJeqcAHn5O3": "An assignment expression requires that the type of its value operand is a subtype of the type of its assignee operand.",
+            "fls_AD1IXzsnlwyg": "A type cast expression requires that the type of its operand is a subtype of its target type.",
+            "fls_p2II8E6cc9zt": "A call expression or method call expression requires that the [type]s of its [argument operand]s are [subtype]s of the [type]s of the corresponding parameter.",
+            "fls_pN5C4FHWEWdK": "A return expression requires that the type of its operand is a subtype of the return type of the containing function or closure expression.",
+            "fls_RdqV0hI8h8BI": "A break expression requires that its break type is a subtype of the type of the block expression or loop expression that the break expression breaks out of.",
+            "fls_Uv5CcMHPX79J": "Other [expression]s do not impose any additional subtyping requirements.",
+            "fls_LyvV4pOG7E4l": "Any type coercion resulting in a method invocation imposes the same subtyping requirements as an explicit invocation of that method would."
+          }
+        }
+      },
+      "parent_fls_id": "fls_jeoas4n6su4",
+      "sibling_fls_ids": [
+        "fls_yqcygq3y6m5j",
+        "fls_l9ebxrlxyawd"
+      ]
+    },
+    {
+      "fls_id": "fls_l9ebxrlxyawd",
+      "title": "Lifetime Elision",
+      "category": 0,
+      "level": 3,
+      "file": "types-and-traits",
+      "content": "Lifetime Elision\n\nLifetime elision is a set of rules that automatically insert\n[lifetime parameter]s and/or [lifetime argument]s when they are\nelided in the source code.\n\nA lifetime may be elided either implicitly or explicitly.\n\nA lifetime is elided explicitly if it is the '_ lifetime.\n\nA lifetime is elided implicitly if it is absent.\n\nLifetime elision rules are introduced by certain [construct]s and may\nbe nested.\n\nAn elided lifetime is subject to the set of lifetime elision rules\nintroduced by the innermost construct containing the elided lifetime.\n\nIt is a static error to elide a lifetime in a position where no\nlifetime elision rules are active.\n\n[Lifetime]s cannot be implicitly elided within [impl trait type]s.\nIf no lifetime bound is present, the impl trait type is not considered\nto be bound by any lifetime.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_9wtuclhm7yz5": "Lifetime elision is a set of rules that automatically insert [lifetime parameter]s and/or [lifetime argument]s when they are elided in the source code.",
+            "fls_JmP6O9zj8fkV": "A lifetime may be elided either implicitly or explicitly.",
+            "fls_5ZAQ9p7jQuc2": "A lifetime is elided explicitly if it is the '_ lifetime.",
+            "fls_YmUQ8ZiQuycp": "A lifetime is elided implicitly if it is absent.",
+            "fls_sIMN6Sd8xUZz": "Lifetime elision rules are introduced by certain [construct]s and may be nested.",
+            "fls_dIyisjNIx9dC": "An elided lifetime is subject to the set of lifetime elision rules introduced by the innermost construct containing the elided lifetime.",
+            "fls_cD0ZYi23VqWg": "It is a static error to elide a lifetime in a position where no lifetime elision rules are active.",
+            "fls_sA4Lqc5o6cX3": "[Lifetime]s cannot be implicitly elided within [impl trait type]s. If no lifetime bound is present, the impl trait type is not considered to be bound by any lifetime."
+          }
+        }
+      },
+      "parent_fls_id": "fls_jeoas4n6su4",
+      "sibling_fls_ids": [
+        "fls_yqcygq3y6m5j",
+        "fls_ikfvbeewame7"
+      ]
+    },
+    {
+      "fls_id": "fls_HEtHxXBcg7JA",
+      "title": "Function Lifetime Elision",
+      "category": 0,
+      "level": 4,
+      "file": "types-and-traits",
+      "content": "Function Lifetime Elision\n\nFunction lifetime elision is a form of lifetime elision that applies\nto [function]s, [function pointer type parameter]s, and [path]s\nthat resolve to one of the core::ops::Fn, core::ops::FnMut, and\ncore::ops::FnOnce [trait]s.\n\nAn input lifetime is one of the following [lifetime]s:\n\n* Any lifetime related to a function parameter.\n\n* Any lifetime related to a function pointer type parameter.\n\n* Any lifetime related to the [function parameter]s of the\n core::ops::Fn, core::ops::FnMut, and core::ops::FnOnce\n [trait]s.\n\nA self input lifetime is an input lifetime of a self parameter\nthat is a lifetime of a reference type whose referent is Self.\n\n* Any lifetime related to an implementing type and an\n implemented trait of an implementation.\n\nAn output lifetime is one of the following [lifetime]s:\n\n* Any lifetime related to the return type of a function.\n\n* Any lifetime related to the return type of a\n function pointer type.\n\n* Any lifetime related to the [return type]s of the\n core::ops::Fn, core::ops::FnMut, and core::ops::FnOnce\n [trait]s.\n\nLifetime elision proceeds as follows:\n\n#. Each elided input lifetime is a distinct lifetime parameter in\n its related construct.\n\n#. If a construct has exactly one input lifetime, then that\n lifetime is assigned to all elided [output lifetime]s.\n\n#. If a function has a self parameter with exactly 1\n self input lifetime, then the lifetime of the\n self input lifetime is assigned to all elided\n [output lifetime]s.\n\n#. Otherwise this is a static error.\n\nGiven function f of the form\n\nits lifetime elided form is",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_lAdIRCFFlydD": "Function lifetime elision is a form of lifetime elision that applies to [function]s, [function pointer type parameter]s, and [path]s that resolve to one of the core::ops::Fn, core::ops::FnMut, and core::ops::FnOnce [trait]s.",
+            "fls_dpudys82dhdc": "An input lifetime is one of the following [lifetime]s:",
+            "fls_pjil71kk0r25": "Any lifetime related to a function parameter.",
+            "fls_1jnn9bsb71k7": "Any lifetime related to a function pointer type parameter.",
+            "fls_2p29p1fvi182": "Any lifetime related to the [function parameter]s of the core::ops::Fn, core::ops::FnMut, and core::ops::FnOnce [trait]s.",
+            "fls_d4u3y82hdadc": "A self input lifetime is an input lifetime of a self parameter that is a lifetime of a reference type whose referent is Self.",
+            "fls_ks8wlufmhz6d": "Any lifetime related to an implementing type and an implemented trait of an implementation.",
+            "fls_hsg9kfyvh35m": "An output lifetime is one of the following [lifetime]s:",
+            "fls_ofqy10q4a9jk": "Any lifetime related to the return type of a function.",
+            "fls_yofbo96tjppf": "Any lifetime related to the return type of a function pointer type.",
+            "fls_vf7cxiir91ps": "Any lifetime related to the [return type]s of the core::ops::Fn, core::ops::FnMut, and core::ops::FnOnce [trait]s.",
+            "fls_g56br27hq2zj": "Lifetime elision proceeds as follows: #.",
+            "fls_1j204m1wy333": "Each elided input lifetime is a distinct lifetime parameter in its related construct. #.",
+            "fls_6km3cbchuxr2": "If a construct has exactly one input lifetime, then that lifetime is assigned to all elided [output lifetime]s. #.",
+            "fls_crb6m6b3cdwh": "If a function has a self parameter with exactly 1 self input lifetime, then the lifetime of the self input lifetime is assigned to all elided [output lifetime]s. #.",
+            "fls_ac9tdlfwp5et": "Otherwise this is a static error."
+          }
+        },
+        "-7": {
+          "paragraphs": {
+            "fls_qtjc7334wzhj": "Given function f of the form .. code-block:: rust fn f <'a, 'b, T: ToCStr>(&'a mut self, args: &'b [T]) -> &'a mut Command;",
+            "fls_vcmmkp9uruhr": "its lifetime elided form is .. code-block:: rust fn f <T: ToCStr>(&mut self, args: &[T]) -> &mut Command;"
+          }
+        }
+      },
+      "parent_fls_id": "fls_l9ebxrlxyawd",
+      "sibling_fls_ids": [
+        "fls_u5lQkU2rS6uV",
+        "fls_XTBOhK2Yk4lA",
+        "fls_ZQPv1ybdDsE1"
+      ]
+    },
+    {
+      "fls_id": "fls_u5lQkU2rS6uV",
+      "title": "Static Lifetime Elision",
+      "category": 0,
+      "level": 4,
+      "file": "types-and-traits",
+      "content": "Static Lifetime Elision\n\nStatic lifetime elision is a form of lifetime elision that applies to\nthe type ascription of [constant]s and [static]s.\n\nAn elided lifetime of a reference type or path in the\ntype specification of a constant or static is inferred to be the\n'static' lifetime.\n\nThe lifetime of an associated implementation constant shall not be\nelided.\n\nThe lifetime of an associated trait constant shall not be elided.\n\nGiven static S of the form\n\nits lifetime elided form is",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_l4RDXaFwnQZ6": "Static lifetime elision is a form of lifetime elision that applies to the type ascription of [constant]s and [static]s.",
+            "fls_8irr97rZWfSC": "An elided lifetime of a reference type or path in the type specification of a constant or static is inferred to be the 'static' lifetime.",
+            "fls_37udexenqv3p": "The lifetime of an associated implementation constant shall not be elided.",
+            "fls_xi86he5vvill": "The lifetime of an associated trait constant shall not be elided."
+          }
+        },
+        "-7": {
+          "paragraphs": {
+            "fls_2GKCEI9MwMn9": "Given static S of the form .. code-block:: rust static S: &[&usize] = &[];",
+            "fls_f3yZ31dRuTPG": "its lifetime elided form is .. code-block:: rust static S: &'static [&'static usize] = &[];"
+          }
+        }
+      },
+      "parent_fls_id": "fls_l9ebxrlxyawd",
+      "sibling_fls_ids": [
+        "fls_HEtHxXBcg7JA",
+        "fls_XTBOhK2Yk4lA",
+        "fls_ZQPv1ybdDsE1"
+      ]
+    },
+    {
+      "fls_id": "fls_XTBOhK2Yk4lA",
+      "title": "Trait Object Lifetime Elision",
+      "category": 0,
+      "level": 4,
+      "file": "types-and-traits",
+      "content": "Trait Object Lifetime Elision\n\nTrait object lifetime elision is a form of lifetime elision that\napplies to [trait object type]s.\n\nAn elided lifetime of a trait object type is inferred as follows:\n\n* If the trait object type is used as the type specification of a\n reference type, then the lifetime of the reference type is the\n elided lifetime,\n\n* If the trait object type is used as a generic argument and\n\n * if the corresponding generic parameter has exactly one\n lifetime bound, then the lifetime of that bound is the\n elided lifetime,\n\n * Otherwise it is a static error to infer the lifetime bound.\n\n* If the trait of the trait object type has exactly one\n lifetime bound specified, then the lifetime of that bound is\n the inferred lifetime,\n\n* If the trait of the trait object type has no [lifetime bound]s\n specified, then the elided lifetime is the 'static\n lifetime unless it is elided in [expression]s where it is\n instead inferred,\n\n* Otherwise it is a static error to infer the lifetime bound.\n\nGiven type alias T of the form\n\nits lifetime elided form is",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_fuBYWRrgxlbQ": "Trait object lifetime elision is a form of lifetime elision that applies to [trait object type]s.",
+            "fls_URl9CeIVsiWs": "An elided lifetime of a trait object type is inferred as follows:",
+            "fls_SHhw6lYHeYyQ": "If the trait object type is used as the type specification of a reference type, then the lifetime of the reference type is the elided lifetime,",
+            "fls_lC2rwdPLRwaf": "If the trait object type is used as a generic argument and",
+            "fls_e36Hh4oJvfhv": "if the corresponding generic parameter has exactly one lifetime bound, then the lifetime of that bound is the elided lifetime,",
+            "fls_ptejalcnIQtm": "Otherwise it is a static error to infer the lifetime bound.",
+            "fls_rGbdKtTijby4": "If the trait of the trait object type has exactly one lifetime bound specified, then the lifetime of that bound is the inferred lifetime,",
+            "fls_JhmQpUoExiNZ": "If the trait of the trait object type has no [lifetime bound]s specified, then the elided lifetime is the 'static lifetime unless it is elided in [expression]s where it is instead inferred,",
+            "fls_cglZigwAnASl": "Otherwise it is a static error to infer the lifetime bound."
+          }
+        },
+        "-7": {
+          "paragraphs": {
+            "fls_MipY2emZFF6d": "Given type alias T of the form .. code-block:: rust type T<'a> = &'a dyn Trait;",
+            "fls_YPesUZqYHVUX": "its lifetime elided form is .. code-block:: rust type T<'a> = &'a (dyn Trait + 'a);"
+          }
+        }
+      },
+      "parent_fls_id": "fls_l9ebxrlxyawd",
+      "sibling_fls_ids": [
+        "fls_HEtHxXBcg7JA",
+        "fls_u5lQkU2rS6uV",
+        "fls_ZQPv1ybdDsE1"
+      ]
+    },
+    {
+      "fls_id": "fls_ZQPv1ybdDsE1",
+      "title": "Impl Header Lifetime Elision",
+      "category": 0,
+      "level": 4,
+      "file": "types-and-traits",
+      "content": "Impl Header Lifetime Elision\n\nImpl header lifetime elision is a form of lifetime elision that\napplies to the implementing type and implemented trait (if any) of an\nimplementation.\n\nThe impl header lifetime elision rules are as follows:\n\n* Every explicitly elided lifetime is replaced with a new\n lifetime parameter defined on the implementation.\n\n* An implicitly elided lifetime of a reference is also replaced with a\n new lifetime parameter defined on the implementation.\n\n* An implicitly elided lifetime in any other type is a static error.\n\nGiven an implementation of the form\n\nits lifetime elided form is\n\nwhere 'a, 'b, and 'c are anonymous [lifetime parameter]s that\ncannot be named by user-written code.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_FUdsmzN0T8XP": "Impl header lifetime elision is a form of lifetime elision that applies to the implementing type and implemented trait (if any) of an implementation.",
+            "fls_3p5BdLn3JbKz": "The impl header lifetime elision rules are as follows:",
+            "fls_PfS5AlkN6ANl": "Every explicitly elided lifetime is replaced with a new lifetime parameter defined on the implementation.",
+            "fls_QV6zE5Mdor5E": "An implicitly elided lifetime of a reference is also replaced with a new lifetime parameter defined on the implementation.",
+            "fls_P2V1DqrdCjCi": "An implicitly elided lifetime in any other type is a static error."
+          }
+        },
+        "-7": {
+          "paragraphs": {
+            "fls_MBa35hfS8J9l": "Given an implementation of the form .. code-block:: rust impl Trait<&u8, Strukt<'_>> for &i32 {}",
+            "fls_w0vwdmO8qV9j": "its lifetime elided form is .. code-block:: rust impl<'a, 'b, 'c> Trait<&'a u8, Strukt<'b>> for &'c i32 {}",
+            "fls_vImY3BrpNvNY": "where 'a, 'b, and 'c are anonymous [lifetime parameter]s that cannot be named by user-written code."
+          }
+        }
+      },
+      "parent_fls_id": "fls_l9ebxrlxyawd",
+      "sibling_fls_ids": [
+        "fls_HEtHxXBcg7JA",
+        "fls_u5lQkU2rS6uV",
+        "fls_XTBOhK2Yk4lA"
+      ]
+    }
+  ]
+}

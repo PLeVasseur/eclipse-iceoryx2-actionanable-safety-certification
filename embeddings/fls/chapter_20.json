@@ -1,0 +1,530 @@
+{
+  "chapter": 20,
+  "title": "Macros",
+  "fls_id": "fls_83182bfa9uqb",
+  "file": "macros",
+  "extraction_date": "2025-12-31",
+  "category_codes": {
+    "0": "section",
+    "-1": "general",
+    "-2": "legality_rules",
+    "-3": "dynamic_semantics",
+    "-4": "undefined_behavior",
+    "-5": "implementation_requirements",
+    "-6": "implementation_permissions",
+    "-7": "examples",
+    "-8": "syntax"
+  },
+  "statistics": {
+    "total_sections": 15,
+    "total_paragraphs": 190,
+    "paragraphs_by_category": {
+      "-8": 7,
+      "-7": 6,
+      "-2": 176,
+      "-1": 1
+    }
+  },
+  "sections": [
+    {
+      "fls_id": "fls_83182bfa9uqb",
+      "title": "Macros",
+      "category": 0,
+      "level": 1,
+      "file": "macros",
+      "content": "Macros\n\nA macro is a custom definition that extends Rust by defining callable\nsyntactic transformations. The effects of a macro are realized through\n[macro invocation]s or attribute use. [Macro]s come in two\ndistinct forms:\n\n* [Declarative macro]s define rules for recognizing syntactic patterns and\n generating direct syntax.\n\n* [Procedural macro]s define augmented [function]s that operate on and\n return a stream of [lexical element]s.\n\n[Token]s are a subset of [lexical element]s consumed by [macro]s.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_j1jc83erljo0": "A macro is a custom definition that extends Rust by defining callable syntactic transformations. The effects of a macro are realized through [macro invocation]s or attribute use. [Macro]s come in two distinct forms:",
+            "fls_23eapx3ckymf": "[Declarative macro]s define rules for recognizing syntactic patterns and generating direct syntax.",
+            "fls_a5uemz2hnbi8": "[Procedural macro]s define augmented [function]s that operate on and return a stream of [lexical element]s.",
+            "fls_rnty1c8l5495": "[Token]s are a subset of [lexical element]s consumed by [macro]s."
+          }
+        }
+      },
+      "parent_fls_id": null,
+      "sibling_fls_ids": []
+    },
+    {
+      "fls_id": "fls_xa7lp0zg1ol2",
+      "title": "Declarative Macros",
+      "category": 0,
+      "level": 2,
+      "file": "macros",
+      "content": "Declarative Macros\n\n MacroRulesDefinition ::=\n $$($$ MacroRuleList $$)$$ $$;$$\n | $$[$$ MacroRuleList $$]$$ $$;$$\n | $${$$ MacroRuleList $$}$$\n\n MacroRuleList ::=\n MacroRule ($$;$$ MacroRule)* $$;$$?\n\n MacroRule ::=\n MacroMatcher $$=>$$ MacroTranscriber\n\n MacroMatcher ::=\n $$($$ MacroMatch* $$)$$\n | $$[$$ MacroMatch* $$]$$\n | $${$$ MacroMatch* $$}$$\n\n MacroTranscriber ::=\n DelimitedTokenTree\n\n MacroMatch ::=\n MacroMatcher\n | MacroMatchToken\n | MacroMetavariableMatch\n | MacroRepetitionMatch\n\nA :ds:`MacroMatchToken` is any lexical element in category\nLexicalElement, except punctuation $ and category Delimiter.\n\nA declarative macro is a macro that associates a name with a set\nof syntactic transformation [macro rule]s.\n\nA macro rule is a construct that consists of a macro matcher and\na macro transcriber.\n\nA macro matcher is a construct that describes a syntactic pattern that\na macro must match.\n\nA macro match is the most basic form of a satisfied macro matcher.\n\nA macro transcriber is a construct that describes the replacement\nsyntax of a macro.\n\nA declarative macro is invoked using a macro invocation.",
+      "rubrics": {
+        "-8": {
+          "paragraphs": {
+            "fls_ikzjsq8heyk6": "A :ds:MacroMatchToken is any lexical element in category LexicalElement, except punctuation $ and category Delimiter.",
+            "syntax_1": "MacroRulesDeclaration ::=\n       $$macro_rules$$ $$!$$ Name MacroRulesDefinition\n\n   MacroRulesDefinition ::=\n       $$($$ MacroRuleList $$)$$ $$;$$\n     | $$[$$ MacroRuleList $$]$$ $$;$$\n     | $${$$ MacroRuleList $$}$$\n\n   MacroRuleList ::=\n       MacroRule ($$;$$ MacroRule)* $$;$$?\n\n   MacroRule ::=\n       MacroMatcher $$=>$$ MacroTranscriber\n\n   MacroMatcher ::=\n       $$($$ MacroMatch* $$)$$\n     | $$[$$ MacroMatch* $$]$$\n     | $${$$ MacroMatch* $$}$$\n\n   MacroTranscriber ::=\n       Delimi..."
+          }
+        },
+        "-2": {
+          "paragraphs": {
+            "fls_w44hav7mw3ao": "A declarative macro is a macro that associates a name with a set of syntactic transformation [macro rule]s.",
+            "fls_dw1nq4r9ghhd": "A macro rule is a construct that consists of a macro matcher and a macro transcriber.",
+            "fls_oq4xn8guos8f": "A macro matcher is a construct that describes a syntactic pattern that a macro must match.",
+            "fls_cdaf8viwmdfe": "A macro match is the most basic form of a satisfied macro matcher.",
+            "fls_ljavs0w61z3j": "A macro transcriber is a construct that describes the replacement syntax of a macro.",
+            "fls_3jspk8obv7sd": "A declarative macro is invoked using a macro invocation."
+          }
+        }
+      },
+      "parent_fls_id": "fls_83182bfa9uqb",
+      "sibling_fls_ids": [
+        "fls_wn1i6hzg2ff7",
+        "fls_vnvt40pa48n8",
+        "fls_wjldgtio5o75",
+        "fls_xlfo7di0gsqz"
+      ]
+    },
+    {
+      "fls_id": "fls_8nzypdu9j3ge",
+      "title": "Metavariables",
+      "category": 0,
+      "level": 3,
+      "file": "macros",
+      "content": "Metavariables\n\n MacroMetavariable ::=\n Keyword\n | NonKeywordIdentifier\n\n MacroFragmentSpecifier ::=\n $$block$$\n | $$expr$$\n | $$expr_2021$$\n | $$ident$$\n | $$item$$\n | $$lifetime$$\n | $$literal$$\n | $$meta$$\n | $$pat$$\n | $$pat_param$$\n | $$path$$\n | $$stmt$$\n | $$tt$$\n | $$ty$$\n | $$vis$$\n\n MacroMetavariableIndication ::=\n $$$$$ MacroMetavariable\n\n[Declarative macro]s employ [metavariable]s to match a token of\na particular kind and bind its value to a name for use during\nmacro transcription.\n\nA metavariable is a macro match that describes a variable.\n\nA metavariable is visible in the macro transcriber of the\nmacro rule of the macro matcher it is declared in.\n\nA fragment specifier is a construct that indicates the type of\na metavariable.\n\nFragment specifier kinds impose the following\n[fragment specifier restriction]s on the [token]s that follow them:\n\n* expr and expr_2021 shall only be followed by =>, ,, or ;.\n\n* pat shall only be followed by =>, ,, =, |, if, or\n in.\n\n* path shall only be followed by =>, ,, =, |, ;, :,\n >, >>, [, {, as, where, or a metavariable with\n the block fragment specifier kind.\n\n* pat_param shall only be followed by =>, ,, =, |, if,\n or in.\n\n* stmt shall only be followed by =>, ,, or ;.\n\n* ty shall only be followed by =>, ,, =, |, ;, :,\n >, >>, [, {, as, where, or a metavariable with\n the block fragment specifier kind.\n\n* vis shall only be followed by ,, an identifier except for\n priv, any token that may begin a TypeSpecification, or a\n metavariable with the ident, ty or block\n fragment specifier kind.\n\n* Any other kind may be followed by any token.\n\nA metavariable indication is a construct that indicates a\nmetavariable.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_g93r3teei8wo": "[Declarative macro]s employ [metavariable]s to match a token of a particular kind and bind its value to a name for use during macro transcription.",
+            "fls_4zdait30exvn": "A metavariable is a macro match that describes a variable.",
+            "fls_2HguXbL7DjKH": "A metavariable is visible in the macro transcriber of the macro rule of the macro matcher it is declared in.",
+            "fls_8zypylq60zba": "A fragment specifier is a construct that indicates the type of a metavariable.",
+            "fls_8o9mcV2KrKac": "Fragment specifier kinds impose the following [fragment specifier restriction]s on the [token]s that follow them:",
+            "fls_PxR9vNHsaFnI": "expr and expr_2021 shall only be followed by =>, ,, or ;.",
+            "fls_ePyoTeJJ11N0": "pat shall only be followed by =>, ,, =, |, if, or in.",
+            "fls_0j7VOV4ewfeY": "path shall only be followed by =>, ,, =, |, ;, :, >, >>, [, {, as, where, or a metavariable with the block fragment specifier kind.",
+            "fls_80cOMpIMU2gx": "pat_param shall only be followed by =>, ,, =, |, if, or in.",
+            "fls_DFMRwsWI8e5z": "stmt shall only be followed by =>, ,, or ;.",
+            "fls_BoIGgrFdyhwH": "ty shall only be followed by =>, ,, =, |, ;, :, >, >>, [, {, as, where, or a metavariable with the block fragment specifier kind.",
+            "fls_NBbygZwUxjFp": "vis shall only be followed by ,, an identifier except for priv, any token that may begin a TypeSpecification, or a metavariable with the ident, ty or block fragment specifier kind.",
+            "fls_lZ8F1zUJju33": "Any other kind may be followed by any token.",
+            "fls_ephlmLsGTMgw": "A metavariable indication is a construct that indicates a metavariable."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "MacroMetavariableMatch ::=\n       $$$$$ MacroMetavariable $$:$$ MacroFragmentSpecifier\n\n   MacroMetavariable ::=\n       Keyword\n     | NonKeywordIdentifier\n\n   MacroFragmentSpecifier ::=\n       $$block$$\n     | $$expr$$\n     | $$expr_2021$$\n     | $$ident$$\n     | $$item$$\n     | $$lifetime$$\n     | $$literal$$\n     | $$meta$$\n     | $$pat$$\n     | $$pat_param$$\n     | $$path$$\n     | $$stmt$$\n     | $$tt$$\n     | $$ty$$\n     | $$vis$$\n\n   MacroMetavariableIndication ::=\n       $$$$$ MacroMetava..."
+          }
+        }
+      },
+      "parent_fls_id": "fls_xa7lp0zg1ol2",
+      "sibling_fls_ids": [
+        "fls_k01lsksqtq1r"
+      ]
+    },
+    {
+      "fls_id": "fls_k01lsksqtq1r",
+      "title": "Repetition",
+      "category": 0,
+      "level": 3,
+      "file": "macros",
+      "content": "Repetition\n\n MacroRepetitionMatchContent ::=\n MacroMatch*\n\n MacroRepetitionTranscriber ::=\n $$$$$ $$($$ TokenTree* $$)$$ MacroRepetitionSeparator? MacroRepetitionOperator\n\n MacroRepetitionOperator ::=\n $$+$$\n | $$*$$\n | $$?$$\n\nA :ds:`MacroRepetitionSeparator` is any lexical element in category\nLexicalElement, except punctuation +, *, ?, and category\nDelimiter.\n\nA macro repetition in matching allows for a syntactic pattern to be matched\nzero or multiple times during macro matching.\n\nA macro repetition in transcription allows for a syntactic pattern to be\ntranscribed zero or multiple times during macro transcription.\n\nA macro repetition is either a macro repetition in matching or a\nmacro repetition in transcription.\n\nA repetition operator is a construct that indicates the number\nof times a macro repetition in matching or a\nmacro repetition in transcription can be repeated.\n\nThe effects of a repetition operator are as follows:\n\n* * - Zero or more repetitions.\n\n* + - One or more repetitions.\n\n* ? - Zero or one repetition.\n\nA macro repetition has the following additional restrictions:\n\n* If the macro repetition has a separator, the separator shall\n be allowed by the MacroRepetitionMatchContent's\n [fragment specifier restriction]s.\n\n* If the repetition operator is * or +, then the\n possible beginnings of the MacroRepetitionMatchContent shall be allowed\n by its MacroRepetitionMatchContent's\n [fragment specifier restriction]s.\n\n* If the repetition operator is ? or *, then the succeeding\n MacroMatch must be allowed by the preceding MacroMatch's\n [fragment specifier restriction]s.\n\n* The possible beginnings of the MacroRepetitionMatchContent must be\n allowed by the preceding MacroMatch's\n [fragment specifier restriction]s.\n\n* The succeeding MacroMatch must be allowed by the possible endings of the\n MacroRepetitionMatchContent's [fragment specifier restriction]s.",
+      "rubrics": {
+        "-8": {
+          "paragraphs": {
+            "fls_4ps4x4513xau": "A :ds:MacroRepetitionSeparator is any lexical element in category LexicalElement, except punctuation +, *, ?, and category Delimiter.",
+            "syntax_1": "MacroRepetitionMatch ::=\n       $$$$$ $$($$ MacroRepetitionMatchContent $$)$$ MacroRepetitionSeparator? MacroRepetitionOperator\n\n   MacroRepetitionMatchContent ::=\n       MacroMatch*\n\n   MacroRepetitionTranscriber ::=\n       $$$$$ $$($$ TokenTree* $$)$$ MacroRepetitionSeparator? MacroRepetitionOperator\n\n   MacroRepetitionOperator ::=\n       $$+$$\n     | $$*$$\n     | $$?$$"
+          }
+        },
+        "-2": {
+          "paragraphs": {
+            "fls_8byjmlgum2f3": "A macro repetition in matching allows for a syntactic pattern to be matched zero or multiple times during macro matching.",
+            "fls_ltdp3zs60dzr": "A macro repetition in transcription allows for a syntactic pattern to be transcribed zero or multiple times during macro transcription.",
+            "fls_V1WRuzZUWUGj": "A macro repetition is either a macro repetition in matching or a macro repetition in transcription.",
+            "fls_u86j0zm2jshf": "A repetition operator is a construct that indicates the number of times a macro repetition in matching or a macro repetition in transcription can be repeated.",
+            "fls_h5f8x4jdnvbu": "The effects of a repetition operator are as follows:",
+            "fls_hf4gj5pfl437": "- Zero or more repetitions.",
+            "fls_tm0w0680wf4x": "+ - One or more repetitions.",
+            "fls_10lsg5212ffb": "? - Zero or one repetition.",
+            "fls_UnfvR9NB1Nze": "A macro repetition has the following additional restrictions:",
+            "fls_Sm4qVsHKYLY2": "If the macro repetition has a separator, the separator shall be allowed by the MacroRepetitionMatchContent's [fragment specifier restriction]s.",
+            "fls_Rdvs8Dz6OUU7": "If the repetition operator is * or +, then the possible beginnings of the MacroRepetitionMatchContent shall be allowed by its MacroRepetitionMatchContent's [fragment specifier restriction]s.",
+            "fls_UIlj6Csow81w": "If the repetition operator is ? or *, then the succeeding MacroMatch must be allowed by the preceding MacroMatch's [fragment specifier restriction]s.",
+            "fls_yp2XxDv4DzEi": "The possible beginnings of the MacroRepetitionMatchContent must be allowed by the preceding MacroMatch's [fragment specifier restriction]s.",
+            "fls_n5TkJKWiDhCD": "The succeeding MacroMatch must be allowed by the possible endings of the MacroRepetitionMatchContent's [fragment specifier restriction]s."
+          }
+        }
+      },
+      "parent_fls_id": "fls_xa7lp0zg1ol2",
+      "sibling_fls_ids": [
+        "fls_8nzypdu9j3ge"
+      ]
+    },
+    {
+      "fls_id": "fls_wn1i6hzg2ff7",
+      "title": "Procedural Macros",
+      "category": 0,
+      "level": 2,
+      "file": "macros",
+      "content": "Procedural Macros\n\nA procedural macro is a macro that encapsulates syntactic\ntransformations in a function. [Procedural macro]s consume one or more\nstreams of [token]s and produce a stream of [token]s.\n\n[Procedural macro]s shall be defined in a crate subject to\nattribute crate_type where the type is proc-macro.\n\nA macro implementation function is the function that encapsulates the\nsyntactic transformations of a procedural macro.\n\nA macro implementation function enters the name of the\nprocedural macro into the macro namespace.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_ejbddhggstd2": "A procedural macro is a macro that encapsulates syntactic transformations in a function. [Procedural macro]s consume one or more streams of [token]s and produce a stream of [token]s.",
+            "fls_pcce9gmjpxba": "[Procedural macro]s shall be defined in a crate subject to attribute crate_type where the type is proc-macro.",
+            "fls_vtzuplb1p3s": "A macro implementation function is the function that encapsulates the syntactic transformations of a procedural macro.",
+            "fls_mewfehvgm16r": "A macro implementation function enters the name of the procedural macro into the macro namespace."
+          }
+        }
+      },
+      "parent_fls_id": "fls_83182bfa9uqb",
+      "sibling_fls_ids": [
+        "fls_xa7lp0zg1ol2",
+        "fls_vnvt40pa48n8",
+        "fls_wjldgtio5o75",
+        "fls_xlfo7di0gsqz"
+      ]
+    },
+    {
+      "fls_id": "fls_2d6bqnpy6tvs",
+      "title": "Function-like Macros",
+      "category": 0,
+      "level": 3,
+      "file": "macros",
+      "content": "Function-like Macros\n\nA function-like macro is a procedural macro that consumes a stream of\n[token]s and produces a stream of [token]s.\n\nThe macro implementation function of a function-like macro shall be\nsubject to the following restrictions:\n\n* It shall be subject to attribute proc_macro,\n\n* It shall be subject to visibility modifier pub,\n\n* It shall lack [function qualifier]s,\n\n* It shall lack [generic parameter]s,\n\n* It shall have a single function parameter whose type specification\n indicates type proc_macro::TokenStream,\n\n* It shall have a return type whose type specification indicates\n type proc_macro::TokenStream.\n\nA function-like macro is invoked using a macro invocation.\n\nThe sole parameter of the macro implementation function captures the\ntoken stream produced from the DelimitedTokenTree of the\nmacro invocation, excluding outer [Delimiter]s.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_utd3zqczix": "A function-like macro is a procedural macro that consumes a stream of [token]s and produces a stream of [token]s.",
+            "fls_ojr30lf6jfx0": "The macro implementation function of a function-like macro shall be subject to the following restrictions:",
+            "fls_ljkjmegynhiy": "It shall be subject to attribute proc_macro,",
+            "fls_8a8qhzjw5hax": "It shall be subject to visibility modifier pub,",
+            "fls_ofzql79i9if": "It shall lack [function qualifier]s,",
+            "fls_j1wsyzip2qb3": "It shall lack [generic parameter]s,",
+            "fls_etyo9bmzxby6": "It shall have a single function parameter whose type specification indicates type proc_macro::TokenStream,",
+            "fls_mkl9b38m0sf1": "It shall have a return type whose type specification indicates type proc_macro::TokenStream.",
+            "fls_lfmb22bfnrye": "A function-like macro is invoked using a macro invocation.",
+            "fls_fbgal48cgj44": "The sole parameter of the macro implementation function captures the token stream produced from the DelimitedTokenTree of the macro invocation, excluding outer [Delimiter]s."
+          }
+        }
+      },
+      "parent_fls_id": "fls_wn1i6hzg2ff7",
+      "sibling_fls_ids": [
+        "fls_o8s3r7m90q59",
+        "fls_4vjbkm4ceymk"
+      ]
+    },
+    {
+      "fls_id": "fls_o8s3r7m90q59",
+      "title": "Derive Macros",
+      "category": 0,
+      "level": 3,
+      "file": "macros",
+      "content": "Derive Macros\n\nA derive macro is a procedural macro that consumes a stream of\n[token]s and produces a stream of [token]s. [Derive macro]s are\nused to construct new syntax for [abstract data type]s.\n\nThe macro implementation function of a derive macro shall be subject\nto the following restrictions:\n\n* It shall be subject to attribute proc_macro_derive,\n\n* It shall be subject to visibility modifier pub,\n\n* It shall lack [function qualifier]s,\n\n* It shall lack [generic parameter]s,\n\n* It shall have a single function parameter whose type specification\n indicates type proc_macro::TokenStream,\n\n* It shall have a return type whose type specification indicates\n type proc_macro::TokenStream.\n\nA derive macro is invoked using attribute derive.\n\nThe sole parameter of the macro implementation function captures\nthe token stream produced from the related EnumDeclaration,\nStructDeclaration, or UnionDeclaration.\n\nA derive macro adds all its declared [derive helper attribute]s into\nthe derive helper attribute scope of the abstract data type the\nattribute is attached to.\n\nA derive helper attribute is an inert attribute that acts as a\nhint to attribute derive.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_e5x92q2rq8a0": "A derive macro is a procedural macro that consumes a stream of [token]s and produces a stream of [token]s. [Derive macro]s are used to construct new syntax for [abstract data type]s.",
+            "fls_ldw75sy5uj7p": "The macro implementation function of a derive macro shall be subject to the following restrictions:",
+            "fls_7gcnui9beky": "It shall be subject to attribute proc_macro_derive,",
+            "fls_ef30ropg7dhx": "It shall be subject to visibility modifier pub,",
+            "fls_mo00vqm9xfqc": "It shall lack [function qualifier]s,",
+            "fls_gr9wugeqyb3b": "It shall lack [generic parameter]s,",
+            "fls_npnze2cg8ae": "It shall have a single function parameter whose type specification indicates type proc_macro::TokenStream,",
+            "fls_w2h4lk6bmht": "It shall have a return type whose type specification indicates type proc_macro::TokenStream.",
+            "fls_x96a0xzcyrko": "A derive macro is invoked using attribute derive.",
+            "fls_caa16usjxryg": "The sole parameter of the macro implementation function captures the token stream produced from the related EnumDeclaration, StructDeclaration, or UnionDeclaration.",
+            "fls_H5ipqqlH3pJh": "A derive macro adds all its declared [derive helper attribute]s into the derive helper attribute scope of the abstract data type the attribute is attached to.",
+            "fls_mobky5ck1mi": "A derive helper attribute is an inert attribute that acts as a hint to attribute derive."
+          }
+        }
+      },
+      "parent_fls_id": "fls_wn1i6hzg2ff7",
+      "sibling_fls_ids": [
+        "fls_2d6bqnpy6tvs",
+        "fls_4vjbkm4ceymk"
+      ]
+    },
+    {
+      "fls_id": "fls_4vjbkm4ceymk",
+      "title": "Attribute Macros",
+      "category": 0,
+      "level": 3,
+      "file": "macros",
+      "content": "Attribute Macros\n\nAn attribute macro is a procedural macro that consumes two streams\nof [token]s to produce a single stream of [token]s, and defines a\nnew outer attribute that can be attached to [item]s.\n[Attribute macro]s are used to replace [item]s with other\n[item]s.\n\nThe macro implementation function of an attribute macro shall be\nsubject to the following restrictions:\n\n* It shall be subject to attribute proc_macro_attribute,\n\n* It shall be subject to visibility modifier pub,\n\n* It shall lack [function qualifier]s,\n\n* It shall lack [generic parameter]s,\n\n* It shall have two [function parameter]s whose [type specification]s\n indicate type proc_macro::TokenStream,\n\n* It shall have a return type whose type specification indicates type\n proc_macro::TokenStream.\n\nAn attribute macro is invoked using an attribute of the form\n\n* #[SimplePath], or\n\n* #[SimplePath DelimitedTokenTree]\n\nThe first function parameter of the macro implementation function\ncaptures the token stream produced from the DelimitedTokenTree\nof the invoking attribute, excluding outer [Delimiter]s. If no\nDelimitedTokenTree is provided, then the token stream is considered\nempty.\n\nThe second function parameter of the macro implementation function\ncaptures the token stream produced from the related item, including\nall [outer attribute]s that apply to that item.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_l3epi1dqpi8o": "An attribute macro is a procedural macro that consumes two streams of [token]s to produce a single stream of [token]s, and defines a new outer attribute that can be attached to [item]s. [Attribute macro]s are used to replace [item]s with other [item]s.",
+            "fls_3sublbi9bz7k": "The macro implementation function of an attribute macro shall be subject to the following restrictions:",
+            "fls_eb8jxl70wmeh": "It shall be subject to attribute proc_macro_attribute,",
+            "fls_7ugtmobgb2t9": "It shall be subject to visibility modifier pub,",
+            "fls_y700oif45wum": "It shall lack [function qualifier]s,",
+            "fls_hhsf1a9p6o55": "It shall lack [generic parameter]s,",
+            "fls_4g932k8ueyqp": "It shall have two [function parameter]s whose [type specification]s indicate type proc_macro::TokenStream,",
+            "fls_f5qy1pnlbpng": "It shall have a return type whose type specification indicates type proc_macro::TokenStream.",
+            "fls_rzn48xylk4yj": "An attribute macro is invoked using an attribute of the form",
+            "fls_78400zh02sdq": "#[SimplePath], or",
+            "fls_eyesmvuwpjn1": "#[SimplePath DelimitedTokenTree]",
+            "fls_fku5beu3mr4c": "The first function parameter of the macro implementation function captures the token stream produced from the DelimitedTokenTree of the invoking attribute, excluding outer [Delimiter]s. If no DelimitedTokenTree is provided, then the token stream is considered empty.",
+            "fls_knjsslplv5ri": "The second function parameter of the macro implementation function captures the token stream produced from the related item, including all [outer attribute]s that apply to that item."
+          }
+        }
+      },
+      "parent_fls_id": "fls_wn1i6hzg2ff7",
+      "sibling_fls_ids": [
+        "fls_2d6bqnpy6tvs",
+        "fls_o8s3r7m90q59"
+      ]
+    },
+    {
+      "fls_id": "fls_vnvt40pa48n8",
+      "title": "Macro Invocation",
+      "category": 0,
+      "level": 2,
+      "file": "macros",
+      "content": "Macro Invocation\n\n DelimitedTokenTree ::=\n $$($$ TokenTree* $$)$$\n | $$[$$ TokenTree* $$]$$\n | $${$$ TokenTree* $$}$$\n\n TokenTree ::=\n DelimitedTokenTree\n | NonDelimitedToken\n\n TerminatedMacroInvocation ::=\n SimplePath $$!$$ $$($$ TokenTree* $$)$$ $$;$$\n | SimplePath $$!$$ $$[$$ TokenTree* $$]$$ $$;$$\n | SimplePath $$!$$ $${$$ TokenTree* $$}$$\n\nA :ds:`NonDelimitedToken` is any lexical element in category\nLexicalElement, except category Delimiter.\n\nA macro invocation is a call of a declarative macro or\nfunction-like macro that is expanded statically and replaced with the\nresult of the macro.\n\nA terminated macro invocation is a macro invocation that may be used\nas a statement.\n\nSee fls_xa7lp0zg1ol2 for the declaration of answer_to_life.\n\nSee fls_8nzypdu9j3ge for the declaration of square.\n\nSee fls_k01lsksqtq1r for the declaration of generate_pairs.\n\nSee fls_2d6bqnpy6tvs for the declaration of\nmake_answer_to_life.\n\nSee fls_o8s3r7m90q59 for the declaration of Answer.\n\nSee fls_4vjbkm4ceymk for the declaration of\noutput_and_return_item.",
+      "rubrics": {
+        "-8": {
+          "paragraphs": {
+            "fls_wushtmw9qt3y": "A :ds:NonDelimitedToken is any lexical element in category LexicalElement, except category Delimiter.",
+            "syntax_1": "MacroInvocation ::=\n       SimplePath $$!$$ DelimitedTokenTree\n\n   DelimitedTokenTree ::=\n       $$($$ TokenTree* $$)$$\n     | $$[$$ TokenTree* $$]$$\n     | $${$$ TokenTree* $$}$$\n\n   TokenTree ::=\n       DelimitedTokenTree\n     | NonDelimitedToken\n\n   TerminatedMacroInvocation ::=\n       SimplePath $$!$$ $$($$ TokenTree* $$)$$ $$;$$\n     | SimplePath $$!$$ $$[$$ TokenTree* $$]$$ $$;$$\n     | SimplePath $$!$$ $${$$ TokenTree* $$}$$"
+          }
+        },
+        "-2": {
+          "paragraphs": {
+            "fls_snpxxcqhtjfv": "A macro invocation is a call of a declarative macro or function-like macro that is expanded statically and replaced with the result of the macro.",
+            "fls_6v06zvi1ctub": "A terminated macro invocation is a macro invocation that may be used as a statement."
+          }
+        },
+        "-7": {
+          "paragraphs": {
+            "fls_338rmbazl67o": "See for the declaration of answer_to_life. .. code-block:: rust answer_to_life!();",
+            "fls_lrr7gg8tian": "See for the declaration of square. .. code-block:: rust square!(5);",
+            "fls_8qxwwf4trnl": "See for the declaration of generate_pairs. .. code-block:: rust generate_pairs!(1, 2, 3; 9, 8, 7);",
+            "fls_8z1sgtvchhhw": "See for the declaration of make_answer_to_life. .. code-block:: rust make_answer_to_life!();",
+            "fls_d9w3dn2yn7mo": "See for the declaration of Answer. .. code-block:: rust #[derive(Answer)] struct derive_macro_invoker;",
+            "fls_1tftbd91yfpd": "See for the declaration of output_and_return_item. .. code-block:: rust #[output_and_return_item] fn attribute_macro_invoker() {}"
+          }
+        }
+      },
+      "parent_fls_id": "fls_83182bfa9uqb",
+      "sibling_fls_ids": [
+        "fls_xa7lp0zg1ol2",
+        "fls_wn1i6hzg2ff7",
+        "fls_wjldgtio5o75",
+        "fls_xlfo7di0gsqz"
+      ]
+    },
+    {
+      "fls_id": "fls_wjldgtio5o75",
+      "title": "Macro Expansion",
+      "category": 0,
+      "level": 2,
+      "file": "macros",
+      "content": "Macro Expansion\n\nMacro expansion is the process of statically executing a\nmacro invocation and replacing it with the produced output of the\nmacro invocation.\n\nMacro expansion of [declarative macro]s proceeds as follows:\n\n#. The TokenTree of the macro invocation has all\n [outer block doc]s and [outer line doc]s contained within replaced\n by their equivalent attribute doc representation.\n\n#. The TokenTree of the macro invocation is matched against the\n [macro rule]s of the resolved macro by considering individual\n [macro matcher]s. It is a static error if no macro matcher is\n satisfied.\n\n#. The macro transcriber of the satisfied macro rule produces its\n result, with all [metavariable indication]s resolved. It is a static\n error if the macro transcriber fails to produce its result.\n\n#. The macro invocation is replaced with the result of the\n macro transcriber. It is a static error if the result cannot be parsed\n according to the expected expansion syntax of the context where the\n macro invocation resides. The expected expansion syntax is as follows:\n\n #. If the macro invocation appears as part of an associated item,\n an item within an external block, or another\n macro invocation, the output is required to constitute zero or more\n [item]s.\n\n #. If the macro invocation appears as part of an\n expression-without-block, the output is required to constitute an\n expression.\n\n #. If the macro invocation appears as part of a\n pattern-without-range, the output is required to constitute a\n [pattern].\n\n #. If the macro invocation appears as part of a statement, the\n output is required to constitute zero or more [statement]s.\n\n #. If the macro invocation appears as part of a\n type specification without [bound]s, the output is required to\n constitute a type.\n\nMacro expansion of [function-like macro]s proceeds as follows:\n\n#. The TokenTree of the macro invocation has all [outer block\n doc]s and [outer line doc]s contained within replaced by their\n equivalent attribute doc representation.\n\n#. The TokenTree of the macro invocation is transformed into a\n corresponding proc_macro::TokenStream.\n\n#. The macro implementation function is called with the\n proc_macro::TokenStream as its sole argument. It is a static error\n if the macro implementation function call fails.\n\n#. The macro invocation is replaced with the returned\n proc_macro::TokenStream of the macro implementation function\n call. It is a static error if the result can not be parsed according\n to the expected expansion syntax of the context where the macro\n invocation resides. The expected expansion syntax is as follows:\n\n #. If the macro invocation appears as part of an associated item,\n an item within an external block, or another\n macro invocation, the output is required to constitute zero or more\n [item]s.\n\n #. If the macro invocation appears as part of an\n expression-without-block, the output is required to constitute an\n expression.\n\n #. If the macro invocation appears as part of a\n pattern-without-range, the output is required to constitute zero or\n more [pattern]s.\n\n #. If the macro invocation appears as part of a statement, the\n output is required to constitute zero or more [statement]s.\n\n #. If the macro invocation appears as part of a\n type specification without [bound]s, the output is required to\n constitute a type.\n\nMacro expansion of [derive macro]s proceeds as follows:\n\n#. The item subject to the derive macro has all\n [outer block doc]s and [outer line doc]s contained within replaced\n by their equivalent attribute doc representation.\n\n#. The item subject to the derive macro is transformed into a\n corresponding proc_macro::TokenStream without the\n invoking derive attribute as well as any preceding derive\n [attribute]s.\n\n#. The macro implementation function is called with the\n proc_macro::TokenStream as its sole argument. It is a static error\n if the macro implementation function call fails.\n\n#. The returned proc_macro::TokenStream of the\n macro implementation function call is appended to the enclosing\n block expression or module where the related EnumDeclaration,\n StructDeclaration, or UnionDeclaration resides. It is a static\n error if the output proc_macro::TokenStream does not constitute zero\n or more [item]s.\n\nMacro expansion of [attribute macro]s proceeds as follows:\n\n#. The DelimitedTokenTree of the invoking attribute macro is\n transformed into a corresponding proc_macro::TokenStream without\n the outer [Delimiter]s. If no DelimitedTokenTree is provided,\n and empty proc_macro::TokenStream is used. This\n proc_macro::TokenStream constitutes the first function parameter\n of the macro implementation function.\n\n#. The item subject to the attribute macro has all\n [outer block doc]s and [outer line doc]s contained within replaced\n by their equivalent attribute doc representation.\n\n#. The item subject to the attribute macro is transformed into a\n corresponding proc_macro::TokenStream without the invoking\n attribute. This proc_macro::TokenStream constitutes the second\n function parameter of the macro implementation function.\n\n#. The macro implementation function is called with the two\n [proc_macro::TokenStream]s as the two arguments. It is a static error\n if the macro implementation function call fails.\n\n#. The item subject to the attribute macro is replaced with the\n returned proc_macro::TokenStream of the\n macro implementation function call. It is a static error if the output\n proc_macro::TokenStream does not constitute zero or more [item]s.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_xscdaxvs4wx4": "Macro expansion is the process of statically executing a macro invocation and replacing it with the produced output of the macro invocation.",
+            "fls_nz5stwcc41gk": "Macro expansion of [declarative macro]s proceeds as follows: #.",
+            "fls_40xq8Ri1OMZZ": "The TokenTree of the macro invocation has all [outer block doc]s and [outer line doc]s contained within replaced by their equivalent attribute doc representation. #.",
+            "fls_76prdp6k1fga": "The TokenTree of the macro invocation is matched against the [macro rule]s of the resolved macro by considering individual [macro matcher]s. It is a static error if no macro matcher is satisfied. #.",
+            "fls_76u274l4kew8": "The macro transcriber of the satisfied macro rule produces its result, with all [metavariable indication]s resolved. It is a static error if the macro transcriber fails to produce its result. #.",
+            "fls_lakpily1zwfl": "The macro invocation is replaced with the result of the macro transcriber. It is a static error if the result cannot be parsed according to the expected expansion syntax of the context where the macro invocation resides. The expected expansion syntax is as follows: #.",
+            "fls_y20pmwo3v3uu": "If the macro invocation appears as part of an associated item, an item within an external block, or another macro invocation, the output is required to constitute zero or more [item]s. #.",
+            "fls_nsh2vwx8oiw": "If the macro invocation appears as part of an expression-without-block, the output is required to constitute an expression. #.",
+            "fls_tu6kmwm4v9nj": "If the macro invocation appears as part of a pattern-without-range, the output is required to constitute a [pattern]. #.",
+            "fls_3zn4dz19nyvq": "If the macro invocation appears as part of a statement, the output is required to constitute zero or more [statement]s. #.",
+            "fls_t89sw6az99z7": "If the macro invocation appears as part of a type specification without [bound]s, the output is required to constitute a type.",
+            "fls_417hvhvj2554": "Macro expansion of [function-like macro]s proceeds as follows: #.",
+            "fls_nNrs4EC3ff5T": "The TokenTree of the macro invocation has all [outer block doc]s and [outer line doc]s contained within replaced by their equivalent attribute doc representation. #.",
+            "fls_srtqkdceaz5t": "The TokenTree of the macro invocation is transformed into a corresponding proc_macro::TokenStream. #.",
+            "fls_mi92etjtpamu": "The macro implementation function is called with the proc_macro::TokenStream as its sole argument. It is a static error if the macro implementation function call fails. #.",
+            "fls_n8beqlt54rhy": "The macro invocation is replaced with the returned proc_macro::TokenStream of the macro implementation function call. It is a static error if the result can not be parsed according to the expected expansion syntax of the context where the macro invocation resides. The expected expansion syntax is as follows: #.",
+            "fls_vd3dzvr6re19": "If the macro invocation appears as part of an associated item, an item within an external block, or another macro invocation, the output is required to constitute zero or more [item]s. #.",
+            "fls_l8j2jiuuao4f": "If the macro invocation appears as part of an expression-without-block, the output is required to constitute an expression. #.",
+            "fls_xvemyqj5gc6g": "If the macro invocation appears as part of a pattern-without-range, the output is required to constitute zero or more [pattern]s. #.",
+            "fls_stseor6tln22": "If the macro invocation appears as part of a statement, the output is required to constitute zero or more [statement]s. #.",
+            "fls_u11o90szy68s": "If the macro invocation appears as part of a type specification without [bound]s, the output is required to constitute a type.",
+            "fls_qi5kyvj1e8th": "Macro expansion of [derive macro]s proceeds as follows: #.",
+            "fls_vqIZaEl4EKu5": "The item subject to the derive macro has all [outer block doc]s and [outer line doc]s contained within replaced by their equivalent attribute doc representation. #.",
+            "fls_grtiwf7q8jah": "The item subject to the derive macro is transformed into a corresponding proc_macro::TokenStream without the invoking derive attribute as well as any preceding derive [attribute]s. #.",
+            "fls_tbe2qq7whq10": "The macro implementation function is called with the proc_macro::TokenStream as its sole argument. It is a static error if the macro implementation function call fails. #.",
+            "fls_my93neopj9x0": "The returned proc_macro::TokenStream of the macro implementation function call is appended to the enclosing block expression or module where the related EnumDeclaration, StructDeclaration, or UnionDeclaration resides. It is a static error if the output proc_macro::TokenStream does not constitute zero or more [item]s.",
+            "fls_zat7kwi5vc5c": "Macro expansion of [attribute macro]s proceeds as follows: #.",
+            "fls_tjn92evtlflq": "The DelimitedTokenTree of the invoking attribute macro is transformed into a corresponding proc_macro::TokenStream without the outer [Delimiter]s. If no DelimitedTokenTree is provided, and empty proc_macro::TokenStream is used. This proc_macro::TokenStream constitutes the first function parameter of the macro implementation function. #.",
+            "fls_AJmPrhHfZo6J": "The item subject to the attribute macro has all [outer block doc]s and [outer line doc]s contained within replaced by their equivalent attribute doc representation. #.",
+            "fls_mpgh22bi8caz": "The item subject to the attribute macro is transformed into a corresponding proc_macro::TokenStream without the invoking attribute. This proc_macro::TokenStream constitutes the second function parameter of the macro implementation function. #.",
+            "fls_ul7nhfyvyzh": "The macro implementation function is called with the two [proc_macro::TokenStream]s as the two arguments. It is a static error if the macro implementation function call fails. #.",
+            "fls_z6xfhf71w10a": "The item subject to the attribute macro is replaced with the returned proc_macro::TokenStream of the macro implementation function call. It is a static error if the output proc_macro::TokenStream does not constitute zero or more [item]s."
+          }
+        }
+      },
+      "parent_fls_id": "fls_83182bfa9uqb",
+      "sibling_fls_ids": [
+        "fls_xa7lp0zg1ol2",
+        "fls_wn1i6hzg2ff7",
+        "fls_vnvt40pa48n8",
+        "fls_xlfo7di0gsqz"
+      ]
+    },
+    {
+      "fls_id": "fls_4apk1exafxii",
+      "title": "Macro Matching",
+      "category": 0,
+      "level": 3,
+      "file": "macros",
+      "content": "Macro Matching\n\nMacro matching is the process of performing rule matching and\ntoken matching.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_ZmQZ8HQWv77L": "Macro matching is the process of performing rule matching and token matching."
+          }
+        }
+      },
+      "parent_fls_id": "fls_wjldgtio5o75",
+      "sibling_fls_ids": [
+        "fls_ym00b6ewf4n3"
+      ]
+    },
+    {
+      "fls_id": "fls_n3ktmjqf87qb",
+      "title": "Rule Matching",
+      "category": 0,
+      "level": 4,
+      "file": "macros",
+      "content": "Rule Matching\n\nRule matching is the process of consuming a TokenTree in an attempt\nto fully satisfy the macro matcher of a macro rule that belongs to a\nresolved declarative macro.\n\nRule matching proceeds as follows:\n\n#. The [macro matcher]s of all [macro rule]s that belong to a resolved\n macro are tried against the TokenTree of the macro invocation,\n in declarative order. In the event of a static error, no further attempts at\n selecting a subsequent macro matcher are made.\n\n#. The macro match of a candidate macro matcher is tried against\n the TokenTree of the macro invocation by matching individual\n [token]s, in left-to-right order. Matching does not employ lookahead.\n It is a static error if matching a candidate macro matcher is ambiguous.\n Matching does not employ backtracking. It is a static error if matching a\n candidate macro matcher fails while parsing into a metavariable and\n having consumed at least one token while parsing the metavariable.\n\n#. It is a static error if no macro matcher is selected.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_77ucvwu6idms": "Rule matching is the process of consuming a TokenTree in an attempt to fully satisfy the macro matcher of a macro rule that belongs to a resolved declarative macro.",
+            "fls_6h1jqhxzku5v": "Rule matching proceeds as follows: #.",
+            "fls_r6i1ykrhb49j": "The [macro matcher]s of all [macro rule]s that belong to a resolved macro are tried against the TokenTree of the macro invocation, in declarative order. In the event of a static error, no further attempts at selecting a subsequent macro matcher are made. #.",
+            "fls_3qzes4lr8yuv": "The macro match of a candidate macro matcher is tried against the TokenTree of the macro invocation by matching individual [token]s, in left-to-right order. Matching does not employ lookahead. It is a static error if matching a candidate macro matcher is ambiguous. Matching does not employ backtracking. It is a static error if matching a candidate macro matcher fails while parsing into a metavariable and having consumed at least one token while parsing the metavariable. #.",
+            "fls_r878ysvsy4jb": "It is a static error if no macro matcher is selected."
+          }
+        }
+      },
+      "parent_fls_id": "fls_4apk1exafxii",
+      "sibling_fls_ids": [
+        "fls_qpx6lgapce57"
+      ]
+    },
+    {
+      "fls_id": "fls_qpx6lgapce57",
+      "title": "Token Matching",
+      "category": 0,
+      "level": 4,
+      "file": "macros",
+      "content": "Token Matching\n\nToken matching is the process of consuming a TokenTree in an attempt\nto fully satisfy a macro match of a selected macro matcher that\nbelongs to a resolved declarative macro.\n\nToken matching proceeds as follows:\n\nThe outer [Delimiter]s of a macro matcher match any outer\n[Delimiter]s in the macro invocation.\n\nA metavariable in a macro matcher is matched against a sequence of\n[token]s in the macro invocation based on its fragment specifier:\n\n* Fragment specifier **block** requires a block expression.\n\n* Fragment specifier **expr** and **expr_2021** requires an expression that is not an underscore expression or const block expression.\n\n* Fragment specifier **ident** requires a pure identifier.\n\n* Fragment specifier **item** requires an item.\n\n* Fragment specifier **lifetime** requires character sequence 0x27\n 0x5F (apostrophe, low line), or character 0x27 (apostrophe) followed by an\n identifier.\n\n* Fragment specifier **literal** requires optional character 0x2D\n (hyphen-minus), followed by a literal expression.\n\n* Fragment specifier **meta** requires an attribute content.\n\n* Fragment specifier **pat** requires a pattern.\n\n* Fragment specifier **pat_param** requires a\n pattern-without-alternation.\n\n* Fragment specifier **path** requires a type path.\n\n* Fragment specifier **stmt** requires a statement without trailing\n character 0x3B (semicolon), excluding [item]s that require character\n 0x3B (semicolon).\n\n* Fragment specifier **tt** requires a TokenTree.\n\n* Fragment specifier **ty** requires a type specification.\n\n* Fragment specifier **vis** requires a possibly empty visibility modifier.\n\nOnce a metavariable is matched, the matching sequence of [token]s is\nbound to that metavariable.\n\nRepetition in a macro matcher is matched based on how many times the\npattern appears consecutively optionally separated by a separator in\nthe TokenTree of the macro invocation, as follows:\n\n* If the repeated pattern includes a separator, then the\n separator must be able to follow the repeated pattern.\n\n* If the repeated pattern can appear multiple times, then the repeated\n pattern must be able to follow itself.\n\n* If the repeated pattern can appear zero times, then the preceding\n pattern must be able to follow the succeeding pattern.\n\n* The repeated pattern must be able to follow the preceding pattern.\n\n* The succeeding pattern must be able to follow the repeated pattern.\n\nA repetition index is a monotonically increasing number that is\ninitialized to zero, and incremented by one.\n\nOnce a metavariable is matched, the matching sequence of [token]s is\ntreated as follows:\n\n#. The matching sequence of [token]s is stored in an ordered collection at\n the current repetition index.\n\n#. The current repetition index is incremented by one.\n\nEach matched metavariable in a macro repetition in matching is bound\nseparately, where the matches are stored in an ordered collection.\n\nAny other token in a macro matcher is matched literally against the\nTokenTree of the macro invocation.\n\nIt is a static error if the TokenTree of the macro invocation contains\nleftover [token]s after macro matching.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_k6a24sbon5v9": "Token matching is the process of consuming a TokenTree in an attempt to fully satisfy a macro match of a selected macro matcher that belongs to a resolved declarative macro.",
+            "fls_6uuxv91xgmfz": "Token matching proceeds as follows:",
+            "fls_g1rml9tavh8v": "The outer [Delimiter]s of a macro matcher match any outer [Delimiter]s in the macro invocation.",
+            "fls_h7x3tc208zpk": "A metavariable in a macro matcher is matched against a sequence of [token]s in the macro invocation based on its fragment specifier:",
+            "fls_p9eqa17d3dx": "Fragment specifier **block** requires a block expression.",
+            "fls_k00bck2k8tde": "Fragment specifier **expr** and **expr_2021** requires an expression that is not an underscore expression or const block expression.",
+            "fls_pf0qrz5nadl2": "Fragment specifier **ident** requires a pure identifier.",
+            "fls_9fioah171ojx": "Fragment specifier **item** requires an item.",
+            "fls_j2o0f52zyvyb": "Fragment specifier **lifetime** requires character sequence 0x27 0x5F (apostrophe, low line), or character 0x27 (apostrophe) followed by an identifier.",
+            "fls_w5dzv3z4zd5a": "Fragment specifier **literal** requires optional character 0x2D (hyphen-minus), followed by a literal expression.",
+            "fls_wtol98rrqka5": "Fragment specifier **meta** requires an attribute content.",
+            "fls_iorqt9q4ie9j": "Fragment specifier **pat** requires a pattern.",
+            "fls_2zjed913qpvi": "Fragment specifier **pat_param** requires a pattern-without-alternation.",
+            "fls_3zdts0fsa36u": "Fragment specifier **path** requires a type path.",
+            "fls_mb3yr1j7npv5": "Fragment specifier **stmt** requires a statement without trailing character 0x3B (semicolon), excluding [item]s that require character 0x3B (semicolon).",
+            "fls_xbuixjt9pum6": "Fragment specifier **tt** requires a TokenTree.",
+            "fls_6annifhk6cd8": "Fragment specifier **ty** requires a type specification.",
+            "fls_2zu22efr6ncy": "Fragment specifier **vis** requires a possibly empty visibility modifier.",
+            "fls_dqroklsaayzb": "Once a metavariable is matched, the matching sequence of [token]s is bound to that metavariable.",
+            "fls_ghqjk6xj85ng": "Repetition in a macro matcher is matched based on how many times the pattern appears consecutively optionally separated by a separator in the TokenTree of the macro invocation, as follows:",
+            "fls_lzwl4en5wcw0": "If the repeated pattern includes a separator, then the separator must be able to follow the repeated pattern.",
+            "fls_cz44evkjzv29": "If the repeated pattern can appear multiple times, then the repeated pattern must be able to follow itself.",
+            "fls_o2exsai4m0gy": "If the repeated pattern can appear zero times, then the preceding pattern must be able to follow the succeeding pattern.",
+            "fls_1ch299zp8h7": "The repeated pattern must be able to follow the preceding pattern.",
+            "fls_55ptfjlvoo8o": "The succeeding pattern must be able to follow the repeated pattern.",
+            "fls_finzfb5ljkf8": "A repetition index is a monotonically increasing number that is initialized to zero, and incremented by one.",
+            "fls_s1ccs6jocsgr": "Once a metavariable is matched, the matching sequence of [token]s is treated as follows: #.",
+            "fls_wpi2i6hoj3li": "The matching sequence of [token]s is stored in an ordered collection at the current repetition index. #.",
+            "fls_uuey421a8n96": "The current repetition index is incremented by one.",
+            "fls_b5u47tuu136r": "Each matched metavariable in a macro repetition in matching is bound separately, where the matches are stored in an ordered collection.",
+            "fls_rb1tu4e7dpma": "Any other token in a macro matcher is matched literally against the TokenTree of the macro invocation.",
+            "fls_c76sdvos5xeo": "It is a static error if the TokenTree of the macro invocation contains leftover [token]s after macro matching."
+          }
+        }
+      },
+      "parent_fls_id": "fls_4apk1exafxii",
+      "sibling_fls_ids": [
+        "fls_n3ktmjqf87qb"
+      ]
+    },
+    {
+      "fls_id": "fls_ym00b6ewf4n3",
+      "title": "Macro Transcription",
+      "category": 0,
+      "level": 3,
+      "file": "macros",
+      "content": "Macro Transcription\n\nMacro transcription is the process of producing the expansion of a\ndeclarative macro.\n\nMacro transcription proceeds as follows:\n\nEvery metavariable indication found in the DelimitedTokenTree of the\nmacro transcriber that belongs to a matched macro rule is replaced by\nthe matched sequence of [token]s of the metavariable.\n\nUnresolved [metavariable indication]s are kept as [token]s in the\noutput verbatim.\n\nEvery macro repetition in transcription found in the\nDelimitedTokenTree of the macro transcriber shall be transcribed by\nrepeatedly transcribing the [token]s inside of it.\n\nThe number of transcription repetitions for a\nmacro repetition in transcription shall depend on its\nrepetition operator, as follows:\n\n* A repetition operator denoted by + shall require one or more\n repetitions.\n\n* A repetition operator denoted by * shall require zero or more\n repetitions.\n\n* A repetition operator denoted by ? shall require zero or one\n repetition.\n\nA metavariable indication that is matched inside of a\nmacro repetition shall not be used outside of a\nmacro repetition in transcription.\n\nA metavariable indication shall be used in a\nmacro repetition in transcription of the same nesting depth as its\ncorresponding metavariable appears in the macro matcher.\n\nA metavariable indication within a macro repetition in transcription\nshall repeat the same number of times in its matching macro repetition if\nthe macro repetition occurs at the same nesting depth.\n\nMultiple transcribed [metavariable indication]s in the same macro\nrepetition in transcription shall repeat the same number of times.\n\nWhen transcribing a metavariable indication in a\nmacro repetition in transcription, the metavariable indication is\nreplaced with the matched sequence of [token]s of the corresponding\niteration of the repetition metavariable taken from the ordered collection.\n\nA metavariable indication in a macro repetition in transcription shall\nbe transcribed to the matched [token]s in order, as follows:\n\nyields 0;1;2;\n\nGiven a macro invocation with N metavariable arguments, a\nmacro of the form\n\nis equivalent to a macro of the form\n\nwhere the metavariable of the macro repetition in matching are\nrepeated N times, and the [metavariable indication]s of the\nmacro repetition in transcription are repeated N times. Invoking such\na macro relates the first metavariable argument of the\nmacro invocation with the first metavariable of the\nmacro repetition in matching, the second metavariable argument with\nthe second metavariable, and so on.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_y21i8062mft0": "Macro transcription is the process of producing the expansion of a declarative macro.",
+            "fls_n2dx4ug5nd5w": "Macro transcription proceeds as follows:",
+            "fls_iw7322ycvhkc": "Every metavariable indication found in the DelimitedTokenTree of the macro transcriber that belongs to a matched macro rule is replaced by the matched sequence of [token]s of the metavariable.",
+            "fls_jgitbqmyixem": "Unresolved [metavariable indication]s are kept as [token]s in the output verbatim.",
+            "fls_ihcwl6taptas": "Every macro repetition in transcription found in the DelimitedTokenTree of the macro transcriber shall be transcribed by repeatedly transcribing the [token]s inside of it.",
+            "fls_g3dtpw4rtgdr": "The number of transcription repetitions for a macro repetition in transcription shall depend on its repetition operator, as follows:",
+            "fls_pvp6dxykuv66": "A repetition operator denoted by + shall require one or more repetitions.",
+            "fls_bd673n5awwbz": "A repetition operator denoted by * shall require zero or more repetitions.",
+            "fls_zbtwrtcy7pzf": "A repetition operator denoted by ? shall require zero or one repetition.",
+            "fls_eacyb6jap9ru": "A metavariable indication that is matched inside of a macro repetition shall not be used outside of a macro repetition in transcription.",
+            "fls_y4podc7ee8lf": "A metavariable indication shall be used in a macro repetition in transcription of the same nesting depth as its corresponding metavariable appears in the macro matcher.",
+            "fls_wbys0m4a1omg": "A metavariable indication within a macro repetition in transcription shall repeat the same number of times in its matching macro repetition if the macro repetition occurs at the same nesting depth.",
+            "fls_g445ovedgo4q": "Multiple transcribed [metavariable indication]s in the same macro repetition in transcription shall repeat the same number of times.",
+            "fls_ctzthi6keit2": "When transcribing a metavariable indication in a macro repetition in transcription, the metavariable indication is replaced with the matched sequence of [token]s of the corresponding iteration of the repetition metavariable taken from the ordered collection.",
+            "fls_9n46ugmcqmix": "A metavariable indication in a macro repetition in transcription shall be transcribed to the matched [token]s in order, as follows: .. code-block:: rust macro_rules! foo { ( $($expr:expr)* ) => { $( $expr ; )* // $expr is an error }; ( $( $( $expr:expr )* )* ) => { $($($expr)*)* } } foo! { 0 1 2 }",
+            "fls_JinrPA0pMZCr": "yields 0;1;2;",
+            "fls_95rn4cvgznmd": "Given a macro invocation with N metavariable arguments, a macro of the form .. code-block:: rust macro_rules! m { ( $(param: expr)* ) => { $( $param )* } }",
+            "fls_yg4c9x7049y4": "is equivalent to a macro of the form .. code-block:: rust macro_rules! m { ( $param_1: expr $param_2: expr ... $param_N: expr) => { $param_1 $param_2 ... $param_N } }",
+            "fls_o9rwz9z0a2h4": "where the metavariable of the macro repetition in matching are repeated N times, and the [metavariable indication]s of the macro repetition in transcription are repeated N times. Invoking such a macro relates the first metavariable argument of the macro invocation with the first metavariable of the macro repetition in matching, the second metavariable argument with the second metavariable, and so on."
+          }
+        }
+      },
+      "parent_fls_id": "fls_wjldgtio5o75",
+      "sibling_fls_ids": [
+        "fls_4apk1exafxii"
+      ]
+    },
+    {
+      "fls_id": "fls_xlfo7di0gsqz",
+      "title": "Hygiene",
+      "category": 0,
+      "level": 2,
+      "file": "macros",
+      "content": "Hygiene\n\nHygiene is a property of [macro]s and [identifier]s that appear\nwithin them, which aims to eliminate the syntactic interference between a\nmacro and its environment.\n\nHygiene is categorized as follows:\n\n* Definition site hygiene, which resolves to a MacroRulesDeclaration\n site. [Identifier]s with definition site hygiene cannot reference\n the environment of the MacroRulesDeclaration, cannot be referenced by the\n environment of a MacroInvocation, and are considered hygienic.\n\n* Call site hygiene, which resolves to a MacroInvocation site.\n [Identifier]s with call site hygiene can reference the environment\n of the MacroRulesDeclaration, can reference the environment of the\n MacroInvocation, and are considered unhygienic.\n\n* Mixed site hygiene, which resolves to a MacroRulesDeclaration\n site for [label]s, [variable]s, and the $crate\n metavariable, and to the MacroInvocation site otherwise, and is\n considered partially hygienic.\n\nEvery macro has associated hygiene that depends on its kind:\n\n* [Declarative macro]s have mixed site hygiene.\n\n* [Procedural macro]s have call site hygiene and\n mixed site hygiene depending on the implementation of the\n procedural macro.\n\nThe metavariable $crate in a declarative macro's expansion refers\nto the crate the declarative macro was declared in.",
+      "rubrics": {
+        "-1": {
+          "paragraphs": {
+            "fls_7ezc7ncs678f": "Hygiene is a property of [macro]s and [identifier]s that appear within them, which aims to eliminate the syntactic interference between a macro and its environment."
+          }
+        },
+        "-2": {
+          "paragraphs": {
+            "fls_3axjf28xb1nt": "Hygiene is categorized as follows:",
+            "fls_dz2mvodl818d": "Definition site hygiene, which resolves to a MacroRulesDeclaration site. [Identifier]s with definition site hygiene cannot reference the environment of the MacroRulesDeclaration, cannot be referenced by the environment of a MacroInvocation, and are considered hygienic.",
+            "fls_puqhytfzfsg6": "Call site hygiene, which resolves to a MacroInvocation site. [Identifier]s with call site hygiene can reference the environment of the MacroRulesDeclaration, can reference the environment of the MacroInvocation, and are considered unhygienic.",
+            "fls_uyvnq88y9gk3": "Mixed site hygiene, which resolves to a MacroRulesDeclaration site for [label]s, [variable]s, and the $crate metavariable, and to the MacroInvocation site otherwise, and is considered partially hygienic.",
+            "fls_yxqcr19dig18": "Every macro has associated hygiene that depends on its kind:",
+            "fls_kx25olky1jov": "[Declarative macro]s have mixed site hygiene.",
+            "fls_v46v0t2vh6x4": "[Procedural macro]s have call site hygiene and mixed site hygiene depending on the implementation of the procedural macro.",
+            "fls_7eqqk2cj0clr": "The metavariable $crate in a declarative macro's expansion refers to the crate the declarative macro was declared in."
+          }
+        }
+      },
+      "parent_fls_id": "fls_83182bfa9uqb",
+      "sibling_fls_ids": [
+        "fls_xa7lp0zg1ol2",
+        "fls_wn1i6hzg2ff7",
+        "fls_vnvt40pa48n8",
+        "fls_wjldgtio5o75"
+      ]
+    }
+  ]
+}

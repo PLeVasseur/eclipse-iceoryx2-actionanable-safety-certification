@@ -1,0 +1,237 @@
+{
+  "chapter": 7,
+  "title": "Values",
+  "fls_id": "fls_94a8v54bufn8",
+  "file": "values",
+  "extraction_date": "2025-12-31",
+  "category_codes": {
+    "0": "section",
+    "-1": "general",
+    "-2": "legality_rules",
+    "-3": "dynamic_semantics",
+    "-4": "undefined_behavior",
+    "-5": "implementation_requirements",
+    "-6": "implementation_permissions",
+    "-7": "examples",
+    "-8": "syntax"
+  },
+  "statistics": {
+    "total_sections": 6,
+    "total_paragraphs": 67,
+    "paragraphs_by_category": {
+      "-8": 2,
+      "-4": 5,
+      "-3": 7,
+      "-2": 53
+    }
+  },
+  "sections": [
+    {
+      "fls_id": "fls_94a8v54bufn8",
+      "title": "Values",
+      "category": 0,
+      "level": 1,
+      "file": "values",
+      "content": "Values\n\nA value is either a literal or the result of a computation, that may\nbe stored in a memory location, and interpreted based on some type.\n\nAn allocated object is a value stored at some memory address.\n\nThe base address of an allocated object is the memory address where\nthe object is stored.\n\nAn [allocated object]s memory size is the number of bytes the object\nspans in memory from its base address.\n\nTwo [value]s overlap when\n\n* Both [value]s are the same, or\n\n* One value is of an abstract data type and the other denotes a\n field of the same value, or\n\n* One value denotes an array and the other denotes an element of the\n same value, or\n\n* Both [value]s are elements of the same array.\n\nIt is undefined behavior to create a value from uninitialized memory unless\nthe type of the value is a union type.\n\nIt is undefined behavior to create an allocated object at base address\nnull.\n\nIt is undefined behavior to create an allocated object with memory\nsize size at a base address base where base + size is greater\nthan the architectures maximum usize value.\n\nIt is undefined behavior to create an allocated object with memory\nsize size where size is greater than the architectures maximum\nisize value.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_buyaqara7am4": "A value is either a literal or the result of a computation, that may be stored in a memory location, and interpreted based on some type.",
+            "fls_CUJyMj0Sj8NS": "An allocated object is a value stored at some memory address.",
+            "fls_kaomYy0Ml4Nh": "The base address of an allocated object is the memory address where the object is stored.",
+            "fls_B5cmkWfD5GNt": "An [allocated object]s memory size is the number of bytes the object spans in memory from its base address.",
+            "fls_rixdyyc525xp": "Two [value]s overlap when",
+            "fls_m6ctqq70vcxr": "Both [value]s are the same, or",
+            "fls_s231d18x5eay": "One value is of an abstract data type and the other denotes a field of the same value, or",
+            "fls_dfr4yqo93fsn": "One value denotes an array and the other denotes an element of the same value, or",
+            "fls_eoak5mdl6ma": "Both [value]s are elements of the same array."
+          }
+        },
+        "-4": {
+          "paragraphs": {
+            "fls_6lg0oaaopc26": "It is undefined behavior to create a value from uninitialized memory unless the type of the value is a union type.",
+            "fls_oqhQ62mDLckN": "It is undefined behavior to create an allocated object at base address null.",
+            "fls_uhwpuv6cx4ip": "It is undefined behavior to create an allocated object with memory size size at a base address base where base + size is greater than the architectures maximum usize value.",
+            "fls_xuuFKmm181bs": "It is undefined behavior to create an allocated object with memory size size where size is greater than the architectures maximum isize value."
+          }
+        }
+      },
+      "parent_fls_id": null,
+      "sibling_fls_ids": []
+    },
+    {
+      "fls_id": "fls_ixjc5jaamx84",
+      "title": "Constants",
+      "category": 0,
+      "level": 2,
+      "file": "values",
+      "content": "Constants\n\n ConstantInitializer ::=\n $$=$$ Expression\n\nA constant is an immutable value expression whose uses are substituted by\nthe value.\n\nAn unnamed constant is a constant declared with character 0x5F (low\nline).\n\nThe type specification of a constant shall have 'static\nlifetime.\n\nThe type of a constant shall implement the core::marker::Sized\ntrait.\n\nA constant initializer is a construct that provides the value of\nits related constant.\n\nA constant shall have a constant initializer, unless it is an\nassociated trait constant.\n\nThe expression of a constant initializer shall be a\nconstant expression.\n\nThe value of a constant is determined by evaluating its\nconstant initializer.\n\nAfter type coercion, the value of the constant cannot contain any\n[mutable reference]s, except when\n\n- The mutable reference is contained within an external static, or\n\n- The mutable reference is contained within a mutable static, or\n\n- The mutable reference is contained within a static\n whose type is subject to interior mutability, or\n\n- The mutable reference is contained within an union, or\n\n- The referent is a value of a zero-sized type.\n\nThe elaboration of a constant evaluates its constant initializer.\n\nA path that refers to a constant is replaced with the value of\nthe constant.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_5o5iu4j8in4l": "A constant is an immutable value expression whose uses are substituted by the value.",
+            "fls_3mhj0kkupwuz": "An unnamed constant is a constant declared with character 0x5F (low line).",
+            "fls_ka4y2yd100dx": "The type specification of a constant shall have 'static lifetime.",
+            "fls_vt9tlkd676ql": "The type of a constant shall implement the core::marker::Sized trait.",
+            "fls_ndmfqxjpvsqy": "A constant initializer is a construct that provides the value of its related constant.",
+            "fls_6rxwbbhf5tc5": "A constant shall have a constant initializer, unless it is an associated trait constant.",
+            "fls_vnc3ttnid1qr": "The expression of a constant initializer shall be a constant expression.",
+            "fls_deuo1pn8cjd6": "The value of a constant is determined by evaluating its constant initializer.",
+            "fls_ooOYxhVh8hZo": "After type coercion, the value of the constant cannot contain any [mutable reference]s, except when -",
+            "fls_zkNFeBLy80UA": "The mutable reference is contained within an external static, or -",
+            "fls_VhzGfnWg7YrG": "The mutable reference is contained within a mutable static, or -",
+            "fls_qC6L0km0ZMFI": "The mutable reference is contained within a static whose type is subject to interior mutability, or -",
+            "fls_ibYKKQdB2tDn": "The mutable reference is contained within an union, or -",
+            "fls_dQdSxf8kOgbi": "The referent is a value of a zero-sized type."
+          }
+        },
+        "-3": {
+          "paragraphs": {
+            "fls_xezt9hl069h4": "The elaboration of a constant evaluates its constant initializer.",
+            "fls_ndobth7s92if": "A path that refers to a constant is replaced with the value of the constant."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "ConstantDeclaration ::=\n       $$const$$ (Name | $$_$$) TypeAscription ConstantInitializer? $$;$$\n\n   ConstantInitializer ::=\n       $$=$$ Expression"
+          }
+        }
+      },
+      "parent_fls_id": "fls_94a8v54bufn8",
+      "sibling_fls_ids": [
+        "fls_xdvdl2ssnhlo",
+        "fls_cleoffpn5ew6",
+        "fls_gho955gmob73"
+      ]
+    },
+    {
+      "fls_id": "fls_xdvdl2ssnhlo",
+      "title": "Statics",
+      "category": 0,
+      "level": 2,
+      "file": "values",
+      "content": "Statics\n\n StaticInitializer ::=\n $$=$$ Expression\n\nA static is a value that is associated with a specific memory\nlocation.\n\nA static defined within a generic function exists once in the\noutput executable or library.\n\nThe type specification of a static shall have 'static\nlifetime.\n\nThe type of a static shall implement the core::marker::Sized\ntrait.\n\nA static shall only be subject to an ItemSafety if it is an external static in an unsafe external block.\n\nA mutable static is a static with keyword mut whose\nvalue can be modified.\n\nAccess to a mutable static shall require unsafe context.\n\nAn immutable static is a static whose value cannot be modified.\n\nThe type of an immutable static shall implement the\ncore::marker::Sync trait.\n\nA static initializer is a construct that provides the value of\nits related static.\n\nA static shall have a static initializer, unless it is an\nexternal static.\n\nThe expression of a static initializer shall be a\nconstant expression.\n\nA use of a static is a place expression referring to the unique\nlocation of the static.\n\nThe elaboration of a static evaluates its static initializer.\n\nAll [path]s that refer to a static refer to the same memory location.\n\nA static is not dropped during destruction.\n\nAn immutable static whose type is not subject to\ninterior mutability may reside in read-only memory.\n\nIt is undefined behavior to mutate an immutable static whose type is\nnot subject to interior mutability.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_ibrmiwfypldh": "A static is a value that is associated with a specific memory location.",
+            "fls_mt94jvoot9dx": "A static defined within a generic function exists once in the output executable or library.",
+            "fls_k0r2c6uq29tu": "The type specification of a static shall have 'static lifetime.",
+            "fls_b6ods85htuyn": "The type of a static shall implement the core::marker::Sized trait.",
+            "fls_WRpcVF1fLEpr": "A static shall only be subject to an ItemSafety if it is an external static in an unsafe external block.",
+            "fls_doi4z6u55bi7": "A mutable static is a static with keyword mut whose value can be modified.",
+            "fls_74hp208pto22": "Access to a mutable static shall require unsafe context.",
+            "fls_jfde2vg6mtww": "An immutable static is a static whose value cannot be modified.",
+            "fls_k4tyqb1j6zjo": "The type of an immutable static shall implement the core::marker::Sync trait.",
+            "fls_t17h5h6a6v4c": "A static initializer is a construct that provides the value of its related static.",
+            "fls_yq0hpy4jx2qb": "A static shall have a static initializer, unless it is an external static.",
+            "fls_vgidvfwzm4ks": "The expression of a static initializer shall be a constant expression.",
+            "fls_8dcldbvu7lav": "A use of a static is a place expression referring to the unique location of the static."
+          }
+        },
+        "-3": {
+          "paragraphs": {
+            "fls_w0nb0mphho7b": "The elaboration of a static evaluates its static initializer.",
+            "fls_eeocxst9vafn": "All [path]s that refer to a static refer to the same memory location.",
+            "fls_47khd5ljsxeq": "A static is not dropped during destruction.",
+            "fls_dowxbphqvk3n": "An immutable static whose type is not subject to interior mutability may reside in read-only memory."
+          }
+        },
+        "-4": {
+          "paragraphs": {
+            "fls_b5wsmii7vz3v": "It is undefined behavior to mutate an immutable static whose type is not subject to interior mutability."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "StaticDeclaration ::=\n       ItemSafety? $$static$$ $$mut$$? Name TypeAscription StaticInitializer? $$;$$\n\n   StaticInitializer ::=\n       $$=$$ Expression"
+          }
+        }
+      },
+      "parent_fls_id": "fls_94a8v54bufn8",
+      "sibling_fls_ids": [
+        "fls_ixjc5jaamx84",
+        "fls_cleoffpn5ew6",
+        "fls_gho955gmob73"
+      ]
+    },
+    {
+      "fls_id": "fls_cleoffpn5ew6",
+      "title": "Temporaries",
+      "category": 0,
+      "level": 2,
+      "file": "values",
+      "content": "Temporaries\n\nA temporary is an anonymous variable produced by some intermediate\ncomputation.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_awpw61yofckz": "A temporary is an anonymous variable produced by some intermediate computation."
+          }
+        }
+      },
+      "parent_fls_id": "fls_94a8v54bufn8",
+      "sibling_fls_ids": [
+        "fls_ixjc5jaamx84",
+        "fls_xdvdl2ssnhlo",
+        "fls_gho955gmob73"
+      ]
+    },
+    {
+      "fls_id": "fls_gho955gmob73",
+      "title": "Variables",
+      "category": 0,
+      "level": 2,
+      "file": "values",
+      "content": "Variables\n\nA variable is a placeholder for a value that is allocated on the\nstack.\n\nThe following [construct]s are [variable]s:\n\n* A binding.\n\n* A temporary.\n\nA variable shall be used only after it has been initialized through all\n[reachable control flow path]s up to the point of its usage.\n\nA variable is not initialized when allocated.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_hl5tnd9yy252": "A variable is a placeholder for a value that is allocated on the stack.",
+            "fls_vgi0gh5zmoiu": "The following [construct]s are [variable]s:",
+            "fls_81dlbula47nu": "A binding.",
+            "fls_3p0sb9ppmg3w": "A temporary.",
+            "fls_r9km9f969bu8": "A variable shall be used only after it has been initialized through all [reachable control flow path]s up to the point of its usage."
+          }
+        },
+        "-3": {
+          "paragraphs": {
+            "fls_g8etd5lsgn9j": "A variable is not initialized when allocated."
+          }
+        }
+      },
+      "parent_fls_id": "fls_94a8v54bufn8",
+      "sibling_fls_ids": [
+        "fls_ixjc5jaamx84",
+        "fls_xdvdl2ssnhlo",
+        "fls_cleoffpn5ew6"
+      ]
+    },
+    {
+      "fls_id": "fls_wttihxen35as",
+      "title": "Constant Promotion",
+      "category": 0,
+      "level": 3,
+      "file": "values",
+      "content": "Constant Promotion\n\nConstant promotion is the process of converting a value expression\ninto a constant.\n\nConstant promotion is possible only when\n\n* The value expression is a constant expression, and\n\n* The type of the value expression does not have a destructor,\n and\n\n* The value expression does not employ a struct expression\n constructing a core::cell::UnsafeCell, and\n\n* The value expression only consists of operations that will always succeed\n evaluation, and\n\n* The value expression is the operand of an\n immutable borrow expression.\n\nConstant promotion is always possible for expression &mut [],\npromoting the produced mutable borrow to have 'static lifetime.\n\nConstant promotion proceeds as follows:\n\n#. An anonymous constant is created, whose constant initializer holds\n the result of the value expression.\n\n#. The value of the anonymous constant is borrowed with\n 'static lifetime.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_udn9lyf3m0z6": "Constant promotion is the process of converting a value expression into a constant.",
+            "fls_yvkdcs4pmxjf": "Constant promotion is possible only when",
+            "fls_n570za6a9nqd": "The value expression is a constant expression, and",
+            "fls_tms5r9f5ogcb": "The type of the value expression does not have a destructor, and",
+            "fls_bysv5r7iuf5j": "The value expression does not employ a struct expression constructing a core::cell::UnsafeCell, and",
+            "fls_3h5vr7xk2rrt": "The value expression only consists of operations that will always succeed evaluation, and",
+            "fls_3BGncWvMumEt": "The value expression is the operand of an immutable borrow expression.",
+            "fls_m690b8qg9d9r": "Constant promotion is always possible for expression &mut [], promoting the produced mutable borrow to have 'static lifetime.",
+            "fls_uf0sg25awre6": "Constant promotion proceeds as follows: #.",
+            "fls_o7cqfdnr253y": "An anonymous constant is created, whose constant initializer holds the result of the value expression. #.",
+            "fls_ap85svxyuhvg": "The value of the anonymous constant is borrowed with 'static lifetime."
+          }
+        }
+      },
+      "parent_fls_id": "fls_gho955gmob73",
+      "sibling_fls_ids": []
+    }
+  ]
+}

@@ -128,10 +128,8 @@ def extract_misra_c_guidelines(pdf_path: Path) -> tuple[list[Category], dict]:
             title = match.group(3)
             rule_id = f"Rule {section}.{rule_num}"
 
-            if rule_id in seen_rules:
-                continue
-            seen_rules.add(rule_id)
-
+            # Clean and validate title BEFORE checking seen_rules
+            # This ensures cross-reference matches don't block real definitions
             title = clean_title(title)
             if not title or len(title) < 5:
                 continue
@@ -139,6 +137,11 @@ def extract_misra_c_guidelines(pdf_path: Path) -> tuple[list[Category], dict]:
             # Skip if title looks like a cross-reference
             if title.startswith("Rule ") or title.startswith("Dir "):
                 continue
+
+            # Only now check for duplicates and add to seen set
+            if rule_id in seen_rules:
+                continue
+            seen_rules.add(rule_id)
 
             guidelines_by_section[f"rule_{section}"].append(
                 Guideline(id=rule_id, title=title, guideline_type="rule")
@@ -151,10 +154,8 @@ def extract_misra_c_guidelines(pdf_path: Path) -> tuple[list[Category], dict]:
             title = match.group(3)
             dir_id = f"Dir {section}.{dir_num}"
 
-            if dir_id in seen_dirs:
-                continue
-            seen_dirs.add(dir_id)
-
+            # Clean and validate title BEFORE checking seen_dirs
+            # This ensures cross-reference matches don't block real definitions
             title = clean_title(title)
             if not title or len(title) < 5:
                 continue
@@ -162,6 +163,11 @@ def extract_misra_c_guidelines(pdf_path: Path) -> tuple[list[Category], dict]:
             # Skip if title looks like a cross-reference
             if title.startswith("Rule ") or title.startswith("Dir "):
                 continue
+
+            # Only now check for duplicates and add to seen set
+            if dir_id in seen_dirs:
+                continue
+            seen_dirs.add(dir_id)
 
             guidelines_by_section[f"dir_{section}"].append(
                 Guideline(id=dir_id, title=title, guideline_type="directive")

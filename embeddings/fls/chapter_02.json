@@ -1,0 +1,852 @@
+{
+  "chapter": 2,
+  "title": "Lexical Elements",
+  "fls_id": "fls_411up5z0b6n6",
+  "file": "lexical-elements",
+  "extraction_date": "2025-12-31",
+  "category_codes": {
+    "0": "section",
+    "-1": "general",
+    "-2": "legality_rules",
+    "-3": "dynamic_semantics",
+    "-4": "undefined_behavior",
+    "-5": "implementation_requirements",
+    "-6": "implementation_permissions",
+    "-7": "examples",
+    "-8": "syntax"
+  },
+  "statistics": {
+    "total_sections": 25,
+    "total_paragraphs": 221,
+    "paragraphs_by_category": {
+      "-8": 50,
+      "-2": 169,
+      "-1": 2
+    }
+  },
+  "sections": [
+    {
+      "fls_id": "fls_411up5z0b6n6",
+      "title": "Lexical Elements",
+      "category": 0,
+      "level": 1,
+      "file": "lexical-elements",
+      "content": "Lexical Elements\n\nThe text of a Rust program consists of [module]s organized into [source\nfile]s. The text of a source file is a sequence of [lexical\nelement]s, each composed of characters, whose rules are presented in this\nchapter.",
+      "rubrics": {
+        "-1": {
+          "paragraphs": {
+            "fls_pqwpf87b84tr": "The text of a Rust program consists of [module]s organized into [source file]s. The text of a source file is a sequence of [lexical element]s, each composed of characters, whose rules are presented in this chapter."
+          }
+        }
+      },
+      "parent_fls_id": null,
+      "sibling_fls_ids": []
+    },
+    {
+      "fls_id": "fls_2i089jvv8j5g",
+      "title": "Character Set",
+      "category": 0,
+      "level": 2,
+      "file": "lexical-elements",
+      "content": "Character Set\n\nThe program text of a Rust program is written using the Unicode character\nset.\n\nA character is defined by this document for each cell in the coding space\ndescribed by Unicode, regardless of whether or not Unicode allocates a\ncharacter to that cell.\n\nA whitespace character is one of the following characters:\n\n* 0x09 (horizontal tabulation)\n\n* 0x0A (new line)\n\n* 0x0B (vertical tabulation)\n\n* 0x0C (form feed)\n\n* 0x0D (carriage return)\n\n* 0x20 (space)\n\n* 0x85 (next line)\n\n* 0x200E (left-to-right mark)\n\n* 0x200F (right-to-left mark)\n\n* 0x2028 (line separator)\n\n* 0x2029 (paragraph separator)\n\nA whitespace string is a string that consists of one or more\n[whitespace character]s.\n\nAn :ds:`AsciiCharacter` is any Unicode character in the range 0x00 - 0x7F, both inclusive.\n\nThe coded representation of a character is tool-defined.",
+      "rubrics": {
+        "-1": {
+          "paragraphs": {
+            "fls_itcth8292ud6": "The program text of a Rust program is written using the Unicode character set."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "fls_vfx8byq5zo8t": "A character is defined by this document for each cell in the coding space described by Unicode, regardless of whether or not Unicode allocates a character to that cell.",
+            "fls_pvslhm3chtlb": "A whitespace character is one of the following characters:",
+            "fls_a5ec9cpn4sc8": "0x09 (horizontal tabulation)",
+            "fls_dgyrj49y3c7c": "0x0A (new line)",
+            "fls_5ocmngyur7by": "0x0B (vertical tabulation)",
+            "fls_1aj0rgi9kpib": "0x0C (form feed)",
+            "fls_bfzdxsbq2c2q": "0x0D (carriage return)",
+            "fls_vw0kq2y1o63m": "0x20 (space)",
+            "fls_ao296bmamwzh": "0x85 (next line)",
+            "fls_6kymhq7embdh": "0x200E (left-to-right mark)",
+            "fls_8mxmrxvhn3by": "0x200F (right-to-left mark)",
+            "fls_bc6D1ATvmJJr": "0x2028 (line separator)",
+            "fls_zfs15iel08y0": "0x2029 (paragraph separator)",
+            "fls_7eifv4ksunu1": "A whitespace string is a string that consists of one or more [whitespace character]s.",
+            "fls_PIDKEm8GiLNL": "An :ds:AsciiCharacter is any Unicode character in the range 0x00 - 0x7F, both inclusive."
+          }
+        },
+        "-2": {
+          "paragraphs": {
+            "fls_2brw13n9ldgy": "The coded representation of a character is tool-defined."
+          }
+        }
+      },
+      "parent_fls_id": "fls_411up5z0b6n6",
+      "sibling_fls_ids": [
+        "fls_fgnllgz5k3e6",
+        "fls_21vnag69kbwe",
+        "fls_nrkd5wpi64oo",
+        "fls_q8l2jza7d9xa",
+        "fls_lish33a1naw5"
+      ]
+    },
+    {
+      "fls_id": "fls_fgnllgz5k3e6",
+      "title": "Lexical Elements, Separators, and Punctuation",
+      "category": 0,
+      "level": 2,
+      "file": "lexical-elements",
+      "content": "Lexical Elements, Separators, and Punctuation\n\n Punctuation ::=\n Delimiter\n | $$+$$\n | $$-$$\n | $$*$$\n | $$/$$\n | $$%$$\n | $$^$$\n | $$!$$\n | $$&$$\n | $$|$$\n | $$&&$$\n | $$||$$\n | $$<<$$\n | $$>>$$\n | $$+=$$\n | $$-=$$\n | $$*=$$\n | $$/=$$\n | $$%=$$\n | $$^=$$\n | $$&=$$\n | $$|=$$\n | $$<<=$$\n | $$>>=$$\n | $$=$$\n | $$==$$\n | $$!=$$\n | $$>$$\n | $$<$$\n | $$>=$$\n | $$<=$$\n | $$@$$\n | $$_$$\n | $$.$$\n | $$..$$\n | $$...$$\n | $$..=$$\n | $$,$$\n | $$;$$\n | $$:$$\n | $$::$$\n | $$->$$\n | $$=>$$\n | $$#$$\n | $$$$$\n | $$?$$\n\n Delimiter ::=\n $${$$\n | $$}$$\n | $$[$$\n | $$]$$\n | $$($$\n | $$)$$\n\nThe text of a source file is a sequence of separate [lexical\nelement]s. The meaning of a program depends only on the particular sequence of\n[lexical element]s, excluding non-[doc comment]s.\n\nA lexical element is the most basic syntactic element in program text.\n\nThe text of a source file is divided into [line]s.\n\nA line is a sequence of zero or more characters followed by an end of\nline.\n\nThe representation of an end of line is tool-defined.\n\nA separator is a character or a string that separates adjacent [lexical\nelement]s. A whitespace string is a separator.\n\nA simple punctuator is one of the following special characters:\n\nA compound punctuator is one of the following two or more adjacent special\ncharacters:\n\nThe following [compound punctuator]s are [flexible compound\npunctuator]s.\n\nA flexible compound punctuator may be treated as a single compound\npunctuator or two adjacent [simple punctuator]s.\n\nEach of the special characters listed for single character punctuator\nis a simple punctuator except if this character is used as a character\nof a compound punctuator, or a character of a character literal, a\ncomment, a numeric literal, or a string literal.\n\nThe following names are used when referring to [punctuator]s:",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_d4nvxsvxj537": "The text of a source file is a sequence of separate [lexical element]s. The meaning of a program depends only on the particular sequence of [lexical element]s, excluding non-[doc comment]s.",
+            "fls_a1zylpqha73x": "A lexical element is the most basic syntactic element in program text.",
+            "fls_jy6wifn5r2bu": "The text of a source file is divided into [line]s.",
+            "fls_efdfq9nhpmp5": "A line is a sequence of zero or more characters followed by an end of line.",
+            "fls_go25sisi5fdp": "The representation of an end of line is tool-defined.",
+            "fls_a6t53o8h1vdk": "A separator is a character or a string that separates adjacent [lexical element]s. A whitespace string is a separator.",
+            "fls_8fv63w6f4udl": "A simple punctuator is one of the following special characters:",
+            "fls_es0tz1q9cmoo": "A compound punctuator is one of the following two or more adjacent special characters:",
+            "fls_vm86olkeecer": "The following [compound punctuator]s are [flexible compound punctuator]s.",
+            "fls_5zxdgxy8tjrq": "A flexible compound punctuator may be treated as a single compound punctuator or two adjacent [simple punctuator]s.",
+            "fls_x89vkq9rwlyt": "Each of the special characters listed for single character punctuator is a simple punctuator except if this character is used as a character of a compound punctuator, or a character of a character literal, a comment, a numeric literal, or a string literal.",
+            "fls_bo3xh8r60ji1": "The following names are used when referring to [punctuator]s: .. list-table:: -",
+            "fls_sslkjuxjnteu": "- **punctuator** - **name** -",
+            "fls_9g1godm0jp0z": "- + - Plus -",
+            "fls_6oith9q0soot": "- - - Minus -",
+            "fls_1dledwdc8fa6": "- * - Star -",
+            "fls_lunw7ucj5ius": "- / - Slash -",
+            "fls_a4oiuhz95uiv": "- % - Percent -",
+            "fls_137x9s6guj6h": "- ^ - Caret -",
+            "fls_y0wdb09cpp1w": "- ! - Not -",
+            "fls_48b7mepiuupz": "- & - And -",
+            "fls_g9h9bsvrsmk1": "- | - Or -",
+            "fls_fxne2xd0zzzo": "- && - And and, lazy boolean and -",
+            "fls_il7zv5x3aw0q": "- || - Or or, lazy boolean or -",
+            "fls_ovcs1qm86ss9": "- << - Shift left -",
+            "fls_wmhlvjm0b0j9": "- >> - Shift right -",
+            "fls_gg42klb2gn9v": "- += - Plus equals -",
+            "fls_icahptg5enj4": "- -= - Minus equals -",
+            "fls_baawlxoi7yd4": "- *= - Star equals -",
+            "fls_m7gt3wfbtm81": "- /= - Slash equals -",
+            "fls_6ewl7gn3sjm2": "- %= - Percent equals -",
+            "fls_nb8q6oq8txv3": "- ^= - Caret equals -",
+            "fls_4nnky9ansr9j": "- &= - And equals -",
+            "fls_h1gvudehmnn9": "- |= - Or equals -",
+            "fls_6yj1c3lh691s": "- <<= - Shift left equals -",
+            "fls_2d3oo9nou9vv": "- >>= - Shift right equals -",
+            "fls_st2vhcy14ud9": "- = - Equals -",
+            "fls_9gdyw71dl25": "- == - Equals equals, logical equality -",
+            "fls_sp8ufz28l9w3": "- != - Not equals -",
+            "fls_7kdr8biodxvz": "- > - Greater than -",
+            "fls_pf92l9bkte2u": "- < - Less than -",
+            "fls_ui40thspgyav": "- >= - Greater than equals, greater than or equal to -",
+            "fls_h33qzachmimc": "- <= - Less than equals, less than or equal to -",
+            "fls_13ud1clgdnyv": "- @ - At -",
+            "fls_7fosi8l2ktz2": "- _ - Underscore -",
+            "fls_9qitp6r75ia6": "- . - Dot -",
+            "fls_g0umao9roi2l": "- .. - Dot dot, exclusive range -",
+            "fls_lamrpdpko48": "- ... - Dot dot dot, ellipsis -",
+            "fls_s4lte9onbmqb": "- ..= - Dot dot equals, inclusive range -",
+            "fls_ywc297y8s0dt": "- , - Comma -",
+            "fls_ijb0fws4gshu": "- ; - Semicolon -",
+            "fls_c25ur4xwbpk0": "- : - Colon -",
+            "fls_9dd9479zzq30": "- :: - Colon colon, path separator -",
+            "fls_kwsu9d3ppv3f": "- -> - Right arrow -",
+            "fls_oh62j9unw4mg": "- => - Fat arrow, Hashrocket -",
+            "fls_g0tltt8qmbum": "- # - Pound -",
+            "fls_ounkw8b8tk4f": "- $ - Dollar sign -",
+            "fls_8ywv8gftsfr1": "- ? - Question mark -",
+            "fls_hsn6zc29ifyx": "- { - Left curly brace -",
+            "fls_o3amqe3ca82d": "- } - Right curly brace -",
+            "fls_lkevfpj7sqd3": "- [ - Left square bracket -",
+            "fls_ff05ge2189z": "- ] - Right square bracket -",
+            "fls_nplkudde6oxf": "- ( - Left parenthesis -",
+            "fls_qwnrklmbz0b": "- ) - Right parenthesis"
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "LexicalElement ::=\n       Comment\n     | Identifier\n     | Keyword\n     | Literal\n     | Punctuation\n\n   Punctuation ::=\n       Delimiter\n     | $$+$$\n     | $$-$$\n     | $$*$$\n     | $$/$$\n     | $$%$$\n     | $$^$$\n     | $$!$$\n     | $$&$$\n     | $$|$$\n     | $$&&$$\n     | $$||$$\n     | $$<<$$\n     | $$>>$$\n     | $$+=$$\n     | $$-=$$\n     | $$*=$$\n     | $$/=$$\n     | $$%=$$\n     | $$^=$$\n     | $$&=$$\n     | $$|=$$\n     | $$<<=$$\n     | $$>>=$$\n     | $$=$$\n     | $$==$$\n     | $$!=$$\n     |...",
+            "syntax_2": "$$+$$\n   $$-$$\n   $$*$$\n   $$/$$\n   $$%$$\n   $$^$$\n   $$!$$\n   $$&$$\n   $$|$$\n   $$=$$\n   $$>$$\n   $$<$$\n   $$@$$\n   $$_$$\n   $$.$$\n   $$,$$\n   $$;$$\n   $$:$$\n   $$#$$\n   $$$$$\n   $$?$$\n   $${$$\n   $$}$$\n   $$[$$\n   $$]$$\n   $$($$\n   $$)$$",
+            "syntax_3": "$$&&$$\n   $$||$$\n   $$<<$$\n   $$>>$$\n   $$+=$$\n   $$-=$$\n   $$*=$$\n   $$/=$$\n   $$%=$$\n   $$^=$$\n   $$&=$$\n   $$|=$$\n   $$<<=$$\n   $$>>=$$\n   $$==$$\n   $$!=$$\n   $$>=$$\n   $$<=$$\n   $$..$$\n   $$...$$\n   $$..=$$\n   $$::$$\n   $$->$$\n   $$=>$$",
+            "syntax_4": "$$&&$$\n   $$||$$\n   $$<<$$\n   $$>>$$"
+          }
+        }
+      },
+      "parent_fls_id": "fls_411up5z0b6n6",
+      "sibling_fls_ids": [
+        "fls_2i089jvv8j5g",
+        "fls_21vnag69kbwe",
+        "fls_nrkd5wpi64oo",
+        "fls_q8l2jza7d9xa",
+        "fls_lish33a1naw5"
+      ]
+    },
+    {
+      "fls_id": "fls_21vnag69kbwe",
+      "title": "Identifiers",
+      "category": 0,
+      "level": 2,
+      "file": "lexical-elements",
+      "content": "Identifiers\n\n IdentifierList ::=\n Identifier ($$,$$ Identifier)* $$,$$?\n\n NonKeywordIdentifier ::=\n PureIdentifier\n | WeakKeyword\n\n RawIdentifier ::=\n $$r#$$ (PureIdentifier | RawIdentifierKeyword)\n\n PureIdentifier ::=\n XID_Start XID_Continue*\n | $$_$$ XID_Continue+\n\n IdentifierOrUnderscore ::=\n Identifier\n | $$_$$\n\n Renaming ::=\n $$as$$ IdentifierOrUnderscore\n\nA :ds:`RawIdentifierKeyword` is any keyword in category Keyword,\nexcept crate, self, Self, and super.\n\n:ds:`XID_Start` and :ds:`XID_Continue` are defined in Unicode Standard Annex\n#31.\n\nAn identifier is a lexical element that refers to a name.\n\nA pure identifier is an identifier that does not include [weak\nkeyword]s.\n\nA pure identifier shall follow the specification in Unicode Standard Annex\n#31 for Unicode version 16.0, with the following profile:\n\n* Start = XID_Start, plus character 0x5F (low line).\n\n* Continue = XID_Continue\n\n* Medial = empty\n\nCharacters 0x200C (zero width non-joiner) and 0x200D (zero width joiner) shall\nnot appear in a pure identifier.\n\nA pure identifier shall be restricted to characters in category\nAsciiCharacter in the following contexts:\n\n* [Crate import]s,\n\n* [Name]s of external [crate]s represented in a simple path, when\n the simple path starts with namespace qualifier ::,\n\n* [Name]s of [outline module]s that lack attribute path,\n\n* [Name]s of [item]s that are subject to attribute\n no_mangle,\n\n* [Name]s of [item]s within [external block]s.\n\n[Identifier]s are normalized using Normalization Form C as defined in\nUnicode Standard Annex #15.\n\nTwo [identifier]s are considered the same if they consist of the same\nsequence of characters after performing normalization.\n\n[Declarative macro]s and [procedural macro]s shall receive normalized\n[identifier]s in their input.",
+      "rubrics": {
+        "-8": {
+          "paragraphs": {
+            "fls_ls7ymvgd5kfa": "A :ds:RawIdentifierKeyword is any keyword in category Keyword, except crate, self, Self, and super.",
+            "fls_aqj9aguczgqs": ":ds:XID_Start and :ds:XID_Continue are defined in Unicode Standard Annex #31.",
+            "syntax_1": "Identifier ::=\n       NonKeywordIdentifier\n     | RawIdentifier\n\n   IdentifierList ::=\n       Identifier ($$,$$ Identifier)* $$,$$?\n\n   NonKeywordIdentifier ::=\n       PureIdentifier\n     | WeakKeyword\n\n   RawIdentifier ::=\n       $$r#$$ (PureIdentifier | RawIdentifierKeyword)\n\n   PureIdentifier ::=\n       XID_Start XID_Continue*\n     | $$_$$ XID_Continue+\n\n   IdentifierOrUnderscore ::=\n       Identifier\n     | $$_$$\n\n   Renaming ::=\n       $$as$$ IdentifierOrUnderscore"
+          }
+        },
+        "-2": {
+          "paragraphs": {
+            "fls_xsdmun5uqy4c": "An identifier is a lexical element that refers to a name.",
+            "fls_ktnf6zkrdy45": "A pure identifier is an identifier that does not include [weak keyword]s.",
+            "fls_jpecw46eh061": "A pure identifier shall follow the specification in Unicode Standard Annex #31 for Unicode version 16.0, with the following profile:",
+            "fls_lwcflgezgs5z": "Start = XID_Start, plus character 0x5F (low line).",
+            "fls_uts0hywaw1rq": "Continue = XID_Continue",
+            "fls_lju1avcn0pfd": "Medial = empty",
+            "fls_cs6cbw625np1": "Characters 0x200C (zero width non-joiner) and 0x200D (zero width joiner) shall not appear in a pure identifier.",
+            "fls_irwcldiotei2": "A pure identifier shall be restricted to characters in category AsciiCharacter in the following contexts:",
+            "fls_g72rxs2z5960": "[Crate import]s,",
+            "fls_w473jevurlt1": "[Name]s of external [crate]s represented in a simple path, when the simple path starts with namespace qualifier ::,",
+            "fls_mt1u4m3simhc": "[Name]s of [outline module]s that lack attribute path,",
+            "fls_e2v58o233lvd": "[Name]s of [item]s that are subject to attribute no_mangle,",
+            "fls_op0lp1i065di": "[Name]s of [item]s within [external block]s.",
+            "fls_vde7gev5rz4q": "[Identifier]s are normalized using Normalization Form C as defined in Unicode Standard Annex #15.",
+            "fls_j9yh8j8jgdeu": "Two [identifier]s are considered the same if they consist of the same sequence of characters after performing normalization.",
+            "fls_jejt5z8m1yew": "[Declarative macro]s and [procedural macro]s shall receive normalized [identifier]s in their input."
+          }
+        }
+      },
+      "parent_fls_id": "fls_411up5z0b6n6",
+      "sibling_fls_ids": [
+        "fls_2i089jvv8j5g",
+        "fls_fgnllgz5k3e6",
+        "fls_nrkd5wpi64oo",
+        "fls_q8l2jza7d9xa",
+        "fls_lish33a1naw5"
+      ]
+    },
+    {
+      "fls_id": "fls_nrkd5wpi64oo",
+      "title": "Literals",
+      "category": 0,
+      "level": 2,
+      "file": "lexical-elements",
+      "content": "Literals\n\nA literal is a fixed value in program text.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_s76un78zyd0j": "A literal is a fixed value in program text."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "Literal ::=\n       BooleanLiteral\n     | ByteLiteral\n     | ByteStringLiteral\n     | CStringLiteral\n     | CharacterLiteral\n     | NumericLiteral\n     | StringLiteral"
+          }
+        }
+      },
+      "parent_fls_id": "fls_411up5z0b6n6",
+      "sibling_fls_ids": [
+        "fls_2i089jvv8j5g",
+        "fls_fgnllgz5k3e6",
+        "fls_21vnag69kbwe",
+        "fls_q8l2jza7d9xa",
+        "fls_lish33a1naw5"
+      ]
+    },
+    {
+      "fls_id": "fls_2ifjqwnw03ms",
+      "title": "Byte Literals",
+      "category": 0,
+      "level": 3,
+      "file": "lexical-elements",
+      "content": "Byte Literals\n\n ByteContent ::=\n ByteCharacter\n | ByteEscape\n\n ByteEscape ::=\n $$\\0$$\n | $$\\\"$$\n | $$\\'$$\n | $$\\t$$\n | $$\\n$$\n | $$\\r$$\n | $$\\\\$$\n | $$\\x$$ OctalDigit HexadecimalDigit\n\nA :ds:`ByteCharacter` is any character in category AsciiCharacter\nexcept characters 0x09 (horizontal tabulation), 0x0A (new line), 0x0D (carriage\nreturn), 0x27 (apostrophe), and 0x5C (reverse solidus).\n\nA byte literal is a literal that denotes a fixed byte value.\n\nThe type of a byte literal is u8.",
+      "rubrics": {
+        "-8": {
+          "paragraphs": {
+            "fls_3hpzf12h60u4": "A :ds:ByteCharacter is any character in category AsciiCharacter except characters 0x09 (horizontal tabulation), 0x0A (new line), 0x0D (carriage return), 0x27 (apostrophe), and 0x5C (reverse solidus).",
+            "syntax_1": "ByteLiteral ::=\n       $$b'$$ ByteContent $$'$$\n\n   ByteContent ::=\n       ByteCharacter\n     | ByteEscape\n\n   ByteEscape ::=\n       $$\\0$$\n     | $$\\\"$$\n     | $$\\'$$\n     | $$\\t$$\n     | $$\\n$$\n     | $$\\r$$\n     | $$\\\\$$\n     | $$\\x$$ OctalDigit HexadecimalDigit"
+          }
+        },
+        "-2": {
+          "paragraphs": {
+            "fls_q0qwr83frszx": "A byte literal is a literal that denotes a fixed byte value.",
+            "fls_fggytrv5jvw0": "The type of a byte literal is u8."
+          }
+        }
+      },
+      "parent_fls_id": "fls_nrkd5wpi64oo",
+      "sibling_fls_ids": [
+        "fls_fqaffyrjob7v",
+        "fls_U1gHCy16emVe",
+        "fls_hv9jtycp0o1y",
+        "fls_ypa86oqxhn9u",
+        "fls_jkab8eevzbte"
+      ]
+    },
+    {
+      "fls_id": "fls_fqaffyrjob7v",
+      "title": "Byte String Literals",
+      "category": 0,
+      "level": 3,
+      "file": "lexical-elements",
+      "content": "Byte String Literals\n\nA byte string literal is a literal that consists of multiple\n[AsciiCharacter]s.\n\nThe character sequence 0x0D 0x0A (carriage return, new line) is replaced by 0x0A\n(new line) inside of a byte string literal.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_t63zfv5JdUhj": "A byte string literal is a literal that consists of multiple [AsciiCharacter]s.",
+            "fls_Xd6LnfzMb7t7": "The character sequence 0x0D 0x0A (carriage return, new line) is replaced by 0x0A (new line) inside of a byte string literal."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "ByteStringLiteral ::=\n       RawByteStringLiteral\n     | SimpleByteStringLiteral"
+          }
+        }
+      },
+      "parent_fls_id": "fls_nrkd5wpi64oo",
+      "sibling_fls_ids": [
+        "fls_2ifjqwnw03ms",
+        "fls_U1gHCy16emVe",
+        "fls_hv9jtycp0o1y",
+        "fls_ypa86oqxhn9u",
+        "fls_jkab8eevzbte"
+      ]
+    },
+    {
+      "fls_id": "fls_msbaxfC09VkK",
+      "title": "Simple Byte String Literals",
+      "category": 0,
+      "level": 4,
+      "file": "lexical-elements",
+      "content": "Simple Byte String Literals\n\n SimpleByteStringContent ::=\n ByteEscape\n | SimpleByteStringCharacter\n | StringContinuation\n\nA :ds:`SimpleByteStringCharacter` is any character in category AsciiCharacter\nexcept characters 0x0D (carriage return), 0x22 (quotation mark), and 0x5C\n(reverse solidus).\n\nA simple byte string literal is a byte string literal that consists of multiple\n[AsciiCharacter]s.\n\nThe type of a simple byte string literal of size N is &'static [u8;\nN].",
+      "rubrics": {
+        "-8": {
+          "paragraphs": {
+            "fls_3dcqhuosqb84": "A :ds:SimpleByteStringCharacter is any character in category AsciiCharacter except characters 0x0D (carriage return), 0x22 (quotation mark), and 0x5C (reverse solidus).",
+            "syntax_1": "SimpleByteStringLiteral ::=\n       $$b\"$$ SimpleByteStringContent* $$\"$$\n\n   SimpleByteStringContent ::=\n       ByteEscape\n     | SimpleByteStringCharacter\n     | StringContinuation"
+          }
+        },
+        "-2": {
+          "paragraphs": {
+            "fls_moe3zfx39ox2": "A simple byte string literal is a byte string literal that consists of multiple [AsciiCharacter]s.",
+            "fls_vffxb6arj9jf": "The type of a simple byte string literal of size N is &'static [u8; N]."
+          }
+        }
+      },
+      "parent_fls_id": "fls_fqaffyrjob7v",
+      "sibling_fls_ids": [
+        "fls_jps9102q0qfi"
+      ]
+    },
+    {
+      "fls_id": "fls_jps9102q0qfi",
+      "title": "Raw Byte String Literals",
+      "category": 0,
+      "level": 4,
+      "file": "lexical-elements",
+      "content": "Raw Byte String Literals\n\n RawByteStringContent ::=\n NestedRawByteStringContent\n | $$\"$$ AsciiCharacter* $$\"$$\n\n NestedRawByteStringContent ::=\n $$#$$ RawByteStringContent $$#$$\n\nA raw byte string literal is a simple byte string literal that does not\nrecognize [escaped character]s.\n\nThe type of a raw byte string literal of size N is &'static\n[u8; N].",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_yyw7nv651580": "A raw byte string literal is a simple byte string literal that does not recognize [escaped character]s.",
+            "fls_5ybq0euwya42": "The type of a raw byte string literal of size N is &'static [u8; N]."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "RawByteStringLiteral ::=\n       $$br$$ RawByteStringContent\n\n   RawByteStringContent ::=\n       NestedRawByteStringContent\n     | $$\"$$ AsciiCharacter* $$\"$$\n\n   NestedRawByteStringContent ::=\n       $$#$$ RawByteStringContent $$#$$"
+          }
+        }
+      },
+      "parent_fls_id": "fls_fqaffyrjob7v",
+      "sibling_fls_ids": [
+        "fls_msbaxfC09VkK"
+      ]
+    },
+    {
+      "fls_id": "fls_U1gHCy16emVe",
+      "title": "C String Literals",
+      "category": 0,
+      "level": 3,
+      "file": "lexical-elements",
+      "content": "C String Literals\n\nA c string literal is a literal that consists of multiple characters\nwith an implicit 0x00 byte appended to it.\n\nThe character sequence 0x0D 0x0A (carriage return, new line) is replaced by 0x0A\n(new line) inside of a c string literal.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_VKCW830CzhhN": "A c string literal is a literal that consists of multiple characters with an implicit 0x00 byte appended to it.",
+            "fls_XJprzaEn82Xs": "The character sequence 0x0D 0x0A (carriage return, new line) is replaced by 0x0A (new line) inside of a c string literal."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "CStringLiteral ::=\n       RawCStringLiteral\n     | SimpleCStringLiteral"
+          }
+        }
+      },
+      "parent_fls_id": "fls_nrkd5wpi64oo",
+      "sibling_fls_ids": [
+        "fls_2ifjqwnw03ms",
+        "fls_fqaffyrjob7v",
+        "fls_hv9jtycp0o1y",
+        "fls_ypa86oqxhn9u",
+        "fls_jkab8eevzbte"
+      ]
+    },
+    {
+      "fls_id": "fls_p090c5oTnElW",
+      "title": "Simple C String Literals",
+      "category": 0,
+      "level": 4,
+      "file": "lexical-elements",
+      "content": "Simple C String Literals\n\n SimpleCStringContent ::=\n AsciiEscape\n | SimpleStringCharacter\n | StringContinuation\n | UnicodeEscape\n\nA simple c string literal is any Unicode character except characters\n0x0D (carriage return), 0x22 (quotation mark), 0x5C (reverse solidus) and 0x00\n(null byte).\n\nA simple c string literal is a c string literal where the characters are\nUnicode characters.\n\nThe type of a simple string literal is &'static\n[core::ffi::CStr].",
+      "rubrics": {
+        "-8": {
+          "paragraphs": {
+            "fls_fnwQHo7twAom": "A simple c string literal is any Unicode character except characters 0x0D (carriage return), 0x22 (quotation mark), 0x5C (reverse solidus) and 0x00 (null byte).",
+            "syntax_1": "SimpleCStringLiteral ::=\n       $$c\"$$ SimpleCStringContent* $$\"$$\n\n   SimpleCStringContent ::=\n       AsciiEscape\n     | SimpleStringCharacter\n     | StringContinuation\n     | UnicodeEscape"
+          }
+        },
+        "-2": {
+          "paragraphs": {
+            "fls_nPI7j0siGP8G": "A simple c string literal is a c string literal where the characters are Unicode characters.",
+            "fls_Ae7LM4Wg0NA7": "The type of a simple string literal is &'static [core::ffi::CStr]."
+          }
+        }
+      },
+      "parent_fls_id": "fls_U1gHCy16emVe",
+      "sibling_fls_ids": [
+        "fls_G4LdypF3rL6i"
+      ]
+    },
+    {
+      "fls_id": "fls_G4LdypF3rL6i",
+      "title": "Raw C String Literals",
+      "category": 0,
+      "level": 4,
+      "file": "lexical-elements",
+      "content": "Raw C String Literals\n\n RawCStringContent ::=\n NestedRawCStringContent\n | $$\"$$ ~[$$\\r$$]* $$\"$$\n\n NestedRawCStringContent ::=\n $$#$$ RawCStringContent $$#$$\n\nA raw c string literal is a simple c string literal that does not\nrecognize [escaped character]s.\n\nThe type of a simple string literal is &'static\n[core::ffi::CStr].",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_gLrei65i8Uzq": "A raw c string literal is a simple c string literal that does not recognize [escaped character]s.",
+            "fls_9nJHsg9dCi66": "The type of a simple string literal is &'static [core::ffi::CStr]."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "RawCStringLiteral ::=\n       $$cr$$ RawCStringContent\n\n   RawCStringContent ::=\n       NestedRawCStringContent\n     | $$\"$$ ~[$$\\r$$]* $$\"$$\n\n   NestedRawCStringContent ::=\n       $$#$$ RawCStringContent $$#$$"
+          }
+        }
+      },
+      "parent_fls_id": "fls_U1gHCy16emVe",
+      "sibling_fls_ids": [
+        "fls_p090c5oTnElW"
+      ]
+    },
+    {
+      "fls_id": "fls_hv9jtycp0o1y",
+      "title": "Numeric Literals",
+      "category": 0,
+      "level": 3,
+      "file": "lexical-elements",
+      "content": "Numeric Literals\n\nA numeric literal is a literal that denotes a number.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_fqpqnku27v99": "A numeric literal is a literal that denotes a number."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "NumericLiteral ::=\n       FloatLiteral\n     | IntegerLiteral"
+          }
+        }
+      },
+      "parent_fls_id": "fls_nrkd5wpi64oo",
+      "sibling_fls_ids": [
+        "fls_2ifjqwnw03ms",
+        "fls_fqaffyrjob7v",
+        "fls_U1gHCy16emVe",
+        "fls_ypa86oqxhn9u",
+        "fls_jkab8eevzbte"
+      ]
+    },
+    {
+      "fls_id": "fls_2ed4axpsy9u0",
+      "title": "Integer Literals",
+      "category": 0,
+      "level": 4,
+      "file": "lexical-elements",
+      "content": "Integer Literals\n\n IntegerContent ::=\n BinaryLiteral\n | DecimalLiteral\n | HexadecimalLiteral\n | OctalLiteral\n\n BinaryLiteral ::=\n $$0b$$ BinaryDigitOrUnderscore* BinaryDigit BinaryDigitOrUnderscore*\n\n BinaryDigitOrUnderscore ::=\n BinaryDigit\n | $$_$$\n\n BinaryDigit ::=\n [$$0$$-$$1$$]\n\n DecimalLiteral ::=\n DecimalDigit DecimalDigitOrUnderscore*\n\n DecimalDigitOrUnderscore ::=\n DecimalDigit\n | $$_$$\n\n DecimalDigit ::=\n [$$0$$-$$9$$]\n\n HexadecimalLiteral ::=\n $$0x$$ HexadecimalDigitOrUnderscore* HexadecimalDigit HexadecimalDigitOrUnderscore*\n\n HexadecimalDigitOrUnderscore ::=\n HexadecimalDigit\n | $$_$$\n\n HexadecimalDigit ::=\n [$$0$$-$$9$$ $$a$$-$$f$$ $$A$$-$$F$$]\n\n OctalLiteral ::=\n $$0o$$ OctalDigitOrUnderscore* OctalDigit OctalDigitOrUnderscore*\n\n OctalDigitOrUnderscore ::=\n OctalDigit\n | $$_$$\n\n OctalDigit ::=\n [$$0$$-$$7$$]\n\n IntegerSuffix ::=\n SignedIntegerSuffix\n | UnsignedIntegerSuffix\n\n SignedIntegerSuffix ::=\n $$i8$$\n | $$i16$$\n | $$i32$$\n | $$i64$$\n | $$i128$$\n | $$isize$$\n\n UnsignedIntegerSuffix ::=\n $$u8$$\n | $$u16$$\n | $$u32$$\n | $$u64$$\n | $$u128$$\n | $$usize$$\n\nAn integer literal is a numeric literal that denotes a whole number.\n\nA binary literal is an integer literal in base 2.\n\nA decimal literal is an integer literal in base 10.\n\nA hexadecimal literal is an integer literal in base 16.\n\nAn octal literal is an integer literal in base 8.\n\nAn integer suffix is a component of an integer literal that specifies\nan explicit integer type.\n\nA suffixed integer is an integer literal with an integer suffix.\n\nAn unsuffixed integer is an integer literal without an integer\nsuffix.\n\nThe type of a suffixed integer is determined by its integer\nsuffix as follows:\n\n* Suffix i8 specifies type i8.\n\n* Suffix i16 specifies type i16.\n\n* Suffix i32 specifies type i32.\n\n* Suffix i64 specifies type i64.\n\n* Suffix i128 specifies type i128.\n\n* Suffix isize specifies type isize.\n\n* Suffix u8 specifies type u8.\n\n* Suffix u16 specifies type u16.\n\n* Suffix u32 specifies type u32.\n\n* Suffix u64 specifies type u64.\n\n* Suffix u128 specifies type u128.\n\n* Suffix usize specifies type usize.\n\nThe type of an unsuffixed integer is determined by type inference\nas follows:\n\n* If an integer type can be uniquely determined from the surrounding\n program context, then the unsuffixed integer has that type.\n\n* If the program context under-constrains the type, then the inferred\n type is i32.\n\n* If the program context over-constrains the type, then this is considered\n a static error.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_vkk2krfn93ry": "An integer literal is a numeric literal that denotes a whole number.",
+            "fls_nxqncu5yq4eu": "A binary literal is an integer literal in base 2.",
+            "fls_rn8xfd66yvst": "A decimal literal is an integer literal in base 10.",
+            "fls_2268lchxkzjp": "A hexadecimal literal is an integer literal in base 16.",
+            "fls_4v7awnutbpoe": "An octal literal is an integer literal in base 8.",
+            "fls_f1e29aj0sqvl": "An integer suffix is a component of an integer literal that specifies an explicit integer type.",
+            "fls_u83mffscqm6": "A suffixed integer is an integer literal with an integer suffix.",
+            "fls_g10nuv14q4jn": "An unsuffixed integer is an integer literal without an integer suffix.",
+            "fls_hpkkvuj1z1ez": "The type of a suffixed integer is determined by its integer suffix as follows:",
+            "fls_7yq2fep848ky": "Suffix i8 specifies type i8.",
+            "fls_bzm8lwq3qlat": "Suffix i16 specifies type i16.",
+            "fls_l4cx36brc1r5": "Suffix i32 specifies type i32.",
+            "fls_wthchinwx996": "Suffix i64 specifies type i64.",
+            "fls_7uoaet2pm3am": "Suffix i128 specifies type i128.",
+            "fls_p4rw583o2qbi": "Suffix isize specifies type isize.",
+            "fls_xrv4q56lmoo3": "Suffix u8 specifies type u8.",
+            "fls_66e3q5um6cwc": "Suffix u16 specifies type u16.",
+            "fls_5asyk66y7c9d": "Suffix u32 specifies type u32.",
+            "fls_76fifqjka0lx": "Suffix u64 specifies type u64.",
+            "fls_fsaimo419gf0": "Suffix u128 specifies type u128.",
+            "fls_hvzacbu7yiwc": "Suffix usize specifies type usize.",
+            "fls_50qipwqi3arw": "The type of an unsuffixed integer is determined by type inference as follows:",
+            "fls_idzhusp2l908": "If an integer type can be uniquely determined from the surrounding program context, then the unsuffixed integer has that type.",
+            "fls_qqrqyc6uhol": "If the program context under-constrains the type, then the inferred type is i32.",
+            "fls_pexi5jazthq6": "If the program context over-constrains the type, then this is considered a static error."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "IntegerLiteral ::=\n       IntegerContent IntegerSuffix?\n\n   IntegerContent ::=\n       BinaryLiteral\n     | DecimalLiteral\n     | HexadecimalLiteral\n     | OctalLiteral\n\n   BinaryLiteral ::=\n       $$0b$$ BinaryDigitOrUnderscore* BinaryDigit BinaryDigitOrUnderscore*\n\n   BinaryDigitOrUnderscore ::=\n       BinaryDigit\n     | $$_$$\n\n   BinaryDigit ::=\n       [$$0$$-$$1$$]\n\n   DecimalLiteral ::=\n       DecimalDigit DecimalDigitOrUnderscore*\n\n   DecimalDigitOrUnderscore ::=\n       DecimalDigit\n     | ..."
+          }
+        }
+      },
+      "parent_fls_id": "fls_hv9jtycp0o1y",
+      "sibling_fls_ids": [
+        "fls_29tlg1vyqay2"
+      ]
+    },
+    {
+      "fls_id": "fls_29tlg1vyqay2",
+      "title": "Float Literals",
+      "category": 0,
+      "level": 4,
+      "file": "lexical-elements",
+      "content": "Float Literals\n\n FloatExponent ::=\n ExponentLetter ExponentSign? ExponentMagnitude\n\n ExponentLetter ::=\n $$e$$\n | $$E$$\n\n ExponentSign ::=\n $$+$$\n | $$-$$\n\n ExponentMagnitude ::=\n DecimalDigitOrUnderscore* DecimalDigit DecimalDigitOrUnderscore*\n\n FloatSuffix ::=\n $$f32$$\n | $$f64$$\n\nA float literal is a numeric literal that denotes a fractional number.\n\nA float suffix is a component of a float literal that specifies an\nexplicit floating-point type.\n\nA suffixed float is a float literal with a float suffix.\n\nAn unsuffixed float is a float literal without a float suffix.\n\nThe type of a suffixed float is determined by the float suffix\nas follows:\n\n* Suffix f32 specifies type f32.\n\n* Suffix f64 specifies type f64.\n\nThe type of an unsuffixed float is determined by type inference\nas follows:\n\n* If a floating-point type can be uniquely determined from the surrounding\n program context, then the unsuffixed float has that type.\n\n* If the program context under-constrains the type, then the inferred\n type is f64.\n\n* If the program context over-constrains the type, then this is considered\n a static error.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_rzi7oeqokd6e": "A float literal is a numeric literal that denotes a fractional number.",
+            "fls_2ru1zyrykd37": "A float suffix is a component of a float literal that specifies an explicit floating-point type.",
+            "fls_21mhnhplzam7": "A suffixed float is a float literal with a float suffix.",
+            "fls_drqh80k0sfkb": "An unsuffixed float is a float literal without a float suffix.",
+            "fls_cbs7j9pjpusw": "The type of a suffixed float is determined by the float suffix as follows:",
+            "fls_b9w7teaw1f8f": "Suffix f32 specifies type f32.",
+            "fls_eawxng4ndhv0": "Suffix f64 specifies type f64.",
+            "fls_yuhza1muo7o": "The type of an unsuffixed float is determined by type inference as follows:",
+            "fls_4sxt1ct7fyen": "If a floating-point type can be uniquely determined from the surrounding program context, then the unsuffixed float has that type.",
+            "fls_wa72rssp0jnt": "If the program context under-constrains the type, then the inferred type is f64.",
+            "fls_x2cw7g8g56f8": "If the program context over-constrains the type, then this is considered a static error."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "FloatLiteral ::=\n       DecimalLiteral $$.$$\n     | DecimalLiteral FloatExponent\n     | DecimalLiteral $$.$$ DecimalLiteral FloatExponent?\n     | DecimalLiteral ($$.$$ DecimalLiteral)? FloatExponent? FloatSuffix\n\n   FloatExponent ::=\n       ExponentLetter ExponentSign? ExponentMagnitude\n\n   ExponentLetter ::=\n       $$e$$\n     | $$E$$\n\n   ExponentSign ::=\n       $$+$$\n     | $$-$$\n\n   ExponentMagnitude ::=\n       DecimalDigitOrUnderscore* DecimalDigit DecimalDigitOrUnderscore*\n\n   FloatSuffix ::..."
+          }
+        }
+      },
+      "parent_fls_id": "fls_hv9jtycp0o1y",
+      "sibling_fls_ids": [
+        "fls_2ed4axpsy9u0"
+      ]
+    },
+    {
+      "fls_id": "fls_ypa86oqxhn9u",
+      "title": "Character Literals",
+      "category": 0,
+      "level": 3,
+      "file": "lexical-elements",
+      "content": "Character Literals\n\n CharacterContent ::=\n AsciiEscape\n | CharacterLiteralCharacter\n | UnicodeEscape\n\n AsciiEscape ::=\n $$\\0$$\n | $$\\\"$$\n | $$\\'$$\n | $$\\t$$\n | $$\\n$$\n | $$\\r$$\n | $$\\\\$$\n | $$\\x$$ OctalDigit HexadecimalDigit\n\nA :ds:`CharacterLiteralCharacter` is any Unicode character except\ncharacters 0x09 (horizontal tabulation), 0x0A (new line), 0x0D (carriage\nreturn), 0x27 (apostrophe), and 0x5c (reverse solidus).\n\nA :ds:`UnicodeEscape` starts with a \\u{ literal, followed by 1 to 6\ninstances of a HexadecimalDigit, inclusive, followed by a } character.\nIt can represent any Unicode codepoint between U+00000 and U+10FFFF,\ninclusive, except Unicode surrogate codepoints, which exist between\nthe range of U+D800 and U+DFFF, inclusive.\n\nA character literal is a literal that denotes a fixed Unicode\ncharacter.\n\nThe type of a character literal is char.",
+      "rubrics": {
+        "-8": {
+          "paragraphs": {
+            "fls_j9q9ton57rvl": "A :ds:CharacterLiteralCharacter is any Unicode character except characters 0x09 (horizontal tabulation), 0x0A (new line), 0x0D (carriage return), 0x27 (apostrophe), and 0x5c (reverse solidus).",
+            "fls_5v9gx22g5wPm": "A :ds:UnicodeEscape starts with a \\u{ literal, followed by 1 to 6 instances of a HexadecimalDigit, inclusive, followed by a } character. It can represent any Unicode codepoint between U+00000 and U+10FFFF, inclusive, except Unicode surrogate codepoints, which exist between the range of U+D800 and U+DFFF, inclusive.",
+            "syntax_1": "CharacterLiteral ::=\n       $$'$$ CharacterContent $$'$$\n\n   CharacterContent ::=\n       AsciiEscape\n     | CharacterLiteralCharacter\n     | UnicodeEscape\n\n   AsciiEscape ::=\n       $$\\0$$\n     | $$\\\"$$\n     | $$\\'$$\n     | $$\\t$$\n     | $$\\n$$\n     | $$\\r$$\n     | $$\\\\$$\n     | $$\\x$$ OctalDigit HexadecimalDigit"
+          }
+        },
+        "-2": {
+          "paragraphs": {
+            "fls_vag2oy4q7d4n": "A character literal is a literal that denotes a fixed Unicode character.",
+            "fls_n8z6p6g564r2": "The type of a character literal is char."
+          }
+        }
+      },
+      "parent_fls_id": "fls_nrkd5wpi64oo",
+      "sibling_fls_ids": [
+        "fls_2ifjqwnw03ms",
+        "fls_fqaffyrjob7v",
+        "fls_U1gHCy16emVe",
+        "fls_hv9jtycp0o1y",
+        "fls_jkab8eevzbte"
+      ]
+    },
+    {
+      "fls_id": "fls_boyhlu5srp6u",
+      "title": "Simple String Literals",
+      "category": 0,
+      "level": 4,
+      "file": "lexical-elements",
+      "content": "String Literals\n\nA string literal is a literal that consists of multiple characters.\n\nThe character sequence 0x0D 0x0A (carriage return, new line) is replaced by 0x0A\n(new line) inside of a string literal.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_7fuctvtvdi7x": "A string literal is a literal that consists of multiple characters.",
+            "fls_NyiCpU2tzJlQ": "The character sequence 0x0D 0x0A (carriage return, new line) is replaced by 0x0A (new line) inside of a string literal."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "StringLiteral ::=\n       RawStringLiteral\n     | SimpleStringLiteral"
+          }
+        }
+      },
+      "parent_fls_id": "fls_ypa86oqxhn9u",
+      "sibling_fls_ids": [
+        "fls_hucd52suu6it",
+        "fls_usr6iuwpwqqh"
+      ]
+    },
+    {
+      "fls_id": "fls_hucd52suu6it",
+      "title": "Simple String Literals",
+      "category": 0,
+      "level": 4,
+      "file": "lexical-elements",
+      "content": "Simple String Literals\n\n SimpleStringContent ::=\n AsciiEscape\n | SimpleStringCharacter\n | StringContinuation\n | UnicodeEscape\n\nA :ds:`SimpleStringCharacter` is any Unicode character except characters\n0x0D (carriage return), 0x22 (quotation mark), and 0x5C (reverse solidus).\n\n:ds:`StringContinuation` is the character sequence 0x5C 0x0A (reverse solidus,\nnew line).\n\nA simple string literal is a string literal where the characters are\nUnicode characters.\n\nThe type of a simple string literal is &'static str.",
+      "rubrics": {
+        "-8": {
+          "paragraphs": {
+            "fls_1pdzwkt5txfj": "A :ds:SimpleStringCharacter is any Unicode character except characters 0x0D (carriage return), 0x22 (quotation mark), and 0x5C (reverse solidus).",
+            "fls_wawtu6j3fiqn": ":ds:StringContinuation is the character sequence 0x5C 0x0A (reverse solidus, new line).",
+            "syntax_1": "SimpleStringLiteral ::=\n       $$\"$$ SimpleStringContent* $$\"$$\n\n   SimpleStringContent ::=\n       AsciiEscape\n     | SimpleStringCharacter\n     | StringContinuation\n     | UnicodeEscape"
+          }
+        },
+        "-2": {
+          "paragraphs": {
+            "fls_ycy5ee6orjx": "A simple string literal is a string literal where the characters are Unicode characters.",
+            "fls_6nt5kls21xes": "The type of a simple string literal is &'static str."
+          }
+        }
+      },
+      "parent_fls_id": "fls_ypa86oqxhn9u",
+      "sibling_fls_ids": [
+        "fls_boyhlu5srp6u",
+        "fls_usr6iuwpwqqh"
+      ]
+    },
+    {
+      "fls_id": "fls_usr6iuwpwqqh",
+      "title": "Raw String Literals",
+      "category": 0,
+      "level": 4,
+      "file": "lexical-elements",
+      "content": "Raw String Literals\n\n RawStringContent ::=\n NestedRawStringContent\n | $$\"$$ ~[$$\\r$$]* $$\"$$\n\n NestedRawStringContent ::=\n $$#$$ RawStringContent $$#$$\n\nA raw string literal is a simple string literal that does not\nrecognize [escaped character]s.\n\nThe type of a raw string literal is &'static str.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_36suwhbwmq1t": "A raw string literal is a simple string literal that does not recognize [escaped character]s.",
+            "fls_ms43w1towz40": "The type of a raw string literal is &'static str."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "RawStringLiteral ::=\n       $$r$$ RawStringContent\n\n   RawStringContent ::=\n       NestedRawStringContent\n     | $$\"$$ ~[$$\\r$$]* $$\"$$\n\n   NestedRawStringContent ::=\n       $$#$$ RawStringContent $$#$$"
+          }
+        }
+      },
+      "parent_fls_id": "fls_ypa86oqxhn9u",
+      "sibling_fls_ids": [
+        "fls_boyhlu5srp6u",
+        "fls_hucd52suu6it"
+      ]
+    },
+    {
+      "fls_id": "fls_jkab8eevzbte",
+      "title": "Boolean Literals",
+      "category": 0,
+      "level": 3,
+      "file": "lexical-elements",
+      "content": "Boolean Literals\n\nA boolean literal is a literal that denotes the truth [value]s of\nlogic and Boolean algebra.\n\nThe type of a boolean literal is bool.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_1lll64ftupjd": "A boolean literal is a literal that denotes the truth [value]s of logic and Boolean algebra.",
+            "fls_pgngble3ilyx": "The type of a boolean literal is bool."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "BooleanLiteral ::=\n       $$false$$\n     | $$true$$"
+          }
+        }
+      },
+      "parent_fls_id": "fls_nrkd5wpi64oo",
+      "sibling_fls_ids": [
+        "fls_2ifjqwnw03ms",
+        "fls_fqaffyrjob7v",
+        "fls_U1gHCy16emVe",
+        "fls_hv9jtycp0o1y",
+        "fls_ypa86oqxhn9u"
+      ]
+    },
+    {
+      "fls_id": "fls_q8l2jza7d9xa",
+      "title": "Comments",
+      "category": 0,
+      "level": 2,
+      "file": "lexical-elements",
+      "content": "Comments\n\n BlockCommentOrDoc ::=\n BlockComment\n | InnerBlockDoc\n | OuterBlockDoc\n\n LineCommentOrDoc ::=\n LineComment\n | InnerLineDoc\n | OuterLineDoc\n\n LineComment ::=\n $$//$$\n | $$//$$ (~[$$!$$ $$/$$] | $$//$$) ~[$$\\n$$]*\n\n BlockComment ::=\n $$/*$$ (~[$$!$$ $$*$$] | $$**$$ | BlockCommentOrDoc) (BlockCommentOrDoc | ~[$$*/$$])* $$*/$$\n | $$/**/$$\n | $$/***/$$\n\n InnerBlockDoc ::=\n $$/*!$$ (BlockCommentOrDoc | ~[$$*/$$ $$\\r$$])* $$*/$$\n\n InnerLineDoc ::=\n $$//!$$ ~[$$\\n$$ $$\\r$$]*\n\n OuterBlockDoc ::=\n $$/**$$ (~[$$*$$] | BlockCommentOrDoc) (BlockCommentOrDoc | ~[$$*/$$ $$\\r$$])* $$*/$$\n\n OuterLineDoc ::=\n $$///$$ (~[$$/$$] ~[$$\\n$$ $$\\r$$]*)?\n\nA comment is a lexical element that acts as an annotation or an\nexplanation in program text.\n\nA block comment is a comment that spans one or more [line]s.\n\nA line comment is a comment that spans exactly one line.\n\nAn inner block doc is a block comment that applies to an enclosing\nnon-[comment] construct.\n\nAn inner line doc is a line comment that applies to an enclosing\nnon-[comment] construct.\n\nAn inner doc comment is either an inner block doc or an\ninner line doc.\n\nAn outer block doc is a block comment that applies to a subsequent\nnon-[comment] construct.\n\nAn outer line doc is a line comment that applies to a subsequent\nnon-[comment] construct.\n\nAn outer doc comment is either an outer block doc or an\nouter line doc.\n\nA doc comment is a comment class that includes [inner block\ndoc]s, [inner line doc]s, [outer block doc]s, and [outer line\ndoc]s.\n\nCharacter 0x0D (carriage return) shall not appear in a comment.\n\n[Block comment]s, [inner block doc]s, and [outer block doc]s\nshall extend one or more [line]s.\n\n[Line comment]s, [inner line doc]s, and [outer line doc]s shall\nextend exactly one line.\n\n[Outer block doc]s and [outer line doc]s shall apply to a subsequent\nnon-[comment] construct.\n\n[Inner block doc]s and [inner line doc]s shall apply to an enclosing\nnon-[comment] construct.\n\n[Inner block doc]s and [inner line doc]s are equivalent to\nattribute doc of the form #![doc = content], where content\nis a string literal form of the comment without the leading //!,\n/*! amd trailing */ characters.\n\n[Outer block doc]s and [outer line doc]s are equivalent to\nattribute doc of the form #[doc = content], where content\nis a string literal form of the comment without the leading ///,\n/** and trailing */ characters.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_8obn3dtzpe5f": "A comment is a lexical element that acts as an annotation or an explanation in program text.",
+            "fls_qsbnl11be35s": "A block comment is a comment that spans one or more [line]s.",
+            "fls_nayisy85kyq2": "A line comment is a comment that spans exactly one line.",
+            "fls_k3hj30hjkdhw": "An inner block doc is a block comment that applies to an enclosing non-[comment] construct.",
+            "fls_tspijl68lduc": "An inner line doc is a line comment that applies to an enclosing non-[comment] construct.",
+            "fls_KZp0yiFLTqxb": "An inner doc comment is either an inner block doc or an inner line doc.",
+            "fls_63gzofa9ktic": "An outer block doc is a block comment that applies to a subsequent non-[comment] construct.",
+            "fls_scko7crha0um": "An outer line doc is a line comment that applies to a subsequent non-[comment] construct.",
+            "fls_RYVL9KgaxKvl": "An outer doc comment is either an outer block doc or an outer line doc.",
+            "fls_7n6d3jx61ose": "A doc comment is a comment class that includes [inner block doc]s, [inner line doc]s, [outer block doc]s, and [outer line doc]s.",
+            "fls_6fxcs17n4kw": "Character 0x0D (carriage return) shall not appear in a comment.",
+            "fls_uze7l7cxonk1": "[Block comment]s, [inner block doc]s, and [outer block doc]s shall extend one or more [line]s.",
+            "fls_gy23lwlqw2mc": "[Line comment]s, [inner line doc]s, and [outer line doc]s shall extend exactly one line.",
+            "fls_w7d0skpov1is": "[Outer block doc]s and [outer line doc]s shall apply to a subsequent non-[comment] construct.",
+            "fls_32ncjvj2kn7z": "[Inner block doc]s and [inner line doc]s shall apply to an enclosing non-[comment] construct.",
+            "fls_ok0zvo9vcmzo": "[Inner block doc]s and [inner line doc]s are equivalent to attribute doc of the form #![doc = content], where content is a string literal form of the comment without the leading //!, /*! amd trailing */ characters.",
+            "fls_nWtKuPi8Fw6v": "[Outer block doc]s and [outer line doc]s are equivalent to attribute doc of the form #[doc = content], where content is a string literal form of the comment without the leading ///, /** and trailing */ characters."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "Comment ::=\n       BlockCommentOrDoc\n     | LineCommentOrDoc\n\n   BlockCommentOrDoc ::=\n       BlockComment\n     | InnerBlockDoc\n     | OuterBlockDoc\n\n   LineCommentOrDoc ::=\n       LineComment\n     | InnerLineDoc\n     | OuterLineDoc\n\n   LineComment ::=\n       $$//$$\n     | $$//$$ (~[$$!$$ $$/$$] | $$//$$) ~[$$\\n$$]*\n\n   BlockComment ::=\n       $$/*$$ (~[$$!$$ $$*$$] | $$**$$ | BlockCommentOrDoc) (BlockCommentOrDoc | ~[$$*/$$])* $$*/$$\n     | $$/**/$$\n     | $$/***/$$\n\n   InnerBlockDoc ::=\n      ..."
+          }
+        }
+      },
+      "parent_fls_id": "fls_411up5z0b6n6",
+      "sibling_fls_ids": [
+        "fls_2i089jvv8j5g",
+        "fls_fgnllgz5k3e6",
+        "fls_21vnag69kbwe",
+        "fls_nrkd5wpi64oo",
+        "fls_lish33a1naw5"
+      ]
+    },
+    {
+      "fls_id": "fls_lish33a1naw5",
+      "title": "Keywords",
+      "category": 0,
+      "level": 2,
+      "file": "lexical-elements",
+      "content": "Keywords\n\nA keyword is a word in program text that has special meaning.\n\n[Keyword]s are case sensitive.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_dti0uu7rz81w": "A keyword is a word in program text that has special meaning.",
+            "fls_sxg1o4oxql51": "[Keyword]s are case sensitive."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "Keyword ::=\n       ReservedKeyword\n     | StrictKeyword\n     | WeakKeyword"
+          }
+        }
+      },
+      "parent_fls_id": "fls_411up5z0b6n6",
+      "sibling_fls_ids": [
+        "fls_2i089jvv8j5g",
+        "fls_fgnllgz5k3e6",
+        "fls_21vnag69kbwe",
+        "fls_nrkd5wpi64oo",
+        "fls_q8l2jza7d9xa"
+      ]
+    },
+    {
+      "fls_id": "fls_mec5cg5aptf8",
+      "title": "Strict Keywords",
+      "category": 0,
+      "level": 3,
+      "file": "lexical-elements",
+      "content": "Strict Keywords\n\nA strict keyword is a keyword that always holds its special meaning.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_bsh7qsyvox21": "A strict keyword is a keyword that always holds its special meaning."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "StrictKeyword ::=\n       $$as$$\n     | $$async$$\n     | $$await$$\n     | $$break$$\n     | $$const$$\n     | $$continue$$\n     | $$crate$$\n     | $$dyn$$\n     | $$else$$\n     | $$enum$$\n     | $$extern$$\n     | $$false$$\n     | $$fn$$\n     | $$for$$\n     | $$if$$\n     | $$impl$$\n     | $$in$$\n     | $$let$$\n     | $$loop$$\n     | $$match$$\n     | $$mod$$\n     | $$move$$\n     | $$mut$$\n     | $$pub$$\n     | $$ref$$\n     | $$return$$\n     | $$self$$\n     | $$Self$$\n     | $$static$$\n     | $$struct$..."
+          }
+        }
+      },
+      "parent_fls_id": "fls_lish33a1naw5",
+      "sibling_fls_ids": [
+        "fls_cbsgp6k0qa82",
+        "fls_9kjpxri0axvg"
+      ]
+    },
+    {
+      "fls_id": "fls_cbsgp6k0qa82",
+      "title": "Reserved Keywords",
+      "category": 0,
+      "level": 3,
+      "file": "lexical-elements",
+      "content": "Reserved Keywords\n\nA reserved keyword is a keyword that is not yet in use.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_w4b97ewwnql": "A reserved keyword is a keyword that is not yet in use."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "ReservedKeyword ::=\n       $$abstract$$\n     | $$become$$\n     | $$box$$\n     | $$do$$\n     | $$final$$\n     | $$macro$$\n     | $$override$$\n     | $$priv$$\n     | $$try$$\n     | $$typeof$$\n     | $$unsized$$\n     | $$virtual$$\n     | $$yield$$"
+          }
+        }
+      },
+      "parent_fls_id": "fls_lish33a1naw5",
+      "sibling_fls_ids": [
+        "fls_mec5cg5aptf8",
+        "fls_9kjpxri0axvg"
+      ]
+    },
+    {
+      "fls_id": "fls_9kjpxri0axvg",
+      "title": "Weak Keywords",
+      "category": 0,
+      "level": 3,
+      "file": "lexical-elements",
+      "content": "Weak Keywords\n\nA weak keyword is a keyword whose special meaning depends on the\ncontext.\n\nWord macro_rules acts as a keyword only when used in the context of a\nMacroRulesDefinition.\n\nWord 'static acts as a keyword only when used in the context of a\nLifetimeIndication.\n\nWord union acts as a keyword only when used in the context of a\nUnionDeclaration.\n\nWord safe acts as a keyword only when used as a qualifier of FunctionDeclaration or StaticDeclaration in the context of a ExternalBlock.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_bv87t1gvj7bz": "A weak keyword is a keyword whose special meaning depends on the context.",
+            "fls_bl55g03jmayf": "Word macro_rules acts as a keyword only when used in the context of a MacroRulesDefinition.",
+            "fls_c354oryv513p": "Word 'static acts as a keyword only when used in the context of a LifetimeIndication.",
+            "fls_r9fhuiq1ys1p": "Word union acts as a keyword only when used in the context of a UnionDeclaration.",
+            "fls_g0JEluWqBpNc": "Word safe acts as a keyword only when used as a qualifier of FunctionDeclaration or StaticDeclaration in the context of a ExternalBlock."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "WeakKeyword ::=\n       $$macro_rules$$\n     | $$'static$$\n     | $$union$$\n     | $$safe$$"
+          }
+        }
+      },
+      "parent_fls_id": "fls_lish33a1naw5",
+      "sibling_fls_ids": [
+        "fls_mec5cg5aptf8",
+        "fls_cbsgp6k0qa82"
+      ]
+    }
+  ]
+}

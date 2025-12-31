@@ -44,28 +44,48 @@
       ],
       "description": "Generic Parameters",
       "status": "demonstrated",
-      "findings": {},
+      "findings": {
+        "count": 7012
+      },
       "samples": [
         {
           "file": "iceoryx2/src/sample_mut_uninit.rs",
-          "line": [119, 120, 121, 122, 123, 124],
+          "line": [
+            119,
+            120,
+            121,
+            122,
+            123,
+            124
+          ],
           "code": "unsafe impl<\n        Service: crate::service::Service,\n        Payload: Debug + ZeroCopySend + ?Sized,\n        UserHeader: ZeroCopySend,\n    > Send for SampleMutUninit<Service, Payload, UserHeader>",
           "purpose": "Generic type parameters with trait bounds enabling thread-safe sample handling"
         },
         {
           "file": "iceoryx2/src/port/server.rs",
-          "line": [235, 236, 237, 238, 239, 240, 241],
+          "line": [
+            235,
+            236,
+            237,
+            238,
+            239,
+            240,
+            241
+          ],
           "code": "unsafe impl<\n        Service: service::Service,\n        RequestPayload: Debug + ZeroCopySend + ?Sized,\n        RequestHeader: Debug + ZeroCopySend,\n        ResponsePayload: Debug + ZeroCopySend + ?Sized,\n        ResponseHeader: Debug + ZeroCopySend,\n    > Send for Server<Service, ...",
           "purpose": "Multiple generic type parameters with trait bounds for request-response server"
         },
         {
           "file": "iceoryx2/src/service/static_config/mod.rs",
-          "line": [66, 67, 68],
+          "line": [
+            66,
+            67,
+            68
+          ],
           "code": "service_id: ServiceId::new::<Hasher>(\n    service_name,\n    crate::service::messaging_pattern::MessagingPattern::RequestResponse,\n),",
           "purpose": "Turbofish syntax providing concrete type argument for hash function"
         }
-      ],
-      "count": 7012
+      ]
     },
     "where_clauses": {
       "fls_section": "12.2",
@@ -74,28 +94,44 @@
       ],
       "description": "Where Clauses",
       "status": "demonstrated",
-      "findings": {},
+      "findings": {
+        "count": 67
+      },
       "samples": [
         {
           "file": "iceoryx2/src/sample_mut_uninit.rs",
-          "line": [124, 125, 126, 127],
+          "line": [
+            124,
+            125,
+            126,
+            127
+          ],
           "code": "    > Send for SampleMutUninit<Service, Payload, UserHeader>\nwhere\n    Service::ArcThreadSafetyPolicy<PublisherSharedState<Service>>: Send + Sync,\n{",
           "purpose": "Where clause constraining associated type to Send + Sync for thread safety"
         },
         {
           "file": "iceoryx2/src/active_request.rs",
-          "line": [111, 112, 113, 114],
+          "line": [
+            111,
+            112,
+            113,
+            114
+          ],
           "code": "for ActiveRequest<Service, RequestPayload, RequestHeader, ResponsePayload, ResponseHeader>\nwhere\n    Service::ArcThreadSafetyPolicy<SharedServerState<Service>>: Send + Sync,\n{",
           "purpose": "Where clause on ActiveRequest ensuring thread-safe service state handling"
         },
         {
           "file": "iceoryx2/src/port/server.rs",
-          "line": [253, 254, 255, 256],
+          "line": [
+            253,
+            254,
+            255,
+            256
+          ],
           "code": "> Sync for Server<Service, RequestPayload, RequestHeader, ResponsePayload, ResponseHeader>\nwhere\n    Service::ArcThreadSafetyPolicy<SharedServerState<Service>>: Send + Sync,\n{",
           "purpose": "Where clause enabling Sync trait impl only when service policy supports it"
         }
-      ],
-      "count": 67
+      ]
     },
     "generic_arguments": {
       "fls_section": "12.3",
@@ -104,28 +140,35 @@
       ],
       "description": "Generic Arguments",
       "status": "demonstrated",
-      "findings": {},
+      "findings": {
+        "count": 2617
+      },
       "samples": [
         {
           "file": "iceoryx2/src/service/static_config/mod.rs",
-          "line": [66],
+          "line": [
+            66
+          ],
           "code": "service_id: ServiceId::new::<Hasher>(",
           "purpose": "Turbofish generic argument specifying hash algorithm type"
         },
         {
           "file": "iceoryx2-cli/lib/src/filter.rs",
-          "line": [45],
+          "line": [
+            45
+          ],
           "code": "if let Ok(pid) = s.parse::<pid_t>() {",
           "purpose": "Turbofish specifying target type for string parsing"
         },
         {
           "file": "iceoryx2-cli/iox2/src/command/paths.rs",
-          "line": [22],
+          "line": [
+            22
+          ],
           "code": "let paths = IceoryxCommandFinder::<E>::paths().context(\"Failed to list search paths\")?;",
           "purpose": "Generic environment type parameter for command path lookup"
         }
-      ],
-      "count": 2617
+      ]
     },
     "generic_conformance": {
       "fls_section": "12.4",
@@ -134,16 +177,17 @@
       ],
       "description": "Generic Conformance",
       "status": "demonstrated",
-      "findings": {},
-      "samples": [],
-      "count": null,
-      "count_methodology": "Conceptual - conformance is compiler behavior",
-      "samples_waiver": {
-        "reason": "conceptual_section",
-        "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
-        "approved_by": "automated",
-        "date": "2025-12-30"
-      }
+      "findings": {
+        "count": null,
+        "count_methodology": "Conceptual - conformance is compiler behavior",
+        "samples_waiver": {
+          "reason": "conceptual_section",
+          "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+          "approved_by": "automated",
+          "date": "2025-12-30"
+        }
+      },
+      "samples": []
     }
   },
   "design_patterns": {

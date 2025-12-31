@@ -1,0 +1,138 @@
+{
+  "chapter": 11,
+  "title": "Implementations",
+  "fls_id": "fls_fk2m2irwpeof",
+  "file": "implementations",
+  "extraction_date": "2025-12-31",
+  "category_codes": {
+    "0": "section",
+    "-1": "general",
+    "-2": "legality_rules",
+    "-3": "dynamic_semantics",
+    "-4": "undefined_behavior",
+    "-5": "implementation_requirements",
+    "-6": "implementation_permissions",
+    "-7": "examples",
+    "-8": "syntax"
+  },
+  "statistics": {
+    "total_sections": 3,
+    "total_paragraphs": 49,
+    "paragraphs_by_category": {
+      "-8": 1,
+      "-7": 3,
+      "-2": 45
+    }
+  },
+  "sections": [
+    {
+      "fls_id": "fls_fk2m2irwpeof",
+      "title": "Implementations",
+      "category": 0,
+      "level": 1,
+      "file": "implementations",
+      "content": "Implementations\n\n InherentImplementation ::=\n $$impl$$ GenericParameterList? ImplementingType WhereClause? ImplementationBody\n\n TraitImplementation ::=\n $$unsafe$$? $$impl$$ GenericParameterList? $$!$$? ImplementedTrait $$for$$ ImplementingType WhereClause? ImplementationBody\n\n ImplementingType ::=\n TypeSpecification\n\n ImplementedTrait ::=\n TypePath\n\n ImplementationBody ::=\n $${$$\n InnerAttributeOrDoc*\n AssociatedItem*\n $$}$$\n\nAn implementation is an item that supplements an\nimplementing type by extending its functionality.\n\nAn implementing type is the type that the [associated item]s of\nan implementation are associated with.\n\nWithin an implementation, the type Self acts as a type alias\nfor the implementing type.\n\nAn implementation body is a construct that encapsulates the\n[associated item]s, [inner attribute]s, and\n[inner doc comment]s of an implementation.\n\nAn inherent implementation is an implementation that adds direct\nfunctionality.\n\n[Inherent implementation]s of the same implementing type shall be\ndefined within the same crate.\n\nA trait implementation is an implementation that adds functionality\nspecified by a trait.\n\nAn unsafe trait implementation is a trait implementation subject to\nkeyword unsafe.\n\nAn implemented trait is a trait whose functionality has been\nimplemented by an implementing type.\n\nThe type path of a trait implementation shall resolve to a trait.\n\nA trait implementation shall be an unsafe trait implementation if and\nonly if it implements an unsafe trait.\n\n[Trait implementation]s are subject to implementation coherence and\nimplementation conformance.\n\n[Inherent implementation]s of the same implementing type shall not\ndefine more than one associated item with the same name in the same\nnamespace.\n\nCircle is an implementing type.\n\nThe following is an inherent implementation:\n\nThe following is a trait implementation:",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_ivxpoxggy7s6": "An implementation is an item that supplements an implementing type by extending its functionality.",
+            "fls_yopmjbnw8tbl": "An implementing type is the type that the [associated item]s of an implementation are associated with.",
+            "fls_eIHc8Y9fBtr0": "Within an implementation, the type Self acts as a type alias for the implementing type.",
+            "fls_Mcpdzzcw43M7": "An implementation body is a construct that encapsulates the [associated item]s, [inner attribute]s, and [inner doc comment]s of an implementation.",
+            "fls_v0n0bna40dqr": "An inherent implementation is an implementation that adds direct functionality.",
+            "fls_797etpdk5dyb": "[Inherent implementation]s of the same implementing type shall be defined within the same crate.",
+            "fls_ry3an0mwb63g": "A trait implementation is an implementation that adds functionality specified by a trait.",
+            "fls_8pwr7ibvhmhu": "An unsafe trait implementation is a trait implementation subject to keyword unsafe.",
+            "fls_47x0ep8of8wr": "An implemented trait is a trait whose functionality has been implemented by an implementing type.",
+            "fls_agitlryvyc16": "The type path of a trait implementation shall resolve to a trait.",
+            "fls_mx5xjcejwa6u": "A trait implementation shall be an unsafe trait implementation if and only if it implements an unsafe trait.",
+            "fls_z78dg261oob6": "[Trait implementation]s are subject to implementation coherence and implementation conformance.",
+            "fls_89yNjGNB7KI3": "[Inherent implementation]s of the same implementing type shall not define more than one associated item with the same name in the same namespace."
+          }
+        },
+        "-7": {
+          "paragraphs": {
+            "fls_yuyesijndu9n": "Circle is an implementing type. .. code-block:: rust struct Circle { radius: f64 }",
+            "fls_o62i75sjzp9y": "The following is an inherent implementation: .. code-block:: rust impl Circle { fn set_radius(mut self, new_radius: f64) { self.radius = new_radius; } }",
+            "fls_a2utf0tmuhy4": "The following is a trait implementation: .. code-block:: rust impl Shape for Circle { fn area(self) -> f64 { self.radius.powi(2) * std::f64::consts::PI } }"
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "Implementation ::=\n       InherentImplementation\n     | TraitImplementation\n\n   InherentImplementation ::=\n       $$impl$$ GenericParameterList? ImplementingType WhereClause? ImplementationBody\n\n   TraitImplementation ::=\n       $$unsafe$$? $$impl$$ GenericParameterList? $$!$$? ImplementedTrait $$for$$ ImplementingType WhereClause? ImplementationBody\n\n   ImplementingType ::=\n       TypeSpecification\n\n   ImplementedTrait ::=\n       TypePath\n\n   ImplementationBody ::=\n       $${$$\n         InnerAt..."
+          }
+        }
+      },
+      "parent_fls_id": null,
+      "sibling_fls_ids": []
+    },
+    {
+      "fls_id": "fls_46ork6fz5o2e",
+      "title": "Implementation Coherence",
+      "category": 0,
+      "level": 2,
+      "file": "implementations",
+      "content": "Implementation Coherence\n\nA trait implementation exhibits implementation coherence when it is\nvalid and does not overlap with another trait implementation.\n\nTwo [trait implementation]s of the same implemented trait overlap when\nthe intersection of the [implementing type]s is non-empty.\n\nGiven trait implementation\nimpl<P1, P2, .., PN> Trait<T1, T2, .., TN> for T0, the\ntrait implementation is considered valid when\n\n* Trait is fundamental or a local trait, or\n\n* All of\n\n * At least one of [type]s T0, T1, .., TN is :T:`fundamental` or a\n local type, and\n\n * No type parameter of P1, P2, .., PN that is not used in another\n type may appear in the non-[local type]s and\n non-[fundamental] [type]s of T0, T1, .., TN.\n\nA trait or type is fundamental when its\nimplementation coherence rules are relaxed and the trait or type\nis always treated as if it was a local trait or a local type.\n\nThe following [type]s are fundamental:\n\n* [reference type]s\n\n* core::pin::Pin\n\n..\n also `alloc::boxed::Box`\n\nThe following [trait]s are fundamental:\n\n* core::ops::Fn\n\n* core::ops::FnMut\n\n* core::ops::FnOnce\n\n* core::marker::Sized\n\nA trait implementation shall be coherent.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_fv1l4yjuut7p": "A trait implementation exhibits implementation coherence when it is valid and does not overlap with another trait implementation.",
+            "fls_swdusjwzgksx": "Two [trait implementation]s of the same implemented trait overlap when the intersection of the [implementing type]s is non-empty.",
+            "fls_ir7hp941ky8t": "Given trait implementation impl<P1, P2, .., PN> Trait<T1, T2, .., TN> for T0, the trait implementation is considered valid when",
+            "fls_3tbm20k2ixol": "Trait is fundamental or a local trait, or",
+            "fls_lscc9ileg3gm": "All of",
+            "fls_9klwbsh3vlxu": "At least one of [type]s T0, T1, .., TN is :T:fundamental or a local type, and",
+            "fls_9gmc1tcscq9v": "No type parameter of P1, P2, .., PN that is not used in another type may appear in the non-[local type]s and non-[fundamental] [type]s of T0, T1, .., TN.",
+            "fls_UkQhjEWSJpDq": "A trait or type is fundamental when its implementation coherence rules are relaxed and the trait or type is always treated as if it was a local trait or a local type.",
+            "fls_fSybUG40hA5r": "The following [type]s are fundamental:",
+            "fls_z8APl0CEF7a0": "[reference type]s",
+            "fls_RJJafhpVsi6M": "core::pin::Pin .. also alloc::boxed::Box",
+            "fls_dtUJxhNkl8Ty": "The following [trait]s are fundamental:",
+            "fls_zJKovQrXQWdU": "core::ops::Fn",
+            "fls_V6R8yQtsqNyv": "core::ops::FnMut",
+            "fls_CpC6XQN1iWqU": "core::ops::FnOnce",
+            "fls_dj7YGw4e4i4H": "core::marker::Sized",
+            "fls_koy70k770ayu": "A trait implementation shall be coherent."
+          }
+        }
+      },
+      "parent_fls_id": "fls_fk2m2irwpeof",
+      "sibling_fls_ids": [
+        "fls_e1pgdlv81vul"
+      ]
+    },
+    {
+      "fls_id": "fls_e1pgdlv81vul",
+      "title": "Implementation Conformance",
+      "category": 0,
+      "level": 2,
+      "file": "implementations",
+      "content": "Implementation Conformance\n\nA trait implementation exhibits implementation conformance when it\nsatisfies the constraints of its implemented trait.\n\nAn associated trait constant is conformant with an associated constant\nof an implemented trait when\n\n* The [name]s of both [associated constant]s are the same, and\n\n* The type of the associated constant in the implementation is a\n subtype of the type of the associated trait constant.\n\nAn associated trait function is conformant with an associated function\nof an implemented trait when\n\n* The function signature of the associated function of the\n implemented trait is a subtype of the function signature of\n the associated trait function, and\n\n* The [bound]s of the associated function of the\n implemented trait are more general that the [bound]s of the\n associated trait function.\n\nAn associated type of a trait implementation is conformant with an\nassociated type of an implemented trait when\n\n* The [name]s of both [type]s are the same, and\n\n* The type specification of the associated type of the\n implemented trait conforms to the [bound]s of the\n associated type of the trait implementation.\n\nA trait implementation is conformant with an implemented trait when:\n\n* The trait implementation has a conformant associated constant\n for each associated constant of the implemented trait, unless the\n associated constant of the implemented trait has a default value,\n and\n\n* The trait implementation has a conformant associated function\n for each associated function of the implemented trait, unless\n the associated function of the implemented trait has a default\n implementation in the implemented trait, and\n\n* The trait implementation has a conformant associated type for each\n associated type of the implemented trait.\n\nA trait implementation shall be conformant.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_YyUSuAYG4lX6": "A trait implementation exhibits implementation conformance when it satisfies the constraints of its implemented trait.",
+            "fls_v31idwjau90d": "An associated trait constant is conformant with an associated constant of an implemented trait when",
+            "fls_k3wfh5japmyw": "The [name]s of both [associated constant]s are the same, and",
+            "fls_11qrqfuc3rmh": "The type of the associated constant in the implementation is a subtype of the type of the associated trait constant.",
+            "fls_qmhduwunxww0": "An associated trait function is conformant with an associated function of an implemented trait when",
+            "fls_2500ivh0cc3y": "The function signature of the associated function of the implemented trait is a subtype of the function signature of the associated trait function, and",
+            "fls_18gimgfy0kw9": "The [bound]s of the associated function of the implemented trait are more general that the [bound]s of the associated trait function.",
+            "fls_fi4qmauirlsm": "An associated type of a trait implementation is conformant with an associated type of an implemented trait when",
+            "fls_2s8lh3k4rw6u": "The [name]s of both [type]s are the same, and",
+            "fls_bb874uu2alt3": "The type specification of the associated type of the implemented trait conforms to the [bound]s of the associated type of the trait implementation.",
+            "fls_so8em6rphkhv": "A trait implementation is conformant with an implemented trait when:",
+            "fls_ldu9bmb9cy10": "The trait implementation has a conformant associated constant for each associated constant of the implemented trait, unless the associated constant of the implemented trait has a default value, and",
+            "fls_5cr6un2gzdft": "The trait implementation has a conformant associated function for each associated function of the implemented trait, unless the associated function of the implemented trait has a default implementation in the implemented trait, and",
+            "fls_pshfe3ioh0mg": "The trait implementation has a conformant associated type for each associated type of the implemented trait.",
+            "fls_8yq1g7nzv9px": "A trait implementation shall be conformant."
+          }
+        }
+      },
+      "parent_fls_id": "fls_fk2m2irwpeof",
+      "sibling_fls_ids": [
+        "fls_46ork6fz5o2e"
+      ]
+    }
+  ]
+}

@@ -37,6 +37,7 @@
       "description": "Implementation Coherence",
       "status": "demonstrated",
       "findings": {
+        "count": 948,
         "patterns": [
           "Orphan rule compliance",
           "Platform-specific implementations via cfg",
@@ -66,12 +67,18 @@
         },
         {
           "file": "iceoryx2/src/service/attribute.rs",
-          "line": [398, 399, 400, 401, 402, 403],
+          "line": [
+            398,
+            399,
+            400,
+            401,
+            402,
+            403
+          ],
           "code": "impl Deref for AttributeSet {\n    type Target = [Attribute];\n\n    fn deref(&self) -> &Self::Target {\n        self.0.as_slice()\n    }\n}",
           "purpose": "Foreign trait (Deref) for local type enabling slice access to attributes"
         }
-      ],
-      "count": 948
+      ]
     },
     "implementation_conformance": {
       "fls_section": "11.2",
@@ -81,6 +88,7 @@
       "description": "Implementation Conformance",
       "status": "demonstrated",
       "findings": {
+        "count": 2050,
         "patterns": [
           "All required trait methods implemented",
           "All associated types bound",
@@ -115,12 +123,16 @@
         },
         {
           "file": "iceoryx2-bb/elementary-traits/src/zero_copy_send.rs",
-          "line": [50, 51, 52, 53],
+          "line": [
+            50,
+            51,
+            52,
+            53
+          ],
           "code": "unsafe impl ZeroCopySend for usize {}\nunsafe impl ZeroCopySend for u8 {}\nunsafe impl ZeroCopySend for u16 {}\nunsafe impl ZeroCopySend for u32 {}",
           "purpose": "Unsafe marker trait implementations for primitive types enabling zero-copy IPC"
         }
-      ],
-      "count": 2050
+      ]
     }
   },
   "cross_chapter_references": {

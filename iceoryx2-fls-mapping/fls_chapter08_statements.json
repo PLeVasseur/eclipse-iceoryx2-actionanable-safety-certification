@@ -45,33 +45,38 @@
       "description": "Item Statement",
       "status": "demonstrated",
       "findings": {
+        "count": "~3232 inner function declarations",
         "fls_reference": "8:2",
         "description": "An item statement is a statement expressed as an item, allowing items to be declared within block expressions (local scope). Common in iceoryx2 for test-local constants and helper functions.",
         "inner_const": "Used extensively in test functions for test-local constants",
-        "inner_fn": "Less common, mostly in macro-generated code",
-        "count": "~3232 inner function declarations"
+        "inner_fn": "Less common, mostly in macro-generated code"
       },
       "samples": [
         {
           "file": "iceoryx2/src/service/builder/request_response.rs",
-          "line": [792],
+          "line": [
+            792
+          ],
           "code": "const OPEN_RETRY_LIMIT: usize = 5;",
           "purpose": "Local constant inside function defining retry limit for service opening"
         },
         {
           "file": "iceoryx2-bb/posix/src/unix_datagram_socket.rs",
-          "line": [615],
+          "line": [
+            615
+          ],
           "code": "const FLAGS: i32 = 0;",
           "purpose": "Inner constant for sendmsg flags inside send_msg method"
         },
         {
           "file": "iceoryx2-bb/posix/src/directory.rs",
-          "line": [458],
+          "line": [
+            458
+          ],
           "code": "const DOT: posix::c_char = b'.' as _;",
           "purpose": "Local constant for dot character comparison in directory iteration"
         }
-      ],
-      "count": 22288
+      ]
     },
     "empty_statement": {
       "fls_section": "8.-2.2",
@@ -81,13 +86,13 @@
       "description": "Empty Statement",
       "status": "not_used",
       "findings": {
+        "count": 0,
         "fls_reference": "8:3",
         "description": "An empty statement is a statement expressed as character 0x3B (semicolon) that has no effect when executed.",
         "dynamic_semantics": "The execution of an empty statement has no effect.",
         "status": "Not intentionally used in iceoryx2 - empty statements are rare in production Rust code"
       },
-      "samples": [],
-      "count": 0
+      "samples": []
     },
     "macro_statement": {
       "fls_section": "8.-2.3",
@@ -97,6 +102,7 @@
       "description": "Macro Statement",
       "status": "demonstrated",
       "findings": {
+        "count": 10953,
         "fls_reference": "8:4",
         "description": "A macro statement is a statement expressed as a terminated macro invocation. Macro statements are heavily used in iceoryx2 for assertions, logging, and test infrastructure.",
         "assertion_macros": {
@@ -123,24 +129,31 @@
       "samples": [
         {
           "file": "iceoryx2-bb/memory/src/pool_allocator.rs",
-          "line": [78, 79, 80],
+          "line": [
+            78,
+            79,
+            80
+          ],
           "code": "debug_assert!(\n    self.is_memory_initialized.load(Ordering::Relaxed),\n    \"From: {self:?}, Undefined behavior when calling \\\"{source}\\\" and the object is not initialized.\"\n);",
           "purpose": "Debug assertion verifying memory initialization before operations"
         },
         {
           "file": "iceoryx2-cal/src/zero_copy_connection/common.rs",
-          "line": [657],
+          "line": [
+            657
+          ],
           "code": "debug_assert!(channel_id.value() < self.storage.get().channels.capacity());",
           "purpose": "Debug-only invariant check for channel ID bounds"
         },
         {
           "file": "iceoryx2-cal/src/zero_copy_connection/common.rs",
-          "line": [688],
+          "line": [
+            688
+          ],
           "code": "debug_assert!(ptr.offset() % sample_size == 0);",
           "purpose": "Debug-only alignment validation for sample offsets"
         }
-      ],
-      "count": 10953
+      ]
     },
     "empty_statement_execution": {
       "fls_section": "8.-3.1",
@@ -150,11 +163,11 @@
       "description": "Empty Statement Execution",
       "status": "not_applicable",
       "findings": {
+        "count": null,
+        "count_methodology": "Pattern not defined for this section",
         "description": "Dynamic semantics for empty statement execution - has no effect. Not applicable as empty statements are not used in iceoryx2."
       },
-      "samples": [],
-      "count": null,
-      "count_methodology": "Pattern not defined for this section"
+      "samples": []
     },
     "let_statements": {
       "fls_section": "8.1",
@@ -164,6 +177,7 @@
       "description": "Let Statements",
       "status": "demonstrated",
       "findings": {
+        "count": 13605,
         "description": "A let statement introduces new bindings by matching a pattern against a value. The primary mechanism for creating local variables in Rust.",
         "statistics": {
           "let_statements_total": 13605,
@@ -189,24 +203,32 @@
       "samples": [
         {
           "file": "iceoryx2/src/config.rs",
-          "line": [237, 238],
+          "line": [
+            237,
+            238
+          ],
           "code": "let mut path = *self.root_path();\npath.add_path_entry(&self.service.directory).unwrap();",
           "purpose": "Mutable let binding for path construction with method chaining"
         },
         {
           "file": "iceoryx2/src/node/mod.rs",
-          "line": [552],
+          "line": [
+            552
+          ],
           "code": "let mut cleanup_failure = Ok(());",
           "purpose": "Mutable let binding initialized to Ok for accumulating errors"
         },
         {
           "file": "iceoryx2-bb/posix/src/shared_memory.rs",
-          "line": [288, 289, 290],
+          "line": [
+            288,
+            289,
+            290
+          ],
           "code": "let shm_created;\nlet mut fd = match self\n    .config",
           "purpose": "Uninitialized binding pattern - shm_created must be assigned in all match arms before use"
         }
-      ],
-      "count": 13605
+      ]
     },
     "expression_statements": {
       "fls_section": "8.2",
@@ -216,6 +238,7 @@
       "description": "Expression Statements",
       "status": "demonstrated",
       "findings": {
+        "count": 45398,
         "description": "An expression statement is an expression whose result is ignored. Used for side effects like function calls, method invocations, and assignments.",
         "dynamic_semantics": "8:5 - The value of the operand is dropped after evaluation",
         "common_patterns": [
@@ -228,24 +251,30 @@
       "samples": [
         {
           "file": "iceoryx2/src/waitset.rs",
-          "line": [558],
+          "line": [
+            558
+          ],
           "code": "self.attachment_counter.fetch_add(1, Ordering::Relaxed);",
           "purpose": "Expression statement for atomic counter increment (side effect only)"
         },
         {
           "file": "iceoryx2-bb/lock-free/src/spsc/safely_overflowing_index_queue.rs",
-          "line": [318, 319],
+          "line": [
+            318,
+            319
+          ],
           "code": "self.write_position\n    .store(write_position + 1, Ordering::Release);",
           "purpose": "Expression statement for atomic store with release ordering"
         },
         {
           "file": "iceoryx2-bb/lock-free/src/spsc/queue.rs",
-          "line": [67],
+          "line": [
+            67
+          ],
           "code": "self.queue.has_producer.store(true, Ordering::Relaxed);",
           "purpose": "Expression statement for atomic flag update in producer registration"
         }
-      ],
-      "count": 45398
+      ]
     }
   },
   "safety_critical_summary": {
@@ -257,12 +286,16 @@
           "samples": [
             {
               "file": "iceoryx2-bb/posix/src/shared_memory.rs",
-              "line": [288],
+              "line": [
+                288
+              ],
               "code": "let shm_created; // Must be assigned in all match arms before use"
             },
             {
               "file": "iceoryx2-bb/posix/src/semaphore.rs",
-              "line": [490],
+              "line": [
+                490
+              ],
               "code": "let msg; // Assigned conditionally before use"
             }
           ]

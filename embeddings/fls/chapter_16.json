@@ -1,0 +1,102 @@
+{
+  "chapter": 16,
+  "title": "Exceptions and Errors",
+  "fls_id": "fls_dzq9cdz4ibsz",
+  "file": "exceptions-and-errors",
+  "extraction_date": "2025-12-31",
+  "category_codes": {
+    "0": "section",
+    "-1": "general",
+    "-2": "legality_rules",
+    "-3": "dynamic_semantics",
+    "-4": "undefined_behavior",
+    "-5": "implementation_requirements",
+    "-6": "implementation_permissions",
+    "-7": "examples",
+    "-8": "syntax"
+  },
+  "statistics": {
+    "total_sections": 3,
+    "total_paragraphs": 14,
+    "paragraphs_by_category": {
+      "-3": 6,
+      "-2": 8
+    }
+  },
+  "sections": [
+    {
+      "fls_id": "fls_dzq9cdz4ibsz",
+      "title": "Exceptions and Errors",
+      "category": 0,
+      "level": 1,
+      "file": "exceptions-and-errors",
+      "content": "Exceptions and Errors\n\nThe Rust programming language lacks exceptions and exception handlers. Instead,\nthe language uses the following tiered error handling scheme:\n\n* A possibly absent value is usually represented using enum\n core::option::Option.\n\n* The result of a possibly erroneous computation is usually represented using\n enum core::result::Result.\n\n* Erroneous behavior is signaled using macro core::panic.\n\nEnum core::option::Option indicates whether a value is\neither present using core::option::Option::Some or absent using\ncore::option::Option::None.\n\nEnum core::result::Result indicates whether a computation completed\nsuccessfully and produced a value using core::result::Result::Ok or\nthe computation failed with an error using core::result::Result::Err.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_vsk4vhnuiyyz": "The Rust programming language lacks exceptions and exception handlers. Instead, the language uses the following tiered error handling scheme:",
+            "fls_ebangxc36t74": "A possibly absent value is usually represented using enum core::option::Option.",
+            "fls_ckeitwiv326r": "The result of a possibly erroneous computation is usually represented using enum core::result::Result.",
+            "fls_eg0orgibg98m": "Erroneous behavior is signaled using macro core::panic.",
+            "fls_ko1x0gp9e7y3": "Enum core::option::Option indicates whether a value is either present using core::option::Option::Some or absent using core::option::Option::None.",
+            "fls_gwu4cn4ziabe": "Enum core::result::Result indicates whether a computation completed successfully and produced a value using core::result::Result::Ok or the computation failed with an error using core::result::Result::Err."
+          }
+        }
+      },
+      "parent_fls_id": null,
+      "sibling_fls_ids": []
+    },
+    {
+      "fls_id": "fls_k02nt1m5fq1z",
+      "title": "Panic",
+      "category": 0,
+      "level": 2,
+      "file": "exceptions-and-errors",
+      "content": "Panic\n\nA panic is an abnormal program state caused by invoking macro\ncore::panic.\n\nInvoking macro core::panic has the following runtime effects:\n\n#. Control flow halts the execution of the current thread.\n\n#. Control flow of the current thread resumes execution by invoking the\n function subject to attribute panic_handler.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_a554v4n0khye": "A panic is an abnormal program state caused by invoking macro core::panic."
+          }
+        },
+        "-3": {
+          "paragraphs": {
+            "fls_i9njhpte5l0t": "Invoking macro core::panic has the following runtime effects: #.",
+            "fls_n6q7bksyn1m": "Control flow halts the execution of the current thread. #.",
+            "fls_xmtt04lw517w": "Control flow of the current thread resumes execution by invoking the function subject to attribute panic_handler."
+          }
+        }
+      },
+      "parent_fls_id": "fls_dzq9cdz4ibsz",
+      "sibling_fls_ids": [
+        "fls_hi1iz0gbnksi"
+      ]
+    },
+    {
+      "fls_id": "fls_hi1iz0gbnksi",
+      "title": "Abort",
+      "category": 0,
+      "level": 2,
+      "file": "exceptions-and-errors",
+      "content": "Abort\n\nAbort is the immediate termination of a program.\n\nAbort has the following runtime effects:\n\n#. Control flow halts the execution of all threads.\n\n#. The program terminates.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_9a1izu3omkbn": "Abort is the immediate termination of a program."
+          }
+        },
+        "-3": {
+          "paragraphs": {
+            "fls_iq6olct3rw4u": "Abort has the following runtime effects: #.",
+            "fls_wd2q6ft9yzrg": "Control flow halts the execution of all threads. #.",
+            "fls_7bnrbjb0pq5n": "The program terminates."
+          }
+        }
+      },
+      "parent_fls_id": "fls_dzq9cdz4ibsz",
+      "sibling_fls_ids": [
+        "fls_k02nt1m5fq1z"
+      ]
+    }
+  ]
+}

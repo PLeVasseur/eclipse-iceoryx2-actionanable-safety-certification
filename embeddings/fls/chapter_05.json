@@ -1,0 +1,1099 @@
+{
+  "chapter": 5,
+  "title": "Patterns",
+  "fls_id": "fls_xgqh0ju6bmbn",
+  "file": "patterns",
+  "extraction_date": "2025-12-31",
+  "category_codes": {
+    "0": "section",
+    "-1": "general",
+    "-2": "legality_rules",
+    "-3": "dynamic_semantics",
+    "-4": "undefined_behavior",
+    "-5": "implementation_requirements",
+    "-6": "implementation_permissions",
+    "-7": "examples",
+    "-8": "syntax"
+  },
+  "statistics": {
+    "total_sections": 28,
+    "total_paragraphs": 279,
+    "paragraphs_by_category": {
+      "-8": 18,
+      "-7": 19,
+      "-4": 1,
+      "-3": 53,
+      "-2": 188
+    }
+  },
+  "sections": [
+    {
+      "fls_id": "fls_xgqh0ju6bmbn",
+      "title": "Patterns",
+      "category": 0,
+      "level": 1,
+      "file": "patterns",
+      "content": "Patterns\n\n PatternList ::=\n Pattern ($$,$$ Pattern)* $$,$$?\n\n PatternWithoutAlternation ::=\n PatternWithoutRange\n | RangePattern\n\n PatternWithoutRange ::=\n IdentifierPattern\n | LiteralPattern\n | MacroInvocation\n | ParenthesizedPattern\n | PathPattern\n | ReferencePattern\n | RestPattern\n | SlicePattern\n | StructPattern\n | TuplePattern\n | UnderscorePattern\n\nA pattern is a construct that matches a value which satisfies all\nthe criteria of the pattern.\n\nA pattern-without-alternation is a pattern that cannot be alternated.\n\nA pattern-without-range is a pattern-without-alternation that\nexcludes [range pattern]s.\n\nA subpattern is a pattern nested within another pattern.\n\nA pattern has a type, with the exception of the rest pattern if\nit is not the inner pattern of a slice pattern or the pattern of\na possibly nested identifier pattern of a slice pattern\\ .\n\nThe expected type of a pattern is the type the pattern is being matched against.\n\nIt is a static error when [lexical element]s match multiple alternations\nof a pattern-without-range, except for when the pattern is &mut\nIdentifier. Such a pattern is interpreted as a reference pattern\nwith keyword mut containing an identifier pattern.\n\nAny two [pattern-without-alternation]s that are or-ed using character 0x7C\n(vertical line) are subject to the following restrictions:\n\n* The [type]s of the two [pattern-without-alternation]s shall be\n unifiable.\n\n* The [binding]s of the two [pattern-without-alternation]s shall\n be the same, shall have [unifiable type]s, and shall have the same\n [binding mode]s.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_imegtsi224ts": "A pattern is a construct that matches a value which satisfies all the criteria of the pattern.",
+            "fls_mp6i4blzexnu": "A pattern-without-alternation is a pattern that cannot be alternated.",
+            "fls_JJ1fJa1SsaWh": "A pattern-without-range is a pattern-without-alternation that excludes [range pattern]s.",
+            "fls_6xx34zr069bj": "A subpattern is a pattern nested within another pattern.",
+            "fls_8xzjb0yzftkd": "A pattern has a type, with the exception of the rest pattern if it is not the inner pattern of a slice pattern or the pattern of a possibly nested identifier pattern of a slice pattern\\ .",
+            "fls_cma5t8waon0x": "The expected type of a pattern is the type the pattern is being matched against.",
+            "fls_TUanRT7WU14E": "It is a static error when [lexical element]s match multiple alternations of a pattern-without-range, except for when the pattern is &mut Identifier. Such a pattern is interpreted as a reference pattern with keyword mut containing an identifier pattern.",
+            "fls_8luyomzppck": "Any two [pattern-without-alternation]s that are or-ed using character 0x7C (vertical line) are subject to the following restrictions:",
+            "fls_rpvdfmy3n05a": "The [type]s of the two [pattern-without-alternation]s shall be unifiable.",
+            "fls_kv533rntni1x": "The [binding]s of the two [pattern-without-alternation]s shall be the same, shall have [unifiable type]s, and shall have the same [binding mode]s."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "Pattern ::=\n       $$|$$? PatternWithoutAlternation ($$|$$ PatternWithoutAlternation)*\n\n   PatternList ::=\n       Pattern ($$,$$ Pattern)* $$,$$?\n\n   PatternWithoutAlternation ::=\n       PatternWithoutRange\n     | RangePattern\n\n   PatternWithoutRange ::=\n       IdentifierPattern\n     | LiteralPattern\n     | MacroInvocation\n     | ParenthesizedPattern\n     | PathPattern\n     | ReferencePattern\n     | RestPattern\n     | SlicePattern\n     | StructPattern\n     | TuplePattern\n     | UnderscorePattern"
+          }
+        }
+      },
+      "parent_fls_id": null,
+      "sibling_fls_ids": []
+    },
+    {
+      "fls_id": "fls_uh76pw6ykd57",
+      "title": "Refutability",
+      "category": 0,
+      "level": 2,
+      "file": "patterns",
+      "content": "Refutability\n\nRefutability is a property of [pattern]s that expresses the ability to\nmatch all possible values of a type.\n\nAn irrefutable pattern is a pattern that always matches any value of its type.\n\nA refutable pattern is a pattern that has a possibility of not\nmatching a value of its type\n\nA pattern that is not an irrefutable pattern is a\nrefutable pattern.\n\nAn irrefutable constant is a constant of a type that has at most\none value.\n\nA refutable constant is a constant of a refutable type.\n\nx is an irrefutable pattern because it matches all possible values of type i32.\n\ncore::option::Option::Some(y) is a refutable pattern because it does not match value when\nvalue denotes core::option::Option::None.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_9ntc4qmjmo90": "Refutability is a property of [pattern]s that expresses the ability to match all possible values of a type.",
+            "fls_9fjspnefoyvz": "An irrefutable pattern is a pattern that always matches any value of its type.",
+            "fls_uq7ftuuq1sig": "A refutable pattern is a pattern that has a possibility of not matching a value of its type",
+            "fls_mnbyt7jfYAZ9": "A pattern that is not an irrefutable pattern is a refutable pattern.",
+            "fls_l76ycteulo8e": "An irrefutable constant is a constant of a type that has at most one value.",
+            "fls_lh0d85tl4qvy": "A refutable constant is a constant of a refutable type."
+          }
+        },
+        "-7": {
+          "paragraphs": {
+            "fls_sgu9bnp7xajv": "x is an irrefutable pattern because it matches all possible values of type i32. .. code-block:: rust let x = 42;",
+            "fls_cl1g4fxfa020": "core::option::Option::Some(y) is a refutable pattern because it does not match value when value denotes core::option::Option::None. .. code-block:: rust if let core::option::Option::Some(y) = value {"
+          }
+        }
+      },
+      "parent_fls_id": "fls_xgqh0ju6bmbn",
+      "sibling_fls_ids": [
+        "fls_7dbd5t2750ce",
+        "fls_qssijtofa9i8",
+        "fls_jm6l7b90h6wa"
+      ]
+    },
+    {
+      "fls_id": "fls_7bxv8lybxm18",
+      "title": "Identifier Patterns",
+      "category": 0,
+      "level": 3,
+      "file": "patterns",
+      "content": "Identifier Patterns\n\n BoundPattern ::=\n $$@$$ Pattern\n\nAn identifier pattern is a pattern that binds the value it\nmatches to a binding.\n\nA bound pattern is a pattern that imposes a constraint on a related\nidentifier pattern.\n\nAn identifier pattern yields a binding. An identifier pattern\nwith keyword mut yields a mutable binding.\n\nAn identifier pattern with keyword ref is a\nreference identifier pattern.\n\nThe identifier pattern enters its binding into binding scope in\nthe value namespace if it does not resolve to a constant, a\nunit struct constant or a unit enum variant.\n\nIt is a static error if the identifier pattern consists of anything other\nthan a binding when the binding resolves to a constant, a\nunit struct constant, or a unit enum variant.\n\nIt is a static error if the binding of an identifier pattern resolves\nto a tuple struct or a tuple enum variant.\n\nAn identifier pattern is an irrefutable pattern when:\n\n* It has a bound pattern and the bound pattern is an\n irrefutable pattern, or\n\n* It does not have a bound pattern and its binding resolves to an\n irrefutable constant.\n\n* It does not have a bound pattern and its binding does not resolve to\n a constant, a unit struct constant, or a unit enum variant.\n\nIf the identifier pattern does not have a bound pattern, then the\ntype of its binding is determined as follows:\n\n* If the identifier pattern has only keyword ref, then the\n type is & inferred_type, where inferred_type is the type\n determined by type inference.\n\n* If the identifier pattern has [keyword]s ref mut, then the\n type is &mut inferred_type, where inferred_type is the type\n determined by type inference.\n\n* Otherwise the type is inferred_type, where inferred_type is the\n type determined by type inference.\n\nIf the identifier pattern has a bound pattern, then the type of\nits binding is determined as follows:\n\n* If the identifier pattern has only keyword ref, then the\n type is & bound_pattern_type, where bound_pattern_type is the\n type of the bound pattern.\n\n* If the identifier pattern has [keyword]s ref mut, then the\n type is &mut bound_pattern_type, where bound_pattern_type is the\n type of the bound pattern.\n\n* Otherwise the type is inferred_type, where inferred_type is the\n type determined by type inference.\n\nAn identifier pattern in the context of a let expression.\n\nAn identifier pattern with a bound pattern in the context of a match expression.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_uljdw9rf7ies": "An identifier pattern is a pattern that binds the value it matches to a binding.",
+            "fls_vy9uw586wy0d": "A bound pattern is a pattern that imposes a constraint on a related identifier pattern.",
+            "fls_hqwt3fvr063y": "An identifier pattern yields a binding. An identifier pattern with keyword mut yields a mutable binding.",
+            "fls_joIQdDn44oIT": "An identifier pattern with keyword ref is a reference identifier pattern.",
+            "fls_24c95c56tugl": "The identifier pattern enters its binding into binding scope in the value namespace if it does not resolve to a constant, a unit struct constant or a unit enum variant.",
+            "fls_twcavjk7iquy": "It is a static error if the identifier pattern consists of anything other than a binding when the binding resolves to a constant, a unit struct constant, or a unit enum variant.",
+            "fls_k1yBTstX7jEE": "It is a static error if the binding of an identifier pattern resolves to a tuple struct or a tuple enum variant.",
+            "fls_hw26hy33guk5": "An identifier pattern is an irrefutable pattern when:",
+            "fls_svfxwz4yy5i": "It has a bound pattern and the bound pattern is an irrefutable pattern, or",
+            "fls_x6f6q22b5jpc": "It does not have a bound pattern and its binding resolves to an irrefutable constant.",
+            "fls_r2mb8v2lh3x0": "It does not have a bound pattern and its binding does not resolve to a constant, a unit struct constant, or a unit enum variant.",
+            "fls_7oioaitb075g": "If the identifier pattern does not have a bound pattern, then the type of its binding is determined as follows:",
+            "fls_40qin0ss5sqd": "If the identifier pattern has only keyword ref, then the type is & inferred_type, where inferred_type is the type determined by type inference.",
+            "fls_pivz0v7ey6sw": "If the identifier pattern has [keyword]s ref mut, then the type is &mut inferred_type, where inferred_type is the type determined by type inference.",
+            "fls_2ahkrddxwj1n": "Otherwise the type is inferred_type, where inferred_type is the type determined by type inference.",
+            "fls_eucnafj3uedy": "If the identifier pattern has a bound pattern, then the type of its binding is determined as follows:",
+            "fls_f8zo4scodhcr": "If the identifier pattern has only keyword ref, then the type is & bound_pattern_type, where bound_pattern_type is the type of the bound pattern.",
+            "fls_d3fs2h7oqjl0": "If the identifier pattern has [keyword]s ref mut, then the type is &mut bound_pattern_type, where bound_pattern_type is the type of the bound pattern.",
+            "fls_exo8asevh5x1": "Otherwise the type is inferred_type, where inferred_type is the type determined by type inference."
+          }
+        },
+        "-7": {
+          "paragraphs": {
+            "fls_sfyfdxhvhk44": "An identifier pattern in the context of a let expression. .. code-block:: rust let x = 42;",
+            "fls_as0pqqmo1des": "An identifier pattern with a bound pattern in the context of a match expression. .. code-block:: rust match x { small @ 1 ..= 5 => (), _ => (), }"
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "IdentifierPattern ::=\n       $$ref$$? $$mut$$? Binding BoundPattern?\n\n   BoundPattern ::=\n       $$@$$ Pattern"
+          }
+        }
+      },
+      "parent_fls_id": "fls_uh76pw6ykd57",
+      "sibling_fls_ids": [
+        "fls_2krxnq8q9ef1",
+        "fls_1xit18et4ohh",
+        "fls_uloyjbaso8pz",
+        "fls_6tl1fx99yn6c",
+        "fls_d2sc9hl3v0mk",
+        "fls_7wpgnp4kjq82",
+        "fls_qte70mgzpras"
+      ]
+    },
+    {
+      "fls_id": "fls_2krxnq8q9ef1",
+      "title": "Literal Patterns",
+      "category": 0,
+      "level": 3,
+      "file": "patterns",
+      "content": "Literal Patterns\n\nA literal pattern is a pattern that matches a literal.\n\nA numeric literal pattern is a pattern that matches a numeric\nliteral.\n\nA numeric literal pattern's numeric literal value shall not be a IEEE\nfloating-point NaN.\n\nThe type of a literal pattern is the type of the specified\nliteral.\n\nTwo literal patterns in the context of a match expression.\nSee fls_sfyfdxhvhk44 for the declaration of x.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_pah15qa54irs": "A literal pattern is a pattern that matches a literal.",
+            "fls_COQKJC0dvtNO": "A numeric literal pattern is a pattern that matches a numeric literal.",
+            "fls_JP8YSbxSN0Ym": "A numeric literal pattern's numeric literal value shall not be a IEEE floating-point NaN.",
+            "fls_co60bzvwashg": "The type of a literal pattern is the type of the specified literal."
+          }
+        },
+        "-7": {
+          "paragraphs": {
+            "fls_fqclaznjgtb1": "Two literal patterns in the context of a match expression. See for the declaration of x. .. code-block:: rust match x { -2 => (), 36 => (), _ => (), }"
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "LiteralPattern ::=\n       BooleanLiteral\n     | ByteLiteral\n     | ByteStringLiteral\n     | CharacterLiteral\n     | $$-$$? NumericLiteral\n     | RawByteStringLiteral\n     | RawStringLiteral\n     | SimpleStringLiteral"
+          }
+        }
+      },
+      "parent_fls_id": "fls_uh76pw6ykd57",
+      "sibling_fls_ids": [
+        "fls_7bxv8lybxm18",
+        "fls_1xit18et4ohh",
+        "fls_uloyjbaso8pz",
+        "fls_6tl1fx99yn6c",
+        "fls_d2sc9hl3v0mk",
+        "fls_7wpgnp4kjq82",
+        "fls_qte70mgzpras"
+      ]
+    },
+    {
+      "fls_id": "fls_1xit18et4ohh",
+      "title": "Parenthesized Patterns",
+      "category": 0,
+      "level": 3,
+      "file": "patterns",
+      "content": "Parenthesized Patterns\n\nA parenthesized pattern is a pattern that controls the precedence of\nits [subpattern]s.\n\nA parenthesized pattern is an irrefutable pattern when its nested\npattern is an irrefutable pattern.\n\nThe type of a parenthesized pattern is the type of its nested\npattern.\n\nSee fls_sfyfdxhvhk44 for the declaration of x.\n\nA parenthesized pattern inside a reference pattern in the context of a match\nexpression.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_kvqzmt7my5dh": "A parenthesized pattern is a pattern that controls the precedence of its [subpattern]s.",
+            "fls_mrjhpiq5refe": "A parenthesized pattern is an irrefutable pattern when its nested pattern is an irrefutable pattern.",
+            "fls_pe5kh8y8u664": "The type of a parenthesized pattern is the type of its nested pattern."
+          }
+        },
+        "-7": {
+          "paragraphs": {
+            "fls_2xq8852gihn9": "See for the declaration of x. .. code-block:: rust let ref_x = &x;",
+            "fls_2dmeukyjqz9y": "A parenthesized pattern inside a reference pattern in the context of a match expression. .. code-block:: rust match ref_x { &(1 ..= 5) => (), _ => (), }"
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "ParenthesizedPattern ::=\n       $$($$ Pattern $$)$$"
+          }
+        }
+      },
+      "parent_fls_id": "fls_uh76pw6ykd57",
+      "sibling_fls_ids": [
+        "fls_7bxv8lybxm18",
+        "fls_2krxnq8q9ef1",
+        "fls_uloyjbaso8pz",
+        "fls_6tl1fx99yn6c",
+        "fls_d2sc9hl3v0mk",
+        "fls_7wpgnp4kjq82",
+        "fls_qte70mgzpras"
+      ]
+    },
+    {
+      "fls_id": "fls_uloyjbaso8pz",
+      "title": "Path Patterns",
+      "category": 0,
+      "level": 3,
+      "file": "patterns",
+      "content": "Path Patterns\n\nA path pattern is a pattern that matches a constant, a\nunit enum variant, or a unit struct constant indicated by a path.\n\nA path pattern expressed as a path expression shall refer to either\nan associated constant, or a constant.\n\nWhen a path pattern refers to an associated constant or a\nconstant, the associated constant or constant shall not be of a\nunion type.\n\nWhen a path pattern refers to an associated constant or a\nconstant, the type of the associated constant or constant\nshall be structurally equal.\n\nWhen a path pattern refers to an associated constant or a\nconstant, the constant must not contain any references to\n[mutable static]s, [static]s with interior mutability,\nor [external static]s.\n\nWhen the type of the path pattern is of an enum type or\nstruct type, then the enum type or struct type shall be subject\nto attribute derive with arguments core::cmp::Eq and\ncore::cmp::PartialEq.\n\nA path pattern expressed as a qualified path expression shall refer\nto an associated constant.\n\nA path pattern is an irrefutable pattern when it refers to:\n\n* An irrefutable constant,\n\n* An enum variant of an enum type with zero or more [visible empty enum variant]s and one non-visible empty enum variant where the [type]s of all [field]s are not subject to visible emptiness\n\n* A struct where the [type]s of all [field]s are\n [irrefutable pattern]s.\n\nThe type of a path pattern is the type of the constant,\nunit enum variant, or unit struct constant the path resolved to.\n\nSee fls_sfyfdxhvhk44 for the declaration of x.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_1crq0mexo5r1": "A path pattern is a pattern that matches a constant, a unit enum variant, or a unit struct constant indicated by a path.",
+            "fls_xz5otkhogn31": "A path pattern expressed as a path expression shall refer to either an associated constant, or a constant.",
+            "fls_t8sjzsif2ilf": "When a path pattern refers to an associated constant or a constant, the associated constant or constant shall not be of a union type.",
+            "fls_zCswsyuitexI": "When a path pattern refers to an associated constant or a constant, the type of the associated constant or constant shall be structurally equal.",
+            "fls_wJ9f906BlBvg": "When a path pattern refers to an associated constant or a constant, the constant must not contain any references to [mutable static]s, [static]s with interior mutability, or [external static]s.",
+            "fls_hF19K8sWU8FF": "When the type of the path pattern is of an enum type or struct type, then the enum type or struct type shall be subject to attribute derive with arguments core::cmp::Eq and core::cmp::PartialEq.",
+            "fls_bv9psmitxfuw": "A path pattern expressed as a qualified path expression shall refer to an associated constant.",
+            "fls_sl47k9oj5p7t": "A path pattern is an irrefutable pattern when it refers to:",
+            "fls_cfoy86mkmqa4": "An irrefutable constant,",
+            "fls_rnppz6y5z8pi": "An enum variant of an enum type with zero or more [visible empty enum variant]s and one non-visible empty enum variant where the [type]s of all [field]s are not subject to visible emptiness",
+            "fls_ag6m4mvpturw": "A struct where the [type]s of all [field]s are [irrefutable pattern]s.",
+            "fls_pedy2pqrvnx7": "The type of a path pattern is the type of the constant, unit enum variant, or unit struct constant the path resolved to."
+          }
+        },
+        "-7": {
+          "paragraphs": {
+            "fls_u59rilepu8z9": "See for the declaration of x. .. code-block:: rust match x { module::ZERO => (), Enum::Variant => (), _ => (), }"
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "PathPattern ::=\n       PathExpression\n     | QualifiedPathExpression"
+          }
+        }
+      },
+      "parent_fls_id": "fls_uh76pw6ykd57",
+      "sibling_fls_ids": [
+        "fls_7bxv8lybxm18",
+        "fls_2krxnq8q9ef1",
+        "fls_1xit18et4ohh",
+        "fls_6tl1fx99yn6c",
+        "fls_d2sc9hl3v0mk",
+        "fls_7wpgnp4kjq82",
+        "fls_qte70mgzpras"
+      ]
+    },
+    {
+      "fls_id": "fls_6tl1fx99yn6c",
+      "title": "Range Patterns",
+      "category": 0,
+      "level": 3,
+      "file": "patterns",
+      "content": "Range Patterns\n\n HalfOpenRangePattern ::=\n RangePatternLowBound $$..$$\n\n InclusiveRangePattern ::=\n RangePatternLowBound $$..=$$ RangePatternHighBound\n\n ExclusiveRangePattern ::=\n RangePatternLowBound $$..$$ RangePatternHighBound\n\n ObsoleteRangePattern ::=\n RangePatternLowBound $$...$$ RangePatternHighBound\n\n RangePatternLowBound ::=\n RangePatternBound\n\n RangePatternHighBound ::=\n RangePatternBound\n\n RangePatternBound ::=\n ByteLiteral\n | CharacterLiteral\n | $$-$$? NumericLiteral\n | PathExpression\n | QualifiedPathExpression\n\nA range pattern is a pattern that matches [value]s which fall\nwithin a range.\n\nA half-open range pattern is a range pattern with only a\nrange pattern low bound.\n\nAn inclusive range pattern is a range pattern with both a\nrange pattern low bound and a range pattern high bound.\n\nAn exclusive range pattern is a range pattern with both a\nrange pattern low bound and a range pattern high bound.\n\nAn obsolete range pattern is a range pattern that uses obsolete syntax\nto express an inclusive range pattern.\n\nA range pattern bound is a constraint on the range of a range pattern.\n\nA range pattern low bound is a range pattern bound that specifies the\nstart of a range.\n\nA range pattern high bound is a range pattern bound that specifies the\nend of a range.\n\nA half-open range pattern shall appear within a parenthesized pattern\nwhen the context is a slice pattern.\n\nThe range pattern low bound of an inclusive range pattern shall be\nless than or equal to its range pattern high bound.\n\nThe range pattern low bound of an exclusive range pattern shall be\nless than its range pattern high bound.\n\nAn obsolete range pattern is equivalent to an inclusive range pattern.\n\nA range pattern is an irrefutable pattern only when it spans the\nentire set of possible [value]s of a type.\n\nThe [type]s of the range pattern low bound and the\nrange pattern high bound of a range pattern shall be unifiable.\n\nThe type of a range pattern is determined as follows:\n\n* If the range pattern is expressed as an inclusive range pattern, an\n exclusive range pattern, or an obsolete range pattern, then the\n type is the unified type of the [type]s of the\n range pattern low bound and the range pattern high bound.\n\n* Otherwise the type is the type of the range pattern low bound.\n\nA path expression of a range pattern shall refer to a constant\nof a scalar type.\n\nA qualified path expression of a range pattern shall refer to an\nassociated constant of a scalar type.\n\nTwo range patterns in the context of a match expression.\nSee fls_sfyfdxhvhk44 for the declaration of x.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_okupyoav13rm": "A range pattern is a pattern that matches [value]s which fall within a range.",
+            "fls_jhchm7dy927k": "A half-open range pattern is a range pattern with only a range pattern low bound.",
+            "fls_q86j23iiqv8w": "An inclusive range pattern is a range pattern with both a range pattern low bound and a range pattern high bound.",
+            "fls_3PyquOKjA7SI": "An exclusive range pattern is a range pattern with both a range pattern low bound and a range pattern high bound.",
+            "fls_akf9x5r6e0ta": "An obsolete range pattern is a range pattern that uses obsolete syntax to express an inclusive range pattern.",
+            "fls_vrpr6ttpfpal": "A range pattern bound is a constraint on the range of a range pattern.",
+            "fls_nk48gregn3me": "A range pattern low bound is a range pattern bound that specifies the start of a range.",
+            "fls_83v1xqbebs58": "A range pattern high bound is a range pattern bound that specifies the end of a range.",
+            "fls_2hpuccwh2xml": "A half-open range pattern shall appear within a parenthesized pattern when the context is a slice pattern.",
+            "fls_9kk81isk0mlp": "The range pattern low bound of an inclusive range pattern shall be less than or equal to its range pattern high bound.",
+            "fls_8bdOqkO1NuJW": "The range pattern low bound of an exclusive range pattern shall be less than its range pattern high bound.",
+            "fls_s2b5n4snc4d7": "An obsolete range pattern is equivalent to an inclusive range pattern.",
+            "fls_4o4ge6x9a8rs": "A range pattern is an irrefutable pattern only when it spans the entire set of possible [value]s of a type.",
+            "fls_6o995ak4hywq": "The [type]s of the range pattern low bound and the range pattern high bound of a range pattern shall be unifiable.",
+            "fls_3js1645tgh31": "The type of a range pattern is determined as follows:",
+            "fls_8Q6NfRx4j5V7": "If the range pattern is expressed as an inclusive range pattern, an exclusive range pattern, or an obsolete range pattern, then the type is the unified type of the [type]s of the range pattern low bound and the range pattern high bound.",
+            "fls_rgr7t33s0m7m": "Otherwise the type is the type of the range pattern low bound.",
+            "fls_5ey5mj8t8knd": "A path expression of a range pattern shall refer to a constant of a scalar type.",
+            "fls_z4js96mchcsv": "A qualified path expression of a range pattern shall refer to an associated constant of a scalar type."
+          }
+        },
+        "-7": {
+          "paragraphs": {
+            "fls_3wwpq8i6mo2a": "Two range patterns in the context of a match expression. See for the declaration of x. .. code-block:: rust match x { -30 ..= 2 => (), 57 .. => (), _ => (), }"
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "RangePattern ::=\n       HalfOpenRangePattern\n     | InclusiveRangePattern\n     | ExclusiveRangePattern\n     | ObsoleteRangePattern\n\n   HalfOpenRangePattern ::=\n       RangePatternLowBound $$..$$\n\n   InclusiveRangePattern ::=\n       RangePatternLowBound $$..=$$ RangePatternHighBound\n\n   ExclusiveRangePattern ::=\n       RangePatternLowBound $$..$$ RangePatternHighBound\n\n   ObsoleteRangePattern ::=\n       RangePatternLowBound $$...$$ RangePatternHighBound\n\n   RangePatternLowBound ::=\n       RangePa..."
+          }
+        }
+      },
+      "parent_fls_id": "fls_uh76pw6ykd57",
+      "sibling_fls_ids": [
+        "fls_7bxv8lybxm18",
+        "fls_2krxnq8q9ef1",
+        "fls_1xit18et4ohh",
+        "fls_uloyjbaso8pz",
+        "fls_d2sc9hl3v0mk",
+        "fls_7wpgnp4kjq82",
+        "fls_qte70mgzpras"
+      ]
+    },
+    {
+      "fls_id": "fls_d2sc9hl3v0mk",
+      "title": "Reference Patterns",
+      "category": 0,
+      "level": 3,
+      "file": "patterns",
+      "content": "Reference Patterns\n\nA reference pattern is a pattern that dereferences a pointer that\nis being matched.\n\nA reference pattern is an irrefutable pattern when its nested pattern itself is an irrefutable pattern.\n\nThe type of a reference pattern is determined as follows:\n\n* If the reference pattern appears with keyword mut,\n then the type is &mut pattern_without_range_type,\n where pattern_without_range_type is the type of the\n PatternWithoutRange.\n\n* If the reference pattern appears without keyword\n mut, then the type is & pattern_without_range_type,\n where pattern_without_range_type is the type of the\n PatternWithoutRange.\n\nA reference pattern in the context of a match expression.\nSee fls_2xq8852gihn9 for the declaration of ref_x.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_fhahcc1mz2qh": "A reference pattern is a pattern that dereferences a pointer that is being matched.",
+            "fls_x0bmzl1315gq": "A reference pattern is an irrefutable pattern when its nested pattern itself is an irrefutable pattern.",
+            "fls_fedo8zhgpla5": "The type of a reference pattern is determined as follows:",
+            "fls_30u9ij164ww3": "If the reference pattern appears with keyword mut, then the type is &mut pattern_without_range_type, where pattern_without_range_type is the type of the PatternWithoutRange.",
+            "fls_d1kc73hpncpo": "If the reference pattern appears without keyword mut, then the type is & pattern_without_range_type, where pattern_without_range_type is the type of the PatternWithoutRange."
+          }
+        },
+        "-7": {
+          "paragraphs": {
+            "fls_mpeuhov0umfa": "A reference pattern in the context of a match expression. See for the declaration of ref_x. .. code-block:: rust match ref_x { &23 => (), _ => (), }"
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "ReferencePattern ::=\n       $$&$$ $$mut$$? PatternWithoutRange"
+          }
+        }
+      },
+      "parent_fls_id": "fls_uh76pw6ykd57",
+      "sibling_fls_ids": [
+        "fls_7bxv8lybxm18",
+        "fls_2krxnq8q9ef1",
+        "fls_1xit18et4ohh",
+        "fls_uloyjbaso8pz",
+        "fls_6tl1fx99yn6c",
+        "fls_7wpgnp4kjq82",
+        "fls_qte70mgzpras"
+      ]
+    },
+    {
+      "fls_id": "fls_7wpgnp4kjq82",
+      "title": "Rest Patterns",
+      "category": 0,
+      "level": 3,
+      "file": "patterns",
+      "content": "Rest Patterns\n\nA rest pattern is a pattern that matches zero or more elements that\nhave not already been matched.\n\nA rest pattern shall appear at most once within a slice pattern, an\nidentifier pattern of a slice pattern, a tuple pattern, and a\ntuple struct pattern.\n\nA rest pattern is an irrefutable pattern.\n\nIf a rest pattern appears within a slice pattern or the\nidentifier pattern of a slice pattern, then the type of the\nrest pattern is determined as follows:\n\n* If the type of the slice pattern is an array type, then the\n type is [T; N] where T is the element type of the\n array type, and N is the [array type]'s size minus the number\n of matched elements of the slice pattern.\n\n* If the type of the slice pattern is a slice type, then the\n type is that slice type.\n\nA rest pattern in an identifier pattern of a slice pattern, followed by a rest\npattern in a slice pattern.\n\nRest patterns in tuple patterns.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_eso51epfofxb": "A rest pattern is a pattern that matches zero or more elements that have not already been matched.",
+            "fls_5a75a2y43uev": "A rest pattern shall appear at most once within a slice pattern, an identifier pattern of a slice pattern, a tuple pattern, and a tuple struct pattern.",
+            "fls_rsqyza99vl3x": "A rest pattern is an irrefutable pattern.",
+            "fls_w1pw40phsv2o": "If a rest pattern appears within a slice pattern or the identifier pattern of a slice pattern, then the type of the rest pattern is determined as follows:",
+            "fls_x8ylgxrf9ca": "If the type of the slice pattern is an array type, then the type is [T; N] where T is the element type of the array type, and N is the [array type]'s size minus the number of matched elements of the slice pattern.",
+            "fls_zgoke73xrhk3": "If the type of the slice pattern is a slice type, then the type is that slice type."
+          }
+        },
+        "-7": {
+          "paragraphs": {
+            "fls_bdcv6rwx0fsv": "A rest pattern in an identifier pattern of a slice pattern, followed by a rest pattern in a slice pattern. .. code-block:: rust match slice { [1, 5, .., 7] => (), [start, end @ ..] => (), }",
+            "fls_qz9guhlg19j3": "Rest patterns in tuple patterns."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "RestPattern ::=\n       $$..$$",
+            "syntax_2": "match tuple {\n       (1, .., y) => (),\n       (.., 5) => (),\n       (..) => (),\n   }"
+          }
+        }
+      },
+      "parent_fls_id": "fls_uh76pw6ykd57",
+      "sibling_fls_ids": [
+        "fls_7bxv8lybxm18",
+        "fls_2krxnq8q9ef1",
+        "fls_1xit18et4ohh",
+        "fls_uloyjbaso8pz",
+        "fls_6tl1fx99yn6c",
+        "fls_d2sc9hl3v0mk",
+        "fls_qte70mgzpras"
+      ]
+    },
+    {
+      "fls_id": "fls_qte70mgzpras",
+      "title": "Slice Patterns",
+      "category": 0,
+      "level": 3,
+      "file": "patterns",
+      "content": "Slice Patterns\n\nA slice pattern is a pattern that matches [array]s of fixed size\nand [slice]s of dynamic size.\n\nA slice pattern is an irrefutable pattern when it refers to:\n\n* An array, where each subpattern is an irrefutable pattern, or\n\n* A slice, where the PatternList consists of a single\n rest pattern, or a single possibly nested identifier pattern whose\n last bound pattern is a rest pattern.\n\nThe type of a slice pattern is the same as the expected type.\n\nA slice pattern in the context of a match expression.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_qqiu594hki8g": "A slice pattern is a pattern that matches [array]s of fixed size and [slice]s of dynamic size.",
+            "fls_h6x9xlxi7y5n": "A slice pattern is an irrefutable pattern when it refers to:",
+            "fls_jbmxu7y5fnm6": "An array, where each subpattern is an irrefutable pattern, or",
+            "fls_r78zzw7yyg34": "A slice, where the PatternList consists of a single rest pattern, or a single possibly nested identifier pattern whose last bound pattern is a rest pattern.",
+            "fls_ndor56nou676": "The type of a slice pattern is the same as the expected type."
+          }
+        },
+        "-7": {
+          "paragraphs": {
+            "fls_9yuobz1jsehf": "A slice pattern in the context of a match expression."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "SlicePattern ::=\n       $$[$$ PatternList? $$]$$",
+            "syntax_2": "let v = vec![1, 2, 3];",
+            "syntax_3": "match v.as_slice() {\n       [a, b, c] => (),\n       _ => ()\n   }"
+          }
+        }
+      },
+      "parent_fls_id": "fls_uh76pw6ykd57",
+      "sibling_fls_ids": [
+        "fls_7bxv8lybxm18",
+        "fls_2krxnq8q9ef1",
+        "fls_1xit18et4ohh",
+        "fls_uloyjbaso8pz",
+        "fls_6tl1fx99yn6c",
+        "fls_d2sc9hl3v0mk",
+        "fls_7wpgnp4kjq82"
+      ]
+    },
+    {
+      "fls_id": "fls_7dbd5t2750ce",
+      "title": "Struct Patterns",
+      "category": 0,
+      "level": 2,
+      "file": "patterns",
+      "content": "Struct Patterns\n\n Deconstructee ::=\n PathExpression\n\nA struct pattern is a pattern that matches an enum value, a\nstruct value, or a union value.\n\nA deconstructee indicates the enum variant or type that is being\ndeconstructed by a struct pattern.\n\nA struct pattern is interpreted based on the deconstructee. It is a\nstatic error if a struct pattern cannot be interpreted.\n\nA struct pattern is an irrefutable pattern if\n\n* All of its [subpattern]s are [irrefutable pattern]s, and\n\n* The deconstructee is either:\n\n * A struct type or a union type, or\n\n * An enum variant of an enum type with zero or more [visible empty enum variant]s and one non-visible empty enum variant where the [type]s of all [field]s are not subject to visible emptiness.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_vjdkpr3zml51": "A struct pattern is a pattern that matches an enum value, a struct value, or a union value.",
+            "fls_6o3x101wo478": "A deconstructee indicates the enum variant or type that is being deconstructed by a struct pattern.",
+            "fls_k9zih9s0oe5h": "A struct pattern is interpreted based on the deconstructee. It is a static error if a struct pattern cannot be interpreted.",
+            "fls_r8rat3qmc4hy": "A struct pattern is an irrefutable pattern if",
+            "fls_hUX723DmLg2a": "All of its [subpattern]s are [irrefutable pattern]s, and",
+            "fls_p4OplpUvS04l": "The deconstructee is either:",
+            "fls_pre3YwAv01FE": "A struct type or a union type, or",
+            "fls_MK83WE0iDqNf": "An enum variant of an enum type with zero or more [visible empty enum variant]s and one non-visible empty enum variant where the [type]s of all [field]s are not subject to visible emptiness."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "StructPattern ::=\n       RecordStructPattern\n     | TupleStructPattern\n\n   Deconstructee ::=\n       PathExpression"
+          }
+        }
+      },
+      "parent_fls_id": "fls_xgqh0ju6bmbn",
+      "sibling_fls_ids": [
+        "fls_uh76pw6ykd57",
+        "fls_qssijtofa9i8",
+        "fls_jm6l7b90h6wa"
+      ]
+    },
+    {
+      "fls_id": "fls_nruvg0es3kx7",
+      "title": "Record Struct Patterns",
+      "category": 0,
+      "level": 3,
+      "file": "patterns",
+      "content": "Record Struct Patterns\n\n RecordStructPatternContent ::=\n RecordStructRestPattern\n | FieldDeconstructorList ($$,$$ RecordStructRestPattern | $$,$$?)\n\n RecordStructRestPattern ::=\n OuterAttributeOrDoc* RestPattern\n\n FieldDeconstructorList ::=\n FieldDeconstructor ($$,$$ FieldDeconstructor)*\n\n FieldDeconstructor ::=\n OuterAttributeOrDoc* (\n IndexedDeconstructor\n | NamedDeconstructor\n | ShorthandDeconstructor\n )\n\n IndexedDeconstructor ::=\n FieldIndex $$:$$ Pattern\n\n NamedDeconstructor ::=\n Identifier $$:$$ Pattern\n\n ShorthandDeconstructor ::=\n $$ref$$? $$mut$$? Binding\n\n FieldIndex ::=\n DecimalLiteral\n\nA record struct pattern is a pattern that matches a\nenum variant value, a struct value, or a union value.\n\nThe deconstructee of a record struct pattern shall resolve to an\nenum variant, a struct type, or a union type.\n\nAn indexed deconstructor is a construct that matches the position of\na field.\n\nAn indexed deconstructor matches a field of the deconstructee\nwhen its field index and the position of the field in the\ndeconstructee are the same. Such an indexed deconstructor is a\nmatched indexed deconstructor.\n\nThe type of a matched indexed deconstructor and the type of the\nmatched field shall be unifiable.\n\nA named deconstructor is a construct that matches the name of\na field.\n\nA named deconstructor matches a field of the deconstructee when\nits identifier and the name of the field are the same. Such a\nnamed deconstructor is a matched named deconstructor.\n\nThe type of a matched named deconstructor and the type of the\nmatched field shall be unifiable.\n\nA shorthand deconstructor is a construct that matches the name\nof a field and binds the value of the matched field to a\nbinding.\n\nA shorthand deconstructor with keyword mut yields a\nmutable binding.\n\nIt is a static error if a shorthand deconstructor has only keyword\nref or [keyword]s ref mut, and its binding shadows a\nconstant, a unit enum variant, or a unit struct constant.\n\nA shorthand deconstructor is equivalent to a named deconstructor where\nthe name of the shorthand deconstructor denotes the identifier\nof the named deconstructor and the entire content of the shorthand\ndeconstructor denotes the pattern of the named deconstructor.\n\nA shorthand deconstructor matches a field of the deconstructee\nwhen its name and the name of the field are the same. Such a\nshorthand deconstructor is a matched shorthand deconstructor.\n\nThe type of a matched shorthand deconstructor and the type of the\nmatched field shall be unifiable.\n\nIf the deconstructee of a record struct pattern is a\nrecord enum variant or a record struct, then\n\n* For each field of the deconstructee, the record struct pattern\n shall either:\n\n * Contain at most one matched named deconstructor, or\n\n * Contain at most one matched shorthand deconstructor, or\n\n * Have exactly one RecordStructRestPattern.\n\n* A RecordStructRestPattern is allowed even if all [field]s of the\n deconstructee have been matched.\n\nIf the deconstructee of a record struct pattern is a\ntuple enum variant or a tuple struct type, then\n\n* For each field of the deconstructee, the record struct pattern\n shall either:\n\n * Contain at most one matched indexed deconstructor, or\n\n * Have exactly one RecordStructRestPattern.\n\n* A RecordStructRestPattern is allowed even if all [field]s of the\n deconstructee have been matched.\n\nIf the deconstructee of a record struct pattern is a union type,\nthen\n\n* The RecordStructPatternContent of the record struct\n pattern shall contain exactly one FieldDeconstructor.\n\n* The record struct pattern shall not contain a\n RecordStructRestPattern.\n\n* For the single field of the deconstructee, the\n record struct pattern shall either:\n\n * Contain exactly one matched named deconstructor, or\n\n * Contain exactly one matched shorthand deconstructor.\n\n* The record struct pattern shall require unsafe context.\n\nIf the deconstructee of a record struct pattern is a\nunit enum variant or a unit struct, then the\nrecord struct pattern shall have at most one RecordStructRestPattern.\n\nIt is undefined behavior reading the field of a deconstructee that is\na union type when the field contains data that is invalid for the\nfield's type.\n\nA record struct pattern deconstructing a record struct.\n\nA record struct pattern deconstructing a tuple struct.\n\nA record struct pattern deconstructing a union.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_g6dytd6aq62d": "A record struct pattern is a pattern that matches a enum variant value, a struct value, or a union value.",
+            "fls_3px4oiweg9dm": "The deconstructee of a record struct pattern shall resolve to an enum variant, a struct type, or a union type.",
+            "fls_mnh35ehva8tx": "An indexed deconstructor is a construct that matches the position of a field.",
+            "fls_p2rjnlbvifaa": "An indexed deconstructor matches a field of the deconstructee when its field index and the position of the field in the deconstructee are the same. Such an indexed deconstructor is a matched indexed deconstructor.",
+            "fls_23be2x50at14": "The type of a matched indexed deconstructor and the type of the matched field shall be unifiable.",
+            "fls_46u4ddj0yf93": "A named deconstructor is a construct that matches the name of a field.",
+            "fls_qu3dvfdq6oy7": "A named deconstructor matches a field of the deconstructee when its identifier and the name of the field are the same. Such a named deconstructor is a matched named deconstructor.",
+            "fls_4b2hchdzv30u": "The type of a matched named deconstructor and the type of the matched field shall be unifiable.",
+            "fls_9wfizujx0szd": "A shorthand deconstructor is a construct that matches the name of a field and binds the value of the matched field to a binding.",
+            "fls_jTh9Hur0qsIb": "A shorthand deconstructor with keyword mut yields a mutable binding.",
+            "fls_as54u97xis8z": "It is a static error if a shorthand deconstructor has only keyword ref or [keyword]s ref mut, and its binding shadows a constant, a unit enum variant, or a unit struct constant.",
+            "fls_8364ueejn5y3": "A shorthand deconstructor is equivalent to a named deconstructor where the name of the shorthand deconstructor denotes the identifier of the named deconstructor and the entire content of the shorthand deconstructor denotes the pattern of the named deconstructor.",
+            "fls_7t0be1w2hq3c": "A shorthand deconstructor matches a field of the deconstructee when its name and the name of the field are the same. Such a shorthand deconstructor is a matched shorthand deconstructor.",
+            "fls_3vgmkm2mzwwy": "The type of a matched shorthand deconstructor and the type of the matched field shall be unifiable.",
+            "fls_m91ith3rjy79": "If the deconstructee of a record struct pattern is a record enum variant or a record struct, then",
+            "fls_c09jf2vpcr58": "For each field of the deconstructee, the record struct pattern shall either:",
+            "fls_4h00oqypa8qg": "Contain at most one matched named deconstructor, or",
+            "fls_195mqijyrnam": "Contain at most one matched shorthand deconstructor, or",
+            "fls_ta0vdoqmt2k1": "Have exactly one RecordStructRestPattern.",
+            "fls_f0u0j4q90lpl": "A RecordStructRestPattern is allowed even if all [field]s of the deconstructee have been matched.",
+            "fls_8bi8q3usubby": "If the deconstructee of a record struct pattern is a tuple enum variant or a tuple struct type, then",
+            "fls_1x0o71kxj3yq": "For each field of the deconstructee, the record struct pattern shall either:",
+            "fls_1thgpx95lfg5": "Contain at most one matched indexed deconstructor, or",
+            "fls_rpo1wimbmzhc": "Have exactly one RecordStructRestPattern.",
+            "fls_brhtaaxt1s3s": "A RecordStructRestPattern is allowed even if all [field]s of the deconstructee have been matched.",
+            "fls_jwz3arnfkxwn": "If the deconstructee of a record struct pattern is a union type, then",
+            "fls_pfz8xlwezbw1": "The RecordStructPatternContent of the record struct pattern shall contain exactly one FieldDeconstructor.",
+            "fls_XFKBJZe6k1o2": "The record struct pattern shall not contain a RecordStructRestPattern.",
+            "fls_mu166csowj71": "For the single field of the deconstructee, the record struct pattern shall either:",
+            "fls_y09fygnglu3n": "Contain exactly one matched named deconstructor, or",
+            "fls_2tadaatmauzk": "Contain exactly one matched shorthand deconstructor.",
+            "fls_oq30xkmvyz72": "The record struct pattern shall require unsafe context.",
+            "fls_9y1gbv47z23o": "If the deconstructee of a record struct pattern is a unit enum variant or a unit struct, then the record struct pattern shall have at most one RecordStructRestPattern."
+          }
+        },
+        "-4": {
+          "paragraphs": {
+            "fls_dHtV2BPRFVBB": "It is undefined behavior reading the field of a deconstructee that is a union type when the field contains data that is invalid for the field's type."
+          }
+        },
+        "-7": {
+          "paragraphs": {
+            "fls_zRCiKnhQebyp": "A record struct pattern deconstructing a record struct. .. code-block:: rust struct RecordStruct { first : u32, second: u32, } let record_struct_value = RecordStruct { first: 11, second: 22 }; match record_struct_value { RecordStruct { second: 33, ref first } => (), RecordStruct { first: 44, .. } => (), RecordStruct { .. } => (), }",
+            "fls_D5tAGzrjXFTu": "A record struct pattern deconstructing a tuple struct. .. code-block:: rust struct TupleStruct ( u32, u32, ); let tuple_struct_value = TupleStruct { 0: 11, 1: 22 }; match tuple_struct_value { TupleStruct { 1: 33, 0: 44 } => (), TupleStruct { 0: 55, .. } => (), TupleStruct { .. } => (), }",
+            "fls_FhvMzLPRlY7p": "A record struct pattern deconstructing a union. .. code-block:: rust union Union { first : u32, second: u32, } let union_value = Union { second: 11 }; unsafe { match union_value { Union { first: 22 } => (), Union { second: 33 } => (), _ => (), } }"
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "RecordStructPattern ::=\n       Deconstructee $${$$ RecordStructPatternContent? $$}$$\n\n   RecordStructPatternContent ::=\n       RecordStructRestPattern\n     | FieldDeconstructorList ($$,$$ RecordStructRestPattern | $$,$$?)\n\n   RecordStructRestPattern ::=\n       OuterAttributeOrDoc* RestPattern\n\n   FieldDeconstructorList ::=\n       FieldDeconstructor ($$,$$ FieldDeconstructor)*\n\n   FieldDeconstructor ::=\n       OuterAttributeOrDoc* (\n           IndexedDeconstructor\n         | NamedDeconstructor\n  ..."
+          }
+        }
+      },
+      "parent_fls_id": "fls_7dbd5t2750ce",
+      "sibling_fls_ids": [
+        "fls_vlrto778v49m",
+        "fls_urbr5rg9206v",
+        "fls_qfsfnql1t7m"
+      ]
+    },
+    {
+      "fls_id": "fls_vlrto778v49m",
+      "title": "Tuple Struct Patterns",
+      "category": 0,
+      "level": 3,
+      "file": "patterns",
+      "content": "Tuple Struct Patterns\n\nA tuple struct pattern is a pattern that matches a\ntuple enum variant value, or a tuple struct value.\n\nThe deconstructee of a tuple struct pattern shall resolve to a\ntuple enum variant or a tuple struct type.\n\nA subpattern of a tuple struct pattern matches a field of the\ndeconstructee when its position and the position of the field in\nthe deconstructee are the same. Such a subpattern is a\nmatched tuple struct subpattern.\n\nThe position of a subpattern is determined as follows:\n\n* If the tuple struct pattern has a RecordStructRestPattern, then\n\n * If the subpattern precedes the RecordStructRestPattern, then its\n position is the position within the PatternList in left-to-right order,\n starting from zero.\n\n * If the subpattern succeeds the RecordStructRestPattern, then its\n position is the position within the PatternList list in right-to-left\n order, starting from the arity of the deconstructee minus one.\n\n* Otherwise the position is the position within the PatternList in\n left-to-right order, starting from zero.\n\nThe type of the subpattern of a tuple struct pattern and the\ntype of the matched field shall be unifiable.\n\nFor each field of the deconstructee, the tuple struct pattern\nshall either:\n\n* Contain at most one matched tuple struct subpattern, or\n\n* Have exactly one RecordStructRestPattern.\n\nA RecordStructRestPattern is allowed even if all [field]s of the\ndeconstructee have been matched.\n\nSee fls_D5tAGzrjXFTu for the declarations of TupleStruct and\ntuple_struct_value.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_ks6y1syab2bp": "A tuple struct pattern is a pattern that matches a tuple enum variant value, or a tuple struct value.",
+            "fls_t1mrijw16k9a": "The deconstructee of a tuple struct pattern shall resolve to a tuple enum variant or a tuple struct type.",
+            "fls_ryfcrqrkp28y": "A subpattern of a tuple struct pattern matches a field of the deconstructee when its position and the position of the field in the deconstructee are the same. Such a subpattern is a matched tuple struct subpattern.",
+            "fls_ehf9r6halgh1": "The position of a subpattern is determined as follows:",
+            "fls_5lo1hs8wzz0t": "If the tuple struct pattern has a RecordStructRestPattern, then",
+            "fls_gwuc2xffosu": "If the subpattern precedes the RecordStructRestPattern, then its position is the position within the PatternList in left-to-right order, starting from zero.",
+            "fls_w369n8lmwr7g": "If the subpattern succeeds the RecordStructRestPattern, then its position is the position within the PatternList list in right-to-left order, starting from the arity of the deconstructee minus one.",
+            "fls_4is6h95jj3gd": "Otherwise the position is the position within the PatternList in left-to-right order, starting from zero.",
+            "fls_budf0rpsa4lx": "The type of the subpattern of a tuple struct pattern and the type of the matched field shall be unifiable.",
+            "fls_vo6mtauh4qhb": "For each field of the deconstructee, the tuple struct pattern shall either:",
+            "fls_rco3fwlx2a76": "Contain at most one matched tuple struct subpattern, or",
+            "fls_4vrnxslad09e": "Have exactly one RecordStructRestPattern.",
+            "fls_qgilaqy5zx7q": "A RecordStructRestPattern is allowed even if all [field]s of the deconstructee have been matched."
+          }
+        },
+        "-7": {
+          "paragraphs": {
+            "fls_2u99arsbnlnk": "See for the declarations of TupleStruct and tuple_struct_value. .. code-block:: rust match tuple_struct_value { TupleStruct ( 11, 22 ) => (), TupleStruct ( 33, .., 44 ) => (), TupleStruct ( .., 55 ) => (), TupleStruct ( 66, .. ) => (), TupleStruct ( .. ) => (), }"
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "TupleStructPattern ::=\n       Deconstructee $$($$ PatternList? $$)$$"
+          }
+        }
+      },
+      "parent_fls_id": "fls_7dbd5t2750ce",
+      "sibling_fls_ids": [
+        "fls_nruvg0es3kx7",
+        "fls_urbr5rg9206v",
+        "fls_qfsfnql1t7m"
+      ]
+    },
+    {
+      "fls_id": "fls_urbr5rg9206v",
+      "title": "Tuple Patterns",
+      "category": 0,
+      "level": 3,
+      "file": "patterns",
+      "content": "Tuple Patterns\n\nA tuple pattern is a pattern that matches a tuple which satisfies\nall criteria defined by its [subpattern]s.\n\nA tuple pattern is an irrefutable pattern when all of its\n[subpattern]s are [irrefutable pattern]s.\n\nThe type of a tuple pattern is the type of the tuple being\ndestructured.\n\nA subpattern of a tuple pattern matches a tuple field of the\ntuple type when its position and the position of the tuple field in\nthe tuple type are the same. Such a subpattern is a\nmatched tuple subpattern.\n\nThe position of a subpattern is determined as follows:\n\n* If the tuple pattern has a RestPattern, then\n\n * If the subpattern precedes the RestPattern, then its\n position is the position within the PatternList in left-to-right order,\n starting from zero.\n\n * If the subpattern succeeds the RestPattern, then its\n position is the position within the PatternList list in right-to-left\n order, starting from the arity of the tuple type minus one.\n\n* Otherwise the position is the position within the PatternList in\n left-to-right order, starting from zero.\n\nThe type of the subpattern of a tuple pattern and the\ntype of the matched tuple field shall be unifiable.\n\nFor each tuple field of the tuple type, the tuple pattern shall\neither:\n\n* Contain at most one matched tuple subpattern, or\n\n* Have exactly one RestPattern.\n\nA RestPattern is allowed even if all [tuple field]s of the\ntuple type have been matched.\n\nA tuple pattern in the context of a let statement.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_e2manugp4e0b": "A tuple pattern is a pattern that matches a tuple which satisfies all criteria defined by its [subpattern]s.",
+            "fls_xk8udu4k61kj": "A tuple pattern is an irrefutable pattern when all of its [subpattern]s are [irrefutable pattern]s.",
+            "fls_yhcaz6v49ub2": "The type of a tuple pattern is the type of the tuple being destructured.",
+            "fls_6WCm0Ra8NQl4": "A subpattern of a tuple pattern matches a tuple field of the tuple type when its position and the position of the tuple field in the tuple type are the same. Such a subpattern is a matched tuple subpattern.",
+            "fls_a3qvQjyilORx": "The position of a subpattern is determined as follows:",
+            "fls_KmIHFxlBYelZ": "If the tuple pattern has a RestPattern, then",
+            "fls_5bXqIaKiFcLg": "If the subpattern precedes the RestPattern, then its position is the position within the PatternList in left-to-right order, starting from zero.",
+            "fls_soHCAVfGlv5f": "If the subpattern succeeds the RestPattern, then its position is the position within the PatternList list in right-to-left order, starting from the arity of the tuple type minus one.",
+            "fls_iiKvYs61959S": "Otherwise the position is the position within the PatternList in left-to-right order, starting from zero.",
+            "fls_F4k6ljuP8Amf": "The type of the subpattern of a tuple pattern and the type of the matched tuple field shall be unifiable.",
+            "fls_GjjCDkVJPQS8": "For each tuple field of the tuple type, the tuple pattern shall either:",
+            "fls_9Qw9N87swwNe": "Contain at most one matched tuple subpattern, or",
+            "fls_CQ84wkLyrAJv": "Have exactly one RestPattern.",
+            "fls_cC6ohNuiltfL": "A RestPattern is allowed even if all [tuple field]s of the tuple type have been matched."
+          }
+        },
+        "-7": {
+          "paragraphs": {
+            "fls_8r81vtv5hnrd": "A tuple pattern in the context of a let statement. .. code-block:: rust let pair = (1, \"two\"); let (first, second) = pair;"
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "TuplePattern ::=\n       $$($$ PatternList? $$)$$"
+          }
+        }
+      },
+      "parent_fls_id": "fls_7dbd5t2750ce",
+      "sibling_fls_ids": [
+        "fls_nruvg0es3kx7",
+        "fls_vlrto778v49m",
+        "fls_qfsfnql1t7m"
+      ]
+    },
+    {
+      "fls_id": "fls_qfsfnql1t7m",
+      "title": "Underscore Patterns",
+      "category": 0,
+      "level": 3,
+      "file": "patterns",
+      "content": "Underscore Patterns\n\nAn underscore pattern is a pattern that matches any single value.\n\nAn underscore pattern is an irrefutable pattern.\n\nThe type of an underscore pattern is the type of the value\nit matches.\n\nAn underscore pattern in the context of a let statement.\nSee fls_8r81vtv5hnrd for the declaration of pair.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_dreny9e0ei6r": "An underscore pattern is a pattern that matches any single value.",
+            "fls_42fye1v0th8l": "An underscore pattern is an irrefutable pattern.",
+            "fls_b87mvrcc13f2": "The type of an underscore pattern is the type of the value it matches."
+          }
+        },
+        "-7": {
+          "paragraphs": {
+            "fls_j3u6x1ensrbe": "An underscore pattern in the context of a let statement. See for the declaration of pair. .. code-block:: rust let (first, _) = pair;"
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "UnderscorePattern ::=\n       $$_$$"
+          }
+        }
+      },
+      "parent_fls_id": "fls_7dbd5t2750ce",
+      "sibling_fls_ids": [
+        "fls_nruvg0es3kx7",
+        "fls_vlrto778v49m",
+        "fls_urbr5rg9206v"
+      ]
+    },
+    {
+      "fls_id": "fls_qssijtofa9i8",
+      "title": "Binding Modes",
+      "category": 0,
+      "level": 2,
+      "file": "patterns",
+      "content": "Binding Modes\n\nA binding pattern is either an identifier pattern or a\nshorthand deconstructor.\n\nA binding of a binding pattern binds a matched value to a\nname.\n\nA binding with binding mode by value binds the matched\nvalue by passing <passing convention> the value to the place\nindicated by the name.\n\nA binding with binding mode by reference binds an\nimmutable reference to the matched value to the name.\n\nA binding with binding mode by mutable reference binds a\nmutable reference to the matched value to the name.\n\nA non-reference pattern is any pattern except\nnon-[binding pattern]s, [path pattern]s, [reference pattern]s,\nand [underscore pattern]s.\n\nIf a binding pattern does not explicitly specify keyword ref,\nkeyword mut, or [keyword]s ref mut, then its binding mode\nuses the current binding mode of pattern matching.\n\nInitially, the binding mode of a binding is by value.\n\nDuring the process of pattern matching, each time a reference\nis matched against a non-[reference pattern], the reference is\ndereferenced and the binding mode is updated as follows:\n\n* If the reference is an immutable reference, then the\n binding mode is updated to by reference.\n\n* If the reference is a mutable reference and the binding mode\n is by value, then the binding mode is updated to\n by mutable reference.\n\nThe process repeats if the dereferenced value is a reference.\n\nA [binding pattern]s binds its binding to a matched value as\nfollows:\n\n* If the binding mode is by reference or the binding pattern\n appears only with keyword ref, then the binding is bound to a\n reference of the matched value.\n\n* If the binding mode is by mutable reference or the binding\n pattern appears with keywords ref mut, then the binding is bound\n to a mutable reference of the matched value.\n\n* If the binding mode is by value, then the binding is\n bound to a copy of the matched value if its type implements the\n core::marker::Copy trait, otherwise the binding is bound to\n the move of the matched value.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_7xby6d1903kw": "A binding pattern is either an identifier pattern or a shorthand deconstructor.",
+            "fls_vnh9wfrvumdz": "A binding of a binding pattern binds a matched value to a name.",
+            "fls_RViC5UEZPQUV": "A binding with binding mode by value binds the matched value by passing <passing convention> the value to the place indicated by the name.",
+            "fls_6lXtoxebD5It": "A binding with binding mode by reference binds an immutable reference to the matched value to the name.",
+            "fls_xNxQN8sgpZ3O": "A binding with binding mode by mutable reference binds a mutable reference to the matched value to the name.",
+            "fls_dqe75i8h2fie": "A non-reference pattern is any pattern except non-[binding pattern]s, [path pattern]s, [reference pattern]s, and [underscore pattern]s.",
+            "fls_y3wuvj1y5j20": "If a binding pattern does not explicitly specify keyword ref, keyword mut, or [keyword]s ref mut, then its binding mode uses the current binding mode of pattern matching.",
+            "fls_55jtzh6a292x": "Initially, the binding mode of a binding is by value.",
+            "fls_qcaf2kup7zn0": "During the process of pattern matching, each time a reference is matched against a non-[reference pattern], the reference is dereferenced and the binding mode is updated as follows:",
+            "fls_6acdqz8rwnn": "If the reference is an immutable reference, then the binding mode is updated to by reference.",
+            "fls_tv0avib387bv": "If the reference is a mutable reference and the binding mode is by value, then the binding mode is updated to by mutable reference.",
+            "fls_dbgmwldye42e": "The process repeats if the dereferenced value is a reference."
+          }
+        },
+        "-3": {
+          "paragraphs": {
+            "fls_t34oqarwcusu": "A [binding pattern]s binds its binding to a matched value as follows:",
+            "fls_7gxb74u1np36": "If the binding mode is by reference or the binding pattern appears only with keyword ref, then the binding is bound to a reference of the matched value.",
+            "fls_7y56d0ulxomf": "If the binding mode is by mutable reference or the binding pattern appears with keywords ref mut, then the binding is bound to a mutable reference of the matched value.",
+            "fls_pxvtqxke1enp": "If the binding mode is by value, then the binding is bound to a copy of the matched value if its type implements the core::marker::Copy trait, otherwise the binding is bound to the move of the matched value."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "Binding ::=\n       Name"
+          }
+        }
+      },
+      "parent_fls_id": "fls_xgqh0ju6bmbn",
+      "sibling_fls_ids": [
+        "fls_uh76pw6ykd57",
+        "fls_7dbd5t2750ce",
+        "fls_jm6l7b90h6wa"
+      ]
+    },
+    {
+      "fls_id": "fls_jm6l7b90h6wa",
+      "title": "Pattern Matching",
+      "category": 0,
+      "level": 2,
+      "file": "patterns",
+      "content": "Pattern Matching\n\nPattern matching that involves a pattern and a context value\nproceeds as follows:\n\n#. For each pattern-without-alternation of the pattern:\n\n #. If the pattern-without-alternation is an identifier pattern,\n then perform identifier pattern matching.\n\n #. If the pattern-without-alternation is a literal pattern, then\n perform literal pattern matching.\n\n #. If the pattern-without-alternation is a parenthesized pattern,\n then perform parenthesized pattern matching.\n\n #. If the pattern-without-alternation is a path pattern, then\n perform path pattern matching.\n\n #. If the pattern-without-alternation is a range pattern, then\n perform range pattern matching.\n\n #. If the pattern-without-alternation is a reference pattern, then\n perform reference pattern matching.\n\n #. If the pattern-without-alternation is a slice pattern, then\n perform slice pattern matching.\n\n #. If the pattern-without-alternation is a record struct pattern,\n then perform record struct pattern matching.\n\n #. If the pattern-without-alternation is a tuple struct pattern,\n then perform tuple struct pattern matching.\n\n #. If the pattern-without-alternation is a tuple pattern, then\n perform tuple pattern matching.\n\n #. If the pattern-without-alternation is an underscore pattern,\n then perform underscore pattern matching.\n\n #. Otherwise pattern matching fails.\n\nOnly the [binding]s of a matched pattern-without-alternation are\nintroduced into a binding scope.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_tlwr4u7bjhh5": "Pattern matching that involves a pattern and a context value proceeds as follows: #.",
+            "fls_67ajub7d2b4c": "For each pattern-without-alternation of the pattern: #.",
+            "fls_62626ws222op": "If the pattern-without-alternation is an identifier pattern, then perform identifier pattern matching. #.",
+            "fls_q0z46h1gnzez": "If the pattern-without-alternation is a literal pattern, then perform literal pattern matching. #.",
+            "fls_1r0vm6rg13o9": "If the pattern-without-alternation is a parenthesized pattern, then perform parenthesized pattern matching. #.",
+            "fls_am5h8r887bz5": "If the pattern-without-alternation is a path pattern, then perform path pattern matching. #.",
+            "fls_eppmiloh7bgg": "If the pattern-without-alternation is a range pattern, then perform range pattern matching. #.",
+            "fls_gwc08xayno7q": "If the pattern-without-alternation is a reference pattern, then perform reference pattern matching. #.",
+            "fls_19iygu12s315": "If the pattern-without-alternation is a slice pattern, then perform slice pattern matching. #.",
+            "fls_r307spfk6cs9": "If the pattern-without-alternation is a record struct pattern, then perform record struct pattern matching. #.",
+            "fls_qhdofvbso3gl": "If the pattern-without-alternation is a tuple struct pattern, then perform tuple struct pattern matching. #.",
+            "fls_drb114dtvlpt": "If the pattern-without-alternation is a tuple pattern, then perform tuple pattern matching. #.",
+            "fls_uxysntb3u03j": "If the pattern-without-alternation is an underscore pattern, then perform underscore pattern matching. #.",
+            "fls_wh201rmh6u6d": "Otherwise pattern matching fails.",
+            "fls_vstdqifqipbh": "Only the [binding]s of a matched pattern-without-alternation are introduced into a binding scope."
+          }
+        }
+      },
+      "parent_fls_id": "fls_xgqh0ju6bmbn",
+      "sibling_fls_ids": [
+        "fls_uh76pw6ykd57",
+        "fls_7dbd5t2750ce",
+        "fls_qssijtofa9i8"
+      ]
+    },
+    {
+      "fls_id": "fls_vnai6ag4qrdb",
+      "title": "Identifier Pattern Matching",
+      "category": 0,
+      "level": 3,
+      "file": "patterns",
+      "content": "Identifier Pattern Matching\n\nAn identifier pattern with keyword mut shall require that the\ncontext value is a mutable place expression.\n\nIdentifier pattern matching proceeds as follows:\n\n#. If the identifier pattern has a bound pattern, then\n\n #. Performed pattern matching with the bound pattern and the same\n context value.\n\n #. If matching the bound pattern fails, then matching fails.\n\n#. The context value is bound to the binding of the\n identifier pattern according to the binding mode.\n\n#. Matching succeeds.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_4f3lzw64myhk": "An identifier pattern with keyword mut shall require that the context value is a mutable place expression."
+          }
+        },
+        "-3": {
+          "paragraphs": {
+            "fls_wauqwmdbcpna": "Identifier pattern matching proceeds as follows: #.",
+            "fls_3jyog8n6x2aa": "If the identifier pattern has a bound pattern, then #.",
+            "fls_w637uvlbzsyo": "Performed pattern matching with the bound pattern and the same context value. #.",
+            "fls_arz8ik3gf6u4": "If matching the bound pattern fails, then matching fails. #.",
+            "fls_u6o5ndnezwbe": "The context value is bound to the binding of the identifier pattern according to the binding mode. #.",
+            "fls_h1er04t0yta7": "Matching succeeds."
+          }
+        }
+      },
+      "parent_fls_id": "fls_jm6l7b90h6wa",
+      "sibling_fls_ids": [
+        "fls_azzf1llv3wf",
+        "fls_5loglxds6zik",
+        "fls_d44aflefat88",
+        "fls_fyskeih6twyb",
+        "fls_org6hqv397fp",
+        "fls_57ic33pwdvp3",
+        "fls_asj8rgccvkoe",
+        "fls_eexupzdsu7f",
+        "fls_rce8bb7nz2jy",
+        "fls_yc4xm4hrfyw7"
+      ]
+    },
+    {
+      "fls_id": "fls_azzf1llv3wf",
+      "title": "Literal Pattern Matching",
+      "category": 0,
+      "level": 3,
+      "file": "patterns",
+      "content": "Literal Pattern Matching\n\nLiteral pattern matching proceeds as follows:\n\n#. If the literal of the literal pattern and the context value\n are equal, then matching succeeds.\n\n#. Otherwise matching fails.",
+      "rubrics": {
+        "-3": {
+          "paragraphs": {
+            "fls_fqkhhgushje9": "Literal pattern matching proceeds as follows: #.",
+            "fls_m01eo9sa55s": "If the literal of the literal pattern and the context value are equal, then matching succeeds. #.",
+            "fls_294jtwbfq3p9": "Otherwise matching fails."
+          }
+        }
+      },
+      "parent_fls_id": "fls_jm6l7b90h6wa",
+      "sibling_fls_ids": [
+        "fls_vnai6ag4qrdb",
+        "fls_5loglxds6zik",
+        "fls_d44aflefat88",
+        "fls_fyskeih6twyb",
+        "fls_org6hqv397fp",
+        "fls_57ic33pwdvp3",
+        "fls_asj8rgccvkoe",
+        "fls_eexupzdsu7f",
+        "fls_rce8bb7nz2jy",
+        "fls_yc4xm4hrfyw7"
+      ]
+    },
+    {
+      "fls_id": "fls_5loglxds6zik",
+      "title": "Parenthesized Pattern Matching",
+      "category": 0,
+      "level": 3,
+      "file": "patterns",
+      "content": "Parenthesized Pattern Matching\n\nParenthesized pattern matching performs pattern matching with its\nsubpattern and the same context value.",
+      "rubrics": {
+        "-3": {
+          "paragraphs": {
+            "fls_jajvvwoy3399": "Parenthesized pattern matching performs pattern matching with its subpattern and the same context value."
+          }
+        }
+      },
+      "parent_fls_id": "fls_jm6l7b90h6wa",
+      "sibling_fls_ids": [
+        "fls_vnai6ag4qrdb",
+        "fls_azzf1llv3wf",
+        "fls_d44aflefat88",
+        "fls_fyskeih6twyb",
+        "fls_org6hqv397fp",
+        "fls_57ic33pwdvp3",
+        "fls_asj8rgccvkoe",
+        "fls_eexupzdsu7f",
+        "fls_rce8bb7nz2jy",
+        "fls_yc4xm4hrfyw7"
+      ]
+    },
+    {
+      "fls_id": "fls_d44aflefat88",
+      "title": "Path Pattern Matching",
+      "category": 0,
+      "level": 3,
+      "file": "patterns",
+      "content": "Path Pattern Matching\n\nPath pattern matching proceeds as follows:\n\n#. If the constant, unit enum variant or unit struct the\n path of the path pattern resolved to and the context value\n are equal, then matching succeeds.\n\n#. Otherwise matching fails.",
+      "rubrics": {
+        "-3": {
+          "paragraphs": {
+            "fls_4faltss0xbn4": "Path pattern matching proceeds as follows: #.",
+            "fls_fqt5w3qsykca": "If the constant, unit enum variant or unit struct the path of the path pattern resolved to and the context value are equal, then matching succeeds. #.",
+            "fls_h3y8r4298s53": "Otherwise matching fails."
+          }
+        }
+      },
+      "parent_fls_id": "fls_jm6l7b90h6wa",
+      "sibling_fls_ids": [
+        "fls_vnai6ag4qrdb",
+        "fls_azzf1llv3wf",
+        "fls_5loglxds6zik",
+        "fls_fyskeih6twyb",
+        "fls_org6hqv397fp",
+        "fls_57ic33pwdvp3",
+        "fls_asj8rgccvkoe",
+        "fls_eexupzdsu7f",
+        "fls_rce8bb7nz2jy",
+        "fls_yc4xm4hrfyw7"
+      ]
+    },
+    {
+      "fls_id": "fls_fyskeih6twyb",
+      "title": "Range Pattern Matching",
+      "category": 0,
+      "level": 3,
+      "file": "patterns",
+      "content": "Range Pattern Matching\n\nRange pattern matching proceeds as follows:\n\n#. If the range pattern is expressed as a half-open range pattern and\n the context value is in the inclusive range from the\n range pattern low bound to the maximum value of the\n range pattern low bound's type, then matching succeeds.\n\n#. If the range pattern is expressed as either an inclusive range\n pattern or an obsolete range pattern and the context value is in\n the inclusive range from the range pattern low bound to the\n range pattern high bound, then matching succeeds.\n\n#. If the range pattern is expressed as an exclusive range pattern\n and the context value is in the exclusive range from the\n range pattern low bound to the range pattern high bound, then\n matching succeeds.\n\n#. Otherwise matching fails.",
+      "rubrics": {
+        "-3": {
+          "paragraphs": {
+            "fls_mrh9vfdek5fi": "Range pattern matching proceeds as follows: #.",
+            "fls_7nxkgls0a5os": "If the range pattern is expressed as a half-open range pattern and the context value is in the inclusive range from the range pattern low bound to the maximum value of the range pattern low bound's type, then matching succeeds. #.",
+            "fls_6kgj2fjccoig": "If the range pattern is expressed as either an inclusive range pattern or an obsolete range pattern and the context value is in the inclusive range from the range pattern low bound to the range pattern high bound, then matching succeeds. #.",
+            "fls_EDL1Pi56KQ2H": "If the range pattern is expressed as an exclusive range pattern and the context value is in the exclusive range from the range pattern low bound to the range pattern high bound, then matching succeeds. #.",
+            "fls_n4t3xah1pk7i": "Otherwise matching fails."
+          }
+        }
+      },
+      "parent_fls_id": "fls_jm6l7b90h6wa",
+      "sibling_fls_ids": [
+        "fls_vnai6ag4qrdb",
+        "fls_azzf1llv3wf",
+        "fls_5loglxds6zik",
+        "fls_d44aflefat88",
+        "fls_org6hqv397fp",
+        "fls_57ic33pwdvp3",
+        "fls_asj8rgccvkoe",
+        "fls_eexupzdsu7f",
+        "fls_rce8bb7nz2jy",
+        "fls_yc4xm4hrfyw7"
+      ]
+    },
+    {
+      "fls_id": "fls_org6hqv397fp",
+      "title": "Reference Pattern Matching",
+      "category": 0,
+      "level": 3,
+      "file": "patterns",
+      "content": "Reference Pattern Matching\n\nReference pattern matching proceeds as follows:\n\n#. Dereference the context value.\n\n#. Perform pattern matching with its subpattern and the dereferenced\n value.",
+      "rubrics": {
+        "-3": {
+          "paragraphs": {
+            "fls_ysfgdzaiww8z": "Reference pattern matching proceeds as follows: #.",
+            "fls_7rxnxd4ybxbt": "Dereference the context value. #.",
+            "fls_l2nwz166curc": "Perform pattern matching with its subpattern and the dereferenced value."
+          }
+        }
+      },
+      "parent_fls_id": "fls_jm6l7b90h6wa",
+      "sibling_fls_ids": [
+        "fls_vnai6ag4qrdb",
+        "fls_azzf1llv3wf",
+        "fls_5loglxds6zik",
+        "fls_d44aflefat88",
+        "fls_fyskeih6twyb",
+        "fls_57ic33pwdvp3",
+        "fls_asj8rgccvkoe",
+        "fls_eexupzdsu7f",
+        "fls_rce8bb7nz2jy",
+        "fls_yc4xm4hrfyw7"
+      ]
+    },
+    {
+      "fls_id": "fls_57ic33pwdvp3",
+      "title": "Slice Pattern Matching",
+      "category": 0,
+      "level": 3,
+      "file": "patterns",
+      "content": "Slice Pattern Matching\n\nSlice pattern matching proceeds as follows:\n\n#. If the expected type is a slice type then,\n\n #. If the number of [subpattern]s of the slice pattern is greater\n than the length of the context value, then matching fails.\n\n #. If the number of [subpattern]s of the slice pattern is less than\n the size of the context value and one of those [subpattern]s is\n not a rest pattern, then matching fails.\n\n #. For each subpattern of the slice pattern:\n\n #. Perform pattern matching with the subpattern and the\n corresponding value from the context value, ignoring\n [rest pattern]s.\n\n #. If matching the subpattern fails, then matching fails.\n\n#. Otherwise, if the expected type is an array type, then\n\n #. For each subpattern of the slice pattern:\n\n #. Perform pattern matching with the subpattern and the\n corresponding value from the context value, ignoring\n [rest pattern]s.\n\n #. If matching the subpattern fails, then matching fails.",
+      "rubrics": {
+        "-3": {
+          "paragraphs": {
+            "fls_hzyv4ofu0ny": "Slice pattern matching proceeds as follows: #.",
+            "fls_x10AKxoXXbs8": "If the expected type is a slice type then, #.",
+            "fls_69bnxrtj0nar": "If the number of [subpattern]s of the slice pattern is greater than the length of the context value, then matching fails. #.",
+            "fls_twhwiy213ibf": "If the number of [subpattern]s of the slice pattern is less than the size of the context value and one of those [subpattern]s is not a rest pattern, then matching fails. #.",
+            "fls_ei7y4ul6n6hu": "For each subpattern of the slice pattern: #.",
+            "fls_ad2jud5h1rfp": "Perform pattern matching with the subpattern and the corresponding value from the context value, ignoring [rest pattern]s. #.",
+            "fls_pc97m47p34wq": "If matching the subpattern fails, then matching fails. #.",
+            "fls_kwQyiSoyAwZ8": "Otherwise, if the expected type is an array type, then #.",
+            "fls_zAdtysiuUwBX": "For each subpattern of the slice pattern: #.",
+            "fls_SezcYXcSlEq7": "Perform pattern matching with the subpattern and the corresponding value from the context value, ignoring [rest pattern]s. #.",
+            "fls_6xRXEt2pGnZi": "If matching the subpattern fails, then matching fails."
+          }
+        }
+      },
+      "parent_fls_id": "fls_jm6l7b90h6wa",
+      "sibling_fls_ids": [
+        "fls_vnai6ag4qrdb",
+        "fls_azzf1llv3wf",
+        "fls_5loglxds6zik",
+        "fls_d44aflefat88",
+        "fls_fyskeih6twyb",
+        "fls_org6hqv397fp",
+        "fls_asj8rgccvkoe",
+        "fls_eexupzdsu7f",
+        "fls_rce8bb7nz2jy",
+        "fls_yc4xm4hrfyw7"
+      ]
+    },
+    {
+      "fls_id": "fls_asj8rgccvkoe",
+      "title": "Record Struct Pattern Matching",
+      "category": 0,
+      "level": 3,
+      "file": "patterns",
+      "content": "Record Struct Pattern Matching\n\nRecord struct pattern matching proceeds as follows:\n\n#. If the number of [subpattern]s of the record struct pattern is less\n than the number of [field]s of the context value and one of those\n [subpattern]s is not a rest pattern, then matching fails.\n\n#. For each subpattern of the struct pattern\n\n #. If the subpattern is a shorthand deconstructor, then the\n corresponding field of the context value is bound to the\n binding of the shorthand deconstructor according to the\n binding mode.\n\n #. Otherwise perform pattern matching with the subpattern and the\n corresponding field from the context value, ignoring [rest\n pattern]s.\n\n #. If matching the subpattern fails, then matching fails.",
+      "rubrics": {
+        "-3": {
+          "paragraphs": {
+            "fls_evuhau2rwm8i": "Record struct pattern matching proceeds as follows: #.",
+            "fls_bde1hpvrosui": "If the number of [subpattern]s of the record struct pattern is less than the number of [field]s of the context value and one of those [subpattern]s is not a rest pattern, then matching fails. #.",
+            "fls_447s4hc07ozn": "For each subpattern of the struct pattern #.",
+            "fls_vfdb1i5l41yk": "If the subpattern is a shorthand deconstructor, then the corresponding field of the context value is bound to the binding of the shorthand deconstructor according to the binding mode. #.",
+            "fls_yfk52fr7trw3": "Otherwise perform pattern matching with the subpattern and the corresponding field from the context value, ignoring [rest pattern]s. #.",
+            "fls_6sdcykdrpe5d": "If matching the subpattern fails, then matching fails."
+          }
+        }
+      },
+      "parent_fls_id": "fls_jm6l7b90h6wa",
+      "sibling_fls_ids": [
+        "fls_vnai6ag4qrdb",
+        "fls_azzf1llv3wf",
+        "fls_5loglxds6zik",
+        "fls_d44aflefat88",
+        "fls_fyskeih6twyb",
+        "fls_org6hqv397fp",
+        "fls_57ic33pwdvp3",
+        "fls_eexupzdsu7f",
+        "fls_rce8bb7nz2jy",
+        "fls_yc4xm4hrfyw7"
+      ]
+    },
+    {
+      "fls_id": "fls_eexupzdsu7f",
+      "title": "Tuple Struct Pattern Matching",
+      "category": 0,
+      "level": 3,
+      "file": "patterns",
+      "content": "Tuple Struct Pattern Matching\n\nTuple struct pattern matching proceeds as follows:\n\n#. For each subpattern of the tuple struct pattern\n\n #. Otherwise perform pattern matching with the subpattern and the\n corresponding field from the context value, ignoring\n [rest pattern]s.\n\n #. If matching the subpattern fails, then matching fails.",
+      "rubrics": {
+        "-3": {
+          "paragraphs": {
+            "fls_dexg9g9cct30": "Tuple struct pattern matching proceeds as follows: #.",
+            "fls_boc7juqj69hw": "For each subpattern of the tuple struct pattern #.",
+            "fls_4dr1stiw82v9": "Otherwise perform pattern matching with the subpattern and the corresponding field from the context value, ignoring [rest pattern]s. #.",
+            "fls_h14emtt6iyk3": "If matching the subpattern fails, then matching fails."
+          }
+        }
+      },
+      "parent_fls_id": "fls_jm6l7b90h6wa",
+      "sibling_fls_ids": [
+        "fls_vnai6ag4qrdb",
+        "fls_azzf1llv3wf",
+        "fls_5loglxds6zik",
+        "fls_d44aflefat88",
+        "fls_fyskeih6twyb",
+        "fls_org6hqv397fp",
+        "fls_57ic33pwdvp3",
+        "fls_asj8rgccvkoe",
+        "fls_rce8bb7nz2jy",
+        "fls_yc4xm4hrfyw7"
+      ]
+    },
+    {
+      "fls_id": "fls_rce8bb7nz2jy",
+      "title": "Tuple Pattern Matching",
+      "category": 0,
+      "level": 3,
+      "file": "patterns",
+      "content": "Tuple Pattern Matching\n\nTuple pattern matching proceeds as follows:\n\n#. For each subpattern of the tuple pattern\n\n #. Perform pattern matching with the subpattern and the\n corresponding field from the context value, ignoring\n [rest pattern]s.\n\n #. If matching the subpattern fails, then matching fails.",
+      "rubrics": {
+        "-3": {
+          "paragraphs": {
+            "fls_w4xypnrnhycb": "Tuple pattern matching proceeds as follows: #.",
+            "fls_vnx1bpval595": "For each subpattern of the tuple pattern #.",
+            "fls_dzf32f40y7fr": "Perform pattern matching with the subpattern and the corresponding field from the context value, ignoring [rest pattern]s. #.",
+            "fls_krl32txvxxkz": "If matching the subpattern fails, then matching fails."
+          }
+        }
+      },
+      "parent_fls_id": "fls_jm6l7b90h6wa",
+      "sibling_fls_ids": [
+        "fls_vnai6ag4qrdb",
+        "fls_azzf1llv3wf",
+        "fls_5loglxds6zik",
+        "fls_d44aflefat88",
+        "fls_fyskeih6twyb",
+        "fls_org6hqv397fp",
+        "fls_57ic33pwdvp3",
+        "fls_asj8rgccvkoe",
+        "fls_eexupzdsu7f",
+        "fls_yc4xm4hrfyw7"
+      ]
+    },
+    {
+      "fls_id": "fls_yc4xm4hrfyw7",
+      "title": "Underscore Pattern Matching",
+      "category": 0,
+      "level": 3,
+      "file": "patterns",
+      "content": "Underscore Pattern Matching\n\nUnderscore pattern matching proceeds as follows:\n\n#. The context value is matched unconditionally.\n\n#. Matching succeeds.",
+      "rubrics": {
+        "-3": {
+          "paragraphs": {
+            "fls_dvk7r1gf7pwp": "Underscore pattern matching proceeds as follows: #.",
+            "fls_e0uprihqn1y6": "The context value is matched unconditionally. #.",
+            "fls_ljcq2vyo052q": "Matching succeeds."
+          }
+        }
+      },
+      "parent_fls_id": "fls_jm6l7b90h6wa",
+      "sibling_fls_ids": [
+        "fls_vnai6ag4qrdb",
+        "fls_azzf1llv3wf",
+        "fls_5loglxds6zik",
+        "fls_d44aflefat88",
+        "fls_fyskeih6twyb",
+        "fls_org6hqv397fp",
+        "fls_57ic33pwdvp3",
+        "fls_asj8rgccvkoe",
+        "fls_eexupzdsu7f",
+        "fls_rce8bb7nz2jy"
+      ]
+    }
+  ]
+}

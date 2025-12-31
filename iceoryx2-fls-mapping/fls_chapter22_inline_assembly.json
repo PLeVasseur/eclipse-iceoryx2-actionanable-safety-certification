@@ -38,17 +38,17 @@
       "description": "Registers",
       "status": "deliberately_avoided",
       "findings": {
+        "count": 0,
+        "samples_waiver": {
+          "reason": "other",
+          "explanation": "iceoryx2 production code does not use inline assembly for portability. Register usage only exists in bare-metal examples which are not production code.",
+          "approved_by": "manual_review",
+          "date": "2025-12-30"
+        },
         "description": "iceoryx2 production code does not use inline assembly registers. Memory synchronization uses fence()/compiler_fence() instead.",
         "rationale": "Portability across architectures without architecture-specific assembly"
       },
-      "samples": [],
-      "count": 0,
-      "samples_waiver": {
-        "reason": "other",
-        "explanation": "iceoryx2 production code does not use inline assembly for portability. Register usage only exists in bare-metal examples which are not production code.",
-        "approved_by": "manual_review",
-        "date": "2025-12-30"
-      }
+      "samples": []
     },
     "register_classes": {
       "fls_section": "22.2",
@@ -58,11 +58,11 @@
       "description": "Register Classes",
       "status": "not_used",
       "findings": {
+        "count": null,
+        "count_methodology": "Pattern not defined for this section",
         "description": "No register class specifiers found. Uses explicit named registers."
       },
-      "samples": [],
-      "count": null,
-      "count_methodology": "Pattern not defined for this section"
+      "samples": []
     },
     "register_arguments": {
       "fls_section": "22.3",
@@ -72,17 +72,17 @@
       "description": "Register Arguments",
       "status": "deliberately_avoided",
       "findings": {
+        "count": 0,
+        "samples_waiver": {
+          "reason": "other",
+          "explanation": "iceoryx2 production code does not use inline assembly register arguments. Only bare-metal examples use asm! which are not production code.",
+          "approved_by": "manual_review",
+          "date": "2025-12-30"
+        },
         "description": "iceoryx2 production code does not use inline assembly register arguments.",
         "rationale": "No asm! usage in production code for portability"
       },
-      "samples": [],
-      "count": 0,
-      "samples_waiver": {
-        "reason": "other",
-        "explanation": "iceoryx2 production code does not use inline assembly register arguments. Only bare-metal examples use asm! which are not production code.",
-        "approved_by": "manual_review",
-        "date": "2025-12-30"
-      }
+      "samples": []
     },
     "assembly_instructions": {
       "fls_section": "22.4",
@@ -92,17 +92,17 @@
       "description": "Assembly Instructions",
       "status": "deliberately_avoided",
       "findings": {
+        "count": 0,
+        "samples_waiver": {
+          "reason": "other",
+          "explanation": "iceoryx2 production code does not use inline assembly instructions. Only bare-metal examples use asm! which are not production code.",
+          "approved_by": "manual_review",
+          "date": "2025-12-30"
+        },
         "description": "iceoryx2 production code does not use inline assembly instructions.",
         "rationale": "Memory synchronization achieved through Rust's fence() and compiler_fence() APIs"
       },
       "samples": [],
-      "count": 0,
-      "samples_waiver": {
-        "reason": "other",
-        "explanation": "iceoryx2 production code does not use inline assembly instructions. Only bare-metal examples use asm! which are not production code.",
-        "approved_by": "manual_review",
-        "date": "2025-12-30"
-      },
       "subsections": {
         "register_parameter_modifiers": {
           "fls_section": "22.4.1",
@@ -112,17 +112,17 @@
           "description": "Register Parameter Modifiers",
           "status": "deliberately_avoided",
           "findings": {
+            "count": 0,
+            "samples_waiver": {
+              "reason": "other",
+              "explanation": "iceoryx2 production code does not use inline assembly register parameter modifiers. Only bare-metal examples use asm! which are not production code.",
+              "approved_by": "manual_review",
+              "date": "2025-12-30"
+            },
             "description": "iceoryx2 production code does not use inline assembly register parameter modifiers.",
             "rationale": "No asm! usage in production code for portability"
           },
-          "samples": [],
-          "count": 0,
-          "samples_waiver": {
-            "reason": "other",
-            "explanation": "iceoryx2 production code does not use inline assembly register parameter modifiers. Only bare-metal examples use asm! which are not production code.",
-            "approved_by": "manual_review",
-            "date": "2025-12-30"
-          }
+          "samples": []
         },
         "directive_support": {
           "fls_section": "22.4.2",
@@ -132,17 +132,17 @@
           "description": "Directive Support",
           "status": "deliberately_avoided",
           "findings": {
+            "count": 0,
+            "samples_waiver": {
+              "reason": "other",
+              "explanation": "iceoryx2 production code does not use assembly directives. Only bare-metal examples use global_asm! which are not production code.",
+              "approved_by": "manual_review",
+              "date": "2025-12-30"
+            },
             "description": "iceoryx2 production code does not use assembly directives.",
             "rationale": "No global_asm! usage in production code for portability"
           },
-          "samples": [],
-          "count": 0,
-          "samples_waiver": {
-            "reason": "other",
-            "explanation": "iceoryx2 production code does not use assembly directives. Only bare-metal examples use global_asm! which are not production code.",
-            "approved_by": "manual_review",
-            "date": "2025-12-30"
-          }
+          "samples": []
         }
       }
     },
@@ -154,11 +154,11 @@
       "description": "ABI Clobbers",
       "status": "not_used",
       "findings": {
+        "count": null,
+        "count_methodology": "Pattern not defined for this section",
         "description": "No explicit clobber lists found"
       },
-      "samples": [],
-      "count": null,
-      "count_methodology": "Pattern not defined for this section"
+      "samples": []
     },
     "assembly_options": {
       "fls_section": "22.6",
@@ -168,17 +168,17 @@
       "description": "Assembly Options",
       "status": "deliberately_avoided",
       "findings": {
+        "count": 0,
+        "samples_waiver": {
+          "reason": "other",
+          "explanation": "iceoryx2 production code does not use inline assembly options. Only bare-metal examples use asm! options which are not production code.",
+          "approved_by": "manual_review",
+          "date": "2025-12-30"
+        },
         "description": "iceoryx2 production code does not use inline assembly options.",
         "rationale": "No asm! usage in production code for portability"
       },
-      "samples": [],
-      "count": 0,
-      "samples_waiver": {
-        "reason": "other",
-        "explanation": "iceoryx2 production code does not use inline assembly options. Only bare-metal examples use asm! options which are not production code.",
-        "approved_by": "manual_review",
-        "date": "2025-12-30"
-      }
+      "samples": []
     },
     "macros_asm_global_asm_and_naked_asm": {
       "fls_section": "22.7",
@@ -188,6 +188,13 @@
       "description": "Macros: asm, global_asm, and naked_asm",
       "status": "deliberately_avoided",
       "findings": {
+        "count": 0,
+        "samples_waiver": {
+          "reason": "other",
+          "explanation": "iceoryx2 production code does not use asm!, global_asm!, or naked_asm! macros. Only bare-metal examples (not production) use these constructs. Production code uses fence()/compiler_fence() for memory ordering.",
+          "approved_by": "manual_review",
+          "date": "2025-12-30"
+        },
         "asm_in_production": 0,
         "global_asm_in_production": 0,
         "naked_asm_in_production": 0,
@@ -197,14 +204,7 @@
       "safety_notes": [
         "iceoryx2 production code deliberately avoids asm!, global_asm!, and naked_asm! for portability",
         "Memory synchronization achieved through fence() and compiler_fence() instead"
-      ],
-      "count": 0,
-      "samples_waiver": {
-        "reason": "other",
-        "explanation": "iceoryx2 production code does not use asm!, global_asm!, or naked_asm! macros. Only bare-metal examples (not production) use these constructs. Production code uses fence()/compiler_fence() for memory ordering.",
-        "approved_by": "manual_review",
-        "date": "2025-12-30"
-      }
+      ]
     },
     "label_block": {
       "fls_section": "22.8",
@@ -212,17 +212,17 @@
       "description": "Label block",
       "status": "deliberately_avoided",
       "findings": {
+        "count": 0,
+        "samples_waiver": {
+          "reason": "other",
+          "explanation": "iceoryx2 production code does not use inline assembly. Label blocks only exist in asm! which is not used.",
+          "approved_by": "manual_review",
+          "date": "2025-12-30"
+        },
         "description": "iceoryx2 production code does not use inline assembly label blocks.",
         "rationale": "No asm!/global_asm! usage in production code for portability"
       },
-      "samples": [],
-      "count": 0,
-      "samples_waiver": {
-        "reason": "other",
-        "explanation": "iceoryx2 production code does not use inline assembly. Label blocks only exist in asm! which is not used.",
-        "approved_by": "manual_review",
-        "date": "2025-12-30"
-      }
+      "samples": []
     }
   },
   "cross_chapter_references": {

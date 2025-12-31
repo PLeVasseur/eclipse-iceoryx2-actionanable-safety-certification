@@ -52,6 +52,7 @@
       "description": "Source Files",
       "status": "demonstrated",
       "findings": {
+        "count": 1071,
         "source_files": {
           "section": "18.1",
           "rules": {
@@ -71,24 +72,36 @@
       "samples": [
         {
           "file": "iceoryx2/src/lib.rs",
-          "line": [13, 14, 15, 16],
+          "line": [
+            13,
+            14,
+            15,
+            16
+          ],
           "code": "#![cfg_attr(not(any(test, feature = \"std\")), no_std)]\n#![warn(clippy::alloc_instead_of_core)]\n#![warn(clippy::std_instead_of_alloc)]\n#![warn(clippy::std_instead_of_core)]",
           "purpose": "Library crate root with conditional no_std and lint attributes"
         },
         {
           "file": "iceoryx2/src/service/mod.rs",
-          "line": [203, 206, 210],
+          "line": [
+            203,
+            206,
+            210
+          ],
           "code": "pub mod builder;\npub mod dynamic_config;\npub mod header;",
           "purpose": "Module file declaring submodules"
         },
         {
           "file": "iceoryx2/src/prelude.rs",
-          "line": [13, 14, 15],
+          "line": [
+            13,
+            14,
+            15
+          ],
           "code": "pub use crate::config::Config;\npub use crate::node::{node_name::NodeName, Node, NodeBuilder, NodeState};\npub use crate::port::{event_id::EventId, unable_to_deliver_strategy::UnableToDeliverStrategy};",
           "purpose": "Prelude module with public re-exports for convenient API access"
         }
-      ],
-      "count": 1071
+      ]
     },
     "modules": {
       "fls_section": "18.2",
@@ -98,6 +111,7 @@
       "description": "Modules",
       "status": "demonstrated",
       "findings": {
+        "count": 1039,
         "modules": {
           "section": "18.2",
           "rules": {
@@ -159,24 +173,35 @@
       "samples": [
         {
           "file": "iceoryx2/src/service/mod.rs",
-          "line": [203, 206, 210, 214],
+          "line": [
+            203,
+            206,
+            210,
+            214
+          ],
           "code": "pub mod builder;\npub mod dynamic_config;\npub mod header;\npub mod messaging_pattern;",
           "purpose": "Public module declarations with doc comments for service subsystem"
         },
         {
           "file": "iceoryx2/src/service/static_config/mod.rs",
-          "line": [16, 21, 25],
+          "line": [
+            16,
+            21,
+            25
+          ],
           "code": "pub mod event;\npub mod publish_subscribe;\npub mod message_type_details;",
           "purpose": "Outline module declarations for messaging pattern configs"
         },
         {
           "file": "iceoryx2-bb/posix/src/signal.rs",
-          "line": [279, 280],
+          "line": [
+            279,
+            280
+          ],
           "code": "#[cfg(not(all(test, loom, feature = \"std\")))]\nstatic LAST_SIGNAL: AtomicUsize = AtomicUsize::new(posix::MAX_SIGNAL_VALUE);",
           "purpose": "Conditional module content with cfg attribute"
         }
-      ],
-      "count": 1039
+      ]
     },
     "crates": {
       "fls_section": "18.3",
@@ -186,6 +211,13 @@
       "description": "Crates",
       "status": "demonstrated",
       "findings": {
+        "count": 0,
+        "samples_waiver": {
+          "reason": "insufficient_patterns",
+          "explanation": "Only 0 instance(s) found in codebase, fewer than 3 required samples",
+          "approved_by": "automated",
+          "date": "2025-12-30"
+        },
         "crates": {
           "section": "18.3",
           "rules": {
@@ -321,14 +353,7 @@
           }
         }
       },
-      "samples": [],
-      "count": 0,
-      "samples_waiver": {
-        "reason": "insufficient_patterns",
-        "explanation": "Only 0 instance(s) found in codebase, fewer than 3 required samples",
-        "approved_by": "automated",
-        "date": "2025-12-30"
-      }
+      "samples": []
     },
     "crate_imports": {
       "fls_section": "18.4",
@@ -338,6 +363,7 @@
       "description": "Crate Imports",
       "status": "demonstrated",
       "findings": {
+        "count": 6847,
         "crate_imports": {
           "section": "18.4",
           "rules": {
@@ -379,24 +405,34 @@
       "samples": [
         {
           "file": "iceoryx2-bb/container/src/lib.rs",
-          "line": [96, 97, 98],
+          "line": [
+            96,
+            97,
+            98
+          ],
           "code": "extern crate alloc;\n\n/// A queue similar to [`alloc::collections::vec_deque::VecDeque`]",
           "purpose": "extern crate alloc enabling heap allocation in no_std container crate"
         },
         {
           "file": "iceoryx2/src/port/writer.rs",
-          "line": [66, 67],
+          "line": [
+            66,
+            67
+          ],
           "code": "extern crate alloc;\nuse alloc::sync::Arc;",
           "purpose": "extern crate alloc for Arc import in no_std writer port"
         },
         {
           "file": "iceoryx2-bb/lock-free/src/mpmc/container.rs",
-          "line": [77, 78, 79],
+          "line": [
+            77,
+            78,
+            79
+          ],
           "code": "extern crate alloc;\n\nuse alloc::vec::Vec;",
           "purpose": "extern crate alloc for Vec in lock-free MPMC container"
         }
-      ],
-      "count": 6847
+      ]
     },
     "compilation_roots": {
       "fls_section": "18.5",
@@ -406,6 +442,7 @@
       "description": "Compilation Roots",
       "status": "demonstrated",
       "findings": {
+        "count": 40,
         "compilation_roots": {
           "section": "18.5",
           "rules": {
@@ -420,24 +457,36 @@
       "samples": [
         {
           "file": "iceoryx2/src/lib.rs",
-          "line": [13, 14, 15],
+          "line": [
+            13,
+            14,
+            15
+          ],
           "code": "#![cfg_attr(not(any(test, feature = \"std\")), no_std)]\n#![warn(clippy::alloc_instead_of_core)]\n#![warn(clippy::std_instead_of_alloc)]",
           "purpose": "Library crate root (lib.rs) with crate-level attributes"
         },
         {
           "file": "iceoryx2-cli/iox2/src/main.rs",
-          "line": [14, 15, 17, 18],
+          "line": [
+            14,
+            15,
+            17,
+            18
+          ],
           "code": "#[cfg(not(debug_assertions))]\nuse human_panic::setup_panic;\n\n#[cfg(debug_assertions)]\nextern crate better_panic;",
           "purpose": "Binary crate root (main.rs) with conditional panic handlers"
         },
         {
           "file": "iceoryx2-bb/derive-macros/src/lib.rs",
-          "line": [13, 20, 21],
+          "line": [
+            13,
+            20,
+            21
+          ],
           "code": "#![no_std]\n...\nextern crate alloc;\nextern crate proc_macro;",
           "purpose": "Proc-macro crate root with extern crate proc_macro (required for proc-macros)"
         }
-      ],
-      "count": 40
+      ]
     },
     "conditional_compilation": {
       "fls_section": "18.6",
@@ -447,6 +496,7 @@
       "description": "Conditional Compilation",
       "status": "demonstrated",
       "findings": {
+        "count": 360,
         "conditional_compilation": {
           "section": "18.6",
           "rules": {
@@ -528,24 +578,32 @@
       "samples": [
         {
           "file": "iceoryx2/src/lib.rs",
-          "line": [13],
+          "line": [
+            13
+          ],
           "code": "#![cfg_attr(not(any(test, feature = \"std\")), no_std)]",
           "purpose": "Conditional no_std based on test and std feature flags"
         },
         {
           "file": "iceoryx2-bb/posix/src/signal.rs",
-          "line": [279, 280, 282, 283],
+          "line": [
+            279,
+            280,
+            282,
+            283
+          ],
           "code": "#[cfg(not(all(test, loom, feature = \"std\")))]\nstatic LAST_SIGNAL: AtomicUsize = ...\n\n#[cfg(all(test, loom, feature = \"std\"))]\nstatic LAST_SIGNAL: std::sync::LazyLock<IoxAtomicUsize> = ...",
           "purpose": "Conditional compilation for loom testing vs production"
         },
         {
           "file": "iceoryx2-log/loggers/src/console.rs",
-          "line": [16],
+          "line": [
+            16
+          ],
           "code": "#[cfg(feature = \"std\")]",
           "purpose": "Feature-gated console logger requiring std"
         }
-      ],
-      "count": 360
+      ]
     },
     "program_entry_point": {
       "fls_section": "18.7",
@@ -553,6 +611,14 @@
       "description": "Program Entry Point",
       "status": "demonstrated",
       "findings": {
+        "count": null,
+        "count_methodology": "Pattern not defined for this section",
+        "samples_waiver": {
+          "reason": "conceptual_section",
+          "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+          "approved_by": "automated",
+          "date": "2025-12-30"
+        },
         "program_entry_point": {
           "section": "18.7",
           "rules": {
@@ -578,15 +644,7 @@
           }
         }
       },
-      "samples": [],
-      "count": null,
-      "count_methodology": "Pattern not defined for this section",
-      "samples_waiver": {
-        "reason": "conceptual_section",
-        "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
-        "approved_by": "automated",
-        "date": "2025-12-30"
-      }
+      "samples": []
     }
   },
   "design_patterns": {

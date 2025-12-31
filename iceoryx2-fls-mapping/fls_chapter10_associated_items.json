@@ -67,12 +67,15 @@
         },
         {
           "file": "iceoryx2/src/config.rs",
-          "line": [94, 95, 96],
+          "line": [
+            94,
+            95,
+            96
+          ],
           "code": "const DEFAULT_CONFIG_FILE_NAME: &[u8] = b\"iceoryx2.toml\";\nconst RELATIVE_LOCAL_CONFIG_PATH: &[u8] = b\"config\";\nconst RELATIVE_CONFIG_FILE_PATH: &[u8] = b\"iceoryx2\";",
           "purpose": "Module-level constants defining configuration file paths and names"
         }
-      ],
-      "count": 4199
+      ]
     },
     "function_declaration": {
       "fls_section": "10.0.2",
@@ -80,6 +83,7 @@
       "description": "Function Declaration",
       "status": "demonstrated",
       "findings": {
+        "count": 9977,
         "total_functions": 8459,
         "fn_new_constructors": 351,
         "common_trait_impls": {
@@ -109,12 +113,16 @@
         },
         {
           "file": "iceoryx2-bb/concurrency/src/spin_lock.rs",
-          "line": [118, 119, 120, 121],
+          "line": [
+            118,
+            119,
+            120,
+            121
+          ],
           "code": "impl<T> Drop for SpinLockGuard<'_, T> {\n    fn drop(&mut self) {\n        self.lock.locked.store(false, Ordering::Release);\n    }\n}",
           "purpose": "Drop implementation for SpinLockGuard releasing the lock on scope exit"
         }
-      ],
-      "count": 9977
+      ]
     },
     "type_alias_declaration": {
       "fls_section": "10.0.3",
@@ -122,6 +130,7 @@
       "description": "Type Alias Declaration",
       "status": "demonstrated",
       "findings": {
+        "count": 1166,
         "type_alias_definitions": 578,
         "associated_type_declarations": 3,
         "patterns": [
@@ -142,18 +151,32 @@
         },
         {
           "file": "iceoryx2/src/service/attribute.rs",
-          "line": [398, 399, 400, 401, 402, 403],
+          "line": [
+            398,
+            399,
+            400,
+            401,
+            402,
+            403
+          ],
           "code": "impl Deref for AttributeSet {\n    type Target = [Attribute];\n\n    fn deref(&self) -> &Self::Target {\n        self.0.as_slice()\n    }\n}",
           "purpose": "Associated type Target bound to slice type in Deref implementation"
         },
         {
           "file": "iceoryx2/src/service/service_name.rs",
-          "line": [149, 150, 151, 152, 153, 154, 155],
+          "line": [
+            149,
+            150,
+            151,
+            152,
+            153,
+            154,
+            155
+          ],
           "code": "impl core::ops::Deref for ServiceName {\n    type Target = str;\n\n    fn deref(&self) -> &Self::Target {\n        self.as_str()\n    }\n}",
           "purpose": "Deref impl with associated type Target enabling ServiceName to be used as str"
         }
-      ],
-      "count": 1166
+      ]
     }
   },
   "design_patterns": {

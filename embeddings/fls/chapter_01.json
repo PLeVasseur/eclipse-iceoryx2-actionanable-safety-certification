@@ -1,0 +1,303 @@
+{
+  "chapter": 1,
+  "title": "General",
+  "fls_id": "fls_48qldfwwh493",
+  "file": "general",
+  "extraction_date": "2025-12-31",
+  "category_codes": {
+    "0": "section",
+    "-1": "general",
+    "-2": "legality_rules",
+    "-3": "dynamic_semantics",
+    "-4": "undefined_behavior",
+    "-5": "implementation_requirements",
+    "-6": "implementation_permissions",
+    "-7": "examples",
+    "-8": "syntax"
+  },
+  "statistics": {
+    "total_sections": 8,
+    "total_paragraphs": 89,
+    "paragraphs_by_category": {
+      "-8": 14,
+      "-7": 1,
+      "-5": 13,
+      "-4": 1,
+      "-3": 1,
+      "-2": 2,
+      "-1": 57
+    }
+  },
+  "sections": [
+    {
+      "fls_id": "fls_48qldfwwh493",
+      "title": "General",
+      "category": 0,
+      "level": 1,
+      "file": "general",
+      "content": "General\n\nThis document is influenced by the `Ada Reference Manual\n<http://www.ada-auth.org/standards/2xrm/html/RM-TTL.html>`_\nAda 202x edition, as well as the `Rust Language Reference\n<https://doc.rust-lang.org/stable/reference/>`_, the `Rust\nGuidebook <https://doc.rust-lang.org/book/>`_, and the `Rustonomicon\n<https://doc.rust-lang.org/nomicon/>`_.\n\nParts of these documents have been copied, in whole or in part, in particular\nbut not limited to:\n\n* The outline and structure of the documents;\n\n* The title, outline, organization, and numbering of chapters;\n\n* The structure, formality, wording, and numbering of paragraphs;\n\n* The definitions and uses of terms;\n\n* The categories of syntactic and semantic rules.\n\nConsult :doc:`licenses` for the relevant copyright notices and licenses.",
+      "rubrics": {
+        "-1": {
+          "paragraphs": {
+            "fls_c4ry0kgmvk9z": "This document is influenced by the Ada Reference Manual <http://www.ada-auth.org/standards/2xrm/html/RM-TTL.html>_ Ada 202x edition, as well as the Rust Language Reference <https://doc.rust-lang.org/stable/reference/>_, the Rust Guidebook <https://doc.rust-lang.org/book/>_, and the Rustonomicon <https://doc.rust-lang.org/nomicon/>_.",
+            "fls_gxqbj0qoiaio": "Parts of these documents have been copied, in whole or in part, in particular but not limited to:",
+            "fls_u8k9zr8da30": "The outline and structure of the documents;",
+            "fls_8mt9iigoboba": "The title, outline, organization, and numbering of chapters;",
+            "fls_suhf2g3fatfa": "The structure, formality, wording, and numbering of paragraphs;",
+            "fls_jjr5kbn0wuco": "The definitions and uses of terms;",
+            "fls_4dfcjyprkzbx": "The categories of syntactic and semantic rules.",
+            "fls_tq9jcv5ddvwn": "Consult :doc:licenses for the relevant copyright notices and licenses."
+          }
+        }
+      },
+      "parent_fls_id": null,
+      "sibling_fls_ids": []
+    },
+    {
+      "fls_id": "fls_fo1c7pg2mw1",
+      "title": "Scope",
+      "category": 0,
+      "level": 2,
+      "file": "general",
+      "content": "Scope\n\nThis document specifies the form and meaning of programs written in the 2021 Edition of the\nRust programming language, as implemented by the Rust compiler (rustc),\nversion |spec_version|.\nIt documents the current understanding for the purposes of\ncompiler validation. As such, given any doubt, it prefers documenting behavior\nof rustc over claiming correctness as a specification.\n\nThis document is made available for contribution and review,\nand can be a place of shared understanding. It\nis not intended as a discussion ground for language evolution. It is also not\nintended as a document enabling conformance between compilers.",
+      "rubrics": {
+        "-1": {
+          "paragraphs": {
+            "fls_srdq4mota5pr": "This document specifies the form and meaning of programs written in the 2021 Edition of the Rust programming language, as implemented by the Rust compiler (rustc), version |spec_version|. It documents the current understanding for the purposes of compiler validation. As such, given any doubt, it prefers documenting behavior of rustc over claiming correctness as a specification.",
+            "fls_dv1qish8svc": "This document is made available for contribution and review, and can be a place of shared understanding. It is not intended as a discussion ground for language evolution. It is also not intended as a document enabling conformance between compilers."
+          }
+        }
+      },
+      "parent_fls_id": "fls_48qldfwwh493",
+      "sibling_fls_ids": [
+        "fls_9cd746qe40ag",
+        "fls_ijzgf4h0mp3c"
+      ]
+    },
+    {
+      "fls_id": "fls_10yukmkhl0ng",
+      "title": "Extent",
+      "category": 0,
+      "level": 3,
+      "file": "general",
+      "content": "Extent\n\nThis document specifies:\n\n* The form of a program written in Rust;\n\n* The effect of translating and executing such a program;\n\n* The manner in which [crate]s and [module]s may be combined to form\n Rust programs;\n\n* The language-defined libraries that a conforming tool is required to supply;\n\n* The violations that a conforming tool is required to detect, and the effect of\n attempting to translate or execute a program containing such violations;\n\n* The violations that a conforming tool is not required to detect.\n\nThis document does not specify:\n\n* The means by which a Rust program is transformed into object code executable\n by a processor;\n\n* The means by which translation or execution of Rust programs is invoked and\n the executing units are controlled;\n\n* The size or speed of the object code, or the relative execution speed of\n different language constructs;\n\n* The form or contents of any listings produced by a tool; in particular, the\n form or contents of error or warning messages;\n\n* The effect of undefined behavior;\n\n* The size of a program or program unit that will exceed the capacity of a\n conforming tool.",
+      "rubrics": {
+        "-1": {
+          "paragraphs": {
+            "fls_x78yd1sszydv": "This document specifies:",
+            "fls_9e032738udnb": "The form of a program written in Rust;",
+            "fls_jk7scu5xs17z": "The effect of translating and executing such a program;",
+            "fls_jiryupa5fxgf": "The manner in which [crate]s and [module]s may be combined to form Rust programs;",
+            "fls_sph1a3sapinh": "The language-defined libraries that a conforming tool is required to supply;",
+            "fls_7tm19jxtffc8": "The violations that a conforming tool is required to detect, and the effect of attempting to translate or execute a program containing such violations;",
+            "fls_5pbrl8lhuth1": "The violations that a conforming tool is not required to detect.",
+            "fls_o8fc3e53vp7g": "This document does not specify:",
+            "fls_rw0y5t13y6gs": "The means by which a Rust program is transformed into object code executable by a processor;",
+            "fls_x7c3o621qj9z": "The means by which translation or execution of Rust programs is invoked and the executing units are controlled;",
+            "fls_5y2b6yjcl1vz": "The size or speed of the object code, or the relative execution speed of different language constructs;",
+            "fls_8dennhk2dha": "The form or contents of any listings produced by a tool; in particular, the form or contents of error or warning messages;",
+            "fls_j2gs3hrbxtyx": "The effect of undefined behavior;",
+            "fls_gy2c7vfwkd8j": "The size of a program or program unit that will exceed the capacity of a conforming tool."
+          }
+        }
+      },
+      "parent_fls_id": "fls_fo1c7pg2mw1",
+      "sibling_fls_ids": [
+        "fls_xscgklvg1wd2",
+        "fls_99b7xi1bkgih",
+        "fls_79rl6ylmct07"
+      ]
+    },
+    {
+      "fls_id": "fls_xscgklvg1wd2",
+      "title": "Structure",
+      "category": 0,
+      "level": 3,
+      "file": "general",
+      "content": "Structure\n\nThis document contains 22 chapters, 4 appendices, and an index.\n\nThe specification of the Rust language is separated into:\n\n* Chapters 1 through 22,\n\n* Appendices A through D\n\nThe specification is normative, except for the material in each of the items\nlisted below, which is informative:\n\n* Text under an \"Examples\" heading.\n\n* Each subchapter whose title starts with the word \"Example\" or \"Examples\".\n\nAll appendices are informative.\n\nEach chapter is divided into subchapters that have a common structure. Each\nchapter and subchapter is then organized to include the following segments as is\nrelevant to the topic:\n\nThe syntax representation of a construct.\n\nCompile-time rules and facts for each construct. A construct is legal\nif it obeys all of the Legality Rules.\n\nLegality Rules are verified after macro expansion takes place.\n\nRun-time effects of each construct.\n\nSituations that result in unbounded errors.\n\nAdditional requirements for conforming tools.\n\nExamples illustrating the possible forms of a construct. This material\nis informative.",
+      "rubrics": {
+        "-1": {
+          "paragraphs": {
+            "fls_6lrqailxjb02": "This document contains 22 chapters, 4 appendices, and an index.",
+            "fls_tys7ciqnp8bn": "The specification of the Rust language is separated into:",
+            "fls_3ubhkaheu8i1": "Chapters 1 through 22,",
+            "fls_xw3grr2g5zgi": "Appendices A through D",
+            "fls_6srbinvnyd54": "The specification is normative, except for the material in each of the items listed below, which is informative:",
+            "fls_ciixfg9jhv42": "Text under an \"Examples\" heading.",
+            "fls_ej94lm2682kg": "Each subchapter whose title starts with the word \"Example\" or \"Examples\".",
+            "fls_xgk91jrbpyoc": "All appendices are informative.",
+            "fls_jc4upf6685bw": "Each chapter is divided into subchapters that have a common structure. Each chapter and subchapter is then organized to include the following segments as is relevant to the topic:"
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "fls_oxzjqxgejx9t": "The syntax representation of a construct."
+          }
+        },
+        "-2": {
+          "paragraphs": {
+            "fls_gmx688d6ek1o": "Compile-time rules and facts for each construct. A construct is legal if it obeys all of the Legality Rules.",
+            "fls_5zdjikp1jhc": "Legality Rules are verified after macro expansion takes place."
+          }
+        },
+        "-3": {
+          "paragraphs": {
+            "fls_as5bhc5t285g": "Run-time effects of each construct."
+          }
+        },
+        "-4": {
+          "paragraphs": {
+            "fls_70qjvaqoz007": "Situations that result in unbounded errors."
+          }
+        },
+        "-5": {
+          "paragraphs": {
+            "fls_o4rdsbc7u98": "Additional requirements for conforming tools."
+          }
+        },
+        "-7": {
+          "paragraphs": {
+            "fls_w8j575w2hmc8": "Examples illustrating the possible forms of a construct. This material is informative."
+          }
+        }
+      },
+      "parent_fls_id": "fls_fo1c7pg2mw1",
+      "sibling_fls_ids": [
+        "fls_10yukmkhl0ng",
+        "fls_99b7xi1bkgih",
+        "fls_79rl6ylmct07"
+      ]
+    },
+    {
+      "fls_id": "fls_99b7xi1bkgih",
+      "title": "Conformity",
+      "category": 0,
+      "level": 3,
+      "file": "general",
+      "content": "Conformity\n\nA conforming tool shall:\n\n* Correctly translate legal programs written in Rust,\n\n* Reject programs that exceed the tool's implementation capacity,\n\n* Reject programs that contain errors whose detection is required by this document,\n\nThe external effect of the execution of a Rust program is defined in terms of\nits interactions with its external environment. The following are defined as\nexternal interactions:\n\n* Any call to an external function,\n\n* Any interaction with an external static,\n\n* Any result returned from a program entry point,\n\n* Any result returned from an exported function to an external caller.\n\nA tool that conforms to this document shall produce for the execution of a given\nRust program a set of interactions with the external environment whose order and\ntiming are consistent with the definitions and requirements of this document for\nthe semantics of the given program.\n\nA tool that conforms to this document shall support each capability required by\nthe language as specified.\n\nA tool that conforms to this document may provide additional [attribute]s\nas long as their names are not the same as the names of [built-in\nattribute]s.",
+      "rubrics": {
+        "-5": {
+          "paragraphs": {
+            "fls_kdyqtnc6loam": "A conforming tool shall:",
+            "fls_dBKu9jgx3OyH": "Correctly translate legal programs written in Rust,",
+            "fls_faRvWyJJpno8": "Reject programs that exceed the tool's implementation capacity,",
+            "fls_GZmxrO61eiJ1": "Reject programs that contain errors whose detection is required by this document,",
+            "fls_nnmx2qsu14ft": "The external effect of the execution of a Rust program is defined in terms of its interactions with its external environment. The following are defined as external interactions:",
+            "fls_gu3331rmv2ho": "Any call to an external function,",
+            "fls_AR8ZIYlDRSNs": "Any interaction with an external static,",
+            "fls_xAYhvEh7WWel": "Any result returned from a program entry point,",
+            "fls_QvFpU8v5p8Hb": "Any result returned from an exported function to an external caller.",
+            "fls_pl0fyjcwslqm": "A tool that conforms to this document shall produce for the execution of a given Rust program a set of interactions with the external environment whose order and timing are consistent with the definitions and requirements of this document for the semantics of the given program.",
+            "fls_lkdm0mdghppv": "A tool that conforms to this document shall support each capability required by the language as specified.",
+            "fls_d07x1mbhgpsd": "A tool that conforms to this document may provide additional [attribute]s as long as their names are not the same as the names of [built-in attribute]s."
+          }
+        }
+      },
+      "parent_fls_id": "fls_fo1c7pg2mw1",
+      "sibling_fls_ids": [
+        "fls_10yukmkhl0ng",
+        "fls_xscgklvg1wd2",
+        "fls_79rl6ylmct07"
+      ]
+    },
+    {
+      "fls_id": "fls_79rl6ylmct07",
+      "title": "Method of Description and Syntax Notation",
+      "category": 0,
+      "level": 3,
+      "file": "general",
+      "content": "Method of Description and Syntax Notation\n\nThe form of a Rust program is described by means of a context-free syntax\ntogether with context-dependent requirements expressed by narrative rules.\n\nThe semantic meaning of a Rust program is described by means of narrative rules defining\nboth the effects of each construct and the composition rules for constructs.\n\nThe context-free syntax of Rust is described using a simple variant of the\nBackus-Naur form. In particular:\n\n* A monospaced font is used to denote Rust syntax.\n\n* Words in PascalCase font are used to denote a syntactic category, for example:\n\n* Words in **bold** font are used to indicate literal words and [keyword]s,\n for example:\n\n* Characters in **bold** font are used to indicate literal characters and\n literal punctuation, for example:\n\n* A character preceded by \\ (bold reverse solidus) is used to denote an\n escaped character, for example:\n\n* A prefix followed by ? (question mark) is used to denote an optional\n prefix, for example:\n\n* A prefix followed by * (asterisk) is used to denote zero or more\n repetitions of the prefix, for example:\n\n* A prefix followed by + (plus sign) is used to denote one or more\n repetitions of the prefix, for example:\n\n* A prefix followed by L-H is used to denote the number of repetitions of\n the prefix within the range from L to H, inclusive. For example:\n\n* [ ] (square brackets) indicate any character within, for example:\n\n* ~[ ] (square brackets preceded by tilde) indicate any character except the\n characters within, for example:\n\n* [ - ] indicates any character within the specified range, inclusive. For\n example:\n\n* A | (vertical line) separates alternative items, for example:\n\n* ( ) (parentheses) are used to group items, for example:",
+      "rubrics": {
+        "-1": {
+          "paragraphs": {
+            "fls_mc4a28do6kcp": "The form of a Rust program is described by means of a context-free syntax together with context-dependent requirements expressed by narrative rules.",
+            "fls_ioyp4wux6skt": "The semantic meaning of a Rust program is described by means of narrative rules defining both the effects of each construct and the composition rules for constructs.",
+            "fls_jsflt7691ye4": "The context-free syntax of Rust is described using a simple variant of the Backus-Naur form. In particular:",
+            "fls_98fm7z04lq9": "A monospaced font is used to denote Rust syntax.",
+            "fls_ceb5a8t6cakr": "Words in PascalCase font are used to denote a syntactic category, for example:",
+            "fls_pts29mb5ld68": "Words in **bold** font are used to indicate literal words and [keyword]s, for example:",
+            "fls_gqjo5oh7vn3b": "Characters in **bold** font are used to indicate literal characters and literal punctuation, for example:",
+            "fls_1dz634xp8xp5": "A character preceded by \\ (bold reverse solidus) is used to denote an escaped character, for example:",
+            "fls_pp9vtjlyblrl": "A prefix followed by ? (question mark) is used to denote an optional prefix, for example:",
+            "fls_6e2vd9fvhsmk": "A prefix followed by * (asterisk) is used to denote zero or more repetitions of the prefix, for example:",
+            "fls_4onq0kkrt6qv": "A prefix followed by + (plus sign) is used to denote one or more repetitions of the prefix, for example:",
+            "fls_qu4rsmnq659w": "A prefix followed by L-H is used to denote the number of repetitions of the prefix within the range from L to H, inclusive. For example:",
+            "fls_rllu7aksf17e": "[ ] (square brackets) indicate any character within, for example:",
+            "fls_blvsfqeevosr": "~[ ] (square brackets preceded by tilde) indicate any character except the characters within, for example:",
+            "fls_lwcjq3wzjyvb": "[ - ] indicates any character within the specified range, inclusive. For example:",
+            "fls_v7wd5yk00im6": "A | (vertical line) separates alternative items, for example:",
+            "fls_nf8alga8uz6c": "( ) (parentheses) are used to group items, for example:"
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "FloatExponent",
+            "syntax_2": "$$crate$$\n   $$proc_macro_derive$$\n   $$Self$$\n   $$tt$$",
+            "syntax_3": "$$1$$\n   $$F$$\n   $${$$\n   $$&&$$\n   $$>>=$$",
+            "syntax_4": "$$\\t$$\n   $$\\\\$$",
+            "syntax_5": "IntegerSuffix?",
+            "syntax_6": "OuterAttributeOrDoc*",
+            "syntax_7": "MacroMatch+",
+            "syntax_8": "HexadecimalDigit1-6",
+            "syntax_9": "[$$8$$ $$a$$ $$\\r$$ $$:$$]",
+            "syntax_10": "~[$$8$$ $$a$$ $$\\r$$ $$:$$]",
+            "syntax_11": "[$$a$$-$$f$$]",
+            "syntax_12": "$$self$$ | Identifier | $$_$$",
+            "syntax_13": "($$,$$ ConfigurationPredicate)"
+          }
+        }
+      },
+      "parent_fls_id": "fls_fo1c7pg2mw1",
+      "sibling_fls_ids": [
+        "fls_10yukmkhl0ng",
+        "fls_xscgklvg1wd2",
+        "fls_99b7xi1bkgih"
+      ]
+    },
+    {
+      "fls_id": "fls_9cd746qe40ag",
+      "title": "Versioning",
+      "category": 0,
+      "level": 2,
+      "file": "general",
+      "content": "Versioning\n\nFerrocene is a qualified compiler and this is the accompanying language\nspecification for the qualified version of the compiler. This document will\nbe updated with each qualification to accurately reflect the behavior of the\ncompiler qualified under that version of Ferrocene.",
+      "rubrics": {
+        "-1": {
+          "paragraphs": {
+            "fls_l80e3kdwnldc": "Ferrocene is a qualified compiler and this is the accompanying language specification for the qualified version of the compiler. This document will be updated with each qualification to accurately reflect the behavior of the compiler qualified under that version of Ferrocene."
+          }
+        }
+      },
+      "parent_fls_id": "fls_48qldfwwh493",
+      "sibling_fls_ids": [
+        "fls_fo1c7pg2mw1",
+        "fls_ijzgf4h0mp3c"
+      ]
+    },
+    {
+      "fls_id": "fls_ijzgf4h0mp3c",
+      "title": "Definitions",
+      "category": 0,
+      "level": 2,
+      "file": "general",
+      "content": "Definitions\n\nTerms are defined throughout this document, indicated by *italic* type. Terms\nexplicitly defined in this document are not to be presumed to refer implicitly\nto similar terms defined elsewhere.\n\nMathematical terms not defined in this document are to be interpreted according\nto the CRC Concise Encyclopedia of Mathematics, Second Edition.\n\nOther terms not defined in this document are to be interpreted according to the\nWebster's Third New International Dictionary of the English Language.\n\nThe definitions of terms are available in :doc:`glossary`.\n\nA *rule* is a requirement imposed on the programmer, stated in normative\nlanguage such as \"shall\", \"shall not\", \"must\", \"must not\", except for text\nunder Implementation Requirements heading.\n\nA *fact* is a requirement imposed on a conforming tool, stated in informative\nlanguage such as \"is\", \"is not\", \"can\", \"cannot\".",
+      "rubrics": {
+        "-1": {
+          "paragraphs": {
+            "fls_sm2kexes5pr7": "Terms are defined throughout this document, indicated by *italic* type. Terms explicitly defined in this document are not to be presumed to refer implicitly to similar terms defined elsewhere.",
+            "fls_2o98zw29xc46": "Mathematical terms not defined in this document are to be interpreted according to the CRC Concise Encyclopedia of Mathematics, Second Edition.",
+            "fls_lon5qffd65fi": "Other terms not defined in this document are to be interpreted according to the Webster's Third New International Dictionary of the English Language.",
+            "fls_qeolgxvcy75": "The definitions of terms are available in :doc:glossary.",
+            "fls_h2m244agxaxs": "A *rule* is a requirement imposed on the programmer, stated in normative language such as \"shall\", \"shall not\", \"must\", \"must not\", except for text under Implementation Requirements heading.",
+            "fls_47svine904xk": "A *fact* is a requirement imposed on a conforming tool, stated in informative language such as \"is\", \"is not\", \"can\", \"cannot\"."
+          }
+        }
+      },
+      "parent_fls_id": "fls_48qldfwwh493",
+      "sibling_fls_ids": [
+        "fls_fo1c7pg2mw1",
+        "fls_9cd746qe40ag"
+      ]
+    }
+  ]
+}

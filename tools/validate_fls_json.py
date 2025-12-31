@@ -731,15 +731,18 @@ def validate_section_hierarchy(data: Dict) -> List[str]:
         For FLS content that doesn't have traditional section headings, we use
         a special encoding with negative numbers:
         
-        - X.Y     = Standard sections (e.g., 8.1 Let Statements)
-        - X.0.Y   = Syntax block productions
-        - X.-1.Y  = Top-level unsorted items (items before first heading)
-        - X.-2.Y  = Legality rules (e.g., 8.-2.1 Item Statement legality rule)
-        - X.-3.Y  = Dynamic semantics (e.g., 8.-3.1 Empty Statement Execution)
+        - X.Y      (0)  = Standard sections (e.g., 8.1 Let Statements)
+        - X.-1.Y  (-1)  = General/intro text before first rubric
+        - X.-2.Y  (-2)  = Legality rules (e.g., 8.-2.1 Item Statement legality rule)
+        - X.-3.Y  (-3)  = Dynamic semantics (e.g., 8.-3.1 Empty Statement Execution)
+        - X.-4.Y  (-4)  = Undefined behavior definitions
+        - X.-5.Y  (-5)  = Implementation requirements
+        - X.-6.Y  (-6)  = Implementation permissions
+        - X.-7.Y  (-7)  = Examples
+        - X.-8.Y  (-8)  = Syntax block productions
         
         This encoding allows us to reference and track FLS content that exists
-        outside the traditional section hierarchy, particularly legality rules
-        and dynamic semantics which are critical for safety certification.
+        outside the traditional section hierarchy. See AGENTS.md for full docs.
 
     Returns list of error messages.
     """

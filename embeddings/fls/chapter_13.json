@@ -1,0 +1,1873 @@
+{
+  "chapter": 13,
+  "title": "Attributes",
+  "fls_id": "fls_gvwd0kf72jt",
+  "file": "attributes",
+  "extraction_date": "2025-12-31",
+  "category_codes": {
+    "0": "section",
+    "-1": "general",
+    "-2": "legality_rules",
+    "-3": "dynamic_semantics",
+    "-4": "undefined_behavior",
+    "-5": "implementation_requirements",
+    "-6": "implementation_permissions",
+    "-7": "examples",
+    "-8": "syntax"
+  },
+  "statistics": {
+    "total_sections": 58,
+    "total_paragraphs": 334,
+    "paragraphs_by_category": {
+      "-8": 45,
+      "-7": 1,
+      "-4": 5,
+      "-2": 282,
+      "-1": 1
+    }
+  },
+  "sections": [
+    {
+      "fls_id": "fls_gvwd0kf72jt",
+      "title": "Attributes",
+      "category": 0,
+      "level": 1,
+      "file": "attributes",
+      "content": "Attributes\n\n InnerAttribute ::=\n $$#![$$ AttributeContent $$]$$\n\n OuterAttributeOrDoc ::=\n OuterAttribute\n | OuterBuiltinAttribute\n | OuterBlockDoc\n | OuterLineDoc\n\n OuterAttribute ::=\n $$#[$$ AttributeContent $$]$$\n\n AttributeContent ::=\n SimplePath AttributeInput?\n\n AttributeInput ::=\n $$($$ TokenTree* $$)$$\n | $$=$$ Expression\n\n AttributeContentList ::=\n AttributeContent ($$,$$ AttributeContent)* $$,$$?\n\nAn attribute is a general, free-form metadatum that is interpreted based on\nits name, convention, language, and tool.\n\nAn inner attribute is an attribute that applies to an enclosing\nitem.\n\nAn outer attribute is an attribute that applies to a subsequent\nitem.\n\nAn attribute content is a construct that provides the content of\nan attribute.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_rnzxj1t0hehl": "An attribute is a general, free-form metadatum that is interpreted based on its name, convention, language, and tool.",
+            "fls_yd0ehw5csaur": "An inner attribute is an attribute that applies to an enclosing item.",
+            "fls_8o6vmzbw1b1j": "An outer attribute is an attribute that applies to a subsequent item.",
+            "fls_9TMRVlQwAdTB": "An attribute content is a construct that provides the content of an attribute."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "InnerAttributeOrDoc ::=\n       InnerAttribute\n     | InnerBuiltinAttribute\n     | InnerBlockDoc\n     | InnerLineDoc\n\n   InnerAttribute ::=\n       $$#![$$ AttributeContent $$]$$\n\n   OuterAttributeOrDoc ::=\n       OuterAttribute\n     | OuterBuiltinAttribute\n     | OuterBlockDoc\n     | OuterLineDoc\n\n   OuterAttribute ::=\n       $$#[$$ AttributeContent $$]$$\n\n   AttributeContent ::=\n       SimplePath AttributeInput?\n\n   AttributeInput ::=\n       $$($$ TokenTree* $$)$$\n     | $$=$$ Expression\n\n   Att..."
+          }
+        }
+      },
+      "parent_fls_id": null,
+      "sibling_fls_ids": []
+    },
+    {
+      "fls_id": "fls_i52cujixq9qs",
+      "title": "Attribute Properties",
+      "category": 0,
+      "level": 2,
+      "file": "attributes",
+      "content": "Attribute Properties\n\nAn active attribute is an attribute that is removed from the item\nit decorates.\n\nAn inert attribute is an attribute that remains with the item\nit decorates.\n\nThe following [attribute]s are [active attribute]s:\n\n* [Attribute macro]s.\n\n* Attribute cfg.\n\n* Attribute cfg_attr.\n\nAttribute test is an inert attribute when compiling for testing\npurposes, otherwise it is an active attribute.\n\nAll remaining [attribute]s are [inert attribute]s.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_p4potvq7x532": "An active attribute is an attribute that is removed from the item it decorates.",
+            "fls_xk7lb2g02sy7": "An inert attribute is an attribute that remains with the item it decorates.",
+            "fls_q8wl7pidx2za": "The following [attribute]s are [active attribute]s:",
+            "fls_jottio69o9e7": "[Attribute macro]s.",
+            "fls_gzyx9lfi5pvd": "Attribute cfg.",
+            "fls_elsfqsiqor1y": "Attribute cfg_attr.",
+            "fls_4xu1rwecd9au": "Attribute test is an inert attribute when compiling for testing purposes, otherwise it is an active attribute.",
+            "fls_n3737i320qum": "All remaining [attribute]s are [inert attribute]s."
+          }
+        }
+      },
+      "parent_fls_id": "fls_gvwd0kf72jt",
+      "sibling_fls_ids": [
+        "fls_ahmnqhm8anlb"
+      ]
+    },
+    {
+      "fls_id": "fls_ahmnqhm8anlb",
+      "title": "Built-in Attributes",
+      "category": 0,
+      "level": 2,
+      "file": "attributes",
+      "content": "Built-in Attributes\n\n OuterBuiltinAttribute ::=\n $$#[$$ BuiltinAttributeContent $$]$$\n\n BuiltinAttributeContent ::=\n AutomaticallyDerivedContent\n | CfgAttrContent\n | CfgContent\n | CollapseDebuginfoContent\n | ColdContent\n | CrateNameContent\n | CrateTypeContent\n | DeriveContent\n | DocContent\n | ExportNameContent\n | GlobalAllocatorContent\n | InlineContent\n | IgnoreContent\n | LinkContent\n | LinkNameContent\n | LinkSectionContent\n | LinkOrdinalContent\n | MacroExportContent\n | MacroUseContent\n | NakedContent\n | NoBuiltinsContent\n | NoImplicitPreludeContent\n | NoLinkContent\n | NoMainContent\n | NoMangleContent\n | NonExhaustiveContent\n | NoStdContent\n | PanicHandlerContent\n | PathContent\n | ProcMacroAttributeContent\n | ProcMacroContent\n | ProcMacroDeriveContent\n | RecursionLimitContent\n | ReprContent\n | ShouldPanicContent\n | TargetFeatureContent\n | TestContent\n | TrackCallerContent\n | TypeLengthLimitContent\n | UnsafeContent\n | UsedContent\n | WindowsSubsystemContent\n\nA built-in attribute is a language-defined attribute.\n\nThe following [built-in attribute]s are [code generation attribute]s:\n\n* Attribute cold.\n\n* Attribute inline.\n\n* Attribute no_builtins.\n\n* Attribute target_feature.\n\n* Attribute track_caller.\n\n* Attribute naked.\n\nThe following [built-in attribute]s are\n[conditional compilation attribute]s:\n\n* Attribute cfg.\n\n* Attribute cfg_attr.\n\nThe following [built-in attribute]s are [derivation attribute]s:\n\n* Attribute automatically_derived.\n\n* Attribute derive.\n\nThe following [built-in attribute]s are [diagnostics attribute]s:\n\n* Attribute allow.\n\n* Attribute deny.\n\n* Attribute deprecated.\n\n* Attribute forbid.\n\n* Attribute must_use.\n\n* Attribute warn.\n\n* Attribute expect.\n\n* Attribute unsafe.\n\nThe following [built-in attribute]s are [documentation attribute]s:\n\n* Attribute doc.\n\nThe following [built-in attribute]s are\n[foreign function interface attribute]s:\n\n* Attribute crate_name.\n\n* Attribute crate_type.\n\n* Attribute export_name.\n\n* Attribute link.\n\n* Attribute link_name.\n\n* Attribute link_section.\n\n* Attribute no_link.\n\n* Attribute no_main.\n\n* Attribute no_mangle.\n\n* Attribute repr.\n\n* Attribute used.\n\nThe following [built-in attribute]s are [limits attribute]s:\n\n* Attribute recursion_limit.\n\n* Attribute type_length_limit.\n\nThe following [built-in attribute]s are [macro attribute]s:\n\n* Attribute macro_export.\n\n* Attribute macro_use.\n\n* Attribute proc_macro.\n\n* Attribute proc_macro_attribute.\n\n* Attribute proc_macro_derive.\n\nThe following [built-in attribute]s are [modules attribute]s:\n\n* Attribute path.\n\nThe following [built-in attribute]s are [prelude attribute]s:\n\n* Attribute no_implicit_prelude.\n\n* Attribute no_std.\n\nThe following [built-in attribute]s are [runtime attribute]s:\n\n* Attribute global_allocator.\n\n* Attribute panic_handler.\n\n* Attribute windows_subsystem.\n\nThe following [built-in attribute]s are [testing attribute]s:\n\n* Attribute ignore.\n\n* Attribute should_panic.\n\n* Attribute test.\n\nThe following [built-in attribute]s are [type attribute]s:\n\n* Attribute non_exhaustive.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_92tqo8uas8kd": "A built-in attribute is a language-defined attribute.",
+            "fls_bxucstrfcco8": "The following [built-in attribute]s are [code generation attribute]s:",
+            "fls_wle815gb9ai2": "Attribute cold.",
+            "fls_tvn08dtuilue": "Attribute inline.",
+            "fls_q4c023zdsfgn": "Attribute no_builtins.",
+            "fls_xtu3p0kzwn7b": "Attribute target_feature.",
+            "fls_gxxbf6eag3et": "Attribute track_caller.",
+            "fls_eOJS3mxa9xgu": "Attribute naked.",
+            "fls_87o6n9et9jio": "The following [built-in attribute]s are [conditional compilation attribute]s:",
+            "fls_ui0i3rpt5v5u": "Attribute cfg.",
+            "fls_6utorag4adlv": "Attribute cfg_attr.",
+            "fls_d8spdkjzp496": "The following [built-in attribute]s are [derivation attribute]s:",
+            "fls_vidbcv25dyud": "Attribute automatically_derived.",
+            "fls_d0298bmlyuu4": "Attribute derive.",
+            "fls_dtb3t5ht5ngf": "The following [built-in attribute]s are [diagnostics attribute]s:",
+            "fls_c5n4gzgs79vv": "Attribute allow.",
+            "fls_xheohvupr8kb": "Attribute deny.",
+            "fls_s5z2q5pl14p4": "Attribute deprecated.",
+            "fls_5ko0q9jnxv5a": "Attribute forbid.",
+            "fls_rgjf5ibhurda": "Attribute must_use.",
+            "fls_29y8icoou1gx": "Attribute warn.",
+            "fls_NrTL2FruARAv": "Attribute expect.",
+            "fls_4d2ArC50kNWL": "Attribute unsafe.",
+            "fls_3fxhz0olhbcy": "The following [built-in attribute]s are [documentation attribute]s:",
+            "fls_oexj0952o05u": "Attribute doc.",
+            "fls_q579e97n1m8j": "The following [built-in attribute]s are [foreign function interface attribute]s:",
+            "fls_sn43rofpq6ld": "Attribute crate_name.",
+            "fls_56d70gkmin4p": "Attribute crate_type.",
+            "fls_mgb1xipm0qwo": "Attribute export_name.",
+            "fls_rmhlssasdtkj": "Attribute link.",
+            "fls_josaywt6g3rq": "Attribute link_name.",
+            "fls_qk4vkn42c2jh": "Attribute link_section.",
+            "fls_f21azsygoovw": "Attribute no_link.",
+            "fls_4d31lwzblg91": "Attribute no_main.",
+            "fls_muucfla1s8yn": "Attribute no_mangle.",
+            "fls_wbdtpntjr95w": "Attribute repr.",
+            "fls_lglwcbsvi9yj": "Attribute used.",
+            "fls_1gyg8hfb13n7": "The following [built-in attribute]s are [limits attribute]s:",
+            "fls_6005g57evfbp": "Attribute recursion_limit.",
+            "fls_3y4o8kq58dt8": "Attribute type_length_limit.",
+            "fls_vsix3pqf519x": "The following [built-in attribute]s are [macro attribute]s:",
+            "fls_c8uqw8p0qrh5": "Attribute macro_export.",
+            "fls_b3jobjxmqppy": "Attribute macro_use.",
+            "fls_xyhoxm30i7wn": "Attribute proc_macro.",
+            "fls_nowfw1ffhupd": "Attribute proc_macro_attribute.",
+            "fls_5i27houut1mu": "Attribute proc_macro_derive.",
+            "fls_1v9p4vr1nszn": "The following [built-in attribute]s are [modules attribute]s:",
+            "fls_jvkgtnulrqgh": "Attribute path.",
+            "fls_k9p2xrs3dotn": "The following [built-in attribute]s are [prelude attribute]s:",
+            "fls_73n30xdcx8e": "Attribute no_implicit_prelude.",
+            "fls_e7zusnfka5dt": "Attribute no_std.",
+            "fls_85ul6x76ew9": "The following [built-in attribute]s are [runtime attribute]s:",
+            "fls_xkhm1sht2ju5": "Attribute global_allocator.",
+            "fls_w9za4moh6gb3": "Attribute panic_handler.",
+            "fls_3vubhygy9jje": "Attribute windows_subsystem.",
+            "fls_mhaplbf40j02": "The following [built-in attribute]s are [testing attribute]s:",
+            "fls_23huzf3c4arx": "Attribute ignore.",
+            "fls_i63y9xnnwq2z": "Attribute should_panic.",
+            "fls_yic8ksed28no": "Attribute test.",
+            "fls_p1ugiol1e5v5": "The following [built-in attribute]s are [type attribute]s:",
+            "fls_7xh2iphiteam": "Attribute non_exhaustive."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "InnerBuiltinAttribute ::=\n       $$#![$$ BuiltinAttributeContent $$]$$\n\n   OuterBuiltinAttribute ::=\n       $$#[$$ BuiltinAttributeContent $$]$$\n\n   BuiltinAttributeContent ::=\n       AutomaticallyDerivedContent\n     | CfgAttrContent\n     | CfgContent\n     | CollapseDebuginfoContent\n     | ColdContent\n     | CrateNameContent\n     | CrateTypeContent\n     | DeriveContent\n     | DocContent\n     | ExportNameContent\n     | GlobalAllocatorContent\n     | InlineContent\n     | IgnoreContent\n     | LinkCo..."
+          }
+        }
+      },
+      "parent_fls_id": "fls_gvwd0kf72jt",
+      "sibling_fls_ids": [
+        "fls_i52cujixq9qs"
+      ]
+    },
+    {
+      "fls_id": "fls_h4k49eadninz",
+      "title": "Code Generation Attributes",
+      "category": 0,
+      "level": 3,
+      "file": "attributes",
+      "content": "Code Generation Attributes",
+      "rubrics": {},
+      "parent_fls_id": "fls_ahmnqhm8anlb",
+      "sibling_fls_ids": [
+        "fls_cdx9zb1yxcc8",
+        "fls_wednba84zi3y",
+        "fls_t2590yyvclgb",
+        "fls_8wcliky2svcs",
+        "fls_pgp7ezcc9lh8",
+        "fls_cjq792yj6vft",
+        "fls_2084b06dr0wz",
+        "fls_7bb5ua4g06k8",
+        "fls_go457hpaf7ov",
+        "fls_nbbvukrdngev",
+        "fls_riyi0gy48fxw",
+        "fls_r3zwgf9sg1xp"
+      ]
+    },
+    {
+      "fls_id": "fls_kpwbpp5hc00s",
+      "title": "Attribute ``cold``",
+      "category": 0,
+      "level": 4,
+      "file": "attributes",
+      "content": "Attribute cold\n\nAttribute cold shall apply to [function]s.\n\nAttribute :dc:`cold` indicates that its related function is unlikely\nto be called.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_x860jl4103p": "Attribute cold shall apply to [function]s.",
+            "fls_8zdexi5lgm2f": "Attribute :dc:cold indicates that its related function is unlikely to be called."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "ColdContent ::=\n       $$cold$$"
+          }
+        }
+      },
+      "parent_fls_id": "fls_h4k49eadninz",
+      "sibling_fls_ids": [
+        "fls_ypio6boj3pwf",
+        "fls_zakwockktml8",
+        "fls_spdmit5fy7el",
+        "fls_6qj249hphj1s",
+        "fls_Sd6rUmpEb355"
+      ]
+    },
+    {
+      "fls_id": "fls_ypio6boj3pwf",
+      "title": "Attribute ``inline``",
+      "category": 0,
+      "level": 4,
+      "file": "attributes",
+      "content": "Attribute inline\n\n InlineHint ::=\n $$($$ ($$always$$ | $$never$$) $$)$$\n\nAttribute inline shall apply to [closure expression]s and\n[function]s.\n\nAttribute :dc:`inline` marks its related function as inlined.\nThe process of replacing a call expression to an inlined function\nwith the function body is referred to as inlining.\n\nAttribute inline without an InlineHint suggests to a tool that\ninlining should be performed.\n\nAttribute inline with InlineHint always suggests to a tool\nthat inlining should always be performed.\n\nAttribute inline with InlineHint never suggests to a tool\nthat inlining should never be performed.\n\nA tool is not obliged to perform inlining.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_jwyhky49ssup": "Attribute inline shall apply to [closure expression]s and [function]s.",
+            "fls_s7bf7tf9206d": "Attribute :dc:inline marks its related function as inlined. The process of replacing a call expression to an inlined function with the function body is referred to as inlining.",
+            "fls_930o6urn669w": "Attribute inline without an InlineHint suggests to a tool that inlining should be performed.",
+            "fls_z7ufiqqujgdh": "Attribute inline with InlineHint always suggests to a tool that inlining should always be performed.",
+            "fls_f0n4g5uky9tp": "Attribute inline with InlineHint never suggests to a tool that inlining should never be performed.",
+            "fls_r3p4din7rjz8": "A tool is not obliged to perform inlining."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "InlineContent ::=\n       $$inline$$ InlineHint?\n\n   InlineHint ::=\n       $$($$ ($$always$$ | $$never$$) $$)$$"
+          }
+        }
+      },
+      "parent_fls_id": "fls_h4k49eadninz",
+      "sibling_fls_ids": [
+        "fls_kpwbpp5hc00s",
+        "fls_zakwockktml8",
+        "fls_spdmit5fy7el",
+        "fls_6qj249hphj1s",
+        "fls_Sd6rUmpEb355"
+      ]
+    },
+    {
+      "fls_id": "fls_zakwockktml8",
+      "title": "Attribute ``no_builtins``",
+      "category": 0,
+      "level": 4,
+      "file": "attributes",
+      "content": "Attribute no_builtins\n\nAttribute no_builtins shall apply to the crate root module.\n\nAttribute :dc:`no_builtins` prevents the tool from replacing certain code\npatterns with calls to intrinsic functions.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_x36c6j1ivbvp": "Attribute no_builtins shall apply to the crate root module.",
+            "fls_k2k10qtn6f0g": "Attribute :dc:no_builtins prevents the tool from replacing certain code patterns with calls to intrinsic functions."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "NoBuiltinsContent ::=\n       $$no_builtins$$",
+            "syntax_2": "$$#![no_builtins]$$"
+          }
+        }
+      },
+      "parent_fls_id": "fls_h4k49eadninz",
+      "sibling_fls_ids": [
+        "fls_kpwbpp5hc00s",
+        "fls_ypio6boj3pwf",
+        "fls_spdmit5fy7el",
+        "fls_6qj249hphj1s",
+        "fls_Sd6rUmpEb355"
+      ]
+    },
+    {
+      "fls_id": "fls_spdmit5fy7el",
+      "title": "Attribute ``target_feature``",
+      "category": 0,
+      "level": 4,
+      "file": "attributes",
+      "content": "Attribute target_feature\n\n FeatureList ::=\n Feature ($$,$$ Feature)*\n\n Feature ::=\n $$adx$$\n | $$aes$$\n | $$avx$$\n | $$avx2$$\n | $$avx512bf16$$\n | $$avx512bitalg$$\n | $$avx512bw$$\n | $$avx512cd$$\n | $$avx512dq$$\n | $$avx512f$$\n | $$avx512fp16$$\n | $$avx512ifma$$\n | $$avx512vbmi$$\n | $$avx512vbmi2$$\n | $$avx512vl$$\n | $$avx512vnni$$\n | $$avx512vp2intersect$$\n | $$avx512vpopcntdq$$\n | $$avxifma$$\n | $$avxneconvert$$\n | $$avxvnni$$\n | $$avxvnniint16$$\n | $$avxvnniint8$$\n | $$bmi1$$\n | $$bmi2$$\n | $$fma$$\n | $$fxsr$$\n | $$gfni$$\n | $$kl$$\n | $$lzcnt$$\n | $$pclmulqdq$$\n | $$popcnt$$\n | $$rdrand$$\n | $$rdseed$$\n | $$sha$$\n | $$sha512$$\n | $$sm3$$\n | $$sm4$$\n | $$sse$$\n | $$sse2$$\n | $$sse3$$\n | $$sse4.1$$\n | $$sse4.2$$\n | $$sse4a$$\n | $$ssse3$$\n | $$tbm$$\n | $$vaes$$\n | $$vpclmulqdq$$\n | $$widekl$$\n | $$xsave$$\n | $$xsavec$$\n | $$xsaveopt$$\n | $$xsaves$$\n\nSafe [function]s that are annotated with [target_feature]s\ncan only be called without an unsafe block by a caller that is within a function\nthat enables all the [target_feature]s that the callee enables.\n\nAttribute :dc:`target_feature` enables target architecture features for its\nrelated function.\n\nThe target architecture features are as follows:\n\nIt is undefined behavior to execute a program compiled with target architecture\nfeatures that are not supported.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_3qj3jvmtxvx6": "Safe [function]s that are annotated with [target_feature]s can only be called without an unsafe block by a caller that is within a function that enables all the [target_feature]s that the callee enables.",
+            "fls_agpkz1v3c281": "Attribute :dc:target_feature enables target architecture features for its related function.",
+            "fls_91b7nd6qslsb": "The target architecture features are as follows: .. list-table:: -",
+            "fls_yz4itbk700ot": "- **Feature** - **implicitly enables** - **Description** -",
+            "fls_pdyotoq8uqi2": "- adx - - Intel Multi-Precision Add-Cary Instruction Extensions -",
+            "fls_vdbjoy6gbk7l": "- aes - sse2 - Advanced Encryption Standard -",
+            "fls_k3szii6nviza": "- avx - sse4.2 - Advanced Vector Extensions -",
+            "fls_xsdkkfgv0pz6": "- avx2 - avx - Advanced Vector Extensions 2 -",
+            "fls_8HPcvIaahaB9": "- avx512bf16 - avx512bw - Advanced Vector Extensions 512-bit - Bfloat16 Extensions -",
+            "fls_lxcfj6XCKyMh": "- vx512bitalg - avx512bw - Advanced Vector Extensions 512-bit - Bit Algorithms -",
+            "fls_fh7i1Pcmqjdm": "- avx512bw - avx512f - Advanced Vector Extensions 512-bit - Byte and Word Instructions -",
+            "fls_M9ne2sqhRB5L": "- avx512cd - avx512f - Advanced Vector Extensions 512-bit - Conflict Detection Instructions -",
+            "fls_xWcGvl83bVWC": "- avx512dq - avx512f - Advanced Vector Extensions 512-bit - Doubleword and Quadword Instructions -",
+            "fls_5CVTkOoLHAvW": "- avx512f - avx2, fma, f16c - Advanced Vector Extensions 512-bit - Foundation -",
+            "fls_hThb8qn820wJ": "- avx512fp16 - avx512bw - Advanced Vector Extensions 512-bit - Float16 Extensions -",
+            "fls_1T0VYMtG3loD": "- avx512ifma - avx512f - Advanced Vector Extensions 512-bit - Integer Fused Multiply Add -",
+            "fls_AlBD9ckWKecQ": "- avx512vbmi - avx512bw - Advanced Vector Extensions 512-bit - Vector Byte Manipulation Instructions -",
+            "fls_72cwAExPDMQ8": "- avx512vbmi2 - avx512bw - Advanced Vector Extensions 512-bit - Vector Byte Manipulation Instructions 2 -",
+            "fls_pSSIwmUAnUly": "- avx512vl - avx512f - Advanced Vector Extensions 512-bit - Vector Length Extensions -",
+            "fls_YOW8lcBQ5lNI": "- avx512vnni - avx512f - Advanced Vector Extensions 512-bit - Vector Neural Network Instructions -",
+            "fls_8PrvVL6dkr31": "- avx512vp2intersect - avx512f - Advanced Vector Extensions 512-bit - Vector Pair Intersection to a Pair of Mask Registers -",
+            "fls_hKvaSExdlKgd": "- avx512vpopcntdq - avx512f - Advanced Vector Extensions 512-bit - Vector Population Count Instruction -",
+            "fls_r5KEicrmEGJt": "- avxifma - avx2 - Advanced Vector Extensions - Integer Fused Multiply Add -",
+            "fls_Qnx9nNiJeIAX": "- avxneconvert - avx2 - Advanced Vector Extensions - No-Exception Floating-Point conversion Instructions -",
+            "fls_ZrcPWy4pxlTX": "- avxvnni - avx2 - Advanced Vector Extensions - Vector Neural Network Instructions -",
+            "fls_YW7otDxAliSj": "- avxvnniint16 - avx2 - Advanced Vector Extensions - Vector Neural Network Instructions with 16-bit Integers -",
+            "fls_G4aOoX8a7i7r": "- avxvnniint8 - avx2 - Advanced Vector Extensions - Vector Neural Network Instructions with 8-bit Integers -",
+            "fls_eglaup5zyfsk": "- bmi1 - - Bit Manipulation Instruction Sets -",
+            "fls_tkayqh7li81o": "- bmi2 - - Bit Manipulation Instruction Sets 2 -",
+            "fls_vv8o31s0zmli": "- fma - avx - Three-operand fused multiply-add -",
+            "fls_g0762ekvl2ah": "- fxsr - - Save and restore x87 FPU, MMX technology, and SSE state -",
+            "fls_HGKiXfM5fGVo": "- gfni - sse2 - Galois Field New Instructions -",
+            "fls_gtoLNHFmmBzd": "- kl - sse2 - Intel Key Locker Instructions -",
+            "fls_406ltkru11tk": "- lzcnt - - Leading zeros count -",
+            "fls_4mhyvwj8pbpk": "- pclmulqdq - sse2 - Packed carry-less multiplication quadword -",
+            "fls_ijsmqk7pgyiz": "- popcnt - - Count of bits set to 1 -",
+            "fls_a1jggfetycxh": "- rdrand - - Read random number -",
+            "fls_rmbadmoeaoxu": "- rdseed - - Read random seed -",
+            "fls_f9ydn049isbv": "- sha - sse2 - Secure Hash Algorithm -",
+            "fls_UPhNSZS89sYr": "- sha512 - avx2 - Secure Hash Algorithm with 512-bit digest -",
+            "fls_HoNwaLtDzwZi": "- sm3 - avx - ShangMi 3 Hash Algorithm -",
+            "fls_VqjfIihpRe9m": "- sm4 - avx2 - ShangMi 4 Hash Algorithm -",
+            "fls_7c31e21g6bdj": "- sse - - Streaming SIMD Extensions -",
+            "fls_6d5a375j2775": "- sse2 - sse - Streaming SIMD Extensions 2 -",
+            "fls_xthidh2nyrno": "- sse3 - sse2 - Streaming SIMD Extensions 3 -",
+            "fls_w02pk6kf9w9e": "- sse4.1 - sse3 - Streaming SIMD Extensions 4.1 -",
+            "fls_lzl1gpco3osx": "- sse4.2. - sse4.1 - Streaming SIMD Extensions 4.2 -",
+            "fls_pGHKFrgGlFtg": "- sse4a - sse3 - Streaming SIMD Extensions 4a -",
+            "fls_9x2on8w44k4f": "- ssse3 - sse3 - Supplemental Streaming SIMD Extensions 3 -",
+            "fls_K6TM6oTLL1BA": "- tbm - - Trailing Bit Manipulation -",
+            "fls_gRf8F9PIGySt": "- vaes - avx2, aes - Vector AES Instructions -",
+            "fls_NNj4H6A9VTR8": "- vpclmulqdq - avx, pclmulqdq - Vector Carry-less multiplication of Quadwords -",
+            "fls_qZO82VdU5Iz9": "- widekl - kl - Intel Wide Keylocker Instructions -",
+            "fls_rilqwazchfpp": "- xsave - - Save processor extended status -",
+            "fls_f0of1395z9pn": "- xsavec - - Save processor extended status with compaction -",
+            "fls_v9gf6selc17l": "- xsaveopt - - Save processor extended states optimized -",
+            "fls_jyb5s2r8w1po": "- xsaves - - Save processor extended states supervizor"
+          }
+        },
+        "-4": {
+          "paragraphs": {
+            "fls_xx51fjkbgg5g": "It is undefined behavior to execute a program compiled with target architecture features that are not supported."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "TargetFeatureContent ::=\n       $$target_feature$$ $$($$ $$enable$$ $$=$$ $$\"$$ FeatureList $$\"$$ $$)$$\n\n   FeatureList ::=\n       Feature ($$,$$ Feature)*\n\n   Feature ::=\n       $$adx$$\n     | $$aes$$\n     | $$avx$$\n     | $$avx2$$\n     | $$avx512bf16$$\n     | $$avx512bitalg$$\n     | $$avx512bw$$\n     | $$avx512cd$$\n     | $$avx512dq$$\n     | $$avx512f$$\n     | $$avx512fp16$$\n     | $$avx512ifma$$\n     | $$avx512vbmi$$\n     | $$avx512vbmi2$$\n     | $$avx512vl$$\n     | $$avx512vnni$$\n     | $$av..."
+          }
+        }
+      },
+      "parent_fls_id": "fls_h4k49eadninz",
+      "sibling_fls_ids": [
+        "fls_kpwbpp5hc00s",
+        "fls_ypio6boj3pwf",
+        "fls_zakwockktml8",
+        "fls_6qj249hphj1s",
+        "fls_Sd6rUmpEb355"
+      ]
+    },
+    {
+      "fls_id": "fls_6qj249hphj1s",
+      "title": "Attribute ``track_caller``",
+      "category": 0,
+      "level": 4,
+      "file": "attributes",
+      "content": "Attribute track_caller\n\nAttribute track_caller shall apply to non-[main function]s with\nABI \"Rust\".\n\nAttribute :dc:`track_caller` allows the function body of its\nrelated function to obtain a core::panic::Location which indicates\nthe topmost untracked caller that ultimately led to the invocation of the\nfunction.\n\nA tool is not required to implement this indication in an effective manner.\n\nWhen applied to an associated trait function, attribute\ntrack_caller applies to all [associated function]s of the\nimplemented trait. If the associated trait function has a default\nimplementation, then the attribute applies to all overriding\n[function]s.\n\nIt is undefined behavior when attribute track_caller applies to an\nexternal function but does not apply to all linked [implementation]s.\n\nIt is undefined behavior when attribute track_caller is applied to\nan exported function but the external function it links to is missing\nthe attribute.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_h8yepgchjxv9": "Attribute track_caller shall apply to non-[main function]s with ABI \"Rust\".",
+            "fls_w1pxtzp7acty": "Attribute :dc:track_caller allows the function body of its related function to obtain a core::panic::Location which indicates the topmost untracked caller that ultimately led to the invocation of the function.",
+            "fls_zch43jpetmdu": "A tool is not required to implement this indication in an effective manner.",
+            "fls_y1e258p4rby5": "When applied to an associated trait function, attribute track_caller applies to all [associated function]s of the implemented trait. If the associated trait function has a default implementation, then the attribute applies to all overriding [function]s."
+          }
+        },
+        "-4": {
+          "paragraphs": {
+            "fls_vkz8t751gfhk": "It is undefined behavior when attribute track_caller applies to an external function but does not apply to all linked [implementation]s.",
+            "fls_ddg0u5lej74x": "It is undefined behavior when attribute track_caller is applied to an exported function but the external function it links to is missing the attribute."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "TrackCallerContent ::=\n       $$track_caller$$"
+          }
+        }
+      },
+      "parent_fls_id": "fls_h4k49eadninz",
+      "sibling_fls_ids": [
+        "fls_kpwbpp5hc00s",
+        "fls_ypio6boj3pwf",
+        "fls_zakwockktml8",
+        "fls_spdmit5fy7el",
+        "fls_Sd6rUmpEb355"
+      ]
+    },
+    {
+      "fls_id": "fls_Sd6rUmpEb355",
+      "title": "Attribute ``naked``",
+      "category": 0,
+      "level": 4,
+      "file": "attributes",
+      "content": "Attribute naked\n\nAttribute naked shall apply to [function]s.\n\nAttribute :dc:`naked` ensures that a function prologue and epilogue are not generated.\n\nAttribute naked function body must consist of exactly one\nmacro core::arch::naked_asm call.\n\nAttribute naked cannot be used together with [testing function]s.\n\nAttribute naked cannot be used together with attribute inline.\n\nAttribute naked cannot be used together with attribute track_caller.\n\nIt is a safety invariant for the function body to respect the ABI of the function.\n\nIt is a safety invariant for the function body to diverge <diverging expression>.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_8eg0iN2diBZt": "Attribute naked shall apply to [function]s.",
+            "fls_WnqgR5OyecIs": "Attribute :dc:naked ensures that a function prologue and epilogue are not generated.",
+            "fls_NCHa4Dc1M6oM": "Attribute naked function body must consist of exactly one macro core::arch::naked_asm call.",
+            "fls_H7ccwNk2HGAi": "Attribute naked cannot be used together with [testing function]s.",
+            "fls_ocOk47SGiRVb": "Attribute naked cannot be used together with attribute inline.",
+            "fls_VUL2qySBvRqy": "Attribute naked cannot be used together with attribute track_caller."
+          }
+        },
+        "-4": {
+          "paragraphs": {
+            "fls_0tYMAQY1V55p": "It is a safety invariant for the function body to respect the ABI of the function.",
+            "fls_wGbJrz4OpKKb": "It is a safety invariant for the function body to diverge <diverging expression>."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "NakedContent ::=\n       $$naked$$"
+          }
+        }
+      },
+      "parent_fls_id": "fls_h4k49eadninz",
+      "sibling_fls_ids": [
+        "fls_kpwbpp5hc00s",
+        "fls_ypio6boj3pwf",
+        "fls_zakwockktml8",
+        "fls_spdmit5fy7el",
+        "fls_6qj249hphj1s"
+      ]
+    },
+    {
+      "fls_id": "fls_cdx9zb1yxcc8",
+      "title": "Conditional Compilation Attributes",
+      "category": 0,
+      "level": 3,
+      "file": "attributes",
+      "content": "Conditional Compilation Attributes",
+      "rubrics": {},
+      "parent_fls_id": "fls_ahmnqhm8anlb",
+      "sibling_fls_ids": [
+        "fls_h4k49eadninz",
+        "fls_wednba84zi3y",
+        "fls_t2590yyvclgb",
+        "fls_8wcliky2svcs",
+        "fls_pgp7ezcc9lh8",
+        "fls_cjq792yj6vft",
+        "fls_2084b06dr0wz",
+        "fls_7bb5ua4g06k8",
+        "fls_go457hpaf7ov",
+        "fls_nbbvukrdngev",
+        "fls_riyi0gy48fxw",
+        "fls_r3zwgf9sg1xp"
+      ]
+    },
+    {
+      "fls_id": "fls_fymvsy6ig99a",
+      "title": "Attribute ``cfg``",
+      "category": 0,
+      "level": 4,
+      "file": "attributes",
+      "content": "Attribute cfg\n\n ConfigurationPredicate ::=\n ConfigurationOption\n | ConfigurationPredicateAll\n | ConfigurationPredicateAny\n | ConfigurationPredicateNot\n | $$true$$\n | $$false$$\n\n ConfigurationOption ::=\n ConfigurationOptionName ConfigurationOptionValue?\n\n ConfigurationOptionName ::=\n Identifier\n\n ConfigurationOptionValue ::=\n $$=$$ StringLiteral\n\n ConfigurationPredicateAll ::=\n $$all$$ $$($$ ConfigurationPredicateList? $$)$$\n\n ConfigurationPredicateAny ::=\n $$any$$ $$($$ ConfigurationPredicateList? $$)$$\n\n ConfigurationPredicateNot ::=\n $$not$$ $$($$ ConfigurationPredicate $$)$$\n\n ConfigurationPredicateList ::=\n ConfigurationPredicate ($$,$$ ConfigurationPredicate)* $$,$$?\n\nAttribute :dc:`cfg` enables conditional compilation.\n\nA configuration predicate is a construct that evaluates statically\nto either true or false, and controls conditional compilation.\n\nAn all configuration predicate is a configuration predicate that\nmodels existential quantifier ALL.\n\nAn all configuration predicate evaluates statically to true when either\nall nested configuration predicates evaluate to true, or there are no nested\nconfiguration predicates.\n\nAn any configuration predicate is a configuration predicate that\nmodels existential quantifier ANY.\n\nAn any configuration predicate evaluates statically to true when any\nnested configuration predicate evaluates to true.\n\nA not configuration predicate is a configuration predicate that\nnegates the Boolean value of its nested configuration predicate.\n\nA not configuration predicate evaluates statically to true when its\nnested configuration predicate evaluates to false.\n\nConfiguration predicate :dc:`true` always evaluates statically to true.\n\nConfiguration predicate :dc:`false` always evaluates statically to false.\n\nThe evaluation of a configuration option is tool-defined.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_xrjp7xw9jutz": "Attribute :dc:cfg enables conditional compilation.",
+            "fls_l96kyix5xsof": "A configuration predicate is a construct that evaluates statically to either true or false, and controls conditional compilation.",
+            "fls_y1MUhnKCxK6T": "An all configuration predicate is a configuration predicate that models existential quantifier ALL.",
+            "fls_tncxxsyutppf": "An all configuration predicate evaluates statically to true when either all nested configuration predicates evaluate to true, or there are no nested configuration predicates.",
+            "fls_Rp73YEE3aFdI": "An any configuration predicate is a configuration predicate that models existential quantifier ANY.",
+            "fls_m0zxktz168e0": "An any configuration predicate evaluates statically to true when any nested configuration predicate evaluates to true.",
+            "fls_XsxeOd32JI8x": "A not configuration predicate is a configuration predicate that negates the Boolean value of its nested configuration predicate.",
+            "fls_tvsadfy9uibu": "A not configuration predicate evaluates statically to true when its nested configuration predicate evaluates to false.",
+            "fls_JWx8vQwl19Fu": "Configuration predicate :dc:true always evaluates statically to true.",
+            "fls_SziFAQsio0ab": "Configuration predicate :dc:false always evaluates statically to false.",
+            "fls_jbl9xyynjo0g": "The evaluation of a configuration option is tool-defined."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "CfgContent ::=\n       $$cfg$$ $$($$ ConfigurationPredicate $$)$$\n\n   ConfigurationPredicate ::=\n       ConfigurationOption\n     | ConfigurationPredicateAll\n     | ConfigurationPredicateAny\n     | ConfigurationPredicateNot\n     | $$true$$\n     | $$false$$\n\n   ConfigurationOption ::=\n       ConfigurationOptionName ConfigurationOptionValue?\n\n   ConfigurationOptionName ::=\n       Identifier\n\n   ConfigurationOptionValue ::=\n       $$=$$ StringLiteral\n\n   ConfigurationPredicateAll ::=\n       $$all$$ $..."
+          }
+        }
+      },
+      "parent_fls_id": "fls_cdx9zb1yxcc8",
+      "sibling_fls_ids": [
+        "fls_dd9xh3wdjudo"
+      ]
+    },
+    {
+      "fls_id": "fls_dd9xh3wdjudo",
+      "title": "Attribute ``cfg_attr``",
+      "category": 0,
+      "level": 4,
+      "file": "attributes",
+      "content": "Attribute cfg_attr\n\nAttribute :dc:`cfg_attr` enables conditional compilation.\n\nAn attribute cfg_attr where the related\nconfiguration predicate evaluates to true is replaced with a new\nattribute for each AttributeContent enumerated in the\n[attribute]'s AttributeContentList.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_r66jhict6rlq": "Attribute :dc:cfg_attr enables conditional compilation.",
+            "fls_rzw12sagm585": "An attribute cfg_attr where the related configuration predicate evaluates to true is replaced with a new attribute for each AttributeContent enumerated in the [attribute]'s AttributeContentList."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "CfgAttrContent ::=\n       $$cfg_attr$$ $$($$ ConfigurationPredicate $$,$$ AttributeContentList $$)$$"
+          }
+        }
+      },
+      "parent_fls_id": "fls_cdx9zb1yxcc8",
+      "sibling_fls_ids": [
+        "fls_fymvsy6ig99a"
+      ]
+    },
+    {
+      "fls_id": "fls_wednba84zi3y",
+      "title": "Derivation Attributes",
+      "category": 0,
+      "level": 3,
+      "file": "attributes",
+      "content": "Derivation Attributes",
+      "rubrics": {},
+      "parent_fls_id": "fls_ahmnqhm8anlb",
+      "sibling_fls_ids": [
+        "fls_h4k49eadninz",
+        "fls_cdx9zb1yxcc8",
+        "fls_t2590yyvclgb",
+        "fls_8wcliky2svcs",
+        "fls_pgp7ezcc9lh8",
+        "fls_cjq792yj6vft",
+        "fls_2084b06dr0wz",
+        "fls_7bb5ua4g06k8",
+        "fls_go457hpaf7ov",
+        "fls_nbbvukrdngev",
+        "fls_riyi0gy48fxw",
+        "fls_r3zwgf9sg1xp"
+      ]
+    },
+    {
+      "fls_id": "fls_bqw87nz4qbrb",
+      "title": "Attribute ``automatically_derived``",
+      "category": 0,
+      "level": 4,
+      "file": "attributes",
+      "content": "Attribute automatically_derived\n\nAttribute :dc:`automatically_derived` is automatically added to\n[implementation]s that are created by attribute derive for\n[built-in trait]s.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_5u1e0lkt0ab1": "Attribute :dc:automatically_derived is automatically added to [implementation]s that are created by attribute derive for [built-in trait]s."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "AutomaticallyDerivedContent ::=\n       $$automatically_derived$$"
+          }
+        }
+      },
+      "parent_fls_id": "fls_wednba84zi3y",
+      "sibling_fls_ids": [
+        "fls_r6gj1p4gajnq"
+      ]
+    },
+    {
+      "fls_id": "fls_r6gj1p4gajnq",
+      "title": "Attribute ``derive``",
+      "category": 0,
+      "level": 4,
+      "file": "attributes",
+      "content": "Attribute derive\n\nAttribute derive shall apply to [abstract data type]s.\n\nAttribute :dc:`derive` lists [derive macro]s for automatic\nimplementation by a tool.\n\nAttribute derive causes trait core::cmp::PartialEq to be\nautomatically implemented for struct S<T> as follows:",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_4btm6zwf445a": "Attribute derive shall apply to [abstract data type]s.",
+            "fls_pjmbmj2b35y8": "Attribute :dc:derive lists [derive macro]s for automatic implementation by a tool."
+          }
+        },
+        "-7": {
+          "paragraphs": {
+            "fls_xtty2ino4vwc": "Attribute derive causes trait core::cmp::PartialEq to be automatically implemented for struct S<T> as follows: .. code-block:: rust impl<T: core::cmp::PartialEq> core::cmp::PartialEq for S<T> { fn eq(&self, other: &S<T>) -> bool { self.field == other.field } fn ne(&self, other: &S<T>) -> bool { self.field != other.field } }"
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "DeriveContent ::=\n       $$derive$$ $$($$ SimplePathList? $$)$$"
+          }
+        }
+      },
+      "parent_fls_id": "fls_wednba84zi3y",
+      "sibling_fls_ids": [
+        "fls_bqw87nz4qbrb"
+      ]
+    },
+    {
+      "fls_id": "fls_t2590yyvclgb",
+      "title": "Diagnostics Attributes",
+      "category": 0,
+      "level": 3,
+      "file": "attributes",
+      "content": "Diagnostics Attributes\n\nDiagnostic [attribute]s are related to linting, and are not defined in\nthis document.",
+      "rubrics": {
+        "-1": {
+          "paragraphs": {
+            "fls_ghumzt9ybtit": "Diagnostic [attribute]s are related to linting, and are not defined in this document."
+          }
+        }
+      },
+      "parent_fls_id": "fls_ahmnqhm8anlb",
+      "sibling_fls_ids": [
+        "fls_h4k49eadninz",
+        "fls_cdx9zb1yxcc8",
+        "fls_wednba84zi3y",
+        "fls_8wcliky2svcs",
+        "fls_pgp7ezcc9lh8",
+        "fls_cjq792yj6vft",
+        "fls_2084b06dr0wz",
+        "fls_7bb5ua4g06k8",
+        "fls_go457hpaf7ov",
+        "fls_nbbvukrdngev",
+        "fls_riyi0gy48fxw",
+        "fls_r3zwgf9sg1xp"
+      ]
+    },
+    {
+      "fls_id": "fls_8wcliky2svcs",
+      "title": "Documentation Attributes",
+      "category": 0,
+      "level": 3,
+      "file": "attributes",
+      "content": "Documentation Attributes",
+      "rubrics": {},
+      "parent_fls_id": "fls_ahmnqhm8anlb",
+      "sibling_fls_ids": [
+        "fls_h4k49eadninz",
+        "fls_cdx9zb1yxcc8",
+        "fls_wednba84zi3y",
+        "fls_t2590yyvclgb",
+        "fls_pgp7ezcc9lh8",
+        "fls_cjq792yj6vft",
+        "fls_2084b06dr0wz",
+        "fls_7bb5ua4g06k8",
+        "fls_go457hpaf7ov",
+        "fls_nbbvukrdngev",
+        "fls_riyi0gy48fxw",
+        "fls_r3zwgf9sg1xp"
+      ]
+    },
+    {
+      "fls_id": "fls_63v1fqedzwfd",
+      "title": "Attribute ``doc``",
+      "category": 0,
+      "level": 4,
+      "file": "attributes",
+      "content": "Attribute doc\n\n DocInput ::=\n $$=$$ MacroInvocation\n | $$=$$ StringLiteral\n | $$($$ TokenTree* $$)$$\n\nAttribute :dc:`doc` associates documentation with a construct.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_1ee9qjcgbwme": "Attribute :dc:doc associates documentation with a construct."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "DocContent ::=\n       $$doc$$ DocInput\n\n   DocInput ::=\n       $$=$$ MacroInvocation\n     | $$=$$ StringLiteral\n     | $$($$ TokenTree* $$)$$"
+          }
+        }
+      },
+      "parent_fls_id": "fls_8wcliky2svcs",
+      "sibling_fls_ids": []
+    },
+    {
+      "fls_id": "fls_pgp7ezcc9lh8",
+      "title": "Foreign Function Interface Attributes",
+      "category": 0,
+      "level": 3,
+      "file": "attributes",
+      "content": "Foreign Function Interface Attributes",
+      "rubrics": {},
+      "parent_fls_id": "fls_ahmnqhm8anlb",
+      "sibling_fls_ids": [
+        "fls_h4k49eadninz",
+        "fls_cdx9zb1yxcc8",
+        "fls_wednba84zi3y",
+        "fls_t2590yyvclgb",
+        "fls_8wcliky2svcs",
+        "fls_cjq792yj6vft",
+        "fls_2084b06dr0wz",
+        "fls_7bb5ua4g06k8",
+        "fls_go457hpaf7ov",
+        "fls_nbbvukrdngev",
+        "fls_riyi0gy48fxw",
+        "fls_r3zwgf9sg1xp"
+      ]
+    },
+    {
+      "fls_id": "fls_sun645voqex6",
+      "title": "Attribute ``crate_name``",
+      "category": 0,
+      "level": 4,
+      "file": "attributes",
+      "content": "Attribute crate_name\n\nAttribute crate_name shall apply to the crate root module.\n\nAttribute :dc:`crate_name` shall specify the name of the related\ncrate.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_tsdk8jyajcg": "Attribute crate_name shall apply to the crate root module.",
+            "fls_6riphqysh0gd": "Attribute :dc:crate_name shall specify the name of the related crate."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "CrateNameContent ::=\n       $$crate_name$$ $$=$$ StringLiteral"
+          }
+        }
+      },
+      "parent_fls_id": "fls_pgp7ezcc9lh8",
+      "sibling_fls_ids": [
+        "fls_ujig607lmwbm",
+        "fls_olzilmy8n0nl",
+        "fls_o0f9ae22ug1x",
+        "fls_p44fky7fifc",
+        "fls_hffpo88r61rh",
+        "fls_Obik2w9gvhLN",
+        "fls_ch9nkxkloozv",
+        "fls_fh27ljezn3qz",
+        "fls_mvd7nz8k3wcy",
+        "fls_aibb2quva4mn",
+        "fls_19LnTi3WabFd",
+        "fls_7skf24auayqy"
+      ]
+    },
+    {
+      "fls_id": "fls_ujig607lmwbm",
+      "title": "Attribute ``crate_type``",
+      "category": 0,
+      "level": 4,
+      "file": "attributes",
+      "content": "Attribute crate_type\n\n CrateType ::=\n $$bin$$\n | $$cdylib$$\n | $$dylib$$\n | $$lib$$\n | $$proc-macro$$\n | $$rlib$$\n | $$staticlib$$\n\nAttribute crate_type shall apply to the crate root module.\n\nAttribute :dc:`crate_type` shall specify the linkage type of the\ncrate it appears in.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_2i2g55nqqpc1": "Attribute crate_type shall apply to the crate root module.",
+            "fls_1zziddjuzjeq": "Attribute :dc:crate_type shall specify the linkage type of the crate it appears in."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "CrateTypeContent ::=\n       $$crate_type$$ $$=$$ $$\"$$ CrateType $$\"$$\n\n   CrateType ::=\n       $$bin$$\n     | $$cdylib$$\n     | $$dylib$$\n     | $$lib$$\n     | $$proc-macro$$\n     | $$rlib$$\n     | $$staticlib$$"
+          }
+        }
+      },
+      "parent_fls_id": "fls_pgp7ezcc9lh8",
+      "sibling_fls_ids": [
+        "fls_sun645voqex6",
+        "fls_olzilmy8n0nl",
+        "fls_o0f9ae22ug1x",
+        "fls_p44fky7fifc",
+        "fls_hffpo88r61rh",
+        "fls_Obik2w9gvhLN",
+        "fls_ch9nkxkloozv",
+        "fls_fh27ljezn3qz",
+        "fls_mvd7nz8k3wcy",
+        "fls_aibb2quva4mn",
+        "fls_19LnTi3WabFd",
+        "fls_7skf24auayqy"
+      ]
+    },
+    {
+      "fls_id": "fls_olzilmy8n0nl",
+      "title": "Attribute ``export_name``",
+      "category": 0,
+      "level": 4,
+      "file": "attributes",
+      "content": "Attribute export_name\n\nAttribute export_name shall apply to [function]s and\n[static]s.\n\nAttribute :dc:`export_name` shall specify the exported symbol of the\nrelated function or static.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_r3fwpuuaoeie": "Attribute export_name shall apply to [function]s and [static]s.",
+            "fls_spwr6gf7kpds": "Attribute :dc:export_name shall specify the exported symbol of the related function or static."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "ExportNameContent ::=\n       $$export_name$$ $$=$$ StringLiteral"
+          }
+        }
+      },
+      "parent_fls_id": "fls_pgp7ezcc9lh8",
+      "sibling_fls_ids": [
+        "fls_sun645voqex6",
+        "fls_ujig607lmwbm",
+        "fls_o0f9ae22ug1x",
+        "fls_p44fky7fifc",
+        "fls_hffpo88r61rh",
+        "fls_Obik2w9gvhLN",
+        "fls_ch9nkxkloozv",
+        "fls_fh27ljezn3qz",
+        "fls_mvd7nz8k3wcy",
+        "fls_aibb2quva4mn",
+        "fls_19LnTi3WabFd",
+        "fls_7skf24auayqy"
+      ]
+    },
+    {
+      "fls_id": "fls_o0f9ae22ug1x",
+      "title": "Attribute ``link``",
+      "category": 0,
+      "level": 4,
+      "file": "attributes",
+      "content": "Attribute link\n\n LinkOption ::=\n NativeLibraryName\n | NativeLibraryNameWithKind\n | WebAssemblyModuleName\n\n NativeLibraryName ::=\n $$name$$ $$=$$ StringLiteral\n\n NativeLibraryNameWithKind ::=\n NativeLibraryName $$,$$ NativeLibraryKind\n\n WebAssemblyModuleName ::=\n $$wasm_import_module$$ $$=$$ StringLiteral\n\n NativeLibraryKind ::=\n $$kind$$ $$=$$ $$\"$$ NativeLibraryKindType $$\"$$\n\n NativeLibraryKindType ::=\n $$dylib$$\n | $$raw-dylib$$\n | $$framework$$\n | $$static$$\n\nAttribute link shall apply to [external block]s.\n\nAttribute :dc:`link` shall specify the name of a native library that a tool\nshould link with.\n\nThe following native library kinds are available:\n\nWhen attribute link appears without a native library kind, its native\nlibrary kind defaults to dylib. Native library kind framework is only valid\non macOS targets.\n\nIf attribute link appears without a WebAssembly module name, then the\nWebAssembly module name defaults to env.\n\nWhen attribute link appears with raw-dylib as the native library\nkind, the supplied name must include the file extension.\n\nWhen attribute link appears with raw-dylib as the native library\nkind, the [external function]s and [external static]s of the related\nexternal block shall not be subject to attribute no_mangle.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_yslpkdngo8hj": "Attribute link shall apply to [external block]s.",
+            "fls_6rohnk4swj6c": "Attribute :dc:link shall specify the name of a native library that a tool should link with.",
+            "fls_o83pf3bcrzma": "The following native library kinds are available: .. list-table:: -",
+            "fls_5541q1qoxdpf": "- **Native Library Kind** - **Description** -",
+            "fls_wpqawdpevkj6": "- dylib - Dynamic library -",
+            "fls_HPl6poXGiAqV": "- raw-dylib - Dynamic library -",
+            "fls_h9dfs6kzmobp": "- framework - macOS framework -",
+            "fls_3a3r4jf7hzqr": "- static - Static library",
+            "fls_1tdheukgm6ai": "When attribute link appears without a native library kind, its native library kind defaults to dylib. Native library kind framework is only valid on macOS targets.",
+            "fls_3i9ijypnh8nx": "If attribute link appears without a WebAssembly module name, then the WebAssembly module name defaults to env.",
+            "fls_iDjcQczFQknm": "When attribute link appears with raw-dylib as the native library kind, the supplied name must include the file extension.",
+            "fls_rcERq1PfKPJI": "When attribute link appears with raw-dylib as the native library kind, the [external function]s and [external static]s of the related external block shall not be subject to attribute no_mangle."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "LinkContent ::=\n       $$link$$ $$($$ LinkOption $$)$$\n\n   LinkOption ::=\n       NativeLibraryName\n     | NativeLibraryNameWithKind\n     | WebAssemblyModuleName\n\n   NativeLibraryName ::=\n       $$name$$ $$=$$ StringLiteral\n\n   NativeLibraryNameWithKind ::=\n       NativeLibraryName $$,$$ NativeLibraryKind\n\n   WebAssemblyModuleName ::=\n       $$wasm_import_module$$ $$=$$ StringLiteral\n\n   NativeLibraryKind ::=\n       $$kind$$ $$=$$ $$\"$$ NativeLibraryKindType $$\"$$\n\n   NativeLibraryKindType ::=\n  ..."
+          }
+        }
+      },
+      "parent_fls_id": "fls_pgp7ezcc9lh8",
+      "sibling_fls_ids": [
+        "fls_sun645voqex6",
+        "fls_ujig607lmwbm",
+        "fls_olzilmy8n0nl",
+        "fls_p44fky7fifc",
+        "fls_hffpo88r61rh",
+        "fls_Obik2w9gvhLN",
+        "fls_ch9nkxkloozv",
+        "fls_fh27ljezn3qz",
+        "fls_mvd7nz8k3wcy",
+        "fls_aibb2quva4mn",
+        "fls_19LnTi3WabFd",
+        "fls_7skf24auayqy"
+      ]
+    },
+    {
+      "fls_id": "fls_p44fky7fifc",
+      "title": "Attribute ``link_name``",
+      "category": 0,
+      "level": 4,
+      "file": "attributes",
+      "content": "Attribute link_name\n\nAttribute link_name shall apply to [external function]s and\n[external static]s.\n\nAttribute :dc:`link_name` shall specify the linking symbol of the related\nexternal function or external static.\n\nAttribute link_name shall not be applied to [external function]s\nand [external static]s that are annotated with Attribute\nlink_ordinal.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_g09jhukl0ez2": "Attribute link_name shall apply to [external function]s and [external static]s.",
+            "fls_d00wni4edi8f": "Attribute :dc:link_name shall specify the linking symbol of the related external function or external static.",
+            "fls_0Athv8KFA5FO": "Attribute link_name shall not be applied to [external function]s and [external static]s that are annotated with Attribute link_ordinal."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "LinkNameContent ::=\n       $$link_name$$ $$=$$ StringLiteral"
+          }
+        }
+      },
+      "parent_fls_id": "fls_pgp7ezcc9lh8",
+      "sibling_fls_ids": [
+        "fls_sun645voqex6",
+        "fls_ujig607lmwbm",
+        "fls_olzilmy8n0nl",
+        "fls_o0f9ae22ug1x",
+        "fls_hffpo88r61rh",
+        "fls_Obik2w9gvhLN",
+        "fls_ch9nkxkloozv",
+        "fls_fh27ljezn3qz",
+        "fls_mvd7nz8k3wcy",
+        "fls_aibb2quva4mn",
+        "fls_19LnTi3WabFd",
+        "fls_7skf24auayqy"
+      ]
+    },
+    {
+      "fls_id": "fls_hffpo88r61rh",
+      "title": "Attribute ``link_section``",
+      "category": 0,
+      "level": 4,
+      "file": "attributes",
+      "content": "Attribute link_section\n\nAttribute link_section shall apply to [function]s and\n[static]s.\n\nAttribute :dc:`link_section` specifies the object file section where the\nsymbol of the related function or static will be placed.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_5loqzajiz34m": "Attribute link_section shall apply to [function]s and [static]s.",
+            "fls_cyxk12wuicml": "Attribute :dc:link_section specifies the object file section where the symbol of the related function or static will be placed."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "LinkSectionContent ::=\n       $$link_section$$ $$=$$ StringLiteral"
+          }
+        }
+      },
+      "parent_fls_id": "fls_pgp7ezcc9lh8",
+      "sibling_fls_ids": [
+        "fls_sun645voqex6",
+        "fls_ujig607lmwbm",
+        "fls_olzilmy8n0nl",
+        "fls_o0f9ae22ug1x",
+        "fls_p44fky7fifc",
+        "fls_Obik2w9gvhLN",
+        "fls_ch9nkxkloozv",
+        "fls_fh27ljezn3qz",
+        "fls_mvd7nz8k3wcy",
+        "fls_aibb2quva4mn",
+        "fls_19LnTi3WabFd",
+        "fls_7skf24auayqy"
+      ]
+    },
+    {
+      "fls_id": "fls_Obik2w9gvhLN",
+      "title": "Attribute ``link_ordinal``",
+      "category": 0,
+      "level": 4,
+      "file": "attributes",
+      "content": "Attribute link_ordinal\n\nAttribute link_ordinal shall apply to [external function]s and\n[external static]s.\n\nThe related extern block of the [external function] or\n[external static] shall be subject to attribute link with\nraw-dylib as the native library kind.\n\nAttribute :dc:`link_ordinal` shall specify the linking symbol of the\nrelated external function or external static by ordinal number.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_fuv29BIqcawW": "Attribute link_ordinal shall apply to [external function]s and [external static]s.",
+            "fls_qh5sXG4znAXa": "The related extern block of the [external function] or [external static] shall be subject to attribute link with raw-dylib as the native library kind.",
+            "fls_ASnJJiXWGlKI": "Attribute :dc:link_ordinal shall specify the linking symbol of the related external function or external static by ordinal number."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "LinkOrdinalContent ::=\n       $$link_ordinal$$ $$($$ DecimalLiteral $$)$$"
+          }
+        }
+      },
+      "parent_fls_id": "fls_pgp7ezcc9lh8",
+      "sibling_fls_ids": [
+        "fls_sun645voqex6",
+        "fls_ujig607lmwbm",
+        "fls_olzilmy8n0nl",
+        "fls_o0f9ae22ug1x",
+        "fls_p44fky7fifc",
+        "fls_hffpo88r61rh",
+        "fls_ch9nkxkloozv",
+        "fls_fh27ljezn3qz",
+        "fls_mvd7nz8k3wcy",
+        "fls_aibb2quva4mn",
+        "fls_19LnTi3WabFd",
+        "fls_7skf24auayqy"
+      ]
+    },
+    {
+      "fls_id": "fls_ch9nkxkloozv",
+      "title": "Attribute ``no_link``",
+      "category": 0,
+      "level": 4,
+      "file": "attributes",
+      "content": "Attribute no_link\n\nAttribute no_link shall apply to [crate import]s.\n\nAttribute :dc:`no_link` indicates that the imported external crate\nwill not be linked into the resulting binary or library.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_ayhn6g6sgt3h": "Attribute no_link shall apply to [crate import]s.",
+            "fls_76ox8n3eef5": "Attribute :dc:no_link indicates that the imported external crate will not be linked into the resulting binary or library."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "NoLinkContent ::=\n       $$no_link$$"
+          }
+        }
+      },
+      "parent_fls_id": "fls_pgp7ezcc9lh8",
+      "sibling_fls_ids": [
+        "fls_sun645voqex6",
+        "fls_ujig607lmwbm",
+        "fls_olzilmy8n0nl",
+        "fls_o0f9ae22ug1x",
+        "fls_p44fky7fifc",
+        "fls_hffpo88r61rh",
+        "fls_Obik2w9gvhLN",
+        "fls_fh27ljezn3qz",
+        "fls_mvd7nz8k3wcy",
+        "fls_aibb2quva4mn",
+        "fls_19LnTi3WabFd",
+        "fls_7skf24auayqy"
+      ]
+    },
+    {
+      "fls_id": "fls_fh27ljezn3qz",
+      "title": "Attribute ``no_main``",
+      "category": 0,
+      "level": 4,
+      "file": "attributes",
+      "content": "Attribute no_main\n\nAttribute no_main shall apply to the crate root module.\n\nAttribute :dc:`no_main` indicates that the symbols of the\nprogram entry point will not be present in a binary.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_84a9k0fzmnfk": "Attribute no_main shall apply to the crate root module.",
+            "fls_6qig3s3qpj0i": "Attribute :dc:no_main indicates that the symbols of the program entry point will not be present in a binary."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "NoMainContent ::=\n       $$no_main$$"
+          }
+        }
+      },
+      "parent_fls_id": "fls_pgp7ezcc9lh8",
+      "sibling_fls_ids": [
+        "fls_sun645voqex6",
+        "fls_ujig607lmwbm",
+        "fls_olzilmy8n0nl",
+        "fls_o0f9ae22ug1x",
+        "fls_p44fky7fifc",
+        "fls_hffpo88r61rh",
+        "fls_Obik2w9gvhLN",
+        "fls_ch9nkxkloozv",
+        "fls_mvd7nz8k3wcy",
+        "fls_aibb2quva4mn",
+        "fls_19LnTi3WabFd",
+        "fls_7skf24auayqy"
+      ]
+    },
+    {
+      "fls_id": "fls_mvd7nz8k3wcy",
+      "title": "Attribute ``no_mangle``",
+      "category": 0,
+      "level": 4,
+      "file": "attributes",
+      "content": "Attribute no_mangle\n\nAttribute no_mangle has no effect on [construct]s other than\n[function]s and [static]s.\n\nAttribute :dc:`no_mangle` indicates that the name of the related\nfunction or static will be used as the symbol for that function\nor static.\n\nAttribute no_mangle causes the related function or static to\nbe publicly exported from the produced library or object file.\n\nAn exported function is a function subject to attribute\nno_mangle.\n\nAn exported static is a static subject to attribute\nno_mangle.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_q5swm5meafmx": "Attribute no_mangle has no effect on [construct]s other than [function]s and [static]s.",
+            "fls_esaew4fqk8mm": "Attribute :dc:no_mangle indicates that the name of the related function or static will be used as the symbol for that function or static.",
+            "fls_lvnclpxbye9u": "Attribute no_mangle causes the related function or static to be publicly exported from the produced library or object file.",
+            "fls_VKuSiswPMll7": "An exported function is a function subject to attribute no_mangle.",
+            "fls_I029Rvr5BX5P": "An exported static is a static subject to attribute no_mangle."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "NoMangleContent ::=\n       $$no_mangle$$"
+          }
+        }
+      },
+      "parent_fls_id": "fls_pgp7ezcc9lh8",
+      "sibling_fls_ids": [
+        "fls_sun645voqex6",
+        "fls_ujig607lmwbm",
+        "fls_olzilmy8n0nl",
+        "fls_o0f9ae22ug1x",
+        "fls_p44fky7fifc",
+        "fls_hffpo88r61rh",
+        "fls_Obik2w9gvhLN",
+        "fls_ch9nkxkloozv",
+        "fls_fh27ljezn3qz",
+        "fls_aibb2quva4mn",
+        "fls_19LnTi3WabFd",
+        "fls_7skf24auayqy"
+      ]
+    },
+    {
+      "fls_id": "fls_aibb2quva4mn",
+      "title": "Attribute ``repr``",
+      "category": 0,
+      "level": 4,
+      "file": "attributes",
+      "content": "Attribute repr\n\n RepresentationList ::=\n Representation ($$,$$ Representation)* $$,$$?\n\n Representation ::=\n RepresentationKind\n | Alignment\n\n RepresentationKind ::=\n PrimitiveRepresentation\n | $$C$$\n | $$Rust$$\n | $$transparent$$\n\n Alignment ::=\n AlignmentDecrease\n | AlignmentIncrease\n\n PrimitiveRepresentation ::=\n $$i8$$\n | $$i16$$\n | $$i32$$\n | $$i64$$\n | $$i128$$\n | $$isize$$\n | $$u8$$\n | $$u16$$\n | $$u32$$\n | $$u64$$\n | $$u128$$\n | $$usize$$\n\n AlignmentDecrease ::=\n $$packed$$\n\n AlignmentIncrease ::=\n $$align$$ $$($$ DecimalLiteral $$)$$\n\nAttribute repr shall apply to [abstract data type]s.\n\nAttribute :dc:`repr` shall indicate the type representation of the\nrelated type.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_vetjq9sw84qc": "Attribute repr shall apply to [abstract data type]s.",
+            "fls_is2esjz1sy36": "Attribute :dc:repr shall indicate the type representation of the related type."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "ReprContent ::=\n       $$repr$$ $$($$ RepresentationList $$)$$\n\n   RepresentationList ::=\n       Representation ($$,$$ Representation)* $$,$$?\n\n   Representation ::=\n       RepresentationKind\n     | Alignment\n\n   RepresentationKind ::=\n       PrimitiveRepresentation\n     | $$C$$\n     | $$Rust$$\n     | $$transparent$$\n\n   Alignment ::=\n       AlignmentDecrease\n     | AlignmentIncrease\n\n   PrimitiveRepresentation ::=\n       $$i8$$\n     | $$i16$$\n     | $$i32$$\n     | $$i64$$\n     | $$i128$$\n     |..."
+          }
+        }
+      },
+      "parent_fls_id": "fls_pgp7ezcc9lh8",
+      "sibling_fls_ids": [
+        "fls_sun645voqex6",
+        "fls_ujig607lmwbm",
+        "fls_olzilmy8n0nl",
+        "fls_o0f9ae22ug1x",
+        "fls_p44fky7fifc",
+        "fls_hffpo88r61rh",
+        "fls_Obik2w9gvhLN",
+        "fls_ch9nkxkloozv",
+        "fls_fh27ljezn3qz",
+        "fls_mvd7nz8k3wcy",
+        "fls_19LnTi3WabFd",
+        "fls_7skf24auayqy"
+      ]
+    },
+    {
+      "fls_id": "fls_19LnTi3WabFd",
+      "title": "Attribute ``unsafe``",
+      "category": 0,
+      "level": 4,
+      "file": "attributes",
+      "content": "Attribute unsafe\n\nAttribute :dc:`unsafe` is used to indicate that an attribute is unsafe <unsafe operation>.\n\nAttribute unsafe shall apply to what the contained attribute applies to.\n\nAttribute unsafe does not affect the behavior of the contained attribute.\n\nThe contained attribute shall be one of the following:\n\n* Attribute no_mangle\n\n* Attribute export_name\n\n* Attribute link_section\n\n* Attribute naked",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_z5DTDKM9mU3o": "Attribute :dc:unsafe is used to indicate that an attribute is unsafe <unsafe operation>.",
+            "fls_5pjo3nGOxbVw": "Attribute unsafe shall apply to what the contained attribute applies to.",
+            "fls_gpxlWbQUNsj8": "Attribute unsafe does not affect the behavior of the contained attribute.",
+            "fls_PhrfxSBvXTPV": "The contained attribute shall be one of the following:",
+            "fls_pCSew95bKJJ5": "Attribute no_mangle",
+            "fls_NRLgmOXxuljQ": "Attribute export_name",
+            "fls_ykpxNByUDyHG": "Attribute link_section",
+            "fls_2oP2nbDPtUg7": "Attribute naked"
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "UnsafeContent ::=\n       $$unsafe$$ $$($$ BuiltinAttributeContent $$)$$"
+          }
+        }
+      },
+      "parent_fls_id": "fls_pgp7ezcc9lh8",
+      "sibling_fls_ids": [
+        "fls_sun645voqex6",
+        "fls_ujig607lmwbm",
+        "fls_olzilmy8n0nl",
+        "fls_o0f9ae22ug1x",
+        "fls_p44fky7fifc",
+        "fls_hffpo88r61rh",
+        "fls_Obik2w9gvhLN",
+        "fls_ch9nkxkloozv",
+        "fls_fh27ljezn3qz",
+        "fls_mvd7nz8k3wcy",
+        "fls_aibb2quva4mn",
+        "fls_7skf24auayqy"
+      ]
+    },
+    {
+      "fls_id": "fls_7skf24auayqy",
+      "title": "Attribute ``used``",
+      "category": 0,
+      "level": 4,
+      "file": "attributes",
+      "content": "Attribute used\n\nAttribute used shall apply to [static]s.\n\nAttribute :dc:`used` forces a tool to keep the related static in the\noutput object file even if the static is not used or referenced by other\n[item]s in the crate.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_s4ii078wgpk": "Attribute used shall apply to [static]s.",
+            "fls_k293nzcffks4": "Attribute :dc:used forces a tool to keep the related static in the output object file even if the static is not used or referenced by other [item]s in the crate."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "UsedContent ::=\n       $$used$$"
+          }
+        }
+      },
+      "parent_fls_id": "fls_pgp7ezcc9lh8",
+      "sibling_fls_ids": [
+        "fls_sun645voqex6",
+        "fls_ujig607lmwbm",
+        "fls_olzilmy8n0nl",
+        "fls_o0f9ae22ug1x",
+        "fls_p44fky7fifc",
+        "fls_hffpo88r61rh",
+        "fls_Obik2w9gvhLN",
+        "fls_ch9nkxkloozv",
+        "fls_fh27ljezn3qz",
+        "fls_mvd7nz8k3wcy",
+        "fls_aibb2quva4mn",
+        "fls_19LnTi3WabFd"
+      ]
+    },
+    {
+      "fls_id": "fls_cjq792yj6vft",
+      "title": "Limits Attributes",
+      "category": 0,
+      "level": 3,
+      "file": "attributes",
+      "content": "Limits Attributes",
+      "rubrics": {},
+      "parent_fls_id": "fls_ahmnqhm8anlb",
+      "sibling_fls_ids": [
+        "fls_h4k49eadninz",
+        "fls_cdx9zb1yxcc8",
+        "fls_wednba84zi3y",
+        "fls_t2590yyvclgb",
+        "fls_8wcliky2svcs",
+        "fls_pgp7ezcc9lh8",
+        "fls_2084b06dr0wz",
+        "fls_7bb5ua4g06k8",
+        "fls_go457hpaf7ov",
+        "fls_nbbvukrdngev",
+        "fls_riyi0gy48fxw",
+        "fls_r3zwgf9sg1xp"
+      ]
+    },
+    {
+      "fls_id": "fls_u2hzlzpzh7yy",
+      "title": "Attribute ``recursion_limit``",
+      "category": 0,
+      "level": 4,
+      "file": "attributes",
+      "content": "Attribute recursion_limit\n\nAttribute recursion_limit shall apply to the crate root module.\n\nAttribute :dc:`recursion_limit` sets the maximum depth of\nmacro expansion and auto-dereferencing.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_o55cxc67sya7": "Attribute recursion_limit shall apply to the crate root module.",
+            "fls_o9p8fa8zhe15": "Attribute :dc:recursion_limit sets the maximum depth of macro expansion and auto-dereferencing."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "RecursionLimitContent ::=\n       $$recursion_limit$$ $$=$$ $$\"$$ DecimalLiteral $$\"$$"
+          }
+        }
+      },
+      "parent_fls_id": "fls_cjq792yj6vft",
+      "sibling_fls_ids": [
+        "fls_tdjjuwbr7mkg"
+      ]
+    },
+    {
+      "fls_id": "fls_tdjjuwbr7mkg",
+      "title": "Attribute ``type_length_limit``",
+      "category": 0,
+      "level": 4,
+      "file": "attributes",
+      "content": "Attribute type_length_limit\n\nAttribute type_length_limit shall apply to the\ncrate root module.\n\nAttribute :dc:`type_length_limit` sets the maximum number of\n[generic substitution]s for [type parameter]s when constructing a\nconcrete type.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_dfnkzj8ob3uq": "Attribute type_length_limit shall apply to the crate root module.",
+            "fls_61vt1r8g51nh": "Attribute :dc:type_length_limit sets the maximum number of [generic substitution]s for [type parameter]s when constructing a concrete type."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "TypeLengthLimitContent ::=\n       $$type_length_limit$$ $$=$$ $$\"$$ DecimalLiteral $$\"$$"
+          }
+        }
+      },
+      "parent_fls_id": "fls_cjq792yj6vft",
+      "sibling_fls_ids": [
+        "fls_u2hzlzpzh7yy"
+      ]
+    },
+    {
+      "fls_id": "fls_2084b06dr0wz",
+      "title": "Macros Attributes",
+      "category": 0,
+      "level": 3,
+      "file": "attributes",
+      "content": "Macros Attributes",
+      "rubrics": {},
+      "parent_fls_id": "fls_ahmnqhm8anlb",
+      "sibling_fls_ids": [
+        "fls_h4k49eadninz",
+        "fls_cdx9zb1yxcc8",
+        "fls_wednba84zi3y",
+        "fls_t2590yyvclgb",
+        "fls_8wcliky2svcs",
+        "fls_pgp7ezcc9lh8",
+        "fls_cjq792yj6vft",
+        "fls_7bb5ua4g06k8",
+        "fls_go457hpaf7ov",
+        "fls_nbbvukrdngev",
+        "fls_riyi0gy48fxw",
+        "fls_r3zwgf9sg1xp"
+      ]
+    },
+    {
+      "fls_id": "fls_qyudjGHZfyJH",
+      "title": "Attribute ``collapse_debuginfo``",
+      "category": 0,
+      "level": 4,
+      "file": "attributes",
+      "content": "Attribute collapse_debuginfo\n\n CollapseDebuginfoKind ::=\n $$no$$\n | $$external$$\n | $$yes$$\n\nAttribute collapse_debuginfo shall apply to [declarative macro]s.\n\nAttribute :dc:`collapse_debuginfo` changes the debug location information\nfor the expanded code of the declarative macro to its invocation site. This\nrepeats recursively to the top most expansion of a declarative macro that\nis not annotated with attribute collapse_debuginfo.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_EzKHtWHmXMAZ": "Attribute collapse_debuginfo shall apply to [declarative macro]s.",
+            "fls_BCvJpfQMYEcD": "Attribute :dc:collapse_debuginfo changes the debug location information for the expanded code of the declarative macro to its invocation site. This repeats recursively to the top most expansion of a declarative macro that is not annotated with attribute collapse_debuginfo."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "CollapseDebuginfoContent ::=\n       $$collapse_debuginfo$$  $$($$ CollapseDebuginfoKind $$)$$\n\n   CollapseDebuginfoKind ::=\n       $$no$$\n     | $$external$$\n     | $$yes$$"
+          }
+        }
+      },
+      "parent_fls_id": "fls_2084b06dr0wz",
+      "sibling_fls_ids": [
+        "fls_e0a96eb6ux3y",
+        "fls_qxjy0f758x5s",
+        "fls_qkmkev85o5jf",
+        "fls_ejhlylrcajo",
+        "fls_q6qecp6e413"
+      ]
+    },
+    {
+      "fls_id": "fls_e0a96eb6ux3y",
+      "title": "Attribute ``macro_export``",
+      "category": 0,
+      "level": 4,
+      "file": "attributes",
+      "content": "Attribute macro_export\n\nAttribute macro_export shall apply to [declarative macro]s.\n\nAttribute :dc:`macro_export` changes the visibility of the related\ndeclarative macro to public visibility and introduces the name\nof the declarative macro into the item scope of the\ncrate root module.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_3ma7zkk6john": "Attribute macro_export shall apply to [declarative macro]s.",
+            "fls_h26iw5wh4lla": "Attribute :dc:macro_export changes the visibility of the related declarative macro to public visibility and introduces the name of the declarative macro into the item scope of the crate root module."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "MacroExportContent ::=\n       $$macro_export$$"
+          }
+        }
+      },
+      "parent_fls_id": "fls_2084b06dr0wz",
+      "sibling_fls_ids": [
+        "fls_qyudjGHZfyJH",
+        "fls_qxjy0f758x5s",
+        "fls_qkmkev85o5jf",
+        "fls_ejhlylrcajo",
+        "fls_q6qecp6e413"
+      ]
+    },
+    {
+      "fls_id": "fls_qxjy0f758x5s",
+      "title": "Attribute ``macro_use``",
+      "category": 0,
+      "level": 4,
+      "file": "attributes",
+      "content": "Attribute macro_use\n\n ImportedMacroList ::=\n $$($$ IdentifierList $$)$$\n\nAttribute macro_use shall apply to [crate import]s and\n[module]s.\n\nAn ImportedMacroList enumerates macros-to-import. A macro-to-import shall\nbe subject to attribute macro_export.\n\nWhen applied to a crate import, attribute :dc:`macro_use`\nimports from the related crate either:\n\n* The enumerated macros-to-import, or\n\n* If no macros-to-import have been specified, all [macro]s subject to\n attribute macro_export.\n\nWhen applied to a module, attribute macro_use extends the\ntextual macro scope of the related macro.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_uua0nthq9id": "Attribute macro_use shall apply to [crate import]s and [module]s.",
+            "fls_oq4kyo5z5tj5": "An ImportedMacroList enumerates macros-to-import. A macro-to-import shall be subject to attribute macro_export.",
+            "fls_skexvtpbjknn": "When applied to a crate import, attribute :dc:macro_use imports from the related crate either:",
+            "fls_v03924dr0u0z": "The enumerated macros-to-import, or",
+            "fls_eha2hoey857x": "If no macros-to-import have been specified, all [macro]s subject to attribute macro_export.",
+            "fls_p6jlgmn2sg7j": "When applied to a module, attribute macro_use extends the textual macro scope of the related macro."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "MacroUseContent ::=\n       $$macro_use$$ ImportedMacroList?\n\n   ImportedMacroList ::=\n       $$($$ IdentifierList $$)$$"
+          }
+        }
+      },
+      "parent_fls_id": "fls_2084b06dr0wz",
+      "sibling_fls_ids": [
+        "fls_qyudjGHZfyJH",
+        "fls_e0a96eb6ux3y",
+        "fls_qkmkev85o5jf",
+        "fls_ejhlylrcajo",
+        "fls_q6qecp6e413"
+      ]
+    },
+    {
+      "fls_id": "fls_qkmkev85o5jf",
+      "title": "Attribute ``proc_macro``",
+      "category": 0,
+      "level": 4,
+      "file": "attributes",
+      "content": "Attribute proc_macro\n\nAttribute proc_macro shall apply to public [function]s in the\ncrate root module of a proc-macro crate.\n\nAttribute :dc:`proc_macro` turns the related function into a\nfunction-like macro.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_u48dtmh97g": "Attribute proc_macro shall apply to public [function]s in the crate root module of a proc-macro crate.",
+            "fls_t4ez0zg1m569": "Attribute :dc:proc_macro turns the related function into a function-like macro."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "ProcMacroContent ::=\n       $$proc_macro$$"
+          }
+        }
+      },
+      "parent_fls_id": "fls_2084b06dr0wz",
+      "sibling_fls_ids": [
+        "fls_qyudjGHZfyJH",
+        "fls_e0a96eb6ux3y",
+        "fls_qxjy0f758x5s",
+        "fls_ejhlylrcajo",
+        "fls_q6qecp6e413"
+      ]
+    },
+    {
+      "fls_id": "fls_ejhlylrcajo",
+      "title": "Attribute ``proc_macro_attribute``",
+      "category": 0,
+      "level": 4,
+      "file": "attributes",
+      "content": "Attribute proc_macro_attribute\n\nAttribute proc_macro_attribute shall apply to public [function]s\nin the crate root module of a proc-macro crate.\n\nAttribute :dc:`proc_macro_attribute` turns the related function into\nan attribute macro.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_huznzmkuhdky": "Attribute proc_macro_attribute shall apply to public [function]s in the crate root module of a proc-macro crate.",
+            "fls_gc3ly8fsodf1": "Attribute :dc:proc_macro_attribute turns the related function into an attribute macro."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "ProcMacroAttributeContent ::=\n       $$proc_macro_attribute$$"
+          }
+        }
+      },
+      "parent_fls_id": "fls_2084b06dr0wz",
+      "sibling_fls_ids": [
+        "fls_qyudjGHZfyJH",
+        "fls_e0a96eb6ux3y",
+        "fls_qxjy0f758x5s",
+        "fls_qkmkev85o5jf",
+        "fls_q6qecp6e413"
+      ]
+    },
+    {
+      "fls_id": "fls_q6qecp6e413",
+      "title": "Attribute ``proc_macro_derive``",
+      "category": 0,
+      "level": 4,
+      "file": "attributes",
+      "content": "Attribute proc_macro_derive\n\n DeriveName ::=\n Name\n\n HelperAttributeList ::=\n $$attributes$$ $$($$ IdentifierList $$)$$\n\nAttribute proc_macro_derive shall apply to public [function]s in\nthe crate root module of a proc-macro crate.\n\nAttribute :dc:`proc_macro_derive` turns the related function into a\nderive macro, where DeriveName defines the name of the\nderive macro available to attribute derive.\n\nThe HelperAttributeList declares the [derive helper attribute]s of\nthe derive macro.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_l82yswg0k3px": "Attribute proc_macro_derive shall apply to public [function]s in the crate root module of a proc-macro crate.",
+            "fls_ir9i4i2x5gyx": "Attribute :dc:proc_macro_derive turns the related function into a derive macro, where DeriveName defines the name of the derive macro available to attribute derive.",
+            "fls_NydVxyb43TH6": "The HelperAttributeList declares the [derive helper attribute]s of the derive macro."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "ProcMacroDeriveContent ::=\n       $$proc_macro_derive$$ $$($$ DeriveName ($$,$$ HelperAttributeList)? $$)$$\n\n   DeriveName ::=\n       Name\n\n   HelperAttributeList ::=\n       $$attributes$$ $$($$ IdentifierList $$)$$"
+          }
+        }
+      },
+      "parent_fls_id": "fls_2084b06dr0wz",
+      "sibling_fls_ids": [
+        "fls_qyudjGHZfyJH",
+        "fls_e0a96eb6ux3y",
+        "fls_qxjy0f758x5s",
+        "fls_qkmkev85o5jf",
+        "fls_ejhlylrcajo"
+      ]
+    },
+    {
+      "fls_id": "fls_7bb5ua4g06k8",
+      "title": "Modules Attributes",
+      "category": 0,
+      "level": 3,
+      "file": "attributes",
+      "content": "Modules Attributes",
+      "rubrics": {},
+      "parent_fls_id": "fls_ahmnqhm8anlb",
+      "sibling_fls_ids": [
+        "fls_h4k49eadninz",
+        "fls_cdx9zb1yxcc8",
+        "fls_wednba84zi3y",
+        "fls_t2590yyvclgb",
+        "fls_8wcliky2svcs",
+        "fls_pgp7ezcc9lh8",
+        "fls_cjq792yj6vft",
+        "fls_2084b06dr0wz",
+        "fls_go457hpaf7ov",
+        "fls_nbbvukrdngev",
+        "fls_riyi0gy48fxw",
+        "fls_r3zwgf9sg1xp"
+      ]
+    },
+    {
+      "fls_id": "fls_1zbaajz5prpn",
+      "title": "Attribute ``path``",
+      "category": 0,
+      "level": 4,
+      "file": "attributes",
+      "content": "Attribute path\n\nAttribute path shall apply to [module]s.\n\nAttribute :dc:`path` specifies the module path of the respective\nmodule as a string literal.\n\nA tool is free to define the format of a module path.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_lht4pcezmbxw": "Attribute path shall apply to [module]s.",
+            "fls_qb6anohvc03k": "Attribute :dc:path specifies the module path of the respective module as a string literal.",
+            "fls_18tcecx4p2wp": "A tool is free to define the format of a module path."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "PathContent ::=\n       $$path$$ $$=$$ StringLiteral"
+          }
+        }
+      },
+      "parent_fls_id": "fls_7bb5ua4g06k8",
+      "sibling_fls_ids": []
+    },
+    {
+      "fls_id": "fls_go457hpaf7ov",
+      "title": "Prelude Attributes",
+      "category": 0,
+      "level": 3,
+      "file": "attributes",
+      "content": "Prelude Attributes",
+      "rubrics": {},
+      "parent_fls_id": "fls_ahmnqhm8anlb",
+      "sibling_fls_ids": [
+        "fls_h4k49eadninz",
+        "fls_cdx9zb1yxcc8",
+        "fls_wednba84zi3y",
+        "fls_t2590yyvclgb",
+        "fls_8wcliky2svcs",
+        "fls_pgp7ezcc9lh8",
+        "fls_cjq792yj6vft",
+        "fls_2084b06dr0wz",
+        "fls_7bb5ua4g06k8",
+        "fls_nbbvukrdngev",
+        "fls_riyi0gy48fxw",
+        "fls_r3zwgf9sg1xp"
+      ]
+    },
+    {
+      "fls_id": "fls_iikmhqsp1r5a",
+      "title": "Attribute ``no_implicit_prelude``",
+      "category": 0,
+      "level": 4,
+      "file": "attributes",
+      "content": "Attribute no_implicit_prelude\n\nThe inner attribute version of attribute no_implicit_prelude\nshall apply to the crate root module or to [module]s.\n\nThe outer attribute version of attribute no_implicit_prelude\nshall apply to [module]s.\n\nAttribute :dc:`no_implicit_prelude` prevents the import of the\nexternal prelude, the standard library prelude, and the tool\nprelude.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_tki5k5uo74gw": "The inner attribute version of attribute no_implicit_prelude shall apply to the crate root module or to [module]s.",
+            "fls_cmrqxc5oax4r": "The outer attribute version of attribute no_implicit_prelude shall apply to [module]s.",
+            "fls_c7v2hbdb7g2d": "Attribute :dc:no_implicit_prelude prevents the import of the external prelude, the standard library prelude, and the tool prelude."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "NoImplicitPreludeContent ::=\n       $$no_implicit_prelude$$"
+          }
+        }
+      },
+      "parent_fls_id": "fls_go457hpaf7ov",
+      "sibling_fls_ids": [
+        "fls_9xnaxd7qbakp"
+      ]
+    },
+    {
+      "fls_id": "fls_9xnaxd7qbakp",
+      "title": "Attribute ``no_std``",
+      "category": 0,
+      "level": 4,
+      "file": "attributes",
+      "content": "Attribute no_std\n\nAttribute no_std shall apply to the crate root module.\n\nAttribute :dc:`no_std` has the following effects:\n\n* Prevents the import of the standard library prelude.\n\n* Imports the core prelude.\n\n* Imports all [declarative macro]s subject to attribute\n macro_export of the core crate into the macro_use prelude.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_qnxihxsvkyf6": "Attribute no_std shall apply to the crate root module.",
+            "fls_kxav9vw59ts4": "Attribute :dc:no_std has the following effects:",
+            "fls_ve1shwjq09pl": "Prevents the import of the standard library prelude.",
+            "fls_wgwsn7laoju7": "Imports the core prelude.",
+            "fls_lxkd6hdboav4": "Imports all [declarative macro]s subject to attribute macro_export of the core crate into the macro_use prelude."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "NoStdContent ::=\n       $$no_std$$"
+          }
+        }
+      },
+      "parent_fls_id": "fls_go457hpaf7ov",
+      "sibling_fls_ids": [
+        "fls_iikmhqsp1r5a"
+      ]
+    },
+    {
+      "fls_id": "fls_nbbvukrdngev",
+      "title": "Runtime Attributes",
+      "category": 0,
+      "level": 3,
+      "file": "attributes",
+      "content": "Runtime Attributes",
+      "rubrics": {},
+      "parent_fls_id": "fls_ahmnqhm8anlb",
+      "sibling_fls_ids": [
+        "fls_h4k49eadninz",
+        "fls_cdx9zb1yxcc8",
+        "fls_wednba84zi3y",
+        "fls_t2590yyvclgb",
+        "fls_8wcliky2svcs",
+        "fls_pgp7ezcc9lh8",
+        "fls_cjq792yj6vft",
+        "fls_2084b06dr0wz",
+        "fls_7bb5ua4g06k8",
+        "fls_go457hpaf7ov",
+        "fls_riyi0gy48fxw",
+        "fls_r3zwgf9sg1xp"
+      ]
+    },
+    {
+      "fls_id": "fls_fs0lcfllamj",
+      "title": "Attribute ``global_allocator``",
+      "category": 0,
+      "level": 4,
+      "file": "attributes",
+      "content": "Attribute global_allocator\n\nAttribute global_allocator shall apply to [static]s whose\n[type]s implement the core::alloc::GlobalAlloc trait.\n\nAttribute :dc:`global_allocator` sets the global allocator to the related\nstatic.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_5b8aewlgeon8": "Attribute global_allocator shall apply to [static]s whose [type]s implement the core::alloc::GlobalAlloc trait.",
+            "fls_homoidh8mu1r": "Attribute :dc:global_allocator sets the global allocator to the related static."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "GlobalAllocatorContent ::=\n       $$global_allocator$$"
+          }
+        }
+      },
+      "parent_fls_id": "fls_nbbvukrdngev",
+      "sibling_fls_ids": [
+        "fls_ls5eryuoxlp9",
+        "fls_1l4mnlfk5rr2"
+      ]
+    },
+    {
+      "fls_id": "fls_ls5eryuoxlp9",
+      "title": "Attribute ``panic_handler``",
+      "category": 0,
+      "level": 4,
+      "file": "attributes",
+      "content": "Attribute panic_handler\n\nAttribute panic_handler shall apply to [function]s with the\nfollowing restrictions:\n\n* It lacks [function qualifier]s,\n\n* Its ABI is Rust,\n\n* It lacks [generic parameter]s,\n\n* It has a single function parameter whose type is &\n core::panic::PanicInfo,\n\n* It has the never type as its return type,\n\n* It lacks a where clause,\n\n* It has a function body.\n\nAttribute :dc:`panic_handler` indicates that its related function\ndefines the behavior of [panic]s.\n\nA crate graph shall contain exactly one function subject to\nattribute panic_handler.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_ryz8qy1wdnma": "Attribute panic_handler shall apply to [function]s with the following restrictions:",
+            "fls_ncyod5gegMqL": "It lacks [function qualifier]s,",
+            "fls_jzIHzPkJqVm8": "Its ABI is Rust,",
+            "fls_qXii07xWRUoT": "It lacks [generic parameter]s,",
+            "fls_ZEjvn4mmfSct": "It has a single function parameter whose type is & core::panic::PanicInfo,",
+            "fls_iWPw0QFE5TrP": "It has the never type as its return type,",
+            "fls_WirXqd7UV4M0": "It lacks a where clause,",
+            "fls_5CGTQTuT0I5v": "It has a function body.",
+            "fls_8gqun8lma9wz": "Attribute :dc:panic_handler indicates that its related function defines the behavior of [panic]s.",
+            "fls_ka66jcu8gir7": "A crate graph shall contain exactly one function subject to attribute panic_handler."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "PanicHandlerContent ::=\n       $$panic_handler$$"
+          }
+        }
+      },
+      "parent_fls_id": "fls_nbbvukrdngev",
+      "sibling_fls_ids": [
+        "fls_fs0lcfllamj",
+        "fls_1l4mnlfk5rr2"
+      ]
+    },
+    {
+      "fls_id": "fls_1l4mnlfk5rr2",
+      "title": "Attribute ``windows_subsystem``",
+      "category": 0,
+      "level": 4,
+      "file": "attributes",
+      "content": "Attribute windows_subsystem\n\n SubsystemKind ::=\n $$console$$\n | $$windows$$\n\nAttribute windows_subsystem shall apply to the crate root module\nof a binary crate.\n\nAttribute :dc:`windows_subsystem` specifies the subsystem on Windows.\n\nIf attribute windows_subsystem is missing, the subsystem of the\nrelated binary crate defaults to console.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_7mzjahvdzpy5": "Attribute windows_subsystem shall apply to the crate root module of a binary crate.",
+            "fls_t3c0t3lcnebk": "Attribute :dc:windows_subsystem specifies the subsystem on Windows.",
+            "fls_go7pfkgpjk2t": "If attribute windows_subsystem is missing, the subsystem of the related binary crate defaults to console."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "WindowsSubsystemContent ::=\n       $$windows_subsystem$$ $$=$$ $$\"$$ SubsystemKind $$\"$$\n\n   SubsystemKind ::=\n       $$console$$\n     | $$windows$$"
+          }
+        }
+      },
+      "parent_fls_id": "fls_nbbvukrdngev",
+      "sibling_fls_ids": [
+        "fls_fs0lcfllamj",
+        "fls_ls5eryuoxlp9"
+      ]
+    },
+    {
+      "fls_id": "fls_riyi0gy48fxw",
+      "title": "Testing Attributes",
+      "category": 0,
+      "level": 3,
+      "file": "attributes",
+      "content": "Testing Attributes",
+      "rubrics": {},
+      "parent_fls_id": "fls_ahmnqhm8anlb",
+      "sibling_fls_ids": [
+        "fls_h4k49eadninz",
+        "fls_cdx9zb1yxcc8",
+        "fls_wednba84zi3y",
+        "fls_t2590yyvclgb",
+        "fls_8wcliky2svcs",
+        "fls_pgp7ezcc9lh8",
+        "fls_cjq792yj6vft",
+        "fls_2084b06dr0wz",
+        "fls_7bb5ua4g06k8",
+        "fls_go457hpaf7ov",
+        "fls_nbbvukrdngev",
+        "fls_r3zwgf9sg1xp"
+      ]
+    },
+    {
+      "fls_id": "fls_x849a4u7h82j",
+      "title": "Attribute ``ignore``",
+      "category": 0,
+      "level": 4,
+      "file": "attributes",
+      "content": "Attribute ignore\n\n IgnoreReason ::=\n $$=$$ StringLiteral\n\nAttribute ignore shall apply to [testing function]s.\n\nAttribute :dc:`ignore` prevents the execution of its related\ntesting function.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_qmdylxse9yhu": "Attribute ignore shall apply to [testing function]s.",
+            "fls_9m8e59fc1tyh": "Attribute :dc:ignore prevents the execution of its related testing function."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "IgnoreContent ::=\n       $$ignore$$ IgnoreReason?\n\n   IgnoreReason ::=\n       $$=$$ StringLiteral"
+          }
+        }
+      },
+      "parent_fls_id": "fls_riyi0gy48fxw",
+      "sibling_fls_ids": [
+        "fls_aes2d94g12b9",
+        "fls_dv2j1fvvnk1t"
+      ]
+    },
+    {
+      "fls_id": "fls_aes2d94g12b9",
+      "title": "Attribute ``should_panic``",
+      "category": 0,
+      "level": 4,
+      "file": "attributes",
+      "content": "Attribute should_panic\n\n ExpectedPanicMessage ::=\n $$($$ $$expected$$ $$=$$ StringLiteral $$)$$\n\nAttribute should_panic shall apply to [testing function]s.\n\nAttribute :dc:`should_panic` indicates that for the related\ntesting function to pass, it should panic.\n\nIf ExpectedPanicMessage is specified, then the related\ntesting function passes only when the panic message contains the\nExpectedPanicMessage.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_w7dq8gnzel36": "Attribute should_panic shall apply to [testing function]s.",
+            "fls_bm5x846zfnb8": "Attribute :dc:should_panic indicates that for the related testing function to pass, it should panic.",
+            "fls_bcoq5aus8nkr": "If ExpectedPanicMessage is specified, then the related testing function passes only when the panic message contains the ExpectedPanicMessage."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "ShouldPanicContent ::=\n       $$should_panic$$ ExpectedPanicMessage?\n\n   ExpectedPanicMessage ::=\n       $$($$ $$expected$$ $$=$$ StringLiteral $$)$$"
+          }
+        }
+      },
+      "parent_fls_id": "fls_riyi0gy48fxw",
+      "sibling_fls_ids": [
+        "fls_x849a4u7h82j",
+        "fls_dv2j1fvvnk1t"
+      ]
+    },
+    {
+      "fls_id": "fls_dv2j1fvvnk1t",
+      "title": "Attribute ``test``",
+      "category": 0,
+      "level": 4,
+      "file": "attributes",
+      "content": "Attribute test\n\nAttribute test shall apply to [function]s that:\n\n* Is not an async function, and\n\n* Is not an unsafe function, and\n\n* Lacks [generic parameter]s, and\n\n* Lacks [function parameter]s, and\n\nAttribute :dc:`test` indicates that the respective function is a\ntesting function.\n\nA testing function that returns the unit type passes when it\nterminates and does not panic.\n\nA testing function that returns core::result::Result<(), E> passes when\nit returns core::result::Result::Ok(()).\n\nA testing function that does not terminate shall pass and fail according to\nthe tool.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_o2elhg5w1rj9": "Attribute test shall apply to [function]s that:",
+            "fls_ert22u8rvkxt": "Is not an async function, and",
+            "fls_c9ckjrq6emdj": "Is not an unsafe function, and",
+            "fls_4uykzqpq6svl": "Lacks [generic parameter]s, and",
+            "fls_aqzd30s267pt": "Lacks [function parameter]s, and",
+            "fls_ze6cs75y9aft": "Attribute :dc:test indicates that the respective function is a testing function.",
+            "fls_pcs0prrh23y3": "A testing function that returns the unit type passes when it terminates and does not panic.",
+            "fls_niky8lbkvej9": "A testing function that returns core::result::Result<(), E> passes when it returns core::result::Result::Ok(()).",
+            "fls_qfuntdm2g184": "A testing function that does not terminate shall pass and fail according to the tool."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "TestContent ::=\n       $$test$$"
+          }
+        }
+      },
+      "parent_fls_id": "fls_riyi0gy48fxw",
+      "sibling_fls_ids": [
+        "fls_x849a4u7h82j",
+        "fls_aes2d94g12b9"
+      ]
+    },
+    {
+      "fls_id": "fls_r3zwgf9sg1xp",
+      "title": "Type Attributes",
+      "category": 0,
+      "level": 3,
+      "file": "attributes",
+      "content": "Type Attributes",
+      "rubrics": {},
+      "parent_fls_id": "fls_ahmnqhm8anlb",
+      "sibling_fls_ids": [
+        "fls_h4k49eadninz",
+        "fls_cdx9zb1yxcc8",
+        "fls_wednba84zi3y",
+        "fls_t2590yyvclgb",
+        "fls_8wcliky2svcs",
+        "fls_pgp7ezcc9lh8",
+        "fls_cjq792yj6vft",
+        "fls_2084b06dr0wz",
+        "fls_7bb5ua4g06k8",
+        "fls_go457hpaf7ov",
+        "fls_nbbvukrdngev",
+        "fls_riyi0gy48fxw"
+      ]
+    },
+    {
+      "fls_id": "fls_9tmvuqrmk3ug",
+      "title": "Attribute ``non_exhaustive``",
+      "category": 0,
+      "level": 4,
+      "file": "attributes",
+      "content": "Attribute non_exhaustive\n\nAttribute non_exhaustive shall apply to [enum type]s,\n[enum variant]s, and [struct type]s.\n\nAttribute :dc:`non_exhaustive` indicates that the related\nabstract data type or enum variant may have more [field]s or\n[enum variant]s added in the future. A type subject to attribute\nnon_exhaustive is referred to as a non-exhaustive type.\n\nA non-exhaustive type shall not be constructed outside of its defining\ncrate.\n\nAn enum variant subject to attribute non_exhaustive is referred\nto as a non-exhaustive variant.\n\nA non-exhaustive variant shall not be constructed outside of its defining\ncrate.\n\nPattern matching a non-exhaustive variant shall require a\nstruct pattern with a rest pattern outside its defining crate.\n\nPattern matching a non-exhaustive variant does not contribute towards\nthe exhaustiveness of [match arm]s.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_szvrd79cgzsg": "Attribute non_exhaustive shall apply to [enum type]s, [enum variant]s, and [struct type]s.",
+            "fls_1of56vl2ewq0": "Attribute :dc:non_exhaustive indicates that the related abstract data type or enum variant may have more [field]s or [enum variant]s added in the future. A type subject to attribute non_exhaustive is referred to as a non-exhaustive type.",
+            "fls_hkyzdmmdyoin": "A non-exhaustive type shall not be constructed outside of its defining crate.",
+            "fls_7b0fvwrmz0mh": "An enum variant subject to attribute non_exhaustive is referred to as a non-exhaustive variant.",
+            "fls_oqfrg9tqgaj8": "A non-exhaustive variant shall not be constructed outside of its defining crate.",
+            "fls_aql3c89840ix": "Pattern matching a non-exhaustive variant shall require a struct pattern with a rest pattern outside its defining crate.",
+            "fls_cez7yxfc376c": "Pattern matching a non-exhaustive variant does not contribute towards the exhaustiveness of [match arm]s."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "NonExhaustiveContent ::=\n       $$non_exhaustive$$"
+          }
+        }
+      },
+      "parent_fls_id": "fls_r3zwgf9sg1xp",
+      "sibling_fls_ids": []
+    }
+  ]
+}

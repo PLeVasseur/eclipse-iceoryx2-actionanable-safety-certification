@@ -1,0 +1,56 @@
+{
+  "chapter": 3,
+  "title": "Items",
+  "fls_id": "fls_wb86edg02t6a",
+  "file": "items",
+  "extraction_date": "2025-12-31",
+  "category_codes": {
+    "0": "section",
+    "-1": "general",
+    "-2": "legality_rules",
+    "-3": "dynamic_semantics",
+    "-4": "undefined_behavior",
+    "-5": "implementation_requirements",
+    "-6": "implementation_permissions",
+    "-7": "examples",
+    "-8": "syntax"
+  },
+  "statistics": {
+    "total_sections": 1,
+    "total_paragraphs": 3,
+    "paragraphs_by_category": {
+      "-8": 1,
+      "-3": 1,
+      "-2": 1
+    }
+  },
+  "sections": [
+    {
+      "fls_id": "fls_wb86edg02t6a",
+      "title": "Items",
+      "category": 0,
+      "level": 1,
+      "file": "items",
+      "content": "Items\n\n ItemWithVisibility ::=\n VisibilityModifier? (\n ConstantDeclaration\n | EnumDeclaration\n | ExternalBlock\n | ExternalCrateImport\n | FunctionDeclaration\n | Implementation\n | ModuleDeclaration\n | StaticDeclaration\n | StructDeclaration\n | TraitDeclaration\n | TypeAliasDeclaration\n | UnionDeclaration\n | UseImport\n )\n\n MacroItem ::=\n MacroRulesDeclaration\n | TerminatedMacroInvocation\n\n ItemSafety ::=\n $$unsafe$$\n | $$safe$$\n\nThe macro expansion of a terminated macro invocation is treated as\nzero or more [item]s if the terminated macro invocation appears as\nan item.\n\nElaboration is the process by which a declaration achieves its runtime\neffects.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_s3b1cba9lfj5": "The macro expansion of a terminated macro invocation is treated as zero or more [item]s if the terminated macro invocation appears as an item."
+          }
+        },
+        "-3": {
+          "paragraphs": {
+            "fls_hil5f7y4xdhe": "Elaboration is the process by which a declaration achieves its runtime effects."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "Item ::=\n       OuterAttributeOrDoc* (ItemWithVisibility | MacroItem)\n\n   ItemWithVisibility ::=\n       VisibilityModifier? (\n           ConstantDeclaration\n         | EnumDeclaration\n         | ExternalBlock\n         | ExternalCrateImport\n         | FunctionDeclaration\n         | Implementation\n         | ModuleDeclaration\n         | StaticDeclaration\n         | StructDeclaration\n         | TraitDeclaration\n         | TypeAliasDeclaration\n         | UnionDeclaration\n         | UseImport\n       ..."
+          }
+        }
+      },
+      "parent_fls_id": null,
+      "sibling_fls_ids": []
+    }
+  ]
+}

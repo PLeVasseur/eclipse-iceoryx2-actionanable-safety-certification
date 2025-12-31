@@ -1,0 +1,97 @@
+{
+  "chapter": 9,
+  "title": "Functions",
+  "fls_id": "fls_qcb1n9c0e5hz",
+  "file": "functions",
+  "extraction_date": "2025-12-31",
+  "category_codes": {
+    "0": "section",
+    "-1": "general",
+    "-2": "legality_rules",
+    "-3": "dynamic_semantics",
+    "-4": "undefined_behavior",
+    "-5": "implementation_requirements",
+    "-6": "implementation_permissions",
+    "-7": "examples",
+    "-8": "syntax"
+  },
+  "statistics": {
+    "total_sections": 1,
+    "total_paragraphs": 49,
+    "paragraphs_by_category": {
+      "-8": 1,
+      "-2": 48
+    }
+  },
+  "sections": [
+    {
+      "fls_id": "fls_qcb1n9c0e5hz",
+      "title": "Functions",
+      "category": 0,
+      "level": 1,
+      "file": "functions",
+      "content": "Functions\n\n FunctionQualifierList ::=\n $$const$$? $$async$$? ItemSafety? AbiSpecification?\n\n FunctionParameterList ::=\n (FunctionParameter ($$,$$ FunctionParameter)* $$,$$?)\n | (SelfParameter ($$,$$ FunctionParameter)* $$,$$?)\n\n FunctionParameter ::=\n OuterAttributeOrDoc* (FunctionParameterPattern | FunctionParameterVariadicPart | TypeSpecification)\n\n FunctionParameterPattern ::=\n PatternWithoutAlternation (TypeAscription | ($$:$$ FunctionParameterVariadicPart))\n\n FunctionParameterVariadicPart ::=\n $$...$$\n\n ReturnType ::=\n $$->$$ TypeSpecification\n\n FunctionBody ::=\n BlockExpression\n\n SelfParameter ::=\n OuterAttributeOrDoc* (ShorthandSelf | TypedSelf)\n\n ShorthandSelf ::=\n ($$&$$ LifetimeIndication?)? $$mut$$? $$self$$\n\n TypedSelf ::=\n $$mut$$? $$self$$ TypeAscription\n\nA function is a value of a function type that models a behavior.\n\nA function declares a unique function item type for itself.\n\nA function qualifier is a construct that determines the role of\na function.\n\nA function shall not be subject to both keyword async and\nkeyword const.\n\nA function parameter is a construct that yields a set of\n[binding]s that bind matched input [value]s to [name]s at the\nsite of a call expression or a method call expression.\n\nA self parameter is a function parameter expressed by keyword\nself.\n\nA function shall not specify a self parameter unless it is an\nassociated function.\n\nThe type of a function parameter is determined as follows:\n\n* If the function parameter is a self parameter without a TypeSpecification:\n\n * And the self parameter has token & and keyword mut, then the type is &mut Self.\n\n * And the self parameter has token & and lacks keyword mut, then the type is &Self.\n\n * And the self parameter lacks token & and keyword mut, then the type is Self.\n\n* Otherwise the type is the specified type.\n\nThe pattern of a function parameter shall be an irrefutable\npattern.\n\nThe expected type of the pattern of a function parameter is the type of the function parameter.\n\nThe [binding]s of all [pattern]s of all [function parameter]s of a function shall not shadow another.\n\nA variadic function is an external function that specifies\nFunctionParameterVariadicPart as the last function parameter.\n\nA variadic function shall specify one of the following [ABI]s:\n\n* extern \"C\"\n* extern \"C-unwind\"\n* extern \"aapcs\"\n* extern \"aapcs-unwind\"\n* extern \"cdecl\"\n* extern \"cdecl-unwind\"\n* extern \"efiapi\"\n* extern \"system\"\n* extern \"system-unwind\"\n* extern \"sysv64\"\n* extern \"sysv64-unwind\"\n* extern \"win64\"\n* extern \"win64-unwind\"\n\nA return type is the type of the result a function, closure type or function pointer type returns.\n\nThe return type of a function is determined as follows:\n\n* If the FunctionDeclaration specifies a ReturnType, then the return type is the specified ReturnType.\n\n* Otherwise the return type is the unit type.\n\nA function body is the block expression of a function.\n\nA function shall have a function body unless it is an\nassociated trait function or an external function.\n\nA function body denotes a control flow boundary.\n\nA function body of an async function denotes an\nasync control flow boundary.\n\nA function signature is a unique identification of a function\nthat encompasses of its [function qualifier]s, name,\n[generic parameter]s, [function parameter]s, return type, and\nwhere clause.\n\nA constant function is a function subject to keyword const.\n\nThe function body of a constant function shall be a\nconstant expression.\n\nA constant function shall be callable from a constant context.\n\nAn async function is a function subject to keyword async. An\nasync function of the form\n\nis equivalent to function\n\nAn unsafe function is a function subject to an ItemSafety with keyword unsafe.\n\nA function shall only be subject to an ItemSafety with keyword safe if it is an external function in an unsafe external block.\n\nThe invocation of an unsafe function shall require unsafe context.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_gn1ngtx2tp2s": "A function is a value of a function type that models a behavior.",
+            "fls_bdx9gnnjxru3": "A function declares a unique function item type for itself.",
+            "fls_87jnkimc15gi": "A function qualifier is a construct that determines the role of a function.",
+            "fls_nwywh1vjt6rr": "A function shall not be subject to both keyword async and keyword const.",
+            "fls_uwuthzfgslif": "A function parameter is a construct that yields a set of [binding]s that bind matched input [value]s to [name]s at the site of a call expression or a method call expression.",
+            "fls_ymeo93t4mz4": "A self parameter is a function parameter expressed by keyword self.",
+            "fls_ijbt4tgnl95n": "A function shall not specify a self parameter unless it is an associated function.",
+            "fls_AAYJDCNMJgTq": "The type of a function parameter is determined as follows:",
+            "fls_PGtp39f6gJwU": "If the function parameter is a self parameter without a TypeSpecification:",
+            "fls_yZ2yIXxmy2ri": "And the self parameter has token & and keyword mut, then the type is &mut Self.",
+            "fls_35aSvBxBnIzm": "And the self parameter has token & and lacks keyword mut, then the type is &Self.",
+            "fls_Ogziu8S01qPQ": "And the self parameter lacks token & and keyword mut, then the type is Self.",
+            "fls_xCSsxYUZUFed": "Otherwise the type is the specified type.",
+            "fls_lxzinvqveuqh": "The pattern of a function parameter shall be an irrefutable pattern.",
+            "fls_kcAbTPZXQ5Y8": "The expected type of the pattern of a function parameter is the type of the function parameter.",
+            "fls_PGDKWK7nPvgw": "The [binding]s of all [pattern]s of all [function parameter]s of a function shall not shadow another.",
+            "fls_o4uSLPo00KUg": "A variadic function is an external function that specifies FunctionParameterVariadicPart as the last function parameter.",
+            "fls_icdzs1mjh0n4": "A variadic function shall specify one of the following [ABI]s:",
+            "fls_OR85NVifPwjr": "extern \"C\"",
+            "fls_4s2IdfYDzPrX": "extern \"C-unwind\"",
+            "fls_ZJJppPfiJRou": "extern \"aapcs\"",
+            "fls_jOyZh9ujWWHQ": "extern \"aapcs-unwind\"",
+            "fls_Xdr0bFwxhWiB": "extern \"cdecl\"",
+            "fls_DpTFEHZAABdD": "extern \"cdecl-unwind\"",
+            "fls_b7FTlWfnX2OI": "extern \"efiapi\"",
+            "fls_6urL6fZ5cpaA": "extern \"system\"",
+            "fls_TMOzb6cYIOlH": "extern \"system-unwind\"",
+            "fls_eHPWHrvs7ETl": "extern \"sysv64\"",
+            "fls_mjCrvmikm58M": "extern \"sysv64-unwind\"",
+            "fls_4EUb9zFatZ97": "extern \"win64\"",
+            "fls_4B4B5FIqAes9": "extern \"win64-unwind\"",
+            "fls_vljy4mm0zca2": "A return type is the type of the result a function, closure type or function pointer type returns.",
+            "fls_EqJb3Jl3vK8K": "The return type of a function is determined as follows:",
+            "fls_C7dvzcXcpQCy": "If the FunctionDeclaration specifies a ReturnType, then the return type is the specified ReturnType.",
+            "fls_J8X8ahnJLrMo": "Otherwise the return type is the unit type.",
+            "fls_927nfm5mkbsp": "A function body is the block expression of a function.",
+            "fls_yfm0jh62oaxr": "A function shall have a function body unless it is an associated trait function or an external function.",
+            "fls_bHwy8FLzEUi3": "A function body denotes a control flow boundary.",
+            "fls_5Q861wb08DU3": "A function body of an async function denotes an async control flow boundary.",
+            "fls_owdlsaaygtho": "A function signature is a unique identification of a function that encompasses of its [function qualifier]s, name, [generic parameter]s, [function parameter]s, return type, and where clause.",
+            "fls_2049qu3ji5x7": "A constant function is a function subject to keyword const.",
+            "fls_7mlanuh5mvpn": "The function body of a constant function shall be a constant expression.",
+            "fls_otr3hgp8lj1q": "A constant function shall be callable from a constant context.",
+            "fls_m3jiunibqj81": "An async function is a function subject to keyword async. An async function of the form .. code-block:: rust async fn async_fn(param: &param_type) -> return_type { /* tail expression */ }",
+            "fls_7vogmqyd87ey": "is equivalent to function .. code-block:: rust fn async_fn<'a>(param: &'a param_type) -> impl Future<Output = return_type> + 'a { async move { /* tail expression */ } }",
+            "fls_7ucwmzqtittv": "An unsafe function is a function subject to an ItemSafety with keyword unsafe.",
+            "fls_nUADhgcfvvGC": "A function shall only be subject to an ItemSafety with keyword safe if it is an external function in an unsafe external block.",
+            "fls_5hn8fkf7rcvz": "The invocation of an unsafe function shall require unsafe context."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "FunctionDeclaration ::=\n       FunctionQualifierList $$fn$$ Name GenericParameterList? $$($$ FunctionParameterList? $$)$$ ReturnType? WhereClause? (FunctionBody | $$;$$)\n\n   FunctionQualifierList ::=\n       $$const$$? $$async$$? ItemSafety? AbiSpecification?\n\n   FunctionParameterList ::=\n       (FunctionParameter ($$,$$ FunctionParameter)* $$,$$?)\n     | (SelfParameter ($$,$$ FunctionParameter)* $$,$$?)\n\n   FunctionParameter ::=\n       OuterAttributeOrDoc* (FunctionParameterPattern | FunctionPar..."
+          }
+        }
+      },
+      "parent_fls_id": null,
+      "sibling_fls_ids": []
+    }
+  ]
+}

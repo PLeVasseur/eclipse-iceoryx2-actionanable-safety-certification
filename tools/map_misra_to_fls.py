@@ -337,6 +337,7 @@ def create_mapping_entry(
     
     entry = {
         "guideline_id": guideline_id,
+        "guideline_title": title,
         "guideline_type": guideline_type,
         "applicability_all_rust": applicability_all,
         "applicability_safe_rust": applicability_safe,

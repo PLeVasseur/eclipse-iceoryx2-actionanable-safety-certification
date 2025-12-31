@@ -1,0 +1,92 @@
+{
+  "chapter": 10,
+  "title": "Associated Items",
+  "fls_id": "fls_l21tjqjkkaa0",
+  "file": "associated-items",
+  "extraction_date": "2025-12-31",
+  "category_codes": {
+    "0": "section",
+    "-1": "general",
+    "-2": "legality_rules",
+    "-3": "dynamic_semantics",
+    "-4": "undefined_behavior",
+    "-5": "implementation_requirements",
+    "-6": "implementation_permissions",
+    "-7": "examples",
+    "-8": "syntax"
+  },
+  "statistics": {
+    "total_sections": 1,
+    "total_paragraphs": 39,
+    "paragraphs_by_category": {
+      "-8": 1,
+      "-7": 1,
+      "-2": 37
+    }
+  },
+  "sections": [
+    {
+      "fls_id": "fls_l21tjqjkkaa0",
+      "title": "Associated Items",
+      "category": 0,
+      "level": 1,
+      "file": "associated-items",
+      "content": "Associated Items\n\n AssociatedItemWithVisibility ::=\n VisibilityModifier? (\n ConstantDeclaration\n | FunctionDeclaration\n | TypeAliasDeclaration\n )\n\nAn associated item is an item that appears within an\nimplementation or a trait.\n\nAn associated constant is a constant that appears as an\nassociated item.\n\nAn associated function is a function that appears as an\nassociated item.\n\nAn associated type is a type alias that appears as an\nassociated item.\n\nAn associated type shall not be used in the path expression of a\nstruct expression.\n\nAn associated type with a TypeBoundList shall appear only as an\nassociated trait type.\n\nA generic associated type is an associated type with\n[generic parameter]s.\n\nA lifetime parameter of a generic associated type requires a\nbound of the form T: 'lifetime, where T is a type parameter\nor Self and 'lifetime is the lifetime parameter, when\n\n* The generic associated type is used in an associated function of\n the same trait, and\n\n* The corresponding lifetime argument in the use is not the 'static\n lifetime and has either an explicit bound or an implied bound\n that constrains the type parameter, and\n\n* The intersection of all such uses is not empty.\n\nAn associated implementation constant is an associated constant that\nappears within an implementation.\n\nAn associated implementation constant shall have a constant\ninitializer.\n\nAn associated implementation function is an associated function that\nappears within an implementation.\n\nAn associated implementation function shall have a function body.\n\nAn associated implementation type is an associated type that appears\nwithin an implementation.\n\nAn associated implementation type shall have an initialization type.\n\nAn associated trait item is an associated item that appears\nwithin a trait.\n\nAn associated trait implementation item is an associated item that\nappears within a trait implementation.\n\nAn associated trait constant is an associated constant that appears\nwithin a trait.\n\nAn associated trait function is an associated function that appears\nwithin a trait.\n\nAn associated trait function shall not be subject to keyword const.\n\nEvery occurrence of an impl trait type in the return type of an\nassociated trait function is equivalent to referring to a new\nanonymous associated trait type of the implemented trait.\n\nAn associated trait type is an associated type that appears within\na trait.\n\nAn associated trait type shall not have an initialization type.\n\nAn associated trait type has an implicit core::marker::Sized\nbound.\n\nAn associated trait type of the form\n\nis equivalent to a where clause of the following form:\n\nAn associated trait implementation function is an associated function\nthat appears within a trait implementation.\n\nEvery occurrence of an impl trait type in the return type of an\nassociated trait implementation function is equivalent to referring to the\ncorresponding associated trait type of the corresponding associated\ntrait function.\n\nA method is an associated function with a self parameter.\n\nThe type of a self parameter shall be one of the following:\n\n* A type specification resolving to the implementing type of the\n related implementation, or\n\n* &T where T is one of the [type]s listed in this enumeration,\n or\n\n* &mut T where T is one of the [type]s listed in this\n enumeration, or\n\n* core::pin::Pin<T> <core::pin::Pin> where T is one of the [type]s listed in this\n enumeration.\n\nThe visibility modifier of an associated trait item or associated\ntrait implementation item is rejected, but may still be consumed by\n[macro]s.\n\nGeneric associated type with lifetime bound.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_ckzd25qd213t": "An associated item is an item that appears within an implementation or a trait.",
+            "fls_5y6ae0xqux57": "An associated constant is a constant that appears as an associated item.",
+            "fls_lj7492aq7fzo": "An associated function is a function that appears as an associated item.",
+            "fls_8cz4rdrklaj4": "An associated type is a type alias that appears as an associated item.",
+            "fls_w8nu8suy7t5": "An associated type shall not be used in the path expression of a struct expression.",
+            "fls_wasocqdnuzd1": "An associated type with a TypeBoundList shall appear only as an associated trait type.",
+            "fls_PeD0DzjK57be": "A generic associated type is an associated type with [generic parameter]s.",
+            "fls_3foYUch29ZtF": "A lifetime parameter of a generic associated type requires a bound of the form T: 'lifetime, where T is a type parameter or Self and 'lifetime is the lifetime parameter, when",
+            "fls_SnQc0zZS57Cz": "The generic associated type is used in an associated function of the same trait, and",
+            "fls_6Z05BK2JSzpP": "The corresponding lifetime argument in the use is not the 'static lifetime and has either an explicit bound or an implied bound that constrains the type parameter, and",
+            "fls_AtItgS1UvwiX": "The intersection of all such uses is not empty.",
+            "fls_l3iwn56n1uz8": "An associated implementation constant is an associated constant that appears within an implementation.",
+            "fls_4ftfefcotb4g": "An associated implementation constant shall have a constant initializer.",
+            "fls_qb5qpfe0uwk": "An associated implementation function is an associated function that appears within an implementation.",
+            "fls_1zlkeb6fz10j": "An associated implementation function shall have a function body.",
+            "fls_tw8u0cc5867l": "An associated implementation type is an associated type that appears within an implementation.",
+            "fls_bx7931x4155h": "An associated implementation type shall have an initialization type.",
+            "fls_bnTcCbDvdp94": "An associated trait item is an associated item that appears within a trait.",
+            "fls_N3cdn4lCZ2Bf": "An associated trait implementation item is an associated item that appears within a trait implementation.",
+            "fls_x564isbhobym": "An associated trait constant is an associated constant that appears within a trait.",
+            "fls_b6nns7oqvdpm": "An associated trait function is an associated function that appears within a trait.",
+            "fls_2TRwCz38kuRz": "An associated trait function shall not be subject to keyword const.",
+            "fls_WnsVATJvUdza": "Every occurrence of an impl trait type in the return type of an associated trait function is equivalent to referring to a new anonymous associated trait type of the implemented trait.",
+            "fls_yyhebj4qyk34": "An associated trait type is an associated type that appears within a trait.",
+            "fls_kl9p3ycl5mzf": "An associated trait type shall not have an initialization type.",
+            "fls_a5prbmuruma4": "An associated trait type has an implicit core::marker::Sized bound.",
+            "fls_vp2ov6ykueue": "An associated trait type of the form .. code-block:: rust trait T { type X: Bound; }",
+            "fls_5uf74nvdm64o": "is equivalent to a where clause of the following form: .. code-block:: rust trait T where Self::X: Bound { type X; }",
+            "fls_amWtS80fPtza": "An associated trait implementation function is an associated function that appears within a trait implementation.",
+            "fls_Cu8FWrisrqz1": "Every occurrence of an impl trait type in the return type of an associated trait implementation function is equivalent to referring to the corresponding associated trait type of the corresponding associated trait function.",
+            "fls_oy92gzxgc273": "A method is an associated function with a self parameter.",
+            "fls_WXnCWfJGoQx3": "The type of a self parameter shall be one of the following:",
+            "fls_OaszUw4IFobz": "A type specification resolving to the implementing type of the related implementation, or",
+            "fls_Wd2FZRomB5yn": "&T where T is one of the [type]s listed in this enumeration, or",
+            "fls_lcEyToYIlcmf": "&mut T where T is one of the [type]s listed in this enumeration, or",
+            "fls_IKSPR7ZQMErU": "core::pin::Pin<T> <core::pin::Pin> where T is one of the [type]s listed in this enumeration.",
+            "fls_oHxzyaiT7Qm6": "The visibility modifier of an associated trait item or associated trait implementation item is rejected, but may still be consumed by [macro]s."
+          }
+        },
+        "-7": {
+          "paragraphs": {
+            "fls_znfADVeOvXHD": "Generic associated type with lifetime bound. .. code-block:: rust trait LendingIterator { type Item<'x> where Self: 'x; fn next<'a>(&'a mut self) -> Self::Item<'a>; }"
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "AssociatedItem ::=\n       OuterAttributeOrDoc* (AssociatedItemWithVisibility | TerminatedMacroInvocation)\n\n   AssociatedItemWithVisibility ::=\n       VisibilityModifier? (\n           ConstantDeclaration\n         | FunctionDeclaration\n         | TypeAliasDeclaration\n       )"
+          }
+        }
+      },
+      "parent_fls_id": null,
+      "sibling_fls_ids": []
+    }
+  ]
+}

@@ -1,0 +1,198 @@
+{
+  "chapter": 21,
+  "title": "FFI",
+  "fls_id": "fls_osd6c4utyjb3",
+  "file": "ffi",
+  "extraction_date": "2025-12-31",
+  "category_codes": {
+    "0": "section",
+    "-1": "general",
+    "-2": "legality_rules",
+    "-3": "dynamic_semantics",
+    "-4": "undefined_behavior",
+    "-5": "implementation_requirements",
+    "-6": "implementation_permissions",
+    "-7": "examples",
+    "-8": "syntax"
+  },
+  "statistics": {
+    "total_sections": 5,
+    "total_paragraphs": 51,
+    "paragraphs_by_category": {
+      "-8": 2,
+      "-6": 13,
+      "-4": 1,
+      "-3": 1,
+      "-2": 34
+    }
+  },
+  "sections": [
+    {
+      "fls_id": "fls_osd6c4utyjb3",
+      "title": "FFI",
+      "category": 0,
+      "level": 1,
+      "file": "ffi",
+      "content": "FFI\n\nForeign Function Interface or FFI employs ABI,\n[attribute]s, [external block]s, [external function]s, linkage,\nand type layout to interface a Rust program with foreign code.\n\nThe following [attribute]s affect FFI:\n\n* Attribute export_name.\n\n* Attribute link.\n\n* Attribute link_section\n\n* Attribute no_mangle.\n\n* Attribute used.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_djlglv2eaihl": "Foreign Function Interface or FFI employs ABI, [attribute]s, [external block]s, [external function]s, linkage, and type layout to interface a Rust program with foreign code.",
+            "fls_k1hiwghzxtfa": "The following [attribute]s affect FFI:",
+            "fls_3cgtdk4698hm": "Attribute export_name.",
+            "fls_shzmgci4f7o5": "Attribute link.",
+            "fls_m7x5odt4nb23": "Attribute link_section",
+            "fls_4akfvpq1yg4g": "Attribute no_mangle.",
+            "fls_9d8v0xeyi0f": "Attribute used."
+          }
+        }
+      },
+      "parent_fls_id": null,
+      "sibling_fls_ids": []
+    },
+    {
+      "fls_id": "fls_usgd0xlijoxv",
+      "title": "ABI",
+      "category": 0,
+      "level": 2,
+      "file": "ffi",
+      "content": "ABI\n\n AbiKind ::=\n RawStringLiteral\n | StringLiteral\n\nApplication Binary Interface or ABI is a set of conventions that\ndictate how data and computation cross language boundaries.\n\nThe ABI kind indicates the ABI of a construct.\n\nThe following [ABI]s are supported:\n\n* extern \"C\" - The default ABI of C code, referred to as\n extern C ABI.\n\n* extern \"C-unwind\" - The same as extern \"C\" with the addition that\n unwinding across FFI is permitted.\n\n* extern \"Rust\" - The default ABI of a Rust program, referred to as\n Rust ABI.\n\n* extern \"system\" - The operating system-dependent ABI.\n\n* extern \"system-unwind\" - The same as extern \"system\" with the\n addition that unwinding across FFI is permitted.\n\nA function without an explicit ABI has implicit Rust ABI, unless\nit appears within an external block.\n\nA function with an ABI but without a specified ABI kind has\nimplicit extern C ABI.\n\nA tool is allowed to specify additional [ABI]s. These [ABI]s may\ninclude, but may not be limited to, the following:\n\n* extern \"aapcs\" - The soft-float ABI for 32-bit ARM targets.\n\n* extern \"aapcs-unwind\" - The same as extern \"aapcs\"\n with the addition that unwinding across FFI is permitted.\n\n* extern \"cdecl\" - The x86_32 ABI of C code.\n\n* extern \"cdecl-unwind\" - The same as extern \"cdecl\"\n with the addition that unwinding across FFI is permitted.\n\n* extern \"fastcall\" - The fastcall ABI that corresponds to MSVC's\n __fastcall and GCC and clang's __attribute__((fastcall)).\n\n* extern \"stdcall\" - The x86_32 ABI of the Win32 API.\n\n* extern \"sysv64\" - The x86_64 non-Windows ABI of C code.\n\n* extern \"sysv64-unwind\" - The same as extern \"sysv64\"\n with the addition that unwinding across FFI is permitted.\n\n* extern \"vectorcall\" - The vectorcall ABI that corresponds to\n MSVC's __vectorcall and clang's __attribute__((vectorcall)).\n\n* extern \"win64\" - The x86_64 Windows ABI of C code.\n\n* extern \"win64-unwind\" - The same as extern \"win64\"\n with the addition that unwinding across FFI is permitted.\n\n* extern \"efiapi\" - The ABI for `UEFI <https://uefi.org/specifications>`_.\n\nIt is undefined behavior when a foreign exception crosses a\nforeign function interface boundary with an ABI that does not end in\n-unwind.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_xangrq3tfze0": "Application Binary Interface or ABI is a set of conventions that dictate how data and computation cross language boundaries.",
+            "fls_2w0xi6rxw3uz": "The ABI kind indicates the ABI of a construct.",
+            "fls_9zitf1fvvfk8": "The following [ABI]s are supported:",
+            "fls_x7ct9k82fpgn": "extern \"C\" - The default ABI of C code, referred to as extern C ABI.",
+            "fls_LfjvLXvI6TFL": "extern \"C-unwind\" - The same as extern \"C\" with the addition that unwinding across FFI is permitted.",
+            "fls_a2d8ltpgtvn6": "extern \"Rust\" - The default ABI of a Rust program, referred to as Rust ABI.",
+            "fls_8m7pc3riokst": "extern \"system\" - The operating system-dependent ABI.",
+            "fls_NQAzj5ai1La5": "extern \"system-unwind\" - The same as extern \"system\" with the addition that unwinding across FFI is permitted.",
+            "fls_r2drzo3dixe4": "A function without an explicit ABI has implicit Rust ABI, unless it appears within an external block.",
+            "fls_z2kzyin8dyr7": "A function with an ABI but without a specified ABI kind has implicit extern C ABI."
+          }
+        },
+        "-6": {
+          "paragraphs": {
+            "fls_j6pqchx27ast": "A tool is allowed to specify additional [ABI]s. These [ABI]s may include, but may not be limited to, the following:",
+            "fls_dbbfqaqa80r8": "extern \"aapcs\" - The soft-float ABI for 32-bit ARM targets.",
+            "fls_UippZpUyYpHl": "extern \"aapcs-unwind\" - The same as extern \"aapcs\" with the addition that unwinding across FFI is permitted.",
+            "fls_36qrs2fxxvi7": "extern \"cdecl\" - The x86_32 ABI of C code.",
+            "fls_CIyK8BYzzo26": "extern \"cdecl-unwind\" - The same as extern \"cdecl\" with the addition that unwinding across FFI is permitted.",
+            "fls_6rtj6rwqxojh": "extern \"fastcall\" - The fastcall ABI that corresponds to MSVC's __fastcall and GCC and clang's __attribute__((fastcall)).",
+            "fls_d3nmpc5mtg27": "extern \"stdcall\" - The x86_32 ABI of the Win32 API.",
+            "fls_7t7yxh94wnbl": "extern \"sysv64\" - The x86_64 non-Windows ABI of C code.",
+            "fls_ccFdnlX5HIYk": "extern \"sysv64-unwind\" - The same as extern \"sysv64\" with the addition that unwinding across FFI is permitted.",
+            "fls_sxj4vy39sj4g": "extern \"vectorcall\" - The vectorcall ABI that corresponds to MSVC's __vectorcall and clang's __attribute__((vectorcall)).",
+            "fls_tyjs1x4j8ovp": "extern \"win64\" - The x86_64 Windows ABI of C code.",
+            "fls_xrCRprWS13R1": "extern \"win64-unwind\" - The same as extern \"win64\" with the addition that unwinding across FFI is permitted.",
+            "fls_JHlqXjn4Sf07": "extern \"efiapi\" - The ABI for UEFI <https://uefi.org/specifications>_."
+          }
+        },
+        "-4": {
+          "paragraphs": {
+            "fls_M4LqHf8hbPA8": "It is undefined behavior when a foreign exception crosses a foreign function interface boundary with an ABI that does not end in -unwind."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "AbiSpecification ::=\n       $$extern$$ AbiKind?\n\n   AbiKind ::=\n       RawStringLiteral\n     | StringLiteral"
+          }
+        }
+      },
+      "parent_fls_id": "fls_osd6c4utyjb3",
+      "sibling_fls_ids": [
+        "fls_tmoh3y9oyqsy",
+        "fls_yztwtek0y34v",
+        "fls_s4yt19sptl7d"
+      ]
+    },
+    {
+      "fls_id": "fls_tmoh3y9oyqsy",
+      "title": "External Blocks",
+      "category": 0,
+      "level": 2,
+      "file": "ffi",
+      "content": "External Blocks\n\n ExternItem ::=\n OuterAttributeOrDoc* (ExternalItemWithVisibility | TerminatedMacroInvocation)\n\n ExternalItemWithVisibility ::=\n VisibilityModifier? (\n FunctionDeclaration\n | StaticDeclaration\n )\n\nAn external block is a construct that provides the declarations of\n[external function]s and [external static]s as unchecked imports.\n\nAn unsafe external block is an external block subject to keyword unsafe.\n\nThe ABI of an external block is determined as follows:\n\n* If the external block specifies an AbiKind, then the ABI is the specified AbiKind.\n\n* Otherwise the ABI is the extern C ABI.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_4dje9t5y2dia": "An external block is a construct that provides the declarations of [external function]s and [external static]s as unchecked imports.",
+            "fls_8ltVLtAfvy0m": "An unsafe external block is an external block subject to keyword unsafe.",
+            "fls_Nz0l16hMxqTd": "The ABI of an external block is determined as follows:",
+            "fls_4XOoiFloXM7t": "If the external block specifies an AbiKind, then the ABI is the specified AbiKind.",
+            "fls_PBsepNHImJKH": "Otherwise the ABI is the extern C ABI."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "ExternalBlock ::=\n       $$unsafe$$? $$extern$$ AbiKind? $${$$\n         InnerAttributeOrDoc*\n         ExternItem*\n       $$}$$\n\n   ExternItem ::=\n       OuterAttributeOrDoc* (ExternalItemWithVisibility | TerminatedMacroInvocation)\n\n   ExternalItemWithVisibility ::=\n       VisibilityModifier? (\n           FunctionDeclaration\n         | StaticDeclaration\n       )"
+          }
+        }
+      },
+      "parent_fls_id": "fls_osd6c4utyjb3",
+      "sibling_fls_ids": [
+        "fls_usgd0xlijoxv",
+        "fls_yztwtek0y34v",
+        "fls_s4yt19sptl7d"
+      ]
+    },
+    {
+      "fls_id": "fls_yztwtek0y34v",
+      "title": "External Functions",
+      "category": 0,
+      "level": 2,
+      "file": "ffi",
+      "content": "External Functions\n\nAn external function is an unchecked import of a foreign function.\n\nAn external function shall be invoked from an unsafe context unless it is defined in an unsafe external block and subject to ItemSafety with keyword safe.\n\nAn external function shall not specify a FunctionQualifierList.\n\nAn external function inherits the ABI of its enclosing\nexternal block.\n\nAn external function shall not specify a GenericParameterList\ncontaining [constant parameter]s or [type parameter]s.\n\nAn external function shall not specify a FunctionBody.\n\nAn external function shall not specify [pattern]s other than\n[identifier pattern]s and [underscore pattern]s.\n\nOnly the last parameter FunctionParameter of an external function may\nspecify a FunctionParameterVariadicPart.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_v24ino4hix3m": "An external function is an unchecked import of a foreign function.",
+            "fls_l88r9fj82650": "An external function shall be invoked from an unsafe context unless it is defined in an unsafe external block and subject to ItemSafety with keyword safe.",
+            "fls_qwchgvvnp0qe": "An external function shall not specify a FunctionQualifierList.",
+            "fls_w00qi1gx204e": "An external function inherits the ABI of its enclosing external block.",
+            "fls_m7tu4w4lk8v": "An external function shall not specify a GenericParameterList containing [constant parameter]s or [type parameter]s.",
+            "fls_rdu4723vp0oo": "An external function shall not specify a FunctionBody.",
+            "fls_9div9yusw64h": "An external function shall not specify [pattern]s other than [identifier pattern]s and [underscore pattern]s.",
+            "fls_juob30rst11r": "Only the last parameter FunctionParameter of an external function may specify a FunctionParameterVariadicPart."
+          }
+        }
+      },
+      "parent_fls_id": "fls_osd6c4utyjb3",
+      "sibling_fls_ids": [
+        "fls_usgd0xlijoxv",
+        "fls_tmoh3y9oyqsy",
+        "fls_s4yt19sptl7d"
+      ]
+    },
+    {
+      "fls_id": "fls_s4yt19sptl7d",
+      "title": "External Statics",
+      "category": 0,
+      "level": 2,
+      "file": "ffi",
+      "content": "External Statics\n\nAn external static is an import of a foreign variable.\n\nAn external static inherits the ABI of its enclosing\nexternal block.\n\nAn external static shall be referenced from an unsafe context unless it is defined in an unsafe external block and subject to ItemSafety with keyword safe.\n\nAn external static shall not specify a static initializer.\n\nAn immutable external static shall be initialized before Rust code\nis executed.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_8ddsytjr4il6": "An external static is an import of a foreign variable.",
+            "fls_H0cg9XMaGz0y": "An external static inherits the ABI of its enclosing external block.",
+            "fls_fo9with6xumo": "An external static shall be referenced from an unsafe context unless it is defined in an unsafe external block and subject to ItemSafety with keyword safe.",
+            "fls_tr7purzcldn0": "An external static shall not specify a static initializer."
+          }
+        },
+        "-3": {
+          "paragraphs": {
+            "fls_en2h09ehj0j3": "An immutable external static shall be initialized before Rust code is executed."
+          }
+        }
+      },
+      "parent_fls_id": "fls_osd6c4utyjb3",
+      "sibling_fls_ids": [
+        "fls_usgd0xlijoxv",
+        "fls_tmoh3y9oyqsy",
+        "fls_yztwtek0y34v"
+      ]
+    }
+  ]
+}

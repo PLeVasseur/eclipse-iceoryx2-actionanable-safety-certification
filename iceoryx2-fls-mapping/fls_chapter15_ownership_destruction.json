@@ -58,6 +58,14 @@
       "description": "Ownership",
       "status": "demonstrated",
       "findings": {
+        "count": null,
+        "count_methodology": "Conceptual - ownership is semantic",
+        "samples_waiver": {
+          "reason": "conceptual_section",
+          "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+          "approved_by": "automated",
+          "date": "2025-12-30"
+        },
         "ownership": {
           "section": "15.1",
           "rules": {
@@ -106,15 +114,7 @@
           }
         }
       },
-      "samples": [],
-      "count": null,
-      "count_methodology": "Conceptual - ownership is semantic",
-      "samples_waiver": {
-        "reason": "conceptual_section",
-        "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
-        "approved_by": "automated",
-        "date": "2025-12-30"
-      }
+      "samples": []
     },
     "initialization": {
       "fls_section": "15.2",
@@ -124,6 +124,7 @@
       "description": "Initialization",
       "status": "demonstrated",
       "findings": {
+        "count": 30042,
         "initialization": {
           "section": "15.2",
           "rules": {
@@ -151,24 +152,32 @@
       "samples": [
         {
           "file": "iceoryx2/src/waitset.rs",
-          "line": [501, 502, 503],
+          "line": [
+            501,
+            502,
+            503
+          ],
           "code": "let deadline_queue = fail!(from self, when DeadlineQueueBuilder::new().create(),\n        with WaitSetCreateError::InternalError,\n        \"{msg} since the underlying Timer could not be created.\");",
           "purpose": "Initialization via builder pattern with error handling"
         },
         {
           "file": "iceoryx2/src/config.rs",
-          "line": [237, 238],
+          "line": [
+            237,
+            238
+          ],
           "code": "let mut path = *self.root_path();\npath.add_path_entry(&self.service.directory).unwrap();",
           "purpose": "Initialization with copy and subsequent mutation"
         },
         {
           "file": "iceoryx2-bb/posix/src/mutex.rs",
-          "line": [281],
+          "line": [
+            281
+          ],
           "code": "pub fn new() -> Self { Self::default() }",
           "purpose": "Constructor initialization returning new instance"
         }
-      ],
-      "count": 30042
+      ]
     },
     "references": {
       "fls_section": "15.3",
@@ -178,6 +187,7 @@
       "description": "References",
       "status": "demonstrated",
       "findings": {
+        "count": 12141,
         "references": {
           "section": "15.3",
           "rules": {
@@ -255,24 +265,30 @@
       "samples": [
         {
           "file": "iceoryx2/src/waitset.rs",
-          "line": [265, 266],
+          "line": [
+            265,
+            266
+          ],
           "code": "fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {\n    write!(f, \"WaitSetAttachmentError::{self:?}\")",
           "purpose": "Immutable reference &self and mutable reference &mut Formatter"
         },
         {
           "file": "iceoryx2/src/config.rs",
-          "line": [255],
+          "line": [
+            255
+          ],
           "code": "pub fn set_root_path(&mut self, value: &Path) {",
           "purpose": "Mutable reference &mut self and immutable reference &Path"
         },
         {
           "file": "iceoryx2/src/waitset.rs",
-          "line": [418],
+          "line": [
+            418
+          ],
           "code": "pub fn has_event_from(&self, other: &WaitSetGuard<Service>) -> bool {",
           "purpose": "Two immutable references in same function signature"
         }
-      ],
-      "count": 12141
+      ]
     },
     "borrowing": {
       "fls_section": "15.4",
@@ -282,6 +298,7 @@
       "description": "Borrowing",
       "status": "demonstrated",
       "findings": {
+        "count": 12141,
         "borrowing": {
           "section": "15.4",
           "rules": {
@@ -345,24 +362,29 @@
       "samples": [
         {
           "file": "iceoryx2-bb/posix/src/read_write_mutex.rs",
-          "line": [215],
+          "line": [
+            215
+          ],
           "code": "pub struct MutexReadGuard<'handle, T: Debug>",
           "purpose": "Lifetime-annotated borrow in guard type binding guard to mutex"
         },
         {
           "file": "iceoryx2-bb/posix/src/file_lock.rs",
-          "line": [126],
+          "line": [
+            126
+          ],
           "code": "pub struct FileLockWriteGuard<'handle, 'b, T: FileDescriptorBased + Debug>",
           "purpose": "Multiple lifetime parameters for complex borrowing relationships"
         },
         {
           "file": "iceoryx2/src/waitset.rs",
-          "line": [375],
+          "line": [
+            375
+          ],
           "code": "fn hash<H: core::hash::Hasher>(&self, state: &mut H) {",
           "purpose": "Borrowing self immutably while mutably borrowing hasher state"
         }
-      ],
-      "count": 12141
+      ]
     },
     "passing_conventions": {
       "fls_section": "15.5",
@@ -372,6 +394,14 @@
       "description": "Passing Conventions",
       "status": "demonstrated",
       "findings": {
+        "count": null,
+        "count_methodology": "Conceptual - passing is semantic",
+        "samples_waiver": {
+          "reason": "conceptual_section",
+          "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+          "approved_by": "automated",
+          "date": "2025-12-30"
+        },
         "passing_conventions": {
           "section": "15.5",
           "rules": {
@@ -407,15 +437,7 @@
           }
         }
       },
-      "samples": [],
-      "count": null,
-      "count_methodology": "Conceptual - passing is semantic",
-      "samples_waiver": {
-        "reason": "conceptual_section",
-        "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
-        "approved_by": "automated",
-        "date": "2025-12-30"
-      }
+      "samples": []
     },
     "destruction": {
       "fls_section": "15.6",
@@ -425,6 +447,7 @@
       "description": "Destruction",
       "status": "demonstrated",
       "findings": {
+        "count": 595,
         "destruction": {
           "section": "15.6",
           "rules": {
@@ -465,8 +488,7 @@
           "code": "core::mem::forget(sut);",
           "purpose": "Test shared memory cleanup on crash"
         }
-      ],
-      "count": 595
+      ]
     },
     "destructors": {
       "fls_section": "15.7",
@@ -476,6 +498,7 @@
       "description": "Destructors",
       "status": "demonstrated",
       "findings": {
+        "count": 41,
         "destructors": {
           "section": "15.7",
           "rules": {
@@ -743,13 +766,21 @@
         },
         {
           "file": "iceoryx2-bb/lock-free/src/spsc/queue.rs",
-          "line": [64, 65, 66],
+          "line": [
+            64,
+            65,
+            66
+          ],
           "code": "impl<T: Copy, const CAPACITY: usize> Drop for Producer<'_, T, CAPACITY> {\n    fn drop(&mut self) {\n        self.queue.has_producer.store(true, Ordering::Relaxed);",
           "purpose": "Drop impl restoring producer flag on queue cleanup"
         },
         {
           "file": "iceoryx2-bb/posix/src/unix_datagram_socket.rs",
-          "line": [546, 547, 548],
+          "line": [
+            546,
+            547,
+            548
+          ],
           "code": "impl Drop for UnixDatagramSender {\n    fn drop(&mut self) {\n        trace!(from self, \"disconnected\");",
           "purpose": "Drop impl logging disconnection before socket cleanup"
         },
@@ -774,8 +805,7 @@
           ],
           "code": "impl Drop for GlobalWsaInitializer {"
         }
-      ],
-      "count": 41
+      ]
     },
     "drop_scopes": {
       "fls_section": "15.8",
@@ -785,6 +815,7 @@
       "description": "Drop Scopes",
       "status": "demonstrated",
       "findings": {
+        "count": 4934,
         "drop_scopes": {
           "section": "15.8",
           "rules": {
@@ -802,19 +833,40 @@
       "samples": [
         {
           "file": "iceoryx2-bb/concurrency/src/spin_lock.rs",
-          "line": [119, 120, 121],
+          "line": [
+            119,
+            120,
+            121
+          ],
           "code": "fn drop(&mut self) {\n    self.lock.locked.store(false, Ordering::Release);\n}",
           "purpose": "Block expression as drop scope - lock released at block end"
         },
         {
           "file": "iceoryx2/src/waitset.rs",
-          "line": [501, 502, 503, 504, 505, 506],
+          "line": [
+            501,
+            502,
+            503,
+            504,
+            505,
+            506
+          ],
           "code": "let deadline_queue = fail!(from self, when DeadlineQueueBuilder::new().create(),\n        with WaitSetCreateError::InternalError,\n        \"{msg} since the underlying Timer could not be created.\");\n\nmatch <Service::Reactor as Reactor>::Builder::new().create() {\n    Ok(reactor) => Ok(WaitSet {",
           "purpose": "Match arms as drop scopes - temporaries dropped per arm"
         },
         {
           "file": "iceoryx2-bb/container/src/semantic_string.rs",
-          "line": [83, 84, 85, 86, 87, 88, 89, 90, 91],
+          "line": [
+            83,
+            84,
+            85,
+            86,
+            87,
+            88,
+            89,
+            90,
+            91
+          ],
           "code": "fn from(value: StringModificationError) -> Self {\n    match value {\n        StringModificationError::InsertWouldExceedCapacity => {\n            SemanticStringError::ExceedsMaximumLength\n        }\n        StringModificationError::InvalidCharacter => SemanticStringError::InvalidContent,\n    }\n}",
           "purpose": "Function body as drop scope - parameter dropped at function end"
         }
@@ -828,20 +880,19 @@
           "description": "Drop Scope Extension",
           "status": "demonstrated",
           "findings": {
+            "count": null,
+            "count_methodology": "Pattern not defined for this section",
+            "samples_waiver": {
+              "reason": "conceptual_section",
+              "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+              "approved_by": "automated",
+              "date": "2025-12-30"
+            },
             "description": "Drop scope extension occurs when temporary values need extended lifetimes. In iceoryx2, this is used with RAII guards like MutexGuard where the guard must live for the duration of the protected scope."
           },
-          "samples": [],
-          "count": null,
-          "count_methodology": "Pattern not defined for this section",
-          "samples_waiver": {
-            "reason": "conceptual_section",
-            "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
-            "approved_by": "automated",
-            "date": "2025-12-30"
-          }
+          "samples": []
         }
-      },
-      "count": 4934
+      }
     },
     "drop_order": {
       "fls_section": "15.9",
@@ -851,6 +902,14 @@
       "description": "Drop Order",
       "status": "demonstrated",
       "findings": {
+        "count": null,
+        "count_methodology": "Conceptual - drop order is semantic",
+        "samples_waiver": {
+          "reason": "conceptual_section",
+          "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+          "approved_by": "automated",
+          "date": "2025-12-30"
+        },
         "drop_order": {
           "section": "15.9",
           "rules": {
@@ -869,15 +928,7 @@
           }
         }
       },
-      "samples": [],
-      "count": null,
-      "count_methodology": "Conceptual - drop order is semantic",
-      "samples_waiver": {
-        "reason": "conceptual_section",
-        "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
-        "approved_by": "automated",
-        "date": "2025-12-30"
-      }
+      "samples": []
     }
   },
   "design_patterns": {

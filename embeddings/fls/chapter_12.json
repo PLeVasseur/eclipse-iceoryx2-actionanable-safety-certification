@@ -1,0 +1,222 @@
+{
+  "chapter": 12,
+  "title": "Generics",
+  "fls_id": "fls_y2k5paj8m8ug",
+  "file": "generics",
+  "extraction_date": "2025-12-31",
+  "category_codes": {
+    "0": "section",
+    "-1": "general",
+    "-2": "legality_rules",
+    "-3": "dynamic_semantics",
+    "-4": "undefined_behavior",
+    "-5": "implementation_requirements",
+    "-6": "implementation_permissions",
+    "-7": "examples",
+    "-8": "syntax"
+  },
+  "statistics": {
+    "total_sections": 5,
+    "total_paragraphs": 86,
+    "paragraphs_by_category": {
+      "-8": 4,
+      "-7": 2,
+      "-2": 80
+    }
+  },
+  "sections": [
+    {
+      "fls_id": "fls_y2k5paj8m8ug",
+      "title": "Generics",
+      "category": 0,
+      "level": 1,
+      "file": "generics",
+      "content": "Generics",
+      "rubrics": {},
+      "parent_fls_id": null,
+      "sibling_fls_ids": []
+    },
+    {
+      "fls_id": "fls_vhpwge5123cm",
+      "title": "Generic Parameters",
+      "category": 0,
+      "level": 2,
+      "file": "generics",
+      "content": "Generic Parameters\n\n GenericParameter ::=\n OuterAttributeOrDoc* (\n ConstantParameter\n | LifetimeParameter\n | TypeParameter\n )\n\n ConstantParameter ::=\n $$const$$ Name TypeAscription ($$=$$ ConstantParameterInitializer)?\n\n ConstantParameterInitializer ::=\n BlockExpression\n | Identifier\n | $$-$$? LiteralExpression\n\n LifetimeParameter ::=\n Lifetime ($$:$$ LifetimeIndicationList)?\n\n TypeParameter ::=\n Name ($$:$$ TypeBoundList?)? ($$=$$ TypeParameterInitializer)?\n\n TypeParameterInitializer ::=\n TypeSpecification\n\nA generic parameter is a placeholder for a constant, a lifetime,\nor a type, whose constant, lifetime, or type is supplied\nstatically by a generic argument.\n\nAll [LifetimeParameter]s in a GenericParameterList shall precede all\n[ConstantParameter]s and [TypeParameter]s.\n\nA generic enum is an enum with [generic parameter]s.\n\nA generic function is a function with [generic parameter]s.\n\nA generic implementation is an implementation with\n[generic parameter]s.\n\nA generic struct is a struct with [generic parameter]s.\n\nA generic trait is a trait with [generic parameter]s.\n\nA generic type alias is a type alias with [generic parameter]s.\n\nA generic union is a union with [generic parameter]s.\n\nA constant parameter is a generic parameter for a constant.\n\nA constant parameter initializer is a construct that provides the\ndefault value of its related constant parameter.\n\nA constant parameter initializer shall be a constant expression.\n\nIt is a static error to use a generic parameter in the\ndiscriminant initializer of an enum variant.\n\nA lifetime parameter is a generic parameter for a lifetime.\n\nA lifetime parameter shall not be used within a constant context,\nexcept for the 'static lifetime.\n\nA type parameter is a generic parameter for a type.\n\nA type parameter initializer is a construct that provides the\ndefault value of its related type parameter.\n\nThe type of the type parameter initializer of a type parameter\nshall satisfy the [trait bound]s of the type parameter.\n\nA generic enum shall use all of its [type parameter]s and\n[lifetime parameter]s at least once in at least one of its\n[enum variant]s.\n\nA generic struct shall use all of its [type parameter]s and\n[lifetime parameter]s at least once in at least one of its [field]s.\n\nA generic union shall use all of its [type parameter]s and\n[lifetime parameter]s at least once in at least one of its [field]s.\n\nA generic parameter is said to constrain an implementation if the\ngeneric parameter appears at least once in one of the following:\n\n* As a binding argument in the [trait bound]s of a type that\n contains another generic parameter that constrains the\n implementation, or\n\n* The implemented trait, or\n\n* The implementing type.\n\nIt is a static error if a constant parameter or a type parameter of\nan implementation does not constrain the implementation.\n\nIt is a static error if a lifetime parameter of an implementation\nis used in an associated type without constraining the\nimplementation.\n\nThe type of a constant parameter shall be a scalar type.\n\nA constant parameter shall be used in the following contexts:\n\n* As a constant argument in the signature and [field]s of an\n item.\n\n* In the constant initializer of an associated constant.\n\n* As a constant argument of an [associated type]'s\n InitializationType.\n\n* As a constant argument of any type used within a function body.\n\n* As a value of any expression within a function body.\n\nAn inferred constant is a constant argument whose value is\ninferred from the surrounding context by using _ (underscore) in its place.\n\nAn inferred constant cannot be used in item signatures.\n\nAn inferred constant cannot be surrounded by {} (curly braces).\n\nAn inferred constant can be surrounded by an arbitrary number of ()\n(parentheses).\n\nA type parameter has an implicit core::marker::Sized bound,\nunless an opt-out trait bound for the core::marker::Sized trait\nis present.\n\nA type parameter of an abstract data type has implicit\n[lifetime bound]s depending on its usage in the [field]s of the\nabstract data type as follows:\n\n* If the type parameter is used in a reference type, then the\n type parameter has an implicit lifetime bound for the\n lifetime of the reference type,\n\n* If the type parameter is used as a generic argument of an\n abstract data type, the type parameter inherits all the\n [lifetime bound]s from the corresponding generic parameter of\n the generic argument.\n\nA type parameter of a function has implicit [lifetime bound]s\ndepending on its usages in the [function parameter]s and return type\nas follows:\n\n* If the type parameter is used in a reference type, then the\n type parameter has an implicit lifetime bound for the lifetime\n of the reference type,\n\n* If the type parameter is used as a generic argument of an\n abstract data type, the type parameter inherits all the\n [lifetime bound]s from the corresponding generic parameter of\n the generic argument.\n\nA generic parameter with a bound of the form\n\nis equivalent to the generic parameter without the bound and a\nwhere clause of the following form:",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_sye3d17l9bf5": "A generic parameter is a placeholder for a constant, a lifetime, or a type, whose constant, lifetime, or type is supplied statically by a generic argument.",
+            "fls_dalqke3rznrb": "All [LifetimeParameter]s in a GenericParameterList shall precede all [ConstantParameter]s and [TypeParameter]s.",
+            "fls_pi6eukz7kc99": "A generic enum is an enum with [generic parameter]s.",
+            "fls_ixmgqupxvf73": "A generic function is a function with [generic parameter]s.",
+            "fls_z311nxou9yi3": "A generic implementation is an implementation with [generic parameter]s.",
+            "fls_wmcp0n36jlbr": "A generic struct is a struct with [generic parameter]s.",
+            "fls_h42kg56vsefx": "A generic trait is a trait with [generic parameter]s.",
+            "fls_372h3oevejih": "A generic type alias is a type alias with [generic parameter]s.",
+            "fls_u8mqct93yimd": "A generic union is a union with [generic parameter]s.",
+            "fls_vpcqgec83ybt": "A constant parameter is a generic parameter for a constant.",
+            "fls_3SjMBlc0b7qo": "A constant parameter initializer is a construct that provides the default value of its related constant parameter.",
+            "fls_p4yb8EAXlRU0": "A constant parameter initializer shall be a constant expression.",
+            "fls_4a2qshaf5se7": "It is a static error to use a generic parameter in the discriminant initializer of an enum variant.",
+            "fls_s0nrjwqg2wox": "A lifetime parameter is a generic parameter for a lifetime.",
+            "fls_2grtygcj8o3": "A lifetime parameter shall not be used within a constant context, except for the 'static lifetime.",
+            "fls_95eooah0vcqx": "A type parameter is a generic parameter for a type.",
+            "fls_ahCqtkh0m5sR": "A type parameter initializer is a construct that provides the default value of its related type parameter.",
+            "fls_3qZRBp9j26w3": "The type of the type parameter initializer of a type parameter shall satisfy the [trait bound]s of the type parameter.",
+            "fls_x4s7p2v981r6": "A generic enum shall use all of its [type parameter]s and [lifetime parameter]s at least once in at least one of its [enum variant]s.",
+            "fls_jzfk9fspzqja": "A generic struct shall use all of its [type parameter]s and [lifetime parameter]s at least once in at least one of its [field]s.",
+            "fls_6j616ydf2mnh": "A generic union shall use all of its [type parameter]s and [lifetime parameter]s at least once in at least one of its [field]s.",
+            "fls_hyi2jnp38v1n": "A generic parameter is said to constrain an implementation if the generic parameter appears at least once in one of the following:",
+            "fls_sseo6u6pbcki": "As a binding argument in the [trait bound]s of a type that contains another generic parameter that constrains the implementation, or",
+            "fls_62b59qvom3nm": "The implemented trait, or",
+            "fls_oq76uff9gp0k": "The implementing type.",
+            "fls_ua3w16qo9o4": "It is a static error if a constant parameter or a type parameter of an implementation does not constrain the implementation.",
+            "fls_w9ol06mldwb": "It is a static error if a lifetime parameter of an implementation is used in an associated type without constraining the implementation.",
+            "fls_g2pfrqhmeys8": "The type of a constant parameter shall be a scalar type.",
+            "fls_56jq9k9l31rt": "A constant parameter shall be used in the following contexts:",
+            "fls_sh669lnc5o1b": "As a constant argument in the signature and [field]s of an item.",
+            "fls_h6kx8dxh5u96": "In the constant initializer of an associated constant.",
+            "fls_5r7ontjlmgwj": "As a constant argument of an [associated type]'s InitializationType.",
+            "fls_prbwj1pmng6k": "As a constant argument of any type used within a function body.",
+            "fls_byqjs5fvy2bj": "As a value of any expression within a function body.",
+            "fls_reASCId0i117": "An inferred constant is a constant argument whose value is inferred from the surrounding context by using _ (underscore) in its place.",
+            "fls_Ft5rGeL7QwJM": "An inferred constant cannot be used in item signatures.",
+            "fls_7epZNsTYNmgE": "An inferred constant cannot be surrounded by {} (curly braces).",
+            "fls_TvuMMQnR0drL": "An inferred constant can be surrounded by an arbitrary number of () (parentheses).",
+            "fls_hidfwkwr2r73": "A type parameter has an implicit core::marker::Sized bound, unless an opt-out trait bound for the core::marker::Sized trait is present.",
+            "fls_yaYedRNaxhTe": "A type parameter of an abstract data type has implicit [lifetime bound]s depending on its usage in the [field]s of the abstract data type as follows:",
+            "fls_axMVssU7an8p": "If the type parameter is used in a reference type, then the type parameter has an implicit lifetime bound for the lifetime of the reference type,",
+            "fls_iAnCoxISuxxb": "If the type parameter is used as a generic argument of an abstract data type, the type parameter inherits all the [lifetime bound]s from the corresponding generic parameter of the generic argument.",
+            "fls_wUwJEGzjCUAT": "A type parameter of a function has implicit [lifetime bound]s depending on its usages in the [function parameter]s and return type as follows:",
+            "fls_BN5nUuvq9AwY": "If the type parameter is used in a reference type, then the type parameter has an implicit lifetime bound for the lifetime of the reference type,",
+            "fls_ouOm2TQKNsP3": "If the type parameter is used as a generic argument of an abstract data type, the type parameter inherits all the [lifetime bound]s from the corresponding generic parameter of the generic argument.",
+            "fls_m0bzw4jap6sg": "A generic parameter with a bound of the form .. code-block:: rust <X: Bound>",
+            "fls_vo7mgm34hwg2": "is equivalent to the generic parameter without the bound and a where clause of the following form: .. code-block:: rust where X: Bound"
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "GenericParameterList ::=\n       $$<$$ (GenericParameter ($$,$$ GenericParameter)* $$,$$?)? $$>$$\n\n   GenericParameter ::=\n       OuterAttributeOrDoc* (\n           ConstantParameter\n         | LifetimeParameter\n         | TypeParameter\n       )\n\n   ConstantParameter ::=\n      $$const$$ Name TypeAscription ($$=$$ ConstantParameterInitializer)?\n\n   ConstantParameterInitializer ::=\n       BlockExpression\n     | Identifier\n     | $$-$$? LiteralExpression\n\n   LifetimeParameter ::=\n       Lifetime ($$:..."
+          }
+        }
+      },
+      "parent_fls_id": "fls_y2k5paj8m8ug",
+      "sibling_fls_ids": [
+        "fls_7nv8ualeaqe3",
+        "fls_utuu8mdbuyxm",
+        "fls_i7g2n7hfg3ch"
+      ]
+    },
+    {
+      "fls_id": "fls_7nv8ualeaqe3",
+      "title": "Where Clauses",
+      "category": 0,
+      "level": 2,
+      "file": "generics",
+      "content": "Where Clauses\n\n WhereClausePredicateList ::=\n WhereClausePredicate ($$,$$ WhereClausePredicate)* $$,$$?\n\n WhereClausePredicate ::=\n LifetimeBoundPredicate\n | TypeBoundPredicate\n\n LifetimeBoundPredicate ::=\n LifetimeIndication $$:$$ LifetimeIndicationList?\n\n TypeBoundPredicate ::=\n ForGenericParameterList? TypeSpecification $$:$$ TypeBoundList?\n\nA where clause is a construct that specifies [bound]s on\n[lifetime parameter]s and [type]s that have\nto hold for the construct subject to the where clause to be valid.\n\nA where clause predicate is either a lifetime bound predicate or a\ntype bound predicate.\n\nA lifetime bound predicate is a construct that specifies\n[lifetime bound]s on a lifetime parameter.\n\nA type bound predicate is a construct that specifies\n[lifetime bound]s and [trait bound]s on a type.\n\nA construct is valid when all of its [where clause predicate]s hold\ntrue for the supplied [generic argument]s.\n\nA trivial predicate is a where clause predicate that does not use\nthe [generic parameter]s or [higher-ranked trait bound]s of the related\nconstruct.\n\nIt is a static error to create a trivial predicate that does not hold.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_3nqb7p5ifvio": "A where clause is a construct that specifies [bound]s on [lifetime parameter]s and [type]s that have to hold for the construct subject to the where clause to be valid.",
+            "fls_fhy4rsmmbvyy": "A where clause predicate is either a lifetime bound predicate or a type bound predicate.",
+            "fls_V4PKFqtCsAv6": "A lifetime bound predicate is a construct that specifies [lifetime bound]s on a lifetime parameter.",
+            "fls_cslGPmVjujHD": "A type bound predicate is a construct that specifies [lifetime bound]s and [trait bound]s on a type.",
+            "fls_ytk74dyxuy6d": "A construct is valid when all of its [where clause predicate]s hold true for the supplied [generic argument]s.",
+            "fls_1xgw1dq60quz": "A trivial predicate is a where clause predicate that does not use the [generic parameter]s or [higher-ranked trait bound]s of the related construct.",
+            "fls_47s8i7pzb9gg": "It is a static error to create a trivial predicate that does not hold."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "WhereClause ::=\n       $$where$$ WhereClausePredicateList\n\n   WhereClausePredicateList ::=\n       WhereClausePredicate ($$,$$ WhereClausePredicate)* $$,$$?\n\n   WhereClausePredicate ::=\n       LifetimeBoundPredicate\n     | TypeBoundPredicate\n\n   LifetimeBoundPredicate ::=\n      LifetimeIndication $$:$$ LifetimeIndicationList?\n\n   TypeBoundPredicate ::=\n      ForGenericParameterList? TypeSpecification $$:$$ TypeBoundList?"
+          }
+        }
+      },
+      "parent_fls_id": "fls_y2k5paj8m8ug",
+      "sibling_fls_ids": [
+        "fls_vhpwge5123cm",
+        "fls_utuu8mdbuyxm",
+        "fls_i7g2n7hfg3ch"
+      ]
+    },
+    {
+      "fls_id": "fls_utuu8mdbuyxm",
+      "title": "Generic Arguments",
+      "category": 0,
+      "level": 2,
+      "file": "generics",
+      "content": "Generic Arguments\n\n GenericArgument ::=\n BindingArgument\n | BindingBoundArgument\n | ConstantArgument\n | LifetimeArgument\n | TypeArgument\n\n BindingArgument ::=\n Identifier $$=$$ TypeSpecification\n\n BindingBoundArgument ::=\n Identifier $$:$$ TypeBoundList\n\n ConstantArgument ::=\n BlockExpression\n | $$-$$? LiteralExpression\n | Identifier\n\n LifetimeArgument ::=\n LifetimeIndication\n\n TypeArgument ::=\n TypeSpecification\n\nA generic argument supplies a static input for an\nassociated trait type or a generic parameter.\n\nA BindingArgument shall follow [ConstantArgument]s,\n[LifetimeArgument]s, and [TypeArgument]s in a\nGenericArgumentList.\n\nA LifetimeArgument shall precede [BindingArgument]s,\n[ConstantArgument]s, and [TypeArgument]s in a\nGenericArgumentList.\n\nA binding argument is a generic argument that supplies the type\nof an associated trait type.\n\nA binding bound argument is a generic argument that further imposes\n[bound]s on an associated trait type.\n\nA binding bound argument shall only be used within the confines of a\ntype bound predicate's [bound]s, [impl trait type]'s\n[bound]s, associated type's [bound]s or trait's\n[supertrait]s.\n\nA constant argument is a generic argument that supplies the\nvalue of a constant parameter.\n\nA constant argument may only appear as a single segment\npath expression, optionally encapsulated in a block expression, within\nan array repetition constructor or a type.\n\nA lifetime argument is a generic argument that supplies the\nlifetime of a lifetime parameter.\n\nA type argument is a generic argument that supplies the type of\na type parameter.\n\n[Generic argument]s are subject to generic conformance.\n\nThe following is a generic function with a binding argument.\n\nThe following are generic arguments for func.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_3x6qd8vt5uus": "A generic argument supplies a static input for an associated trait type or a generic parameter.",
+            "fls_ky39fb2vcom6": "A BindingArgument shall follow [ConstantArgument]s, [LifetimeArgument]s, and [TypeArgument]s in a GenericArgumentList.",
+            "fls_9n1ejjili06h": "A LifetimeArgument shall precede [BindingArgument]s, [ConstantArgument]s, and [TypeArgument]s in a GenericArgumentList.",
+            "fls_9pda3ja0ihks": "A binding argument is a generic argument that supplies the type of an associated trait type.",
+            "fls_mcUMWsYcxzmZ": "A binding bound argument is a generic argument that further imposes [bound]s on an associated trait type.",
+            "fls_dxMfAI4EZVS5": "A binding bound argument shall only be used within the confines of a type bound predicate's [bound]s, [impl trait type]'s [bound]s, associated type's [bound]s or trait's [supertrait]s.",
+            "fls_i3z9ueoe99zd": "A constant argument is a generic argument that supplies the value of a constant parameter.",
+            "fls_al4dhmqodvwc": "A constant argument may only appear as a single segment path expression, optionally encapsulated in a block expression, within an array repetition constructor or a type.",
+            "fls_10k9gdxlpuls": "A lifetime argument is a generic argument that supplies the lifetime of a lifetime parameter.",
+            "fls_d4vdvpihoeb1": "A type argument is a generic argument that supplies the type of a type parameter.",
+            "fls_ukarc98ceesz": "[Generic argument]s are subject to generic conformance."
+          }
+        },
+        "-7": {
+          "paragraphs": {
+            "fls_l88o2snx9qbt": "The following is a generic function with a binding argument. .. code-block:: rust fn func<'lifetime, T, const C: usize>() where T: Trait<Assoc = usize> {}",
+            "fls_thpj9io9tyuy": "The following are generic arguments for func."
+          }
+        },
+        "-8": {
+          "paragraphs": {
+            "syntax_1": "GenericArgumentList ::=\n       $$<$$ ( GenericArgument ($$,$$ GenericArgument)* $$,$$? )? $$>$$\n\n   GenericArgument ::=\n       BindingArgument\n     | BindingBoundArgument\n     | ConstantArgument\n     | LifetimeArgument\n     | TypeArgument\n\n   BindingArgument ::=\n       Identifier $$=$$ TypeSpecification\n\n   BindingBoundArgument ::=\n       Identifier $$:$$ TypeBoundList\n\n   ConstantArgument ::=\n       BlockExpression\n     | $$-$$? LiteralExpression\n     | Identifier\n\n   LifetimeArgument ::=\n     ...",
+            "syntax_2": "func::<'static, u32, 0>();"
+          }
+        }
+      },
+      "parent_fls_id": "fls_y2k5paj8m8ug",
+      "sibling_fls_ids": [
+        "fls_vhpwge5123cm",
+        "fls_7nv8ualeaqe3",
+        "fls_i7g2n7hfg3ch"
+      ]
+    },
+    {
+      "fls_id": "fls_i7g2n7hfg3ch",
+      "title": "Generic Conformance",
+      "category": 0,
+      "level": 2,
+      "file": "generics",
+      "content": "Generic Conformance\n\nGeneric conformance measures the compatibility between a set of\n[generic parameter]s and a set of [generic argument]s.\n\nA binding argument is conformant with an associated type when the\nsupplied type of the binding argument fulfills the required\n[trait bound]s of the associated type.\n\nA constant argument is conformant with a constant parameter when\nthe [type]s of the constant argument and the constant parameter\nare unifiable.\n\nA lifetime argument is conformant with a lifetime parameter when it\noutlives the lifetime specified by the lifetime parameter.\n\nA type argument is conformant with a type parameter when the\ntype of the type argument fulfills the required [trait bound]s\nof the type parameter.\n\n[Generic argument]s are conformant with [generic parameter]s when\n\n* The [generic argument]s consist only of conformant\n [binding argument]s, conformant [constant argument]s, conformant\n [lifetime argument]s, and conformant [type argument]s, and\n\n* Any remaining [generic parameter]s without corresponding conformant\n [generic argument]s are [constant parameter]s with\n [constant parameter initializer]s, [lifetime parameter]s with\n either inferred [lifetime argument]s or [elided lifetime]s,\n [type parameter]s with [type parameter initializer]s or inferred\n [type argument]s, and\n\n* All [lifetime argument]s come first, followed by\n [constant argument]s and [type argument]s in the order defined by\n the [generic parameter]s, followed by [binding argument]s, and\n\n* All [constant argument]s, [lifetime argument]s, and\n [type argument]s have a corresponding generic parameter.\n\n[Generic argument]s shall be conformant.\n\nThe value of a constant parameter is determined as follows:\n\n* If the constant parameter has a conformant constant argument, then\n the value is that of the constant argument.\n\n* Otherwise, if the constant parameter has a\n constant parameter initializer, then the value is that of the\n constant parameter initializer.\n\n* Otherwise this is a static error.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_CBWyxBJeYeb2": "Generic conformance measures the compatibility between a set of [generic parameter]s and a set of [generic argument]s.",
+            "fls_ltch5eivxgaa": "A binding argument is conformant with an associated type when the supplied type of the binding argument fulfills the required [trait bound]s of the associated type.",
+            "fls_gb3mpt5rxjoa": "A constant argument is conformant with a constant parameter when the [type]s of the constant argument and the constant parameter are unifiable.",
+            "fls_kdeltu9dsd0d": "A lifetime argument is conformant with a lifetime parameter when it outlives the lifetime specified by the lifetime parameter.",
+            "fls_ws1h57fk1mkh": "A type argument is conformant with a type parameter when the type of the type argument fulfills the required [trait bound]s of the type parameter.",
+            "fls_w0ozotuwtr9": "[Generic argument]s are conformant with [generic parameter]s when",
+            "fls_91bylteu35bi": "The [generic argument]s consist only of conformant [binding argument]s, conformant [constant argument]s, conformant [lifetime argument]s, and conformant [type argument]s, and",
+            "fls_j6xtrxc6aik": "Any remaining [generic parameter]s without corresponding conformant [generic argument]s are [constant parameter]s with [constant parameter initializer]s, [lifetime parameter]s with either inferred [lifetime argument]s or [elided lifetime]s, [type parameter]s with [type parameter initializer]s or inferred [type argument]s, and",
+            "fls_us7d30cbwgpz": "All [lifetime argument]s come first, followed by [constant argument]s and [type argument]s in the order defined by the [generic parameter]s, followed by [binding argument]s, and",
+            "fls_dp3hpvf0fmr8": "All [constant argument]s, [lifetime argument]s, and [type argument]s have a corresponding generic parameter.",
+            "fls_mg45zcguxxg5": "[Generic argument]s shall be conformant.",
+            "fls_mDgq5XjzKAl3": "The value of a constant parameter is determined as follows:",
+            "fls_YufUgB25ovh3": "If the constant parameter has a conformant constant argument, then the value is that of the constant argument.",
+            "fls_OhVxhJ23x7W2": "Otherwise, if the constant parameter has a constant parameter initializer, then the value is that of the constant parameter initializer.",
+            "fls_Kyar0jH9BqeW": "Otherwise this is a static error."
+          }
+        }
+      },
+      "parent_fls_id": "fls_y2k5paj8m8ug",
+      "sibling_fls_ids": [
+        "fls_vhpwge5123cm",
+        "fls_7nv8ualeaqe3",
+        "fls_utuu8mdbuyxm"
+      ]
+    }
+  ]
+}

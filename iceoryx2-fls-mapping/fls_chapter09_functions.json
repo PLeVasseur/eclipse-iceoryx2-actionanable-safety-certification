@@ -50,30 +50,42 @@
       "description": "Function Declaration",
       "status": "demonstrated",
       "findings": {
+        "count": 9977,
         "total_declarations": 9884,
         "pub_functions": 2809
       },
       "samples": [
         {
           "file": "iceoryx2-bb/posix/src/mutex.rs",
-          "line": [281, 282, 283],
+          "line": [
+            281,
+            282,
+            283
+          ],
           "code": "pub fn new() -> Self { Self::default() }",
           "purpose": "Public constructor following Rust new() naming convention"
         },
         {
           "file": "iceoryx2/src/config.rs",
-          "line": [236, 237, 238, 239, 240],
+          "line": [
+            236,
+            237,
+            238,
+            239,
+            240
+          ],
           "code": "pub fn service_dir(&self) -> Path {\n    let mut path = *self.root_path();\n    path.add_path_entry(&self.service.directory).unwrap();\n    path\n}",
           "purpose": "Public getter function returning computed Path value"
         },
         {
           "file": "iceoryx2/src/config.rs",
-          "line": [622],
+          "line": [
+            622
+          ],
           "code": "pub fn from_file(config_file: &FilePath) -> Result<Config, ConfigCreationError> {",
           "purpose": "Associated function for constructing Config from file"
         }
-      ],
-      "count": 9977
+      ]
     },
     "function_qualifier_list": {
       "fls_section": "9.0.2",
@@ -81,6 +93,7 @@
       "description": "Function Qualifier List",
       "status": "demonstrated",
       "findings": {
+        "count": 1876,
         "const_fn": 113,
         "unsafe_fn": 1763,
         "async_fn": 0,
@@ -90,24 +103,33 @@
       "samples": [
         {
           "file": "iceoryx2-bb/elementary/src/lazy_singleton.rs",
-          "line": [60, 61, 62],
+          "line": [
+            60,
+            61,
+            62
+          ],
           "code": "pub const fn new() -> Self { ... }",
           "purpose": "const fn constructor enabling compile-time singleton initialization"
         },
         {
           "file": "iceoryx2-ffi/c/src/api/service_name.rs",
-          "line": [125, 126, 127],
+          "line": [
+            125,
+            126,
+            127
+          ],
           "code": "#[no_mangle] pub unsafe extern \"C\" fn iox2_service_name_new(...)",
           "purpose": "FFI function with extern C ABI, unsafe for raw pointer handling"
         },
         {
           "file": "iceoryx2-bb/posix/src/mutex.rs",
-          "line": [552],
+          "line": [
+            552
+          ],
           "code": "pub fn lock(&self) -> Result<MutexGuard<T>, MutexLockError<T>>",
           "purpose": "Public function with Result return type for fallible mutex acquisition"
         }
-      ],
-      "count": 1876
+      ]
     },
     "function_parameter_list": {
       "fls_section": "9.0.3",
@@ -115,29 +137,37 @@
       "description": "Function Parameter List",
       "status": "demonstrated",
       "findings": {
+        "count": 5591,
         "variadic_functions": 0
       },
       "samples": [
         {
           "file": "iceoryx2-ffi/c/src/api/service_name.rs",
-          "line": [126, 127, 128],
+          "line": [
+            126,
+            127,
+            128
+          ],
           "code": "service_name_struct_ptr: *mut iox2_service_name_t, service_name_str: *const c_char",
           "purpose": "C-compatible raw pointer parameters for FFI function"
         },
         {
           "file": "iceoryx2/src/sample.rs",
-          "line": [76],
+          "line": [
+            76
+          ],
           "code": "fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {",
           "purpose": "Debug trait implementation with self and formatter parameters"
         },
         {
           "file": "iceoryx2/src/service/dynamic_config/request_response.rs",
-          "line": [182],
+          "line": [
+            182
+          ],
           "code": "pub fn list_servers<F: FnMut(&ServerDetails) -> CallbackProgression>(&self, mut callback: F)",
           "purpose": "Generic parameter with FnMut trait bound for callback"
         }
-      ],
-      "count": 5591
+      ]
     },
     "function_parameter": {
       "fls_section": "9.0.4",
@@ -145,30 +175,36 @@
       "description": "Function Parameter",
       "status": "demonstrated",
       "findings": {
+        "count": 5591,
         "all_typed": true,
         "fn_mut_callbacks": 106
       },
       "samples": [
         {
           "file": "iceoryx2/src/service/dynamic_config/request_response.rs",
-          "line": [182],
+          "line": [
+            182
+          ],
           "code": "pub fn list_servers<F: FnMut(&ServerDetails) -> CallbackProgression>(&self, mut callback: F)",
           "purpose": "Function with mut callback parameter for iteration with early exit"
         },
         {
           "file": "iceoryx2-bb/container/src/semantic_string.rs",
-          "line": [83],
+          "line": [
+            83
+          ],
           "code": "fn from(value: StringModificationError) -> Self {",
           "purpose": "From trait parameter for type conversion"
         },
         {
           "file": "iceoryx2/src/config.rs",
-          "line": [255],
+          "line": [
+            255
+          ],
           "code": "pub fn set_root_path(&mut self, value: &Path) {",
           "purpose": "Setter function with &mut self and reference parameter"
         }
-      ],
-      "count": 5591
+      ]
     },
     "function_parameter_pattern": {
       "fls_section": "9.0.5",
@@ -176,6 +212,7 @@
       "description": "Function Parameter Pattern",
       "status": "demonstrated",
       "findings": {
+        "count": 2047,
         "patterns": [
           "simple identifiers",
           "mut bindings"
@@ -184,24 +221,32 @@
       "samples": [
         {
           "file": "iceoryx2-bb/container/src/semantic_string.rs",
-          "line": [83, 84],
+          "line": [
+            83,
+            84
+          ],
           "code": "fn from(value: StringModificationError) -> Self {\n    match value {",
           "purpose": "Simple identifier pattern in From trait implementation"
         },
         {
           "file": "iceoryx2/src/config.rs",
-          "line": [622],
+          "line": [
+            622
+          ],
           "code": "pub fn from_file(config_file: &FilePath) -> Result<Config, ConfigCreationError> {",
           "purpose": "Reference parameter pattern with explicit type annotation"
         },
         {
           "file": "iceoryx2-services/discovery/src/service_discovery/tracker.rs",
-          "line": [43, 44, 45],
+          "line": [
+            43,
+            44,
+            45
+          ],
           "code": "fn from(error: ServiceListError) -> Self {\n    match error {\n        ServiceListError::InsufficientPermissions => Self::InsufficientPermissions,",
           "purpose": "Owned parameter in From impl for error type conversion"
         }
-      ],
-      "count": 2047
+      ]
     },
     "function_parameter_variadic_part": {
       "fls_section": "9.0.6",
@@ -210,11 +255,10 @@
       "status": "not_used",
       "findings": {
         "count": 0,
+        "count_methodology": "Pattern not defined for this section",
         "note": "No variadic functions - parameter lists are explicit"
       },
-      "samples": [],
-      "count": null,
-      "count_methodology": "Pattern not defined for this section"
+      "samples": []
     },
     "return_type": {
       "fls_section": "9.0.7",
@@ -222,6 +266,13 @@
       "description": "Return Type",
       "status": "demonstrated",
       "findings": {
+        "count": 0,
+        "samples_waiver": {
+          "reason": "insufficient_patterns",
+          "explanation": "Only 0 instance(s) found in codebase, fewer than 3 required samples",
+          "approved_by": "automated",
+          "date": "2025-12-30"
+        },
         "result_returns": 1396,
         "option_returns": 235,
         "self_returns": 1216,
@@ -244,14 +295,7 @@
           "code": "pub fn deadline(&self) -> Option<Duration>",
           "purpose": "Option return for nullable values"
         }
-      ],
-      "count": 0,
-      "samples_waiver": {
-        "reason": "insufficient_patterns",
-        "explanation": "Only 0 instance(s) found in codebase, fewer than 3 required samples",
-        "approved_by": "automated",
-        "date": "2025-12-30"
-      }
+      ]
     },
     "function_body": {
       "fls_section": "9.0.8",
@@ -259,6 +303,7 @@
       "description": "Function Body",
       "status": "demonstrated",
       "findings": {
+        "count": 7904,
         "patterns": [
           "early return with ?",
           "match expressions",
@@ -268,24 +313,37 @@
       "samples": [
         {
           "file": "iceoryx2-bb/concurrency/src/spin_lock.rs",
-          "line": [119, 120, 121],
+          "line": [
+            119,
+            120,
+            121
+          ],
           "code": "fn drop(&mut self) {\n    self.lock.locked.store(false, Ordering::Release);\n}",
           "purpose": "Drop implementation releasing SpinLock with atomic release ordering"
         },
         {
           "file": "iceoryx2/src/sample.rs",
-          "line": [76, 77, 78, 79],
+          "line": [
+            76,
+            77,
+            78,
+            79
+          ],
           "code": "fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {\n    write!(\n        f,\n        \"Sample<{}, {}, {}> {{ ptr: {:?}, details: {:?} }}\",",
           "purpose": "Debug trait implementation with structured write! macro"
         },
         {
           "file": "iceoryx2-bb/container/src/semantic_string.rs",
-          "line": [83, 84, 85, 86],
+          "line": [
+            83,
+            84,
+            85,
+            86
+          ],
           "code": "fn from(value: StringModificationError) -> Self {\n    match value {\n        StringModificationError::InsertWouldExceedCapacity => {\n            SemanticStringError::ExceedsMaximumLength",
           "purpose": "From trait body with match expression for error conversion"
         }
-      ],
-      "count": 7904
+      ]
     },
     "self_parameter": {
       "fls_section": "9.0.9",
@@ -293,6 +351,7 @@
       "description": "Self Parameter",
       "status": "demonstrated",
       "findings": {
+        "count": 3542,
         "ref_self": 1537,
         "ref_mut_self": 265,
         "owned_self": 530
@@ -300,24 +359,33 @@
       "samples": [
         {
           "file": "iceoryx2-bb/posix/src/mutex.rs",
-          "line": [286, 287, 288, 289],
+          "line": [
+            286,
+            287,
+            288,
+            289
+          ],
           "code": "pub fn clock_type(mut self, clock_type: ClockType) -> Self {\n    self.clock_type = clock_type;\n    self\n}",
           "purpose": "Builder method taking mut self by value, returning Self"
         },
         {
           "file": "iceoryx2/src/config.rs",
-          "line": [250],
+          "line": [
+            250
+          ],
           "code": "pub fn root_path(&self) -> &Path {",
           "purpose": "Getter method taking &self, returning reference"
         },
         {
           "file": "iceoryx2-bb/concurrency/src/spin_lock.rs",
-          "line": [119, 120],
+          "line": [
+            119,
+            120
+          ],
           "code": "fn drop(&mut self) {\n    self.lock.locked.store(false, Ordering::Release);",
           "purpose": "Drop trait taking &mut self for cleanup"
         }
-      ],
-      "count": 3542
+      ]
     },
     "shorthand_self": {
       "fls_section": "9.0.10",
@@ -325,17 +393,17 @@
       "description": "Shorthand Self",
       "status": "demonstrated",
       "findings": {
+        "count": null,
+        "count_methodology": "Pattern not defined for this section",
+        "samples_waiver": {
+          "reason": "conceptual_section",
+          "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
+          "approved_by": "automated",
+          "date": "2025-12-30"
+        },
         "note": "Shorthand self patterns used throughout"
       },
-      "samples": [],
-      "count": null,
-      "count_methodology": "Pattern not defined for this section",
-      "samples_waiver": {
-        "reason": "conceptual_section",
-        "explanation": "This section describes an abstract concept not directly mappable to concrete code patterns",
-        "approved_by": "automated",
-        "date": "2025-12-30"
-      }
+      "samples": []
     },
     "typed_self": {
       "fls_section": "9.0.11",
@@ -343,29 +411,41 @@
       "description": "Typed Self",
       "status": "demonstrated",
       "findings": {
+        "count": 186,
         "note": "Typed self used in some advanced patterns"
       },
       "samples": [
         {
           "file": "iceoryx2/src/sample.rs",
-          "line": [77, 78, 79, 80],
+          "line": [
+            77,
+            78,
+            79,
+            80
+          ],
           "code": "write!(\n    f,\n    \"Sample<{}, {}, {}> {{ ptr: {:?}, details: {:?} }}\",\n    core::any::type_name::<Payload>(),",
           "purpose": "Debug formatting using self in write! macro"
         },
         {
           "file": "iceoryx2/src/waitset.rs",
-          "line": [265, 266],
+          "line": [
+            265,
+            266
+          ],
           "code": "fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {\n    write!(f, \"WaitSetAttachmentError::{self:?}\")",
           "purpose": "Display impl using {self:?} format specifier"
         },
         {
           "file": "iceoryx2/src/node/mod.rs",
-          "line": [245, 246, 247],
+          "line": [
+            245,
+            246,
+            247
+          ],
           "code": "fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {\n    write!(f, \"NodeId {{ value: {:?} }}\", self.value)",
           "purpose": "Debug formatting accessing self.value in write! macro"
         }
-      ],
-      "count": 186
+      ]
     }
   },
   "design_patterns": {

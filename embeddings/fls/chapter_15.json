@@ -1,0 +1,469 @@
+{
+  "chapter": 15,
+  "title": "Ownership and Destruction",
+  "fls_id": "fls_ronnwodjjjsh",
+  "file": "ownership-and-deconstruction",
+  "extraction_date": "2025-12-31",
+  "category_codes": {
+    "0": "section",
+    "-1": "general",
+    "-2": "legality_rules",
+    "-3": "dynamic_semantics",
+    "-4": "undefined_behavior",
+    "-5": "implementation_requirements",
+    "-6": "implementation_permissions",
+    "-7": "examples",
+    "-8": "syntax"
+  },
+  "statistics": {
+    "total_sections": 11,
+    "total_paragraphs": 151,
+    "paragraphs_by_category": {
+      "-7": 16,
+      "-4": 1,
+      "-3": 17,
+      "-2": 117
+    }
+  },
+  "sections": [
+    {
+      "fls_id": "fls_ronnwodjjjsh",
+      "title": "Ownership and Destruction",
+      "category": 0,
+      "level": 1,
+      "file": "ownership-and-deconstruction",
+      "content": "Ownership and Destruction",
+      "rubrics": {},
+      "parent_fls_id": null,
+      "sibling_fls_ids": []
+    },
+    {
+      "fls_id": "fls_svkx6szhr472",
+      "title": "Ownership",
+      "category": 0,
+      "level": 2,
+      "file": "ownership-and-deconstruction",
+      "content": "Ownership\n\nOwnership is a property of [value]s that is central to the resource\nmanagement model of Rust.\n\nAn owner is a variable that holds a value.\n\nA value shall have only one owner.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_wt81sbsecmu0": "Ownership is a property of [value]s that is central to the resource management model of Rust.",
+            "fls_ckcnkbb6y3cq": "An owner is a variable that holds a value.",
+            "fls_ze0u9gfylmhn": "A value shall have only one owner."
+          }
+        }
+      },
+      "parent_fls_id": "fls_ronnwodjjjsh",
+      "sibling_fls_ids": [
+        "fls_3xvm61x0t251",
+        "fls_v5x85lt5ulva",
+        "fls_a14slch83hzn",
+        "fls_77scxuomlbgs",
+        "fls_4jiw35pan7vn",
+        "fls_u2mzjgiwbkz0",
+        "fls_rm4ncoopcdvj",
+        "fls_afafmafz4hf2"
+      ]
+    },
+    {
+      "fls_id": "fls_3xvm61x0t251",
+      "title": "Initialization",
+      "category": 0,
+      "level": 2,
+      "file": "ownership-and-deconstruction",
+      "content": "Initialization\n\nInitialization is the act of supplying an initial value to a\nvariable.\n\nWhen a variable holds a value, the variable is considered to be\ninitialized.\n\nWhen a variable lacks a value or its value has been\npassed <passing convention> by move, the variable is considered\nto be uninitialized.\n\nA variable shall be initialized before it is accessed.\n\nAll memory starts as uninitialized.\n\nVariable a is initialized.\n\nVariable b starts off as uninitialized, but is later initialized by virtue\nof the assignment statement.\n\nVariable c starts off initialized, but is later uninitialized by virtue of a\ntransfer by move.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_drfzu02bo7oe": "Initialization is the act of supplying an initial value to a variable.",
+            "fls_wnhci8phdu4m": "When a variable holds a value, the variable is considered to be initialized.",
+            "fls_ch2lvm50olqd": "When a variable lacks a value or its value has been passed <passing convention> by move, the variable is considered to be uninitialized.",
+            "fls_46910buiwvv9": "A variable shall be initialized before it is accessed."
+          }
+        },
+        "-3": {
+          "paragraphs": {
+            "fls_caufcwkpz689": "All memory starts as uninitialized."
+          }
+        },
+        "-7": {
+          "paragraphs": {
+            "fls_4lg92b9yima6": "Variable a is initialized. .. code-block:: rust let a: i32 = 42;",
+            "fls_xn1au0blioa3": "Variable b starts off as uninitialized, but is later initialized by virtue of the assignment statement. .. code-block:: rust let b: i32; b = 42;",
+            "fls_jmcjboopvytb": "Variable c starts off initialized, but is later uninitialized by virtue of a transfer by move. .. code-block:: rust use core::sync::atomic::AtomicI32; let c: AtomicI32 = AtomicI32::new(42); let d: AtomicI32 = c;"
+          }
+        }
+      },
+      "parent_fls_id": "fls_ronnwodjjjsh",
+      "sibling_fls_ids": [
+        "fls_svkx6szhr472",
+        "fls_v5x85lt5ulva",
+        "fls_a14slch83hzn",
+        "fls_77scxuomlbgs",
+        "fls_4jiw35pan7vn",
+        "fls_u2mzjgiwbkz0",
+        "fls_rm4ncoopcdvj",
+        "fls_afafmafz4hf2"
+      ]
+    },
+    {
+      "fls_id": "fls_v5x85lt5ulva",
+      "title": "References",
+      "category": 0,
+      "level": 2,
+      "file": "ownership-and-deconstruction",
+      "content": "References\n\nA reference is a value of a reference type. A reference\ncan be obtained explicitly by using a borrow expression or implicitly in\ncertain scenarios.\n\nA referent is the value pointed-to by a reference.\n\nA reference shall point to an initialized referent.\n\nThe lifetime of a referent shall be at least as long as the\nlifetime of its reference.\n\nA reference is active from the point of obtaining its referent\nupto the last use of the reference, prior to another assignment to the\nreference or the end of the scope of the reference.\n\nA referent shall not be passed <passing convention> by move while\na reference to it is active.\n\nA referent shall not be modified while a reference to it is\nactive.\n\nAn immutable reference is a value of a shared reference type, and\nprevents the mutation of its referent.\n\nA mutable reference is a value of a mutable reference type, and\nallows the mutation of its referent.\n\nThe referent of an immutable reference shall be mutated only when the\ntype of the referent is subject to interior mutability.\n\nWhile a mutable reference is active, no other reference shall\nrefer to a value that [overlap]s with the referent of the\nmutable reference.\n\nIt is undefined behavior to access a value through aliasing\n[mutable reference]s from unsafe context.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_7x9pi2o7pee7": "A reference is a value of a reference type. A reference can be obtained explicitly by using a borrow expression or implicitly in certain scenarios.",
+            "fls_tsqvr3fmcel": "A referent is the value pointed-to by a reference.",
+            "fls_ev4a82fdhwr8": "A reference shall point to an initialized referent.",
+            "fls_cckf6dtkgwb4": "The lifetime of a referent shall be at least as long as the lifetime of its reference.",
+            "fls_8kqb8754e6p4": "A reference is active from the point of obtaining its referent upto the last use of the reference, prior to another assignment to the reference or the end of the scope of the reference.",
+            "fls_v69rptdjao42": "A referent shall not be passed <passing convention> by move while a reference to it is active.",
+            "fls_vg9h6tz6z37w": "A referent shall not be modified while a reference to it is active.",
+            "fls_wcf5mxrzbujn": "An immutable reference is a value of a shared reference type, and prevents the mutation of its referent.",
+            "fls_fckoj1jh5mrc": "A mutable reference is a value of a mutable reference type, and allows the mutation of its referent.",
+            "fls_hqxsuyn285he": "The referent of an immutable reference shall be mutated only when the type of the referent is subject to interior mutability.",
+            "fls_i1ny0k726a4a": "While a mutable reference is active, no other reference shall refer to a value that [overlap]s with the referent of the mutable reference."
+          }
+        },
+        "-4": {
+          "paragraphs": {
+            "fls_eT1hnLOx6vxk": "It is undefined behavior to access a value through aliasing [mutable reference]s from unsafe context."
+          }
+        }
+      },
+      "parent_fls_id": "fls_ronnwodjjjsh",
+      "sibling_fls_ids": [
+        "fls_svkx6szhr472",
+        "fls_3xvm61x0t251",
+        "fls_a14slch83hzn",
+        "fls_77scxuomlbgs",
+        "fls_4jiw35pan7vn",
+        "fls_u2mzjgiwbkz0",
+        "fls_rm4ncoopcdvj",
+        "fls_afafmafz4hf2"
+      ]
+    },
+    {
+      "fls_id": "fls_a14slch83hzn",
+      "title": "Borrowing",
+      "category": 0,
+      "level": 2,
+      "file": "ownership-and-deconstruction",
+      "content": "Borrowing\n\nBorrowing is the process of temporarily associating a reference with a\nvalue without transferring ownership permanently.\n\nA borrow is a reference produced by borrowing.\n\nAn implicit borrow is a borrow that is not present syntactically in\nprogram text. An implicit borrow occurs in the following contexts:\n\n* The call operand of a call expression,\n\n* The [operand]s of a comparison expression,\n\n* The assigned operand of a compound assignment expression,\n\n* The operand of a field access expression,\n\n* The operand of a dereference expression,\n\n* The indexed operand of an index expression,\n\n* The receiver operand of a method call expression.\n\n`\nAn implicit borrow may be an immutable borrow or a mutable borrow\nif required.\n\nAn immutable borrow is an immutable reference produced by\nborrowing.\n\nA mutable borrow is a mutable reference produced by borrowing.\n\nBorrowing a field of a union type borrows all remaining\n[field]s using the same lifetime.\n\nImmutably borrowing a value proceeds as follows:\n\n#. An immutable borrow of type &'a T is created, where\n lifetime 'a is replaced by a lifetime variable, and\n T is replaced by the borrowed type.\n\n#. Lifetime inference is performed.\n\n#. The immutable borrow is checked against other [borrow]s and\n by move passing within the enclosing item.\n\n#. An immutable reference to the borrowed value is produced.\n\n#. The immutable borrow is released immediately after the last usage of its\n related immutable reference.\n\nMutably borrowing a value proceeds as follows:\n\n#. A mutable borrow of type &'a mut T is created, where\n lifetime 'a is replaced by a lifetime variable, and\n T is replaced by the borrowed type.\n\n#. Lifetime inference is performed.\n\n#. The mutable borrow is checked against other [borrow]s and\n by move passing within the enclosing item.\n\n#. A mutable reference to the borrowed value is produced.\n\n#. The mutable borrow is released immediately after the last usage of its\n related mutable reference.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_c02flohk54pc": "Borrowing is the process of temporarily associating a reference with a value without transferring ownership permanently.",
+            "fls_j9kof0px3l7s": "A borrow is a reference produced by borrowing.",
+            "fls_zepwytjwy049": "An implicit borrow is a borrow that is not present syntactically in program text. An implicit borrow occurs in the following contexts:",
+            "fls_nordokzfy36d": "The call operand of a call expression,",
+            "fls_bjf3futso849": "The [operand]s of a comparison expression,",
+            "fls_yfmy4v5zlgw9": "The assigned operand of a compound assignment expression,",
+            "fls_jv18y618j2s3": "The operand of a field access expression,",
+            "fls_g4i0jb27iryr": "The operand of a dereference expression,",
+            "fls_kky9ufexrvaw": "The indexed operand of an index expression,",
+            "fls_o5oq4jfswr4q": "The receiver operand of a method call expression.",
+            "fls_MT69AGRXH9pS": "` An implicit borrow may be an immutable borrow or a mutable borrow if required.",
+            "fls_hyl4bdjbuzbw": "An immutable borrow is an immutable reference produced by borrowing.",
+            "fls_pu19i4sj6yg0": "A mutable borrow is a mutable reference produced by borrowing.",
+            "fls_kxws4zmaahj6": "Borrowing a field of a union type borrows all remaining [field]s using the same lifetime.",
+            "fls_kup2ou22nwyl": "Immutably borrowing a value proceeds as follows: #.",
+            "fls_8q5ly4x104ai": "An immutable borrow of type &'a T is created, where lifetime 'a is replaced by a lifetime variable, and T is replaced by the borrowed type. #.",
+            "fls_yhchu2bpil4m": "Lifetime inference is performed. #.",
+            "fls_568o7nyihndd": "The immutable borrow is checked against other [borrow]s and by move passing within the enclosing item. #.",
+            "fls_Z2n7EJiLY5CT": "An immutable reference to the borrowed value is produced. #.",
+            "fls_ibi9mqGeHNLp": "The immutable borrow is released immediately after the last usage of its related immutable reference.",
+            "fls_f9we73i8vwq3": "Mutably borrowing a value proceeds as follows: #.",
+            "fls_w5bjgaov8w60": "A mutable borrow of type &'a mut T is created, where lifetime 'a is replaced by a lifetime variable, and T is replaced by the borrowed type. #.",
+            "fls_gbqizu6gu6kk": "Lifetime inference is performed. #.",
+            "fls_ovkkxeybumvt": "The mutable borrow is checked against other [borrow]s and by move passing within the enclosing item. #.",
+            "fls_7Kzu0qXiBUCb": "A mutable reference to the borrowed value is produced. #.",
+            "fls_VDHBP4oAoqT5": "The mutable borrow is released immediately after the last usage of its related mutable reference."
+          }
+        }
+      },
+      "parent_fls_id": "fls_ronnwodjjjsh",
+      "sibling_fls_ids": [
+        "fls_svkx6szhr472",
+        "fls_3xvm61x0t251",
+        "fls_v5x85lt5ulva",
+        "fls_77scxuomlbgs",
+        "fls_4jiw35pan7vn",
+        "fls_u2mzjgiwbkz0",
+        "fls_rm4ncoopcdvj",
+        "fls_afafmafz4hf2"
+      ]
+    },
+    {
+      "fls_id": "fls_77scxuomlbgs",
+      "title": "Passing Conventions",
+      "category": 0,
+      "level": 2,
+      "file": "ownership-and-deconstruction",
+      "content": "Passing Conventions\n\nA passing convention is the mechanism that defines how a value is\ntransferred between [place]s.\n\nA copy type is a type that implements the core::marker::Copy\ntrait.\n\nA value of a copy type is passed <passing convention>\nby copy. Passing by copy does not change the owner of the\nvalue.\n\nA move type is a type that implements the core::marker::Sized\ntrait and is not a copy type.\n\nA value of a move type is passed <passing convention>\nby move. Passing by move changes the owner of the value.\n\nA value of a place expression shall be\npassed <passing convention> by move only when it denotes:\n\n* A field of a place expression that can be\n passed <passing convention> by move and whose type does not\n implement the core::ops::Drop trait, or\n\n* A temporary, or\n\n* A variable which is not currently borrowed.\n\nA value of a value expression is always\npassed <passing convention> by move.\n\nA value not subject to by copy or by move passing convention\nshall not be passed <passing convention> between [place]s.\n\nPassing a value by copy from a source owner to a target\nowner proceeds as follows:\n\n#. The value of the source owner is copied.\n\n#. The copy is assigned to the target owner.\n\nPassing a value by move from a source owner to a target\nowner proceeds as follows:\n\n#. The value is unassigned from the source owner.\n\n#. The value is assigned to the target owner.\n\nType i32 is a copy type. By the end of the second let statement, x is\nthe owner of the original 42 and y is the owner of a cloned 42.\n\nType core::sync::atomic::AtomicI32 is a move type. By the end of the\nsecond let statement, x is uninitialized and y is the sole owner of the\natomic 42.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_fvwx2ufeyzcs": "A passing convention is the mechanism that defines how a value is transferred between [place]s.",
+            "fls_h2pgsij1rbms": "A copy type is a type that implements the core::marker::Copy trait.",
+            "fls_yx2knbby70fy": "A value of a copy type is passed <passing convention> by copy. Passing by copy does not change the owner of the value.",
+            "fls_6ul3f6v0foma": "A move type is a type that implements the core::marker::Sized trait and is not a copy type.",
+            "fls_3ztdz02efeoc": "A value of a move type is passed <passing convention> by move. Passing by move changes the owner of the value.",
+            "fls_konzgoybhfqm": "A value of a place expression shall be passed <passing convention> by move only when it denotes:",
+            "fls_4bnbv7mqod57": "A field of a place expression that can be passed <passing convention> by move and whose type does not implement the core::ops::Drop trait, or",
+            "fls_3xk3p1unbjy5": "A temporary, or",
+            "fls_vk1xhvdaakh0": "A variable which is not currently borrowed.",
+            "fls_vveEJn7lngT8": "A value of a value expression is always passed <passing convention> by move.",
+            "fls_gq35gqagw35": "A value not subject to by copy or by move passing convention shall not be passed <passing convention> between [place]s."
+          }
+        },
+        "-3": {
+          "paragraphs": {
+            "fls_cfqzpmnfeh8h": "Passing a value by copy from a source owner to a target owner proceeds as follows: #.",
+            "fls_go9gdlk5d3km": "The value of the source owner is copied. #.",
+            "fls_459xx6febmf0": "The copy is assigned to the target owner.",
+            "fls_3xyq50abdiv6": "Passing a value by move from a source owner to a target owner proceeds as follows: #.",
+            "fls_7kcx3u8gvl1d": "The value is unassigned from the source owner. #.",
+            "fls_i4hrifsb9msr": "The value is assigned to the target owner."
+          }
+        },
+        "-7": {
+          "paragraphs": {
+            "fls_7tadh1zel0fc": "Type i32 is a copy type. By the end of the second let statement, x is the owner of the original 42 and y is the owner of a cloned 42. .. code-block:: rust let x: i32 = 42; let y: i32 = x;",
+            "fls_ywt328hcieka": "Type core::sync::atomic::AtomicI32 is a move type. By the end of the second let statement, x is uninitialized and y is the sole owner of the atomic 42. .. code-block:: rust use core::sync::atomic::AtomicI32; let x: AtomicI32 = AtomicI32::new(42); let y: AtomicI32 = x;"
+          }
+        }
+      },
+      "parent_fls_id": "fls_ronnwodjjjsh",
+      "sibling_fls_ids": [
+        "fls_svkx6szhr472",
+        "fls_3xvm61x0t251",
+        "fls_v5x85lt5ulva",
+        "fls_a14slch83hzn",
+        "fls_4jiw35pan7vn",
+        "fls_u2mzjgiwbkz0",
+        "fls_rm4ncoopcdvj",
+        "fls_afafmafz4hf2"
+      ]
+    },
+    {
+      "fls_id": "fls_4jiw35pan7vn",
+      "title": "Destruction",
+      "category": 0,
+      "level": 2,
+      "file": "ownership-and-deconstruction",
+      "content": "Destruction\n\nDestruction is the process of recovering resources associated with a\nvalue as it goes out of scope.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_e7ucq87s806d": "Destruction is the process of recovering resources associated with a value as it goes out of scope."
+          }
+        }
+      },
+      "parent_fls_id": "fls_ronnwodjjjsh",
+      "sibling_fls_ids": [
+        "fls_svkx6szhr472",
+        "fls_3xvm61x0t251",
+        "fls_v5x85lt5ulva",
+        "fls_a14slch83hzn",
+        "fls_77scxuomlbgs",
+        "fls_u2mzjgiwbkz0",
+        "fls_rm4ncoopcdvj",
+        "fls_afafmafz4hf2"
+      ]
+    },
+    {
+      "fls_id": "fls_u2mzjgiwbkz0",
+      "title": "Destructors",
+      "category": 0,
+      "level": 2,
+      "file": "ownership-and-deconstruction",
+      "content": "Destructors\n\nA drop type is a type that implements the core::ops::Drop\ntrait or contains a field that has a drop type.\n\nA destructor is a function that is invoked immediately before the\ndestruction of a value of a drop type.\n\nDropping a value is the act of invoking the destructor of the\nrelated type. Such an object is said to be dropped.\n\nAn uninitialized variable is not dropped.\n\nDropping an initialized variable proceeds as follows:\n\n#. If the drop type implements the core::ops::Drop trait, then\n core::ops::Drop::drop of the drop type is invoked.\n\n#. If the drop type is an array type, then its elements are\n dropped from the first element to the last element.\n\n#. Otherwise, if the drop type is a closure type, then all\n [capture target]s whose capture mode is by move are\n dropped in unspecified order.\n\n#. Otherwise, if the drop type is an enum type, then the [field]s\n of the active enum variant are dropped in declaration order.\n\n#. Otherwise, if the drop type is a slice type, then its elements are\n dropped from the first element to the last element.\n\n#. Otherwise, if the drop type is a struct type, then its\n [field]s are dropped in declaration order.\n\n#. Otherwise, if the drop type is a trait object type, then the\n destructor of the underlying type is invoked.\n\n#. Otherwise, if the drop type is a tuple type, then its [field]s\n are dropped in declaration order.\n\n#. Otherwise, dropping has no effect.\n\nWhen object array is dropped, its destructor drops the first element, then\nthe second element.\n\nObject uninitialized is not dropped.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_9m0gszdle0qb": "A drop type is a type that implements the core::ops::Drop trait or contains a field that has a drop type.",
+            "fls_4nkzidytpi6": "A destructor is a function that is invoked immediately before the destruction of a value of a drop type.",
+            "fls_wzuwapjqtyyy": "Dropping a value is the act of invoking the destructor of the related type. Such an object is said to be dropped.",
+            "fls_gfvm70iqu1l4": "An uninitialized variable is not dropped."
+          }
+        },
+        "-3": {
+          "paragraphs": {
+            "fls_l2xkdjeydqtx": "Dropping an initialized variable proceeds as follows: #.",
+            "fls_bync24y6gp93": "If the drop type implements the core::ops::Drop trait, then core::ops::Drop::drop of the drop type is invoked. #.",
+            "fls_jzancf72i95f": "If the drop type is an array type, then its elements are dropped from the first element to the last element. #.",
+            "fls_gjn2jnsal9gs": "Otherwise, if the drop type is a closure type, then all [capture target]s whose capture mode is by move are dropped in unspecified order. #.",
+            "fls_ol2w2292frfi": "Otherwise, if the drop type is an enum type, then the [field]s of the active enum variant are dropped in declaration order. #.",
+            "fls_6ii5o68vuymj": "Otherwise, if the drop type is a slice type, then its elements are dropped from the first element to the last element. #.",
+            "fls_sup43es8ps8r": "Otherwise, if the drop type is a struct type, then its [field]s are dropped in declaration order. #.",
+            "fls_y9q0eqr865b3": "Otherwise, if the drop type is a trait object type, then the destructor of the underlying type is invoked. #.",
+            "fls_kdqng6eovxns": "Otherwise, if the drop type is a tuple type, then its [field]s are dropped in declaration order. #.",
+            "fls_ag249y74jg6c": "Otherwise, dropping has no effect."
+          }
+        },
+        "-7": {
+          "paragraphs": {
+            "fls_tw36n3g32a0y": "When object array is dropped, its destructor drops the first element, then the second element. .. code-block:: rust let array = [PrintOnDrop(\"first element to be dropped\"), PrintOnDrop(\"second element to be dropped\")];",
+            "fls_fmn33zhorkf": "Object uninitialized is not dropped. .. code-block:: rust let uninitialized: PrintOnDrop;"
+          }
+        }
+      },
+      "parent_fls_id": "fls_ronnwodjjjsh",
+      "sibling_fls_ids": [
+        "fls_svkx6szhr472",
+        "fls_3xvm61x0t251",
+        "fls_v5x85lt5ulva",
+        "fls_a14slch83hzn",
+        "fls_77scxuomlbgs",
+        "fls_4jiw35pan7vn",
+        "fls_rm4ncoopcdvj",
+        "fls_afafmafz4hf2"
+      ]
+    },
+    {
+      "fls_id": "fls_rm4ncoopcdvj",
+      "title": "Drop Scopes",
+      "category": 0,
+      "level": 2,
+      "file": "ownership-and-deconstruction",
+      "content": "Drop Scopes\n\nA drop scope is a region of program text that governs the dropping of\n[value]s. When control flow leaves a drop scope, all [value]s\nassociated with that drop scope are dropped based on a\ndrop order.\n\nA drop construct is a construct that employs a drop scope. The\nfollowing [construct]s are [drop construct]s:\n\n* [Expression]s,\n\n* [Function]s,\n\n* A match arm of a match expression,\n\n* [Statement]s.\n\n[Drop scope]s are nested within one another as follows:\n\n* The drop scope of a function is the outermost drop scope.\n\n* The parent drop scope of a function body is the drop scope of\n its related function.\n\n* The parent drop scope of an operand in an expression statement\n is the drop scope of the expression statement.\n\n* The parent drop scope of the expression of a let statement is\n the drop scope of the let statement.\n\n* The parent drop scope of a statement is the drop scope of the\n block expression that contains the statement.\n\n* The parent drop scope of the operand of a match arm guard is\n the drop scope of the match arm that contains the\n match arm guard.\n\n* The parent drop scope of the operand of a match arm is the\n drop scope of the match arm that contains the operand.\n\n* The parent drop scope of a match arm is the drop scope of the\n related match expression.\n\n* The parent drop scope of all other [drop scope]s is the\n drop scope of the immediately enclosing expression.\n\nA binding declared in a for loop expression is associated with\nthe drop scope of the block expression of the\nfor loop expression.\n\nA binding declared in an if let expression is associated with the\ndrop scope of the block expression of the if let expression.\n\nA binding declared in a let statement is associated with the\ndrop scope of the block expression that contains the\nlet statement.\n\nA binding declared in a match expression is associated with the\ndrop scope of the match arm of the match expression.\n\nA binding declared in a while let loop expression is associated with\nthe drop scope of the block expression of the\nwhile let loop expression.\n\nA value or binding of a function parameter is associated with the\ndrop scope of the function of the function parameter.\n\nA temporary that is not subject to constant promotion is associated\nwith the innermost drop scope that contains the expression which\nproduced the temporary, taking into account drop scope extension. The\npossible [drop scope]s are as follows:\n\n* The drop scope of a function body.\n\n* The drop scope of a statement.\n\n* The drop scope of a block expression of an if expression, an\n infinite loop expression, or a while loop expression.\n\n* The drop scope of an else expression.\n\n* The drop scope of the subject expression of an if expression.\n\n* The drop scope of the iteration expression of a\n while loop expression.\n\n* The drop scope of the operand of a match arm.\n\n* The drop scope of the operand of a match arm guard.\n\n* The drop scope of the right operand of a\n lazy boolean expression.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_7uav7vkcv4pz": "A drop scope is a region of program text that governs the dropping of [value]s. When control flow leaves a drop scope, all [value]s associated with that drop scope are dropped based on a drop order.",
+            "fls_txvxrn6wbyql": "A drop construct is a construct that employs a drop scope. The following [construct]s are [drop construct]s:",
+            "fls_n6y6brm6pghr": "[Expression]s,",
+            "fls_gdh6wwvi7ci6": "[Function]s,",
+            "fls_owqk2fcpvc4s": "A match arm of a match expression,",
+            "fls_ckh8wkq0y5ja": "[Statement]s.",
+            "fls_2zwwnzepgmje": "[Drop scope]s are nested within one another as follows:",
+            "fls_vlbx5ukw5c8l": "The drop scope of a function is the outermost drop scope.",
+            "fls_d5yg6w8gv6aq": "The parent drop scope of a function body is the drop scope of its related function.",
+            "fls_qidma4fpkhb0": "The parent drop scope of an operand in an expression statement is the drop scope of the expression statement.",
+            "fls_1o9ye6cwoyiq": "The parent drop scope of the expression of a let statement is the drop scope of the let statement.",
+            "fls_16htxf824xbk": "The parent drop scope of a statement is the drop scope of the block expression that contains the statement.",
+            "fls_lbsfhg42yiqy": "The parent drop scope of the operand of a match arm guard is the drop scope of the match arm that contains the match arm guard.",
+            "fls_5m3u3k6f00bd": "The parent drop scope of the operand of a match arm is the drop scope of the match arm that contains the operand.",
+            "fls_m86ljncnmo7j": "The parent drop scope of a match arm is the drop scope of the related match expression.",
+            "fls_bewcu5xceu8i": "The parent drop scope of all other [drop scope]s is the drop scope of the immediately enclosing expression.",
+            "fls_iHHhlxCiqNWZ": "A binding declared in a for loop expression is associated with the drop scope of the block expression of the for loop expression.",
+            "fls_swXXkbZGLPKa": "A binding declared in an if let expression is associated with the drop scope of the block expression of the if let expression.",
+            "fls_vrqgac634wpr": "A binding declared in a let statement is associated with the drop scope of the block expression that contains the let statement.",
+            "fls_fnvr5w2wzxns": "A binding declared in a match expression is associated with the drop scope of the match arm of the match expression.",
+            "fls_1vZFa5mDEbXW": "A binding declared in a while let loop expression is associated with the drop scope of the block expression of the while let loop expression.",
+            "fls_3jtU8grRaMM9": "A value or binding of a function parameter is associated with the drop scope of the function of the function parameter.",
+            "fls_8r39duatupxw": "A temporary that is not subject to constant promotion is associated with the innermost drop scope that contains the expression which produced the temporary, taking into account drop scope extension. The possible [drop scope]s are as follows:",
+            "fls_2peq1tihglnr": "The drop scope of a function body.",
+            "fls_il09n7sq0a3k": "The drop scope of a statement.",
+            "fls_s1wbqld139gz": "The drop scope of a block expression of an if expression, an infinite loop expression, or a while loop expression.",
+            "fls_asvuef2pc3m0": "The drop scope of an else expression.",
+            "fls_560437qmeqtr": "The drop scope of the subject expression of an if expression.",
+            "fls_8cunkfc6x24q": "The drop scope of the iteration expression of a while loop expression.",
+            "fls_n108lvc4otoc": "The drop scope of the operand of a match arm.",
+            "fls_ptk6yibqyfzi": "The drop scope of the operand of a match arm guard.",
+            "fls_dltmd8e8c5ia": "The drop scope of the right operand of a lazy boolean expression."
+          }
+        }
+      },
+      "parent_fls_id": "fls_ronnwodjjjsh",
+      "sibling_fls_ids": [
+        "fls_svkx6szhr472",
+        "fls_3xvm61x0t251",
+        "fls_v5x85lt5ulva",
+        "fls_a14slch83hzn",
+        "fls_77scxuomlbgs",
+        "fls_4jiw35pan7vn",
+        "fls_u2mzjgiwbkz0",
+        "fls_afafmafz4hf2"
+      ]
+    },
+    {
+      "fls_id": "fls_5eima0pd31c0",
+      "title": "Drop Scope Extension",
+      "category": 0,
+      "level": 3,
+      "file": "ownership-and-deconstruction",
+      "content": "Drop Scope Extension\n\nDrop scope extension is the process of extending a drop scope\nassociated with a temporary to prevent the premature dropping of the\ntemporary.\n\nAn extending pattern is either\n\n* A reference identifier pattern, or\n\n* A slice pattern, a struct pattern, tuple pattern or a\n tuple struct pattern that contains at least one subpattern that is\n an extending pattern.\n\nIf the pattern-without-alternation of a let statement is an\nextending pattern, then the drop scope of the expression of\nthe let statement is extended to the drop scope of the\nblock expression that contains the let statement.\n\nAn extending expression is an expression with an\nextended drop scope <drop scope extension>.\n\nAn extending expression is any of the following:\n\n* The expression of a let statement.\n\n* The operand of an extending expression that is an\n array expression, a borrow expression, a struct expression, a\n tuple expression, or a type cast expression.\n\n* The block expression and else expression of an if expression\n that is an extending expression.\n\n* The expression of an else expression that is an extending\n expression.\n\n* The expression of a match arm of a match expression that is an\n extending expression.\n\n* The tail expression of a block expression that is an\n extending expression.\n\n* The [argument operand]s of a tuple struct call expression\n that is an extending expression.\n\nThe drop scope of the operand of a borrow expression that is an\nextending expression is extended to the drop scope of the\nblock expression that contains the let statement.\n\nThe drop scope of the operand of a borrow expression, a\ndereference expression, or a field access expression that has an\nextended drop scope is extended to the drop scope of the\nexpression.\n\nThe drop scope of the indexed operand of an index expression that\nhas an extended drop scope is extended to the drop scope of the\nexpression.\n\nSee fls_u2mzjgiwbkz0 for the declaration of PrintOnDrop.\n\nThe drop scope of the temporary created for expression AtomicI32::new(42) is\nextended to the drop scope of the block expression.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_kflqez2mtbit": "Drop scope extension is the process of extending a drop scope associated with a temporary to prevent the premature dropping of the temporary.",
+            "fls_xjw82bujm148": "An extending pattern is either",
+            "fls_965wt48ooqyw": "A reference identifier pattern, or",
+            "fls_r8nt0zp8dnyp": "A slice pattern, a struct pattern, tuple pattern or a tuple struct pattern that contains at least one subpattern that is an extending pattern.",
+            "fls_3ycn4u1fe9h": "If the pattern-without-alternation of a let statement is an extending pattern, then the drop scope of the expression of the let statement is extended to the drop scope of the block expression that contains the let statement.",
+            "fls_YeeZWqTdMivX": "An extending expression is an expression with an extended drop scope <drop scope extension>.",
+            "fls_wyzau8hhq74d": "An extending expression is any of the following:",
+            "fls_ju7cpftd8r2g": "The expression of a let statement.",
+            "fls_gjd1ow3l7swe": "The operand of an extending expression that is an array expression, a borrow expression, a struct expression, a tuple expression, or a type cast expression.",
+            "fls_Rj9zhVutfQod": "The block expression and else expression of an if expression that is an extending expression.",
+            "fls_oodpp3LpXC13": "The expression of an else expression that is an extending expression.",
+            "fls_xGThCPoTUSAi": "The expression of a match arm of a match expression that is an extending expression.",
+            "fls_iqw0d1l1lj3i": "The tail expression of a block expression that is an extending expression.",
+            "fls_eeaJtK4w5gVK": "The [argument operand]s of a tuple struct call expression that is an extending expression.",
+            "fls_aq01wjpkxhq9": "The drop scope of the operand of a borrow expression that is an extending expression is extended to the drop scope of the block expression that contains the let statement.",
+            "fls_VDPi1dJzJMUb": "The drop scope of the operand of a borrow expression, a dereference expression, or a field access expression that has an extended drop scope is extended to the drop scope of the expression.",
+            "fls_elGH7HSawMRb": "The drop scope of the indexed operand of an index expression that has an extended drop scope is extended to the drop scope of the expression."
+          }
+        },
+        "-7": {
+          "paragraphs": {
+            "fls_29y59x8bmw75": "See for the declaration of PrintOnDrop.",
+            "fls_subo2w7ln43q": "The drop scope of the temporary created for expression AtomicI32::new(42) is extended to the drop scope of the block expression. .. code-block:: rust use core::sync::atomic::AtomicI32; { let ref mut a = AtomicI32::new(42); println!(\"{}\", a); }"
+          }
+        }
+      },
+      "parent_fls_id": "fls_rm4ncoopcdvj",
+      "sibling_fls_ids": []
+    },
+    {
+      "fls_id": "fls_afafmafz4hf2",
+      "title": "Drop Order",
+      "category": 0,
+      "level": 2,
+      "file": "ownership-and-deconstruction",
+      "content": "Drop Order\n\nDrop order is the order by which [value]s are dropped when a\ndrop scope is left.\n\nWhen a drop scope is left, all [value]s associated with that\ndrop scope are dropped as follows:\n\n* [Binding]s are dropped in reverse declaration order.\n\n* Temporaries <temporary> are dropped in reverse creation order.\n\nWhen a drop scope of a function is left, then each\nfunction parameter is dropped from right to left as follows:\n\n#. All [binding]s introduced by the pattern of the\n function parameter are dropped in reverse declaration order,\n\n#. The value of the function parameter is dropped.\n\nWhen multiple [drop scope]s are left at once, the [value]s are\ndropped from the innermost drop scope to the outermost\ndrop scope.\n\nSee fls_u2mzjgiwbkz0 for the declaration of PrintOnDrop.\n\nThe drop order of the following variables is b, c, a. Dropping\nproceeds as follows:\n\n#. The scope of the block expression is left first because it is an inner scope.\n\n#. b is dropped.\n\n#. The outer scope is left.\n\n#. c is dropped because dropping occurs in reverse declarative order.\n\n#. a is dropped.",
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_n6o1xzjiz8cv": "Drop order is the order by which [value]s are dropped when a drop scope is left.",
+            "fls_jwofws3022ar": "When a drop scope is left, all [value]s associated with that drop scope are dropped as follows:",
+            "fls_g07zq3n55094": "[Binding]s are dropped in reverse declaration order.",
+            "fls_a5tmilqxdb6f": "Temporaries <temporary> are dropped in reverse creation order.",
+            "fls_zQGkVGWIzMQ7": "When a drop scope of a function is left, then each function parameter is dropped from right to left as follows: #.",
+            "fls_K8whhUwAUVqR": "All [binding]s introduced by the pattern of the function parameter are dropped in reverse declaration order, #.",
+            "fls_NpCrm4t03oQg": "The value of the function parameter is dropped.",
+            "fls_3i348l3pbtrx": "When multiple [drop scope]s are left at once, the [value]s are dropped from the innermost drop scope to the outermost drop scope."
+          }
+        },
+        "-7": {
+          "paragraphs": {
+            "fls_oe8l81y0wnao": "See for the declaration of PrintOnDrop.",
+            "fls_4sgca9wcl8h0": "The drop order of the following variables is b, c, a. Dropping proceeds as follows: #.",
+            "fls_a2m4ibzhgupa": "The scope of the block expression is left first because it is an inner scope. #.",
+            "fls_go3bvd23vzi9": "b is dropped. #.",
+            "fls_7rwo0he8x143": "The outer scope is left. #.",
+            "fls_43yqlxjr3a10": "c is dropped because dropping occurs in reverse declarative order. #.",
+            "fls_a7lsq2kkzkk4": "a is dropped. .. code-block:: rust let a = PrintOnDrop(\"3\"); { let b = PrintOnDrop(\"1\"); } let c = PrintOnDrop(\"2\");"
+          }
+        }
+      },
+      "parent_fls_id": "fls_ronnwodjjjsh",
+      "sibling_fls_ids": [
+        "fls_svkx6szhr472",
+        "fls_3xvm61x0t251",
+        "fls_v5x85lt5ulva",
+        "fls_a14slch83hzn",
+        "fls_77scxuomlbgs",
+        "fls_4jiw35pan7vn",
+        "fls_u2mzjgiwbkz0",
+        "fls_rm4ncoopcdvj"
+      ]
+    }
+  ]
+}

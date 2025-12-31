@@ -4,7 +4,7 @@ FLS MAPPING VALIDATION REPORT
 
 Files validated: 21
 Schema valid: 21/21
-Coverage valid: 21/21
+Coverage valid: 0/21
 FLS IDs valid: 21/21
 Sample minimums valid: 21/21
 MUST_BE_FILLED markers: 0
@@ -15,244 +15,417 @@ Sections missing count field: 0
 ------------------------------------------------------------
 FILE: fls_chapter02_lexical_elements.json
 ------------------------------------------------------------
-  OK - No issues found
 
 ------------------------------------------------------------
 FILE: fls_chapter03_items.json
 ------------------------------------------------------------
-  OK - No issues found
 
 ------------------------------------------------------------
 FILE: fls_chapter04_types_and_traits.json
 ------------------------------------------------------------
-  OK - No issues found
 
 ------------------------------------------------------------
 FILE: fls_chapter05_patterns.json
 ------------------------------------------------------------
-  OK - No issues found
 
 ------------------------------------------------------------
 FILE: fls_chapter06_expressions.json
 ------------------------------------------------------------
-  OK - No issues found
 
 ------------------------------------------------------------
 FILE: fls_chapter07_values.json
 ------------------------------------------------------------
-  OK - No issues found
 
 ------------------------------------------------------------
 FILE: fls_chapter08_statements.json
 ------------------------------------------------------------
-  OK - No issues found
 
 ------------------------------------------------------------
 FILE: fls_chapter09_functions.json
 ------------------------------------------------------------
-  OK - No issues found
 
 ------------------------------------------------------------
 FILE: fls_chapter10_associated_items.json
 ------------------------------------------------------------
-  OK - No issues found
 
 ------------------------------------------------------------
 FILE: fls_chapter11_implementations.json
 ------------------------------------------------------------
-  OK - No issues found
 
 ------------------------------------------------------------
 FILE: fls_chapter12_generics.json
 ------------------------------------------------------------
-  OK - No issues found
 
 ------------------------------------------------------------
 FILE: fls_chapter13_attributes.json
 ------------------------------------------------------------
-  OK - No issues found
 
 ------------------------------------------------------------
 FILE: fls_chapter14_entities_resolution.json
 ------------------------------------------------------------
-  OK - No issues found
 
 ------------------------------------------------------------
 FILE: fls_chapter15_ownership_destruction.json
 ------------------------------------------------------------
-  OK - No issues found
 
 ------------------------------------------------------------
 FILE: fls_chapter16_exceptions_errors.json
 ------------------------------------------------------------
-  OK - No issues found
 
 ------------------------------------------------------------
 FILE: fls_chapter17_concurrency.json
 ------------------------------------------------------------
-  OK - No issues found
 
 ------------------------------------------------------------
 FILE: fls_chapter18_program_structure.json
 ------------------------------------------------------------
-  OK - No issues found
 
 ------------------------------------------------------------
 FILE: fls_chapter19_unsafety.json
 ------------------------------------------------------------
-  OK - No issues found
 
 ------------------------------------------------------------
 FILE: fls_chapter20_macros.json
 ------------------------------------------------------------
-  OK - No issues found
 
 ------------------------------------------------------------
 FILE: fls_chapter21_ffi.json
 ------------------------------------------------------------
-  OK - No issues found
 
 ------------------------------------------------------------
 FILE: fls_chapter22_inline_assembly.json
 ------------------------------------------------------------
-  OK - No issues found
 
 ============================================================
 FLS COVERAGE REPORT
 ============================================================
 
 fls_chapter02_lexical_elements.json:
-  Coverage: 24/24 sections (100%)
-  Missing: none
+  Coverage: 24/77 sections (31%)
+  Missing:
+    - 2.-8 Syntax
+    - 2.-8.1 Character Set
+    - 2.-8.2 Lexical Elements, Separators, and Punctuation
+    - 2.-8.3 Identifiers
+    - 2.-8.4 Literals
+    - 2.-8.5 Byte Literals
+    - 2.-8.6 Byte String Literals
+    - 2.-8.7 Simple Byte String Literals
+    - 2.-8.8 Raw Byte String Literals
+    - 2.-8.9 C String Literals
+    ... and 43 more
   Extra (informational):
     - (top-level) safety_critical_summary
 
 fls_chapter03_items.json:
-  Coverage: 15/15 sections (100%)
-  Missing: none
+  Coverage: 15/21 sections (71%)
+  Missing:
+    - 3.-8 Syntax
+    - 3.-8.1 Items
+    - 3.-3 Dynamic Semantics
+    - 3.-3.1 Items
+    - 3.-2 Legality Rules
+    - 3.-2.1 Items
   Extra (informational):
     - (top-level) safety_critical_summary
 
 fls_chapter04_types_and_traits.json:
-  Coverage: 57/57 sections (100%)
-  Missing: none
+  Coverage: 57/144 sections (40%)
+  Missing:
+    - 4.-8 Syntax
+    - 4.-8.1 Types
+    - 4.-8.2 Array Types
+    - 4.-8.3 Slice Types
+    - 4.-8.4 Tuple Types
+    - 4.-8.5 Enum Types
+    - 4.-8.6 Struct Types
+    - 4.-8.7 Union Types
+    - 4.-8.8 Function Pointer Types
+    - 4.-8.9 Raw Pointer Types
+    ... and 77 more
   Extra (informational):
     - (top-level) safety_critical_summary
 
 fls_chapter05_patterns.json:
-  Coverage: 27/27 sections (100%)
-  Missing: none
+  Coverage: 27/91 sections (30%)
+  Missing:
+    - 5.-8 Syntax
+    - 5.-8.1 Patterns
+    - 5.-8.2 Identifier Patterns
+    - 5.-8.3 Literal Patterns
+    - 5.-8.4 Parenthesized Patterns
+    - 5.-8.5 Path Patterns
+    - 5.-8.6 Range Patterns
+    - 5.-8.7 Reference Patterns
+    - 5.-8.8 Rest Patterns
+    - 5.-8.9 Slice Patterns
+    ... and 54 more
   Extra (informational):
     - (top-level) safety_critical_summary
 
 fls_chapter06_expressions.json:
-  Coverage: 58/58 sections (100%)
-  Missing: none
+  Coverage: 58/221 sections (26%)
+  Missing:
+    - 6.-8 Syntax
+    - 6.-8.1 Expressions
+    - 6.-8.2 Literal Expressions
+    - 6.-8.3 Path Expressions
+    - 6.-8.4 Block Expressions
+    - 6.-8.5 Async Blocks
+    - 6.-8.6 Const Blocks
+    - 6.-8.7 Named Blocks
+    - 6.-8.8 Unsafe Blocks
+    - 6.-8.9 Operator Expressions
+    ... and 153 more
   Extra (informational):
     - (top-level) safety_critical_summary
 
 fls_chapter07_values.json:
-  Coverage: 5/5 sections (100%)
-  Missing: none
+  Coverage: 5/22 sections (23%)
+  Missing:
+    - 7.-8 Syntax
+    - 7.-8.1 Constants
+    - 7.-8.2 Statics
+    - 7.-4 Undefined Behavior
+    - 7.-4.1 Values
+    - 7.-4.2 Statics
+    - 7.-3 Dynamic Semantics
+    - 7.-3.1 Constants
+    - 7.-3.2 Statics
+    - 7.-3.3 Variables
+    ... and 7 more
   Extra (informational):
     - (top-level) safety_critical_summary
 
 fls_chapter08_statements.json:
-  Coverage: 6/6 sections (100%)
-  Missing: none
+  Coverage: 6/16 sections (38%)
+  Missing:
+    - 8.-8 Syntax
+    - 8.-8.1 Statements
+    - 8.-8.2 Let Statements
+    - 8.-8.3 Expression Statements
+    - 8.-7 Examples
+    - 8.-7.1 Expression Statements
+    - 8.-3 Dynamic Semantics
+    - 8.-3.2 Let Statements
+    - 8.-3.3 Expression Statements
+    - 8.-2 Legality Rules
   Extra (informational):
     - (top-level) safety_critical_summary
 
 fls_chapter09_functions.json:
-  Coverage: 11/11 sections (100%)
-  Missing: none
+  Coverage: 11/15 sections (73%)
+  Missing:
+    - 9.-8 Syntax
+    - 9.-8.1 Functions
+    - 9.-2 Legality Rules
+    - 9.-2.1 Functions
   Extra (informational):
     - (top-level) design_patterns
     - (top-level) cross_chapter_references
 
 fls_chapter10_associated_items.json:
-  Coverage: 3/3 sections (100%)
-  Missing: none
+  Coverage: 3/9 sections (33%)
+  Missing:
+    - 10.-8 Syntax
+    - 10.-8.1 Associated Items
+    - 10.-7 Examples
+    - 10.-7.1 Associated Items
+    - 10.-2 Legality Rules
+    - 10.-2.1 Associated Items
   Extra (informational):
     - (top-level) design_patterns
     - (top-level) cross_chapter_references
 
 fls_chapter11_implementations.json:
-  Coverage: 2/2 sections (100%)
-  Missing: none
+  Coverage: 2/10 sections (20%)
+  Missing:
+    - 11.-8 Syntax
+    - 11.-8.1 Implementations
+    - 11.-7 Examples
+    - 11.-7.1 Implementations
+    - 11.-2 Legality Rules
+    - 11.-2.1 Implementations
+    - 11.-2.2 Implementation Coherence
+    - 11.-2.3 Implementation Conformance
   Extra (informational):
     - (top-level) cross_chapter_references
 
 fls_chapter12_generics.json:
-  Coverage: 4/4 sections (100%)
-  Missing: none
+  Coverage: 4/15 sections (27%)
+  Missing:
+    - 12.-8 Syntax
+    - 12.-8.1 Generic Parameters
+    - 12.-8.2 Where Clauses
+    - 12.-8.3 Generic Arguments
+    - 12.-7 Examples
+    - 12.-7.1 Generic Arguments
+    - 12.-2 Legality Rules
+    - 12.-2.1 Generic Parameters
+    - 12.-2.2 Where Clauses
+    - 12.-2.3 Generic Arguments
+    ... and 1 more
   Extra (informational):
     - (top-level) design_patterns
     - (top-level) cross_chapter_references
 
 fls_chapter13_attributes.json:
-  Coverage: 57/57 sections (100%)
-  Missing: none
+  Coverage: 57/156 sections (37%)
+  Missing:
+    - 13.-8 Syntax
+    - 13.-8.1 Attributes
+    - 13.-8.2 Built-in Attributes
+    - 13.-8.3 Attribute ``cold``
+    - 13.-8.4 Attribute ``inline``
+    - 13.-8.5 Attribute ``no_builtins``
+    - 13.-8.6 Attribute ``target_feature``
+    - 13.-8.7 Attribute ``track_caller``
+    - 13.-8.8 Attribute ``naked``
+    - 13.-8.9 Attribute ``cfg``
+    ... and 89 more
   Extra (informational):
     - (top-level) design_patterns
     - (top-level) cross_chapter_references
 
 fls_chapter14_entities_resolution.json:
-  Coverage: 23/23 sections (100%)
-  Missing: none
+  Coverage: 23/55 sections (42%)
+  Missing:
+    - 14.-8 Syntax
+    - 14.-8.1 Entities
+    - 14.-8.2 Visibility
+    - 14.-8.3 Paths
+    - 14.-8.4 Use Imports
+    - 14.-7 Examples
+    - 14.-7.1 Paths
+    - 14.-7.2 Use Imports
+    - 14.-2 Legality Rules
+    - 14.-2.1 Entities
+    ... and 22 more
   Extra (informational):
     - (top-level) design_patterns
     - (top-level) cross_chapter_references
 
 fls_chapter15_ownership_destruction.json:
-  Coverage: 10/10 sections (100%)
-  Missing: none
+  Coverage: 10/33 sections (30%)
+  Missing:
+    - 15.-7 Examples
+    - 15.-7.1 Initialization
+    - 15.-7.2 Passing Conventions
+    - 15.-7.3 Destructors
+    - 15.-7.4 Drop Scope Extension
+    - 15.-7.5 Drop Order
+    - 15.-4 Undefined Behavior
+    - 15.-4.1 References
+    - 15.-3 Dynamic Semantics
+    - 15.-3.1 Initialization
+    ... and 13 more
   Extra (informational):
     - (top-level) design_patterns
     - (top-level) cross_chapter_references
 
 fls_chapter16_exceptions_errors.json:
-  Coverage: 2/2 sections (100%)
-  Missing: none
+  Coverage: 2/9 sections (22%)
+  Missing:
+    - 16.-3 Dynamic Semantics
+    - 16.-3.1 Panic
+    - 16.-3.2 Abort
+    - 16.-2 Legality Rules
+    - 16.-2.1 Exceptions and Errors
+    - 16.-2.2 Panic
+    - 16.-2.3 Abort
 
 fls_chapter17_concurrency.json:
-  Coverage: 3/3 sections (100%)
-  Missing: none
+  Coverage: 3/12 sections (25%)
+  Missing:
+    - 17.-4 Undefined Behavior
+    - 17.-4.1 Concurrency
+    - 17.-2 Legality Rules
+    - 17.-2.1 Concurrency
+    - 17.-2.2 Send and Sync
+    - 17.-2.3 Atomics
+    - 17.-2.4 Asynchronous Computation
+    - 17.-1 General
+    - 17.-1.1 Concurrency
   Extra (informational):
     - (top-level) design_patterns
     - (top-level) cross_chapter_references
 
 fls_chapter18_program_structure.json:
-  Coverage: 7/7 sections (100%)
-  Missing: none
+  Coverage: 7/19 sections (37%)
+  Missing:
+    - 18.-8 Syntax
+    - 18.-8.1 Source Files
+    - 18.-8.2 Modules
+    - 18.-8.3 Crate Imports
+    - 18.-2 Legality Rules
+    - 18.-2.1 Source Files
+    - 18.-2.2 Modules
+    - 18.-2.3 Crates
+    - 18.-2.4 Crate Imports
+    - 18.-2.5 Compilation Roots
+    ... and 2 more
   Extra (informational):
     - (top-level) design_patterns
     - (top-level) cross_chapter_references
 
 fls_chapter19_unsafety.json:
-  Coverage: 10/10 sections (100%)
-  Missing: none
+  Coverage: 10/11 sections (91%)
+  Missing:
+    - 19.-2 Legality Rules
   Extra (informational):
     - (top-level) design_patterns
     - (top-level) cross_chapter_references
 
 fls_chapter20_macros.json:
-  Coverage: 14/14 sections (100%)
-  Missing: none
+  Coverage: 14/39 sections (36%)
+  Missing:
+    - 20.-8 Syntax
+    - 20.-8.1 Declarative Macros
+    - 20.-8.2 Metavariables
+    - 20.-8.3 Repetition
+    - 20.-8.4 Macro Invocation
+    - 20.-7 Examples
+    - 20.-7.1 Macro Invocation
+    - 20.-2 Legality Rules
+    - 20.-2.1 Macros
+    - 20.-2.2 Declarative Macros
+    ... and 15 more
   Extra (informational):
     - (top-level) design_patterns
     - (top-level) cross_chapter_references
 
 fls_chapter21_ffi.json:
-  Coverage: 4/4 sections (100%)
-  Missing: none
+  Coverage: 4/19 sections (21%)
+  Missing:
+    - 21.-8 Syntax
+    - 21.-8.1 ABI
+    - 21.-8.2 External Blocks
+    - 21.-6 Implementation Permissions
+    - 21.-6.1 ABI
+    - 21.-4 Undefined Behavior
+    - 21.-4.1 ABI
+    - 21.-3 Dynamic Semantics
+    - 21.-3.1 External Statics
+    - 21.-2 Legality Rules
+    ... and 5 more
   Extra (informational):
     - (top-level) design_patterns
     - (top-level) cross_chapter_references
 
 fls_chapter22_inline_assembly.json:
-  Coverage: 10/10 sections (100%)
-  Missing: none
+  Coverage: 10/37 sections (27%)
+  Missing:
+    - 22.-8 Syntax
+    - 22.-8.1 Registers
+    - 22.-8.2 Register Classes
+    - 22.-8.3 Register Arguments
+    - 22.-8.4 Assembly Instructions
+    - 22.-8.5 ABI Clobbers
+    - 22.-8.6 Assembly Options
+    - 22.-8.7 Macros: asm, global_asm, and naked_asm
+    - 22.-4 Undefined Behavior
+    - 22.-4.1 Registers
+    ... and 17 more
   Extra (informational):
     - (top-level) cross_chapter_references
 
@@ -263,93 +436,107 @@ FLS ID VALIDATION
 fls_chapter02_lexical_elements.json:
   Valid IDs: 21
   Invalid IDs: none
-  Unmapped in FLS source: 4 (OK)
+  Unmapped in FLS source: 7 (OK)
 
 fls_chapter03_items.json:
   Valid IDs: 1
   Invalid IDs: none
+  Unmapped in FLS source: 3 (OK)
 
 fls_chapter04_types_and_traits.json:
   Valid IDs: 50
   Invalid IDs: none
-  Unmapped in FLS source: 8 (OK)
+  Unmapped in FLS source: 13 (OK)
 
 fls_chapter05_patterns.json:
   Valid IDs: 28
   Invalid IDs: none
+  Unmapped in FLS source: 5 (OK)
 
 fls_chapter06_expressions.json:
   Valid IDs: 52
   Invalid IDs: none
-  Unmapped in FLS source: 7 (OK)
+  Unmapped in FLS source: 11 (OK)
 
 fls_chapter07_values.json:
   Valid IDs: 6
   Invalid IDs: none
+  Unmapped in FLS source: 4 (OK)
 
 fls_chapter08_statements.json:
   Valid IDs: 7
   Invalid IDs: none
+  Unmapped in FLS source: 4 (OK)
 
 fls_chapter09_functions.json:
   Valid IDs: 1
   Invalid IDs: none
+  Unmapped in FLS source: 2 (OK)
 
 fls_chapter10_associated_items.json:
   Valid IDs: 1
   Invalid IDs: none
+  Unmapped in FLS source: 3 (OK)
 
 fls_chapter11_implementations.json:
   Valid IDs: 3
   Invalid IDs: none
+  Unmapped in FLS source: 3 (OK)
 
 fls_chapter12_generics.json:
   Valid IDs: 5
   Invalid IDs: none
+  Unmapped in FLS source: 3 (OK)
 
 fls_chapter13_attributes.json:
   Valid IDs: 54
   Invalid IDs: none
-  Unmapped in FLS source: 4 (OK)
+  Unmapped in FLS source: 9 (OK)
 
 fls_chapter14_entities_resolution.json:
   Valid IDs: 23
   Invalid IDs: none
-  Unmapped in FLS source: 1 (OK)
+  Unmapped in FLS source: 4 (OK)
 
 fls_chapter15_ownership_destruction.json:
   Valid IDs: 11
   Invalid IDs: none
+  Unmapped in FLS source: 4 (OK)
 
 fls_chapter16_exceptions_errors.json:
   Valid IDs: 3
   Invalid IDs: none
+  Unmapped in FLS source: 2 (OK)
 
 fls_chapter17_concurrency.json:
   Valid IDs: 4
   Invalid IDs: none
+  Unmapped in FLS source: 3 (OK)
 
 fls_chapter18_program_structure.json:
   Valid IDs: 7
   Invalid IDs: none
-  Unmapped in FLS source: 1 (OK)
+  Unmapped in FLS source: 3 (OK)
 
 fls_chapter19_unsafety.json:
   Valid IDs: 11
   Invalid IDs: none
+  Unmapped in FLS source: 1 (OK)
 
 fls_chapter20_macros.json:
   Valid IDs: 15
   Invalid IDs: none
+  Unmapped in FLS source: 4 (OK)
 
 fls_chapter21_ffi.json:
   Valid IDs: 5
   Invalid IDs: none
+  Unmapped in FLS source: 5 (OK)
 
 fls_chapter22_inline_assembly.json:
   Valid IDs: 10
   Invalid IDs: none
-  Unmapped in FLS source: 1 (OK)
+  Unmapped in FLS source: 5 (OK)
 
 ============================================================
 MISSING CHAPTERS

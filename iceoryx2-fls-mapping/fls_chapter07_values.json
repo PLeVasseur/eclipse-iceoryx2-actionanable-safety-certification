@@ -53,13 +53,13 @@
       "description": "Constants",
       "status": "demonstrated",
       "findings": {
+        "count": 3968,
         "legality_rules": {
           "7:1": "A value is either a literal or the result of a computation",
           "7:2": "An allocated object is a value stored at some memory address",
           "7:3": "Base address is the memory address where object is stored",
           "7:4": "Memory size is bytes spanned from base address"
         },
-        "count": 3968,
         "change_from_v0_7_0": "+943 (+31%)",
         "usage_patterns": [
           "Configuration values (timeouts, sizes, limits)",
@@ -82,24 +82,31 @@
       "samples": [
         {
           "file": "iceoryx2-bb/posix/src/config.rs",
-          "line": [32],
+          "line": [
+            32
+          ],
           "code": "pub const EINTR_REPETITIONS: u64 = 10;",
           "purpose": "Public constant defining maximum EINTR retry attempts"
         },
         {
           "file": "iceoryx2-cal/src/zero_copy_connection/mod.rs",
-          "line": [142, 143, 144],
+          "line": [
+            142,
+            143,
+            144
+          ],
           "code": "pub const DEFAULT_BUFFER_SIZE: usize = 4;\npub const DEFAULT_ENABLE_SAFE_OVERFLOW: bool = false;\npub const DEFAULT_MAX_BORROWED_SAMPLES_PER_CHANNEL: usize = 4;",
           "purpose": "Module-level constants defining default configuration values"
         },
         {
           "file": "iceoryx2/src/constants.rs",
-          "line": [14],
+          "line": [
+            14
+          ],
           "code": "pub const MAX_SERVICE_NAME_LENGTH: usize = 255;",
           "purpose": "Public constant defining maximum service name length limit"
         }
-      ],
-      "count": 3968
+      ]
     },
     "statics": {
       "fls_section": "7.2",
@@ -109,6 +116,7 @@
       "description": "Statics",
       "status": "demonstrated",
       "findings": {
+        "count": 85,
         "legality_rules": {
           "7.2:1": "Static is value associated with specific memory location",
           "7.2:3": "Type specification shall have 'static lifetime",
@@ -134,36 +142,47 @@
       "samples": [
         {
           "file": "iceoryx2-bb/posix/src/signal.rs",
-          "line": [280],
+          "line": [
+            280
+          ],
           "code": "static LAST_SIGNAL: AtomicUsize = AtomicUsize::new(posix::MAX_SIGNAL_VALUE);",
           "purpose": "Immutable static with interior mutability for thread-safe signal tracking"
         },
         {
           "file": "iceoryx2/src/node/mod.rs",
-          "line": [536],
+          "line": [
+            536
+          ],
           "code": "static IN_CLEANUP_SECTION: AtomicBool = AtomicBool::new(false);",
           "purpose": "Immutable static with AtomicBool for cleanup state tracking"
         },
         {
           "file": "iceoryx2-log/log/src/lib.rs",
-          "line": [147],
+          "line": [
+            147
+          ],
           "code": "static LOG_LEVEL: AtomicU8 = AtomicU8::new(DEFAULT_LOG_LEVEL as u8);",
           "purpose": "Immutable static for thread-safe log level configuration"
         },
         {
           "file": "iceoryx2-log/log/src/lib.rs",
-          "line": [144],
+          "line": [
+            144
+          ],
           "code": "static mut LOGGER: Option<&'static dyn Log> = None;",
           "purpose": "Mutable static for global logger instance (requires unsafe access)"
         },
         {
           "file": "iceoryx2-cal/src/static_storage/process_local.rs",
-          "line": [71, 72, 73],
+          "line": [
+            71,
+            72,
+            73
+          ],
           "code": "lazy_static! {\n    static ref PROCESS_LOCAL_MTX_HANDLE: MutexHandle<BTreeMap<FilePath, StorageEntry>> =\n        MutexHandle::new();",
           "purpose": "lazy_static! for complex initialization of process-local storage"
         }
-      ],
-      "count": 85
+      ]
     },
     "temporaries": {
       "fls_section": "7.3",
@@ -173,6 +192,8 @@
       "description": "Temporaries",
       "status": "demonstrated",
       "findings": {
+        "count": null,
+        "count_methodology": "Conceptual - temporaries are implicit",
         "description": "Temporaries are unnamed values created during expression evaluation. They have limited lifetime scope and are dropped at the end of their containing statement unless lifetime-extended.",
         "usage_patterns": [
           "Method chaining creates intermediate temporaries",
@@ -185,25 +206,29 @@
       "samples": [
         {
           "file": "iceoryx2/src/service/attribute.rs",
-          "line": [380],
+          "line": [
+            380
+          ],
           "code": "let key_exists = rhs.iter().any(|attr| attr.key == *key);",
           "purpose": "Iterator temporary created by .iter(), consumed by .any() method chain"
         },
         {
           "file": "iceoryx2/src/port/notifier.rs",
-          "line": [228],
+          "line": [
+            228
+          ],
           "code": "for (i, index) in visited_indices.iter().enumerate() {",
           "purpose": "Temporary iterator with enumerate creates (usize, &T) tuples"
         },
         {
           "file": "iceoryx2/src/service/attribute.rs",
-          "line": [438],
+          "line": [
+            438
+          ],
           "code": "self.iter().filter(|element| element.key() == key).count()",
           "purpose": "Method chain creates filter iterator temporary, consumed by count"
         }
-      ],
-      "count": null,
-      "count_methodology": "Conceptual - temporaries are implicit"
+      ]
     },
     "variables": {
       "fls_section": "7.4",
@@ -213,6 +238,7 @@
       "description": "Variables",
       "status": "demonstrated",
       "findings": {
+        "count": 14965,
         "legality_rules": {
           "7.4:1": "Variable is placeholder for value allocated on stack",
           "7.4:2": "Variables are bindings or temporaries",
@@ -227,19 +253,30 @@
       "samples": [
         {
           "file": "iceoryx2/src/port/notifier.rs",
-          "line": [135, 136, 137, 138, 139],
+          "line": [
+            135,
+            136,
+            137,
+            138,
+            139
+          ],
           "code": "let mut new_self = Self {\n    connections: vec![],\n    service_state,\n    list_state,\n};",
           "purpose": "Mutable binding for struct construction with later modification"
         },
         {
           "file": "iceoryx2/src/port/server.rs",
-          "line": [175],
+          "line": [
+            175
+          ],
           "code": "let mut result = Ok(());",
           "purpose": "Mutable binding initialized to Ok for accumulating operation results"
         },
         {
           "file": "iceoryx2/src/config.rs",
-          "line": [237, 238],
+          "line": [
+            237,
+            238
+          ],
           "code": "let mut path = *self.root_path();\npath.add_path_entry(&self.service.directory).unwrap();",
           "purpose": "Mutable binding for path construction with method mutation"
         }
@@ -253,6 +290,7 @@
           "description": "Constant Promotion",
           "status": "demonstrated",
           "findings": {
+            "count": 3964,
             "description": "Constant promotion allows certain expressions to be promoted to static memory. In iceoryx2, this occurs implicitly with literal references and const-evaluable expressions.",
             "patterns": [
               "Literal array references (&[1, 2, 3]) promoted to 'static",
@@ -263,27 +301,35 @@
           "samples": [
             {
               "file": "iceoryx2-bb/elementary/src/package_version.rs",
-              "line": [67, 68, 69, 70],
+              "line": [
+                67,
+                68,
+                69,
+                70
+              ],
               "code": "const MAJOR: u16 = 0;\nconst MINOR: u16 = 8;\nconst PATCH: u16 = 0;\n\nPackageVersion::from_version(MAJOR, MINOR, PATCH)",
               "purpose": "Local constants in const fn enabling compile-time version construction"
             },
             {
               "file": "iceoryx2/src/service/builder/mod.rs",
-              "line": [480, 481],
+              "line": [
+                480,
+                481
+              ],
               "code": ".has_ownership(true)\n.create(&[])",
               "purpose": "Empty slice literal &[] promoted to 'static lifetime for service creation"
             },
             {
               "file": "iceoryx2-cal/src/shm_allocator/pointer_offset.rs",
-              "line": [51],
+              "line": [
+                51
+              ],
               "code": "const SEGMENT_ID: u8 = 0;",
               "purpose": "Local const in Default impl for compile-time segment ID"
             }
-          ],
-          "count": 3964
+          ]
         }
-      },
-      "count": 14965
+      }
     }
   },
   "safety_critical_summary": {

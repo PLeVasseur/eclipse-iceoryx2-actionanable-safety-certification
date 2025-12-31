@@ -1,17 +1,421 @@
-# FLS Mapping Update Agent Guide
+# FLS Mapping Agent Guide
 
-This document describes the methodology for updating the Ferrocene Language Specification (FLS) mapping JSON files when a new version of iceoryx2 is released.
+This document describes the tools, workflows, and data structures for two related mapping efforts:
 
-## Overview
+1. **iceoryx2 FLS Mapping** - Document how iceoryx2 uses Rust language constructs per the Ferrocene Language Specification (FLS)
+2. **Coding Standards Mapping** - Map MISRA/CERT safety guidelines to FLS sections using semantic similarity
 
-The FLS mapping files in `iceoryx2-fls-mapping/` document how iceoryx2 uses various Rust language constructs as defined by the Ferrocene Language Specification. Each JSON file corresponds to a chapter of the FLS and contains:
+---
 
-- Statistics on language construct usage
-- Code samples with file paths and line numbers
-- Legality rule compliance documentation
-- Safety-critical pattern analysis
+## Tool Processing Flow
 
-## Current Status
+### Pipeline Overview
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                              SOURCE DATA                                     │
+├─────────────────┬─────────────────────────┬─────────────────────────────────┤
+│  iceoryx2 repo  │     FLS RST files       │      MISRA/CERT PDFs            │
+│  (GitHub)       │     (GitHub)            │      (purchased/scraped)        │
+└────────┬────────┴───────────┬─────────────┴──────────────┬──────────────────┘
+         │                    │                            │
+         ▼                    ▼                            ▼
+┌─────────────────┐  ┌─────────────────┐        ┌─────────────────┐
+│ PIPELINE 1:     │  │ PIPELINE 2:     │        │ PIPELINE 2:     │
+│ iceoryx2 FLS    │  │ FLS Extraction  │        │ Standards       │
+│ Mapping         │  │ & Embeddings    │        │ Extraction      │
+└────────┬────────┘  └────────┬────────┘        └────────┬────────┘
+         │                    │                          │
+         ▼                    └──────────┬───────────────┘
+┌─────────────────┐                      ▼
+│ iceoryx2-fls-   │           ┌─────────────────────────┐
+│ mapping/*.json  │           │ Similarity Computation  │
+└────────┬────────┘           │ & Mapping Generation    │
+         │                    └───────────┬─────────────┘
+         │                                ▼
+         │                    ┌─────────────────────────┐
+         │                    │ coding-standards-fls-   │
+         │                    │ mapping/mappings/*.json │
+         │                    └───────────┬─────────────┘
+         │                                │
+         └────────────┬───────────────────┘
+                      ▼
+           ┌─────────────────────────┐
+           │ PIPELINE 3:             │
+           │ Cross-Reference &       │
+           │ Analysis                │
+           └─────────────────────────┘
+```
+
+### Pipeline 1: iceoryx2 FLS Mapping
+
+Documents how iceoryx2 codebase uses Rust language constructs as defined by the FLS.
+
+| Script | Input | Output | Description |
+|--------|-------|--------|-------------|
+| `clone_iceoryx2.py` | GitHub | `cache/repos/iceoryx2/v{VERSION}/` | Clone iceoryx2 at specific version tags |
+| `extract_fls_sections.py` | FLS RST files | `fls_section_mapping.json` | Extract FLS section hierarchy |
+| `restructure_fls_json.py` | `fls_section_mapping.json` | `iceoryx2-fls-mapping/*.json` | Generate chapter JSON skeletons |
+| `normalize_fls_json.py` | Chapter JSON files | Normalized chapter JSON | Normalize field names and structure |
+| `update_fls_counts_samples.py` | iceoryx2 source + chapter JSON | Updated chapter JSON | Add counts and code samples |
+| `validate_fls_json.py` | `iceoryx2-fls-mapping/*.json` | Validation report | Schema, coverage, sample validation |
+
+**Run Pipeline 1:**
+```bash
+cd tools
+uv run python clone_iceoryx2.py --from 0.7.0 --to 0.8.0
+uv run python extract_fls_sections.py
+uv run python normalize_fls_json.py
+uv run python update_fls_counts_samples.py
+uv run python validate_fls_json.py
+```
+
+### Pipeline 2: Coding Standards Mapping
+
+Maps MISRA C/C++ and CERT C/C++ guidelines to FLS sections using semantic similarity.
+
+**Standards Extraction:**
+
+| Script | Input | Output | Description |
+|--------|-------|--------|-------------|
+| `extract_misra_rules.py` | MISRA PDF | `standards/misra_c_2025.json` | Extract MISRA rule listings |
+| `scrape_cert_rules.py` | CERT Wiki | `standards/cert_*.json` | Scrape CERT rule listings |
+
+**Embedding Pipeline (in `tools/embeddings/`):**
+
+| Script | Input | Output | Description |
+|--------|-------|--------|-------------|
+| `extract_fls_content.py` | FLS RST files | `embeddings/fls/chapter_NN.json`, `index.json` | Extract FLS with rubric-categorized paragraphs |
+| `extract_misra_text.py` | MISRA PDF | `cache/misra_c_extracted_text.json` | Extract MISRA guideline full text |
+| `generate_embeddings.py` | Extracted JSON files | `embeddings/*/embeddings.pkl` | Generate sentence-transformer embeddings |
+| `compute_similarity.py` | Embedding files | `embeddings/similarity/misra_c_to_fls.json` | Compute cosine similarity matrix |
+| `orchestrate.py` | (runs above) | All outputs | Convenience script for full pipeline |
+
+**Mapping Generation:**
+
+| Script | Input | Output | Description |
+|--------|-------|--------|-------------|
+| `sync_fls_section_mapping.py` | `embeddings/fls/chapter_NN.json` | Updated `fls_section_mapping.json` | Generate fabricated section entries |
+| `map_misra_to_fls.py` | Similarity + concepts | `mappings/misra_c_to_fls.json` | Generate automated mappings |
+
+**Run Pipeline 2:**
+```bash
+cd tools
+# Option A: Use orchestrator
+uv run python embeddings/orchestrate.py --force
+
+# Option B: Run steps manually
+uv run python embeddings/extract_fls_content.py
+uv run python sync_fls_section_mapping.py
+uv run python embeddings/generate_embeddings.py
+uv run python embeddings/compute_similarity.py
+uv run python map_misra_to_fls.py
+
+# Validate
+uv run python validate_coding_standards.py
+uv run python validate_synthetic_ids.py
+```
+
+### Pipeline 3: Cross-Reference & Analysis
+
+| Script | Purpose | Usage |
+|--------|---------|-------|
+| `analyze_fls_coverage.py` | Cross-reference FLS usage across all mappings | `uv run python analyze_fls_coverage.py` |
+| `review_fls_mappings.py` | Interactive/batch review of coding standard mappings | `uv run python review_fls_mappings.py --standard misra-c --interactive` |
+
+### Shared Resources
+
+| File | Used By | Description |
+|------|---------|-------------|
+| `fls_section_mapping.json` | Most scripts | Canonical FLS section hierarchy with fabricated sections |
+| `concept_to_fls.json` | `map_misra_to_fls.py` | C concept to FLS ID keyword mappings |
+| `misra_rust_applicability.json` | `map_misra_to_fls.py` | MISRA ADD-6 Rust applicability data |
+| `synthetic_fls_ids.json` | `validate_synthetic_ids.py` | Tracks generated FLS IDs |
+
+---
+
+## Repository Structure
+
+```
+eclipse-iceoryx2-actionanable-safety-certification/
+├── AGENTS.md                           # This file
+├── README.md
+│
+├── iceoryx2-fls-mapping/               # Pipeline 1 output: iceoryx2 FLS documentation
+│   ├── schema.json                     # JSON Schema for chapter files
+│   ├── backup/                         # Backup of files before normalization
+│   └── fls_chapter{02-22}_*.json       # 21 chapter mapping files
+│
+├── coding-standards-fls-mapping/       # Pipeline 2 output: standards to FLS mappings
+│   ├── schema/
+│   │   ├── coding_standard_rules.schema.json
+│   │   └── fls_mapping.schema.json
+│   ├── standards/                      # Extracted rule listings
+│   │   ├── misra_c_2025.json
+│   │   ├── misra_cpp_2023.json
+│   │   ├── cert_c.json
+│   │   └── cert_cpp.json
+│   └── mappings/                       # FLS mappings (deliverables)
+│       ├── misra_c_to_fls.json
+│       ├── misra_cpp_to_fls.json
+│       ├── cert_c_to_fls.json
+│       └── cert_cpp_to_fls.json
+│
+├── embeddings/                         # Extracted content and embeddings
+│   ├── fls/
+│   │   ├── index.json                  # Chapter listing and statistics
+│   │   ├── chapter_01.json             # Per-chapter extracted content
+│   │   ├── ...
+│   │   ├── chapter_22.json
+│   │   └── embeddings.pkl              # FLS vector embeddings
+│   ├── misra_c/
+│   │   └── embeddings.pkl              # MISRA C vector embeddings
+│   └── similarity/
+│       └── misra_c_to_fls.json         # Similarity computation results
+│
+├── cache/                              # Cached source repositories (gitignored)
+│   ├── repos/
+│   │   ├── iceoryx2/v0.8.0/            # iceoryx2 source at specific versions
+│   │   └── fls/                        # FLS RST source files
+│   └── misra_c_extracted_text.json     # Extracted MISRA text (gitignored)
+│
+└── tools/                              # All scripts
+    ├── embeddings/                     # Embedding pipeline scripts
+    │   ├── extract_fls_content.py
+    │   ├── extract_misra_text.py
+    │   ├── generate_embeddings.py
+    │   ├── compute_similarity.py
+    │   └── orchestrate.py
+    ├── clone_iceoryx2.py
+    ├── extract_fls_sections.py
+    ├── extract_misra_rules.py
+    ├── scrape_cert_rules.py
+    ├── map_misra_to_fls.py
+    ├── sync_fls_section_mapping.py
+    ├── normalize_fls_json.py
+    ├── restructure_fls_json.py
+    ├── update_fls_counts_samples.py
+    ├── analyze_fls_coverage.py
+    ├── review_fls_mappings.py
+    ├── validate_fls_json.py
+    ├── validate_coding_standards.py
+    ├── validate_synthetic_ids.py
+    ├── fls_section_mapping.json        # Canonical FLS section hierarchy
+    ├── concept_to_fls.json
+    ├── misra_rust_applicability.json
+    └── synthetic_fls_ids.json
+```
+
+---
+
+## JSON File Schemas
+
+### Category Codes
+
+FLS content that doesn't have traditional section headings uses a special encoding with negative numbers:
+
+| Code | Name | RST Rubric | Description |
+|------|------|------------|-------------|
+| `0` | `section` | *(heading)* | Section-level entry (container) |
+| `-1` | `general` | *(none)* | Intro text before first rubric |
+| `-2` | `legality_rules` | `Legality Rules` | Compiler-enforced rules |
+| `-3` | `dynamic_semantics` | `Dynamic Semantics` | Runtime behavior |
+| `-4` | `undefined_behavior` | `Undefined Behavior` | UB definitions |
+| `-5` | `implementation_requirements` | `Implementation Requirements` | Impl requirements |
+| `-6` | `implementation_permissions` | `Implementation Permissions` | Impl permissions |
+| `-7` | `examples` | `Examples` | Code examples |
+| `-8` | `syntax` | `Syntax` | Syntax block productions |
+
+**Section number encoding:** `X.-2.Y` means "Chapter X, Legality Rules, item Y" (e.g., `8.-2.1` = Chapter 8 Legality Rule 1).
+
+### fls_section_mapping.json
+
+Canonical FLS section hierarchy. Contains:
+- Standard sections (e.g., `8.1`, `8.2`)
+- Fabricated sections for rubric content (keys starting with `_`, e.g., `_legality_rules`)
+
+```json
+{
+  "8": {
+    "title": "Statements",
+    "fls_id": "fls_hdwwrsyunir",
+    "sections": {
+      "let_statements": {
+        "fls_section": "8.1",
+        "title": "Let Statements",
+        "fls_id": "fls_yiw26br6wj3g"
+      },
+      "_legality_rules": {
+        "fls_section": "8.-2",
+        "title": "Legality Rules",
+        "category": -2,
+        "fls_id": null,
+        "paragraph_count": 21,
+        "subsections": {
+          "from_fls_yiw26br6wj3g": {
+            "fls_section": "8.-2.1",
+            "title": "Let Statements",
+            "category": -2,
+            "fls_id": "fls_yiw26br6wj3g",
+            "paragraph_ids": ["fls_abc123", "fls_def456"]
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+### embeddings/fls/ Structure
+
+Split chapter files with rubric-categorized paragraphs.
+
+**index.json:**
+```json
+{
+  "source": "FLS RST files",
+  "extraction_date": "2025-12-31",
+  "category_codes": {
+    "0": "section", "-1": "general", "-2": "legality_rules", ...
+  },
+  "chapters": [
+    {"chapter": 1, "title": "General", "fls_id": "fls_...", "file": "chapter_01.json"}
+  ],
+  "aggregate_statistics": {
+    "total_sections": 338,
+    "total_paragraphs": 4054,
+    "paragraphs_by_category": {"-2": 3256, "-3": 355, ...}
+  }
+}
+```
+
+**chapter_NN.json:**
+```json
+{
+  "chapter": 15,
+  "title": "Ownership and Destruction",
+  "fls_id": "fls_ronnwodjjjsh",
+  "sections": [
+    {
+      "fls_id": "fls_v5x85lt5ulva",
+      "title": "References",
+      "category": 0,
+      "level": 2,
+      "content": "cleaned text for embeddings...",
+      "parent_fls_id": "fls_ronnwodjjjsh",
+      "sibling_fls_ids": ["fls_svkx6szhr472", ...],
+      "rubrics": {
+        "-2": {
+          "paragraphs": {
+            "fls_ev4a82fdhwr8": "A reference shall point to an initialized referent.",
+            "fls_i1ny0k726a4a": "While a mutable reference is active, no other reference shall..."
+          }
+        },
+        "-4": {
+          "paragraphs": {
+            "fls_eT1hnLOx6vxk": "It is undefined behavior to access a value through aliasing..."
+          }
+        }
+      }
+    }
+  ]
+}
+```
+
+**Quick lookup:**
+```python
+import json
+
+with open('embeddings/fls/chapter_15.json') as f:
+    chapter = json.load(f)
+
+section = next(s for s in chapter['sections'] if s['fls_id'] == 'fls_v5x85lt5ulva')
+
+# Get legality rules (category -2)
+for pid, text in section['rubrics'].get('-2', {}).get('paragraphs', {}).items():
+    print(f"{pid}: {text[:80]}...")
+
+# Get UB definitions (category -4)
+for pid, text in section['rubrics'].get('-4', {}).get('paragraphs', {}).items():
+    print(f"{pid}: {text[:80]}...")
+```
+
+### iceoryx2-fls-mapping/ Schema
+
+Chapter files documenting iceoryx2's use of FLS constructs. Schema: `iceoryx2-fls-mapping/schema.json`
+
+**Required top-level fields:**
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `chapter` | integer | FLS chapter number (1-25) |
+| `title` | string | Chapter title from FLS |
+| `fls_url` | string | URL to FLS chapter |
+| `fls_id` | string | FLS chapter identifier |
+| `repository` | string | Always `"eclipse-iceoryx/iceoryx2"` |
+| `version` | string | Semver version analyzed |
+| `analysis_date` | string | ISO 8601 date |
+| `sections` | object | FLS section mappings |
+
+**Section structure:**
+```json
+{
+  "ownership": {
+    "fls_section": "15.1",
+    "fls_ids": ["fls_svkx6szhr472"],
+    "description": "Ownership is a property of values...",
+    "status": "demonstrated",
+    "count": 42,
+    "samples": [
+      {
+        "file": "iceoryx2-bb/posix/src/mutex.rs",
+        "line": [186, 187, 188],
+        "code": "pub struct MutexGuard<'a, T> { ... }",
+        "purpose": "RAII guard for mutex unlock"
+      }
+    ]
+  }
+}
+```
+
+### coding-standards-fls-mapping/ Schema
+
+**standards/*.json** - Rule listings per standard
+**mappings/*.json** - FLS mappings with `accepted_matches`:
+
+```json
+{
+  "guideline_id": "Rule 11.1",
+  "guideline_title": "Conversions shall not be performed...",
+  "applicability_all_rust": "direct",
+  "applicability_safe_rust": "not_applicable",
+  "accepted_matches": [
+    {
+      "fls_id": "fls_xxx",
+      "category": 0,
+      "fls_title": "Type Cast Expressions",
+      "score": 0.65,
+      "reason": "Per FLS: 'A cast is legal when...' This directly addresses MISRA's concern."
+    }
+  ],
+  "rejected_matches": [
+    {
+      "fls_id": "fls_yyy",
+      "category": 0,
+      "score": 0.62,
+      "reason": "Section is about enum layout, not type conversions."
+    }
+  ],
+  "fls_rationale_type": "direct_mapping",
+  "confidence": "high"
+}
+```
+
+---
+
+## iceoryx2 FLS Mapping Guide
+
+### Current Status
 
 **All chapters updated to v0.8.0** - Completed 2025-12-30
 
@@ -22,685 +426,129 @@ The FLS mapping files in `iceoryx2-fls-mapping/` document how iceoryx2 uses vari
 
 Next update required when iceoryx2 v0.9.0 or later is released.
 
-### Recent Updates (2025-12-30)
+### Update Workflow
 
-1. **Fixed Chapter 13 JSON structure** - Subsections for `builtin_attributes` had escaped to become siblings instead of children. Restructured to properly nest all 13.2.x sections inside `builtin_attributes.subsections`.
+When a new iceoryx2 version is released:
 
-2. **Enhanced validation script** - Added FLS coverage checking, FLS ID validation, and section hierarchy validation. See [Validation](#validation) section below.
-
-3. **Dependency management cleanup** - `jsonschema` is now a required dependency in `pyproject.toml`, managed via `uv`.
-
-## Repository Structure
-
-```
-eclipse-iceoryx2-actionanable-safety-certification/
-├── iceoryx2-fls-mapping/           # FLS chapter mapping JSON files
-│   ├── schema.json                 # JSON Schema for all mapping files
-│   ├── backup/                     # Backup of original files before normalization
-│   ├── fls_chapter02_lexical_elements.json
-│   ├── fls_chapter03_items.json
-│   ├── fls_chapter04_types_and_traits.json
-│   ├── fls_chapter05_patterns.json
-│   ├── fls_chapter06_expressions.json
-│   ├── fls_chapter07_values.json
-│   ├── fls_chapter08_statements.json
-│   ├── fls_chapter09_functions.json
-│   ├── fls_chapter10_associated_items.json
-│   ├── fls_chapter11_implementations.json
-│   ├── fls_chapter12_generics.json
-│   ├── fls_chapter13_attributes.json
-│   ├── fls_chapter14_entities_resolution.json
-│   ├── fls_chapter15_ownership_destruction.json
-│   ├── fls_chapter16_exceptions_errors.json
-│   ├── fls_chapter17_concurrency.json
-│   ├── fls_chapter18_program_structure.json
-│   ├── fls_chapter19_unsafety.json
-│   ├── fls_chapter20_macros.json
-│   ├── fls_chapter21_ffi.json
-│   └── fls_chapter22_inline_assembly.json
-├── cache/repos/iceoryx2/           # Cached iceoryx2 versions
-│   ├── v0.7.0/
-│   └── v0.8.0/
-├── cache/repos/fls/                # FLS specification source
-└── tools/                          # Helper scripts
-    ├── clone_iceoryx2.py           # Script to clone specific versions
-    ├── fls_section_mapping.json    # FLS section names extracted from .rst files
-    ├── normalize_fls_json.py       # Normalize JSON files to consistent schema
-    └── validate_fls_json.py        # Validate JSON files against schema
-```
-
-## JSON Schema
-
-All FLS mapping JSON files conform to the schema defined in `iceoryx2-fls-mapping/schema.json`. The schema enforces consistent structure across all chapters.
-
-### Required Top-Level Fields
-
-| Field | Type | Description |
-|-------|------|-------------|
-| `chapter` | integer | FLS chapter number (1-25) |
-| `title` | string | Chapter title from FLS |
-| `fls_url` | string (URI) | URL to FLS chapter specification |
-| `fls_id` | string | FLS chapter identifier (e.g., `fls_jep7p27kaqlp`) |
-| `repository` | string | Always `"eclipse-iceoryx/iceoryx2"` |
-| `version` | string | Semver version analyzed (e.g., `"0.8.0"`) |
-| `analysis_date` | string | ISO 8601 date (YYYY-MM-DD) |
-| `version_changes` | object | Changes from previous version |
-| `summary` | string | Executive summary of findings |
-| `statistics` | object | Quantitative counts of language constructs |
-| `sections` | object | FLS section mappings keyed by semantic name |
-
-### Section Structure
-
-Each section uses semantic keys (not numbered keys) and includes:
-
-```json
-{
-  "sections": {
-    "ownership": {
-      "fls_section": "15.1",
-      "fls_paragraphs": ["15.1:1", "15.1:2", "15.1:3"],
-      "fls_ids": ["fls_svkx6szhr472"],
-      "description": "Ownership is a property of values...",
-      "status": "demonstrated",
-      "findings": { ... },
-      "samples": [ ... ],
-      "safety_notes": [ ... ],
-      "subsections": { ... }
-    }
-  }
-}
-```
-
-### Code Sample Format
-
-All code samples use a consistent format with line numbers as arrays:
-
-```json
-{
-  "file": "iceoryx2-bb/posix/src/mutex.rs",
-  "line": [186, 187, 188],
-  "code": "pub struct MutexGuard<'a, T> { ... }",
-  "purpose": "RAII guard for mutex unlock"
-}
-```
-
-### Code Sample Quality Guidelines
-
-#### Acceptable Sample Sources
-
-Code samples in FLS mapping files should come from **production source code only**. The key principle is:
-
-> Samples must come from `/src/` directories of crates that ship as part of the iceoryx2 library or its supporting infrastructure.
-
-**General pattern:** `iceoryx2*/src/` or `iceoryx2-*/*/src/`
-
-As of v0.8.0, this includes:
-- `iceoryx2/src/` - Core library
-- `iceoryx2-bb/*/src/` - Building blocks (container, elementary, lock-free, memory, posix, etc.)
-- `iceoryx2-pal/*/src/` - Platform abstraction layer
-- `iceoryx2-ffi/*/src/` - Foreign function interface bindings
-- `iceoryx2-cal/src/` - Communication abstraction layer
-- `iceoryx2-cli/*/src/` - CLI tools
-- `iceoryx2-log/*/src/` - Logging infrastructure
-- `iceoryx2-services/*/src/` - Service implementations
-
-**When new crates are added:** If iceoryx2 adds new crates (e.g., `iceoryx2-newcrate/`), their `/src/` directories are acceptable sample sources. Use this command to discover all valid source directories:
+#### 1. Clone Repositories
 
 ```bash
-find cache/repos/iceoryx2/v{VERSION} -type d -name src -path "*/iceoryx2*" | grep -v test | grep -v example
+cd tools
+uv run python clone_iceoryx2.py --from 0.8.0 --to 0.9.0
 ```
 
-#### NOT Acceptable Sample Sources
+This clones both versions to `cache/repos/iceoryx2/v{VERSION}/` for comparison.
 
-Samples must NOT come from:
-- `**/tests/` directories or `test_*.rs` files
-- `examples/` directories
-- `benchmarks/` directories
-- `conformance-tests/` or `component-tests/`
-- Testing infrastructure crates (e.g., `iceoryx2-pal/testing/`)
-- Doc comments (`//!`, `///`) - these are documentation, not production code
+#### 2. Review Changelog
 
-#### Sample Quality Requirements
+Check `cache/repos/iceoryx2/v{NEW_VERSION}/doc/release-notes/` for:
+- Directory structure changes
+- New language features used
+- New crates added
+- MSRV changes
 
-| Requirement | Description |
-|-------------|-------------|
-| **Code length** | Snippets must be >20 characters |
-| **Purpose field** | Must be a meaningful description of what the code does, NOT a regex pattern like "Demonstrates \w+..." |
-| **Line accuracy** | Line numbers must match actual file content in `cache/repos/iceoryx2/v{VERSION}/` |
-| **Context** | Include enough surrounding lines to show the pattern clearly (typically 3-8 lines) |
+#### 3. Update Each Chapter
 
-#### Handling Features Only in Tests/Examples
-
-Some FLS language features may only appear in test or example code (not production). For these:
-
-1. Set `status` to `not_used`, `not_applicable`, or `deliberately_avoided`
-2. Add a `samples_waiver` with explanation
-3. Document why it's not in production code
-
-Examples of features typically only in tests:
-- `#[test]`, `#[ignore]`, `#[should_panic]` - testing attributes
-- `#[global_allocator]`, `#[panic_handler]`, `#[no_main]` - runtime attributes (only in examples/bare-metal)
-
-#### Sample Audit Commands
-
-Run the sample audit to find quality issues:
-
-```bash
-# Audit a specific chapter
-cd tools && uv run python validate_fls_json.py --audit-samples --file=fls_chapter04_types_and_traits.json
-
-# Audit all chapters and show status
-cd tools && for f in ../iceoryx2-fls-mapping/fls_chapter*.json; do 
-  output=$(uv run python validate_fls_json.py --audit-samples --file="$(basename $f)" 2>&1)
-  flagged=$(echo "$output" | grep "Total flagged:" | awk '{print $3}')
-  if [ -z "$flagged" ]; then flagged="0"; fi
-  if [ "$flagged" = "0" ]; then 
-    echo "✅ $(basename $f)"
-  else 
-    echo "❌ $(basename $f): $flagged flagged"
-  fi
-done
-```
-
-#### Audit Issue Types
-
-| Issue | Meaning | Resolution |
-|-------|---------|------------|
-| `test_file` | Sample from test file | Replace with production code |
-| `short_snippet` | Code <20 characters | Expand to include more context |
-| `generic_purpose` | Purpose looks auto-generated | Rewrite with meaningful description |
-| `file_missing` | File not found in repo | Update file path |
-| `line_mismatch` | Line content doesn't match | Correct line numbers |
-
-### MUST_BE_FILLED Markers
-
-Fields requiring data that couldn't be automatically determined are marked with `"MUST_BE_FILLED"`. Run the validation script to find these:
-
-```bash
-uv run python tools/validate_fls_json.py
-```
-
-### Validation
-
-To validate all JSON files:
-
-```bash
-# Run with uv (recommended - handles dependencies automatically)
-uv run python tools/validate_fls_json.py
-
-# Limit coverage check depth (e.g., top-level sections only)
-uv run python tools/validate_fls_json.py --depth=1
-
-# Validate a specific file
-uv run python tools/validate_fls_json.py --file=fls_chapter13_attributes.json
-```
-
-The validation script performs comprehensive checks:
-
-| Check | Description |
-|-------|-------------|
-| **Schema validation** | Validates JSON structure against `schema.json` |
-| **MUST_BE_FILLED detection** | Finds placeholder markers needing completion |
-| **Sample path validation** | Verifies code sample paths exist in iceoryx2 repo |
-| **FLS coverage check** | Ensures all FLS sections from `fls_section_mapping.json` are documented |
-| **FLS ID validation** | Verifies `fls_ids` match canonical FLS identifiers |
-| **Section hierarchy validation** | Checks `fls_section` numbering is well-formed (X.Y.Z pattern) |
-| **Sample minimum check** | Ensures sections have ≥3 code samples (unless exempt status or waiver) |
-| **Count field check** | Ensures all sections have required `count` field |
-
-#### Exit Codes
-
-| Code | Meaning |
-|------|---------|
-| 0 | All checks pass |
-| 1 | Schema validation failed (invalid JSON structure) |
-| 2 | FLS coverage check failed (missing required sections) |
-| 3 | FLS ID validation failed (invalid IDs found) |
-| 4 | Multiple failures (combination of above) |
-| 5 | Sample minimum violations |
-
-#### FLS Section Mapping
-
-The file `tools/fls_section_mapping.json` contains the canonical FLS section hierarchy extracted from the FLS RST source files. It includes:
-- All section numbers (e.g., 13.1, 13.2, 13.2.1)
-- Section titles
-- FLS IDs (where available - some sections have `null` if no anchor in source)
-
-Sections marked with `fls_extracted_from_syntax_block` were programmatically extracted from syntax blocks in the FLS source and don't have native FLS ID anchors.
-
-#### FLS Section Number Encoding
-
-For FLS content that doesn't have traditional section headings, we use a special encoding with negative numbers:
-
-| Pattern | Meaning | Example |
-|---------|---------|---------|
-| `X.Y` | Standard sections | `8.1` (Let Statements) |
-| `X.0.Y` | Syntax block productions | (extracted from `.. syntax::` blocks) |
-| `X.-1.Y` | Top-level unsorted items | (items before first heading) |
-| `X.-2.Y` | Legality rules | `8.-2.1` (Item Statement legality rule) |
-| `X.-3.Y` | Dynamic semantics | `8.-3.1` (Empty Statement Execution) |
-
-This encoding allows us to reference and track FLS content that exists outside the traditional section hierarchy, particularly legality rules and dynamic semantics which are critical for safety certification.
-
-### Normalization
-
-To normalize JSON files to the schema (after manual edits):
-
-```bash
-uv run python tools/normalize_fls_json.py
-```
-
-This script:
-- Renames inconsistent fields (`fls_chapter` → `chapter`, etc.)
-- Normalizes line numbers to arrays
-- Restructures sections using FLS semantic names
-- Merges orphan fields into appropriate sections
-
-## Update Workflow
-
-### 1. Prerequisites
-
-Ensure both iceoryx2 versions are available:
-- Old version: `cache/repos/iceoryx2/v{OLD_VERSION}/`
-- New version: `cache/repos/iceoryx2/v{NEW_VERSION}/`
-
-Use `tools/clone_iceoryx2.py` to clone specific versions if needed.
-
-### 2. Review Changelog
-
-Before updating, review the iceoryx2 changelog to understand major changes:
-- `cache/repos/iceoryx2/v{NEW_VERSION}/doc/release-notes/iceoryx2-v{NEW_VERSION}.md`
-
-Key things to look for:
-- Directory structure changes (e.g., `iceoryx2-bb-posix-0.7.0/` → `iceoryx2-bb/posix/`)
-- New language features used (e.g., unions, new traits)
-- New crates added (e.g., `iceoryx2-ffi/c` for FFI)
-- MSRV changes affecting available language features
-
-### 3. Update Each Chapter
-
-For each FLS chapter JSON file, perform these steps:
-
-#### 3.1 Read Current File
-```bash
-# Read the existing JSON to understand its structure
-cat iceoryx2-fls-mapping/fls_chapter{NN}_{name}.json
-```
-
-#### 3.2 Gather Statistics
-
-Use `rg` (ripgrep) to count language constructs in the new version:
+For each chapter, gather statistics using `rg` (ripgrep):
 
 ```bash
 cd cache/repos/iceoryx2/v{NEW_VERSION}
 
-# Count pattern occurrences across all Rust files
+# Count pattern occurrences
 rg -c 'PATTERN' --type rust 2>/dev/null | awk -F: '{sum+=$2} END {print sum}'
 
 # Find sample code with line numbers
 rg -n 'PATTERN' --type rust | head -5
 ```
 
-#### 3.3 Common Patterns to Count
+**Common patterns by chapter:**
 
-**Chapter 6 - Expressions:**
+| Chapter | Patterns |
+|---------|----------|
+| 6 - Expressions | `\bmatch\b`, `\bif let\b`, `\bunsafe\s*\{`, `\bloop\s*\{`, `\?` |
+| 7 - Values | `\bconst\s+[A-Z]`, `\bstatic\s+mut\b`, `\bMaybeUninit\b` |
+| 9 - Functions | `\bpub\s+fn\b`, `\bunsafe\s+fn\b`, `\bextern\s+"C"\s+fn\b` |
+| 15 - Ownership | `impl\s+Drop\s+for`, `ManuallyDrop`, `PhantomData` |
+| 17 - Concurrency | `\bAtomic`, `\bOrdering::`, `unsafe\s+impl\s+Send` |
+| 19 - Unsafety | `\bunsafe\s*\{`, `\bunsafe\s+fn\b`, `\bunion\b` |
+| 20 - Macros | `macro_rules!`, `#\[proc_macro`, `#\[macro_export` |
+| 21 - FFI | `extern\s+"C"\s*\{`, `#\[no_mangle\]`, `#\[repr\(C\)\]` |
+
+#### 4. Update JSON Files
+
+Update each chapter's JSON with:
+- New statistics in `statistics` field
+- Updated `version` and `analysis_date`
+- New code samples (verify paths exist)
+- `version_changes` section documenting changes
+
+#### 5. Validate
+
 ```bash
-rg -c '\bmatch\b' --type rust           # match expressions
-rg -c '\bif let\b' --type rust          # if let
-rg -c '\bwhile let\b' --type rust       # while let
-rg -c '\bunsafe\s*\{' --type rust       # unsafe blocks
-rg -c '\bloop\s*\{' --type rust         # loop expressions
-rg -c '\bfor\b.*\bin\b' --type rust     # for loops
-rg -c '\?' --type rust                  # error propagation
+cd tools
+uv run python validate_fls_json.py
 ```
 
-**Chapter 7 - Values:**
+### Code Sample Guidelines
+
+**Acceptable sources:** Production code in `/src/` directories only:
+- `iceoryx2/src/`, `iceoryx2-bb/*/src/`, `iceoryx2-pal/*/src/`, etc.
+
+**NOT acceptable:** Tests, examples, benchmarks, doc comments.
+
+**Quality requirements:**
+- Code >20 characters
+- Meaningful `purpose` field (not "Demonstrates X...")
+- Accurate line numbers
+
+**Features only in tests/examples:** Set `status` to `not_used` or `deliberately_avoided` with `samples_waiver`.
+
+### Validation
+
 ```bash
-rg -c '\bconst\s+[A-Z]' --type rust     # const declarations
-rg -c '\bstatic\s+mut\b' --type rust    # static mut
-rg -c '\blet\s+[a-z_]' --type rust      # let bindings
-rg -c '\blet\s+mut\b' --type rust       # let mut bindings
-rg -c '\bMaybeUninit\b' --type rust     # MaybeUninit usage
-rg -c '\bUnsafeCell\b' --type rust      # UnsafeCell usage
+cd tools
+uv run python validate_fls_json.py                    # All checks
+uv run python validate_fls_json.py --file=fls_chapter15_ownership_destruction.json
+uv run python validate_fls_json.py --audit-samples    # Sample quality audit
 ```
 
-**Chapter 9 - Functions:**
-```bash
-rg -c '\bpub\s+fn\b' --type rust        # public functions
-rg -c '\bunsafe\s+fn\b' --type rust     # unsafe functions
-rg -c '\bconst\s+fn\b' --type rust      # const functions
-rg -c '\bextern\s+"C"\s+fn\b' --type rust  # extern C functions
-rg -c '#\[no_mangle\]' --type rust      # no_mangle attribute
-```
+**Checks performed:**
+- Schema validation
+- MUST_BE_FILLED detection
+- Sample path validation
+- FLS coverage (all sections documented)
+- Section hierarchy validation
+- Minimum 3 samples per section
 
-**Chapter 15 - Ownership:**
-```bash
-rg -c 'impl\s+Drop\s+for' --type rust   # Drop implementations
-rg -c 'derive.*Copy' --type rust        # Copy derives
-rg -c 'ManuallyDrop' --type rust        # ManuallyDrop usage
-rg -c 'PhantomData' --type rust         # PhantomData markers
-rg -c 'mem::forget' --type rust         # mem::forget usage
-```
-
-**Chapter 17 - Concurrency:**
-```bash
-rg -c '\bAtomic' --type rust            # Atomic types
-rg -c '\bOrdering::' --type rust        # Memory ordering
-rg -c 'unsafe\s+impl\s+Send' --type rust # unsafe impl Send
-rg -c 'unsafe\s+impl\s+Sync' --type rust # unsafe impl Sync
-rg -c '\bSpinLock\b' --type rust        # SpinLock usage
-```
-
-**Chapter 19 - Unsafety:**
-```bash
-rg -c '\bunsafe\s*\{' --type rust       # unsafe blocks
-rg -c '\bunsafe\s+fn\b' --type rust     # unsafe functions
-rg -c '\bunsafe\s+impl\b' --type rust   # unsafe impl
-rg -c '\bunsafe\s+trait\b' --type rust  # unsafe trait
-rg -c '\bunion\b' --type rust           # union types
-```
-
-**Chapter 20 - Macros:**
-```bash
-rg -c 'macro_rules!' --type rust        # declarative macros
-rg -c '#\[proc_macro' --type rust       # procedural macros
-rg -c '#\[macro_export' --type rust     # exported macros
-rg -c '\$crate::' --type rust           # $crate usage
-```
-
-**Chapter 21 - FFI:**
-```bash
-rg -c 'extern\s+"C"\s*\{' --type rust   # extern C blocks
-rg -c '\bextern\s+"C"\s+fn\b' --type rust  # extern C functions
-rg -c '#\[no_mangle\]' --type rust      # no_mangle
-rg -c '#\[repr\(C\)\]' --type rust      # repr(C)
-rg -c '\bunion\b' --type rust           # union types
-```
-
-**Chapter 22 - Inline Assembly:**
-```bash
-rg -c '\basm!\b' --type rust            # asm! macro
-rg -c 'global_asm!' --type rust         # global_asm! macro
-rg -c '\bfence\(' --type rust           # memory fences
-rg -c 'compiler_fence\(' --type rust    # compiler fences
-```
-
-#### 3.4 Update JSON Structure
-
-Each JSON file should include:
-
-```json
-{
-  "chapter": N,
-  "title": "Chapter Name",
-  "fls_url": "https://...",
-  "version": "0.8.0",
-  "analysis_date": "YYYY-MM-DD",
-  "version_changes": {
-    "from_version": "0.7.0",
-    "to_version": "0.8.0",
-    "summary": "Brief description of major changes",
-    "key_changes": [
-      "Change 1 with percentage if applicable",
-      "Change 2 with percentage if applicable"
-    ]
-  },
-  "summary": "Updated summary reflecting new version",
-  "statistics": { ... },
-  // ... rest of chapter-specific content
-}
-```
-
-#### 3.5 Update File Paths
-
-Convert old paths to new structure:
-- `iceoryx2-bb-posix-0.7.0/` → `iceoryx2-bb/posix/`
-- `iceoryx2-bb-memory-0.7.0/` → `iceoryx2-bb/memory/`
-- `iceoryx2-bb-log-0.7.0/` → `iceoryx2-log/log/` (logger was restructured)
-- etc.
-
-#### 3.6 Verify Sample Code
-
-For each code sample, verify it still exists at the specified location:
-```bash
-rg -n 'CODE_SNIPPET' path/to/file.rs
-```
-
-Update line numbers as needed.
-
-## Key Changes v0.7.0 → v0.8.0
-
-### Directory Structure
-| Old (v0.7.0) | New (v0.8.0) |
-|--------------|--------------|
-| `iceoryx2-bb-container-0.7.0/` | `iceoryx2-bb/container/` |
-| `iceoryx2-bb-elementary-0.7.0/` | `iceoryx2-bb/elementary/` |
-| `iceoryx2-bb-lock-free-0.7.0/` | `iceoryx2-bb/lock-free/` |
-| `iceoryx2-bb-log-0.7.0/` | `iceoryx2-log/log/` + `iceoryx2-log/loggers/` |
-| `iceoryx2-bb-memory-0.7.0/` | `iceoryx2-bb/memory/` |
-| `iceoryx2-bb-posix-0.7.0/` | `iceoryx2-bb/posix/` |
-| `iceoryx2-bb-system-types-0.7.0/` | `iceoryx2-bb/system-types/` |
-| `iceoryx2-bb-testing-0.7.0/` | `iceoryx2-bb/testing/` |
-| `iceoryx2-pal-posix-0.7.0/` | `iceoryx2-pal/posix/` |
-| `iceoryx2-pal-concurrency-sync-0.7.0/` | `iceoryx2-pal/concurrency-sync/` |
-| `iceoryx2-cal-0.7.0/` | `iceoryx2-cal/` |
-| `iceoryx2-0.7.0/` | `iceoryx2/` |
-
-### Major Feature Changes
-1. **Union types now used**: 42 union definitions (was 0 in v0.7.0) - for FFI C bindings
-2. **Logger restructured**: Split into `iceoryx2-log/log` and `iceoryx2-loggers`
-3. **no_std support added**: Explicit `extern crate alloc/core` imports
-4. **New container types**: `StaticVec<T, N>` and `StaticString<N>`
-5. **MSRV increased to 1.83**
-6. **Expanded FFI layer**: `iceoryx2-ffi/c` crate with 600+ extern C functions
-7. **static mut increased**: 3 → 14 due to logger restructuring
-
-### Key Statistics Comparison
+### Version History Example: v0.7.0 to v0.8.0
 
 | Metric | v0.7.0 | v0.8.0 | Change |
 |--------|--------|--------|--------|
 | unsafe blocks | 1,702 | 2,372 | +39% |
 | unsafe fn | 1,302 | 1,763 | +35% |
 | extern "C" fn | 17 | 630 | +3606% |
-| #[no_mangle] | ~0 | 602 | new |
 | union types | 0 | 42 | new |
-| static mut | 3 | 14 | +367% |
-| Total functions | 4,909 | 8,422 | +72% |
-| impl blocks | 1,353 | 2,397 | +77% |
-| match expressions | 712 | 1,663 | +134% |
-| ManuallyDrop | 0 | 541 | new |
 
-## Chapter Update Tracking
-
-### v0.8.0 Update (Completed 2025-12-30)
-
-- [x] Chapter 02 - Lexical Elements
-- [x] Chapter 03 - Items
-- [x] Chapter 04 - Types and Traits
-- [x] Chapter 05 - Patterns
-- [x] Chapter 06 - Expressions
-- [x] Chapter 07 - Values
-- [x] Chapter 08 - Statements
-- [x] Chapter 09 - Functions
-- [x] Chapter 10 - Associated Items
-- [x] Chapter 11 - Implementations
-- [x] Chapter 12 - Generics
-- [x] Chapter 13 - Attributes
-- [x] Chapter 14 - Entities Resolution
-- [x] Chapter 15 - Ownership Destruction
-- [x] Chapter 16 - Exceptions and Errors
-- [x] Chapter 17 - Concurrency
-- [x] Chapter 18 - Program Structure
-- [x] Chapter 19 - Unsafety
-- [x] Chapter 20 - Macros
-- [x] Chapter 21 - FFI
-- [x] Chapter 22 - Inline Assembly
-
-### Key Changes by Chapter (v0.7.0 → v0.8.0)
-
-| Chapter | Key Changes |
-|---------|-------------|
-| **21 - FFI** | MASSIVE: 630 extern C fn (+3606%), 602 #[no_mangle], 42 unions, new iceoryx2-ffi/c crate |
-| **19 - Unsafety** | unsafe blocks +39%, unsafe fn +35%, 42 unions, 541 ManuallyDrop |
-| **18 - Program Structure** | 37+ crates (+164%), 1071 source files (+96%), 23 no_std crates |
-| **17 - Concurrency** | Atomic wrappers restructured, SpinLock added, Mutex +503% |
-| **15 - Ownership** | ManuallyDrop 0→541, UnsafeCell +172%, FFI union handling |
-| **20 - Macros** | 28 macros (+75%), 6 proc-macros (+200%), 3 proc-macro crates |
-| **22 - Inline Asm** | Still 0 asm!, 1 global_asm! in bare-metal example only |
-
-## Next Version Update Checklist
-
-When a new iceoryx2 version is released:
-
-1. [ ] Clone new version: `uv run python tools/clone_iceoryx2.py v{NEW_VERSION}`
-2. [ ] Review release notes for major changes
-3. [ ] Identify high-priority chapters (typically FFI, Unsafety, Concurrency)
-4. [ ] Update each chapter JSON with new statistics
-5. [ ] Update file paths if directory structure changed
-6. [ ] Verify code samples still exist and update line numbers
-7. [ ] Update this AGENTS.md with new version tracking
-8. [ ] Update "Current Status" section at top of this file
-
-## Tips
-
-1. **Use parallel rg commands**: Run multiple statistics gathering commands in parallel for efficiency
-2. **Track percentage changes**: Always calculate and document percentage changes from previous version
-3. **Verify samples exist**: Before updating, verify code samples still exist at specified locations
-4. **Note new patterns**: Document any new language patterns introduced (e.g., let-else, union types)
-5. **Document NOT USED**: Explicitly document language features that are intentionally not used (e.g., async/await)
-6. **Prioritize high-impact chapters**: FFI, Unsafety, and Concurrency typically have the most changes
-7. **Update version_changes section**: Always include from_version, to_version, summary, and key_changes
-
-## References
-
-- [Ferrocene Language Specification](https://rust-lang.github.io/fls/)
-- [iceoryx2 Repository](https://github.com/eclipse-iceoryx/iceoryx2)
-- [iceoryx2 v0.8.0 Release Notes](cache/repos/iceoryx2/v0.8.0/doc/release-notes/iceoryx2-v0.8.0.md)
+**Key changes:** FFI layer expansion (`iceoryx2-ffi/c`), logger restructuring, no_std support.
 
 ---
 
-# Coding Standards to FLS Mapping
+## Coding Standards Mapping Guide
 
-This section documents the infrastructure for mapping safety-critical C/C++ coding standards to the Ferrocene Language Specification (FLS).
+### Current Status (2025-12-31)
 
-## Purpose
+**MISRA C:2025 Mapping - Complete (Draft):**
+- All 212 guidelines mapped with MISRA ADD-6 Rust applicability
+- 107 unique FLS IDs referenced
+- All mappings have `medium` confidence (automated) - require manual review for `high`
 
-The Safety-Critical Rust Consortium needs to understand how existing C/C++ safety coding standards (MISRA, CERT) relate to Rust language constructs as defined in the FLS. This enables:
+**Other Standards:** Scaffolds only (MISRA C++, CERT C/C++)
 
-- **Prioritization**: Identify which FLS sections are most referenced by safety standards
-- **Gap Analysis**: Find where Rust's design prevents C/C++ issues entirely
-- **Traceability**: Provide mapping from established standards to Rust equivalents
+### MISRA to FLS Verification Workflow
 
-## Directory Structure
-
-```
-coding-standards-fls-mapping/
-├── schema/
-│   ├── coding_standard_rules.schema.json   # Schema for rule listings
-│   └── fls_mapping.schema.json             # Schema for FLS mappings
-├── standards/                               # Extracted rule listings
-│   ├── misra_c_2025.json                   # 212 guidelines (190 rules, 22 directives)
-│   ├── misra_cpp_2023.json                 # 172 guidelines (168 rules, 4 directives)
-│   ├── cert_c.json                         # 306 guidelines (123 rules, 183 recommendations)
-│   └── cert_cpp.json                       # 143 guidelines (143 rules)
-├── mappings/                                # FLS mappings (deliverables)
-│   ├── misra_c_to_fls.json
-│   ├── misra_cpp_to_fls.json
-│   ├── cert_c_to_fls.json
-│   └── cert_cpp_to_fls.json
-└── README.md
-```
-
-## Current Status (2025-12-31)
-
-**MISRA C:2025 Mapping - Complete (Draft)**:
-- All 212 guidelines mapped with MISRA ADD-6 Rust applicability data
-- 107 unique FLS IDs referenced across all mappings
-- All mappings have `medium` confidence (automated) - require manual review for `high` confidence
-- 29 synthetic FLS IDs generated for syntax block sections
-
-| Applicability | All Rust | Safe Rust |
-|---------------|----------|-----------|
-| direct | 117 | 58 |
-| partial | 2 | 15 |
-| not_applicable | 91 | 139 |
-| rust_prevents | 2 | 0 |
-
-**Other Standards - Scaffolds Only**:
-- MISRA C++, CERT C, CERT C++ mapping files need schema updates and population
-
-**Next Steps**:
-- Manual review of MISRA C mappings to upgrade confidence to `high`
-- Update other standard mapping files with new schema fields
-- Run cross-reference analysis to identify high-priority FLS sections
-
-## Tools
-
-| Tool | Description |
-|------|-------------|
-| `extract_misra_rules.py` | Extract rules/directives from MISRA PDFs |
-| `scrape_cert_rules.py` | Scrape rules from SEI CERT wiki |
-| `validate_coding_standards.py` | Validate JSON files against schemas |
-| `validate_synthetic_ids.py` | Validate synthetic FLS IDs don't collide with native FLS |
-| `map_misra_to_fls.py` | Generate automated MISRA C → FLS mappings |
-| `analyze_fls_coverage.py` | Cross-reference analysis of FLS coverage |
-| `review_fls_mappings.py` | Helper for reviewing mappings with FLS content |
-
-## Validation
-
-```bash
-# Validate all standards and mapping files
-cd tools && uv run python validate_coding_standards.py
-
-# Validate a specific mapping file
-uv run python validate_coding_standards.py --file=misra_c_to_fls.json
-
-# Validate synthetic FLS IDs
-uv run python validate_synthetic_ids.py
-
-# Regenerate MISRA C mappings
-uv run python map_misra_to_fls.py
-
-# Regenerate with verbose output (for debugging)
-uv run python map_misra_to_fls.py --verbose --limit 20
-```
-
-## Synthetic FLS IDs
-
-Some FLS sections (extracted from `.. syntax::` blocks) don't have native FLS ID anchors. We generate synthetic IDs for these:
-
-- **29 synthetic IDs** generated using FLS's ID format (`fls_` + 12 alphanumeric chars)
-- Tracked in `tools/synthetic_fls_ids.json`
-- Validated against native FLS IDs to prevent collisions
-- See `tools/SYNTHETIC_FLS_IDS.md` for methodology
-
-## Mapping Workflow
-
-### Automated Pass (MISRA C Complete)
-
-1. Load rules from `standards/misra_c_2025.json`
-2. Load MISRA ADD-6 Rust applicability from `misra_rust_applicability.json`
-3. Match guideline titles against `concept_to_fls.json` keywords
-4. Generate FLS ID lists from matched concepts
-5. Apply MISRA ADD-6 applicability values
-6. Add `fls_rationale_type` explaining the relationship
-7. Output with `confidence: "medium"`
-
-### Manual Review Pass (TODO)
-
-1. Review each guideline with `confidence: "medium"`
-2. Verify FLS ID assignments are correct
-3. Add/remove FLS IDs as needed
-4. Update notes with specific rationale
-5. Upgrade `confidence` to `"high"` when verified
-
-### MISRA to FLS Mapping Verification Workflow
-
-For each MISRA guideline being manually verified, follow these steps rigorously:
+For each MISRA guideline requiring manual verification, follow these steps rigorously:
 
 #### Step 1: Get Similarity Results
-
-Query `embeddings/similarity/misra_c_to_fls.json` for the rule:
 
 ```bash
 cd tools && uv run python -c "
@@ -714,40 +562,40 @@ for m in matches:
 "
 ```
 
-Record the top 5 matches with their similarity scores.
-
 #### Step 2: Evaluate Similarity Quality
 
-Use these thresholds (based on statistical analysis of the corpus):
+| Score | Interpretation | Action |
+|-------|----------------|--------|
+| **>=0.6** | Strong match | MUST investigate. Document if rejected. |
+| **0.5-0.6** | Medium match | Worth investigating |
+| **0.4-0.5** | Weak match | Lower priority |
+| **<0.4** | Very weak | Probably not relevant |
 
-| Score Range | Interpretation | Action |
-|-------------|----------------|--------|
-| **≥0.6** | Strong match | Likely relevant - MUST investigate. Document if rejected. |
-| **0.5-0.6** | Medium match | Worth investigating, may be relevant |
-| **0.4-0.5** | Weak match | Lower priority, may be tangentially related |
-| **<0.4** | Very weak | Probably not relevant (only 0.9% of top-1 scores fall here) |
-
-**Statistical basis**: Median top-1 score is 0.59, mean is 0.577, stdev is 0.08.
-
-Also check the `missing_siblings` field for related sections that might be relevant.
+Also check `missing_siblings` for related sections.
 
 #### Step 3: Read FLS Content
 
-Use a Task agent to read actual FLS content for strong matches (≥0.5):
+Look up the FLS section content:
 
-```
-Use Task tool with subagent_type="explore" to read FLS section content from cache/repos/fls/src/
+```python
+import json
+with open('embeddings/fls/chapter_15.json') as f:
+    chapter = json.load(f)
+
+section = next(s for s in chapter['sections'] if s['fls_id'] == 'fls_xxx')
+
+# Focus on legality rules (-2) and UB (-4)
+for cat in ['-2', '-4']:
+    for pid, text in section['rubrics'].get(cat, {}).get('paragraphs', {}).items():
+        print(f"[{cat}] {pid}: {text}")
 ```
 
 Focus on:
 - Legality rules (what the compiler enforces)
-- Dynamic semantics (runtime behavior)
 - Undefined behavior definitions
-- Type constraints
+- Dynamic semantics (runtime behavior)
 
 #### Step 4: Compare MISRA Rationale to FLS
-
-Read the MISRA rationale from extracted text:
 
 ```bash
 cd tools && uv run python -c "
@@ -760,84 +608,43 @@ for g in misra['guidelines']:
 "
 ```
 
-Ask yourself:
+Ask:
 - Does the FLS section actually address the MISRA concern?
 - Is Rust's approach the same, different, or does it prevent the issue?
-- Are there multiple FLS sections that together address the concern?
+- Are multiple FLS sections needed together?
 
 #### Step 5: Make Mapping Decision
 
-Document one of:
-
-1. **Accept similarity suggestion**: Use the FLS ID(s) from similarity results
-   - Add to `accepted_matches` with score and reason
-   - Quote specific FLS paragraph IDs that support the mapping
-
-2. **Override with different FLS IDs**: Use different FLS ID(s) than similarity suggested
-   - Add rejected high-scoring matches (≥0.5) to `rejected_matches` field
-   - Document why the override is more appropriate
-
-3. **No FLS mapping needed**: Set `accepted_matches` to empty array
-   - Explain why (C-specific concept with no Rust equivalent)
-   - May still have `rejected_matches` if similarity suggested irrelevant sections
+1. **Accept similarity suggestion:** Add to `accepted_matches` with score and reason quoting specific FLS paragraphs
+2. **Override with different FLS IDs:** Add rejected matches (>=0.5) to `rejected_matches` with explanation
+3. **No FLS mapping needed:** Set `accepted_matches` to empty array with explanation
 
 #### Step 6: Update Mapping with Evidence
-
-The mapping entry should include:
 
 ```json
 {
   "guideline_id": "Rule X.Y",
-  "guideline_title": "...",
-  "applicability_all_rust": "...",
-  "applicability_safe_rust": "...",
   "accepted_matches": [
     {
       "fls_id": "fls_xxx",
-      "fls_title": "Type Cast Expressions",
+      "category": -2,
+      "fls_title": "References",
       "score": 0.65,
-      "reason": "Per FLS: 'A cast is legal when it performs type coercion or is a specialized cast.' This shows Rust requires explicit casts, directly addressing MISRA's concern about implicit type mixing."
-    },
-    {
-      "fls_id": "fls_yyy",
-      "fls_title": "Type Coercion",
-      "score": 0.53,
-      "reason": "Per FLS: No implicit numeric coercions allowed. This prevents the C 'usual arithmetic conversions' that MISRA is trying to control."
+      "reason": "Per FLS fls_ev4a82fdhwr8: 'A reference shall point to an initialized referent.' This directly addresses MISRA's concern about..."
     }
   ],
-  "fls_rationale_type": "...",
-  "confidence": "high",
-  "notes": "High-level summary: Rust's type system prevents implicit type conversions that MISRA's Essential Type Model addresses.",
   "rejected_matches": [
     {
-      "fls_id": "fls_zzz",
-      "fls_title": "Enum Type Representation",
+      "fls_id": "fls_yyy",
+      "category": 0,
       "score": 0.62,
-      "reason": "Section is about enum discriminant layout, not type conversion rules - semantic similarity due to shared 'type' terminology"
+      "reason": "Section is about X, not Y - semantic similarity due to shared terminology"
     }
-  ]
+  ],
+  "confidence": "high",
+  "notes": "High-level summary: Rust's borrow checker prevents the uninitialized access that MISRA is trying to prevent."
 }
 ```
-
-#### Notes Field Template
-
-```
-High-level summary: [1-2 sentence explanation of why this MISRA rule maps/doesn't map to Rust].
-[If applicable: Clippy lint 'X' provides additional enforcement.]
-```
-
-The detailed justifications should be in `accepted_matches` and `rejected_matches` fields, not in `notes`.
-
-#### Rejected Matches Documentation
-
-Document rejected high-similarity matches (≥0.5) to help improve the similarity calculation:
-
-| Pattern | Indicates |
-|---------|-----------|
-| Same section rejected repeatedly | May have "generic" language inflating scores |
-| Different section chosen repeatedly | `concept_to_fls.json` keywords may be incomplete |
-| No good matches for a concept | Embedding model may not capture C↔Rust semantic gap |
-| Parent vs child mismatch | Chunking granularity may need adjustment |
 
 ### Applicability Values
 
@@ -851,30 +658,27 @@ Document rejected high-similarity matches (≥0.5) to help improve the similarit
 
 ### FLS Rationale Types
 
-When `fls_ids` are present, `fls_rationale_type` explains the relationship:
-
 | Value | Description |
 |-------|-------------|
-| `direct_mapping` | Rule maps directly to these FLS concepts |
+| `direct_mapping` | Rule maps directly to FLS concepts |
 | `rust_alternative` | Rust has a different/better mechanism |
 | `rust_prevents` | Rust's design prevents the issue |
-| `no_equivalent` | C concept doesn't exist in Rust (FLS shows context) |
-| `partial_mapping` | Some aspects map directly, others don't |
+| `no_equivalent` | C concept doesn't exist in Rust |
+| `partial_mapping` | Some aspects map, others don't |
 
-## Key Configuration Files
+### Validation
 
-| File | Purpose |
-|------|---------|
-| `concept_to_fls.json` | Maps C concepts to FLS IDs with keywords |
-| `misra_rust_applicability.json` | MISRA ADD-6 Rust applicability data |
-| `fls_section_mapping.json` | Canonical FLS section IDs and titles |
-| `synthetic_fls_ids.json` | Tracks synthetic FLS IDs we generated |
+```bash
+cd tools
+uv run python validate_coding_standards.py
+uv run python validate_synthetic_ids.py
+```
 
-## Data Sources
+---
 
-- **MISRA**: PDFs in `cache/misra-standards/` (not redistributed)
-- **CERT C**: https://wiki.sei.cmu.edu/confluence/display/c/
-- **CERT C++**: https://wiki.sei.cmu.edu/confluence/display/cplusplus/
-- **FLS**: https://rust-lang.github.io/fls/
+## References
 
-See `coding-standards-fls-mapping/README.md` for full documentation.
+- [Ferrocene Language Specification](https://rust-lang.github.io/fls/)
+- [iceoryx2 Repository](https://github.com/eclipse-iceoryx/iceoryx2)
+- [MISRA C:2025](https://misra.org.uk/)
+- [SEI CERT C](https://wiki.sei.cmu.edu/confluence/display/c/)
