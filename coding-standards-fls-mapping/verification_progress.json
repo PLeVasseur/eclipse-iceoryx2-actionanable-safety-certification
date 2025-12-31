@@ -1,19 +1,19 @@
 {
   "standard": "misra_c_2025",
-  "total_guidelines": 228,
+  "total_guidelines": 223,
   "verification_started": "2025-12-31",
   "last_updated": "2025-12-31",
   "summary": {
-    "total_verified": 67,
-    "total_pending": 161,
+    "total_verified": 117,
+    "total_pending": 106,
     "by_batch": {
       "1": {
         "verified": 28,
         "pending": 0
       },
       "2": {
-        "verified": 39,
-        "pending": 54
+        "verified": 89,
+        "pending": 0
       },
       "3": {
         "verified": 0,
@@ -25,10 +25,10 @@
       },
       "5": {
         "verified": 0,
-        "pending": 15
+        "pending": 14
       }
     },
-    "last_updated": "2025-12-31T16:45:00.000000"
+    "last_updated": "2025-12-31T21:04:05.947218"
   },
   "batches": [
     {
@@ -213,7 +213,7 @@
       "batch_id": 2,
       "name": "Not applicable",
       "description": "Guidelines not applicable to Rust - require FLS justification for why no equivalent exists",
-      "status": "in_progress",
+      "status": "completed",
       "guidelines": [
         {
           "guideline_id": "Dir 4.6",
@@ -229,12 +229,6 @@
         },
         {
           "guideline_id": "Dir 4.10",
-          "status": "verified",
-          "verified_date": null,
-          "session_id": 2
-        },
-        {
-          "guideline_id": "Rule 1.2",
           "status": "verified",
           "verified_date": null,
           "session_id": 2
@@ -345,7 +339,7 @@
           "guideline_id": "Rule 8.8",
           "status": "verified",
           "verified_date": "2025-12-31",
-          "session_id": 4
+          "session_id": 3
         },
         {
           "guideline_id": "Rule 8.10",
@@ -451,337 +445,319 @@
         },
         {
           "guideline_id": "Rule 13.2",
-          "status": "pending",
-          "verified_date": null,
-          "session_id": null
+          "status": "verified",
+          "verified_date": "2025-12-31",
+          "session_id": 4
         },
         {
           "guideline_id": "Rule 13.3",
-          "status": "pending",
-          "verified_date": null,
-          "session_id": null
+          "status": "verified",
+          "verified_date": "2025-12-31",
+          "session_id": 4
         },
         {
           "guideline_id": "Rule 13.4",
-          "status": "pending",
-          "verified_date": null,
-          "session_id": null
+          "status": "verified",
+          "verified_date": "2025-12-31",
+          "session_id": 4
         },
         {
           "guideline_id": "Rule 13.6",
-          "status": "pending",
-          "verified_date": null,
-          "session_id": null
+          "status": "verified",
+          "verified_date": "2025-12-31",
+          "session_id": 4
         },
         {
           "guideline_id": "Rule 14.2",
-          "status": "pending",
-          "verified_date": null,
-          "session_id": null
+          "status": "verified",
+          "verified_date": "2025-12-31",
+          "session_id": 4
         },
         {
           "guideline_id": "Rule 15.1",
-          "status": "pending",
-          "verified_date": null,
-          "session_id": null
+          "status": "verified",
+          "verified_date": "2025-12-31",
+          "session_id": 3
         },
         {
           "guideline_id": "Rule 15.2",
-          "status": "pending",
-          "verified_date": null,
-          "session_id": null
+          "status": "verified",
+          "verified_date": "2025-12-31",
+          "session_id": 3
         },
         {
           "guideline_id": "Rule 15.3",
-          "status": "pending",
-          "verified_date": null,
-          "session_id": null
+          "status": "verified",
+          "verified_date": "2025-12-31",
+          "session_id": 3
         },
         {
           "guideline_id": "Rule 15.6",
-          "status": "pending",
-          "verified_date": null,
-          "session_id": null
+          "status": "verified",
+          "verified_date": "2025-12-31",
+          "session_id": 3
         },
         {
           "guideline_id": "Rule 16.1",
-          "status": "pending",
-          "verified_date": null,
-          "session_id": null
+          "status": "verified",
+          "verified_date": "2025-12-31",
+          "session_id": 3
         },
         {
           "guideline_id": "Rule 16.2",
-          "status": "pending",
-          "verified_date": null,
-          "session_id": null
+          "status": "verified",
+          "verified_date": "2025-12-31",
+          "session_id": 3
         },
         {
           "guideline_id": "Rule 16.3",
-          "status": "pending",
-          "verified_date": null,
-          "session_id": null
+          "status": "verified",
+          "verified_date": "2025-12-31",
+          "session_id": 3
         },
         {
           "guideline_id": "Rule 16.4",
-          "status": "pending",
-          "verified_date": null,
-          "session_id": null
+          "status": "verified",
+          "verified_date": "2025-12-31",
+          "session_id": 3
         },
         {
           "guideline_id": "Rule 16.5",
-          "status": "pending",
-          "verified_date": null,
-          "session_id": null
+          "status": "verified",
+          "verified_date": "2025-12-31",
+          "session_id": 3
         },
         {
           "guideline_id": "Rule 16.6",
-          "status": "pending",
-          "verified_date": null,
-          "session_id": null
+          "status": "verified",
+          "verified_date": "2025-12-31",
+          "session_id": 3
         },
         {
           "guideline_id": "Rule 16.7",
-          "status": "pending",
-          "verified_date": null,
-          "session_id": null
+          "status": "verified",
+          "verified_date": "2025-12-31",
+          "session_id": 3
         },
         {
           "guideline_id": "Rule 17.1",
-          "status": "pending",
-          "verified_date": null,
-          "session_id": null
+          "status": "verified",
+          "verified_date": "2025-12-31",
+          "session_id": 3
         },
         {
           "guideline_id": "Rule 17.3",
-          "status": "pending",
-          "verified_date": null,
-          "session_id": null
+          "status": "verified",
+          "verified_date": "2025-12-31",
+          "session_id": 3
         },
         {
           "guideline_id": "Rule 17.4",
-          "status": "pending",
-          "verified_date": null,
-          "session_id": null
+          "status": "verified",
+          "verified_date": "2025-12-31",
+          "session_id": 3
         },
         {
           "guideline_id": "Rule 17.5",
-          "status": "pending",
-          "verified_date": null,
-          "session_id": null
-        },
-        {
-          "guideline_id": "Rule 17.6",
-          "status": "pending",
-          "verified_date": null,
-          "session_id": null
+          "status": "verified",
+          "verified_date": "2025-12-31",
+          "session_id": 3
         },
         {
           "guideline_id": "Rule 17.10",
-          "status": "pending",
-          "verified_date": null,
-          "session_id": null
+          "status": "verified",
+          "verified_date": "2025-12-31",
+          "session_id": 3
         },
         {
           "guideline_id": "Rule 17.12",
-          "status": "pending",
-          "verified_date": null,
-          "session_id": null
+          "status": "verified",
+          "verified_date": "2025-12-31",
+          "session_id": 3
         },
         {
           "guideline_id": "Rule 17.13",
-          "status": "pending",
-          "verified_date": null,
-          "session_id": null
+          "status": "verified",
+          "verified_date": "2025-12-31",
+          "session_id": 3
         },
         {
           "guideline_id": "Rule 18.7",
-          "status": "pending",
-          "verified_date": null,
-          "session_id": null
+          "status": "verified",
+          "verified_date": "2025-12-31",
+          "session_id": 3
         },
         {
           "guideline_id": "Rule 18.8",
-          "status": "pending",
-          "verified_date": null,
-          "session_id": null
+          "status": "verified",
+          "verified_date": "2025-12-31",
+          "session_id": 3
         },
         {
           "guideline_id": "Rule 18.9",
-          "status": "pending",
-          "verified_date": null,
-          "session_id": null
+          "status": "verified",
+          "verified_date": "2025-12-31",
+          "session_id": 3
         },
         {
           "guideline_id": "Rule 18.10",
-          "status": "pending",
-          "verified_date": null,
-          "session_id": null
+          "status": "verified",
+          "verified_date": "2025-12-31",
+          "session_id": 3
         },
         {
           "guideline_id": "Rule 20.1",
-          "status": "pending",
-          "verified_date": null,
-          "session_id": null
+          "status": "verified",
+          "verified_date": "2025-12-31",
+          "session_id": 3
         },
         {
           "guideline_id": "Rule 20.2",
-          "status": "pending",
-          "verified_date": null,
-          "session_id": null
+          "status": "verified",
+          "verified_date": "2025-12-31",
+          "session_id": 3
         },
         {
           "guideline_id": "Rule 20.3",
-          "status": "pending",
-          "verified_date": null,
-          "session_id": null
+          "status": "verified",
+          "verified_date": "2025-12-31",
+          "session_id": 3
         },
         {
           "guideline_id": "Rule 20.5",
-          "status": "pending",
-          "verified_date": null,
-          "session_id": null
+          "status": "verified",
+          "verified_date": "2025-12-31",
+          "session_id": 3
         },
         {
           "guideline_id": "Rule 20.6",
-          "status": "pending",
-          "verified_date": null,
-          "session_id": null
+          "status": "verified",
+          "verified_date": "2025-12-31",
+          "session_id": 3
         },
         {
           "guideline_id": "Rule 20.8",
-          "status": "pending",
-          "verified_date": null,
-          "session_id": null
+          "status": "verified",
+          "verified_date": "2025-12-31",
+          "session_id": 3
         },
         {
           "guideline_id": "Rule 20.9",
-          "status": "pending",
-          "verified_date": null,
-          "session_id": null
+          "status": "verified",
+          "verified_date": "2025-12-31",
+          "session_id": 3
         },
         {
           "guideline_id": "Rule 20.10",
-          "status": "pending",
-          "verified_date": null,
-          "session_id": null
+          "status": "verified",
+          "verified_date": "2025-12-31",
+          "session_id": 3
         },
         {
           "guideline_id": "Rule 20.11",
-          "status": "pending",
-          "verified_date": null,
-          "session_id": null
+          "status": "verified",
+          "verified_date": "2025-12-31",
+          "session_id": 3
         },
         {
           "guideline_id": "Rule 20.12",
-          "status": "pending",
-          "verified_date": null,
-          "session_id": null
+          "status": "verified",
+          "verified_date": "2025-12-31",
+          "session_id": 3
         },
         {
           "guideline_id": "Rule 20.13",
-          "status": "pending",
-          "verified_date": null,
-          "session_id": null
+          "status": "verified",
+          "verified_date": "2025-12-31",
+          "session_id": 3
         },
         {
           "guideline_id": "Rule 20.14",
-          "status": "pending",
-          "verified_date": null,
-          "session_id": null
+          "status": "verified",
+          "verified_date": "2025-12-31",
+          "session_id": 3
         },
         {
           "guideline_id": "Rule 20.15",
-          "status": "pending",
-          "verified_date": null,
-          "session_id": null
-        },
-        {
-          "guideline_id": "Rule 21.1",
-          "status": "pending",
-          "verified_date": null,
-          "session_id": null
-        },
-        {
-          "guideline_id": "Rule 21.2",
-          "status": "pending",
-          "verified_date": null,
-          "session_id": null
+          "status": "verified",
+          "verified_date": "2025-12-31",
+          "session_id": 3
         },
         {
           "guideline_id": "Rule 21.11",
-          "status": "pending",
-          "verified_date": null,
-          "session_id": null
+          "status": "verified",
+          "verified_date": "2025-12-31",
+          "session_id": 3
         },
         {
           "guideline_id": "Rule 21.22",
-          "status": "pending",
-          "verified_date": null,
-          "session_id": null
+          "status": "verified",
+          "verified_date": "2025-12-31",
+          "session_id": 3
         },
         {
           "guideline_id": "Rule 21.23",
-          "status": "pending",
-          "verified_date": null,
-          "session_id": null
+          "status": "verified",
+          "verified_date": "2025-12-31",
+          "session_id": 3
         },
         {
           "guideline_id": "Rule 23.1",
-          "status": "pending",
-          "verified_date": null,
-          "session_id": null
+          "status": "verified",
+          "verified_date": "2025-12-31",
+          "session_id": 3
         },
         {
           "guideline_id": "Rule 23.2",
-          "status": "pending",
-          "verified_date": null,
-          "session_id": null
+          "status": "verified",
+          "verified_date": "2025-12-31",
+          "session_id": 3
         },
         {
           "guideline_id": "Rule 23.3",
-          "status": "pending",
-          "verified_date": null,
-          "session_id": null
+          "status": "verified",
+          "verified_date": "2025-12-31",
+          "session_id": 3
         },
         {
           "guideline_id": "Rule 23.4",
-          "status": "pending",
-          "verified_date": null,
-          "session_id": null
+          "status": "verified",
+          "verified_date": "2025-12-31",
+          "session_id": 3
         },
         {
           "guideline_id": "Rule 23.5",
-          "status": "pending",
-          "verified_date": null,
-          "session_id": null
+          "status": "verified",
+          "verified_date": "2025-12-31",
+          "session_id": 3
         },
         {
           "guideline_id": "Rule 23.6",
-          "status": "pending",
-          "verified_date": null,
-          "session_id": null
+          "status": "verified",
+          "verified_date": "2025-12-31",
+          "session_id": 3
         },
         {
           "guideline_id": "Rule 23.7",
-          "status": "pending",
-          "verified_date": null,
-          "session_id": null
+          "status": "verified",
+          "verified_date": "2025-12-31",
+          "session_id": 3
         },
         {
           "guideline_id": "Rule 23.8",
-          "status": "pending",
-          "verified_date": null,
-          "session_id": null
+          "status": "verified",
+          "verified_date": "2025-12-31",
+          "session_id": 3
         }
       ],
       "started": null,
-      "completed": null
+      "completed": "2025-12-31"
     },
     {
       "batch_id": 3,
       "name": "Stdlib & Resources",
       "description": "Categories 21 (Standard library) and 22 (Resources) - remaining direct mappings",
-      "status": "pending",
+      "status": "in_progress",
       "guidelines": [
         {
           "guideline_id": "Rule 21.3",
@@ -1012,7 +988,7 @@
           "session_id": null
         }
       ],
-      "started": null,
+      "started": "2025-12-31",
       "completed": null
     },
     {
@@ -1410,12 +1386,6 @@
           "session_id": null
         },
         {
-          "guideline_id": "Rule 11.7",
-          "status": "pending",
-          "verified_date": null,
-          "session_id": null
-        },
-        {
           "guideline_id": "Rule 11.11",
           "status": "pending",
           "verified_date": null,
@@ -1507,7 +1477,55 @@
       "date": "2025-12-31",
       "batch_id": 2,
       "guidelines_verified": [
-        "Rule 8.4"
+        "Rule 8.4",
+        "Rule 8.8",
+        "Rule 15.1",
+        "Rule 15.2",
+        "Rule 15.3",
+        "Rule 15.6",
+        "Rule 16.1",
+        "Rule 16.2",
+        "Rule 16.3",
+        "Rule 16.4",
+        "Rule 16.5",
+        "Rule 16.6",
+        "Rule 16.7",
+        "Rule 17.1",
+        "Rule 17.3",
+        "Rule 17.4",
+        "Rule 17.5",
+        "Rule 17.6",
+        "Rule 17.10",
+        "Rule 17.12",
+        "Rule 17.13",
+        "Rule 18.7",
+        "Rule 18.8",
+        "Rule 18.9",
+        "Rule 18.10",
+        "Rule 20.1",
+        "Rule 20.2",
+        "Rule 20.3",
+        "Rule 20.5",
+        "Rule 20.6",
+        "Rule 20.8",
+        "Rule 20.9",
+        "Rule 20.10",
+        "Rule 20.11",
+        "Rule 20.12",
+        "Rule 20.13",
+        "Rule 20.14",
+        "Rule 20.15",
+        "Rule 21.11",
+        "Rule 21.22",
+        "Rule 21.23",
+        "Rule 23.1",
+        "Rule 23.2",
+        "Rule 23.3",
+        "Rule 23.4",
+        "Rule 23.5",
+        "Rule 23.6",
+        "Rule 23.7",
+        "Rule 23.8"
       ],
       "notes": "Continuing Batch 2 verification after reconciling progress stats"
     },
