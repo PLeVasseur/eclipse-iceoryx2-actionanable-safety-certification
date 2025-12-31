@@ -33,6 +33,16 @@ def load_json(path: Path) -> dict | None:
         return json.load(f)
 
 
+def is_verification_complete(guideline: dict) -> bool:
+    """Check if a guideline's verification_decision has been completed.
+    
+    The batch tool scaffolds verification_decision as a dict with None values.
+    A decision is complete only when the 'decision' field is populated.
+    """
+    vd = guideline.get("verification_decision")
+    return vd is not None and vd.get("decision") is not None
+
+
 def find_batch_reports(cache_dir: Path) -> list[dict]:
     """Find all batch reports in cache/verification/."""
     reports = []
@@ -43,11 +53,11 @@ def find_batch_reports(cache_dir: Path) -> list[dict]:
         try:
             data = load_json(f)
             if data and "batch_id" in data and "session_id" in data:
-                # Count verified guidelines
+                # Count verified guidelines (decision field must be populated)
                 total = len(data.get("guidelines", []))
                 verified = sum(
                     1 for g in data.get("guidelines", [])
-                    if g.get("verification_decision") is not None
+                    if is_verification_complete(g)
                 )
                 reports.append({
                     "path": f,
@@ -64,13 +74,13 @@ def find_batch_reports(cache_dir: Path) -> list[dict]:
 
 
 def find_resume_guideline(report_path: Path) -> str | None:
-    """Find the first guideline with verification_decision: null."""
+    """Find the first guideline without a completed verification decision."""
     data = load_json(report_path)
     if not data:
         return None
     
     for g in data.get("guidelines", []):
-        if g.get("verification_decision") is None:
+        if not is_verification_complete(g):
             return g.get("guideline_id")
     
     return None
