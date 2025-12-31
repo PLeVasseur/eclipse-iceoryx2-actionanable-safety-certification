@@ -8878,131 +8878,54 @@
       "applicability_safe_rust": "not_applicable",
       "accepted_matches": [
         {
-          "fls_id": "fls_9wgldua1u8yt",
-          "category": -4,
-          "fls_section": "fls_5cm4gkt55hjh",
-          "fls_title": "Dereference Expression",
-          "score": 0.632,
-          "reason": "Per FLS: 'It is undefined behavior to dereference a raw pointer that is eithe...' (similarity: 0.63)"
-        },
-        {
-          "fls_id": "fls_6b4rwkrc1ap6",
-          "category": -2,
-          "fls_section": "fls_6ydylimiv553",
-          "fls_title": "Place Expressions",
-          "score": 0.605,
-          "reason": "Per FLS: 'A dereference expression whose operand's type is a mutable raw poin...' (similarity: 0.61)"
-        },
-        {
-          "fls_id": "fls_8i4jzksxlrw0",
-          "category": -2,
-          "fls_section": "fls_5cm4gkt55hjh",
-          "fls_title": "Dereference Expression",
-          "score": 0.605,
-          "reason": "Per FLS: 'Dereferencing a raw pointer shall require unsafe context unless the...' (similarity: 0.60)"
-        },
-        {
-          "fls_id": "fls_jd1inwz7ulyw",
-          "category": -2,
-          "fls_section": "19.-2.4",
-          "fls_title": "Unsafety",
-          "score": 0.591,
-          "reason": "Per FLS: 'Dereferencing a value of a raw pointer type.' (similarity: 0.59)"
-        },
-        {
-          "fls_id": "fls_gOXUWePymgGV",
-          "category": -2,
-          "fls_section": "fls_vXGuvRWOLbEE",
-          "fls_title": "Raw Borrow Expression",
-          "score": 0.591,
-          "reason": "Per FLS: 'When the operand of a raw borrow expression is a place expression, ...' (similarity: 0.59)"
-        },
-        {
-          "fls_id": "fls_aeh5pzpcjveq",
-          "category": -2,
-          "fls_section": "fls_5cm4gkt55hjh",
-          "fls_title": "Dereference Expression",
-          "score": 0.584,
-          "reason": "Per FLS: 'When the operand of a dereference expression is of a pointer type, ...' (similarity: 0.58)"
-        },
-        {
-          "fls_id": "fls_CUJyMj0Sj8NS",
-          "category": -2,
-          "fls_section": "fls_94a8v54bufn8",
-          "fls_title": "Values",
-          "score": 0.582,
-          "reason": "Per FLS: 'An allocated object is a value stored at some memory address.' (similarity: 0.58)"
-        },
-        {
-          "fls_id": "fls_5cm4gkt55hjh",
+          "fls_id": "fls_yztwtek0y34v",
           "category": 0,
-          "fls_section": "6.-2.16",
-          "fls_title": "Dereference Expression",
-          "score": 0.577,
-          "reason": "Section-level similarity match (score: 0.58)"
+          "fls_title": "External Functions",
+          "score": 1.0,
+          "reason": "Per FLS fls_v24ino4hix3m: 'An external function is an unchecked import of a foreign function.' Per FLS fls_l88r9fj82650: 'An external function shall be invoked from an unsafe context.' When calling C library functions via FFI, they must be declared as external functions and called from unsafe context."
         },
         {
-          "fls_id": "fls_hrum767l6dte",
-          "category": -2,
-          "fls_section": "fls_ppd1xwve3tr7",
-          "fls_title": "Raw Pointer Types",
-          "score": 0.564,
-          "reason": "Per FLS: 'Comparing two [value]s of [raw pointer type]s compares the addresse...' (similarity: 0.56)"
-        },
-        {
-          "fls_id": "fls_6ydylimiv553",
+          "fls_id": "fls_tmoh3y9oyqsy",
           "category": 0,
-          "fls_section": "6.-2.5",
-          "fls_title": "Place Expressions",
-          "score": 0.562,
-          "reason": "Section-level similarity match (score: 0.56)"
-        },
-        {
-          "fls_id": "fls_5b8aewlgeon8",
-          "category": -2,
-          "fls_section": "fls_fs0lcfllamj",
-          "fls_title": "Attribute ``global_allocator``",
-          "score": 0.557,
-          "reason": "Per FLS: 'Attribute global_allocator shall apply to [static]s whose [type]s i...' (similarity: 0.56)"
-        },
-        {
-          "fls_id": "fls_k6ues2936pjq",
-          "category": -2,
-          "fls_section": "fls_ppd1xwve3tr7",
-          "fls_title": "Raw Pointer Types",
-          "score": 0.555,
-          "reason": "Per FLS: 'Comparing a value of a raw pointer type to a value of a dynamically...' (similarity: 0.56)"
-        },
-        {
-          "fls_id": "fls_e0896uk0mdyl",
-          "category": 0,
-          "fls_section": "22.-2.5",
-          "fls_title": "Assembly Instructions",
-          "score": 0.545,
-          "reason": "Section-level similarity match (score: 0.54)"
-        },
-        {
-          "fls_id": "fls_9beohh5475s2",
-          "category": 0,
-          "fls_section": "6.-2.27",
-          "fls_title": "Destructuring Assignment",
-          "score": 0.54,
-          "reason": "Section-level similarity match (score: 0.54)"
+          "fls_title": "External Blocks",
+          "score": 1.0,
+          "reason": "Per FLS fls_4dje9t5y2dia: 'An external block is a construct that provides the declarations of [external function]s and [external static]s as unchecked imports.' C library functions are declared in external blocks."
         },
         {
           "fls_id": "fls_jep7p27kaqlp",
           "category": 0,
-          "fls_section": "19.-2.1",
           "fls_title": "Unsafety",
-          "score": 0.539,
-          "reason": "Section-level similarity match (score: 0.54)"
+          "score": 1.0,
+          "reason": "Per FLS fls_ljocmnaz2m49: 'Calling an unsafe function' is an unsafe operation. Per fls_ybnpe7ppq1vh: 'An unsafe operation shall be used only within an unsafe context.' All C library functions called via FFI require unsafe context."
+        },
+        {
+          "fls_id": "fls_fs0lcfllamj",
+          "category": 0,
+          "fls_title": "Attribute global_allocator",
+          "score": 0.58,
+          "reason": "Per FLS fls_5b8aewlgeon8: 'Attribute global_allocator shall apply to [static]s whose [type]s implement the core::alloc::GlobalAlloc trait.' This is Rust's mechanism for custom memory allocation."
+        },
+        {
+          "fls_id": "fls_9wgldua1u8yt",
+          "category": -4,
+          "fls_title": "Dereference Expression (UB)",
+          "score": 0.63,
+          "reason": "Per FLS: 'It is undefined behavior to dereference a raw pointer that is either dangling or unaligned.' This directly addresses MISRA's concern about using freed memory."
+        },
+        {
+          "fls_id": "fls_u2mzjgiwbkz0",
+          "category": 0,
+          "fls_title": "Destructors",
+          "score": 0.72,
+          "reason": "Per FLS fls_wzuwapjqtyyy: 'Dropping a value is the act of invoking the destructor of the related type.' Rust's RAII through Drop handles deallocation automatically for safe types."
         }
       ],
       "fls_rationale_type": "direct_mapping",
       "misra_rust_category": "required",
       "misra_rust_comment": "only accessible through unsafe extern \u201cC\u201d",
-      "confidence": "medium",
-      "notes": "MISRA ADD-6: only accessible through unsafe extern \u201cC\u201d. Only applicable in unsafe Rust"
+      "confidence": "high",
+      "notes": "MISRA ADD-6 notes this is only accessible through unsafe extern 'C'. In Rust, memory allocation uses Box/Vec with RAII, or the global allocator interface. When calling C's malloc/free via FFI, these sections apply.",
+      "rejected_matches": []
     },
     {
       "guideline_id": "Rule 21.4",
@@ -9012,19 +8935,33 @@
       "applicability_safe_rust": "not_applicable",
       "accepted_matches": [
         {
-          "fls_id": "fls_e0896uk0mdyl",
+          "fls_id": "fls_yztwtek0y34v",
           "category": 0,
-          "fls_section": "22.-2.5",
-          "fls_title": "Assembly Instructions",
-          "score": 0.507,
-          "reason": "Section-level similarity match (score: 0.51)"
+          "fls_title": "External Functions",
+          "score": 1.0,
+          "reason": "Per FLS fls_v24ino4hix3m: 'An external function is an unchecked import of a foreign function.' Per FLS fls_l88r9fj82650: 'An external function shall be invoked from an unsafe context.' When calling C library functions via FFI, they must be declared as external functions and called from unsafe context."
+        },
+        {
+          "fls_id": "fls_tmoh3y9oyqsy",
+          "category": 0,
+          "fls_title": "External Blocks",
+          "score": 1.0,
+          "reason": "Per FLS fls_4dje9t5y2dia: 'An external block is a construct that provides the declarations of [external function]s and [external static]s as unchecked imports.' C library functions are declared in external blocks."
+        },
+        {
+          "fls_id": "fls_jep7p27kaqlp",
+          "category": 0,
+          "fls_title": "Unsafety",
+          "score": 1.0,
+          "reason": "Per FLS fls_ljocmnaz2m49: 'Calling an unsafe function' is an unsafe operation. Per fls_ybnpe7ppq1vh: 'An unsafe operation shall be used only within an unsafe context.' All C library functions called via FFI require unsafe context."
         }
       ],
-      "fls_rationale_type": "direct_mapping",
+      "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "required",
       "misra_rust_comment": "only accessible through unsafe extern \u201cC\u201d",
-      "confidence": "medium",
-      "notes": "MISRA ADD-6: only accessible through unsafe extern \u201cC\u201d. Only applicable in unsafe Rust"
+      "confidence": "high",
+      "notes": "setjmp/longjmp have no Rust equivalent. Rust uses Result/Option for error handling and panic for unwinding. This rule applies only when calling C code via FFI that uses setjmp/longjmp.",
+      "rejected_matches": []
     },
     {
       "guideline_id": "Rule 21.5",
@@ -9034,8 +8971,33 @@
       "applicability_safe_rust": "not_applicable",
       "misra_rust_category": "required",
       "misra_rust_comment": "only accessible through unsafe extern \u201cC\u201d",
-      "confidence": "medium",
-      "notes": "MISRA ADD-6: only accessible through unsafe extern \u201cC\u201d. Only applicable in unsafe Rust"
+      "confidence": "high",
+      "notes": "C signal handling has no Rust equivalent. Rust does not have a standard signal handling mechanism. This rule applies only when calling C code via FFI that uses signal.h.",
+      "accepted_matches": [
+        {
+          "fls_id": "fls_yztwtek0y34v",
+          "category": 0,
+          "fls_title": "External Functions",
+          "score": 1.0,
+          "reason": "Per FLS fls_v24ino4hix3m: 'An external function is an unchecked import of a foreign function.' Per FLS fls_l88r9fj82650: 'An external function shall be invoked from an unsafe context.' When calling C library functions via FFI, they must be declared as external functions and called from unsafe context."
+        },
+        {
+          "fls_id": "fls_tmoh3y9oyqsy",
+          "category": 0,
+          "fls_title": "External Blocks",
+          "score": 1.0,
+          "reason": "Per FLS fls_4dje9t5y2dia: 'An external block is a construct that provides the declarations of [external function]s and [external static]s as unchecked imports.' C library functions are declared in external blocks."
+        },
+        {
+          "fls_id": "fls_jep7p27kaqlp",
+          "category": 0,
+          "fls_title": "Unsafety",
+          "score": 1.0,
+          "reason": "Per FLS fls_ljocmnaz2m49: 'Calling an unsafe function' is an unsafe operation. Per fls_ybnpe7ppq1vh: 'An unsafe operation shall be used only within an unsafe context.' All C library functions called via FFI require unsafe context."
+        }
+      ],
+      "rejected_matches": [],
+      "fls_rationale_type": "no_equivalent"
     },
     {
       "guideline_id": "Rule 21.6",
@@ -9107,75 +9069,47 @@
       "applicability_safe_rust": "not_applicable",
       "accepted_matches": [
         {
-          "fls_id": "fls_7bnrbjb0pq5n",
-          "category": -3,
-          "fls_section": "fls_hi1iz0gbnksi",
-          "fls_title": "Abort",
-          "score": 0.701,
-          "reason": "Per FLS: 'The program terminates.' (similarity: 0.70)"
-        },
-        {
-          "fls_id": "fls_hi1iz0gbnksi",
+          "fls_id": "fls_yztwtek0y34v",
           "category": 0,
-          "fls_section": "16.-2.3",
-          "fls_title": "Abort",
-          "score": 0.589,
-          "reason": "Section-level similarity match (score: 0.59)"
+          "fls_title": "External Functions",
+          "score": 1.0,
+          "reason": "Per FLS fls_v24ino4hix3m: 'An external function is an unchecked import of a foreign function.' Per FLS fls_l88r9fj82650: 'An external function shall be invoked from an unsafe context.' When calling C library functions via FFI, they must be declared as external functions and called from unsafe context."
         },
         {
-          "fls_id": "fls_iq6olct3rw4u",
-          "category": -3,
-          "fls_section": "fls_hi1iz0gbnksi",
-          "fls_title": "Abort",
-          "score": 0.573,
-          "reason": "Per FLS: 'Abort has the following runtime effects: #.' (similarity: 0.57)"
-        },
-        {
-          "fls_id": "fls_zJOAmSr3Dbqk",
+          "fls_id": "fls_tmoh3y9oyqsy",
           "category": 0,
-          "fls_section": "6.-2.4",
-          "fls_title": "Diverging Expressions",
-          "score": 0.566,
-          "reason": "Section-level similarity match (score: 0.57)"
-        },
-        {
-          "fls_id": "fls_wd2q6ft9yzrg",
-          "category": -3,
-          "fls_section": "fls_hi1iz0gbnksi",
-          "fls_title": "Abort",
-          "score": 0.564,
-          "reason": "Per FLS: 'Control flow halts the execution of all threads. #.' (similarity: 0.56)"
-        },
-        {
-          "fls_id": "fls_usgd0xlijoxv",
-          "category": 0,
-          "fls_section": "21.-2.2",
-          "fls_title": "ABI",
-          "score": 0.552,
-          "reason": "Section-level similarity match (score: 0.55)"
+          "fls_title": "External Blocks",
+          "score": 1.0,
+          "reason": "Per FLS fls_4dje9t5y2dia: 'An external block is a construct that provides the declarations of [external function]s and [external static]s as unchecked imports.' C library functions are declared in external blocks."
         },
         {
           "fls_id": "fls_jep7p27kaqlp",
           "category": 0,
-          "fls_section": "19.-2.1",
           "fls_title": "Unsafety",
-          "score": 0.539,
-          "reason": "Section-level similarity match (score: 0.54)"
+          "score": 1.0,
+          "reason": "Per FLS fls_ljocmnaz2m49: 'Calling an unsafe function' is an unsafe operation. Per fls_ybnpe7ppq1vh: 'An unsafe operation shall be used only within an unsafe context.' All C library functions called via FFI require unsafe context."
         },
         {
-          "fls_id": "fls_a3joqzqp1v9d",
+          "fls_id": "fls_k44b6atjwy89",
           "category": 0,
-          "fls_section": "22.-2.8",
-          "fls_title": "ABI Clobbers",
-          "score": 0.533,
-          "reason": "Section-level similarity match (score: 0.53)"
+          "fls_title": "Panic",
+          "score": 0.55,
+          "reason": "Rust's panic!() macro provides controlled abnormal termination with unwinding. Per FLS, a panic causes the current thread to unwind or abort."
+        },
+        {
+          "fls_id": "fls_hi1iz0gbnksi",
+          "category": 0,
+          "fls_title": "Abort",
+          "score": 0.72,
+          "reason": "Per FLS fls_9a1izu3omkbn: 'Abort is the immediate termination of a program.' Per FLS fls_wd2q6ft9yzrg: 'Control flow halts the execution of all threads.' This directly corresponds to C's abort() function."
         }
       ],
-      "fls_rationale_type": "direct_mapping",
+      "fls_rationale_type": "rust_alternative",
       "misra_rust_category": "required",
       "misra_rust_comment": "only accessible through unsafe extern \u201cC\u201d",
-      "confidence": "medium",
-      "notes": "MISRA ADD-6: only accessible through unsafe extern \u201cC\u201d. Only applicable in unsafe Rust"
+      "confidence": "high",
+      "notes": "C termination functions (abort, exit, _Exit, quick_exit) map to Rust's abort/panic. Rust uses std::process::abort() and panic!() for abnormal termination.",
+      "rejected_matches": []
     },
     {
       "guideline_id": "Rule 21.9",
@@ -9185,51 +9119,33 @@
       "applicability_safe_rust": "not_applicable",
       "accepted_matches": [
         {
-          "fls_id": "fls_94a8v54bufn8",
+          "fls_id": "fls_yztwtek0y34v",
           "category": 0,
-          "fls_section": "7.-2.1",
-          "fls_title": "Values",
-          "score": 0.553,
-          "reason": "Section-level similarity match (score: 0.55)"
+          "fls_title": "External Functions",
+          "score": 1.0,
+          "reason": "Per FLS fls_v24ino4hix3m: 'An external function is an unchecked import of a foreign function.' Per FLS fls_l88r9fj82650: 'An external function shall be invoked from an unsafe context.' When calling C library functions via FFI, they must be declared as external functions and called from unsafe context."
         },
         {
-          "fls_id": "fls_e0896uk0mdyl",
+          "fls_id": "fls_tmoh3y9oyqsy",
           "category": 0,
-          "fls_section": "22.-2.5",
-          "fls_title": "Assembly Instructions",
-          "score": 0.52,
-          "reason": "Section-level similarity match (score: 0.52)"
+          "fls_title": "External Blocks",
+          "score": 1.0,
+          "reason": "Per FLS fls_4dje9t5y2dia: 'An external block is a construct that provides the declarations of [external function]s and [external static]s as unchecked imports.' C library functions are declared in external blocks."
         },
         {
-          "fls_id": "fls_g1z6bpyjqxkz",
+          "fls_id": "fls_jep7p27kaqlp",
           "category": 0,
-          "fls_section": "4.-2.26",
-          "fls_title": "Type Layout",
-          "score": 0.514,
-          "reason": "Section-level similarity match (score: 0.51)"
-        },
-        {
-          "fls_id": "fls_usgd0xlijoxv",
-          "category": 0,
-          "fls_section": "21.-2.2",
-          "fls_title": "ABI",
-          "score": 0.506,
-          "reason": "Section-level similarity match (score: 0.51)"
-        },
-        {
-          "fls_id": "fls_afafmafz4hf2",
-          "category": 0,
-          "fls_section": "15.-2.10",
-          "fls_title": "Drop Order",
-          "score": 0.505,
-          "reason": "Section-level similarity match (score: 0.50)"
+          "fls_title": "Unsafety",
+          "score": 1.0,
+          "reason": "Per FLS fls_ljocmnaz2m49: 'Calling an unsafe function' is an unsafe operation. Per fls_ybnpe7ppq1vh: 'An unsafe operation shall be used only within an unsafe context.' All C library functions called via FFI require unsafe context."
         }
       ],
-      "fls_rationale_type": "direct_mapping",
+      "fls_rationale_type": "rust_alternative",
       "misra_rust_category": "required",
       "misra_rust_comment": "only accessible through unsafe extern \u201cC\u201d",
-      "confidence": "medium",
-      "notes": "MISRA ADD-6: only accessible through unsafe extern \u201cC\u201d. Only applicable in unsafe Rust"
+      "confidence": "high",
+      "notes": "C's bsearch/qsort use function pointers which can be unsafe. Rust provides safe alternatives via slice::binary_search() and slice::sort() which are type-safe and don't require unsafe function pointers.",
+      "rejected_matches": []
     },
     {
       "guideline_id": "Rule 21.10",
@@ -9239,8 +9155,33 @@
       "applicability_safe_rust": "not_applicable",
       "misra_rust_category": "required",
       "misra_rust_comment": "only accessible through unsafe extern \u201cC\u201d",
-      "confidence": "medium",
-      "notes": "MISRA ADD-6: only accessible through unsafe extern \u201cC\u201d. Only applicable in unsafe Rust"
+      "confidence": "high",
+      "notes": "C time/date functions have no standard Rust equivalent. Rust uses chrono or std::time for time handling which are type-safe. This applies only when using C time functions via FFI.",
+      "accepted_matches": [
+        {
+          "fls_id": "fls_yztwtek0y34v",
+          "category": 0,
+          "fls_title": "External Functions",
+          "score": 1.0,
+          "reason": "Per FLS fls_v24ino4hix3m: 'An external function is an unchecked import of a foreign function.' Per FLS fls_l88r9fj82650: 'An external function shall be invoked from an unsafe context.' When calling C library functions via FFI, they must be declared as external functions and called from unsafe context."
+        },
+        {
+          "fls_id": "fls_tmoh3y9oyqsy",
+          "category": 0,
+          "fls_title": "External Blocks",
+          "score": 1.0,
+          "reason": "Per FLS fls_4dje9t5y2dia: 'An external block is a construct that provides the declarations of [external function]s and [external static]s as unchecked imports.' C library functions are declared in external blocks."
+        },
+        {
+          "fls_id": "fls_jep7p27kaqlp",
+          "category": 0,
+          "fls_title": "Unsafety",
+          "score": 1.0,
+          "reason": "Per FLS fls_ljocmnaz2m49: 'Calling an unsafe function' is an unsafe operation. Per fls_ybnpe7ppq1vh: 'An unsafe operation shall be used only within an unsafe context.' All C library functions called via FFI require unsafe context."
+        }
+      ],
+      "rejected_matches": [],
+      "fls_rationale_type": "rust_alternative"
     },
     {
       "guideline_id": "Rule 21.11",
@@ -9264,43 +9205,33 @@
       "applicability_safe_rust": "not_applicable",
       "accepted_matches": [
         {
-          "fls_id": "fls_sxnnkzmuvexa",
-          "category": -2,
-          "fls_section": "fls_ld0ize96cm6m",
-          "fls_title": "Preludes",
-          "score": 0.601,
-          "reason": "Per FLS: '[Floating-point type]s f32 and f64.' (similarity: 0.60)"
-        },
-        {
-          "fls_id": "fls_29tlg1vyqay2",
+          "fls_id": "fls_yztwtek0y34v",
           "category": 0,
-          "fls_section": "2.-2.14",
-          "fls_title": "Float Literals",
-          "score": 0.561,
-          "reason": "Section-level similarity match (score: 0.56)"
+          "fls_title": "External Functions",
+          "score": 1.0,
+          "reason": "Per FLS fls_v24ino4hix3m: 'An external function is an unchecked import of a foreign function.' Per FLS fls_l88r9fj82650: 'An external function shall be invoked from an unsafe context.' When calling C library functions via FFI, they must be declared as external functions and called from unsafe context."
         },
         {
-          "fls_id": "fls_ZFQhOxO3jpby",
-          "category": -2,
-          "fls_section": "fls_lv7w7aalpwm5",
-          "fls_title": "Type Inference",
-          "score": 0.556,
-          "reason": "Per FLS: 'If there are any remaining [floating-point type variable]s that hav...' (similarity: 0.56)"
+          "fls_id": "fls_tmoh3y9oyqsy",
+          "category": 0,
+          "fls_title": "External Blocks",
+          "score": 1.0,
+          "reason": "Per FLS fls_4dje9t5y2dia: 'An external block is a construct that provides the declarations of [external function]s and [external static]s as unchecked imports.' C library functions are declared in external blocks."
         },
         {
-          "fls_id": "fls_vfofk2aagsj5",
-          "category": -3,
-          "fls_section": "fls_1qhsun1vyarz",
-          "fls_title": "Type Cast Expressions",
-          "score": 0.55,
-          "reason": "Per FLS: 'Rounds the value of the operand preferring the value with an even l...' (similarity: 0.55)"
+          "fls_id": "fls_jep7p27kaqlp",
+          "category": 0,
+          "fls_title": "Unsafety",
+          "score": 1.0,
+          "reason": "Per FLS fls_ljocmnaz2m49: 'Calling an unsafe function' is an unsafe operation. Per fls_ybnpe7ppq1vh: 'An unsafe operation shall be used only within an unsafe context.' All C library functions called via FFI require unsafe context."
         }
       ],
-      "fls_rationale_type": "direct_mapping",
+      "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "required",
       "misra_rust_comment": "only accessible through unsafe extern \u201cC\u201d",
-      "confidence": "medium",
-      "notes": "MISRA ADD-6: only accessible through unsafe extern \u201cC\u201d. Only applicable in unsafe Rust"
+      "confidence": "high",
+      "notes": "C floating-point environment (fenv.h) has no Rust equivalent. Rust does not expose floating-point exception flags or rounding mode control. This applies only when calling C code via FFI.",
+      "rejected_matches": []
     },
     {
       "guideline_id": "Rule 21.13",
@@ -9310,131 +9241,33 @@
       "applicability_safe_rust": "not_applicable",
       "accepted_matches": [
         {
-          "fls_id": "fls_wrvjizrqf3po",
+          "fls_id": "fls_yztwtek0y34v",
           "category": 0,
-          "fls_section": "4.-2.4",
-          "fls_title": "Char Type",
-          "score": 0.627,
-          "reason": "Section-level similarity match (score: 0.63)"
+          "fls_title": "External Functions",
+          "score": 1.0,
+          "reason": "Per FLS fls_v24ino4hix3m: 'An external function is an unchecked import of a foreign function.' Per FLS fls_l88r9fj82650: 'An external function shall be invoked from an unsafe context.' When calling C library functions via FFI, they must be declared as external functions and called from unsafe context."
         },
         {
-          "fls_id": "fls_p090c5oTnElW",
+          "fls_id": "fls_tmoh3y9oyqsy",
           "category": 0,
-          "fls_section": "2.-2.10",
-          "fls_title": "Simple C String Literals",
-          "score": 0.593,
-          "reason": "Section-level similarity match (score: 0.59)"
+          "fls_title": "External Blocks",
+          "score": 1.0,
+          "reason": "Per FLS fls_4dje9t5y2dia: 'An external block is a construct that provides the declarations of [external function]s and [external static]s as unchecked imports.' C library functions are declared in external blocks."
         },
         {
-          "fls_id": "fls_emcNJzl2tHSA",
-          "category": -2,
-          "fls_section": "fls_wsfw8xF3vniL",
-          "fls_title": "Structural Equality",
-          "score": 0.58,
-          "reason": "Per FLS: 'Bool, char, [function pointer type]s, [integer type]s, str, and [ra...' (similarity: 0.58)"
-        },
-        {
-          "fls_id": "fls_B0SMXRqQMS1E",
-          "category": -2,
-          "fls_section": "fls_xztr1kebz8bo",
-          "fls_title": "Function Pointer Types",
-          "score": 0.577,
-          "reason": "Per FLS: 'A variadic part indicates the presence of C-like optional parameters.' (similarity: 0.58)"
-        },
-        {
-          "fls_id": "fls_6z45ss502alt",
-          "category": -2,
-          "fls_section": "fls_66m4rnbssgig",
-          "fls_title": "Constant Expressions",
-          "score": 0.569,
-          "reason": "Per FLS: '[Bit expression]s of [scalar type]s,' (similarity: 0.57)"
-        },
-        {
-          "fls_id": "fls_vnwbs0exbwcn",
-          "category": -2,
-          "fls_section": "fls_wrvjizrqf3po",
-          "fls_title": "Char Type",
-          "score": 0.569,
-          "reason": "Per FLS: 'Char is a type whose [value]s are represented as a 32-bit unsigned ...' (similarity: 0.57)"
-        },
-        {
-          "fls_id": "fls_2ed4axpsy9u0",
+          "fls_id": "fls_jep7p27kaqlp",
           "category": 0,
-          "fls_section": "2.-2.13",
-          "fls_title": "Integer Literals",
-          "score": 0.569,
-          "reason": "Section-level similarity match (score: 0.57)"
-        },
-        {
-          "fls_id": "fls_jd1inwz7ulyw",
-          "category": -2,
-          "fls_section": "19.-2.4",
           "fls_title": "Unsafety",
-          "score": 0.567,
-          "reason": "Per FLS: 'Dereferencing a value of a raw pointer type.' (similarity: 0.57)"
-        },
-        {
-          "fls_id": "fls_jU8zg4k8dFsY",
-          "category": -2,
-          "fls_section": "fls_hejgghwzblf",
-          "fls_title": "Register Arguments",
-          "score": 0.564,
-          "reason": "Per FLS: 'The type of a const register expression shall be an integer type.' (similarity: 0.56)"
-        },
-        {
-          "fls_id": "fls_3qnpv2z7yjil",
-          "category": 0,
-          "fls_section": "4.-2.6",
-          "fls_title": "Integer Types",
-          "score": 0.564,
-          "reason": "Section-level similarity match (score: 0.56)"
-        },
-        {
-          "fls_id": "fls_8s1vddh8vdhy",
-          "category": -2,
-          "fls_section": "fls_ohhsmifo0urd",
-          "fls_title": "Type Representation",
-          "score": 0.56,
-          "reason": "Per FLS: 'C representation lays out a type such that the type is interoperabl...' (similarity: 0.56)"
-        },
-        {
-          "fls_id": "fls_h9sxg3pxn7i2",
-          "category": -3,
-          "fls_section": "fls_1qhsun1vyarz",
-          "fls_title": "Type Cast Expressions",
-          "score": 0.559,
-          "reason": "Per FLS: 'Zero-extends the operand if the [operand]'s type is unsigned, or' (similarity: 0.56)"
-        },
-        {
-          "fls_id": "fls_1qhsun1vyarz",
-          "category": 0,
-          "fls_section": "6.-2.24",
-          "fls_title": "Type Cast Expressions",
-          "score": 0.558,
-          "reason": "Section-level similarity match (score: 0.56)"
-        },
-        {
-          "fls_id": "fls_6b4rwkrc1ap6",
-          "category": -2,
-          "fls_section": "fls_6ydylimiv553",
-          "fls_title": "Place Expressions",
-          "score": 0.556,
-          "reason": "Per FLS: 'A dereference expression whose operand's type is a mutable raw poin...' (similarity: 0.56)"
-        },
-        {
-          "fls_id": "fls_onutb0b9p9zj",
-          "category": -2,
-          "fls_section": "fls_abp6tjbz8tpn",
-          "fls_title": "Bit Expressions",
-          "score": 0.555,
-          "reason": "Per FLS: 'The type of the left operand of a shift right expression shall impl...' (similarity: 0.56)"
+          "score": 1.0,
+          "reason": "Per FLS fls_ljocmnaz2m49: 'Calling an unsafe function' is an unsafe operation. Per fls_ybnpe7ppq1vh: 'An unsafe operation shall be used only within an unsafe context.' All C library functions called via FFI require unsafe context."
         }
       ],
-      "fls_rationale_type": "direct_mapping",
+      "fls_rationale_type": "rust_alternative",
       "misra_rust_category": "required",
       "misra_rust_comment": "only accessible through unsafe extern \u201cC\u201d",
-      "confidence": "medium",
-      "notes": "MISRA ADD-6: only accessible through unsafe extern \u201cC\u201d. Only applicable in unsafe Rust"
+      "confidence": "high",
+      "notes": "C's ctype.h functions accept int but expect unsigned char range. Rust's char methods (is_alphabetic, is_digit, etc.) work on Unicode chars and are type-safe. This applies only when calling C ctype.h via FFI.",
+      "rejected_matches": []
     },
     {
       "guideline_id": "Rule 21.14",
@@ -9444,19 +9277,33 @@
       "applicability_safe_rust": "not_applicable",
       "accepted_matches": [
         {
-          "fls_id": "fls_p090c5oTnElW",
+          "fls_id": "fls_yztwtek0y34v",
           "category": 0,
-          "fls_section": "2.-2.10",
-          "fls_title": "Simple C String Literals",
-          "score": 0.542,
-          "reason": "Section-level similarity match (score: 0.54)"
+          "fls_title": "External Functions",
+          "score": 1.0,
+          "reason": "Per FLS fls_v24ino4hix3m: 'An external function is an unchecked import of a foreign function.' Per FLS fls_l88r9fj82650: 'An external function shall be invoked from an unsafe context.' When calling C library functions via FFI, they must be declared as external functions and called from unsafe context."
+        },
+        {
+          "fls_id": "fls_tmoh3y9oyqsy",
+          "category": 0,
+          "fls_title": "External Blocks",
+          "score": 1.0,
+          "reason": "Per FLS fls_4dje9t5y2dia: 'An external block is a construct that provides the declarations of [external function]s and [external static]s as unchecked imports.' C library functions are declared in external blocks."
+        },
+        {
+          "fls_id": "fls_jep7p27kaqlp",
+          "category": 0,
+          "fls_title": "Unsafety",
+          "score": 1.0,
+          "reason": "Per FLS fls_ljocmnaz2m49: 'Calling an unsafe function' is an unsafe operation. Per fls_ybnpe7ppq1vh: 'An unsafe operation shall be used only within an unsafe context.' All C library functions called via FFI require unsafe context."
         }
       ],
-      "fls_rationale_type": "direct_mapping",
+      "fls_rationale_type": "rust_alternative",
       "misra_rust_category": "required",
       "misra_rust_comment": "only accessible through unsafe extern \u201cC\u201d",
-      "confidence": "medium",
-      "notes": "MISRA ADD-6: only accessible through unsafe extern \u201cC\u201d. Only applicable in unsafe Rust"
+      "confidence": "high",
+      "notes": "C's memcmp can expose padding bytes. Rust's PartialEq/Eq traits provide safe comparisons. For byte-level comparison, Rust slices can be compared directly. This applies only when calling C memcmp via FFI.",
+      "rejected_matches": []
     },
     {
       "guideline_id": "Rule 21.15",
@@ -9466,27 +9313,33 @@
       "applicability_safe_rust": "not_applicable",
       "accepted_matches": [
         {
-          "fls_id": "fls_hrum767l6dte",
-          "category": -2,
-          "fls_section": "fls_ppd1xwve3tr7",
-          "fls_title": "Raw Pointer Types",
-          "score": 0.598,
-          "reason": "Per FLS: 'Comparing two [value]s of [raw pointer type]s compares the addresse...' (similarity: 0.60)"
+          "fls_id": "fls_yztwtek0y34v",
+          "category": 0,
+          "fls_title": "External Functions",
+          "score": 1.0,
+          "reason": "Per FLS fls_v24ino4hix3m: 'An external function is an unchecked import of a foreign function.' Per FLS fls_l88r9fj82650: 'An external function shall be invoked from an unsafe context.' When calling C library functions via FFI, they must be declared as external functions and called from unsafe context."
         },
         {
-          "fls_id": "fls_k6ues2936pjq",
-          "category": -2,
-          "fls_section": "fls_ppd1xwve3tr7",
-          "fls_title": "Raw Pointer Types",
-          "score": 0.56,
-          "reason": "Per FLS: 'Comparing a value of a raw pointer type to a value of a dynamically...' (similarity: 0.56)"
+          "fls_id": "fls_tmoh3y9oyqsy",
+          "category": 0,
+          "fls_title": "External Blocks",
+          "score": 1.0,
+          "reason": "Per FLS fls_4dje9t5y2dia: 'An external block is a construct that provides the declarations of [external function]s and [external static]s as unchecked imports.' C library functions are declared in external blocks."
+        },
+        {
+          "fls_id": "fls_jep7p27kaqlp",
+          "category": 0,
+          "fls_title": "Unsafety",
+          "score": 1.0,
+          "reason": "Per FLS fls_ljocmnaz2m49: 'Calling an unsafe function' is an unsafe operation. Per fls_ybnpe7ppq1vh: 'An unsafe operation shall be used only within an unsafe context.' All C library functions called via FFI require unsafe context."
         }
       ],
-      "fls_rationale_type": "direct_mapping",
+      "fls_rationale_type": "rust_alternative",
       "misra_rust_category": "required",
       "misra_rust_comment": "only accessible through unsafe extern \u201cC\u201d",
-      "confidence": "medium",
-      "notes": "MISRA ADD-6: only accessible through unsafe extern \u201cC\u201d. Only applicable in unsafe Rust"
+      "confidence": "high",
+      "notes": "C's memcpy/memmove/memcmp use void* which loses type information. Rust's slice::copy_from_slice and Clone are type-safe. This applies only when calling C memory functions via FFI.",
+      "rejected_matches": []
     },
     {
       "guideline_id": "Rule 21.16",
@@ -9496,75 +9349,33 @@
       "applicability_safe_rust": "not_applicable",
       "accepted_matches": [
         {
-          "fls_id": "fls_emcNJzl2tHSA",
-          "category": -2,
-          "fls_section": "fls_wsfw8xF3vniL",
-          "fls_title": "Structural Equality",
-          "score": 0.629,
-          "reason": "Per FLS: 'Bool, char, [function pointer type]s, [integer type]s, str, and [ra...' (similarity: 0.63)"
-        },
-        {
-          "fls_id": "fls_hrum767l6dte",
-          "category": -2,
-          "fls_section": "fls_ppd1xwve3tr7",
-          "fls_title": "Raw Pointer Types",
-          "score": 0.62,
-          "reason": "Per FLS: 'Comparing two [value]s of [raw pointer type]s compares the addresse...' (similarity: 0.62)"
-        },
-        {
-          "fls_id": "fls_g1z6bpyjqxkz",
+          "fls_id": "fls_yztwtek0y34v",
           "category": 0,
-          "fls_section": "4.-2.26",
-          "fls_title": "Type Layout",
-          "score": 0.61,
-          "reason": "Section-level similarity match (score: 0.61)"
+          "fls_title": "External Functions",
+          "score": 1.0,
+          "reason": "Per FLS fls_v24ino4hix3m: 'An external function is an unchecked import of a foreign function.' Per FLS fls_l88r9fj82650: 'An external function shall be invoked from an unsafe context.' When calling C library functions via FFI, they must be declared as external functions and called from unsafe context."
         },
         {
-          "fls_id": "fls_rjxpof29a3nl",
+          "fls_id": "fls_tmoh3y9oyqsy",
           "category": 0,
-          "fls_section": "4.-2.29",
-          "fls_title": "Struct Type Representation",
-          "score": 0.606,
-          "reason": "Section-level similarity match (score: 0.61)"
+          "fls_title": "External Blocks",
+          "score": 1.0,
+          "reason": "Per FLS fls_4dje9t5y2dia: 'An external block is a construct that provides the declarations of [external function]s and [external static]s as unchecked imports.' C library functions are declared in external blocks."
         },
         {
-          "fls_id": "fls_p090c5oTnElW",
+          "fls_id": "fls_jep7p27kaqlp",
           "category": 0,
-          "fls_section": "2.-2.10",
-          "fls_title": "Simple C String Literals",
-          "score": 0.589,
-          "reason": "Section-level similarity match (score: 0.59)"
-        },
-        {
-          "fls_id": "fls_wrvjizrqf3po",
-          "category": 0,
-          "fls_section": "4.-2.4",
-          "fls_title": "Char Type",
-          "score": 0.589,
-          "reason": "Section-level similarity match (score: 0.59)"
-        },
-        {
-          "fls_id": "fls_94a8v54bufn8",
-          "category": 0,
-          "fls_section": "7.-2.1",
-          "fls_title": "Values",
-          "score": 0.581,
-          "reason": "Section-level similarity match (score: 0.58)"
-        },
-        {
-          "fls_id": "fls_k6ues2936pjq",
-          "category": -2,
-          "fls_section": "fls_ppd1xwve3tr7",
-          "fls_title": "Raw Pointer Types",
-          "score": 0.572,
-          "reason": "Per FLS: 'Comparing a value of a raw pointer type to a value of a dynamically...' (similarity: 0.57)"
+          "fls_title": "Unsafety",
+          "score": 1.0,
+          "reason": "Per FLS fls_ljocmnaz2m49: 'Calling an unsafe function' is an unsafe operation. Per fls_ybnpe7ppq1vh: 'An unsafe operation shall be used only within an unsafe context.' All C library functions called via FFI require unsafe context."
         }
       ],
-      "fls_rationale_type": "direct_mapping",
+      "fls_rationale_type": "rust_alternative",
       "misra_rust_category": "required",
       "misra_rust_comment": "only accessible through unsafe extern \u201cC\u201d",
-      "confidence": "medium",
-      "notes": "MISRA ADD-6: only accessible through unsafe extern \u201cC\u201d. Only applicable in unsafe Rust"
+      "confidence": "high",
+      "notes": "C's memcmp with pointers to different types is problematic. Rust's comparison traits are type-safe. This applies only when calling C memcmp via FFI.",
+      "rejected_matches": []
     },
     {
       "guideline_id": "Rule 21.17",
@@ -9605,59 +9416,33 @@
       "applicability_safe_rust": "not_applicable",
       "accepted_matches": [
         {
-          "fls_id": "fls_p090c5oTnElW",
+          "fls_id": "fls_yztwtek0y34v",
           "category": 0,
-          "fls_section": "2.-2.10",
-          "fls_title": "Simple C String Literals",
-          "score": 0.597,
-          "reason": "Section-level similarity match (score: 0.60)"
+          "fls_title": "External Functions",
+          "score": 1.0,
+          "reason": "Per FLS fls_v24ino4hix3m: 'An external function is an unchecked import of a foreign function.' Per FLS fls_l88r9fj82650: 'An external function shall be invoked from an unsafe context.' When calling C library functions via FFI, they must be declared as external functions and called from unsafe context."
         },
         {
-          "fls_id": "fls_uhwpuv6cx4ip",
-          "category": -4,
-          "fls_section": "fls_94a8v54bufn8",
-          "fls_title": "Values",
-          "score": 0.576,
-          "reason": "Per FLS: 'It is undefined behavior to create an allocated object with memory ...' (similarity: 0.58)"
-        },
-        {
-          "fls_id": "fls_xuuFKmm181bs",
-          "category": -4,
-          "fls_section": "fls_94a8v54bufn8",
-          "fls_title": "Values",
-          "score": 0.555,
-          "reason": "Per FLS: 'It is undefined behavior to create an allocated object with memory ...' (similarity: 0.55)"
-        },
-        {
-          "fls_id": "fls_U1gHCy16emVe",
+          "fls_id": "fls_tmoh3y9oyqsy",
           "category": 0,
-          "fls_section": "2.-2.9",
-          "fls_title": "C String Literals",
-          "score": 0.528,
-          "reason": "Section-level similarity match (score: 0.53)"
+          "fls_title": "External Blocks",
+          "score": 1.0,
+          "reason": "Per FLS fls_4dje9t5y2dia: 'An external block is a construct that provides the declarations of [external function]s and [external static]s as unchecked imports.' C library functions are declared in external blocks."
         },
         {
-          "fls_id": "fls_e0896uk0mdyl",
+          "fls_id": "fls_jep7p27kaqlp",
           "category": 0,
-          "fls_section": "22.-2.5",
-          "fls_title": "Assembly Instructions",
-          "score": 0.503,
-          "reason": "Section-level similarity match (score: 0.50)"
-        },
-        {
-          "fls_id": "fls_usgd0xlijoxv",
-          "category": 0,
-          "fls_section": "21.-2.2",
-          "fls_title": "ABI",
-          "score": 0.503,
-          "reason": "Section-level similarity match (score: 0.50)"
+          "fls_title": "Unsafety",
+          "score": 1.0,
+          "reason": "Per FLS fls_ljocmnaz2m49: 'Calling an unsafe function' is an unsafe operation. Per fls_ybnpe7ppq1vh: 'An unsafe operation shall be used only within an unsafe context.' All C library functions called via FFI require unsafe context."
         }
       ],
-      "fls_rationale_type": "direct_mapping",
+      "fls_rationale_type": "rust_alternative",
       "misra_rust_category": "required",
       "misra_rust_comment": "only accessible through unsafe extern \u201cC\u201d",
-      "confidence": "medium",
-      "notes": "MISRA ADD-6: only accessible through unsafe extern \u201cC\u201d. Only applicable in unsafe Rust"
+      "confidence": "high",
+      "notes": "C's string.h functions with size_t can have buffer overflow issues. Rust slices carry their length and prevent out-of-bounds access. This applies only when calling C string functions via FFI.",
+      "rejected_matches": []
     },
     {
       "guideline_id": "Rule 21.19",
@@ -9667,131 +9452,33 @@
       "applicability_safe_rust": "not_applicable",
       "accepted_matches": [
         {
-          "fls_id": "fls_hrum767l6dte",
-          "category": -2,
-          "fls_section": "fls_ppd1xwve3tr7",
-          "fls_title": "Raw Pointer Types",
-          "score": 0.62,
-          "reason": "Per FLS: 'Comparing two [value]s of [raw pointer type]s compares the addresse...' (similarity: 0.62)"
-        },
-        {
-          "fls_id": "fls_6b4rwkrc1ap6",
-          "category": -2,
-          "fls_section": "fls_6ydylimiv553",
-          "fls_title": "Place Expressions",
-          "score": 0.606,
-          "reason": "Per FLS: 'A dereference expression whose operand's type is a mutable raw poin...' (similarity: 0.61)"
-        },
-        {
-          "fls_id": "fls_5cm4gkt55hjh",
+          "fls_id": "fls_yztwtek0y34v",
           "category": 0,
-          "fls_section": "6.-2.16",
-          "fls_title": "Dereference Expression",
-          "score": 0.601,
-          "reason": "Section-level similarity match (score: 0.60)"
+          "fls_title": "External Functions",
+          "score": 1.0,
+          "reason": "Per FLS fls_v24ino4hix3m: 'An external function is an unchecked import of a foreign function.' Per FLS fls_l88r9fj82650: 'An external function shall be invoked from an unsafe context.' When calling C library functions via FFI, they must be declared as external functions and called from unsafe context."
         },
         {
-          "fls_id": "fls_k6ues2936pjq",
-          "category": -2,
-          "fls_section": "fls_ppd1xwve3tr7",
-          "fls_title": "Raw Pointer Types",
-          "score": 0.599,
-          "reason": "Per FLS: 'Comparing a value of a raw pointer type to a value of a dynamically...' (similarity: 0.60)"
+          "fls_id": "fls_tmoh3y9oyqsy",
+          "category": 0,
+          "fls_title": "External Blocks",
+          "score": 1.0,
+          "reason": "Per FLS fls_4dje9t5y2dia: 'An external block is a construct that provides the declarations of [external function]s and [external static]s as unchecked imports.' C library functions are declared in external blocks."
         },
         {
-          "fls_id": "fls_jd1inwz7ulyw",
-          "category": -2,
-          "fls_section": "19.-2.4",
+          "fls_id": "fls_jep7p27kaqlp",
+          "category": 0,
           "fls_title": "Unsafety",
-          "score": 0.599,
-          "reason": "Per FLS: 'Dereferencing a value of a raw pointer type.' (similarity: 0.60)"
-        },
-        {
-          "fls_id": "fls_9wgldua1u8yt",
-          "category": -4,
-          "fls_section": "fls_5cm4gkt55hjh",
-          "fls_title": "Dereference Expression",
-          "score": 0.591,
-          "reason": "Per FLS: 'It is undefined behavior to dereference a raw pointer that is eithe...' (similarity: 0.59)"
-        },
-        {
-          "fls_id": "fls_8i4jzksxlrw0",
-          "category": -2,
-          "fls_section": "fls_5cm4gkt55hjh",
-          "fls_title": "Dereference Expression",
-          "score": 0.589,
-          "reason": "Per FLS: 'Dereferencing a raw pointer shall require unsafe context unless the...' (similarity: 0.59)"
-        },
-        {
-          "fls_id": "fls_gOXUWePymgGV",
-          "category": -2,
-          "fls_section": "fls_vXGuvRWOLbEE",
-          "fls_title": "Raw Borrow Expression",
-          "score": 0.58,
-          "reason": "Per FLS: 'When the operand of a raw borrow expression is a place expression, ...' (similarity: 0.58)"
-        },
-        {
-          "fls_id": "fls_52thmi9hnoks",
-          "category": -4,
-          "fls_section": "fls_xztr1kebz8bo",
-          "fls_title": "Function Pointer Types",
-          "score": 0.578,
-          "reason": "Per FLS: 'It is a validity invariant for a value of a function pointer type t...' (similarity: 0.58)"
-        },
-        {
-          "fls_id": "fls_aeh5pzpcjveq",
-          "category": -2,
-          "fls_section": "fls_5cm4gkt55hjh",
-          "fls_title": "Dereference Expression",
-          "score": 0.569,
-          "reason": "Per FLS: 'When the operand of a dereference expression is of a pointer type, ...' (similarity: 0.57)"
-        },
-        {
-          "fls_id": "fls_o0feajus3jtu",
-          "category": -2,
-          "fls_section": "fls_6ydylimiv553",
-          "fls_title": "Place Expressions",
-          "score": 0.568,
-          "reason": "Per FLS: 'The operand of a dereference expression if evaluated in a mutable p...' (similarity: 0.57)"
-        },
-        {
-          "fls_id": "fls_usgd0xlijoxv",
-          "category": 0,
-          "fls_section": "21.-2.2",
-          "fls_title": "ABI",
-          "score": 0.565,
-          "reason": "Section-level similarity match (score: 0.56)"
-        },
-        {
-          "fls_id": "fls_p090c5oTnElW",
-          "category": 0,
-          "fls_section": "2.-2.10",
-          "fls_title": "Simple C String Literals",
-          "score": 0.558,
-          "reason": "Section-level similarity match (score: 0.56)"
-        },
-        {
-          "fls_id": "fls_xztr1kebz8bo",
-          "category": 0,
-          "fls_section": "4.-2.16",
-          "fls_title": "Function Pointer Types",
-          "score": 0.549,
-          "reason": "Section-level similarity match (score: 0.55)"
-        },
-        {
-          "fls_id": "fls_rjxpof29a3nl",
-          "category": 0,
-          "fls_section": "4.-2.29",
-          "fls_title": "Struct Type Representation",
-          "score": 0.547,
-          "reason": "Section-level similarity match (score: 0.55)"
+          "score": 1.0,
+          "reason": "Per FLS fls_ljocmnaz2m49: 'Calling an unsafe function' is an unsafe operation. Per fls_ybnpe7ppq1vh: 'An unsafe operation shall be used only within an unsafe context.' All C library functions called via FFI require unsafe context."
         }
       ],
-      "fls_rationale_type": "direct_mapping",
+      "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "required",
       "misra_rust_comment": "only accessible through unsafe extern \u201cC\u201d",
-      "confidence": "medium",
-      "notes": "MISRA ADD-6: only accessible through unsafe extern \u201cC\u201d. Only applicable in unsafe Rust"
+      "confidence": "high",
+      "notes": "C's localeconv/getenv/setlocale return pointers that can be invalidated. Rust's std::env functions return owned Strings. This applies only when calling C locale functions via FFI.",
+      "rejected_matches": []
     },
     {
       "guideline_id": "Rule 21.20",
@@ -9801,43 +9488,33 @@
       "applicability_safe_rust": "not_applicable",
       "accepted_matches": [
         {
-          "fls_id": "fls_usgd0xlijoxv",
+          "fls_id": "fls_yztwtek0y34v",
           "category": 0,
-          "fls_section": "21.-2.2",
-          "fls_title": "ABI",
-          "score": 0.53,
-          "reason": "Section-level similarity match (score: 0.53)"
+          "fls_title": "External Functions",
+          "score": 1.0,
+          "reason": "Per FLS fls_v24ino4hix3m: 'An external function is an unchecked import of a foreign function.' Per FLS fls_l88r9fj82650: 'An external function shall be invoked from an unsafe context.' When calling C library functions via FFI, they must be declared as external functions and called from unsafe context."
         },
         {
-          "fls_id": "fls_e0896uk0mdyl",
+          "fls_id": "fls_tmoh3y9oyqsy",
           "category": 0,
-          "fls_section": "22.-2.5",
-          "fls_title": "Assembly Instructions",
-          "score": 0.521,
-          "reason": "Section-level similarity match (score: 0.52)"
+          "fls_title": "External Blocks",
+          "score": 1.0,
+          "reason": "Per FLS fls_4dje9t5y2dia: 'An external block is a construct that provides the declarations of [external function]s and [external static]s as unchecked imports.' C library functions are declared in external blocks."
         },
         {
-          "fls_id": "fls_6ydylimiv553",
+          "fls_id": "fls_jep7p27kaqlp",
           "category": 0,
-          "fls_section": "6.-2.5",
-          "fls_title": "Place Expressions",
-          "score": 0.505,
-          "reason": "Section-level similarity match (score: 0.50)"
-        },
-        {
-          "fls_id": "fls_5cm4gkt55hjh",
-          "category": 0,
-          "fls_section": "6.-2.16",
-          "fls_title": "Dereference Expression",
-          "score": 0.502,
-          "reason": "Section-level similarity match (score: 0.50)"
+          "fls_title": "Unsafety",
+          "score": 1.0,
+          "reason": "Per FLS fls_ljocmnaz2m49: 'Calling an unsafe function' is an unsafe operation. Per fls_ybnpe7ppq1vh: 'An unsafe operation shall be used only within an unsafe context.' All C library functions called via FFI require unsafe context."
         }
       ],
-      "fls_rationale_type": "direct_mapping",
+      "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "required",
       "misra_rust_comment": "only accessible through unsafe extern \u201cC\u201d",
-      "confidence": "medium",
-      "notes": "MISRA ADD-6: only accessible through unsafe extern \u201cC\u201d. Only applicable in unsafe Rust"
+      "confidence": "high",
+      "notes": "C's strtok uses internal static state which is not thread-safe. Rust has no equivalent; String::split returns an iterator. This applies only when calling C strtok via FFI.",
+      "rejected_matches": []
     },
     {
       "guideline_id": "Rule 21.21",
@@ -9847,115 +9524,33 @@
       "applicability_safe_rust": "not_applicable",
       "accepted_matches": [
         {
-          "fls_id": "fls_6urL6fZ5cpaA",
-          "category": -2,
-          "fls_section": "fls_qcb1n9c0e5hz",
-          "fls_title": "Functions",
-          "score": 0.675,
-          "reason": "Per FLS: 'extern \"system\"' (similarity: 0.68)"
-        },
-        {
-          "fls_id": "fls_eHPWHrvs7ETl",
-          "category": -2,
-          "fls_section": "fls_qcb1n9c0e5hz",
-          "fls_title": "Functions",
-          "score": 0.625,
-          "reason": "Per FLS: 'extern \"sysv64\"' (similarity: 0.63)"
-        },
-        {
-          "fls_id": "fls_OR85NVifPwjr",
-          "category": -2,
-          "fls_section": "fls_qcb1n9c0e5hz",
-          "fls_title": "Functions",
-          "score": 0.594,
-          "reason": "Per FLS: 'extern \"C\"' (similarity: 0.59)"
-        },
-        {
-          "fls_id": "fls_z2kzyin8dyr7",
-          "category": -2,
-          "fls_section": "fls_usgd0xlijoxv",
-          "fls_title": "ABI",
-          "score": 0.583,
-          "reason": "Per FLS: 'A function with an ABI but without a specified ABI kind has implici...' (similarity: 0.58)"
-        },
-        {
-          "fls_id": "fls_8m7pc3riokst",
-          "category": -2,
-          "fls_section": "fls_usgd0xlijoxv",
-          "fls_title": "ABI",
-          "score": 0.574,
-          "reason": "Per FLS: 'extern \"system\" - The operating system-dependent ABI.' (similarity: 0.57)"
-        },
-        {
-          "fls_id": "fls_usgd0xlijoxv",
+          "fls_id": "fls_yztwtek0y34v",
           "category": 0,
-          "fls_section": "21.-2.2",
-          "fls_title": "ABI",
-          "score": 0.574,
-          "reason": "Section-level similarity match (score: 0.57)"
+          "fls_title": "External Functions",
+          "score": 1.0,
+          "reason": "Per FLS fls_v24ino4hix3m: 'An external function is an unchecked import of a foreign function.' Per FLS fls_l88r9fj82650: 'An external function shall be invoked from an unsafe context.' When calling C library functions via FFI, they must be declared as external functions and called from unsafe context."
         },
         {
-          "fls_id": "fls_mjCrvmikm58M",
-          "category": -2,
-          "fls_section": "fls_qcb1n9c0e5hz",
-          "fls_title": "Functions",
-          "score": 0.573,
-          "reason": "Per FLS: 'extern \"sysv64-unwind\"' (similarity: 0.57)"
-        },
-        {
-          "fls_id": "fls_s5nfhBFOk8Bu",
-          "category": -2,
-          "fls_section": "fls_jep7p27kaqlp",
-          "fls_title": "Unsafety",
-          "score": 0.557,
-          "reason": "Per FLS: 'Calling macro core::arch::asm.' (similarity: 0.56)"
-        },
-        {
-          "fls_id": "fls_49pus6qqmf72",
-          "category": -2,
-          "fls_section": "fls_a3joqzqp1v9d",
-          "fls_title": "ABI Clobbers",
-          "score": 0.557,
-          "reason": "Per FLS: '- x86-32 - \"C\", \"cdecl\", \"efiapi\", \"fastcall\", \"stdcall\", \"system\" ...' (similarity: 0.56)"
+          "fls_id": "fls_tmoh3y9oyqsy",
+          "category": 0,
+          "fls_title": "External Blocks",
+          "score": 1.0,
+          "reason": "Per FLS fls_4dje9t5y2dia: 'An external block is a construct that provides the declarations of [external function]s and [external static]s as unchecked imports.' C library functions are declared in external blocks."
         },
         {
           "fls_id": "fls_jep7p27kaqlp",
           "category": 0,
-          "fls_section": "19.-2.1",
           "fls_title": "Unsafety",
-          "score": 0.551,
-          "reason": "Section-level similarity match (score: 0.55)"
-        },
-        {
-          "fls_id": "fls_TMOzb6cYIOlH",
-          "category": -2,
-          "fls_section": "fls_qcb1n9c0e5hz",
-          "fls_title": "Functions",
-          "score": 0.55,
-          "reason": "Per FLS: 'extern \"system-unwind\"' (similarity: 0.55)"
-        },
-        {
-          "fls_id": "fls_e0896uk0mdyl",
-          "category": 0,
-          "fls_section": "22.-2.5",
-          "fls_title": "Assembly Instructions",
-          "score": 0.515,
-          "reason": "Section-level similarity match (score: 0.51)"
-        },
-        {
-          "fls_id": "fls_a3joqzqp1v9d",
-          "category": 0,
-          "fls_section": "22.-2.8",
-          "fls_title": "ABI Clobbers",
-          "score": 0.504,
-          "reason": "Section-level similarity match (score: 0.50)"
+          "score": 1.0,
+          "reason": "Per FLS fls_ljocmnaz2m49: 'Calling an unsafe function' is an unsafe operation. Per fls_ybnpe7ppq1vh: 'An unsafe operation shall be used only within an unsafe context.' All C library functions called via FFI require unsafe context."
         }
       ],
-      "fls_rationale_type": "direct_mapping",
+      "fls_rationale_type": "rust_alternative",
       "misra_rust_category": "required",
       "misra_rust_comment": "only accessible through unsafe extern \u201cC\u201d",
-      "confidence": "medium",
-      "notes": "MISRA ADD-6: only accessible through unsafe extern \u201cC\u201d. Only applicable in unsafe Rust"
+      "confidence": "high",
+      "notes": "C's system() spawns a shell which is a security risk. Rust's std::process::Command allows explicit command execution without shell. This applies only when calling C system() via FFI.",
+      "rejected_matches": []
     },
     {
       "guideline_id": "Rule 21.22",
@@ -9993,8 +9588,33 @@
       "applicability_safe_rust": "not_applicable",
       "misra_rust_category": "required",
       "misra_rust_comment": "only accessible through unsafe extern \u201cC\u201d",
-      "confidence": "medium",
-      "notes": "MISRA ADD-6: only accessible through unsafe extern \u201cC\u201d. Only applicable in unsafe Rust"
+      "confidence": "high",
+      "notes": "C's rand/srand are not cryptographically secure and use global state. Rust's rand crate provides thread-safe, seedable RNGs. This applies only when calling C random functions via FFI.",
+      "accepted_matches": [
+        {
+          "fls_id": "fls_yztwtek0y34v",
+          "category": 0,
+          "fls_title": "External Functions",
+          "score": 1.0,
+          "reason": "Per FLS fls_v24ino4hix3m: 'An external function is an unchecked import of a foreign function.' Per FLS fls_l88r9fj82650: 'An external function shall be invoked from an unsafe context.' When calling C library functions via FFI, they must be declared as external functions and called from unsafe context."
+        },
+        {
+          "fls_id": "fls_tmoh3y9oyqsy",
+          "category": 0,
+          "fls_title": "External Blocks",
+          "score": 1.0,
+          "reason": "Per FLS fls_4dje9t5y2dia: 'An external block is a construct that provides the declarations of [external function]s and [external static]s as unchecked imports.' C library functions are declared in external blocks."
+        },
+        {
+          "fls_id": "fls_jep7p27kaqlp",
+          "category": 0,
+          "fls_title": "Unsafety",
+          "score": 1.0,
+          "reason": "Per FLS fls_ljocmnaz2m49: 'Calling an unsafe function' is an unsafe operation. Per fls_ybnpe7ppq1vh: 'An unsafe operation shall be used only within an unsafe context.' All C library functions called via FFI require unsafe context."
+        }
+      ],
+      "rejected_matches": [],
+      "fls_rationale_type": "rust_alternative"
     },
     {
       "guideline_id": "Rule 21.25",
@@ -10004,18 +9624,46 @@
       "applicability_safe_rust": "direct",
       "accepted_matches": [
         {
+          "fls_id": "fls_yztwtek0y34v",
+          "category": 0,
+          "fls_title": "External Functions",
+          "score": 1.0,
+          "reason": "Per FLS fls_v24ino4hix3m: 'An external function is an unchecked import of a foreign function.' Per FLS fls_l88r9fj82650: 'An external function shall be invoked from an unsafe context.' When calling C library functions via FFI, they must be declared as external functions and called from unsafe context."
+        },
+        {
+          "fls_id": "fls_tmoh3y9oyqsy",
+          "category": 0,
+          "fls_title": "External Blocks",
+          "score": 1.0,
+          "reason": "Per FLS fls_4dje9t5y2dia: 'An external block is a construct that provides the declarations of [external function]s and [external static]s as unchecked imports.' C library functions are declared in external blocks."
+        },
+        {
+          "fls_id": "fls_jep7p27kaqlp",
+          "category": 0,
+          "fls_title": "Unsafety",
+          "score": 1.0,
+          "reason": "Per FLS fls_ljocmnaz2m49: 'Calling an unsafe function' is an unsafe operation. Per fls_ybnpe7ppq1vh: 'An unsafe operation shall be used only within an unsafe context.' All C library functions called via FFI require unsafe context."
+        },
+        {
           "fls_id": "fls_vyc9vcuamlph",
           "category": 0,
-          "fls_section": "17.-2.3",
           "fls_title": "Atomics",
-          "score": 0.557,
-          "reason": "Section-level similarity match (score: 0.56)"
+          "score": 0.61,
+          "reason": "Per FLS fls_3pjla9s93mhd: 'An atomic type is a type defined in module core::sync::atomic. [Atomic type]s provide primitive shared-memory communication between threads.' This directly addresses MISRA's memory synchronization concerns."
+        },
+        {
+          "fls_id": "fls_isypweqewe78",
+          "category": -4,
+          "fls_title": "Concurrency (UB)",
+          "score": 0.45,
+          "reason": "Per FLS: 'It is undefined behavior if two or more threads engage in a data race.' Rust's atomics prevent data races when used correctly."
         }
       ],
       "fls_rationale_type": "direct_mapping",
       "misra_rust_category": "required",
-      "confidence": "medium",
-      "notes": "Similarity-based mapping - requires manual verification"
+      "confidence": "high",
+      "notes": "Memory synchronization operations in C11 map to Rust's atomics. Rust's core::sync::atomic provides atomic types with ordering guarantees.",
+      "rejected_matches": []
     },
     {
       "guideline_id": "Rule 21.26",
@@ -10025,8 +9673,33 @@
       "applicability_safe_rust": "not_applicable",
       "misra_rust_category": "required",
       "misra_rust_comment": "only accessible through unsafe extern \u201cC\u201d",
-      "confidence": "medium",
-      "notes": "MISRA ADD-6: only accessible through unsafe extern \u201cC\u201d. Only applicable in unsafe Rust"
+      "confidence": "high",
+      "notes": "C11's mtx_timedlock() has no standard Rust equivalent. Rust's std::sync::Mutex doesn't support timed locking. parking_lot crate provides timed locking. This applies only when calling C mtx_timedlock via FFI.",
+      "accepted_matches": [
+        {
+          "fls_id": "fls_yztwtek0y34v",
+          "category": 0,
+          "fls_title": "External Functions",
+          "score": 1.0,
+          "reason": "Per FLS fls_v24ino4hix3m: 'An external function is an unchecked import of a foreign function.' Per FLS fls_l88r9fj82650: 'An external function shall be invoked from an unsafe context.' When calling C library functions via FFI, they must be declared as external functions and called from unsafe context."
+        },
+        {
+          "fls_id": "fls_tmoh3y9oyqsy",
+          "category": 0,
+          "fls_title": "External Blocks",
+          "score": 1.0,
+          "reason": "Per FLS fls_4dje9t5y2dia: 'An external block is a construct that provides the declarations of [external function]s and [external static]s as unchecked imports.' C library functions are declared in external blocks."
+        },
+        {
+          "fls_id": "fls_jep7p27kaqlp",
+          "category": 0,
+          "fls_title": "Unsafety",
+          "score": 1.0,
+          "reason": "Per FLS fls_ljocmnaz2m49: 'Calling an unsafe function' is an unsafe operation. Per fls_ybnpe7ppq1vh: 'An unsafe operation shall be used only within an unsafe context.' All C library functions called via FFI require unsafe context."
+        }
+      ],
+      "rejected_matches": [],
+      "fls_rationale_type": "no_equivalent"
     },
     {
       "guideline_id": "Rule 22.1",
@@ -10036,8 +9709,54 @@
       "applicability_safe_rust": "not_applicable",
       "misra_rust_category": "required",
       "misra_rust_comment": "applies to resources acquired through FFI only",
-      "confidence": "medium",
-      "notes": "MISRA ADD-6: applies to resources acquired through FFI only. Only applicable in unsafe Rust"
+      "confidence": "high",
+      "notes": "Resource release maps directly to Rust's RAII/Drop semantics. In safe Rust, resources are automatically released when values go out of scope. When using C resources via FFI, manual management in unsafe code is required.",
+      "accepted_matches": [
+        {
+          "fls_id": "fls_yztwtek0y34v",
+          "category": 0,
+          "fls_title": "External Functions",
+          "score": 1.0,
+          "reason": "Per FLS fls_v24ino4hix3m: 'An external function is an unchecked import of a foreign function.' Per FLS fls_l88r9fj82650: 'An external function shall be invoked from an unsafe context.' When calling C library functions via FFI, they must be declared as external functions and called from unsafe context."
+        },
+        {
+          "fls_id": "fls_tmoh3y9oyqsy",
+          "category": 0,
+          "fls_title": "External Blocks",
+          "score": 1.0,
+          "reason": "Per FLS fls_4dje9t5y2dia: 'An external block is a construct that provides the declarations of [external function]s and [external static]s as unchecked imports.' C library functions are declared in external blocks."
+        },
+        {
+          "fls_id": "fls_jep7p27kaqlp",
+          "category": 0,
+          "fls_title": "Unsafety",
+          "score": 1.0,
+          "reason": "Per FLS fls_ljocmnaz2m49: 'Calling an unsafe function' is an unsafe operation. Per fls_ybnpe7ppq1vh: 'An unsafe operation shall be used only within an unsafe context.' All C library functions called via FFI require unsafe context."
+        },
+        {
+          "fls_id": "fls_4jiw35pan7vn",
+          "category": 0,
+          "fls_title": "Destruction",
+          "score": 0.7,
+          "reason": "Per FLS fls_e7ucq87s806d: 'Destruction is the process of recovering resources associated with a value as it goes out of scope.' This is Rust's RAII mechanism."
+        },
+        {
+          "fls_id": "fls_u2mzjgiwbkz0",
+          "category": 0,
+          "fls_title": "Destructors",
+          "score": 0.72,
+          "reason": "Per FLS fls_wzuwapjqtyyy: 'Dropping a value is the act of invoking the destructor of the related type.' The Drop trait ensures resources are released."
+        },
+        {
+          "fls_id": "fls_rm4ncoopcdvj",
+          "category": 0,
+          "fls_title": "Drop Scopes",
+          "score": 0.65,
+          "reason": "Per FLS fls_7uav7vkcv4pz: 'A drop scope is a region of program text that governs the dropping of [value]s.' Drop scopes ensure deterministic resource cleanup."
+        }
+      ],
+      "rejected_matches": [],
+      "fls_rationale_type": "direct_mapping"
     },
     {
       "guideline_id": "Rule 22.2",
@@ -10047,35 +9766,47 @@
       "applicability_safe_rust": "not_applicable",
       "accepted_matches": [
         {
+          "fls_id": "fls_yztwtek0y34v",
+          "category": 0,
+          "fls_title": "External Functions",
+          "score": 1.0,
+          "reason": "Per FLS fls_v24ino4hix3m: 'An external function is an unchecked import of a foreign function.' Per FLS fls_l88r9fj82650: 'An external function shall be invoked from an unsafe context.' When calling C library functions via FFI, they must be declared as external functions and called from unsafe context."
+        },
+        {
+          "fls_id": "fls_tmoh3y9oyqsy",
+          "category": 0,
+          "fls_title": "External Blocks",
+          "score": 1.0,
+          "reason": "Per FLS fls_4dje9t5y2dia: 'An external block is a construct that provides the declarations of [external function]s and [external static]s as unchecked imports.' C library functions are declared in external blocks."
+        },
+        {
+          "fls_id": "fls_jep7p27kaqlp",
+          "category": 0,
+          "fls_title": "Unsafety",
+          "score": 1.0,
+          "reason": "Per FLS fls_ljocmnaz2m49: 'Calling an unsafe function' is an unsafe operation. Per fls_ybnpe7ppq1vh: 'An unsafe operation shall be used only within an unsafe context.' All C library functions called via FFI require unsafe context."
+        },
+        {
+          "fls_id": "fls_svkx6szhr472",
+          "category": 0,
+          "fls_title": "Ownership",
+          "score": 0.7,
+          "reason": "Per FLS fls_ze0u9gfylmhn: 'A value shall have only one owner.' This prevents double-free by ensuring single ownership."
+        },
+        {
           "fls_id": "fls_9wgldua1u8yt",
           "category": -4,
-          "fls_section": "fls_5cm4gkt55hjh",
-          "fls_title": "Dereference Expression",
-          "score": 0.6,
-          "reason": "Per FLS: 'It is undefined behavior to dereference a raw pointer that is eithe...' (similarity: 0.60)"
-        },
-        {
-          "fls_id": "fls_9beohh5475s2",
-          "category": 0,
-          "fls_section": "6.-2.27",
-          "fls_title": "Destructuring Assignment",
-          "score": 0.524,
-          "reason": "Section-level similarity match (score: 0.52)"
-        },
-        {
-          "fls_id": "fls_5cm4gkt55hjh",
-          "category": 0,
-          "fls_section": "6.-2.16",
-          "fls_title": "Dereference Expression",
-          "score": 0.513,
-          "reason": "Section-level similarity match (score: 0.51)"
+          "fls_title": "Dereference Expression (UB)",
+          "score": 0.63,
+          "reason": "Per FLS: 'It is undefined behavior to dereference a raw pointer that is either dangling or unaligned.' Dereferencing freed memory is UB."
         }
       ],
       "fls_rationale_type": "direct_mapping",
       "misra_rust_category": "required",
       "misra_rust_comment": "only accessible through unsafe extern \u201cC\u201d",
-      "confidence": "medium",
-      "notes": "MISRA ADD-6: only accessible through unsafe extern \u201cC\u201d. Only applicable in unsafe Rust"
+      "confidence": "high",
+      "notes": "Double-free prevention maps to Rust's ownership model. In safe Rust, each value has exactly one owner and is dropped exactly once. When using C memory via FFI, this rule applies to raw pointer management.",
+      "rejected_matches": []
     },
     {
       "guideline_id": "Rule 22.3",
@@ -10085,19 +9816,33 @@
       "applicability_safe_rust": "not_applicable",
       "accepted_matches": [
         {
-          "fls_id": "fls_3v733mnewssy",
+          "fls_id": "fls_yztwtek0y34v",
           "category": 0,
-          "fls_section": "17.-1.1",
-          "fls_title": "Concurrency",
-          "score": 0.536,
-          "reason": "Section-level similarity match (score: 0.54)"
+          "fls_title": "External Functions",
+          "score": 1.0,
+          "reason": "Per FLS fls_v24ino4hix3m: 'An external function is an unchecked import of a foreign function.' Per FLS fls_l88r9fj82650: 'An external function shall be invoked from an unsafe context.' When calling C library functions via FFI, they must be declared as external functions and called from unsafe context."
+        },
+        {
+          "fls_id": "fls_tmoh3y9oyqsy",
+          "category": 0,
+          "fls_title": "External Blocks",
+          "score": 1.0,
+          "reason": "Per FLS fls_4dje9t5y2dia: 'An external block is a construct that provides the declarations of [external function]s and [external static]s as unchecked imports.' C library functions are declared in external blocks."
+        },
+        {
+          "fls_id": "fls_jep7p27kaqlp",
+          "category": 0,
+          "fls_title": "Unsafety",
+          "score": 1.0,
+          "reason": "Per FLS fls_ljocmnaz2m49: 'Calling an unsafe function' is an unsafe operation. Per fls_ybnpe7ppq1vh: 'An unsafe operation shall be used only within an unsafe context.' All C library functions called via FFI require unsafe context."
         }
       ],
-      "fls_rationale_type": "direct_mapping",
+      "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "required",
       "misra_rust_comment": "only accessible through unsafe extern \u201cC\u201d",
-      "confidence": "medium",
-      "notes": "MISRA ADD-6: only accessible through unsafe extern \u201cC\u201d. Only applicable in unsafe Rust"
+      "confidence": "high",
+      "notes": "C FILE* simultaneous read/write streams have no Rust equivalent. Rust's std::fs::File uses separate read/write handles. This applies only when calling C file functions via FFI.",
+      "rejected_matches": []
     },
     {
       "guideline_id": "Rule 22.4",
@@ -10107,19 +9852,33 @@
       "applicability_safe_rust": "not_applicable",
       "accepted_matches": [
         {
-          "fls_id": "fls_d169ppna563c",
-          "category": -2,
-          "fls_section": "fls_ylli0ortyegk",
-          "fls_title": "Assembly Options",
-          "score": 0.559,
-          "reason": "Per FLS: 'Assembly option readonly indicates that the assembly code block doe...' (similarity: 0.56)"
+          "fls_id": "fls_yztwtek0y34v",
+          "category": 0,
+          "fls_title": "External Functions",
+          "score": 1.0,
+          "reason": "Per FLS fls_v24ino4hix3m: 'An external function is an unchecked import of a foreign function.' Per FLS fls_l88r9fj82650: 'An external function shall be invoked from an unsafe context.' When calling C library functions via FFI, they must be declared as external functions and called from unsafe context."
+        },
+        {
+          "fls_id": "fls_tmoh3y9oyqsy",
+          "category": 0,
+          "fls_title": "External Blocks",
+          "score": 1.0,
+          "reason": "Per FLS fls_4dje9t5y2dia: 'An external block is a construct that provides the declarations of [external function]s and [external static]s as unchecked imports.' C library functions are declared in external blocks."
+        },
+        {
+          "fls_id": "fls_jep7p27kaqlp",
+          "category": 0,
+          "fls_title": "Unsafety",
+          "score": 1.0,
+          "reason": "Per FLS fls_ljocmnaz2m49: 'Calling an unsafe function' is an unsafe operation. Per fls_ybnpe7ppq1vh: 'An unsafe operation shall be used only within an unsafe context.' All C library functions called via FFI require unsafe context."
         }
       ],
-      "fls_rationale_type": "direct_mapping",
+      "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "required",
       "misra_rust_comment": "only accessible through unsafe extern \u201cC\u201d",
-      "confidence": "medium",
-      "notes": "MISRA ADD-6: only accessible through unsafe extern \u201cC\u201d. Only applicable in unsafe Rust"
+      "confidence": "high",
+      "notes": "C FILE* read-only stream handling has no Rust equivalent. Rust's type system enforces read vs write at compile time. This applies only when calling C file functions via FFI.",
+      "rejected_matches": []
     },
     {
       "guideline_id": "Rule 22.5",
@@ -10129,75 +9888,33 @@
       "applicability_safe_rust": "not_applicable",
       "accepted_matches": [
         {
-          "fls_id": "fls_8i4jzksxlrw0",
-          "category": -2,
-          "fls_section": "fls_5cm4gkt55hjh",
-          "fls_title": "Dereference Expression",
-          "score": 0.649,
-          "reason": "Per FLS: 'Dereferencing a raw pointer shall require unsafe context unless the...' (similarity: 0.65)"
-        },
-        {
-          "fls_id": "fls_jd1inwz7ulyw",
-          "category": -2,
-          "fls_section": "19.-2.4",
-          "fls_title": "Unsafety",
-          "score": 0.633,
-          "reason": "Per FLS: 'Dereferencing a value of a raw pointer type.' (similarity: 0.63)"
-        },
-        {
-          "fls_id": "fls_9wgldua1u8yt",
-          "category": -4,
-          "fls_section": "fls_5cm4gkt55hjh",
-          "fls_title": "Dereference Expression",
-          "score": 0.599,
-          "reason": "Per FLS: 'It is undefined behavior to dereference a raw pointer that is eithe...' (similarity: 0.60)"
-        },
-        {
-          "fls_id": "fls_gOXUWePymgGV",
-          "category": -2,
-          "fls_section": "fls_vXGuvRWOLbEE",
-          "fls_title": "Raw Borrow Expression",
-          "score": 0.591,
-          "reason": "Per FLS: 'When the operand of a raw borrow expression is a place expression, ...' (similarity: 0.59)"
-        },
-        {
-          "fls_id": "fls_aeh5pzpcjveq",
-          "category": -2,
-          "fls_section": "fls_5cm4gkt55hjh",
-          "fls_title": "Dereference Expression",
-          "score": 0.588,
-          "reason": "Per FLS: 'When the operand of a dereference expression is of a pointer type, ...' (similarity: 0.59)"
-        },
-        {
-          "fls_id": "fls_6b4rwkrc1ap6",
-          "category": -2,
-          "fls_section": "fls_6ydylimiv553",
-          "fls_title": "Place Expressions",
-          "score": 0.57,
-          "reason": "Per FLS: 'A dereference expression whose operand's type is a mutable raw poin...' (similarity: 0.57)"
-        },
-        {
-          "fls_id": "fls_5cm4gkt55hjh",
+          "fls_id": "fls_yztwtek0y34v",
           "category": 0,
-          "fls_section": "6.-2.16",
-          "fls_title": "Dereference Expression",
-          "score": 0.524,
-          "reason": "Section-level similarity match (score: 0.52)"
+          "fls_title": "External Functions",
+          "score": 1.0,
+          "reason": "Per FLS fls_v24ino4hix3m: 'An external function is an unchecked import of a foreign function.' Per FLS fls_l88r9fj82650: 'An external function shall be invoked from an unsafe context.' When calling C library functions via FFI, they must be declared as external functions and called from unsafe context."
+        },
+        {
+          "fls_id": "fls_tmoh3y9oyqsy",
+          "category": 0,
+          "fls_title": "External Blocks",
+          "score": 1.0,
+          "reason": "Per FLS fls_4dje9t5y2dia: 'An external block is a construct that provides the declarations of [external function]s and [external static]s as unchecked imports.' C library functions are declared in external blocks."
         },
         {
           "fls_id": "fls_jep7p27kaqlp",
           "category": 0,
-          "fls_section": "19.-2.1",
           "fls_title": "Unsafety",
-          "score": 0.502,
-          "reason": "Section-level similarity match (score: 0.50)"
+          "score": 1.0,
+          "reason": "Per FLS fls_ljocmnaz2m49: 'Calling an unsafe function' is an unsafe operation. Per fls_ybnpe7ppq1vh: 'An unsafe operation shall be used only within an unsafe context.' All C library functions called via FFI require unsafe context."
         }
       ],
-      "fls_rationale_type": "direct_mapping",
+      "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "required",
       "misra_rust_comment": "only accessible through unsafe extern \u201cC\u201d",
-      "confidence": "medium",
-      "notes": "MISRA ADD-6: only accessible through unsafe extern \u201cC\u201d. Only applicable in unsafe Rust"
+      "confidence": "high",
+      "notes": "C FILE* is an opaque type that should not be dereferenced. Rust has no equivalent; File handles are opaque. This applies only when calling C file functions via FFI.",
+      "rejected_matches": []
     },
     {
       "guideline_id": "Rule 22.6",
@@ -10207,59 +9924,33 @@
       "applicability_safe_rust": "not_applicable",
       "accepted_matches": [
         {
-          "fls_id": "fls_jd1inwz7ulyw",
-          "category": -2,
-          "fls_section": "19.-2.4",
-          "fls_title": "Unsafety",
-          "score": 0.577,
-          "reason": "Per FLS: 'Dereferencing a value of a raw pointer type.' (similarity: 0.58)"
+          "fls_id": "fls_yztwtek0y34v",
+          "category": 0,
+          "fls_title": "External Functions",
+          "score": 1.0,
+          "reason": "Per FLS fls_v24ino4hix3m: 'An external function is an unchecked import of a foreign function.' Per FLS fls_l88r9fj82650: 'An external function shall be invoked from an unsafe context.' When calling C library functions via FFI, they must be declared as external functions and called from unsafe context."
         },
         {
-          "fls_id": "fls_1jnn9bsb71k7",
-          "category": -2,
-          "fls_section": "fls_HEtHxXBcg7JA",
-          "fls_title": "Function Lifetime Elision",
-          "score": 0.576,
-          "reason": "Per FLS: 'Any lifetime related to a function pointer type parameter.' (similarity: 0.58)"
-        },
-        {
-          "fls_id": "fls_yofbo96tjppf",
-          "category": -2,
-          "fls_section": "fls_HEtHxXBcg7JA",
-          "fls_title": "Function Lifetime Elision",
-          "score": 0.57,
-          "reason": "Per FLS: 'Any lifetime related to the return type of a function pointer type.' (similarity: 0.57)"
-        },
-        {
-          "fls_id": "fls_9wgldua1u8yt",
-          "category": -4,
-          "fls_section": "fls_5cm4gkt55hjh",
-          "fls_title": "Dereference Expression",
-          "score": 0.569,
-          "reason": "Per FLS: 'It is undefined behavior to dereference a raw pointer that is eithe...' (similarity: 0.57)"
+          "fls_id": "fls_tmoh3y9oyqsy",
+          "category": 0,
+          "fls_title": "External Blocks",
+          "score": 1.0,
+          "reason": "Per FLS fls_4dje9t5y2dia: 'An external block is a construct that provides the declarations of [external function]s and [external static]s as unchecked imports.' C library functions are declared in external blocks."
         },
         {
           "fls_id": "fls_jep7p27kaqlp",
           "category": 0,
-          "fls_section": "19.-2.1",
           "fls_title": "Unsafety",
-          "score": 0.526,
-          "reason": "Section-level similarity match (score: 0.53)"
-        },
-        {
-          "fls_id": "fls_5cm4gkt55hjh",
-          "category": 0,
-          "fls_section": "6.-2.16",
-          "fls_title": "Dereference Expression",
-          "score": 0.502,
-          "reason": "Section-level similarity match (score: 0.50)"
+          "score": 1.0,
+          "reason": "Per FLS fls_ljocmnaz2m49: 'Calling an unsafe function' is an unsafe operation. Per fls_ybnpe7ppq1vh: 'An unsafe operation shall be used only within an unsafe context.' All C library functions called via FFI require unsafe context."
         }
       ],
-      "fls_rationale_type": "direct_mapping",
+      "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "required",
       "misra_rust_comment": "only accessible through unsafe extern \u201cC\u201d",
-      "confidence": "medium",
-      "notes": "MISRA ADD-6: only accessible through unsafe extern \u201cC\u201d. Only applicable in unsafe Rust"
+      "confidence": "high",
+      "notes": "C FILE* pointer becomes invalid after fclose. Rust's ownership prevents use-after-close. This applies only when calling C file functions via FFI.",
+      "rejected_matches": []
     },
     {
       "guideline_id": "Rule 22.7",
@@ -10269,51 +9960,33 @@
       "applicability_safe_rust": "not_applicable",
       "accepted_matches": [
         {
-          "fls_id": "fls_p090c5oTnElW",
+          "fls_id": "fls_yztwtek0y34v",
           "category": 0,
-          "fls_section": "2.-2.10",
-          "fls_title": "Simple C String Literals",
-          "score": 0.571,
-          "reason": "Section-level similarity match (score: 0.57)"
+          "fls_title": "External Functions",
+          "score": 1.0,
+          "reason": "Per FLS fls_v24ino4hix3m: 'An external function is an unchecked import of a foreign function.' Per FLS fls_l88r9fj82650: 'An external function shall be invoked from an unsafe context.' When calling C library functions via FFI, they must be declared as external functions and called from unsafe context."
         },
         {
-          "fls_id": "fls_usgd0xlijoxv",
+          "fls_id": "fls_tmoh3y9oyqsy",
           "category": 0,
-          "fls_section": "21.-2.2",
-          "fls_title": "ABI",
-          "score": 0.559,
-          "reason": "Section-level similarity match (score: 0.56)"
+          "fls_title": "External Blocks",
+          "score": 1.0,
+          "reason": "Per FLS fls_4dje9t5y2dia: 'An external block is a construct that provides the declarations of [external function]s and [external static]s as unchecked imports.' C library functions are declared in external blocks."
         },
         {
-          "fls_id": "fls_2ifjqwnw03ms",
+          "fls_id": "fls_jep7p27kaqlp",
           "category": 0,
-          "fls_section": "2.-2.5",
-          "fls_title": "Byte Literals",
-          "score": 0.554,
-          "reason": "Section-level similarity match (score: 0.55)"
-        },
-        {
-          "fls_id": "fls_e0896uk0mdyl",
-          "category": 0,
-          "fls_section": "22.-2.5",
-          "fls_title": "Assembly Instructions",
-          "score": 0.54,
-          "reason": "Section-level similarity match (score: 0.54)"
-        },
-        {
-          "fls_id": "fls_msbaxfC09VkK",
-          "category": 0,
-          "fls_section": "2.-2.7",
-          "fls_title": "Simple Byte String Literals",
-          "score": 0.524,
-          "reason": "Section-level similarity match (score: 0.52)"
+          "fls_title": "Unsafety",
+          "score": 1.0,
+          "reason": "Per FLS fls_ljocmnaz2m49: 'Calling an unsafe function' is an unsafe operation. Per fls_ybnpe7ppq1vh: 'An unsafe operation shall be used only within an unsafe context.' All C library functions called via FFI require unsafe context."
         }
       ],
-      "fls_rationale_type": "direct_mapping",
+      "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "required",
       "misra_rust_comment": "only accessible through unsafe extern \u201cC\u201d",
-      "confidence": "medium",
-      "notes": "MISRA ADD-6: only accessible through unsafe extern \u201cC\u201d. Only applicable in unsafe Rust"
+      "confidence": "high",
+      "notes": "C's EOF macro has no Rust equivalent. Rust uses Result/Option for error/end-of-file. This applies only when calling C file functions via FFI.",
+      "rejected_matches": []
     },
     {
       "guideline_id": "Rule 22.8",
@@ -10323,8 +9996,47 @@
       "applicability_safe_rust": "not_applicable",
       "misra_rust_category": "disapplied",
       "misra_rust_comment": "only accessible through unsafe extern \u201cC\u201d",
-      "confidence": "medium",
-      "notes": "MISRA ADD-6: only accessible through unsafe extern \u201cC\u201d. Only applicable in unsafe Rust"
+      "confidence": "high",
+      "notes": "C's errno has no Rust equivalent. Rust uses Result for error handling. This applies only when calling C functions that set errno via FFI. Updated: Rust's Result/Option provide type-safe error handling as an alternative to errno.",
+      "accepted_matches": [
+        {
+          "fls_id": "fls_yztwtek0y34v",
+          "category": 0,
+          "fls_title": "External Functions",
+          "score": 1.0,
+          "reason": "Per FLS fls_v24ino4hix3m: 'An external function is an unchecked import of a foreign function.' Per FLS fls_l88r9fj82650: 'An external function shall be invoked from an unsafe context.' When calling C library functions via FFI, they must be declared as external functions and called from unsafe context."
+        },
+        {
+          "fls_id": "fls_tmoh3y9oyqsy",
+          "category": 0,
+          "fls_title": "External Blocks",
+          "score": 1.0,
+          "reason": "Per FLS fls_4dje9t5y2dia: 'An external block is a construct that provides the declarations of [external function]s and [external static]s as unchecked imports.' C library functions are declared in external blocks."
+        },
+        {
+          "fls_id": "fls_jep7p27kaqlp",
+          "category": 0,
+          "fls_title": "Unsafety",
+          "score": 1.0,
+          "reason": "Per FLS fls_ljocmnaz2m49: 'Calling an unsafe function' is an unsafe operation. Per fls_ybnpe7ppq1vh: 'An unsafe operation shall be used only within an unsafe context.' All C library functions called via FFI require unsafe context."
+        },
+        {
+          "fls_id": "fls_dzq9cdz4ibsz",
+          "category": 0,
+          "fls_title": "Exceptions and Errors",
+          "score": 0.55,
+          "reason": "Per FLS fls_vsk4vhnuiyyz: 'The Rust programming language lacks exceptions and exception handlers. Instead, the language uses the following tiered error handling scheme.' Per FLS fls_ckeitwiv326r: 'The result of a possibly erroneous computation is usually represented using enum core::result::Result.' Result/Option are Rust's type-safe alternative to C's errno mechanism."
+        },
+        {
+          "fls_id": "fls_pocsh1neugpc",
+          "category": 0,
+          "fls_title": "Error Propagation Expression",
+          "score": 0.57,
+          "reason": "Per FLS fls_8q59wbumrt5s: 'An error propagation expression is an expression that either evaluates to a value of its operand or returns a value to the enclosing control flow boundary.' The `?` operator provides structured error propagation, replacing ad-hoc errno checking."
+        }
+      ],
+      "rejected_matches": [],
+      "fls_rationale_type": "rust_alternative"
     },
     {
       "guideline_id": "Rule 22.9",
@@ -10334,8 +10046,47 @@
       "applicability_safe_rust": "not_applicable",
       "misra_rust_category": "disapplied",
       "misra_rust_comment": "only accessible through unsafe extern \u201cC\u201d",
-      "confidence": "medium",
-      "notes": "MISRA ADD-6: only accessible through unsafe extern \u201cC\u201d. Only applicable in unsafe Rust"
+      "confidence": "high",
+      "notes": "C's errno checking has no Rust equivalent. Rust uses Result for error handling. This applies only when calling C functions that set errno via FFI. Updated: Rust's Result/Option provide type-safe error handling as an alternative to errno.",
+      "accepted_matches": [
+        {
+          "fls_id": "fls_yztwtek0y34v",
+          "category": 0,
+          "fls_title": "External Functions",
+          "score": 1.0,
+          "reason": "Per FLS fls_v24ino4hix3m: 'An external function is an unchecked import of a foreign function.' Per FLS fls_l88r9fj82650: 'An external function shall be invoked from an unsafe context.' When calling C library functions via FFI, they must be declared as external functions and called from unsafe context."
+        },
+        {
+          "fls_id": "fls_tmoh3y9oyqsy",
+          "category": 0,
+          "fls_title": "External Blocks",
+          "score": 1.0,
+          "reason": "Per FLS fls_4dje9t5y2dia: 'An external block is a construct that provides the declarations of [external function]s and [external static]s as unchecked imports.' C library functions are declared in external blocks."
+        },
+        {
+          "fls_id": "fls_jep7p27kaqlp",
+          "category": 0,
+          "fls_title": "Unsafety",
+          "score": 1.0,
+          "reason": "Per FLS fls_ljocmnaz2m49: 'Calling an unsafe function' is an unsafe operation. Per fls_ybnpe7ppq1vh: 'An unsafe operation shall be used only within an unsafe context.' All C library functions called via FFI require unsafe context."
+        },
+        {
+          "fls_id": "fls_dzq9cdz4ibsz",
+          "category": 0,
+          "fls_title": "Exceptions and Errors",
+          "score": 0.55,
+          "reason": "Per FLS fls_vsk4vhnuiyyz: 'The Rust programming language lacks exceptions and exception handlers. Instead, the language uses the following tiered error handling scheme.' Per FLS fls_ckeitwiv326r: 'The result of a possibly erroneous computation is usually represented using enum core::result::Result.' Result/Option are Rust's type-safe alternative to C's errno mechanism."
+        },
+        {
+          "fls_id": "fls_pocsh1neugpc",
+          "category": 0,
+          "fls_title": "Error Propagation Expression",
+          "score": 0.57,
+          "reason": "Per FLS fls_8q59wbumrt5s: 'An error propagation expression is an expression that either evaluates to a value of its operand or returns a value to the enclosing control flow boundary.' The `?` operator provides structured error propagation, replacing ad-hoc errno checking."
+        }
+      ],
+      "rejected_matches": [],
+      "fls_rationale_type": "rust_alternative"
     },
     {
       "guideline_id": "Rule 22.10",
@@ -10345,8 +10096,47 @@
       "applicability_safe_rust": "not_applicable",
       "misra_rust_category": "disapplied",
       "misra_rust_comment": "only accessible through unsafe extern \u201cC\u201d",
-      "confidence": "medium",
-      "notes": "MISRA ADD-6: only accessible through unsafe extern \u201cC\u201d. Only applicable in unsafe Rust"
+      "confidence": "high",
+      "notes": "C's errno value semantics have no Rust equivalent. Rust uses Result for error handling. This applies only when calling C functions that set errno via FFI. Updated: Rust's Result/Option provide type-safe error handling as an alternative to errno.",
+      "accepted_matches": [
+        {
+          "fls_id": "fls_yztwtek0y34v",
+          "category": 0,
+          "fls_title": "External Functions",
+          "score": 1.0,
+          "reason": "Per FLS fls_v24ino4hix3m: 'An external function is an unchecked import of a foreign function.' Per FLS fls_l88r9fj82650: 'An external function shall be invoked from an unsafe context.' When calling C library functions via FFI, they must be declared as external functions and called from unsafe context."
+        },
+        {
+          "fls_id": "fls_tmoh3y9oyqsy",
+          "category": 0,
+          "fls_title": "External Blocks",
+          "score": 1.0,
+          "reason": "Per FLS fls_4dje9t5y2dia: 'An external block is a construct that provides the declarations of [external function]s and [external static]s as unchecked imports.' C library functions are declared in external blocks."
+        },
+        {
+          "fls_id": "fls_jep7p27kaqlp",
+          "category": 0,
+          "fls_title": "Unsafety",
+          "score": 1.0,
+          "reason": "Per FLS fls_ljocmnaz2m49: 'Calling an unsafe function' is an unsafe operation. Per fls_ybnpe7ppq1vh: 'An unsafe operation shall be used only within an unsafe context.' All C library functions called via FFI require unsafe context."
+        },
+        {
+          "fls_id": "fls_dzq9cdz4ibsz",
+          "category": 0,
+          "fls_title": "Exceptions and Errors",
+          "score": 0.55,
+          "reason": "Per FLS fls_vsk4vhnuiyyz: 'The Rust programming language lacks exceptions and exception handlers. Instead, the language uses the following tiered error handling scheme.' Per FLS fls_ckeitwiv326r: 'The result of a possibly erroneous computation is usually represented using enum core::result::Result.' Result/Option are Rust's type-safe alternative to C's errno mechanism."
+        },
+        {
+          "fls_id": "fls_pocsh1neugpc",
+          "category": 0,
+          "fls_title": "Error Propagation Expression",
+          "score": 0.57,
+          "reason": "Per FLS fls_8q59wbumrt5s: 'An error propagation expression is an expression that either evaluates to a value of its operand or returns a value to the enclosing control flow boundary.' The `?` operator provides structured error propagation, replacing ad-hoc errno checking."
+        }
+      ],
+      "rejected_matches": [],
+      "fls_rationale_type": "rust_alternative"
     },
     {
       "guideline_id": "Rule 22.11",
@@ -10355,8 +10145,47 @@
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "partial",
       "misra_rust_category": "required",
-      "confidence": "medium",
-      "notes": "No high-confidence FLS matches found"
+      "confidence": "high",
+      "notes": "C11 thread join/detach semantics have no direct FLS equivalent. Rust's std::thread::JoinHandle ensures threads are joined. This applies only when calling C11 thread functions via FFI.",
+      "accepted_matches": [
+        {
+          "fls_id": "fls_yztwtek0y34v",
+          "category": 0,
+          "fls_title": "External Functions",
+          "score": 1.0,
+          "reason": "Per FLS fls_v24ino4hix3m: 'An external function is an unchecked import of a foreign function.' Per FLS fls_l88r9fj82650: 'An external function shall be invoked from an unsafe context.' When calling C library functions via FFI, they must be declared as external functions and called from unsafe context."
+        },
+        {
+          "fls_id": "fls_tmoh3y9oyqsy",
+          "category": 0,
+          "fls_title": "External Blocks",
+          "score": 1.0,
+          "reason": "Per FLS fls_4dje9t5y2dia: 'An external block is a construct that provides the declarations of [external function]s and [external static]s as unchecked imports.' C library functions are declared in external blocks."
+        },
+        {
+          "fls_id": "fls_jep7p27kaqlp",
+          "category": 0,
+          "fls_title": "Unsafety",
+          "score": 1.0,
+          "reason": "Per FLS fls_ljocmnaz2m49: 'Calling an unsafe function' is an unsafe operation. Per fls_ybnpe7ppq1vh: 'An unsafe operation shall be used only within an unsafe context.' All C library functions called via FFI require unsafe context."
+        },
+        {
+          "fls_id": "fls_3v733mnewssy",
+          "category": 0,
+          "fls_title": "Concurrency",
+          "score": 0.68,
+          "reason": "Per FLS fls_opt7v0mopxc8: 'The Rust programming language provides features for concurrent programming without [data race]s.' Per FLS fls_isypweqewe78 (UB): 'It is undefined behavior if two or more threads engage in a data race.' This chapter defines Rust's concurrency model which replaces C11 threading primitives."
+        },
+        {
+          "fls_id": "fls_eiw4by8z75di",
+          "category": 0,
+          "fls_title": "Send and Sync",
+          "score": 0.67,
+          "reason": "Per FLS fls_4ypqdehn7b0v: 'A send type shall have [value]s that are safe to transfer across thread boundaries.' Per FLS fls_zgemofbs5q2x: 'A sync type shall have [value]s that are allowed to be shared across multiple threads at any given time without incurring data races.' These traits enforce thread-safety at compile time, replacing runtime checks needed with C11 threading."
+        }
+      ],
+      "rejected_matches": [],
+      "fls_rationale_type": "no_equivalent"
     },
     {
       "guideline_id": "Rule 22.12",
@@ -10366,43 +10195,47 @@
       "applicability_safe_rust": "not_applicable",
       "accepted_matches": [
         {
-          "fls_id": "fls_3v733mnewssy",
+          "fls_id": "fls_yztwtek0y34v",
           "category": 0,
-          "fls_section": "17.-1.1",
-          "fls_title": "Concurrency",
-          "score": 0.601,
-          "reason": "Section-level similarity match (score: 0.60)"
+          "fls_title": "External Functions",
+          "score": 1.0,
+          "reason": "Per FLS fls_v24ino4hix3m: 'An external function is an unchecked import of a foreign function.' Per FLS fls_l88r9fj82650: 'An external function shall be invoked from an unsafe context.' When calling C library functions via FFI, they must be declared as external functions and called from unsafe context."
         },
         {
-          "fls_id": "fls_vyc9vcuamlph",
+          "fls_id": "fls_tmoh3y9oyqsy",
           "category": 0,
-          "fls_section": "17.-2.3",
-          "fls_title": "Atomics",
-          "score": 0.593,
-          "reason": "Section-level similarity match (score: 0.59)"
+          "fls_title": "External Blocks",
+          "score": 1.0,
+          "reason": "Per FLS fls_4dje9t5y2dia: 'An external block is a construct that provides the declarations of [external function]s and [external static]s as unchecked imports.' C library functions are declared in external blocks."
         },
         {
-          "fls_id": "fls_3pjla9s93mhd",
-          "category": -2,
-          "fls_section": "fls_vyc9vcuamlph",
-          "fls_title": "Atomics",
-          "score": 0.568,
-          "reason": "Per FLS: 'An atomic type is a type defined in module core::sync::atomic. [Ato...' (similarity: 0.57)"
+          "fls_id": "fls_jep7p27kaqlp",
+          "category": 0,
+          "fls_title": "Unsafety",
+          "score": 1.0,
+          "reason": "Per FLS fls_ljocmnaz2m49: 'Calling an unsafe function' is an unsafe operation. Per fls_ybnpe7ppq1vh: 'An unsafe operation shall be used only within an unsafe context.' All C library functions called via FFI require unsafe context."
         },
         {
           "fls_id": "fls_eiw4by8z75di",
           "category": 0,
-          "fls_section": "17.-2.2",
           "fls_title": "Send and Sync",
-          "score": 0.551,
-          "reason": "Section-level similarity match (score: 0.55)"
+          "score": 0.55,
+          "reason": "Per FLS fls_4ypqdehn7b0v: 'A send type shall have [value]s that are safe to transfer across thread boundaries.' This enforces safe cross-thread value transfer."
+        },
+        {
+          "fls_id": "fls_3v733mnewssy",
+          "category": 0,
+          "fls_title": "Concurrency",
+          "score": 0.68,
+          "reason": "Per FLS fls_opt7v0mopxc8: 'The Rust programming language provides features for concurrent programming without [data race]s.' Per FLS fls_isypweqewe78 (UB): 'It is undefined behavior if two or more threads engage in a data race.' This chapter defines Rust's concurrency model which replaces C11 threading primitives."
         }
       ],
-      "fls_rationale_type": "direct_mapping",
+      "fls_rationale_type": "rust_alternative",
       "misra_rust_category": "required",
       "misra_rust_comment": "only accessible through unsafe extern \u201cC\u201d",
-      "confidence": "medium",
-      "notes": "MISRA ADD-6: only accessible through unsafe extern \u201cC\u201d. Only applicable in unsafe Rust"
+      "confidence": "high",
+      "notes": "C11 thread object copying maps to Rust's Send/Sync traits. Rust's type system enforces thread-safety at compile time.",
+      "rejected_matches": []
     },
     {
       "guideline_id": "Rule 22.13",
@@ -10412,74 +10245,53 @@
       "applicability_safe_rust": "direct",
       "accepted_matches": [
         {
+          "fls_id": "fls_yztwtek0y34v",
+          "category": 0,
+          "fls_title": "External Functions",
+          "score": 1.0,
+          "reason": "Per FLS fls_v24ino4hix3m: 'An external function is an unchecked import of a foreign function.' Per FLS fls_l88r9fj82650: 'An external function shall be invoked from an unsafe context.' When calling C library functions via FFI, they must be declared as external functions and called from unsafe context."
+        },
+        {
+          "fls_id": "fls_tmoh3y9oyqsy",
+          "category": 0,
+          "fls_title": "External Blocks",
+          "score": 1.0,
+          "reason": "Per FLS fls_4dje9t5y2dia: 'An external block is a construct that provides the declarations of [external function]s and [external static]s as unchecked imports.' C library functions are declared in external blocks."
+        },
+        {
+          "fls_id": "fls_jep7p27kaqlp",
+          "category": 0,
+          "fls_title": "Unsafety",
+          "score": 1.0,
+          "reason": "Per FLS fls_ljocmnaz2m49: 'Calling an unsafe function' is an unsafe operation. Per fls_ybnpe7ppq1vh: 'An unsafe operation shall be used only within an unsafe context.' All C library functions called via FFI require unsafe context."
+        },
+        {
+          "fls_id": "fls_rm4ncoopcdvj",
+          "category": 0,
+          "fls_title": "Drop Scopes",
+          "score": 0.65,
+          "reason": "Per FLS fls_7uav7vkcv4pz: 'A drop scope is a region of program text that governs the dropping of [value]s.' This ensures deterministic cleanup of thread objects."
+        },
+        {
           "fls_id": "fls_3v733mnewssy",
           "category": 0,
-          "fls_section": "17.-1.1",
           "fls_title": "Concurrency",
-          "score": 0.621,
-          "reason": "Section-level similarity match (score: 0.62)"
-        },
-        {
-          "fls_id": "fls_vyc9vcuamlph",
-          "category": 0,
-          "fls_section": "17.-2.3",
-          "fls_title": "Atomics",
-          "score": 0.613,
-          "reason": "Section-level similarity match (score: 0.61)"
-        },
-        {
-          "fls_id": "fls_3pjla9s93mhd",
-          "category": -2,
-          "fls_section": "fls_vyc9vcuamlph",
-          "fls_title": "Atomics",
-          "score": 0.59,
-          "reason": "Per FLS: 'An atomic type is a type defined in module core::sync::atomic. [Ato...' (similarity: 0.59)"
-        },
-        {
-          "fls_id": "fls_xdvdl2ssnhlo",
-          "category": 0,
-          "fls_section": "7.-2.3",
-          "fls_title": "Statics",
-          "score": 0.573,
-          "reason": "Section-level similarity match (score: 0.57)"
-        },
-        {
-          "fls_id": "fls_opt7v0mopxc8",
-          "category": -1,
-          "fls_section": "fls_3v733mnewssy",
-          "fls_title": "Concurrency",
-          "score": 0.571,
-          "reason": "Per FLS: 'The Rust programming language provides features for concurrent prog...' (similarity: 0.57)"
-        },
-        {
-          "fls_id": "fls_37udexenqv3p",
-          "category": -2,
-          "fls_section": "fls_u5lQkU2rS6uV",
-          "fls_title": "Static Lifetime Elision",
-          "score": 0.561,
-          "reason": "Per FLS: 'The lifetime of an associated implementation constant shall not be ...' (similarity: 0.56)"
-        },
-        {
-          "fls_id": "fls_u5lQkU2rS6uV",
-          "category": 0,
-          "fls_section": "4.-2.45",
-          "fls_title": "Static Lifetime Elision",
-          "score": 0.55,
-          "reason": "Section-level similarity match (score: 0.55)"
+          "score": 0.68,
+          "reason": "Per FLS fls_opt7v0mopxc8: 'The Rust programming language provides features for concurrent programming without [data race]s.' Per FLS fls_isypweqewe78 (UB): 'It is undefined behavior if two or more threads engage in a data race.' This chapter defines Rust's concurrency model which replaces C11 threading primitives."
         },
         {
           "fls_id": "fls_eiw4by8z75di",
           "category": 0,
-          "fls_section": "17.-2.2",
           "fls_title": "Send and Sync",
-          "score": 0.537,
-          "reason": "Section-level similarity match (score: 0.54)"
+          "score": 0.67,
+          "reason": "Per FLS fls_4ypqdehn7b0v: 'A send type shall have [value]s that are safe to transfer across thread boundaries.' Per FLS fls_zgemofbs5q2x: 'A sync type shall have [value]s that are allowed to be shared across multiple threads at any given time without incurring data races.' These traits enforce thread-safety at compile time, replacing runtime checks needed with C11 threading."
         }
       ],
-      "fls_rationale_type": "direct_mapping",
+      "fls_rationale_type": "rust_alternative",
       "misra_rust_category": "required",
-      "confidence": "medium",
-      "notes": "Similarity-based mapping - requires manual verification"
+      "confidence": "high",
+      "notes": "C11 thread object destruction maps to Rust's Drop semantics. Rust's RAII ensures thread handles are properly cleaned up.",
+      "rejected_matches": []
     },
     {
       "guideline_id": "Rule 22.14",
@@ -10489,35 +10301,54 @@
       "applicability_safe_rust": "partial",
       "accepted_matches": [
         {
-          "fls_id": "fls_vyc9vcuamlph",
+          "fls_id": "fls_yztwtek0y34v",
           "category": 0,
-          "fls_section": "17.-2.3",
-          "fls_title": "Atomics",
-          "score": 0.532,
-          "reason": "Section-level similarity match (score: 0.53)"
+          "fls_title": "External Functions",
+          "score": 1.0,
+          "reason": "Per FLS fls_v24ino4hix3m: 'An external function is an unchecked import of a foreign function.' Per FLS fls_l88r9fj82650: 'An external function shall be invoked from an unsafe context.' When calling C library functions via FFI, they must be declared as external functions and called from unsafe context."
+        },
+        {
+          "fls_id": "fls_tmoh3y9oyqsy",
+          "category": 0,
+          "fls_title": "External Blocks",
+          "score": 1.0,
+          "reason": "Per FLS fls_4dje9t5y2dia: 'An external block is a construct that provides the declarations of [external function]s and [external static]s as unchecked imports.' C library functions are declared in external blocks."
+        },
+        {
+          "fls_id": "fls_jep7p27kaqlp",
+          "category": 0,
+          "fls_title": "Unsafety",
+          "score": 1.0,
+          "reason": "Per FLS fls_ljocmnaz2m49: 'Calling an unsafe function' is an unsafe operation. Per fls_ybnpe7ppq1vh: 'An unsafe operation shall be used only within an unsafe context.' All C library functions called via FFI require unsafe context."
         },
         {
           "fls_id": "fls_3v733mnewssy",
           "category": 0,
-          "fls_section": "17.-1.1",
           "fls_title": "Concurrency",
-          "score": 0.53,
-          "reason": "Section-level similarity match (score: 0.53)"
+          "score": 0.68,
+          "reason": "Per FLS fls_opt7v0mopxc8: 'The Rust programming language provides features for concurrent programming without [data race]s.' Per FLS fls_isypweqewe78 (UB): 'It is undefined behavior if two or more threads engage in a data race.' This chapter defines Rust's concurrency model which replaces C11 threading primitives."
         },
         {
           "fls_id": "fls_eiw4by8z75di",
           "category": 0,
-          "fls_section": "17.-2.2",
           "fls_title": "Send and Sync",
-          "score": 0.528,
-          "reason": "Section-level similarity match (score: 0.53)"
+          "score": 0.67,
+          "reason": "Per FLS fls_4ypqdehn7b0v: 'A send type shall have [value]s that are safe to transfer across thread boundaries.' Per FLS fls_zgemofbs5q2x: 'A sync type shall have [value]s that are allowed to be shared across multiple threads at any given time without incurring data races.' These traits enforce thread-safety at compile time, replacing runtime checks needed with C11 threading."
+        },
+        {
+          "fls_id": "fls_vyc9vcuamlph",
+          "category": 0,
+          "fls_title": "Atomics",
+          "score": 0.68,
+          "reason": "Per FLS fls_3pjla9s93mhd: 'An atomic type is a type defined in module core::sync::atomic. [Atomic type]s provide primitive shared-memory communication between threads.' Rust's atomics provide the synchronization primitives that correspond to C11 mutex and condition variable operations."
         }
       ],
-      "fls_rationale_type": "partial_mapping",
+      "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "required",
       "misra_rust_comment": "applies to creating synchronization objects before threads that use them",
-      "confidence": "medium",
-      "notes": "MISRA ADD-6: applies to creating synchronization objects before threads that use them"
+      "confidence": "high",
+      "notes": "C11 thread synchronization object initialization has no direct FLS equivalent. Rust's Mutex/RwLock constructors ensure proper initialization. This applies only when using C11 sync primitives via FFI.",
+      "rejected_matches": []
     },
     {
       "guideline_id": "Rule 22.15",
@@ -10527,51 +10358,47 @@
       "applicability_safe_rust": "partial",
       "accepted_matches": [
         {
-          "fls_id": "fls_3v733mnewssy",
+          "fls_id": "fls_yztwtek0y34v",
           "category": 0,
-          "fls_section": "17.-1.1",
-          "fls_title": "Concurrency",
-          "score": 0.601,
-          "reason": "Section-level similarity match (score: 0.60)"
+          "fls_title": "External Functions",
+          "score": 1.0,
+          "reason": "Per FLS fls_v24ino4hix3m: 'An external function is an unchecked import of a foreign function.' Per FLS fls_l88r9fj82650: 'An external function shall be invoked from an unsafe context.' When calling C library functions via FFI, they must be declared as external functions and called from unsafe context."
         },
         {
-          "fls_id": "fls_vyc9vcuamlph",
+          "fls_id": "fls_tmoh3y9oyqsy",
           "category": 0,
-          "fls_section": "17.-2.3",
-          "fls_title": "Atomics",
-          "score": 0.583,
-          "reason": "Section-level similarity match (score: 0.58)"
+          "fls_title": "External Blocks",
+          "score": 1.0,
+          "reason": "Per FLS fls_4dje9t5y2dia: 'An external block is a construct that provides the declarations of [external function]s and [external static]s as unchecked imports.' C library functions are declared in external blocks."
         },
         {
-          "fls_id": "fls_opt7v0mopxc8",
-          "category": -1,
-          "fls_section": "fls_3v733mnewssy",
-          "fls_title": "Concurrency",
-          "score": 0.563,
-          "reason": "Per FLS: 'The Rust programming language provides features for concurrent prog...' (similarity: 0.56)"
+          "fls_id": "fls_jep7p27kaqlp",
+          "category": 0,
+          "fls_title": "Unsafety",
+          "score": 1.0,
+          "reason": "Per FLS fls_ljocmnaz2m49: 'Calling an unsafe function' is an unsafe operation. Per fls_ybnpe7ppq1vh: 'An unsafe operation shall be used only within an unsafe context.' All C library functions called via FFI require unsafe context."
         },
         {
           "fls_id": "fls_eiw4by8z75di",
           "category": 0,
-          "fls_section": "17.-2.2",
           "fls_title": "Send and Sync",
-          "score": 0.533,
-          "reason": "Section-level similarity match (score: 0.53)"
+          "score": 0.55,
+          "reason": "Per FLS fls_zgemofbs5q2x: 'A sync type shall have [value]s that are allowed to be shared across multiple threads at any given time without incurring data races.'"
         },
         {
-          "fls_id": "fls_u2mzjgiwbkz0",
+          "fls_id": "fls_3v733mnewssy",
           "category": 0,
-          "fls_section": "15.-2.7",
-          "fls_title": "Destructors",
-          "score": 0.519,
-          "reason": "Section-level similarity match (score: 0.52)"
+          "fls_title": "Concurrency",
+          "score": 0.68,
+          "reason": "Per FLS fls_opt7v0mopxc8: 'The Rust programming language provides features for concurrent programming without [data race]s.' Per FLS fls_isypweqewe78 (UB): 'It is undefined behavior if two or more threads engage in a data race.' This chapter defines Rust's concurrency model which replaces C11 threading primitives."
         }
       ],
-      "fls_rationale_type": "partial_mapping",
+      "fls_rationale_type": "rust_alternative",
       "misra_rust_category": "required",
       "misra_rust_comment": "applies to releasing synchronization objects after threads that use them",
-      "confidence": "medium",
-      "notes": "MISRA ADD-6: applies to releasing synchronization objects after threads that use them"
+      "confidence": "high",
+      "notes": "C11 thread-specific storage copying maps to Rust's Send/Sync traits. Rust enforces thread-safety at compile time.",
+      "rejected_matches": []
     },
     {
       "guideline_id": "Rule 22.16",
@@ -10581,27 +10408,54 @@
       "applicability_safe_rust": "not_applicable",
       "accepted_matches": [
         {
+          "fls_id": "fls_yztwtek0y34v",
+          "category": 0,
+          "fls_title": "External Functions",
+          "score": 1.0,
+          "reason": "Per FLS fls_v24ino4hix3m: 'An external function is an unchecked import of a foreign function.' Per FLS fls_l88r9fj82650: 'An external function shall be invoked from an unsafe context.' When calling C library functions via FFI, they must be declared as external functions and called from unsafe context."
+        },
+        {
+          "fls_id": "fls_tmoh3y9oyqsy",
+          "category": 0,
+          "fls_title": "External Blocks",
+          "score": 1.0,
+          "reason": "Per FLS fls_4dje9t5y2dia: 'An external block is a construct that provides the declarations of [external function]s and [external static]s as unchecked imports.' C library functions are declared in external blocks."
+        },
+        {
+          "fls_id": "fls_jep7p27kaqlp",
+          "category": 0,
+          "fls_title": "Unsafety",
+          "score": 1.0,
+          "reason": "Per FLS fls_ljocmnaz2m49: 'Calling an unsafe function' is an unsafe operation. Per fls_ybnpe7ppq1vh: 'An unsafe operation shall be used only within an unsafe context.' All C library functions called via FFI require unsafe context."
+        },
+        {
           "fls_id": "fls_3v733mnewssy",
           "category": 0,
-          "fls_section": "17.-1.1",
           "fls_title": "Concurrency",
-          "score": 0.54,
-          "reason": "Section-level similarity match (score: 0.54)"
+          "score": 0.68,
+          "reason": "Per FLS fls_opt7v0mopxc8: 'The Rust programming language provides features for concurrent programming without [data race]s.' Per FLS fls_isypweqewe78 (UB): 'It is undefined behavior if two or more threads engage in a data race.' This chapter defines Rust's concurrency model which replaces C11 threading primitives."
+        },
+        {
+          "fls_id": "fls_eiw4by8z75di",
+          "category": 0,
+          "fls_title": "Send and Sync",
+          "score": 0.67,
+          "reason": "Per FLS fls_4ypqdehn7b0v: 'A send type shall have [value]s that are safe to transfer across thread boundaries.' Per FLS fls_zgemofbs5q2x: 'A sync type shall have [value]s that are allowed to be shared across multiple threads at any given time without incurring data races.' These traits enforce thread-safety at compile time, replacing runtime checks needed with C11 threading."
         },
         {
           "fls_id": "fls_vyc9vcuamlph",
           "category": 0,
-          "fls_section": "17.-2.3",
           "fls_title": "Atomics",
-          "score": 0.503,
-          "reason": "Section-level similarity match (score: 0.50)"
+          "score": 0.68,
+          "reason": "Per FLS fls_3pjla9s93mhd: 'An atomic type is a type defined in module core::sync::atomic. [Atomic type]s provide primitive shared-memory communication between threads.' Rust's atomics provide the synchronization primitives that correspond to C11 mutex and condition variable operations."
         }
       ],
-      "fls_rationale_type": "direct_mapping",
+      "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "required",
       "misra_rust_comment": "only accessible through unsafe extern \u201cC\u201d",
-      "confidence": "medium",
-      "notes": "MISRA ADD-6: only accessible through unsafe extern \u201cC\u201d. Only applicable in unsafe Rust"
+      "confidence": "high",
+      "notes": "C11 mutex unlock requirements have no direct FLS equivalent. Rust's MutexGuard uses RAII to ensure unlock on drop. This applies only when using C11 mutexes via FFI.",
+      "rejected_matches": []
     },
     {
       "guideline_id": "Rule 22.17",
@@ -10611,8 +10465,54 @@
       "applicability_safe_rust": "not_applicable",
       "misra_rust_category": "required",
       "misra_rust_comment": "only accessible through unsafe extern \u201cC\u201d",
-      "confidence": "medium",
-      "notes": "MISRA ADD-6: only accessible through unsafe extern \u201cC\u201d. Only applicable in unsafe Rust"
+      "confidence": "high",
+      "notes": "C11 mutex ownership for unlock/cnd_wait has no direct FLS equivalent. Rust's MutexGuard enforces ownership. This applies only when using C11 mutexes via FFI.",
+      "accepted_matches": [
+        {
+          "fls_id": "fls_yztwtek0y34v",
+          "category": 0,
+          "fls_title": "External Functions",
+          "score": 1.0,
+          "reason": "Per FLS fls_v24ino4hix3m: 'An external function is an unchecked import of a foreign function.' Per FLS fls_l88r9fj82650: 'An external function shall be invoked from an unsafe context.' When calling C library functions via FFI, they must be declared as external functions and called from unsafe context."
+        },
+        {
+          "fls_id": "fls_tmoh3y9oyqsy",
+          "category": 0,
+          "fls_title": "External Blocks",
+          "score": 1.0,
+          "reason": "Per FLS fls_4dje9t5y2dia: 'An external block is a construct that provides the declarations of [external function]s and [external static]s as unchecked imports.' C library functions are declared in external blocks."
+        },
+        {
+          "fls_id": "fls_jep7p27kaqlp",
+          "category": 0,
+          "fls_title": "Unsafety",
+          "score": 1.0,
+          "reason": "Per FLS fls_ljocmnaz2m49: 'Calling an unsafe function' is an unsafe operation. Per fls_ybnpe7ppq1vh: 'An unsafe operation shall be used only within an unsafe context.' All C library functions called via FFI require unsafe context."
+        },
+        {
+          "fls_id": "fls_3v733mnewssy",
+          "category": 0,
+          "fls_title": "Concurrency",
+          "score": 0.68,
+          "reason": "Per FLS fls_opt7v0mopxc8: 'The Rust programming language provides features for concurrent programming without [data race]s.' Per FLS fls_isypweqewe78 (UB): 'It is undefined behavior if two or more threads engage in a data race.' This chapter defines Rust's concurrency model which replaces C11 threading primitives."
+        },
+        {
+          "fls_id": "fls_eiw4by8z75di",
+          "category": 0,
+          "fls_title": "Send and Sync",
+          "score": 0.67,
+          "reason": "Per FLS fls_4ypqdehn7b0v: 'A send type shall have [value]s that are safe to transfer across thread boundaries.' Per FLS fls_zgemofbs5q2x: 'A sync type shall have [value]s that are allowed to be shared across multiple threads at any given time without incurring data races.' These traits enforce thread-safety at compile time, replacing runtime checks needed with C11 threading."
+        },
+        {
+          "fls_id": "fls_vyc9vcuamlph",
+          "category": 0,
+          "fls_title": "Atomics",
+          "score": 0.68,
+          "reason": "Per FLS fls_3pjla9s93mhd: 'An atomic type is a type defined in module core::sync::atomic. [Atomic type]s provide primitive shared-memory communication between threads.' Rust's atomics provide the synchronization primitives that correspond to C11 mutex and condition variable operations."
+        }
+      ],
+      "rejected_matches": [],
+      "fls_rationale_type": "no_equivalent"
     },
     {
       "guideline_id": "Rule 22.18",
@@ -10621,8 +10521,54 @@
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "direct",
       "misra_rust_category": "required",
-      "confidence": "medium",
-      "notes": "No high-confidence FLS matches found"
+      "confidence": "high",
+      "notes": "C11 non-recursive mutex rules have no direct FLS equivalent. Rust's Mutex is non-recursive by default and panics on relock. This applies only when using C11 mutexes via FFI.",
+      "accepted_matches": [
+        {
+          "fls_id": "fls_yztwtek0y34v",
+          "category": 0,
+          "fls_title": "External Functions",
+          "score": 1.0,
+          "reason": "Per FLS fls_v24ino4hix3m: 'An external function is an unchecked import of a foreign function.' Per FLS fls_l88r9fj82650: 'An external function shall be invoked from an unsafe context.' When calling C library functions via FFI, they must be declared as external functions and called from unsafe context."
+        },
+        {
+          "fls_id": "fls_tmoh3y9oyqsy",
+          "category": 0,
+          "fls_title": "External Blocks",
+          "score": 1.0,
+          "reason": "Per FLS fls_4dje9t5y2dia: 'An external block is a construct that provides the declarations of [external function]s and [external static]s as unchecked imports.' C library functions are declared in external blocks."
+        },
+        {
+          "fls_id": "fls_jep7p27kaqlp",
+          "category": 0,
+          "fls_title": "Unsafety",
+          "score": 1.0,
+          "reason": "Per FLS fls_ljocmnaz2m49: 'Calling an unsafe function' is an unsafe operation. Per fls_ybnpe7ppq1vh: 'An unsafe operation shall be used only within an unsafe context.' All C library functions called via FFI require unsafe context."
+        },
+        {
+          "fls_id": "fls_3v733mnewssy",
+          "category": 0,
+          "fls_title": "Concurrency",
+          "score": 0.68,
+          "reason": "Per FLS fls_opt7v0mopxc8: 'The Rust programming language provides features for concurrent programming without [data race]s.' Per FLS fls_isypweqewe78 (UB): 'It is undefined behavior if two or more threads engage in a data race.' This chapter defines Rust's concurrency model which replaces C11 threading primitives."
+        },
+        {
+          "fls_id": "fls_eiw4by8z75di",
+          "category": 0,
+          "fls_title": "Send and Sync",
+          "score": 0.67,
+          "reason": "Per FLS fls_4ypqdehn7b0v: 'A send type shall have [value]s that are safe to transfer across thread boundaries.' Per FLS fls_zgemofbs5q2x: 'A sync type shall have [value]s that are allowed to be shared across multiple threads at any given time without incurring data races.' These traits enforce thread-safety at compile time, replacing runtime checks needed with C11 threading."
+        },
+        {
+          "fls_id": "fls_vyc9vcuamlph",
+          "category": 0,
+          "fls_title": "Atomics",
+          "score": 0.68,
+          "reason": "Per FLS fls_3pjla9s93mhd: 'An atomic type is a type defined in module core::sync::atomic. [Atomic type]s provide primitive shared-memory communication between threads.' Rust's atomics provide the synchronization primitives that correspond to C11 mutex and condition variable operations."
+        }
+      ],
+      "rejected_matches": [],
+      "fls_rationale_type": "no_equivalent"
     },
     {
       "guideline_id": "Rule 22.19",
@@ -10631,8 +10577,54 @@
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "direct",
       "misra_rust_category": "required",
-      "confidence": "medium",
-      "notes": "No high-confidence FLS matches found"
+      "confidence": "high",
+      "notes": "C11 condition variable association rules have no direct FLS equivalent. Rust's Condvar doesn't have this restriction. This applies only when using C11 condition variables via FFI.",
+      "accepted_matches": [
+        {
+          "fls_id": "fls_yztwtek0y34v",
+          "category": 0,
+          "fls_title": "External Functions",
+          "score": 1.0,
+          "reason": "Per FLS fls_v24ino4hix3m: 'An external function is an unchecked import of a foreign function.' Per FLS fls_l88r9fj82650: 'An external function shall be invoked from an unsafe context.' When calling C library functions via FFI, they must be declared as external functions and called from unsafe context."
+        },
+        {
+          "fls_id": "fls_tmoh3y9oyqsy",
+          "category": 0,
+          "fls_title": "External Blocks",
+          "score": 1.0,
+          "reason": "Per FLS fls_4dje9t5y2dia: 'An external block is a construct that provides the declarations of [external function]s and [external static]s as unchecked imports.' C library functions are declared in external blocks."
+        },
+        {
+          "fls_id": "fls_jep7p27kaqlp",
+          "category": 0,
+          "fls_title": "Unsafety",
+          "score": 1.0,
+          "reason": "Per FLS fls_ljocmnaz2m49: 'Calling an unsafe function' is an unsafe operation. Per fls_ybnpe7ppq1vh: 'An unsafe operation shall be used only within an unsafe context.' All C library functions called via FFI require unsafe context."
+        },
+        {
+          "fls_id": "fls_3v733mnewssy",
+          "category": 0,
+          "fls_title": "Concurrency",
+          "score": 0.68,
+          "reason": "Per FLS fls_opt7v0mopxc8: 'The Rust programming language provides features for concurrent programming without [data race]s.' Per FLS fls_isypweqewe78 (UB): 'It is undefined behavior if two or more threads engage in a data race.' This chapter defines Rust's concurrency model which replaces C11 threading primitives."
+        },
+        {
+          "fls_id": "fls_eiw4by8z75di",
+          "category": 0,
+          "fls_title": "Send and Sync",
+          "score": 0.67,
+          "reason": "Per FLS fls_4ypqdehn7b0v: 'A send type shall have [value]s that are safe to transfer across thread boundaries.' Per FLS fls_zgemofbs5q2x: 'A sync type shall have [value]s that are allowed to be shared across multiple threads at any given time without incurring data races.' These traits enforce thread-safety at compile time, replacing runtime checks needed with C11 threading."
+        },
+        {
+          "fls_id": "fls_vyc9vcuamlph",
+          "category": 0,
+          "fls_title": "Atomics",
+          "score": 0.68,
+          "reason": "Per FLS fls_3pjla9s93mhd: 'An atomic type is a type defined in module core::sync::atomic. [Atomic type]s provide primitive shared-memory communication between threads.' Rust's atomics provide the synchronization primitives that correspond to C11 mutex and condition variable operations."
+        }
+      ],
+      "rejected_matches": [],
+      "fls_rationale_type": "no_equivalent"
     },
     {
       "guideline_id": "Rule 22.20",
@@ -10642,42 +10634,46 @@
       "applicability_safe_rust": "partial",
       "accepted_matches": [
         {
-          "fls_id": "fls_3v733mnewssy",
+          "fls_id": "fls_yztwtek0y34v",
           "category": 0,
-          "fls_section": "17.-1.1",
-          "fls_title": "Concurrency",
-          "score": 0.574,
-          "reason": "Section-level similarity match (score: 0.57)"
+          "fls_title": "External Functions",
+          "score": 1.0,
+          "reason": "Per FLS fls_v24ino4hix3m: 'An external function is an unchecked import of a foreign function.' Per FLS fls_l88r9fj82650: 'An external function shall be invoked from an unsafe context.' When calling C library functions via FFI, they must be declared as external functions and called from unsafe context."
         },
         {
-          "fls_id": "fls_vyc9vcuamlph",
+          "fls_id": "fls_tmoh3y9oyqsy",
           "category": 0,
-          "fls_section": "17.-2.3",
-          "fls_title": "Atomics",
-          "score": 0.564,
-          "reason": "Section-level similarity match (score: 0.56)"
+          "fls_title": "External Blocks",
+          "score": 1.0,
+          "reason": "Per FLS fls_4dje9t5y2dia: 'An external block is a construct that provides the declarations of [external function]s and [external static]s as unchecked imports.' C library functions are declared in external blocks."
         },
         {
           "fls_id": "fls_jep7p27kaqlp",
           "category": 0,
-          "fls_section": "19.-2.1",
           "fls_title": "Unsafety",
-          "score": 0.525,
-          "reason": "Section-level similarity match (score: 0.53)"
+          "score": 1.0,
+          "reason": "Per FLS fls_ljocmnaz2m49: 'Calling an unsafe function' is an unsafe operation. Per fls_ybnpe7ppq1vh: 'An unsafe operation shall be used only within an unsafe context.' All C library functions called via FFI require unsafe context."
         },
         {
-          "fls_id": "fls_94a8v54bufn8",
+          "fls_id": "fls_3v733mnewssy",
           "category": 0,
-          "fls_section": "7.-2.1",
-          "fls_title": "Values",
-          "score": 0.501,
-          "reason": "Section-level similarity match (score: 0.50)"
+          "fls_title": "Concurrency",
+          "score": 0.68,
+          "reason": "Per FLS fls_opt7v0mopxc8: 'The Rust programming language provides features for concurrent programming without [data race]s.' Per FLS fls_isypweqewe78 (UB): 'It is undefined behavior if two or more threads engage in a data race.' This chapter defines Rust's concurrency model which replaces C11 threading primitives."
+        },
+        {
+          "fls_id": "fls_eiw4by8z75di",
+          "category": 0,
+          "fls_title": "Send and Sync",
+          "score": 0.67,
+          "reason": "Per FLS fls_4ypqdehn7b0v: 'A send type shall have [value]s that are safe to transfer across thread boundaries.' Per FLS fls_zgemofbs5q2x: 'A sync type shall have [value]s that are allowed to be shared across multiple threads at any given time without incurring data races.' These traits enforce thread-safety at compile time, replacing runtime checks needed with C11 threading."
         }
       ],
-      "fls_rationale_type": "partial_mapping",
+      "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "required",
-      "confidence": "medium",
-      "notes": "Similarity-based mapping - requires manual verification"
+      "confidence": "high",
+      "notes": "C11 thread-specific storage creation timing has no direct FLS equivalent. Rust's thread_local! macro handles this at compile time. This applies only when using C11 TLS via FFI.",
+      "rejected_matches": []
     },
     {
       "guideline_id": "Rule 23.1",

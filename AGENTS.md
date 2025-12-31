@@ -151,6 +151,7 @@ eclipse-iceoryx2-actionanable-safety-certification/
 │
 ├── coding-standards-fls-mapping/       # Pipeline 2 output: standards to FLS mappings
 │   ├── schema/
+│   │   ├── batch_report.schema.json
 │   │   ├── coding_standard_rules.schema.json
 │   │   ├── fls_mapping.schema.json
 │   │   └── verification_progress.schema.json
@@ -216,7 +217,9 @@ eclipse-iceoryx2-actionanable-safety-certification/
     │   │   └── verification/           # Verification workflow
     │   │       ├── batch.py            # verify-batch
     │   │       ├── apply.py            # apply-verification
+    │   │       ├── enrich.py           # enrich-fls-matches
     │   │       ├── progress.py         # check-progress
+    │   │       ├── reset.py            # reset-batch
     │   │       ├── scaffold.py         # scaffold-progress
     │   │       ├── search.py           # search-fls
     │   │       ├── search_deep.py      # search-fls-deep
@@ -614,7 +617,8 @@ uv run verify-batch \
 - Wide-shot FLS content (matched sections + siblings + all rubrics)
 - Current mapping state
 
-All guidelines start with `verification_decision: null`.
+All guidelines start with a scaffolded `verification_decision` structure (fields set to `null`/empty).
+See `coding-standards-fls-mapping/schema/batch_report.schema.json` for required fields.
 
 **Output modes:**
 - `--mode llm`: Full JSON optimized for LLM consumption
@@ -701,6 +705,14 @@ Process the batch report JSON and for each guideline:
    All changes remain in the batch report (`cache/verification/`) until approved in Phase 3.
 
 6. **Populate** the `verification_decision` section in batch report JSON
+
+   **Required fields** (see `coding-standards-fls-mapping/schema/batch_report.schema.json`):
+   - `decision`: "accept_with_modifications", "accept_no_matches", "accept_existing", or "reject"
+   - `confidence`: "high", "medium", or "low"
+   - `fls_rationale_type`: "direct_mapping", "rust_alternative", "rust_prevents", "no_equivalent", or "partial_mapping"
+   - `accepted_matches`: Array of FLS matches (each with `fls_id`, `category`, `score`, `reason`)
+   - `rejected_matches`: Array of explicitly rejected matches (optional)
+   - `notes`: Additional notes (optional)
 
 **Crash recovery:** If the session is interrupted, the batch report in `cache/verification/` preserves all completed work. Run `check-progress` to see where to resume.
 
@@ -853,6 +865,83 @@ uv run scaffold-progress --force
 # Regenerate batches but preserve completed work
 uv run scaffold-progress --preserve-completed
 ```
+
+#### Resetting a Batch
+
+To reset verification decisions for a batch (e.g., to re-verify after issues):
+
+```bash
+cd tools
+
+# Reset all guidelines in a batch to unverified state
+uv run reset-batch --batch 3
+
+# Reset specific guidelines within a batch
+uv run reset-batch --batch 3 --guidelines "Rule 22.1,Rule 22.2"
+
+# Preview what would be reset without making changes
+uv run reset-batch --batch 3 --dry-run
+```
+
+This clears `verification_decision` fields in the batch report and resets `verified` status in `verification_progress.json` for affected guidelines.
+
+---
+
+## Development Guidelines
+
+### Tool Development with uv
+
+All tools are developed as entry points in the `fls-tools` package. When creating new tools:
+
+1. **Create the module** in the appropriate location under `tools/src/fls_tools/`:
+   - `iceoryx2/` - Pipeline 1 tools
+   - `standards/verification/` - Verification workflow tools
+   - `standards/validation/` - Validation tools
+   - `standards/mapping/` - Mapping generation tools
+   - `analysis/` - Cross-reference and analysis tools
+
+2. **Add entry point** in `tools/pyproject.toml` under `[project.scripts]`:
+   ```toml
+   tool-name = "fls_tools.module.submodule:main"
+   ```
+
+3. **Follow existing patterns:**
+   - Import shared utilities from `fls_tools.shared`
+   - Use `argparse` for CLI arguments
+   - Use `get_project_root()` for path resolution
+   - Include docstring with usage examples
+
+4. **Test the tool:**
+   ```bash
+   cd tools
+   uv run tool-name --help
+   uv run tool-name --dry-run  # If applicable
+   ```
+
+### Ad-Hoc Scripts Policy
+
+Ad-hoc Python/Bash scripts (not registered as tools) follow these rules:
+
+**Acceptable for READ-ONLY operations:**
+- Analysis and reporting
+- Data extraction and inspection
+- One-off queries against data files
+- Generating summaries or statistics
+
+**Require explicit user approval for:**
+- Any modification to canonical data files
+- Batch updates to JSON files
+- Operations that bypass validation tooling
+
+**NOT acceptable (use proper tooling instead):**
+- Operations that have a dedicated tool/command
+- Modifications that should be auditable/traceable
+- Recurring operations that should be reproducible
+
+**When proposing an ad-hoc modification script:**
+1. Explain the rationale and what it will change
+2. Ask for explicit approval before executing
+3. Consider whether the operation should become a reusable tool
 
 ---
 

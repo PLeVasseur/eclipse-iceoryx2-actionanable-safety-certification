@@ -20,11 +20,14 @@ from datetime import date, datetime
 from pathlib import Path
 from typing import Any
 
+import jsonschema
+
 from fls_tools.shared import (
     get_project_root,
     get_tools_dir,
     get_misra_c_mappings_path,
     get_verification_progress_path,
+    get_coding_standards_dir,
 )
 
 
@@ -44,14 +47,41 @@ def save_json(path: Path, data: dict, description: str):
     print(f"Updated {description}: {path}", file=sys.stderr)
 
 
-def validate_batch_report(report: dict) -> list[str]:
-    """Validate that the batch report is ready to apply."""
+def load_batch_report_schema(root: Path) -> dict | None:
+    """Load the batch report JSON schema."""
+    schema_path = get_coding_standards_dir(root) / "schema" / "batch_report.schema.json"
+    if not schema_path.exists():
+        print(f"WARNING: Batch report schema not found: {schema_path}", file=sys.stderr)
+        return None
+    with open(schema_path) as f:
+        return json.load(f)
+
+
+def validate_batch_report(report: dict, schema: dict | None = None) -> list[str]:
+    """
+    Validate that the batch report is ready to apply.
+    
+    Uses schema validation if schema is provided, plus additional semantic checks.
+    """
     errors = []
     
     if not report.get("guidelines"):
         errors.append("No guidelines in batch report")
         return errors
     
+    # Schema validation if available
+    if schema:
+        try:
+            jsonschema.validate(instance=report, schema=schema)
+        except jsonschema.ValidationError as e:
+            errors.append(f"Schema validation error: {e.message}")
+            if e.path:
+                errors.append(f"  Path: {'.'.join(str(p) for p in e.path)}")
+        except jsonschema.SchemaError as e:
+            errors.append(f"Schema error: {e.message}")
+    
+    # Semantic validation for apply-readiness
+    # (verification_decision must be fully populated, not just scaffolded)
     for g in report["guidelines"]:
         gid = g.get("guideline_id", "UNKNOWN")
         decision = g.get("verification_decision")
@@ -61,8 +91,13 @@ def validate_batch_report(report: dict) -> list[str]:
         elif not isinstance(decision, dict):
             errors.append(f"{gid}: verification_decision is not an object")
         else:
-            if "confidence" not in decision:
-                errors.append(f"{gid}: verification_decision missing 'confidence'")
+            # Check that required fields are not just scaffolded (None)
+            if decision.get("decision") is None:
+                errors.append(f"{gid}: verification_decision.decision is null")
+            if decision.get("confidence") is None:
+                errors.append(f"{gid}: verification_decision.confidence is null")
+            if decision.get("fls_rationale_type") is None:
+                errors.append(f"{gid}: verification_decision.fls_rationale_type is null")
             if "accepted_matches" not in decision:
                 errors.append(f"{gid}: verification_decision missing 'accepted_matches'")
     
@@ -133,6 +168,10 @@ def update_mappings(
         
         # Update confidence
         mapping["confidence"] = decision.get("confidence", "high")
+        
+        # Update fls_rationale_type
+        if decision.get("fls_rationale_type"):
+            mapping["fls_rationale_type"] = decision["fls_rationale_type"]
         
         # Update notes if provided
         if decision.get("notes"):
@@ -293,8 +332,11 @@ def main():
     print(f"Loading batch report from {report_path}...", file=sys.stderr)
     report = load_json(report_path, "Batch report")
     
+    # Load schema for validation
+    schema = load_batch_report_schema(root)
+    
     # Validate batch report
-    errors = validate_batch_report(report)
+    errors = validate_batch_report(report, schema)
     if errors:
         print("ERROR: Batch report validation failed:", file=sys.stderr)
         for e in errors:

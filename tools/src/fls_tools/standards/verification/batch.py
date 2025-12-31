@@ -34,6 +34,8 @@ from datetime import date
 from pathlib import Path
 from typing import Any
 
+import jsonschema
+
 from fls_tools.shared import (
     get_project_root,
     get_fls_dir,
@@ -44,6 +46,7 @@ from fls_tools.shared import (
     get_misra_c_similarity_path,
     get_misra_c_extracted_text_path,
     get_verification_progress_path,
+    get_coding_standards_dir,
     CATEGORY_NAMES,
     DEFAULT_SECTION_THRESHOLD,
     DEFAULT_PARAGRAPH_THRESHOLD,
@@ -60,6 +63,38 @@ def load_json(path: Path, description: str) -> dict:
         sys.exit(1)
     with open(path) as f:
         return json.load(f)
+
+
+def load_batch_report_schema(root: Path) -> dict | None:
+    """Load the batch report JSON schema."""
+    schema_path = get_coding_standards_dir(root) / "schema" / "batch_report.schema.json"
+    if not schema_path.exists():
+        print(f"WARNING: Batch report schema not found: {schema_path}", file=sys.stderr)
+        return None
+    with open(schema_path) as f:
+        return json.load(f)
+
+
+def validate_batch_report(report: dict, schema: dict | None) -> list[str]:
+    """
+    Validate a batch report against the schema.
+    
+    Returns a list of validation errors (empty if valid).
+    """
+    if schema is None:
+        return []
+    
+    errors = []
+    try:
+        jsonschema.validate(instance=report, schema=schema)
+    except jsonschema.ValidationError as e:
+        errors.append(f"Schema validation error: {e.message}")
+        if e.path:
+            errors.append(f"  Path: {'.'.join(str(p) for p in e.path)}")
+    except jsonschema.SchemaError as e:
+        errors.append(f"Schema error: {e.message}")
+    
+    return errors
 
 
 def load_all_data(root: Path) -> dict:
@@ -299,7 +334,16 @@ def build_guideline_entry(
         "misra_rationale": misra_rationale,
         "similarity_data": similarity_data,
         "fls_content": fls_content,
-        "verification_decision": None,  # To be filled by LLM in Phase 2
+        # Scaffolded verification_decision structure - to be filled by LLM in Phase 2
+        # See coding-standards-fls-mapping/schema/batch_report.schema.json for required fields
+        "verification_decision": {
+            "decision": None,           # Required: "accept_with_modifications", "accept_no_matches", "accept_existing", "reject"
+            "confidence": None,         # Required: "high", "medium", "low"
+            "fls_rationale_type": None, # Required: "direct_mapping", "rust_alternative", "rust_prevents", "no_equivalent", "partial_mapping"
+            "accepted_matches": [],     # Required: array of FLS matches with fls_id, category, score, reason
+            "rejected_matches": [],     # Optional: array of explicitly rejected matches
+            "notes": None,              # Optional: additional notes
+        },
     }
 
 
@@ -473,6 +517,9 @@ def main():
     print(f"Loading data from {root}...", file=sys.stderr)
     data = load_all_data(root)
     
+    print(f"Loading batch report schema...", file=sys.stderr)
+    schema = load_batch_report_schema(root)
+    
     print(f"Building batch {args.batch} report...", file=sys.stderr)
     report = build_batch_report(
         data,
@@ -481,6 +528,16 @@ def main():
         args.section_threshold,
         args.paragraph_threshold,
     )
+    
+    # Validate the generated report against the schema
+    if schema:
+        print(f"Validating batch report against schema...", file=sys.stderr)
+        errors = validate_batch_report(report, schema)
+        if errors:
+            print("WARNING: Generated report has schema validation issues:", file=sys.stderr)
+            for err in errors:
+                print(f"  {err}", file=sys.stderr)
+            print("  (This is expected for newly generated reports with unfilled verification_decision)", file=sys.stderr)
     
     if args.mode == "llm":
         output = json.dumps(report, indent=2)

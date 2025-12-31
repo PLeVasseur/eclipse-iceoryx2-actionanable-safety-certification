@@ -757,235 +757,235 @@
       "batch_id": 3,
       "name": "Stdlib & Resources",
       "description": "Categories 21 (Standard library) and 22 (Resources) - remaining direct mappings",
-      "status": "in_progress",
+      "status": "completed",
       "guidelines": [
         {
           "guideline_id": "Rule 21.3",
-          "status": "pending",
+          "status": "verified",
           "verified_date": null,
-          "session_id": null
+          "session_id": 5
         },
         {
           "guideline_id": "Rule 21.4",
-          "status": "pending",
+          "status": "verified",
           "verified_date": null,
-          "session_id": null
+          "session_id": 5
         },
         {
           "guideline_id": "Rule 21.5",
-          "status": "pending",
+          "status": "verified",
           "verified_date": null,
-          "session_id": null
+          "session_id": 5
         },
         {
           "guideline_id": "Rule 21.8",
-          "status": "pending",
+          "status": "verified",
           "verified_date": null,
-          "session_id": null
+          "session_id": 5
         },
         {
           "guideline_id": "Rule 21.9",
-          "status": "pending",
+          "status": "verified",
           "verified_date": null,
-          "session_id": null
+          "session_id": 5
         },
         {
           "guideline_id": "Rule 21.10",
-          "status": "pending",
+          "status": "verified",
           "verified_date": null,
-          "session_id": null
+          "session_id": 5
         },
         {
           "guideline_id": "Rule 21.12",
-          "status": "pending",
+          "status": "verified",
           "verified_date": null,
-          "session_id": null
+          "session_id": 5
         },
         {
           "guideline_id": "Rule 21.13",
-          "status": "pending",
+          "status": "verified",
           "verified_date": null,
-          "session_id": null
+          "session_id": 5
         },
         {
           "guideline_id": "Rule 21.14",
-          "status": "pending",
+          "status": "verified",
           "verified_date": null,
-          "session_id": null
+          "session_id": 5
         },
         {
           "guideline_id": "Rule 21.15",
-          "status": "pending",
+          "status": "verified",
           "verified_date": null,
-          "session_id": null
+          "session_id": 5
         },
         {
           "guideline_id": "Rule 21.16",
-          "status": "pending",
+          "status": "verified",
           "verified_date": null,
-          "session_id": null
+          "session_id": 5
         },
         {
           "guideline_id": "Rule 21.18",
-          "status": "pending",
+          "status": "verified",
           "verified_date": null,
-          "session_id": null
+          "session_id": 5
         },
         {
           "guideline_id": "Rule 21.19",
-          "status": "pending",
+          "status": "verified",
           "verified_date": null,
-          "session_id": null
+          "session_id": 5
         },
         {
           "guideline_id": "Rule 21.20",
-          "status": "pending",
+          "status": "verified",
           "verified_date": null,
-          "session_id": null
+          "session_id": 5
         },
         {
           "guideline_id": "Rule 21.21",
-          "status": "pending",
+          "status": "verified",
           "verified_date": null,
-          "session_id": null
+          "session_id": 5
         },
         {
           "guideline_id": "Rule 21.24",
-          "status": "pending",
+          "status": "verified",
           "verified_date": null,
-          "session_id": null
+          "session_id": 5
         },
         {
           "guideline_id": "Rule 21.25",
-          "status": "pending",
+          "status": "verified",
           "verified_date": null,
-          "session_id": null
+          "session_id": 5
         },
         {
           "guideline_id": "Rule 21.26",
-          "status": "pending",
+          "status": "verified",
           "verified_date": null,
-          "session_id": null
+          "session_id": 5
         },
         {
           "guideline_id": "Rule 22.1",
-          "status": "pending",
+          "status": "verified",
           "verified_date": null,
-          "session_id": null
+          "session_id": 5
         },
         {
           "guideline_id": "Rule 22.2",
-          "status": "pending",
+          "status": "verified",
           "verified_date": null,
-          "session_id": null
+          "session_id": 5
         },
         {
           "guideline_id": "Rule 22.3",
-          "status": "pending",
+          "status": "verified",
           "verified_date": null,
-          "session_id": null
+          "session_id": 5
         },
         {
           "guideline_id": "Rule 22.4",
-          "status": "pending",
+          "status": "verified",
           "verified_date": null,
-          "session_id": null
+          "session_id": 5
         },
         {
           "guideline_id": "Rule 22.5",
-          "status": "pending",
+          "status": "verified",
           "verified_date": null,
-          "session_id": null
+          "session_id": 5
         },
         {
           "guideline_id": "Rule 22.6",
-          "status": "pending",
+          "status": "verified",
           "verified_date": null,
-          "session_id": null
+          "session_id": 5
         },
         {
           "guideline_id": "Rule 22.7",
-          "status": "pending",
+          "status": "verified",
           "verified_date": null,
-          "session_id": null
+          "session_id": 5
         },
         {
           "guideline_id": "Rule 22.8",
-          "status": "pending",
+          "status": "verified",
           "verified_date": null,
-          "session_id": null
+          "session_id": 5
         },
         {
           "guideline_id": "Rule 22.9",
-          "status": "pending",
+          "status": "verified",
           "verified_date": null,
-          "session_id": null
+          "session_id": 5
         },
         {
           "guideline_id": "Rule 22.10",
-          "status": "pending",
+          "status": "verified",
           "verified_date": null,
-          "session_id": null
+          "session_id": 5
         },
         {
           "guideline_id": "Rule 22.11",
-          "status": "pending",
+          "status": "verified",
           "verified_date": null,
-          "session_id": null
+          "session_id": 5
         },
         {
           "guideline_id": "Rule 22.12",
-          "status": "pending",
+          "status": "verified",
           "verified_date": null,
-          "session_id": null
+          "session_id": 5
         },
         {
           "guideline_id": "Rule 22.13",
-          "status": "pending",
+          "status": "verified",
           "verified_date": null,
-          "session_id": null
+          "session_id": 5
         },
         {
           "guideline_id": "Rule 22.14",
-          "status": "pending",
+          "status": "verified",
           "verified_date": null,
-          "session_id": null
+          "session_id": 5
         },
         {
           "guideline_id": "Rule 22.15",
-          "status": "pending",
+          "status": "verified",
           "verified_date": null,
-          "session_id": null
+          "session_id": 5
         },
         {
           "guideline_id": "Rule 22.16",
-          "status": "pending",
+          "status": "verified",
           "verified_date": null,
-          "session_id": null
+          "session_id": 5
         },
         {
           "guideline_id": "Rule 22.17",
-          "status": "pending",
+          "status": "verified",
           "verified_date": null,
-          "session_id": null
+          "session_id": 5
         },
         {
           "guideline_id": "Rule 22.18",
-          "status": "pending",
+          "status": "verified",
           "verified_date": null,
-          "session_id": null
+          "session_id": 5
         },
         {
           "guideline_id": "Rule 22.19",
-          "status": "pending",
+          "status": "verified",
           "verified_date": null,
-          "session_id": null
+          "session_id": 5
         },
         {
           "guideline_id": "Rule 22.20",
-          "status": "pending",
+          "status": "verified",
           "verified_date": null,
-          "session_id": null
+          "session_id": 5
         }
       ],
       "started": "2025-12-31",
@@ -1554,6 +1554,12 @@
         "Rule 12.6"
       ],
       "notes": "Reconciled Rule 8.8 (already high confidence in mapping file). Continuing Batch 2."
+    },
+    {
+      "session_id": 5,
+      "date": "2026-01-01",
+      "batch_id": 3,
+      "guidelines_verified": 38
     }
   ]
 }

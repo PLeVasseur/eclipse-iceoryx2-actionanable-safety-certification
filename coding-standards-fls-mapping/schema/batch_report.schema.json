@@ -1,0 +1,253 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "batch_report.schema.json",
+  "title": "Verification Batch Report",
+  "description": "Schema for batch verification reports used in Phase 2 of the MISRA to FLS verification workflow",
+  "type": "object",
+  "required": ["batch_id", "session_id", "generated_date", "standard", "thresholds", "guidelines", "applicability_changes", "summary"],
+  "properties": {
+    "batch_id": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Batch identifier (1-5)"
+    },
+    "session_id": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Session identifier for this verification run"
+    },
+    "generated_date": {
+      "type": "string",
+      "format": "date",
+      "description": "ISO 8601 date when the batch report was generated"
+    },
+    "standard": {
+      "type": "string",
+      "enum": ["misra_c", "misra_cpp", "cert_c", "cert_cpp"],
+      "description": "The coding standard being verified"
+    },
+    "thresholds": {
+      "type": "object",
+      "required": ["section", "paragraph"],
+      "properties": {
+        "section": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Minimum similarity threshold for section matches"
+        },
+        "paragraph": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Minimum similarity threshold for paragraph matches"
+        }
+      }
+    },
+    "guidelines": {
+      "type": "array",
+      "description": "Array of guidelines to verify in this batch",
+      "items": {
+        "$ref": "#/$defs/guideline_entry"
+      }
+    },
+    "applicability_changes": {
+      "type": "array",
+      "description": "Proposed applicability changes requiring human approval",
+      "items": {
+        "$ref": "#/$defs/applicability_change"
+      }
+    },
+    "summary": {
+      "type": "object",
+      "required": ["total_guidelines", "verified_count"],
+      "properties": {
+        "total_guidelines": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Total number of guidelines in this batch"
+        },
+        "verified_count": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of guidelines with completed verification decisions"
+        },
+        "applicability_changes_proposed": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of proposed applicability changes"
+        },
+        "applicability_changes_approved": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of approved applicability changes"
+        }
+      }
+    }
+  },
+  "$defs": {
+    "guideline_entry": {
+      "type": "object",
+      "description": "A single guideline entry in the batch report",
+      "required": ["guideline_id", "guideline_title", "current_state", "verification_decision"],
+      "properties": {
+        "guideline_id": {
+          "type": "string",
+          "description": "MISRA guideline ID (e.g., 'Rule 10.1', 'Dir 4.1')"
+        },
+        "guideline_title": {
+          "type": "string",
+          "description": "Title/summary of the guideline"
+        },
+        "current_state": {
+          "type": "object",
+          "description": "Current state of the guideline mapping from misra_c_to_fls.json",
+          "properties": {
+            "applicability_all_rust": { "type": ["string", "null"] },
+            "applicability_safe_rust": { "type": ["string", "null"] },
+            "confidence": { "type": ["string", "null"] },
+            "fls_rationale_type": { "type": ["string", "null"] },
+            "accepted_matches": { "type": "array" },
+            "rejected_matches": { "type": "array" },
+            "notes": { "type": ["string", "null"] }
+          }
+        },
+        "misra_rationale": {
+          "type": ["string", "object", "null"],
+          "description": "Extracted MISRA rationale text (string) or full extracted data (object)"
+        },
+        "similarity_data": {
+          "type": "object",
+          "description": "Similarity search results for this guideline"
+        },
+        "fls_content": {
+          "type": "object",
+          "description": "Extracted FLS content for matched sections"
+        },
+        "verification_decision": {
+          "$ref": "#/$defs/verification_decision"
+        }
+      }
+    },
+    "verification_decision": {
+      "type": ["object", "null"],
+      "description": "The verification decision made during Phase 2. Null when not yet verified, object when verified.",
+      "if": {
+        "type": "object"
+      },
+      "then": {
+        "required": ["decision", "confidence", "fls_rationale_type", "accepted_matches"],
+        "properties": {
+          "decision": {
+            "type": "string",
+            "enum": ["accept_with_modifications", "accept_no_matches", "accept_existing", "reject"],
+            "description": "The verification decision type"
+          },
+          "confidence": {
+            "type": "string",
+            "enum": ["high", "medium", "low"],
+            "description": "Confidence level in the verification decision"
+          },
+          "fls_rationale_type": {
+            "type": "string",
+            "enum": ["direct_mapping", "rust_alternative", "rust_prevents", "no_equivalent", "partial_mapping"],
+            "description": "Type of relationship between the guideline and FLS"
+          },
+          "accepted_matches": {
+            "type": "array",
+            "description": "FLS sections accepted as matches for this guideline",
+            "items": {
+              "$ref": "#/$defs/fls_match"
+            }
+          },
+          "rejected_matches": {
+            "type": "array",
+            "description": "FLS sections explicitly rejected despite high similarity",
+            "items": {
+              "$ref": "#/$defs/fls_match"
+            }
+          },
+          "notes": {
+            "type": ["string", "null"],
+            "description": "Additional notes about the verification decision"
+          },
+          "proposed_applicability_change": {
+            "type": ["object", "null"],
+            "description": "If set, proposes a change to applicability fields (requires human approval)",
+            "properties": {
+              "field": {
+                "type": "string",
+                "enum": ["applicability_all_rust", "applicability_safe_rust", "fls_rationale_type"]
+              },
+              "current_value": { "type": "string" },
+              "proposed_value": { "type": "string" },
+              "rationale": { "type": "string" }
+            },
+            "required": ["field", "current_value", "proposed_value", "rationale"]
+          }
+        }
+      }
+    },
+    "fls_match": {
+      "type": "object",
+      "required": ["fls_id", "category", "score", "reason"],
+      "properties": {
+        "fls_id": {
+          "type": "string",
+          "pattern": "^fls_[a-zA-Z0-9]+$",
+          "description": "FLS identifier for the matched section or paragraph"
+        },
+        "category": {
+          "type": "integer",
+          "enum": [0, -1, -2, -3, -4, -5, -6, -7, -8],
+          "description": "Category code: 0=section, -1=general, -2=legality_rules, -3=dynamic_semantics, -4=undefined_behavior, -5=implementation_requirements, -6=implementation_permissions, -7=examples, -8=syntax"
+        },
+        "fls_title": {
+          "type": "string",
+          "description": "Human-readable title of the FLS section"
+        },
+        "score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Similarity score (0-1) or 1.0 for manually added matches"
+        },
+        "reason": {
+          "type": "string",
+          "description": "Justification for accepting/rejecting this match - should quote FLS content"
+        }
+      }
+    },
+    "applicability_change": {
+      "type": "object",
+      "required": ["guideline_id", "field", "current_value", "proposed_value", "rationale"],
+      "properties": {
+        "guideline_id": {
+          "type": "string",
+          "description": "The guideline ID for which this change is proposed"
+        },
+        "field": {
+          "type": "string",
+          "enum": ["applicability_all_rust", "applicability_safe_rust", "fls_rationale_type"],
+          "description": "The field to be changed"
+        },
+        "current_value": {
+          "type": "string",
+          "description": "Current value of the field"
+        },
+        "proposed_value": {
+          "type": "string",
+          "description": "Proposed new value"
+        },
+        "rationale": {
+          "type": "string",
+          "description": "Justification for the proposed change"
+        },
+        "approved": {
+          "type": ["boolean", "null"],
+          "description": "Whether the change was approved by human reviewer (null = pending)"
+        }
+      }
+    }
+  }
+}
