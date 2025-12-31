@@ -325,7 +325,7 @@ def main():
                 
                 print()
                 print("To continue parallel verification:")
-                print(f"  uv run record-decision --output-dir {decisions_dir.relative_to(root)} \\")
+                print(f"  uv run record-decision --batch {batch_id} \\")
                 print(f"      --guideline \"<GUIDELINE_ID>\" ...")
                 
                 print()

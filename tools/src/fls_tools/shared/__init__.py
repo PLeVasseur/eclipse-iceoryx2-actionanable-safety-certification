@@ -26,6 +26,7 @@ from .paths import (
     get_cache_dir,
     get_iceoryx2_fls_dir,
     get_verification_cache_dir,
+    get_batch_decisions_dir,
     get_repos_cache_dir,
     get_coding_standards_dir,
     get_fls_repo_dir,
@@ -50,6 +51,11 @@ from .paths import (
     get_misra_c_rationale_embeddings_path,
     get_misra_c_amplification_embeddings_path,
     get_misra_pdf_path,
+    get_batch_report_path,
+    # Path resolution and validation
+    resolve_path,
+    validate_path_in_project,
+    PathOutsideProjectError,
 )
 
 from .constants import (
@@ -92,6 +98,7 @@ __all__ = [
     "get_cache_dir",
     "get_iceoryx2_fls_dir",
     "get_verification_cache_dir",
+    "get_batch_decisions_dir",
     "get_repos_cache_dir",
     "get_coding_standards_dir",
     "get_fls_repo_dir",
@@ -116,6 +123,11 @@ __all__ = [
     "get_misra_c_rationale_embeddings_path",
     "get_misra_c_amplification_embeddings_path",
     "get_misra_pdf_path",
+    "get_batch_report_path",
+    # paths - resolution and validation
+    "resolve_path",
+    "validate_path_in_project",
+    "PathOutsideProjectError",
     # constants
     "CATEGORY_CODES",
     "CATEGORY_NAMES",

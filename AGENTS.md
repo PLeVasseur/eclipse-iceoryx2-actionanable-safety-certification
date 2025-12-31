@@ -137,6 +137,63 @@ uv run validate-synthetic-ids
 
 ---
 
+## Path Safety
+
+### The Problem
+
+When tools accept user-provided paths (e.g., `--output ../cache/file.json`), naive path joining doesn't resolve `..` components:
+
+```python
+# Running from tools/ directory:
+root = Path("/home/user/project")
+user_path = Path("../cache/file.json")
+result = root / user_path
+# Result: /home/user/project/../cache/file.json
+# This path is OUTSIDE the project when traversed!
+```
+
+The `..` remains unresolved, and the resulting path escapes the project directory.
+
+### The Fix
+
+All verification tools now use two utilities from `fls_tools.shared`:
+
+1. **`resolve_path(path)`** - Resolves the path relative to cwd, converting `..` to actual directory names
+2. **`validate_path_in_project(path, root)`** - Errors if the resolved path is outside the project root
+
+Tools will reject paths that would write outside the project:
+
+```
+ERROR: Path '/home/user/other/file.json' is outside project root '/home/user/project'
+```
+
+### Recommended Usage
+
+**Prefer `--batch` options** when available - they auto-resolve to correct cache paths:
+
+```bash
+uv run record-decision --batch 4 --guideline "Dir 1.1" ...
+uv run merge-decisions --batch 4 --session 6
+uv run apply-verification --batch 4 --session 6
+uv run remediate-decisions --batch 4 --waiver "..."
+```
+
+**Explicit paths still work** - they're resolved and validated:
+
+```bash
+# Works - resolved path is within project
+uv run verify-batch --batch 4 --output cache/verification/batch4.json
+
+# Works - absolute path within project  
+uv run verify-batch --batch 4 --output /home/user/project/cache/verification/batch4.json
+
+# Fails - resolved path escapes project
+uv run verify-batch --batch 4 --output /tmp/batch4.json
+# ERROR: Path '/tmp/batch4.json' is outside project root
+```
+
+---
+
 ## Repository Structure
 
 ```
@@ -686,11 +743,11 @@ uv run check-progress --workers 3
 
 ##### Recording Decisions (Parallel-Safe)
 
-Use `--output-dir` instead of updating the batch report directly:
+Use `--batch` to write decisions to individual files (enables parallel verification):
 
 ```bash
 uv run record-decision \
-    --output-dir cache/verification/batch4_decisions/ \
+    --batch 4 \
     --guideline "Dir 1.1" \
     --decision accept_with_modifications \
     --confidence high \
@@ -802,7 +859,7 @@ Process the batch report JSON and for each guideline:
 
    ```bash
    uv run record-decision \
-       --batch-report cache/verification/batch4_session6.json \
+       --batch 4 \
        --guideline "Dir 1.1" \
        --decision accept_with_modifications \
        --confidence high \
@@ -823,7 +880,7 @@ Process the batch report JSON and for each guideline:
 
    ```bash
    uv run record-decision \
-       --batch-report cache/verification/batch4_session6.json \
+       --batch 4 \
        --guideline "Rule 11.1" \
        --decision accept_with_modifications \
        --confidence high \

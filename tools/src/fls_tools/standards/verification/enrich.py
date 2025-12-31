@@ -43,6 +43,9 @@ from fls_tools.shared import (
     get_misra_c_extracted_text_path,
     get_concept_to_fls_path,
     get_verification_cache_dir,
+    resolve_path,
+    validate_path_in_project,
+    PathOutsideProjectError,
     CATEGORY_NAMES,
 )
 
@@ -654,9 +657,12 @@ Examples:
     # Load batch report if provided
     batch_report = None
     if args.batch_report:
-        batch_report_path = Path(args.batch_report)
-        if not batch_report_path.is_absolute():
-            batch_report_path = root / batch_report_path
+        try:
+            batch_report_path = resolve_path(Path(args.batch_report))
+            batch_report_path = validate_path_in_project(batch_report_path, root)
+        except PathOutsideProjectError as e:
+            print(f"ERROR: {e}", file=sys.stderr)
+            sys.exit(1)
         batch_report = load_batch_report(batch_report_path)
     
     # Process each guideline
@@ -698,9 +704,13 @@ Examples:
     output_json = json.dumps(output_data, indent=2)
     
     if args.output:
-        output_path = Path(args.output)
-        if not output_path.is_absolute():
-            output_path = root / output_path
+        try:
+            output_path = resolve_path(Path(args.output))
+            output_path = validate_path_in_project(output_path, root)
+        except PathOutsideProjectError as e:
+            print(f"ERROR: {e}", file=sys.stderr)
+            sys.exit(1)
+        
         output_path.parent.mkdir(parents=True, exist_ok=True)
         with open(output_path, "w") as f:
             f.write(output_json)

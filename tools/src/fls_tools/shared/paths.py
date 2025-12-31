@@ -111,6 +111,11 @@ def get_verification_cache_dir(root: Path | None = None) -> Path:
     return get_cache_dir(root) / "verification"
 
 
+def get_batch_decisions_dir(root: Path | None = None, batch: int = 1) -> Path:
+    """Get the cache/verification/batch{N}_decisions directory for parallel verification."""
+    return get_verification_cache_dir(root) / f"batch{batch}_decisions"
+
+
 def get_repos_cache_dir(root: Path | None = None) -> Path:
     """Get the cache/repos directory for cloned repositories."""
     return get_cache_dir(root) / "repos"
@@ -205,3 +210,72 @@ def get_misra_c_amplification_embeddings_path(root: Path | None = None) -> Path:
 def get_misra_pdf_path(root: Path | None = None) -> Path:
     """Get the path to MISRA C PDF (in cache)."""
     return get_cache_dir(root) / "misra-standards" / "MISRA-C-2025.pdf"
+
+
+def get_batch_report_path(root: Path | None = None, batch: int = 1, session: int = 1) -> Path:
+    """Get the path to a batch report file."""
+    return get_verification_cache_dir(root) / f"batch{batch}_session{session}.json"
+
+
+class PathOutsideProjectError(ValueError):
+    """Raised when a path resolves outside the project root."""
+    pass
+
+
+def resolve_path(path: Path, root: Path | None = None) -> Path:
+    """
+    Resolve a path to an absolute path, handling relative paths correctly.
+    
+    If the path is absolute, returns it as-is.
+    If the path is relative, resolves it from the current working directory.
+    
+    This avoids the bug where `root / relative_path_with_dotdot` doesn't work
+    as expected (e.g., `root / "../cache"` keeps the `..` unresolved).
+    
+    Args:
+        path: The path to resolve
+        root: Ignored (kept for API compatibility) - relative paths always
+              resolve from cwd
+    
+    Returns:
+        The resolved absolute path
+    """
+    if path.is_absolute():
+        return path
+    return path.resolve()
+
+
+def validate_path_in_project(path: Path, root: Path | None = None) -> Path:
+    """
+    Validate that a path is within the project root.
+    
+    Args:
+        path: The path to validate (can be relative or absolute)
+        root: Project root (defaults to get_project_root())
+    
+    Returns:
+        The resolved absolute path
+    
+    Raises:
+        PathOutsideProjectError: If the resolved path is outside the project root
+    
+    Example:
+        >>> validate_path_in_project(Path("cache/verification"))  # OK
+        >>> validate_path_in_project(Path("../other_project"))    # Raises error
+    """
+    if root is None:
+        root = get_project_root()
+    
+    # Resolve to absolute path
+    resolved = path.resolve()
+    root_resolved = root.resolve()
+    
+    # Check if the path is within the project root
+    try:
+        resolved.relative_to(root_resolved)
+        return resolved
+    except ValueError:
+        raise PathOutsideProjectError(
+            f"Path '{resolved}' is outside project root '{root_resolved}'. "
+            f"Use absolute paths or --batch N instead of relative paths."
+        )

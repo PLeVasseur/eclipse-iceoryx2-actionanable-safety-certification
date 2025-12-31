@@ -28,6 +28,10 @@ from fls_tools.shared import (
     get_misra_c_mappings_path,
     get_verification_progress_path,
     get_coding_standards_dir,
+    get_batch_report_path,
+    resolve_path,
+    validate_path_in_project,
+    PathOutsideProjectError,
 )
 
 
@@ -298,8 +302,14 @@ def main():
     parser.add_argument(
         "--batch-report",
         type=str,
-        required=True,
-        help="Path to the verified batch report JSON",
+        default=None,
+        help="Path to the verified batch report JSON (or use --batch and --session)",
+    )
+    parser.add_argument(
+        "--batch",
+        type=int,
+        default=None,
+        help="Batch number (alternative to --batch-report, requires --session)",
     )
     parser.add_argument(
         "--session",
@@ -326,7 +336,22 @@ def main():
     args = parser.parse_args()
     
     root = get_project_root()
-    report_path = Path(args.batch_report)
+    
+    # Determine batch report path
+    if args.batch is not None:
+        # Use --batch and --session to construct path
+        report_path = get_batch_report_path(root, args.batch, args.session)
+    elif args.batch_report is not None:
+        # Resolve and validate user-provided path
+        try:
+            report_path = resolve_path(Path(args.batch_report))
+            report_path = validate_path_in_project(report_path, root)
+        except PathOutsideProjectError as e:
+            print(f"ERROR: {e}", file=sys.stderr)
+            sys.exit(1)
+    else:
+        print("ERROR: Either --batch-report or --batch must be provided", file=sys.stderr)
+        sys.exit(1)
     
     # Load batch report
     print(f"Loading batch report from {report_path}...", file=sys.stderr)

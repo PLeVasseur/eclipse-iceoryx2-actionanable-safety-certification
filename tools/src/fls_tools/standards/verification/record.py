@@ -23,19 +23,24 @@ Usage (in-place mode - updates batch report):
 
 Usage (per-guideline mode - parallel-safe):
     uv run record-decision \\
-        --output-dir cache/verification/batch4_decisions/ \\
+        --batch 4 \\
         --guideline "Dir 1.1" \\
         --decision accept_with_modifications \\
         --confidence high \\
         --rationale-type direct_mapping \\
+        --search-used "search-fls:implementation defined ABI:8" \\
+        --search-used "read-fls-chapter:chapter_21.json" \\
         --accept-match "fls_abc123:Section Title:0:0.65:FLS states X which addresses MISRA concern Y"
 
-    # Optionally include batch report for validation context:
+    # With waiver for legacy decisions:
     uv run record-decision \\
-        --output-dir cache/verification/batch4_decisions/ \\
-        --batch-report cache/verification/batch4_session6.json \\
+        --batch 4 \\
         --guideline "Dir 1.1" \\
-        ...
+        --decision accept_with_modifications \\
+        --confidence high \\
+        --rationale-type direct_mapping \\
+        --search-waiver "legacy_decision:PLeVasseur:2026-01-01:Decision made before search tracking" \\
+        --accept-match "fls_abc123:Section Title:0:0.65:FLS states X which addresses MISRA concern Y"
 
 Match format: fls_id:fls_title:category:score:reason
   - fls_id: FLS identifier (e.g., fls_abc123)
@@ -59,7 +64,14 @@ from pathlib import Path
 
 import jsonschema
 
-from fls_tools.shared import get_project_root, get_coding_standards_dir
+from fls_tools.shared import (
+    get_project_root,
+    get_coding_standards_dir,
+    get_batch_decisions_dir,
+    resolve_path,
+    validate_path_in_project,
+    PathOutsideProjectError,
+)
 
 
 # Valid enum values from schema
@@ -74,6 +86,8 @@ VALID_RATIONALE_TYPES = [
 ]
 VALID_CATEGORIES = [0, -1, -2, -3, -4, -5, -6, -7, -8]
 VALID_CHANGE_FIELDS = ["applicability_all_rust", "applicability_safe_rust", "fls_rationale_type"]
+VALID_SEARCH_TOOLS = ["search-fls", "search-fls-deep", "recompute-similarity", "read-fls-chapter", "grep-fls"]
+VALID_WAIVER_REASONS = ["legacy_decision", "batch_report_sufficient", "manual_fls_review"]
 
 
 def load_json(path: Path) -> dict:
@@ -200,6 +214,78 @@ def parse_applicability_change(change_str: str, guideline_id: str) -> dict:
     }
 
 
+def parse_search_used(search_used_list: list[str]) -> list[dict]:
+    """
+    Parse --search-used arguments into search_tool_usage objects.
+    
+    Format: tool:query[:result_count]
+    """
+    result = []
+    for item in search_used_list:
+        parts = item.split(":", 2)  # Split into at most 3 parts
+        if len(parts) < 2:
+            raise ValueError(
+                f"Invalid --search-used format: '{item}'. "
+                f"Expected 'tool:query[:result_count]'"
+            )
+        
+        tool, query = parts[0], parts[1]
+        if tool not in VALID_SEARCH_TOOLS:
+            raise ValueError(
+                f"Invalid tool '{tool}'. Must be one of: {', '.join(VALID_SEARCH_TOOLS)}"
+            )
+        
+        entry: dict = {"tool": tool, "query": query}
+        if len(parts) == 3:
+            try:
+                entry["result_count"] = int(parts[2])
+            except ValueError:
+                raise ValueError(f"Invalid result_count '{parts[2]}'. Must be integer.")
+        
+        result.append(entry)
+    return result
+
+
+def parse_search_waiver(waiver_str: str) -> dict:
+    """
+    Parse --search-waiver argument into search_waiver object.
+    
+    Format: reason:approved_by:approval_date[:notes]
+    """
+    parts = waiver_str.split(":", 3)  # Split into at most 4 parts
+    
+    if len(parts) < 3:
+        raise ValueError(
+            f"Invalid --search-waiver format: '{waiver_str}'. "
+            f"Expected 'reason:approved_by:approval_date[:notes]'"
+        )
+    
+    reason, approved_by, approval_date = parts[0], parts[1], parts[2]
+    
+    if reason not in VALID_WAIVER_REASONS:
+        raise ValueError(
+            f"Invalid waiver reason '{reason}'. "
+            f"Must be one of: {', '.join(VALID_WAIVER_REASONS)}"
+        )
+    
+    # Validate date format (YYYY-MM-DD)
+    try:
+        datetime.strptime(approval_date, "%Y-%m-%d")
+    except ValueError:
+        raise ValueError(f"Invalid date format '{approval_date}'. Expected YYYY-MM-DD")
+    
+    result = {
+        "waiver_reason": reason,
+        "approved_by": approved_by,
+        "approval_date": approval_date,
+    }
+    
+    if len(parts) == 4:
+        result["notes"] = parts[3]
+    
+    return result
+
+
 def find_guideline(report: dict, guideline_id: str) -> tuple[int, dict] | None:
     """Find a guideline in the report by ID. Returns (index, guideline) or None."""
     for i, g in enumerate(report.get("guidelines", [])):
@@ -253,10 +339,10 @@ def main():
         help="Path to the batch report JSON file (required for in-place mode, optional for per-guideline mode)",
     )
     parser.add_argument(
-        "--output-dir",
-        type=str,
+        "--batch",
+        type=int,
         default=None,
-        help="Write decision to individual file in this directory (enables parallel mode)",
+        help="Batch number - writes to cache/verification/batch{N}_decisions/ (enables parallel mode)",
     )
     parser.add_argument(
         "--guideline",
@@ -314,6 +400,21 @@ def main():
         help="Propose applicability change (format: field:current:proposed:rationale)",
     )
     parser.add_argument(
+        "--search-used",
+        dest="search_used",
+        action="append",
+        default=[],
+        help="Search tool used (format: tool:query[:result_count]). Repeatable. "
+             f"Tools: {', '.join(VALID_SEARCH_TOOLS)}",
+    )
+    parser.add_argument(
+        "--search-waiver",
+        type=str,
+        default=None,
+        help="Waiver for search requirement (format: reason:approved_by:approval_date[:notes]). "
+             f"Reasons: {', '.join(VALID_WAIVER_REASONS)}",
+    )
+    parser.add_argument(
         "--dry-run",
         action="store_true",
         help="Show what would be recorded without writing to file",
@@ -323,26 +424,27 @@ def main():
     
     root = get_project_root()
     
-    # Determine mode: per-guideline (--output-dir) or in-place (--batch-report)
-    per_guideline_mode = args.output_dir is not None
+    # Determine mode: per-guideline (--batch) or in-place (--batch-report)
+    per_guideline_mode = args.batch is not None
     
     if not per_guideline_mode and args.batch_report is None:
-        print("ERROR: Either --output-dir or --batch-report must be provided", file=sys.stderr)
+        print("ERROR: Either --batch or --batch-report must be provided", file=sys.stderr)
         sys.exit(1)
     
-    # Resolve paths
+    # Resolve output directory for per-guideline mode
     output_dir = None
-    if args.output_dir:
-        output_dir = Path(args.output_dir)
-        if not output_dir.is_absolute():
-            output_dir = root / output_dir
+    if args.batch is not None:
+        output_dir = get_batch_decisions_dir(root, args.batch)
     
     report_path = None
     report = None
     if args.batch_report:
-        report_path = Path(args.batch_report)
-        if not report_path.is_absolute():
-            report_path = root / report_path
+        try:
+            report_path = resolve_path(Path(args.batch_report))
+            report_path = validate_path_in_project(report_path, root)
+        except PathOutsideProjectError as e:
+            print(f"ERROR: {e}", file=sys.stderr)
+            sys.exit(1)
         
         if report_path.exists():
             report = load_json(report_path)
@@ -370,6 +472,32 @@ def main():
     except ValueError as e:
         print(f"ERROR: {e}", file=sys.stderr)
         sys.exit(1)
+    
+    # Validate and parse search tool usage (must have either --search-used or --search-waiver)
+    if not args.search_used and not args.search_waiver:
+        print("ERROR: Either --search-used or --search-waiver must be provided", file=sys.stderr)
+        print("  Use --search-used for new decisions (repeatable)", file=sys.stderr)
+        print("  Use --search-waiver for legacy decisions requiring approval", file=sys.stderr)
+        sys.exit(1)
+    
+    if args.search_used and args.search_waiver:
+        print("ERROR: Cannot specify both --search-used and --search-waiver", file=sys.stderr)
+        sys.exit(1)
+    
+    # Parse search tool usage
+    search_tools_used = None
+    if args.search_used:
+        try:
+            search_tools_used = parse_search_used(args.search_used)
+        except ValueError as e:
+            print(f"ERROR: {e}", file=sys.stderr)
+            sys.exit(1)
+    else:
+        try:
+            search_tools_used = parse_search_waiver(args.search_waiver)
+        except ValueError as e:
+            print(f"ERROR: {e}", file=sys.stderr)
+            sys.exit(1)
     
     # Handle applicability change proposal
     proposed_change = None
@@ -399,6 +527,7 @@ def main():
             "accepted_matches": accepted_matches,
             "rejected_matches": rejected_matches,
             "notes": args.notes,
+            "search_tools_used": search_tools_used,
             "proposed_applicability_change": proposed_change,
             "recorded_at": datetime.now(timezone.utc).isoformat(),
         }
@@ -435,6 +564,15 @@ def main():
                 print(f"    - {m['fls_id']} ({m['score']:.3f}): {reason_preview}")
             if args.notes:
                 print(f"  Notes: {args.notes}")
+            # Print search tools info
+            if isinstance(search_tools_used, list):
+                print(f"  Search Tools Used: {len(search_tools_used)}")
+                for s in search_tools_used:
+                    count_str = f" ({s['result_count']} results)" if 'result_count' in s else ""
+                    print(f"    - {s['tool']}: {s['query']}{count_str}")
+            else:
+                print(f"  Search Waiver: {search_tools_used['waiver_reason']}")
+                print(f"    Approved by: {search_tools_used['approved_by']}")
             if proposed_change:
                 print(f"  Proposed Change: {proposed_change['field']}: "
                       f"{proposed_change['current_value']} -> {proposed_change['proposed_value']}")
@@ -447,6 +585,10 @@ def main():
             print(f"  Output: {output_path}")
             print(f"  Decision: {args.decision}, Confidence: {args.confidence}")
             print(f"  Accepted: {len(accepted_matches)}, Rejected: {len(rejected_matches)}")
+            if isinstance(search_tools_used, list):
+                print(f"  Search Tools: {len(search_tools_used)}")
+            else:
+                print(f"  Search Waiver: {search_tools_used['waiver_reason']}")
             if proposed_change:
                 print(f"  Proposed change: {proposed_change['field']}: "
                       f"{proposed_change['current_value']} -> {proposed_change['proposed_value']}")
@@ -470,6 +612,7 @@ def main():
             "accepted_matches": accepted_matches,
             "rejected_matches": rejected_matches,
             "notes": args.notes,
+            "search_tools_used": search_tools_used,
         }
         
         if proposed_change:

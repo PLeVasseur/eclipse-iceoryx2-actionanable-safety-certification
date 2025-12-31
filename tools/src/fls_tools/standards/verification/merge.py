@@ -14,21 +14,19 @@ Features:
 - Optionally validates decision files before merging
 
 Usage:
-    uv run merge-decisions \\
-        --batch-report cache/verification/batch4_session6.json \\
-        --decisions-dir cache/verification/batch4_decisions/
+    # Using --batch for automatic path resolution (recommended):
+    uv run merge-decisions --batch 4 --session 6
 
     # With validation:
-    uv run merge-decisions \\
-        --batch-report cache/verification/batch4_session6.json \\
-        --decisions-dir cache/verification/batch4_decisions/ \\
-        --validate
+    uv run merge-decisions --batch 4 --session 6 --validate
 
     # Dry run:
+    uv run merge-decisions --batch 4 --session 6 --dry-run
+
+    # Using explicit paths (use absolute paths):
     uv run merge-decisions \\
-        --batch-report cache/verification/batch4_session6.json \\
-        --decisions-dir cache/verification/batch4_decisions/ \\
-        --dry-run
+        --batch-report /path/to/batch4_session6.json \\
+        --decisions-dir /path/to/batch4_decisions/
 """
 
 import argparse
@@ -38,7 +36,15 @@ from pathlib import Path
 
 import jsonschema
 
-from fls_tools.shared import get_project_root, get_coding_standards_dir
+from fls_tools.shared import (
+    get_project_root,
+    get_coding_standards_dir,
+    get_batch_decisions_dir,
+    get_batch_report_path,
+    resolve_path,
+    validate_path_in_project,
+    PathOutsideProjectError,
+)
 
 
 def load_json(path: Path) -> dict | None:
@@ -230,16 +236,28 @@ def main():
         description="Merge per-guideline decision files into a batch report"
     )
     parser.add_argument(
+        "--batch",
+        type=int,
+        default=None,
+        help="Batch number - auto-resolves paths to cache/verification/",
+    )
+    parser.add_argument(
+        "--session",
+        type=int,
+        default=None,
+        help="Session number (required with --batch)",
+    )
+    parser.add_argument(
         "--batch-report",
         type=str,
-        required=True,
-        help="Path to the batch report JSON file",
+        default=None,
+        help="Path to the batch report JSON file (use --batch instead when possible)",
     )
     parser.add_argument(
         "--decisions-dir",
         type=str,
-        required=True,
-        help="Path to the decisions directory",
+        default=None,
+        help="Path to the decisions directory (use --batch instead when possible)",
     )
     parser.add_argument(
         "--validate",
@@ -256,14 +274,40 @@ def main():
     
     root = get_project_root()
     
-    # Resolve paths
-    report_path = Path(args.batch_report)
-    if not report_path.is_absolute():
-        report_path = root / report_path
+    # Determine paths - either from --batch or explicit paths
+    use_batch_mode = args.batch is not None
+    use_explicit_mode = args.batch_report is not None or args.decisions_dir is not None
     
-    decisions_dir = Path(args.decisions_dir)
-    if not decisions_dir.is_absolute():
-        decisions_dir = root / decisions_dir
+    if use_batch_mode and use_explicit_mode:
+        print("ERROR: Cannot mix --batch with --batch-report/--decisions-dir", file=sys.stderr)
+        sys.exit(1)
+    
+    if not use_batch_mode and not use_explicit_mode:
+        print("ERROR: Either --batch or --batch-report/--decisions-dir must be provided", file=sys.stderr)
+        sys.exit(1)
+    
+    if use_batch_mode:
+        if args.session is None:
+            print("ERROR: --session is required with --batch", file=sys.stderr)
+            sys.exit(1)
+        report_path = get_batch_report_path(root, args.batch, args.session)
+        decisions_dir = get_batch_decisions_dir(root, args.batch)
+    else:
+        # Explicit paths mode - both required
+        if args.batch_report is None or args.decisions_dir is None:
+            print("ERROR: Both --batch-report and --decisions-dir are required in explicit mode", file=sys.stderr)
+            sys.exit(1)
+        
+        # Resolve paths correctly and validate
+        try:
+            report_path = resolve_path(Path(args.batch_report))
+            report_path = validate_path_in_project(report_path, root)
+            
+            decisions_dir = resolve_path(Path(args.decisions_dir))
+            decisions_dir = validate_path_in_project(decisions_dir, root)
+        except PathOutsideProjectError as e:
+            print(f"ERROR: {e}", file=sys.stderr)
+            sys.exit(1)
     
     # Check paths exist
     if not report_path.exists():

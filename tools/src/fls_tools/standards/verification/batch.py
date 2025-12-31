@@ -47,6 +47,10 @@ from fls_tools.shared import (
     get_misra_c_extracted_text_path,
     get_verification_progress_path,
     get_coding_standards_dir,
+    get_batch_report_path,
+    resolve_path,
+    validate_path_in_project,
+    PathOutsideProjectError,
     CATEGORY_NAMES,
     DEFAULT_SECTION_THRESHOLD,
     DEFAULT_PARAGRAPH_THRESHOLD,
@@ -545,7 +549,14 @@ def main():
         output = generate_human_report(report)
     
     if args.output:
-        output_path = Path(args.output)
+        # Resolve and validate output path
+        try:
+            output_path = resolve_path(Path(args.output))
+            output_path = validate_path_in_project(output_path, root)
+        except PathOutsideProjectError as e:
+            print(f"ERROR: {e}", file=sys.stderr)
+            sys.exit(1)
+        
         output_path.parent.mkdir(parents=True, exist_ok=True)
         with open(output_path, "w") as f:
             f.write(output)

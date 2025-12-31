@@ -37,6 +37,9 @@ from fls_tools.shared import (
     get_project_root,
     get_verification_progress_path,
     get_verification_cache_dir,
+    resolve_path,
+    validate_path_in_project,
+    PathOutsideProjectError,
 )
 
 
@@ -227,9 +230,12 @@ Examples:
     
     # Find or use specified batch report
     if args.batch_report:
-        report_path = Path(args.batch_report)
-        if not report_path.is_absolute():
-            report_path = root / report_path
+        try:
+            report_path = resolve_path(Path(args.batch_report))
+            report_path = validate_path_in_project(report_path, root)
+        except PathOutsideProjectError as e:
+            print(f"ERROR: {e}", file=sys.stderr)
+            sys.exit(1)
     else:
         report_path = find_batch_report(root, args.batch)
     
