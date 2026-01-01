@@ -33,21 +33,21 @@ import numpy as np
 from fls_tools.shared import (
     get_project_root,
     get_fls_dir,
-    get_misra_embeddings_dir,
-    get_misra_c_extracted_text_path,
+    get_standard_extracted_text_path,
     get_concept_to_fls_path,
-    get_misra_c_similarity_path,
+    get_standard_similarity_path,
     get_fls_section_embeddings_path,
     get_fls_paragraph_embeddings_path,
-    get_misra_c_embeddings_path,
-    get_misra_c_query_embeddings_path,
-    get_misra_c_rationale_embeddings_path,
-    get_misra_c_amplification_embeddings_path,
+    get_standard_embeddings_path,
+    get_standard_query_embeddings_path,
+    get_standard_rationale_embeddings_path,
+    get_standard_amplification_embeddings_path,
     CATEGORY_NAMES,
     CONCEPT_BOOST_ADDITIVE,
     CONCEPT_ONLY_BASE_SCORE,
     SEE_ALSO_SCORE_PENALTY,
     SEE_ALSO_MAX_MATCHES,
+    VALID_STANDARDS,
 )
 
 
@@ -129,11 +129,11 @@ def build_fls_metadata(chapters: dict) -> tuple[dict, dict]:
     return sections_metadata, paragraphs_metadata
 
 
-def load_misra_data(root: Path) -> dict:
-    """Load MISRA extracted text for guideline lookup."""
-    cache_path = get_misra_c_extracted_text_path(root)
+def load_standard_data(root: Path, standard: str) -> dict:
+    """Load extracted text for guideline lookup."""
+    cache_path = get_standard_extracted_text_path(root, standard)
     if not cache_path.exists():
-        print(f"ERROR: MISRA extracted text not found: {cache_path}", file=sys.stderr)
+        print(f"ERROR: Extracted text not found: {cache_path}", file=sys.stderr)
         sys.exit(1)
     
     with open(cache_path) as f:
@@ -155,9 +155,9 @@ def load_concept_to_fls(root: Path) -> dict:
     return data.get("concepts", {})
 
 
-def load_precomputed_similarity(root: Path) -> dict:
+def load_precomputed_similarity(root: Path, standard: str) -> dict:
     """Load pre-computed similarity results for see_also lookups."""
-    sim_path = get_misra_c_similarity_path(root)
+    sim_path = get_standard_similarity_path(root, standard)
     if not sim_path.exists():
         return {}
     
@@ -201,6 +201,7 @@ def search_fls(
 def get_guideline_embeddings(
     guideline_id: str,
     root: Path,
+    standard: str,
 ) -> list[tuple[str, np.ndarray, str]]:
     """
     Get all embeddings for a specific guideline.
@@ -210,13 +211,13 @@ def get_guideline_embeddings(
     result = []
     
     # 1. Guideline-level embedding
-    ids, embeds, id_to_idx, _ = load_embeddings(get_misra_c_embeddings_path(root))
+    ids, embeds, id_to_idx, _ = load_embeddings(get_standard_embeddings_path(root, standard))
     if guideline_id in id_to_idx:
         idx = id_to_idx[guideline_id]
         result.append((guideline_id, embeds[idx], "guideline"))
     
     # 2. Query-level embeddings
-    ids, embeds, id_to_idx, metadata = load_embeddings(get_misra_c_query_embeddings_path(root))
+    ids, embeds, id_to_idx, metadata = load_embeddings(get_standard_query_embeddings_path(root, standard))
     for qid, meta in metadata.items():
         if meta.get("guideline_id") == guideline_id:
             if qid in id_to_idx:
@@ -225,14 +226,14 @@ def get_guideline_embeddings(
     
     # 3. Rationale-level embedding
     rationale_id = f"{guideline_id}.rationale"
-    ids, embeds, id_to_idx, _ = load_embeddings(get_misra_c_rationale_embeddings_path(root))
+    ids, embeds, id_to_idx, _ = load_embeddings(get_standard_rationale_embeddings_path(root, standard))
     if rationale_id in id_to_idx:
         idx = id_to_idx[rationale_id]
         result.append((rationale_id, embeds[idx], "rationale"))
     
     # 4. Amplification-level embedding
     amp_id = f"{guideline_id}.amplification"
-    ids, embeds, id_to_idx, _ = load_embeddings(get_misra_c_amplification_embeddings_path(root))
+    ids, embeds, id_to_idx, _ = load_embeddings(get_standard_amplification_embeddings_path(root, standard))
     if amp_id in id_to_idx:
         idx = id_to_idx[amp_id]
         result.append((amp_id, embeds[idx], "amplification"))
@@ -395,6 +396,7 @@ def apply_see_also(
 def deep_search(
     guideline_id: str,
     root: Path,
+    standard: str,
     top_n: int = 15,
     use_concept_boost: bool = True,
     use_see_also: bool = True,
@@ -419,15 +421,15 @@ def deep_search(
     chapters = load_fls_chapters(root)
     sections_meta, paragraphs_meta = build_fls_metadata(chapters)
     
-    # Load MISRA data
-    misra_data = load_misra_data(root)
-    guideline = misra_data.get(guideline_id)
+    # Load standard data
+    standard_data = load_standard_data(root, standard)
+    guideline = standard_data.get(guideline_id)
     
     if not guideline:
         return {"error": f"Guideline '{guideline_id}' not found"}
     
     # Get all embeddings for this guideline
-    guideline_embeddings = get_guideline_embeddings(guideline_id, root)
+    guideline_embeddings = get_guideline_embeddings(guideline_id, root, standard)
     
     if not guideline_embeddings:
         return {"error": f"No embeddings found for '{guideline_id}'"}
@@ -500,7 +502,7 @@ def deep_search(
     see_also_refs = guideline.get("see_also_refs", [])
     
     if use_see_also and see_also_refs:
-        precomputed = load_precomputed_similarity(root)
+        precomputed = load_precomputed_similarity(root, standard)
         merged_sections = apply_see_also(merged_sections, see_also_refs, precomputed, "section")
         merged_paragraphs = apply_see_also(merged_paragraphs, see_also_refs, precomputed, "paragraph")
     
@@ -566,13 +568,20 @@ def format_results(results: dict, mode: str, top_n: int) -> None:
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Deep semantic search across FLS for a MISRA guideline"
+        description="Deep semantic search across FLS for a coding standard guideline"
+    )
+    parser.add_argument(
+        "--standard",
+        type=str,
+        required=True,
+        choices=VALID_STANDARDS,
+        help="Coding standard (e.g., misra-c, cert-cpp)",
     )
     parser.add_argument(
         "--guideline",
         type=str,
         required=True,
-        help="MISRA guideline ID (e.g., 'Rule 21.3')",
+        help="Guideline ID (e.g., 'Rule 21.3')",
     )
     parser.add_argument(
         "--top",
@@ -611,6 +620,7 @@ def main():
     results = deep_search(
         args.guideline,
         root,
+        args.standard,
         top_n=args.top,
         use_concept_boost=not args.no_concept_boost,
         use_see_also=not args.no_see_also,

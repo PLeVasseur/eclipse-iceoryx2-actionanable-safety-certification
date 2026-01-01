@@ -29,11 +29,12 @@ from sentence_transformers import SentenceTransformer
 from fls_tools.shared import (
     get_project_root,
     get_fls_dir,
-    get_misra_c_extracted_text_path,
-    get_misra_c_similarity_path,
+    get_standard_extracted_text_path,
+    get_standard_similarity_path,
     get_fls_section_embeddings_path,
     get_fls_paragraph_embeddings_path,
     CATEGORY_NAMES,
+    VALID_STANDARDS,
 )
 
 
@@ -257,13 +258,20 @@ def compare_with_precomputed(
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Recompute similarity for a specific MISRA guideline"
+        description="Recompute similarity for a specific coding standard guideline"
+    )
+    parser.add_argument(
+        "--standard",
+        type=str,
+        required=True,
+        choices=VALID_STANDARDS,
+        help="Coding standard (e.g., misra-c, cert-cpp)",
     )
     parser.add_argument(
         "--guideline",
         type=str,
         required=True,
-        help="MISRA guideline ID (e.g., 'Rule 21.3')",
+        help="Guideline ID (e.g., 'Rule 21.3')",
     )
     parser.add_argument(
         "--top",
@@ -292,10 +300,10 @@ def main():
     
     root = get_project_root()
     
-    # Load MISRA extracted text
-    misra_path = get_misra_c_extracted_text_path(root)
-    print(f"Loading MISRA text...", file=sys.stderr)
-    misra_data = load_json(misra_path, "MISRA extracted text")
+    # Load standard extracted text
+    standard_path = get_standard_extracted_text_path(root, args.standard)
+    print(f"Loading extracted text...", file=sys.stderr)
+    misra_data = load_json(standard_path, "Extracted text")
     
     # Get guideline text
     guideline_text = get_misra_text(misra_data, args.guideline)
@@ -343,7 +351,7 @@ def main():
     # Compare with pre-computed if requested
     comparison = None
     if args.compare:
-        precomputed_path = get_misra_c_similarity_path(root)
+        precomputed_path = get_standard_similarity_path(root, args.standard)
         if precomputed_path.exists():
             precomputed = load_json(precomputed_path, "Pre-computed similarity")
             comparison = compare_with_precomputed(

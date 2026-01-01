@@ -40,12 +40,13 @@ from fls_tools.shared import (
     resolve_path,
     validate_path_in_project,
     PathOutsideProjectError,
+    VALID_STANDARDS,
 )
 
 
-def find_batch_report(root: Path, batch_id: int) -> Path | None:
+def find_batch_report(root: Path, standard: str, batch_id: int) -> Path | None:
     """Find the most recent batch report for a given batch ID."""
-    cache_dir = get_verification_cache_dir(root)
+    cache_dir = get_verification_cache_dir(root, standard)
     if not cache_dir.exists():
         return None
     
@@ -101,6 +102,7 @@ def reset_batch_report(
 
 def reset_verification_progress(
     root: Path,
+    standard: str,
     batch_id: int,
     guideline_ids: list[str] | None,
     dry_run: bool
@@ -111,7 +113,7 @@ def reset_verification_progress(
     Returns:
         Tuple of (count of reset guidelines, list of reset guideline IDs)
     """
-    progress_path = get_verification_progress_path(root)
+    progress_path = get_verification_progress_path(root, standard)
     
     if not progress_path.exists():
         print(f"WARNING: verification_progress.json not found at {progress_path}")
@@ -182,14 +184,22 @@ def main():
         epilog="""
 Examples:
     # Reset all guidelines in batch 3
-    uv run reset-batch --batch 3
+    uv run reset-batch --standard misra-c --batch 3
 
     # Reset specific guidelines
-    uv run reset-batch --batch 3 --guidelines "Rule 22.1,Rule 22.2"
+    uv run reset-batch --standard misra-c --batch 3 --guidelines "Rule 22.1,Rule 22.2"
 
     # Preview changes
-    uv run reset-batch --batch 3 --dry-run
+    uv run reset-batch --standard misra-c --batch 3 --dry-run
         """
+    )
+    
+    parser.add_argument(
+        "--standard",
+        type=str,
+        required=True,
+        choices=VALID_STANDARDS,
+        help="Coding standard (e.g., misra-c, cert-cpp)",
     )
     
     parser.add_argument(
@@ -237,7 +247,7 @@ Examples:
             print(f"ERROR: {e}", file=sys.stderr)
             sys.exit(1)
     else:
-        report_path = find_batch_report(root, args.batch)
+        report_path = find_batch_report(root, args.standard, args.batch)
     
     if args.dry_run:
         print("DRY RUN - No changes will be made\n")
@@ -263,9 +273,9 @@ Examples:
     print()
     
     # Reset verification progress
-    print(f"Verification progress: {get_verification_progress_path(root)}")
+    print(f"Verification progress: {get_verification_progress_path(root, args.standard)}")
     progress_reset_count, progress_reset_ids = reset_verification_progress(
-        root, args.batch, guideline_ids, args.dry_run
+        root, args.standard, args.batch, guideline_ids, args.dry_run
     )
     if progress_reset_ids:
         print(f"  Would reset {progress_reset_count} guidelines to pending:" if args.dry_run
@@ -286,7 +296,7 @@ Examples:
         print(f"Reset {total_reset} guidelines in batch {args.batch}")
         if report_path and report_path.exists():
             print(f"\nNext step: Re-run verification with:")
-            print(f"  uv run verify-batch --batch {args.batch} --session <NEW_SESSION_ID>")
+            print(f"  uv run verify-batch --standard {args.standard} --batch {args.batch} --session <NEW_SESSION_ID>")
 
 
 if __name__ == "__main__":

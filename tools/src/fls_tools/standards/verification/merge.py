@@ -44,6 +44,7 @@ from fls_tools.shared import (
     resolve_path,
     validate_path_in_project,
     PathOutsideProjectError,
+    VALID_STANDARDS,
 )
 
 
@@ -237,10 +238,17 @@ def main():
         description="Merge per-guideline decision files into a batch report"
     )
     parser.add_argument(
+        "--standard",
+        type=str,
+        required=True,
+        choices=VALID_STANDARDS,
+        help="Coding standard (e.g., misra-c, cert-cpp)",
+    )
+    parser.add_argument(
         "--batch",
         type=int,
         default=None,
-        help="Batch number - auto-resolves paths to cache/verification/",
+        help="Batch number - auto-resolves paths to cache/verification/{standard}/",
     )
     parser.add_argument(
         "--session",
@@ -291,8 +299,8 @@ def main():
         if args.session is None:
             print("ERROR: --session is required with --batch", file=sys.stderr)
             sys.exit(1)
-        report_path = get_batch_report_path(root, args.batch, args.session)
-        decisions_dir = get_batch_decisions_dir(root, args.batch)
+        report_path = get_batch_report_path(root, args.standard, args.batch, args.session)
+        decisions_dir = get_batch_decisions_dir(root, args.standard, args.batch)
     else:
         # Explicit paths mode - both required
         if args.batch_report is None or args.decisions_dir is None:

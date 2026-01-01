@@ -2,11 +2,11 @@
 """
 Generate or update verification progress tracking file.
 
-This script assigns MISRA guidelines to batches based on:
+This script assigns guidelines to batches based on:
 - Current confidence level
 - Applicability to Rust
 - Similarity scores
-- MISRA category
+- Guideline category
 
 Batch Structure:
   1. High-score direct: existing high-confidence + direct with max score >= 0.65
@@ -14,6 +14,11 @@ Batch Structure:
   3. Stdlib & Resources: Categories 21+22, direct, not in batch 1
   4. Medium-score direct: remaining direct with score 0.5-0.65
   5. Edge cases: partial, rust_prevents, and any remaining
+
+Usage:
+    uv run scaffold-progress --standard misra-c
+    uv run scaffold-progress --standard misra-c --force
+    uv run scaffold-progress --standard misra-c --dry-run
 """
 
 import argparse
@@ -25,9 +30,11 @@ from typing import Any
 
 from fls_tools.shared import (
     get_project_root,
-    get_misra_c_mappings_path,
-    get_misra_c_similarity_path,
+    get_standard_mappings_path,
+    get_standard_similarity_path,
     get_verification_progress_path,
+    normalize_standard,
+    VALID_STANDARDS,
 )
 
 
@@ -60,8 +67,8 @@ def get_max_similarity_score(
     return max(m.get("similarity", 0.0) for m in top_matches)
 
 
-def get_misra_category(guideline_id: str) -> str:
-    """Extract MISRA category from guideline ID."""
+def get_guideline_category(guideline_id: str) -> str:
+    """Extract category from guideline ID."""
     if guideline_id.startswith("Dir"):
         return "Directives"
     # Extract number from "Rule X.Y"
@@ -90,7 +97,7 @@ def assign_batches(
             "confidence": m.get("confidence", "medium"),
             "applicability": m.get("applicability_all_rust", "unmapped"),
             "max_score": get_max_similarity_score(gid, similarity_results),
-            "category": get_misra_category(gid),
+            "category": get_guideline_category(gid),
         }
 
     # Batch 1: High-confidence OR (direct AND max_score >= 0.65)
@@ -152,6 +159,7 @@ def assign_batches(
 
 def create_progress_file(
     batches: dict[int, list[str]],
+    standard: str,
     existing_progress: dict[str, Any] | None = None,
     preserve_completed: bool = False,
 ) -> dict[str, Any]:
@@ -204,14 +212,18 @@ def create_progress_file(
     total_guidelines = sum(len(g) for g in batches.values())
     total_verified = len(verified_guidelines)
 
+    # Use internal standard name (snake_case) for the field
+    internal_standard = normalize_standard(standard)
+
     progress = {
-        "standard": "misra_c_2025",
+        "standard": internal_standard,
         "total_guidelines": total_guidelines,
         "verification_started": existing_progress.get("verification_started", today)
         if existing_progress
         else today,
         "last_updated": today,
         "summary": {
+            "total_guidelines": total_guidelines,
             "total_verified": total_verified,
             "total_pending": total_guidelines - total_verified,
             "by_batch": {},
@@ -337,10 +349,17 @@ def main() -> int:
         description="Generate or update verification progress tracking file."
     )
     parser.add_argument(
+        "--standard", "-s",
+        type=str,
+        required=True,
+        choices=VALID_STANDARDS,
+        help="Standard to process (e.g., misra-c, misra-cpp, cert-c, cert-cpp)",
+    )
+    parser.add_argument(
         "--output",
         type=Path,
-        default=None,  # Will be set to get_verification_progress_path() in main
-        help="Output path (default: coding-standards-fls-mapping/verification_progress.json)",
+        default=None,
+        help="Output path (default: coding-standards-fls-mapping/verification/{standard}/progress.json)",
     )
     parser.add_argument(
         "--force",
@@ -360,14 +379,16 @@ def main() -> int:
 
     args = parser.parse_args()
 
-    # Set default output path if not specified
     root = get_project_root()
+    standard = args.standard
+
+    # Set default output path if not specified
     if args.output is None:
-        args.output = get_verification_progress_path(root)
+        args.output = get_verification_progress_path(root, standard)
 
     # Load required data
-    mappings_path = get_misra_c_mappings_path(root)
-    similarity_path = get_misra_c_similarity_path(root)
+    mappings_path = get_standard_mappings_path(root, standard)
+    similarity_path = get_standard_similarity_path(root, standard)
 
     if not mappings_path.exists():
         print(f"Error: Mappings file not found: {mappings_path}", file=sys.stderr)
@@ -377,7 +398,7 @@ def main() -> int:
         print(f"Error: Similarity file not found: {similarity_path}", file=sys.stderr)
         return 1
 
-    print("Loading data...")
+    print(f"Loading data for {standard}...")
     mappings_data = load_json(mappings_path)
     similarity_results = load_json(similarity_path)
 
@@ -426,7 +447,7 @@ def main() -> int:
     preserve = args.preserve_completed or (
         existing_progress is not None and not args.force
     )
-    progress = create_progress_file(batches, existing_progress, preserve)
+    progress = create_progress_file(batches, standard, existing_progress, preserve)
 
     # Write output
     args.output.parent.mkdir(parents=True, exist_ok=True)

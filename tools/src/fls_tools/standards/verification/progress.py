@@ -5,15 +5,15 @@ check_progress.py - Phase 0: Check Verification Progress
 This script shows current verification status and helps determine where to resume:
 - Last session ID and next session ID to use
 - Current batch and its status
-- Whether a batch report exists in cache/verification/
+- Whether a batch report exists in cache/verification/{standard}/
 - Whether a decisions directory exists (for parallel mode)
 - Worker assignment suggestions for remaining guidelines
 - If resuming, which guideline to continue from
 - Suggested command for Phase 1 (if batch report doesn't exist)
 
 Usage:
-    uv run check-progress
-    uv run check-progress --workers 4
+    uv run check-progress --standard misra-c
+    uv run check-progress --standard misra-c --workers 4
 """
 
 import argparse
@@ -28,6 +28,7 @@ from fls_tools.shared import (
     get_verification_cache_dir,
     get_verification_progress_path,
     get_coding_standards_dir,
+    VALID_STANDARDS,
 )
 
 
@@ -50,7 +51,7 @@ def is_verification_complete(guideline: dict) -> bool:
 
 
 def find_batch_reports(cache_dir: Path) -> list[dict]:
-    """Find all batch reports in cache/verification/."""
+    """Find all batch reports in cache/verification/{standard}/."""
     reports = []
     if not cache_dir.exists():
         return reports
@@ -213,21 +214,31 @@ def main():
         description="Check verification progress and suggest next steps"
     )
     parser.add_argument(
+        "--standard", "-s",
+        type=str,
+        required=True,
+        choices=VALID_STANDARDS,
+        help="Standard to check (e.g., misra-c, misra-cpp, cert-c, cert-cpp)",
+    )
+    parser.add_argument(
         "--workers",
         type=int,
         default=3,
         help="Number of workers for parallel assignment suggestions (default: 3)",
     )
     args = parser.parse_args()
+    
     root = get_project_root()
+    standard = args.standard
     
     # Load verification progress
-    progress_path = get_verification_progress_path(root)
+    progress_path = get_verification_progress_path(root, standard)
     progress = load_json(progress_path)
     
     if not progress:
-        print("ERROR: verification_progress.json not found", file=sys.stderr)
+        print(f"ERROR: progress.json not found for {standard}", file=sys.stderr)
         print(f"       Expected at: {progress_path}", file=sys.stderr)
+        print(f"       Run: uv run scaffold-progress --standard {standard}", file=sys.stderr)
         sys.exit(1)
     
     # Find last and next session
@@ -243,12 +254,12 @@ def main():
             break
     
     # Find batch reports in cache
-    cache_dir = get_verification_cache_dir(root)
+    cache_dir = get_verification_cache_dir(root, standard)
     batch_reports = find_batch_reports(cache_dir)
     
     # Output
     print("=" * 60)
-    print("VERIFICATION PROGRESS")
+    print(f"VERIFICATION PROGRESS: {standard}")
     print("=" * 60)
     print()
     print(f"Last session: {last_session}")
@@ -276,7 +287,7 @@ def main():
     if cached_verified is not None and cached_verified != total_verified:
         print()
         print(f"WARNING: Cached summary is stale (shows {cached_verified} verified)")
-        print("         Consider running: uv run scaffold-progress --preserve-completed")
+        print(f"         Consider running: uv run scaffold-progress --standard {standard} --preserve-completed")
     
     print()
     
@@ -343,7 +354,7 @@ def main():
                 
                 print()
                 print("To continue parallel verification:")
-                print(f"  uv run record-decision --batch {batch_id} \\")
+                print(f"  uv run record-decision --standard {standard} --batch {batch_id} \\")
                 print(f"      --guideline \"<GUIDELINE_ID>\" ...")
                 
                 print()
@@ -371,7 +382,7 @@ def main():
                 if decisions_analysis["valid_count"] > 0:
                     print()
                     print("To merge decisions into batch report:")
-                    print(f"  uv run merge-decisions \\")
+                    print(f"  uv run merge-decisions --standard {standard} \\")
                     print(f"      --batch-report {latest['path'].relative_to(root)} \\")
                     print(f"      --decisions-dir {decisions_dir.relative_to(root)} \\")
                     print(f"      --validate")
@@ -395,7 +406,7 @@ def main():
                 print("Ready for Phase 3 (human review) and Phase 4 (apply changes).")
                 print()
                 print("To apply changes:")
-                print(f"  uv run apply-verification \\")
+                print(f"  uv run apply-verification --standard {standard} \\")
                 print(f"      --batch-report {latest['path'].relative_to(root)} \\")
                 print(f"      --session {latest['session_id']}")
         else:
@@ -404,10 +415,10 @@ def main():
             print("-" * 60)
             print("NO BATCH REPORT FOUND")
             print("-" * 60)
-            output_path = f"../cache/verification/batch{batch_id}_session{next_session}.json"
+            output_path = f"cache/verification/{standard}/batch{batch_id}_session{next_session}.json"
             print()
             print("To start Phase 1:")
-            print(f"  uv run verify-batch \\")
+            print(f"  uv run verify-batch --standard {standard} \\")
             print(f"      --batch {batch_id} \\")
             print(f"      --session {next_session} \\")
             print(f"      --mode llm \\")

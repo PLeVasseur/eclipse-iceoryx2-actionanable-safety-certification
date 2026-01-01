@@ -5,6 +5,9 @@ This document describes the tools, workflows, and data structures for two relate
 1. **iceoryx2 FLS Mapping** - Document how iceoryx2 uses Rust language constructs per the Ferrocene Language Specification (FLS)
 2. **Coding Standards Mapping** - Map MISRA/CERT safety guidelines to FLS sections using semantic similarity
 
+**Multi-Standard Support:** All verification and embedding tools require a `--standard` parameter.
+Valid standards: `misra-c`, `misra-cpp`, `cert-c`, `cert-cpp`
+
 ---
 
 ## Tool Processing Flow
@@ -172,23 +175,23 @@ ERROR: Path '/home/user/other/file.json' is outside project root '/home/user/pro
 **Prefer `--batch` options** when available - they auto-resolve to correct cache paths:
 
 ```bash
-uv run record-decision --batch 4 --guideline "Dir 1.1" ...
-uv run merge-decisions --batch 4 --session 6
-uv run apply-verification --batch 4 --session 6
-uv run remediate-decisions --batch 4 --waiver "..."
+uv run record-decision --standard misra-c --batch 4 --guideline "Dir 1.1" ...
+uv run merge-decisions --standard misra-c --batch 4 --session 6
+uv run apply-verification --standard misra-c --batch 4 --session 6
+uv run remediate-decisions --standard misra-c --batch 4 --waiver "..."
 ```
 
 **Explicit paths still work** - they're resolved and validated:
 
 ```bash
 # Works - resolved path is within project
-uv run verify-batch --batch 4 --output cache/verification/batch4.json
+uv run verify-batch --standard misra-c --batch 4 --output cache/verification/misra-c/batch4.json
 
 # Works - absolute path within project  
-uv run verify-batch --batch 4 --output /home/user/project/cache/verification/batch4.json
+uv run verify-batch --standard misra-c --batch 4 --output /home/user/project/cache/verification/misra-c/batch4.json
 
 # Fails - resolved path escapes project
-uv run verify-batch --batch 4 --output /tmp/batch4.json
+uv run verify-batch --standard misra-c --batch 4 --output /tmp/batch4.json
 # ERROR: Path '/tmp/batch4.json' is outside project root
 ```
 
@@ -222,9 +225,14 @@ eclipse-iceoryx2-actionanable-safety-certification/
 │   │   ├── misra_cpp_to_fls.json
 │   │   ├── cert_c_to_fls.json
 │   │   └── cert_cpp_to_fls.json
+│   ├── verification/                   # Verification progress (per-standard)
+│   │   ├── misra-c/
+│   │   │   └── progress.json
+│   │   ├── misra-cpp/
+│   │   ├── cert-c/
+│   │   └── cert-cpp/
 │   ├── concept_to_fls.json             # C concept to FLS ID mappings
-│   ├── misra_rust_applicability.json   # MISRA ADD-6 Rust applicability
-│   └── verification_progress.json      # Verification batch tracking
+│   └── misra_rust_applicability.json   # MISRA ADD-6 Rust applicability
 │
 ├── embeddings/                         # Extracted content and embeddings
 │   ├── fls/
@@ -234,20 +242,27 @@ eclipse-iceoryx2-actionanable-safety-certification/
 │   │   ├── chapter_22.json
 │   │   ├── embeddings.pkl              # FLS section-level embeddings (338)
 │   │   └── paragraph_embeddings.pkl    # FLS paragraph-level embeddings (3,733)
-│   ├── misra_c/
-│   │   ├── embeddings.pkl              # MISRA C guideline-level embeddings
-│   │   ├── query_embeddings.pkl        # MISRA C query-level embeddings
-│   │   ├── rationale_embeddings.pkl    # MISRA C rationale embeddings
-│   │   └── amplification_embeddings.pkl # MISRA C amplification embeddings
-│   └── similarity/
-│       └── misra_c_to_fls.json         # Similarity computation results
+│   ├── misra-c/                        # Per-standard embeddings (kebab-case)
+│   │   ├── embeddings.pkl              # Guideline-level embeddings
+│   │   ├── query_embeddings.pkl        # Query-level embeddings
+│   │   ├── rationale_embeddings.pkl    # Rationale embeddings
+│   │   ├── amplification_embeddings.pkl # Amplification embeddings
+│   │   └── similarity.json             # Similarity computation results
+│   ├── misra-cpp/
+│   ├── cert-c/
+│   └── cert-cpp/
 │
 ├── cache/                              # Cached data (gitignored)
 │   ├── repos/
 │   │   ├── iceoryx2/v0.8.0/            # iceoryx2 source at specific versions
 │   │   └── fls/                        # FLS RST source files
-│   ├── verification/                   # Batch verification reports
-│   │   └── batch{N}_session{M}.json
+│   ├── verification/                   # Batch verification reports (per-standard)
+│   │   ├── misra-c/
+│   │   │   ├── batch{N}_session{M}.json
+│   │   │   └── batch{N}_decisions/
+│   │   ├── misra-cpp/
+│   │   ├── cert-c/
+│   │   └── cert-cpp/
 │   └── misra_c_extracted_text.json     # Extracted MISRA text
 │
 └── tools/                              # All tools
@@ -279,6 +294,7 @@ eclipse-iceoryx2-actionanable-safety-certification/
 │   │       ├── progress.py         # check-progress
 │   │       ├── record.py           # record-decision
 │   │       ├── reset.py            # reset-batch
+│   │       ├── reset_verification.py # reset-verification
 │   │       ├── scaffold.py         # scaffold-progress
 │   │       ├── search.py           # search-fls
 │   │       ├── search_deep.py      # search-fls-deep
@@ -652,8 +668,8 @@ Before starting, run `check-progress` to determine current state:
 
 ```bash
 cd tools
-uv run check-progress
-uv run check-progress --workers 4  # Adjust worker count for parallel mode
+uv run check-progress --standard misra-c
+uv run check-progress --standard misra-c --workers 4  # Adjust worker count for parallel mode
 ```
 
 This shows:
@@ -675,10 +691,10 @@ If no batch report exists, run `verify-batch` to generate one:
 ```bash
 cd tools
 uv run verify-batch \
+    --standard misra-c \
     --batch BATCH_ID \
     --session SESSION_ID \
-    --mode llm \
-    --output ../cache/verification/batchBATCH_ID_sessionSESSION_ID.json
+    --mode llm
 ```
 
 **What it extracts:**
@@ -720,7 +736,7 @@ Before starting parallel verification, ask the user how many workers they want t
 > 
 > Enter number of workers (default: 3):"
 
-Then run `check-progress --workers N` to show the specific guideline assignments for each worker.
+Then run `check-progress --standard misra-c --workers N` to show the specific guideline assignments for each worker.
 
 ##### Setup
 
@@ -729,16 +745,16 @@ cd tools
 
 # 1. Generate batch report (becomes READ-ONLY reference)
 uv run verify-batch \
+    --standard misra-c \
     --batch 4 \
     --session 6 \
-    --mode llm \
-    --output ../cache/verification/batch4_session6.json
+    --mode llm
 
 # 2. Create decisions directory
-mkdir -p cache/verification/batch4_decisions
+mkdir -p cache/verification/misra-c/batch4_decisions
 
 # 3. Check worker assignments
-uv run check-progress --workers 3
+uv run check-progress --standard misra-c --workers 3
 ```
 
 ##### Recording Decisions (Parallel-Safe)
@@ -747,6 +763,7 @@ Use `--batch` to write decisions to individual files (enables parallel verificat
 
 ```bash
 uv run record-decision \
+    --standard misra-c \
     --batch 4 \
     --guideline "Dir 1.1" \
     --decision accept_with_modifications \
@@ -761,12 +778,12 @@ Each decision is written to a separate file (e.g., `Dir_1.1.json`), enabling par
 
 ```bash
 # Check progress (counts valid decision files)
-uv run check-progress
+uv run check-progress --standard misra-c
 
 # Validate decision files
 uv run validate-decisions \
-    --decisions-dir cache/verification/batch4_decisions/ \
-    --batch-report cache/verification/batch4_session6.json
+    --decisions-dir cache/verification/misra-c/batch4_decisions/ \
+    --batch-report cache/verification/misra-c/batch4_session6.json
 ```
 
 ##### Merging Decisions (Before Phase 3)
@@ -775,8 +792,9 @@ After all workers complete, merge decisions back into the batch report:
 
 ```bash
 uv run merge-decisions \
-    --batch-report cache/verification/batch4_session6.json \
-    --decisions-dir cache/verification/batch4_decisions/ \
+    --standard misra-c \
+    --batch 4 \
+    --session 6 \
     --validate
 ```
 
@@ -810,7 +828,7 @@ Process the batch report JSON and for each guideline:
    
    ```bash
    # Step 1: Deep search (always first)
-   uv run search-fls-deep --guideline "Rule X.Y"
+   uv run search-fls-deep --standard misra-c --guideline "Rule X.Y"
    
    # Step 2: C/MISRA terminology query
    uv run search-fls --query "<C concepts from rule text>" --top 10
@@ -869,6 +887,7 @@ Process the batch report JSON and for each guideline:
 
    ```bash
    uv run record-decision \
+       --standard misra-c \
        --batch 4 \
        --guideline "Dir 1.1" \
        --decision accept_with_modifications \
@@ -890,6 +909,7 @@ Process the batch report JSON and for each guideline:
 
    ```bash
    uv run record-decision \
+       --standard misra-c \
        --batch 4 \
        --guideline "Rule 11.1" \
        --decision accept_with_modifications \
@@ -938,7 +958,8 @@ Run `apply-verification` to commit verified decisions:
 ```bash
 cd tools
 uv run apply-verification \
-    --batch-report ../cache/verification/batchBATCH_ID_sessionSESSION_ID.json \
+    --standard misra-c \
+    --batch BATCH_ID \
     --session SESSION_ID \
     --apply-applicability-changes  # Only include if changes were approved
 ```
@@ -958,7 +979,7 @@ After `apply-verification` completes successfully:
 
 1. **Verify application was successful:**
    ```bash
-   uv run check-progress
+   uv run check-progress --standard misra-c
    ```
    Confirm the batch shows as `completed` with the expected number of verified guidelines.
 
@@ -991,8 +1012,8 @@ After `apply-verification` completes successfully:
 
 5. **Upon approval, delete the files:**
    ```bash
-   rm cache/verification/batchN_sessionM.json
-   rm -rf cache/verification/batchN_decisions/
+   rm cache/verification/misra-c/batchN_sessionM.json
+   rm -rf cache/verification/misra-c/batchN_decisions/
    ```
 
 #### Verification Guidelines
@@ -1106,16 +1127,16 @@ Schema: `coding-standards-fls-mapping/schema/verification_progress.schema.json`
 cd tools
 
 # Initial creation
-uv run scaffold-progress
+uv run scaffold-progress --standard misra-c
 
 # Preview batch assignments without writing
-uv run scaffold-progress --dry-run
+uv run scaffold-progress --standard misra-c --dry-run
 
 # Regenerate from scratch (loses progress)
-uv run scaffold-progress --force
+uv run scaffold-progress --standard misra-c --force
 
 # Regenerate batches but preserve completed work
-uv run scaffold-progress --preserve-completed
+uv run scaffold-progress --standard misra-c --preserve-completed
 ```
 
 #### Resetting a Batch
@@ -1126,13 +1147,16 @@ To reset verification decisions for a batch (e.g., to re-verify after issues):
 cd tools
 
 # Reset all guidelines in a batch to unverified state
-uv run reset-batch --batch 3
+uv run reset-batch --standard misra-c --batch 3
 
 # Reset specific guidelines within a batch
-uv run reset-batch --batch 3 --guidelines "Rule 22.1,Rule 22.2"
+uv run reset-batch --standard misra-c --batch 3 --guidelines "Rule 22.1,Rule 22.2"
 
 # Preview what would be reset without making changes
-uv run reset-batch --batch 3 --dry-run
+uv run reset-batch --standard misra-c --batch 3 --dry-run
+
+# Reset ALL verification state for complete re-verification
+uv run reset-verification --standard misra-c
 ```
 
 This clears `verification_decision` fields in the batch report and resets `verified` status in `verification_progress.json` for affected guidelines.

@@ -74,7 +74,9 @@ def parse_cert_c_main_page(html: str) -> list[tuple[str, str, str, str]]:
     # Find all links to rule and recommendation categories
     # Pattern: "Rule XX. Category Name (ABC)" or "Rec. XX. Category Name (ABC)"
     for link in soup.find_all("a"):
-        href = link.get("href", "")
+        href_attr = link.get("href", "")
+        # Handle potential list return from BeautifulSoup
+        href = href_attr[0] if isinstance(href_attr, list) else (href_attr or "")
         text = link.get_text(strip=True)
 
         # Match rule categories
@@ -106,7 +108,9 @@ def parse_cert_cpp_main_page(html: str) -> list[tuple[str, str, str, str]]:
     categories = []
 
     for link in soup.find_all("a"):
-        href = link.get("href", "")
+        href_attr = link.get("href", "")
+        # Handle potential list return from BeautifulSoup
+        href = href_attr[0] if isinstance(href_attr, list) else (href_attr or "")
         text = link.get_text(strip=True)
 
         # Match rule categories - C++ uses format like "Rule 01. Declarations and Initialization (DCL)"
@@ -143,7 +147,8 @@ def parse_category_page(html: str, category_abbrev: str, guideline_type: str) ->
             # Determine if this is a rule or recommendation based on number
             # Rules are typically 30+ (e.g., MEM30-C), recommendations are 00-29
             try:
-                num = int(re.search(r"\d+", match.group(1)).group())
+                num_match = re.search(r"\d+", match.group(1))
+                num = int(num_match.group()) if num_match else 0
                 actual_type = "rule" if num >= 30 else "recommendation"
             except (AttributeError, ValueError):
                 actual_type = guideline_type

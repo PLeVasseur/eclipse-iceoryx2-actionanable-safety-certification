@@ -40,13 +40,14 @@ from fls_tools.shared import (
     get_fls_dir,
     get_fls_section_embeddings_path,
     get_fls_paragraph_embeddings_path,
-    get_misra_c_extracted_text_path,
+    get_standard_extracted_text_path,
     get_concept_to_fls_path,
     get_verification_cache_dir,
     resolve_path,
     validate_path_in_project,
     PathOutsideProjectError,
     CATEGORY_NAMES,
+    VALID_STANDARDS,
 )
 
 
@@ -90,9 +91,9 @@ def load_fls_chapters(root: Path) -> dict:
     return chapters
 
 
-def load_misra_extracted_text(root: Path) -> dict:
-    """Load MISRA extracted text for rationale/amplification."""
-    path = get_misra_c_extracted_text_path(root)
+def load_standard_extracted_text(root: Path, standard: str) -> dict:
+    """Load extracted text for rationale/amplification."""
+    path = get_standard_extracted_text_path(root, standard)
     if not path.exists():
         return {}
     
@@ -532,17 +533,25 @@ def main():
         epilog="""
 Examples:
     # Enrich a single guideline
-    uv run enrich-fls-matches --guideline "Rule 22.8"
+    uv run enrich-fls-matches --standard misra-c --guideline "Rule 22.8"
     
     # Add custom search terms
-    uv run enrich-fls-matches --guideline "Rule 22.8" --query "error handling Result"
+    uv run enrich-fls-matches --standard misra-c --guideline "Rule 22.8" --query "error handling Result"
     
     # Prioritize specific chapters
-    uv run enrich-fls-matches --guideline "Rule 22.8" --chapters 16,6
+    uv run enrich-fls-matches --standard misra-c --guideline "Rule 22.8" --chapters 16,6
     
     # Multiple guidelines
-    uv run enrich-fls-matches --guidelines "Rule 22.8,Rule 22.9"
+    uv run enrich-fls-matches --standard misra-c --guidelines "Rule 22.8,Rule 22.9"
         """
+    )
+    
+    parser.add_argument(
+        "--standard",
+        type=str,
+        required=True,
+        choices=VALID_STANDARDS,
+        help="Coding standard (e.g., misra-c, cert-cpp)",
     )
     
     # Input options
@@ -645,8 +654,8 @@ Examples:
     section_ids, section_embeddings, _ = load_embeddings(get_fls_section_embeddings_path(root))
     paragraph_ids, paragraph_embeddings, _ = load_embeddings(get_fls_paragraph_embeddings_path(root))
     
-    print("Loading MISRA extracted text...", file=sys.stderr)
-    misra_text = load_misra_extracted_text(root)
+    print("Loading extracted text...", file=sys.stderr)
+    misra_text = load_standard_extracted_text(root, args.standard)
     
     print("Loading concept mappings...", file=sys.stderr)
     concept_to_fls = load_concept_to_fls(root)

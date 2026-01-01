@@ -25,13 +25,14 @@ import jsonschema
 from fls_tools.shared import (
     get_project_root,
     get_tools_dir,
-    get_misra_c_mappings_path,
+    get_standard_mappings_path,
     get_verification_progress_path,
     get_coding_standards_dir,
     get_batch_report_path,
     resolve_path,
     validate_path_in_project,
     PathOutsideProjectError,
+    VALID_STANDARDS,
 )
 
 
@@ -301,6 +302,13 @@ def main():
         description="Phase 4: Apply verified changes from batch report"
     )
     parser.add_argument(
+        "--standard",
+        type=str,
+        required=True,
+        choices=VALID_STANDARDS,
+        help="Coding standard (e.g., misra-c, cert-cpp)",
+    )
+    parser.add_argument(
         "--batch-report",
         type=str,
         default=None,
@@ -341,7 +349,7 @@ def main():
     # Determine batch report path
     if args.batch is not None:
         # Use --batch and --session to construct path
-        report_path = get_batch_report_path(root, args.batch, args.session)
+        report_path = get_batch_report_path(root, args.standard, args.batch, args.session)
     elif args.batch_report is not None:
         # Resolve and validate user-provided path
         try:
@@ -379,8 +387,8 @@ def main():
             print("Unapproved changes will be skipped.", file=sys.stderr)
     
     # Load current files
-    mappings_path = get_misra_c_mappings_path(root)
-    progress_path = get_verification_progress_path(root)
+    mappings_path = get_standard_mappings_path(root, args.standard)
+    progress_path = get_verification_progress_path(root, args.standard)
     
     mappings = load_json(mappings_path, "MISRA C to FLS mappings")
     progress = load_json(progress_path, "Verification progress")

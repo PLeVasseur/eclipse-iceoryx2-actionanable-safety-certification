@@ -83,6 +83,7 @@ from fls_tools.shared import (
     resolve_path,
     validate_path_in_project,
     PathOutsideProjectError,
+    VALID_STANDARDS,
 )
 
 
@@ -345,6 +346,13 @@ def main():
         description="Record a verification decision for a guideline"
     )
     parser.add_argument(
+        "--standard",
+        type=str,
+        required=True,
+        choices=VALID_STANDARDS,
+        help="Coding standard to record decision for (e.g., misra-c, cert-cpp)",
+    )
+    parser.add_argument(
         "--batch-report",
         type=str,
         default=None,
@@ -354,7 +362,7 @@ def main():
         "--batch",
         type=int,
         default=None,
-        help="Batch number - writes to cache/verification/batch{N}_decisions/ (enables parallel mode)",
+        help="Batch number - writes to cache/verification/{standard}/batch{N}_decisions/ (enables parallel mode)",
     )
     parser.add_argument(
         "--guideline",
@@ -451,7 +459,7 @@ def main():
     # Resolve output directory for per-guideline mode
     output_dir = None
     if args.batch is not None:
-        output_dir = get_batch_decisions_dir(root, args.batch)
+        output_dir = get_batch_decisions_dir(root, args.standard, args.batch)
     
     report_path = None
     report = None

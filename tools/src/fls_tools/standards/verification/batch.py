@@ -1,30 +1,20 @@
 #!/usr/bin/env python3
 """
-verify_batch.py - Phase 1: Data Gathering for MISRA to FLS Verification
+verify_batch.py - Phase 1: Data Gathering for FLS Verification
 
-This script extracts all relevant data for a batch of MISRA guidelines:
-- Deep search matches using all embedding types (default)
+This script extracts all relevant data for a batch of guidelines:
 - Similarity matches (section and paragraph) above thresholds
-- MISRA rationale from extracted text
+- Rationale from extracted text
 - Wide-shot FLS content (matched sections + siblings + all rubrics)
 - Current mapping state
-
-By default, uses deep search (search_fls_deep.py) which searches using:
-- Guideline-level embedding
-- Query-level embeddings (parsed concerns)
-- Rationale-level embedding
-- Amplification-level embedding
-
-Use --shallow to use original single-embedding search.
 
 Two output modes:
 - LLM mode: Full JSON optimized for LLM consumption
 - Human mode: Markdown report with JSON snippets for quick review
 
 Usage:
-    uv run python verification/verify_batch.py --batch 3 --mode llm --output cache/verification/batch3.json
-    uv run python verification/verify_batch.py --batch 3 --mode human --output cache/verification/batch3.md
-    uv run python verification/verify_batch.py --batch 3 --shallow  # Use original search
+    uv run verify-batch --standard misra-c --batch 3 --session 1 --mode llm --output cache/verification/misra-c/batch3_session1.json
+    uv run verify-batch --standard misra-c --batch 3 --mode human --output cache/verification/misra-c/batch3.md
 """
 
 import argparse
@@ -42,22 +32,21 @@ from fls_tools.shared import (
     get_fls_index_path,
     get_fls_chapter_path,
     get_fls_section_mapping_path,
-    get_misra_c_mappings_path,
-    get_misra_c_similarity_path,
-    get_misra_c_extracted_text_path,
+    get_standard_mappings_path,
+    get_standard_similarity_path,
+    get_standard_extracted_text_path,
     get_verification_progress_path,
     get_coding_standards_dir,
     get_batch_report_path,
     resolve_path,
     validate_path_in_project,
     PathOutsideProjectError,
+    normalize_standard,
+    VALID_STANDARDS,
     CATEGORY_NAMES,
     DEFAULT_SECTION_THRESHOLD,
     DEFAULT_PARAGRAPH_THRESHOLD,
 )
-
-# Deep search will be imported dynamically to avoid circular imports
-# and to allow --shallow mode without loading embedding models
 
 
 def load_json(path: Path, description: str) -> dict:
@@ -101,34 +90,34 @@ def validate_batch_report(report: dict, schema: dict | None) -> list[str]:
     return errors
 
 
-def load_all_data(root: Path) -> dict:
-    """Load all required data sources."""
+def load_all_data(root: Path, standard: str) -> dict:
+    """Load all required data sources for a standard."""
     data = {}
     
     # Required files - fail if missing
     data["mappings"] = load_json(
-        get_misra_c_mappings_path(root),
-        "MISRA C to FLS mappings"
+        get_standard_mappings_path(root, standard),
+        f"{standard} to FLS mappings"
     )
     
     data["similarity"] = load_json(
-        get_misra_c_similarity_path(root),
+        get_standard_similarity_path(root, standard),
         "Similarity results"
     )
     
     data["progress"] = load_json(
-        get_verification_progress_path(root),
+        get_verification_progress_path(root, standard),
         "Verification progress"
     )
     
-    # MISRA extracted text - required, fail immediately if missing
-    misra_text_path = get_misra_c_extracted_text_path(root)
-    if not misra_text_path.exists():
-        print("ERROR: MISRA extracted text not found.", file=sys.stderr)
-        print(f"       Expected at: {misra_text_path}", file=sys.stderr)
-        print("       Run the MISRA text extraction first.", file=sys.stderr)
+    # Extracted text - required, fail immediately if missing
+    extracted_text_path = get_standard_extracted_text_path(root, standard)
+    if not extracted_text_path.exists():
+        print(f"ERROR: Extracted text not found for {standard}.", file=sys.stderr)
+        print(f"       Expected at: {extracted_text_path}", file=sys.stderr)
+        print("       Run the text extraction first.", file=sys.stderr)
         sys.exit(1)
-    data["misra_text"] = load_json(misra_text_path, "MISRA extracted text")
+    data["extracted_text"] = load_json(extracted_text_path, f"{standard} extracted text")
     
     # FLS chapter files
     fls_dir = get_fls_dir(root)
@@ -156,7 +145,7 @@ def get_batch_guidelines(data: dict, batch_id: int) -> list[str]:
         if batch["batch_id"] == batch_id:
             return [g["guideline_id"] for g in batch["guidelines"]]
     
-    print(f"ERROR: Batch {batch_id} not found in verification_progress.json", file=sys.stderr)
+    print(f"ERROR: Batch {batch_id} not found in progress.json", file=sys.stderr)
     sys.exit(1)
 
 
@@ -168,9 +157,9 @@ def get_mapping(data: dict, guideline_id: str) -> dict:
     return {}
 
 
-def get_misra_rationale(data: dict, guideline_id: str) -> str:
-    """Get the MISRA rationale text for a guideline."""
-    for g in data["misra_text"]["guidelines"]:
+def get_rationale(data: dict, guideline_id: str) -> str:
+    """Get the rationale text for a guideline."""
+    for g in data["extracted_text"]["guidelines"]:
         if g["guideline_id"] == guideline_id:
             return g.get("rationale", "")
     return ""
@@ -319,7 +308,7 @@ def build_guideline_entry(
 ) -> dict:
     """Build a complete guideline entry for the batch report."""
     mapping = get_mapping(data, guideline_id)
-    misra_rationale = get_misra_rationale(data, guideline_id)
+    rationale = get_rationale(data, guideline_id)
     similarity_data = get_similarity_data(data, guideline_id, section_threshold, paragraph_threshold)
     fls_content = extract_fls_content(data, similarity_data)
     
@@ -335,7 +324,7 @@ def build_guideline_entry(
             "rejected_matches": mapping.get("rejected_matches", []),
             "notes": mapping.get("notes"),
         },
-        "misra_rationale": misra_rationale,
+        "rationale": rationale,
         "similarity_data": similarity_data,
         "fls_content": fls_content,
         # Scaffolded verification_decision structure - to be filled by LLM in Phase 2
@@ -353,6 +342,7 @@ def build_guideline_entry(
 
 def build_batch_report(
     data: dict,
+    standard: str,
     batch_id: int,
     session_id: int,
     section_threshold: float,
@@ -366,11 +356,14 @@ def build_batch_report(
         entry = build_guideline_entry(data, gid, section_threshold, paragraph_threshold)
         guidelines.append(entry)
     
+    # Use internal standard name
+    internal_standard = normalize_standard(standard)
+    
     return {
         "batch_id": batch_id,
         "session_id": session_id,
         "generated_date": date.today().isoformat(),
-        "standard": "misra_c",
+        "standard": internal_standard,
         "thresholds": {
             "section": section_threshold,
             "paragraph": paragraph_threshold,
@@ -434,12 +427,12 @@ def generate_human_report(report: dict) -> str:
         lines.append(f"- FLS Rationale Type: `{g['current_state'].get('fls_rationale_type')}`")
         lines.append("")
         
-        # MISRA rationale (truncated for human report)
-        if g["misra_rationale"]:
-            rationale = g["misra_rationale"][:500]
-            if len(g["misra_rationale"]) > 500:
+        # Rationale (truncated for human report)
+        if g.get("rationale"):
+            rationale = g["rationale"][:500]
+            if len(g["rationale"]) > 500:
                 rationale += "..."
-            lines.append("**MISRA Rationale:**")
+            lines.append("**Rationale:**")
             lines.append(f"> {rationale}")
             lines.append("")
         
@@ -476,13 +469,20 @@ def generate_human_report(report: dict) -> str:
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Phase 1: Data gathering for MISRA to FLS verification"
+        description="Phase 1: Data gathering for FLS verification"
+    )
+    parser.add_argument(
+        "--standard", "-s",
+        type=str,
+        required=True,
+        choices=VALID_STANDARDS,
+        help="Standard to process (e.g., misra-c, misra-cpp, cert-c, cert-cpp)",
     )
     parser.add_argument(
         "--batch",
         type=int,
         required=True,
-        help="Batch number from verification_progress.json",
+        help="Batch number from progress.json",
     )
     parser.add_argument(
         "--session",
@@ -517,9 +517,10 @@ def main():
     args = parser.parse_args()
     
     root = get_project_root()
+    standard = args.standard
     
-    print(f"Loading data from {root}...", file=sys.stderr)
-    data = load_all_data(root)
+    print(f"Loading data for {standard}...", file=sys.stderr)
+    data = load_all_data(root, standard)
     
     print(f"Loading batch report schema...", file=sys.stderr)
     schema = load_batch_report_schema(root)
@@ -527,6 +528,7 @@ def main():
     print(f"Building batch {args.batch} report...", file=sys.stderr)
     report = build_batch_report(
         data,
+        standard,
         args.batch,
         args.session,
         args.section_threshold,
