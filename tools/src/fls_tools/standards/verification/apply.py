@@ -109,6 +109,7 @@ def migrate_v1_to_v2_entry(v1_entry: dict) -> dict:
         "schema_version": "2.0",
         "guideline_id": v1_entry["guideline_id"],
         "guideline_title": v1_entry.get("guideline_title", ""),
+        "guideline_type": v1_entry.get("guideline_type", "rule"),
         "all_rust": {
             "applicability": convert_v1_applicability_to_v2(v1_entry.get("applicability_all_rust", "direct")),
             "adjusted_category": None,  # Not in v1

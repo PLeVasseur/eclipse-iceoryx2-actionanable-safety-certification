@@ -170,42 +170,64 @@ def load_decision_files(
 
 def check_duplicate_search_ids_v2(decisions: list[dict]) -> dict[str, list[str]]:
     """
-    Check for duplicate search IDs across all decisions and contexts.
+    Check for duplicate search IDs with context-aware rules.
+    
+    Rules:
+    1. search-fls-deep UUIDs MAY be shared between all_rust and safe_rust 
+       contexts within the SAME guideline (the deep search is guideline-specific)
+    2. All other search UUIDs (search-fls, etc.) must be unique per context
+    3. Any UUID reuse across DIFFERENT guidelines is always flagged
     
     Returns:
-        Dict mapping duplicate search_id -> list of "(guideline_id, context)" that use it
+        Dict mapping duplicate search_id -> list of usages that violate rules
     """
-    search_id_usage: dict[str, list[str]] = defaultdict(list)
+    # Track: search_id -> list of (guideline_id, context, tool)
+    search_id_usage: dict[str, list[tuple[str, str, str]]] = defaultdict(list)
     
     for decision in decisions:
         guideline_id = decision.get("guideline_id", "(unknown)")
         schema_version = decision.get("schema_version", "1.0")
         
         if schema_version == "2.0":
-            # v2: check each context
             for context in ["all_rust", "safe_rust"]:
                 ctx_data = decision.get(context, {})
                 search_tools = ctx_data.get("search_tools_used", [])
                 
                 for tool in search_tools:
                     search_id = tool.get("search_id")
+                    tool_name = tool.get("tool", "unknown")
                     if search_id:
-                        search_id_usage[search_id].append(f"{guideline_id}:{context}")
+                        search_id_usage[search_id].append((guideline_id, context, tool_name))
         else:
             # v1: flat structure
             search_tools = decision.get("search_tools_used", [])
             if isinstance(search_tools, list):
                 for tool in search_tools:
                     search_id = tool.get("search_id")
+                    tool_name = tool.get("tool", "unknown")
                     if search_id:
-                        search_id_usage[search_id].append(guideline_id)
+                        search_id_usage[search_id].append((guideline_id, "v1", tool_name))
     
-    # Filter to only duplicates
-    duplicates = {
-        sid: usages
-        for sid, usages in search_id_usage.items()
-        if len(usages) > 1
-    }
+    duplicates = {}
+    
+    for search_id, usages in search_id_usage.items():
+        if len(usages) <= 1:
+            continue
+        
+        # Get unique guidelines that use this search_id
+        guidelines = set(u[0] for u in usages)
+        
+        if len(guidelines) > 1:
+            # Rule 3: Used by multiple different guidelines - always a violation
+            duplicates[search_id] = [f"{g}:{c}" for g, c, t in usages]
+        else:
+            # Same guideline, check if it's search-fls-deep (allowed) or other (violation)
+            tools_used = set(u[2] for u in usages)
+            
+            # Only search-fls-deep is allowed to be shared across contexts
+            if tools_used != {"search-fls-deep"}:
+                # At least one non-deep search is sharing this UUID - violation
+                duplicates[search_id] = [f"{g}:{c} ({t})" for g, c, t in usages]
     
     return duplicates
 

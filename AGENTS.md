@@ -1114,6 +1114,24 @@ record-decision Rule 10.2
 - Generic/shallow justifications that don't address the specific rule's concerns
 - Lower quality mappings that may need rework
 
+#### Search UUID Reuse Rules
+
+Each search tool execution generates a unique UUID. The `merge-decisions` tool validates UUID usage with these rules:
+
+| Scenario | Allowed? | Reason |
+|----------|----------|--------|
+| `search-fls-deep` UUID shared between `all_rust` and `safe_rust` of same guideline | ✓ Yes | Deep search is guideline-specific, returns same results for both contexts |
+| `search-fls` UUID shared between `all_rust` and `safe_rust` of same guideline | ✗ No | Keyword queries should be context-specific (different terminology for safe vs unsafe) |
+| Any UUID shared across different guidelines | ✗ No | Each guideline requires its own dedicated searches |
+
+**Why context-specific keyword searches matter:**
+
+For the same MISRA rule, the `all_rust` and `safe_rust` contexts often need different search angles:
+- `all_rust`: May search for "unsafe pointer transmute FFI" 
+- `safe_rust`: May search for "type coercion borrow checker prevention"
+
+Reusing a keyword search UUID between contexts suggests the verifier didn't perform context-tailored searches.
+
 #### Batch Membership Validation
 
 The `record-decision` tool validates that the guideline belongs to the specified batch before writing. This is a safety net to prevent recording decisions to the wrong batch directory.
