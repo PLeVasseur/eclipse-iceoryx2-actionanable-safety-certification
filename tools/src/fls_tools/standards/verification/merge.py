@@ -196,6 +196,7 @@ def merge_decisions_into_report(
             "accepted_matches": decision.get("accepted_matches", []),
             "rejected_matches": decision.get("rejected_matches", []),
             "notes": decision.get("notes"),
+            "search_tools_used": decision.get("search_tools_used"),
         }
         
         # Handle proposed applicability change

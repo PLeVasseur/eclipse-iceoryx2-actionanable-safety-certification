@@ -1747,91 +1747,91 @@
       "batch_id": 5,
       "name": "Edge cases",
       "description": "Partial mappings, rust_prevents, and any remaining guidelines",
-      "status": "pending",
+      "status": "completed",
       "guidelines": [
         {
           "guideline_id": "Dir 3.1",
-          "status": "pending",
+          "status": "verified",
           "verified_date": null,
-          "session_id": null
+          "session_id": 7
         },
         {
           "guideline_id": "Dir 4.4",
-          "status": "pending",
+          "status": "verified",
           "verified_date": null,
-          "session_id": null
+          "session_id": 7
         },
         {
           "guideline_id": "Dir 4.12",
-          "status": "pending",
+          "status": "verified",
           "verified_date": null,
-          "session_id": null
+          "session_id": 7
         },
         {
           "guideline_id": "Dir 5.3",
-          "status": "pending",
+          "status": "verified",
           "verified_date": null,
-          "session_id": null
+          "session_id": 7
         },
         {
           "guideline_id": "Rule 2.1",
-          "status": "pending",
+          "status": "verified",
           "verified_date": null,
-          "session_id": null
+          "session_id": 7
         },
         {
           "guideline_id": "Rule 2.2",
-          "status": "pending",
+          "status": "verified",
           "verified_date": null,
-          "session_id": null
+          "session_id": 7
         },
         {
           "guideline_id": "Rule 2.6",
-          "status": "pending",
+          "status": "verified",
           "verified_date": null,
-          "session_id": null
+          "session_id": 7
         },
         {
           "guideline_id": "Rule 2.7",
-          "status": "pending",
+          "status": "verified",
           "verified_date": null,
-          "session_id": null
+          "session_id": 7
         },
         {
           "guideline_id": "Rule 2.8",
-          "status": "pending",
+          "status": "verified",
           "verified_date": null,
-          "session_id": null
+          "session_id": 7
         },
         {
           "guideline_id": "Rule 11.11",
-          "status": "pending",
+          "status": "verified",
           "verified_date": null,
-          "session_id": null
+          "session_id": 7
         },
         {
           "guideline_id": "Rule 14.4",
-          "status": "pending",
+          "status": "verified",
           "verified_date": null,
-          "session_id": null
+          "session_id": 7
         },
         {
           "guideline_id": "Rule 17.2",
-          "status": "pending",
+          "status": "verified",
           "verified_date": null,
-          "session_id": null
+          "session_id": 7
         },
         {
           "guideline_id": "Rule 20.4",
-          "status": "pending",
+          "status": "verified",
           "verified_date": null,
-          "session_id": null
+          "session_id": 7
         },
         {
           "guideline_id": "Rule 20.7",
-          "status": "pending",
+          "status": "verified",
           "verified_date": null,
-          "session_id": null
+          "session_id": 7
         }
       ],
       "started": null,
@@ -1984,6 +1984,12 @@
       "date": "2026-01-01",
       "batch_id": 4,
       "guidelines_verified": 54
+    },
+    {
+      "session_id": 7,
+      "date": "2026-01-01",
+      "batch_id": 5,
+      "guidelines_verified": 14
     }
   ]
 }

@@ -191,8 +191,26 @@
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "direct",
       "misra_rust_category": "required",
-      "confidence": "medium",
-      "notes": "No high-confidence FLS matches found"
+      "confidence": "high",
+      "notes": "Dir 3.1 is a process/methodology guideline about code traceability to requirements. The FLS does not prescribe project management or requirements traceability processes. However, Rust provides #[doc] attribute and doc comments as language-level infrastructure to associate documentation with code constructs, which supports traceability implementation at the code level.",
+      "accepted_matches": [
+        {
+          "fls_id": "fls_63v1fqedzwfd",
+          "fls_title": "Attribute doc",
+          "category": 0,
+          "score": 0.47,
+          "reason": "FLS doc attribute provides infrastructure for associating documentation with constructs, supporting traceability at the code level"
+        },
+        {
+          "fls_id": "fls_7n6d3jx61ose",
+          "fls_title": "Doc Comments",
+          "category": -2,
+          "score": 0.58,
+          "reason": "FLS doc comments (/// and //!) are semantically equivalent to #[doc] attributes, enabling documentation directly in source code"
+        }
+      ],
+      "rejected_matches": [],
+      "fls_rationale_type": "no_equivalent"
     },
     {
       "guideline_id": "Dir 4.1",
@@ -390,18 +408,39 @@
       "applicability_safe_rust": "direct",
       "accepted_matches": [
         {
-          "fls_id": "fls_32ncjvj2kn7z",
-          "category": -2,
-          "fls_section": "fls_q8l2jza7d9xa",
+          "fls_id": "fls_q8l2jza7d9xa",
           "fls_title": "Comments",
-          "score": 0.556,
-          "reason": "Per FLS: '[Inner block doc]s and [inner line doc]s shall apply to an enclosin...' (similarity: 0.56)"
+          "category": 0,
+          "score": 0.64,
+          "reason": "FLS Comments section defines block comments that can legally nest (unlike C), reducing the primary risk MISRA identifies"
+        },
+        {
+          "fls_id": "fls_fymvsy6ig99a",
+          "fls_title": "Attribute cfg",
+          "category": 0,
+          "score": 0.67,
+          "reason": "FLS cfg attribute provides proper conditional compilation mechanism, the recommended alternative to commenting out code"
+        },
+        {
+          "fls_id": "fls_dd9xh3wdjudo",
+          "fls_title": "Attribute cfg_attr",
+          "category": 0,
+          "score": 0.87,
+          "reason": "FLS cfg_attr enables conditional attribute application, another mechanism for conditional compilation"
+        },
+        {
+          "fls_id": "fls_u1afezy1ye99",
+          "fls_title": "Conditional Compilation",
+          "category": 0,
+          "score": 0.61,
+          "reason": "FLS defines how cfg attributes control conditional compilation, providing safe code exclusion"
         }
       ],
-      "fls_rationale_type": "direct_mapping",
+      "fls_rationale_type": "rust_alternative",
       "misra_rust_category": "advisory",
-      "confidence": "medium",
-      "notes": "Similarity-based mapping - requires manual verification"
+      "confidence": "high",
+      "notes": "MISRA concern is that C comments cannot nest, causing unexpected behavior when commenting out code. Rust block comments CAN nest safely. Additionally, Rust provides #[cfg(...)] and #[cfg_attr(...)] attributes as the proper mechanism for conditional compilation, which is the recommended approach instead of commenting out code.",
+      "rejected_matches": []
     },
     {
       "guideline_id": "Dir 4.5",
@@ -650,8 +689,33 @@
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "direct",
       "misra_rust_category": "advisory",
-      "confidence": "medium",
-      "notes": "No high-confidence FLS matches found"
+      "confidence": "high",
+      "notes": "MISRA concern is about unpredictable malloc/free behavior. Rust provides: (1) #[no_std] for bare-metal development without heap, (2) #[global_allocator] for custom allocator control, (3) explicit opt-in to alloc crate for heap types. Unlike C where malloc/free are always available, Rust requires explicit crate inclusion for heap allocation, making allocation policy more controllable and auditable.",
+      "accepted_matches": [
+        {
+          "fls_id": "fls_fs0lcfllamj",
+          "fls_title": "Attribute global_allocator",
+          "category": 0,
+          "score": 0.62,
+          "reason": "FLS global_allocator attribute controls memory allocation, allowing custom allocators that can enforce allocation policies"
+        },
+        {
+          "fls_id": "fls_9xnaxd7qbakp",
+          "fls_title": "Attribute no_std",
+          "category": 0,
+          "score": 0.6,
+          "reason": "FLS no_std attribute removes std library, enabling embedded/bare-metal development without heap allocation"
+        },
+        {
+          "fls_id": "fls_94a8v54bufn8",
+          "fls_title": "Values",
+          "category": 0,
+          "score": 0.46,
+          "reason": "FLS Values section defines allocated objects and their memory layout, providing foundation for understanding allocation"
+        }
+      ],
+      "rejected_matches": [],
+      "fls_rationale_type": "direct_mapping"
     },
     {
       "guideline_id": "Dir 4.13",
@@ -929,18 +993,40 @@
       "applicability_safe_rust": "direct",
       "accepted_matches": [
         {
-          "fls_id": "fls_n6q7bksyn1m",
-          "category": -3,
-          "fls_section": "fls_k02nt1m5fq1z",
-          "fls_title": "Panic",
-          "score": 0.557,
-          "reason": "Per FLS: 'Control flow halts the execution of the current thread. #.' (similarity: 0.56)"
+          "fls_id": "fls_3v733mnewssy",
+          "fls_title": "Concurrency",
+          "category": 0,
+          "score": 0.56,
+          "reason": "FLS Concurrency chapter defines data races and thread safety at the language level"
+        },
+        {
+          "fls_id": "fls_eiw4by8z75di",
+          "fls_title": "Send and Sync",
+          "category": 0,
+          "score": 0.51,
+          "reason": "FLS Send and Sync traits provide compile-time thread safety guarantees, preventing data races"
+        },
+        {
+          "fls_id": "fls_9xnaxd7qbakp",
+          "fls_title": "Attribute no_std",
+          "category": 0,
+          "score": 0.4,
+          "reason": "FLS no_std enables bare-metal development without std library thread spawning capabilities"
         }
       ],
       "fls_rationale_type": "direct_mapping",
       "misra_rust_category": "required",
-      "confidence": "medium",
-      "notes": "Similarity-based mapping - requires manual verification"
+      "confidence": "high",
+      "notes": "MISRA concern is about unpredictable thread creation overhead and analyzability. Thread creation in Rust is a library feature (std::thread::spawn), not a language primitive. The FLS defines: (1) Send/Sync traits for compile-time thread safety, (2) data race UB definition. With #[no_std], thread spawning is not available by default. Static thread pools would be implemented via library constructs, not language features. The FLS provides safety infrastructure but thread creation policy is a library/project concern.",
+      "rejected_matches": [
+        {
+          "fls_id": "fls_k02nt1m5fq1z",
+          "fls_title": "Panic",
+          "category": -3,
+          "score": 0.56,
+          "reason": "Panic section mentions thread execution halting but is about panic handling, not thread creation"
+        }
+      ]
     },
     {
       "guideline_id": "Rule 1.1",
@@ -1098,8 +1184,40 @@
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "direct",
       "misra_rust_category": "advisory",
-      "confidence": "medium",
-      "notes": "No high-confidence FLS matches found"
+      "confidence": "high",
+      "notes": "MISRA concern is about unreachable code indicating logic errors or wasted resources. Rust provides: (1) Language-level reachability via diverging expressions and never type (!), (2) Compiler lint unreachable_code that warns about code after diverging expressions, (3) Diagnostics attributes (#[allow], #[deny], #[warn], #[forbid]) for lint control. The FLS defines the language semantics of reachability; lint enforcement is a tooling concern controlled via diagnostics attributes.",
+      "accepted_matches": [
+        {
+          "fls_id": "fls_zJOAmSr3Dbqk",
+          "fls_title": "Diverging Expressions",
+          "category": 0,
+          "score": 0.62,
+          "reason": "FLS defines diverging expressions (break, return, loop, panic, never type) which determine reachability at the language level"
+        },
+        {
+          "fls_id": "fls_t2590yyvclgb",
+          "fls_title": "Diagnostics Attributes",
+          "category": 0,
+          "score": 0.4,
+          "reason": "FLS defines diagnostics attributes (allow, deny, warn, forbid) for controlling lint warnings including unreachable_code"
+        },
+        {
+          "fls_id": "fls_jr4tpuyksr75",
+          "fls_title": "Break Expressions",
+          "category": 0,
+          "score": 0.55,
+          "reason": "FLS break expressions cause control flow to diverge, making subsequent code unreachable"
+        },
+        {
+          "fls_id": "fls_sf4qnd43z2wc",
+          "fls_title": "Infinite Loops",
+          "category": 0,
+          "score": 0.58,
+          "reason": "FLS infinite loops without break have never type, indicating code after them is unreachable"
+        }
+      ],
+      "rejected_matches": [],
+      "fls_rationale_type": "direct_mapping"
     },
     {
       "guideline_id": "Rule 2.2",
@@ -1108,8 +1226,33 @@
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "direct",
       "misra_rust_category": "required",
-      "confidence": "medium",
-      "notes": "No high-confidence FLS matches found"
+      "confidence": "high",
+      "notes": "MISRA concern is about dead code (executes but has no effect) indicating logic errors. Rust provides: (1) Compiler lint dead_code that warns about unused functions, structs, etc., (2) unused_variables, unused_assignments lints for unused bindings, (3) Diagnostics attributes for lint control. The FLS defines language semantics; dead code detection is a tooling concern controlled via diagnostics attributes. Rust's ownership system also helps identify dead code through unused value warnings.",
+      "accepted_matches": [
+        {
+          "fls_id": "fls_t2590yyvclgb",
+          "fls_title": "Diagnostics Attributes",
+          "category": 0,
+          "score": 0.4,
+          "reason": "FLS defines diagnostics attributes (allow, deny, warn, forbid) for controlling lint warnings including dead_code"
+        },
+        {
+          "fls_id": "fls_3xvm61x0t251",
+          "fls_title": "Initialization",
+          "category": 0,
+          "score": 0.55,
+          "reason": "FLS Initialization section defines when values are initialized and used, foundational for dead code analysis"
+        },
+        {
+          "fls_id": "fls_zJOAmSr3Dbqk",
+          "fls_title": "Diverging Expressions",
+          "category": 0,
+          "score": 0.5,
+          "reason": "FLS diverging expressions affect code reachability and dead code detection"
+        }
+      ],
+      "rejected_matches": [],
+      "fls_rationale_type": "direct_mapping"
     },
     {
       "guideline_id": "Rule 2.3",
@@ -1202,26 +1345,39 @@
       "applicability_safe_rust": "direct",
       "accepted_matches": [
         {
-          "fls_id": "fls_ijbt4tgnl95n",
-          "category": -2,
-          "fls_section": "fls_qcb1n9c0e5hz",
-          "fls_title": "Functions",
-          "score": 0.588,
-          "reason": "Per FLS: 'A function shall not specify a self parameter unless it is an assoc...' (similarity: 0.59)"
+          "fls_id": "fls_769b4p8v3cwu",
+          "fls_title": "Label Scope",
+          "category": 0,
+          "score": 0.69,
+          "reason": "FLS Label Scope defines that labels are in scope within the block expression of the related loop expression"
         },
         {
-          "fls_id": "fls_ofzql79i9if",
+          "fls_id": "fls_uusi0zej55is",
+          "fls_title": "Loop Labels",
+          "category": 0,
+          "score": 0.59,
+          "reason": "FLS Loop Labels define named loops for break/continue targeting, not goto labels"
+        },
+        {
+          "fls_id": "fls_7hc8yboeaho0",
+          "fls_title": "Loop Labels legality",
           "category": -2,
-          "fls_section": "fls_2d6bqnpy6tvs",
-          "fls_title": "Function-like Macros",
-          "score": 0.576,
-          "reason": "Per FLS: 'It shall lack [function qualifier]s,' (similarity: 0.58)"
+          "score": 0.54,
+          "reason": "FLS requires label indication to refer to an enclosing named block or loop expression"
+        },
+        {
+          "fls_id": "fls_t2590yyvclgb",
+          "fls_title": "Diagnostics Attributes",
+          "category": 0,
+          "score": 0.4,
+          "reason": "FLS diagnostics attributes control lint warnings including unused_labels"
         }
       ],
-      "fls_rationale_type": "direct_mapping",
+      "fls_rationale_type": "rust_alternative",
       "misra_rust_category": "recommended",
-      "confidence": "medium",
-      "notes": "Similarity-based mapping - requires manual verification"
+      "confidence": "high",
+      "notes": "MISRA concern is about C goto labels being declared but not used. Rust has NO goto statement. Rust labels are for naming loops/blocks to target with break/continue. The FLS defines: (1) Label Scope - labels are scoped to their loop/block, (2) Loop Labels - syntax and semantics for named loops. The compiler provides unused_labels lint for detecting labels not referenced by break/continue. This is a significant Rust alternative - structured loop control instead of arbitrary goto.",
+      "rejected_matches": []
     },
     {
       "guideline_id": "Rule 2.7",
@@ -1231,90 +1387,39 @@
       "applicability_safe_rust": "direct",
       "accepted_matches": [
         {
-          "fls_id": "fls_ijbt4tgnl95n",
-          "category": -2,
-          "fls_section": "fls_qcb1n9c0e5hz",
+          "fls_id": "fls_qcb1n9c0e5hz",
           "fls_title": "Functions",
-          "score": 0.661,
-          "reason": "Per FLS: 'A function shall not specify a self parameter unless it is an assoc...' (similarity: 0.66)"
+          "category": 0,
+          "score": 0.44,
+          "reason": "FLS Functions section defines function parameters and their binding semantics"
         },
         {
-          "fls_id": "fls_lxzinvqveuqh",
+          "fls_id": "fls_uwuthzfgslif",
+          "fls_title": "Function parameter binding",
           "category": -2,
-          "fls_section": "fls_qcb1n9c0e5hz",
-          "fls_title": "Functions",
-          "score": 0.656,
-          "reason": "Per FLS: 'The pattern of a function parameter shall be an irrefutable pattern.' (similarity: 0.66)"
+          "score": 0.63,
+          "reason": "FLS defines function parameters as constructs that yield bindings for matched input values"
         },
         {
-          "fls_id": "fls_byqjs5fvy2bj",
-          "category": -2,
-          "fls_section": "fls_vhpwge5123cm",
-          "fls_title": "Generic Parameters",
-          "score": 0.654,
-          "reason": "Per FLS: 'As a value of any expression within a function body.' (similarity: 0.65)"
+          "fls_id": "fls_qfsfnql1t7m",
+          "fls_title": "Underscore Patterns",
+          "category": 0,
+          "score": 0.6,
+          "reason": "FLS underscore pattern matches any value without binding, providing mechanism for intentionally unused parameters"
         },
         {
-          "fls_id": "fls_icdzs1mjh0n4",
-          "category": -2,
-          "fls_section": "fls_qcb1n9c0e5hz",
-          "fls_title": "Functions",
-          "score": 0.631,
-          "reason": "Per FLS: 'A variadic function shall specify one of the following [ABI]s:' (similarity: 0.63)"
-        },
-        {
-          "fls_id": "fls_prbwj1pmng6k",
-          "category": -2,
-          "fls_section": "fls_vhpwge5123cm",
-          "fls_title": "Generic Parameters",
-          "score": 0.626,
-          "reason": "Per FLS: 'As a constant argument of any type used within a function body.' (similarity: 0.63)"
-        },
-        {
-          "fls_id": "fls_yfm0jh62oaxr",
-          "category": -2,
-          "fls_section": "fls_qcb1n9c0e5hz",
-          "fls_title": "Functions",
-          "score": 0.612,
-          "reason": "Per FLS: 'A function shall have a function body unless it is an associated tr...' (similarity: 0.61)"
-        },
-        {
-          "fls_id": "fls_PGDKWK7nPvgw",
-          "category": -2,
-          "fls_section": "fls_qcb1n9c0e5hz",
-          "fls_title": "Functions",
-          "score": 0.603,
-          "reason": "Per FLS: 'The [binding]s of all [pattern]s of all [function parameter]s of a ...' (similarity: 0.60)"
-        },
-        {
-          "fls_id": "fls_PGtp39f6gJwU",
-          "category": -2,
-          "fls_section": "fls_qcb1n9c0e5hz",
-          "fls_title": "Functions",
-          "score": 0.599,
-          "reason": "Per FLS: 'If the function parameter is a self parameter without a TypeSpecifi...' (similarity: 0.60)"
-        },
-        {
-          "fls_id": "fls_B0SMXRqQMS1E",
-          "category": -2,
-          "fls_section": "fls_xztr1kebz8bo",
-          "fls_title": "Function Pointer Types",
-          "score": 0.594,
-          "reason": "Per FLS: 'A variadic part indicates the presence of C-like optional parameters.' (similarity: 0.59)"
-        },
-        {
-          "fls_id": "fls_AAYJDCNMJgTq",
-          "category": -2,
-          "fls_section": "fls_qcb1n9c0e5hz",
-          "fls_title": "Functions",
-          "score": 0.591,
-          "reason": "Per FLS: 'The type of a function parameter is determined as follows:' (similarity: 0.59)"
+          "fls_id": "fls_t2590yyvclgb",
+          "fls_title": "Diagnostics Attributes",
+          "category": 0,
+          "score": 0.4,
+          "reason": "FLS diagnostics attributes control lint warnings including unused_variables"
         }
       ],
       "fls_rationale_type": "direct_mapping",
       "misra_rust_category": "recommended",
-      "confidence": "medium",
-      "notes": "Similarity-based mapping - requires manual verification"
+      "confidence": "high",
+      "notes": "MISRA concern is about unused function parameters indicating spec/implementation mismatch. Rust provides: (1) Compiler lint unused_variables warns about unused parameters, (2) Underscore prefix (_param) or underscore pattern (_) explicitly marks intentionally unused parameters, (3) Trait implementations may require unused parameters for API conformance. The FLS defines function parameters and underscore patterns; lint enforcement is tooling.",
+      "rejected_matches": []
     },
     {
       "guideline_id": "Rule 2.8",
@@ -1323,8 +1428,33 @@
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "direct",
       "misra_rust_category": "recommended",
-      "confidence": "medium",
-      "notes": "No high-confidence FLS matches found"
+      "confidence": "high",
+      "notes": "MISRA concern is about unused object definitions indicating redundant code. Rust provides: (1) Compiler lint dead_code warns about unused structs, enums, functions, constants, (2) #[used] attribute explicitly marks items that should not be optimized away, (3) Visibility modifiers (pub) indicate intended external usage. The FLS defines items and their declaration; unused item detection is tooling.",
+      "accepted_matches": [
+        {
+          "fls_id": "fls_151r19d7xbgz",
+          "fls_title": "Entities",
+          "category": 0,
+          "score": 0.46,
+          "reason": "FLS Entities section defines items (structs, enums, functions, etc.) that can be unused"
+        },
+        {
+          "fls_id": "fls_7skf24auayqy",
+          "fls_title": "Attribute used",
+          "category": 0,
+          "score": 0.44,
+          "reason": "FLS #[used] attribute prevents the linker from removing a static, indicating intentional retention"
+        },
+        {
+          "fls_id": "fls_t2590yyvclgb",
+          "fls_title": "Diagnostics Attributes",
+          "category": 0,
+          "score": 0.4,
+          "reason": "FLS diagnostics attributes control lint warnings including dead_code for unused items"
+        }
+      ],
+      "rejected_matches": [],
+      "fls_rationale_type": "direct_mapping"
     },
     {
       "guideline_id": "Rule 3.1",
@@ -3697,27 +3827,40 @@
       "applicability_safe_rust": "rust_prevents",
       "accepted_matches": [
         {
-          "fls_id": "fls_52thmi9hnoks",
-          "category": -4,
-          "fls_section": "fls_xztr1kebz8bo",
-          "fls_title": "Function Pointer Types",
-          "score": 0.602,
-          "reason": "Per FLS: 'It is a validity invariant for a value of a function pointer type t...' (similarity: 0.60)"
+          "fls_id": "fls_r7gzxo16esri",
+          "fls_title": "If expression subject bool",
+          "category": -2,
+          "score": 0.46,
+          "reason": "FLS requires if expression subject to be type bool - no implicit pointer-to-bool conversion"
         },
         {
-          "fls_id": "fls_k6ues2936pjq",
-          "category": -2,
-          "fls_section": "fls_ppd1xwve3tr7",
+          "fls_id": "fls_142vncdktbin",
+          "fls_title": "Reference Types",
+          "category": 0,
+          "score": 0.6,
+          "reason": "FLS references have validity invariant of being non-null, eliminating most null-pointer concerns"
+        },
+        {
+          "fls_id": "fls_ppd1xwve3tr7",
           "fls_title": "Raw Pointer Types",
-          "score": 0.557,
-          "reason": "Per FLS: 'Comparing a value of a raw pointer type to a value of a dynamically...' (similarity: 0.56)"
+          "category": 0,
+          "score": 0.6,
+          "reason": "FLS raw pointer comparisons compare addresses explicitly, not implicit boolean conversion"
+        },
+        {
+          "fls_id": "fls_52thmi9hnoks",
+          "fls_title": "Function pointer null invariant",
+          "category": -4,
+          "score": 0.69,
+          "reason": "FLS function pointers have validity invariant of being non-null"
         }
       ],
       "fls_rationale_type": "rust_prevents",
       "misra_rust_category": "implicit",
       "misra_rust_comment": "enforced by rustc",
-      "confidence": "medium",
-      "notes": "MISRA ADD-6: enforced by rustc"
+      "confidence": "high",
+      "notes": "MISRA concern is implicit pointer-to-boolean conversion in C (if(ptr)). Rust PREVENTS this: (1) if expression subject must be bool type - no implicit conversions, (2) References have non-null validity invariant, (3) Raw pointers require explicit .is_null() check or comparison. The type system enforces explicit boolean expressions in control flow.",
+      "rejected_matches": []
     },
     {
       "guideline_id": "Rule 12.1",
@@ -4271,131 +4414,40 @@
       "applicability_safe_rust": "rust_prevents",
       "accepted_matches": [
         {
-          "fls_id": "fls_mkut7gut49gi",
-          "category": 0,
-          "fls_section": "6.-2.48",
-          "fls_title": "If Expressions",
-          "score": 0.651,
-          "reason": "Section-level similarity match (score: 0.65)"
-        },
-        {
-          "fls_id": "fls_Mcpwyvz47SoG",
-          "category": -2,
-          "fls_section": "fls_lv7w7aalpwm5",
-          "fls_title": "Type Inference",
-          "score": 0.65,
-          "reason": "Per FLS: 'If the else expression has an if expression, infer that nested if e...' (similarity: 0.65)"
-        },
-        {
-          "fls_id": "fls_wf11yp1jwf53",
-          "category": -2,
-          "fls_section": "fls_sf4qnd43z2wc",
-          "fls_title": "Infinite Loops",
-          "score": 0.649,
-          "reason": "Per FLS: 'If the infinite loop expression contains at least one break express...' (similarity: 0.65)"
-        },
-        {
-          "fls_id": "fls_1e8qer6bh2f3",
-          "category": -2,
-          "fls_section": "fls_mkut7gut49gi",
-          "fls_title": "If Expressions",
-          "score": 0.648,
-          "reason": "Per FLS: 'The type of an else expression is the type of its block expression,...' (similarity: 0.65)"
-        },
-        {
           "fls_id": "fls_r7gzxo16esri",
+          "fls_title": "If expression requires bool",
           "category": -2,
-          "fls_section": "fls_mkut7gut49gi",
+          "score": 0.59,
+          "reason": "FLS: The type of the subject expression of an if expression shall be type bool"
+        },
+        {
+          "fls_id": "fls_d7ofrq3777kq",
+          "fls_title": "While loop requires bool",
+          "category": -2,
+          "score": 0.66,
+          "reason": "FLS: The type of an iteration expression shall be type bool"
+        },
+        {
+          "fls_id": "fls_tiqp1gxf116z",
+          "fls_title": "Bool Type",
+          "category": 0,
+          "score": 0.61,
+          "reason": "FLS Bool Type defines the boolean type with only true/false values"
+        },
+        {
+          "fls_id": "fls_mkut7gut49gi",
           "fls_title": "If Expressions",
-          "score": 0.647,
-          "reason": "Per FLS: 'The type of the subject expression of an if expression shall be typ...' (similarity: 0.65)"
-        },
-        {
-          "fls_id": "fls_Esa4ST7lLp8T",
-          "category": -2,
-          "fls_section": "fls_lv7w7aalpwm5",
-          "fls_title": "Type Inference",
-          "score": 0.647,
-          "reason": "Per FLS: 'A for loop expression is inferred by unifying the type of its patte...' (similarity: 0.65)"
-        },
-        {
-          "fls_id": "fls_iv9t4nfs4f6w",
-          "category": -2,
-          "fls_section": "fls_mkut7gut49gi",
-          "fls_title": "If Expressions",
-          "score": 0.642,
-          "reason": "Per FLS: 'The type of an if expression is the type of its block expression.' (similarity: 0.64)"
-        },
-        {
-          "fls_id": "fls_4vyrufo4qdeg",
-          "category": -2,
-          "fls_section": "fls_p0t1ch115tra",
-          "fls_title": "If Let Expressions",
-          "score": 0.635,
-          "reason": "Per FLS: 'The type of an if let expression is the type of its block expression.' (similarity: 0.63)"
-        },
-        {
-          "fls_id": "fls_u0gwo0s2l0tn",
-          "category": -2,
-          "fls_section": "fls_lstusiu2c8lu",
-          "fls_title": "Lazy Boolean Expressions",
-          "score": 0.633,
-          "reason": "Per FLS: 'The [type]s of the [operand]s of a lazy boolean expression shall be...' (similarity: 0.63)"
-        },
-        {
-          "fls_id": "fls_KRQxdSav1KBA",
-          "category": -2,
-          "fls_section": "fls_lv7w7aalpwm5",
-          "fls_title": "Type Inference",
-          "score": 0.63,
-          "reason": "Per FLS: 'If the else expression has a block expression, infer the block expr...' (similarity: 0.63)"
-        },
-        {
-          "fls_id": "fls_lEr4iqwdBcbA",
-          "category": -2,
-          "fls_section": "fls_p0t1ch115tra",
-          "fls_title": "If Let Expressions",
-          "score": 0.625,
-          "reason": "Per FLS: 'The type of an if let expression and the type of an else expression...' (similarity: 0.62)"
-        },
-        {
-          "fls_id": "fls_p0t1ch115tra",
           "category": 0,
-          "fls_section": "6.-2.49",
-          "fls_title": "If Let Expressions",
-          "score": 0.614,
-          "reason": "Section-level similarity match (score: 0.61)"
-        },
-        {
-          "fls_id": "fls_onfyolkcbeh3",
-          "category": 0,
-          "fls_section": "6.-2.40",
-          "fls_title": "For Loops",
-          "score": 0.606,
-          "reason": "Section-level similarity match (score: 0.61)"
-        },
-        {
-          "fls_id": "fls_lstusiu2c8lu",
-          "category": 0,
-          "fls_section": "6.-2.22",
-          "fls_title": "Lazy Boolean Expressions",
-          "score": 0.599,
-          "reason": "Section-level similarity match (score: 0.60)"
-        },
-        {
-          "fls_id": "fls_jr4tpuyksr75",
-          "category": 0,
-          "fls_section": "6.-2.45",
-          "fls_title": "Break Expressions",
-          "score": 0.594,
-          "reason": "Section-level similarity match (score: 0.59)"
+          "score": 0.56,
+          "reason": "FLS If Expressions section defines control flow with boolean subject expression"
         }
       ],
       "fls_rationale_type": "rust_prevents",
       "misra_rust_category": "implicit",
       "misra_rust_comment": "enforced by rustc",
-      "confidence": "medium",
-      "notes": "MISRA ADD-6: enforced by rustc"
+      "confidence": "high",
+      "notes": "MISRA concern is about non-boolean expressions in control flow (e.g., if(1), if(ptr)). Rust ENFORCES this at the language level: (1) FLS requires if expression subject to be type bool, (2) FLS requires while loop iteration expression to be type bool. There are NO implicit conversions to bool in Rust. This rule is fully addressed by Rust's type system.",
+      "rejected_matches": []
     },
     {
       "guideline_id": "Rule 15.1",
@@ -4665,8 +4717,40 @@
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "direct",
       "misra_rust_category": "required",
-      "confidence": "medium",
-      "notes": "No high-confidence FLS matches found"
+      "confidence": "high",
+      "notes": "MISRA bans recursion for stack predictability. Rust has no special recursion restrictions - same as C. The FLS defines call expressions and recursion_limit (for macros). Rust idiomatically prefers iteration with iterators. Static analysis tools can detect recursion.",
+      "accepted_matches": [
+        {
+          "fls_id": "fls_3gapgqys3ceb",
+          "fls_title": "Recursive Types",
+          "category": 0,
+          "score": 0.57,
+          "reason": "FLS defines recursive types and their constraints - related concept"
+        },
+        {
+          "fls_id": "fls_u2hzlzpzh7yy",
+          "fls_title": "Attribute recursion_limit",
+          "category": 0,
+          "score": 0.46,
+          "reason": "FLS recursion_limit attribute controls macro/deref recursion depth"
+        },
+        {
+          "fls_id": "fls_xa4nbfas01cj",
+          "fls_title": "Call Expressions",
+          "category": 0,
+          "score": 0.49,
+          "reason": "FLS defines function call semantics including self-referential calls"
+        },
+        {
+          "fls_id": "fls_sf4qnd43z2wc",
+          "fls_title": "Infinite Loops",
+          "category": 0,
+          "score": 0.51,
+          "reason": "FLS defines iteration as alternative to recursion for repeated execution"
+        }
+      ],
+      "rejected_matches": [],
+      "fls_rationale_type": "direct_mapping"
     },
     {
       "guideline_id": "Rule 17.3",
@@ -5502,131 +5586,40 @@
       "applicability_safe_rust": "partial",
       "accepted_matches": [
         {
-          "fls_id": "fls_jejt5z8m1yew",
-          "category": -2,
-          "fls_section": "fls_21vnag69kbwe",
+          "fls_id": "fls_21vnag69kbwe",
           "fls_title": "Identifiers",
-          "score": 0.661,
-          "reason": "Per FLS: '[Declarative macro]s and [procedural macro]s shall receive normaliz...' (similarity: 0.66)"
-        },
-        {
-          "fls_id": "fls_nz5stwcc41gk",
-          "category": -2,
-          "fls_section": "fls_wjldgtio5o75",
-          "fls_title": "Macro Expansion",
-          "score": 0.648,
-          "reason": "Per FLS: 'Macro expansion of [declarative macro]s proceeds as follows: #.' (similarity: 0.65)"
-        },
-        {
-          "fls_id": "fls_g93r3teei8wo",
-          "category": -2,
-          "fls_section": "fls_8nzypdu9j3ge",
-          "fls_title": "Metavariables",
-          "score": 0.64,
-          "reason": "Per FLS: '[Declarative macro]s employ [metavariable]s to match a token of a p...' (similarity: 0.64)"
-        },
-        {
-          "fls_id": "fls_76prdp6k1fga",
-          "category": -2,
-          "fls_section": "fls_wjldgtio5o75",
-          "fls_title": "Macro Expansion",
-          "score": 0.64,
-          "reason": "Per FLS: 'The TokenTree of the macro invocation is matched against the [macro...' (similarity: 0.64)"
-        },
-        {
-          "fls_id": "fls_xa7lp0zg1ol2",
           "category": 0,
-          "fls_section": "20.-2.2",
-          "fls_title": "Declarative Macros",
-          "score": 0.635,
-          "reason": "Section-level similarity match (score: 0.63)"
-        },
-        {
-          "fls_id": "fls_y4podc7ee8lf",
-          "category": -2,
-          "fls_section": "fls_ym00b6ewf4n3",
-          "fls_title": "Macro Transcription",
-          "score": 0.629,
-          "reason": "Per FLS: 'A metavariable indication shall be used in a macro repetition in tr...' (similarity: 0.63)"
-        },
-        {
-          "fls_id": "fls_rnty1c8l5495",
-          "category": -2,
-          "fls_section": "fls_83182bfa9uqb",
-          "fls_title": "Macros",
-          "score": 0.624,
-          "reason": "Per FLS: '[Token]s are a subset of [lexical element]s consumed by [macro]s.' (similarity: 0.62)"
-        },
-        {
-          "fls_id": "fls_8nzypdu9j3ge",
-          "category": 0,
-          "fls_section": "20.-2.3",
-          "fls_title": "Metavariables",
-          "score": 0.624,
-          "reason": "Section-level similarity match (score: 0.62)"
-        },
-        {
-          "fls_id": "fls_bl55g03jmayf",
-          "category": -2,
-          "fls_section": "fls_9kjpxri0axvg",
-          "fls_title": "Weak Keywords",
-          "score": 0.623,
-          "reason": "Per FLS: 'Word macro_rules acts as a keyword only when used in the context of...' (similarity: 0.62)"
-        },
-        {
-          "fls_id": "fls_mewfehvgm16r",
-          "category": -2,
-          "fls_section": "fls_wn1i6hzg2ff7",
-          "fls_title": "Procedural Macros",
-          "score": 0.617,
-          "reason": "Per FLS: 'A macro implementation function enters the name of the procedural m...' (similarity: 0.62)"
-        },
-        {
-          "fls_id": "fls_w44hav7mw3ao",
-          "category": -2,
-          "fls_section": "fls_xa7lp0zg1ol2",
-          "fls_title": "Declarative Macros",
-          "score": 0.616,
-          "reason": "Per FLS: 'A declarative macro is a macro that associates a name with a set of...' (similarity: 0.62)"
-        },
-        {
-          "fls_id": "fls_ofzql79i9if",
-          "category": -2,
-          "fls_section": "fls_2d6bqnpy6tvs",
-          "fls_title": "Function-like Macros",
-          "score": 0.615,
-          "reason": "Per FLS: 'It shall lack [function qualifier]s,' (similarity: 0.61)"
-        },
-        {
-          "fls_id": "fls_wjldgtio5o75",
-          "category": 0,
-          "fls_section": "20.-2.10",
-          "fls_title": "Macro Expansion",
-          "score": 0.613,
-          "reason": "Section-level similarity match (score: 0.61)"
-        },
-        {
-          "fls_id": "fls_ym00b6ewf4n3",
-          "category": 0,
-          "fls_section": "20.-2.14",
-          "fls_title": "Macro Transcription",
-          "score": 0.59,
-          "reason": "Section-level similarity match (score: 0.59)"
+          "score": 0.67,
+          "reason": "FLS identifiers cannot be keywords - macros cannot shadow keywords"
         },
         {
           "fls_id": "fls_xlfo7di0gsqz",
-          "category": 0,
-          "fls_section": "20.-1.1",
           "fls_title": "Hygiene",
-          "score": 0.574,
-          "reason": "Section-level similarity match (score: 0.57)"
+          "category": 0,
+          "score": 0.66,
+          "reason": "FLS macro hygiene prevents name confusion with language constructs"
+        },
+        {
+          "fls_id": "fls_9kjpxri0axvg",
+          "fls_title": "Weak Keywords",
+          "category": 0,
+          "score": 0.6,
+          "reason": "FLS distinguishes strict and weak keywords - strict cannot be used as identifiers"
+        },
+        {
+          "fls_id": "fls_xa7lp0zg1ol2",
+          "fls_title": "Declarative Macros",
+          "category": 0,
+          "score": 0.64,
+          "reason": "FLS declarative macros have hygiene preventing keyword collisions"
         }
       ],
-      "fls_rationale_type": "partial_mapping",
+      "fls_rationale_type": "rust_prevents",
       "misra_rust_category": "required",
       "misra_rust_comment": "possible with raw identifiers but the compiler prevents visual conflicts",
-      "confidence": "medium",
-      "notes": "MISRA ADD-6: possible with raw identifiers but the compiler prevents visual conflicts"
+      "confidence": "high",
+      "notes": "MISRA concern is C preprocessor defining over keywords. Rust PREVENTS this: (1) Macro names are identifiers, (2) Keywords cannot be identifiers, (3) Macro hygiene isolates macro-introduced names. The FLS explicitly distinguishes strict keywords (cannot be identifiers) from weak keywords.",
+      "rejected_matches": []
     },
     {
       "guideline_id": "Rule 20.5",
@@ -5662,131 +5655,40 @@
       "applicability_safe_rust": "partial",
       "accepted_matches": [
         {
-          "fls_id": "fls_wjldgtio5o75",
-          "category": 0,
-          "fls_section": "20.-2.10",
-          "fls_title": "Macro Expansion",
-          "score": 0.733,
-          "reason": "Section-level similarity match (score: 0.73)"
-        },
-        {
-          "fls_id": "fls_tjn92evtlflq",
-          "category": -2,
-          "fls_section": "fls_wjldgtio5o75",
-          "fls_title": "Macro Expansion",
-          "score": 0.704,
-          "reason": "Per FLS: 'The DelimitedTokenTree of the invoking attribute macro is transform...' (similarity: 0.70)"
-        },
-        {
-          "fls_id": "fls_fbgal48cgj44",
-          "category": -2,
-          "fls_section": "fls_2d6bqnpy6tvs",
-          "fls_title": "Function-like Macros",
-          "score": 0.67,
-          "reason": "Per FLS: 'The sole parameter of the macro implementation function captures th...' (similarity: 0.67)"
-        },
-        {
-          "fls_id": "fls_g1rml9tavh8v",
-          "category": -2,
-          "fls_section": "fls_qpx6lgapce57",
-          "fls_title": "Token Matching",
-          "score": 0.666,
-          "reason": "Per FLS: 'The outer [Delimiter]s of a macro matcher match any outer [Delimite...' (similarity: 0.67)"
-        },
-        {
-          "fls_id": "fls_nz5stwcc41gk",
-          "category": -2,
-          "fls_section": "fls_wjldgtio5o75",
-          "fls_title": "Macro Expansion",
-          "score": 0.66,
-          "reason": "Per FLS: 'Macro expansion of [declarative macro]s proceeds as follows: #.' (similarity: 0.66)"
-        },
-        {
-          "fls_id": "fls_nsh2vwx8oiw",
-          "category": -2,
-          "fls_section": "fls_wjldgtio5o75",
-          "fls_title": "Macro Expansion",
-          "score": 0.659,
-          "reason": "Per FLS: 'If the macro invocation appears as part of an expression-without-bl...' (similarity: 0.66)"
-        },
-        {
-          "fls_id": "fls_l8j2jiuuao4f",
-          "category": -2,
-          "fls_section": "fls_wjldgtio5o75",
-          "fls_title": "Macro Expansion",
-          "score": 0.659,
-          "reason": "Per FLS: 'If the macro invocation appears as part of an expression-without-bl...' (similarity: 0.66)"
-        },
-        {
-          "fls_id": "fls_ym00b6ewf4n3",
-          "category": 0,
-          "fls_section": "20.-2.14",
-          "fls_title": "Macro Transcription",
-          "score": 0.655,
-          "reason": "Section-level similarity match (score: 0.66)"
-        },
-        {
-          "fls_id": "fls_3zn4dz19nyvq",
-          "category": -2,
-          "fls_section": "fls_wjldgtio5o75",
-          "fls_title": "Macro Expansion",
-          "score": 0.654,
-          "reason": "Per FLS: 'If the macro invocation appears as part of a statement, the output ...' (similarity: 0.65)"
-        },
-        {
-          "fls_id": "fls_stseor6tln22",
-          "category": -2,
-          "fls_section": "fls_wjldgtio5o75",
-          "fls_title": "Macro Expansion",
-          "score": 0.654,
-          "reason": "Per FLS: 'If the macro invocation appears as part of a statement, the output ...' (similarity: 0.65)"
-        },
-        {
-          "fls_id": "fls_fku5beu3mr4c",
-          "category": -2,
-          "fls_section": "fls_4vjbkm4ceymk",
-          "fls_title": "Attribute Macros",
-          "score": 0.649,
-          "reason": "Per FLS: 'The first function parameter of the macro implementation function c...' (similarity: 0.65)"
-        },
-        {
-          "fls_id": "fls_40xq8Ri1OMZZ",
-          "category": -2,
-          "fls_section": "fls_wjldgtio5o75",
-          "fls_title": "Macro Expansion",
-          "score": 0.641,
-          "reason": "Per FLS: 'The TokenTree of the macro invocation has all [outer block doc]s an...' (similarity: 0.64)"
-        },
-        {
           "fls_id": "fls_8nzypdu9j3ge",
-          "category": 0,
-          "fls_section": "20.-2.3",
           "fls_title": "Metavariables",
-          "score": 0.618,
-          "reason": "Section-level similarity match (score: 0.62)"
-        },
-        {
-          "fls_id": "fls_4vjbkm4ceymk",
           "category": 0,
-          "fls_section": "20.-2.8",
-          "fls_title": "Attribute Macros",
-          "score": 0.611,
-          "reason": "Section-level similarity match (score: 0.61)"
+          "score": 0.62,
+          "reason": "FLS metavariables with expr specifier capture complete expressions as AST units"
         },
         {
           "fls_id": "fls_kw25194gpael",
-          "category": 0,
-          "fls_section": "6.-2.53",
           "fls_title": "Expression Precedence",
-          "score": 0.603,
-          "reason": "Section-level similarity match (score: 0.60)"
+          "category": 0,
+          "score": 0.65,
+          "reason": "FLS defines expression precedence - captured expressions maintain integrity"
+        },
+        {
+          "fls_id": "fls_ym00b6ewf4n3",
+          "fls_title": "Macro Transcription",
+          "category": 0,
+          "score": 0.66,
+          "reason": "FLS transcription substitutes matched tokens preserving structure"
+        },
+        {
+          "fls_id": "fls_qpx6lgapce57",
+          "fls_title": "Token Matching",
+          "category": 0,
+          "score": 0.59,
+          "reason": "FLS fragment specifier expr captures expression as syntactic unit, not text"
         }
       ],
-      "fls_rationale_type": "partial_mapping",
+      "fls_rationale_type": "rust_alternative",
       "misra_rust_category": "advisory",
       "misra_rust_comment": "possible to express with procedural macros only, not macro_rules",
-      "confidence": "medium",
-      "notes": "MISRA ADD-6: possible to express with procedural macros only, not macro_rules"
+      "confidence": "high",
+      "notes": "MISRA concern is C textual substitution causing precedence issues. Rust macros operate on AST tokens, not text. The expr fragment specifier captures a complete expression preserving precedence. No parenthesization needed since substitution is structural, not textual.",
+      "rejected_matches": []
     },
     {
       "guideline_id": "Rule 20.8",

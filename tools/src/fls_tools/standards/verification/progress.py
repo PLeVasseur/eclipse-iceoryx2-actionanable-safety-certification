@@ -255,11 +255,29 @@ def main():
     print(f"Next session: {next_session}")
     print()
     
-    # Summary stats
-    summary = progress.get("summary", {})
+    # Compute counts from actual guideline data (not stale summary)
+    total_verified = 0
+    total_pending = 0
+    for batch in progress.get("batches", []):
+        for g in batch.get("guidelines", []):
+            if g.get("verified", False):
+                total_verified += 1
+            else:
+                total_pending += 1
+    
     print(f"Total guidelines: {progress.get('total_guidelines', 'N/A')}")
-    print(f"Verified: {summary.get('total_verified', 'N/A')}")
-    print(f"Pending: {summary.get('total_pending', 'N/A')}")
+    print(f"Verified: {total_verified}")
+    print(f"Pending: {total_pending}")
+    
+    # Warn if cached summary is stale
+    summary = progress.get("summary", {})
+    cached_verified = summary.get("total_verified")
+    cached_pending = summary.get("total_pending")
+    if cached_verified is not None and cached_verified != total_verified:
+        print()
+        print(f"WARNING: Cached summary is stale (shows {cached_verified} verified)")
+        print("         Consider running: uv run scaffold-progress --preserve-completed")
+    
     print()
     
     # Load decision file schema for validation
@@ -271,7 +289,7 @@ def main():
         batch_guidelines = [g["guideline_id"] for g in current_batch.get("guidelines", [])]
         pending_count = sum(
             1 for g in current_batch.get("guidelines", [])
-            if g.get("status") == "pending"
+            if not g.get("verified", False)
         )
         print(f"Current batch: {batch_id} ({current_batch['name']})")
         print(f"Status: {current_batch['status']}")

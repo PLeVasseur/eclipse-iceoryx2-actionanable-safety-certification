@@ -538,11 +538,22 @@ Exceptional cases only - use --force-no-matches when:
     
     # Parse search tool usage
     search_tools_used = None
+    MIN_SEARCHES = 4
     if args.search_used:
         try:
             search_tools_used = parse_search_used(args.search_used)
         except ValueError as e:
             print(f"ERROR: {e}", file=sys.stderr)
+            sys.exit(1)
+        
+        # Enforce minimum search count
+        if len(search_tools_used) < MIN_SEARCHES:
+            print(f"ERROR: At least {MIN_SEARCHES} search tools required, got {len(search_tools_used)}", file=sys.stderr)
+            print("  Required protocol:", file=sys.stderr)
+            print("    1. search-fls-deep --guideline <id>", file=sys.stderr)
+            print("    2. search-fls with C/MISRA terminology", file=sys.stderr)
+            print("    3. search-fls with Rust terminology", file=sys.stderr)
+            print("    4. search-fls with safety/semantic concepts", file=sys.stderr)
             sys.exit(1)
     else:
         try:
