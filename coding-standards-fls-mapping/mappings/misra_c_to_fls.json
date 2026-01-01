@@ -64,7 +64,7 @@
       ],
       "fls_rationale_type": "direct_mapping",
       "misra_rust_category": "required",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "FLS addresses implementation-defined behavior through explicit ABI specifications, conformity requirements, and clear documentation of what is/isn't specified. Rust's approach differs from C by having a formal specification (FLS) that defines most behavior explicitly, reducing the scope of implementation-defined behavior compared to C.",
       "rejected_matches": [
         {
@@ -115,7 +115,7 @@
       "fls_rationale_type": "direct_mapping",
       "misra_rust_category": "required",
       "misra_rust_comment": "previously Rule 1.2",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust handles extensions via feature gates requiring #![feature(...)]. FLS documents only stable Rust 2021 Edition, so unstable features are inherently excluded. The edition system and qualified compiler versioning address MISRA portability concern.",
       "rejected_matches": [
         {
@@ -165,7 +165,7 @@
       ],
       "fls_rationale_type": "rust_prevents",
       "misra_rust_category": "required",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust enforces this more strictly than C. rustc will not produce an executable when compilation errors exist - the build fails completely. FLS Conformity explicitly requires rejecting erroneous programs.",
       "rejected_matches": [
         {
@@ -191,7 +191,7 @@
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "direct",
       "misra_rust_category": "required",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Dir 3.1 is a process/methodology guideline about code traceability to requirements. The FLS does not prescribe project management or requirements traceability processes. However, Rust provides #[doc] attribute and doc comments as language-level infrastructure to associate documentation with code constructs, which supports traceability implementation at the code level.",
       "accepted_matches": [
         {
@@ -258,7 +258,7 @@
       "fls_rationale_type": "rust_alternative",
       "misra_rust_category": "required",
       "misra_rust_comment": "often in the form of panics",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust provides extensive built-in runtime checking: overflow detection, bounds checking, null pointer prevention. Panics are the primary mechanism for handling runtime failures. Unlike C where runtime errors lead to UB, Rust explicitly defines panic behavior.",
       "rejected_matches": [
         {
@@ -322,7 +322,7 @@
       ],
       "fls_rationale_type": "direct_mapping",
       "misra_rust_category": "required",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "FLS Chapter 22 comprehensively documents Rust inline assembly. All assembly requires unsafe blocks making it explicit and auditable. The asm! macro syntax ensures assembly is clearly marked in source code.",
       "rejected_matches": []
     },
@@ -334,71 +334,38 @@
       "applicability_safe_rust": "direct",
       "accepted_matches": [
         {
-          "fls_id": "fls_z1il3w9nulzy",
+          "fls_id": "fls_qezwyridmjob",
+          "fls_title": "Macros asm global_asm and naked_asm",
           "category": 0,
-          "fls_section": "22.1",
-          "fls_title": "Inline Assembly",
-          "score": 0.588,
-          "reason": "Parent section covering Rust's structured inline assembly approach. All assembly in Rust must go through the macro-based system defined here."
+          "score": 0.56,
+          "reason": "Section defining macro-based encapsulation for all assembly in Rust. Per FLS assembly code blocks are embedded using macros core::arch::asm global_asm naked_asm"
         },
         {
-          "fls_id": "fls_ecteot716j8j",
+          "fls_id": "fls_z1il3w9nulzy",
+          "fls_title": "Inline Assembly",
+          "category": 0,
+          "score": 0.59,
+          "reason": "Parent section for Rust inline assembly. All assembly must go through the structured macro system defined here"
+        },
+        {
+          "fls_id": "fls_3fg60jblx0xb",
+          "fls_title": "Inline Assembly legality",
           "category": -2,
-          "fls_section": "22.8",
-          "fls_title": "Macros: asm, global_asm, and naked_asm",
-          "score": null,
-          "reason": "Per FLS: 'Assembly code blocks are embedded within Rust source code using macros core::arch::asm, core::arch::global_asm, and core::arch::naked_asm.' This directly addresses MISRA's encapsulation requirement - Rust mandates macro encapsulation."
+          "score": 0.71,
+          "reason": "Per FLS Inline assembly is written as an assembly code block that is wrapped inside a macro invocation - directly enforces MISRA encapsulation requirement"
         },
         {
           "fls_id": "fls_4lb6yh12w1cv",
+          "fls_title": "asm macro invocation",
           "category": -2,
-          "fls_section": "22.8",
-          "fls_title": "Macros: asm, global_asm, and naked_asm",
-          "score": 0.62,
-          "reason": "Per FLS: 'Invoking macro core::arch::asm causes the related assembly code block to be integrated into the generated assembly of the function where the macro invocation took place.' Assembly is isolated to specific macro invocations."
-        },
-        {
-          "fls_id": "fls_qezwyridmjob",
-          "category": 0,
-          "fls_section": "22.8",
-          "fls_title": "Macros: asm, global_asm, and naked_asm",
-          "score": 0.533,
-          "reason": "Section describing the macro-based encapsulation mechanism for inline assembly."
+          "score": 0.75,
+          "reason": "Per FLS Invoking macro core::arch::asm causes the related assembly code block to be integrated into the generated assembly - macro encapsulation is mandatory"
         }
       ],
-      "rejected_matches": [
-        {
-          "fls_id": "fls_e0896uk0mdyl",
-          "category": 0,
-          "fls_section": "22.5",
-          "score": 0.691,
-          "reason": "High similarity due to 'assembly' keyword but covers instruction syntax details, not encapsulation requirements."
-        },
-        {
-          "fls_id": "fls_ylli0ortyegk",
-          "category": 0,
-          "fls_section": "22.6",
-          "score": 0.662,
-          "reason": "About assembly options like att_syntax, not encapsulation."
-        },
-        {
-          "fls_id": "fls_6momhvgx4w21",
-          "category": 0,
-          "fls_section": "22.7",
-          "score": 0.656,
-          "reason": "About assembler directives (.byte, .align), not Rust encapsulation requirements."
-        },
-        {
-          "fls_id": "fls_hejgghwzblf",
-          "category": 0,
-          "fls_section": "22.4",
-          "score": 0.58,
-          "reason": "Register handling implementation details, not encapsulation."
-        }
-      ],
+      "rejected_matches": [],
       "fls_rationale_type": "direct_mapping",
       "confidence": "high",
-      "notes": "Rust enforces MISRA Dir 4.3 by design: all inline assembly must use the core::arch::{asm, global_asm, naked_asm} macros. There is no way to write raw assembly without macro encapsulation. This satisfies MISRA's goal of encapsulation and isolation."
+      "notes": "Rust enforces MISRA Dir 4.3 by design: all inline assembly must use core::arch::{asm, global_asm, naked_asm} macros. There is no way to write raw assembly without macro encapsulation."
     },
     {
       "guideline_id": "Dir 4.4",
@@ -438,7 +405,7 @@
       ],
       "fls_rationale_type": "rust_alternative",
       "misra_rust_category": "advisory",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "MISRA concern is that C comments cannot nest, causing unexpected behavior when commenting out code. Rust block comments CAN nest safely. Additionally, Rust provides #[cfg(...)] and #[cfg_attr(...)] attributes as the proper mechanism for conditional compilation, which is the recommended approach instead of commenting out code.",
       "rejected_matches": []
     },
@@ -488,7 +455,7 @@
       "fls_rationale_type": "partial_mapping",
       "misra_rust_category": "recommended",
       "misra_rust_comment": "\u201cambiguity\u201d is determined by the project",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "FLS addresses identifier normalization and prohibits problematic zero-width characters. ASCII-only is enforced in FFI contexts. However, full typographic ambiguity detection (e.g., Cyrillic '\u0430' vs Latin 'a') is project/tooling responsibility per MISRA ADD-6 note.",
       "rejected_matches": []
     },
@@ -502,7 +469,7 @@
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "n_a",
       "misra_rust_comment": "all primitive types already fulfil this",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust primitive types (i8, u16, i32, etc.) already encode size and signedness in the type name. No typedefs needed for this purpose. Per ADD-6: 'all primitive types already fulfil this'.",
       "rejected_matches": []
     },
@@ -545,7 +512,7 @@
       "fls_rationale_type": "direct_mapping",
       "misra_rust_category": "advisory",
       "misra_rust_comment": "prefer Option, Result, etc.",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust's type system enforces error handling through Result<T,E> and Option<T>. Unlike C where error codes can be silently ignored, Rust requires explicit handling via pattern matching, unwrap(), expect(), or the ? operator. The #[must_use] attribute on Result/Option generates compiler warnings if values are discarded. This provides stronger guarantees than MISRA's requirement.",
       "rejected_matches": [
         {
@@ -566,7 +533,7 @@
       "accepted_matches": [],
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust's module system and visibility controls replace C's incomplete type pattern for information hiding. Use `pub(crate)` or private modules instead.",
       "rejected_matches": []
     },
@@ -608,7 +575,7 @@
       ],
       "fls_rationale_type": "direct_mapping",
       "misra_rust_category": "recommended",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust's macro system is hygienic and type-aware, making macros safer than C macros. However, the principle of preferring functions remains valid: functions provide explicit type checking, clearer debugging, and argument evaluation semantics. Rust's const fn and inline attributes provide alternatives when compile-time evaluation or performance is needed.",
       "rejected_matches": [
         {
@@ -627,7 +594,7 @@
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust's module system prevents duplicate inclusion inherently. No header guards needed - each module is compiled once. `mod` declarations handle inclusion.",
       "accepted_matches": [],
       "rejected_matches": []
@@ -670,7 +637,7 @@
       ],
       "fls_rationale_type": "rust_alternative",
       "misra_rust_category": "advisory",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust addresses this differently than C. Instead of requiring runtime validation of restricted domains, Rust: (1) uses Option<T> for possibly-absent values, (2) uses Result<T,E> for fallible operations, (3) defines validity invariants at the type level, (4) uses the type system to prevent invalid values. For example, Rust's sqrt returns Option<f64> rather than having undefined behavior for negative inputs. The MISRA concern is addressed through Rust's type-driven design rather than manual precondition checking.",
       "rejected_matches": [
         {
@@ -689,7 +656,7 @@
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "direct",
       "misra_rust_category": "advisory",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "MISRA concern is about unpredictable malloc/free behavior. Rust provides: (1) #[no_std] for bare-metal development without heap, (2) #[global_allocator] for custom allocator control, (3) explicit opt-in to alloc crate for heap types. Unlike C where malloc/free are always available, Rust requires explicit crate inclusion for heap allocation, making allocation policy more controllable and auditable.",
       "accepted_matches": [
         {
@@ -755,7 +722,7 @@
       ],
       "fls_rationale_type": "rust_prevents",
       "misra_rust_category": "required",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust's ownership system and Drop trait provide compile-time enforcement of proper resource sequencing. Resources are automatically cleaned up when they go out of scope via destructors. RAII pattern is built into the language - the compiler ensures deallocation happens, and in the correct order (reverse order of acquisition). This is stronger than MISRA's requirement for static analysis checks.",
       "rejected_matches": [
         {
@@ -812,7 +779,7 @@
       ],
       "fls_rationale_type": "direct_mapping",
       "misra_rust_category": "required",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust addresses external data validation through: (1) FFI boundaries require unsafe, making external interfaces explicit, (2) Type system enforces that raw external data must be converted to Rust types, providing natural validation points, (3) Result/Option types encode validation success/failure. While Rust doesn't automatically validate external data, it makes the boundaries explicit and provides idioms (FromStr, TryFrom, etc.) for safe parsing with error handling.",
       "rejected_matches": []
     },
@@ -855,7 +822,7 @@
       "fls_rationale_type": "direct_mapping",
       "misra_rust_category": "required",
       "misra_rust_comment": "Rust implements IEEE-754",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust follows IEEE-754/IEC 60559 for floating-point types. The standard library provides is_nan(), is_infinite(), is_finite() methods on f32/f64 for detection. FLS explicitly documents NaN and infinity behavior. Projects should use these methods or checked arithmetic for detection.",
       "rejected_matches": []
     },
@@ -868,80 +835,44 @@
       "accepted_matches": [
         {
           "fls_id": "fls_3v733mnewssy",
-          "category": 0,
-          "fls_section": "17.1",
           "fls_title": "Concurrency",
-          "score": 0.734,
-          "reason": "Parent section defining Rust's concurrency model, which is designed to prevent data races."
+          "category": 0,
+          "score": 0.86,
+          "reason": "Main FLS chapter on concurrency. States Rust provides features for concurrent programming without data races"
         },
         {
           "fls_id": "fls_tx4b8r6i93n4",
+          "fls_title": "Data race definition",
           "category": -2,
-          "fls_section": "17.1",
-          "fls_title": "Concurrency",
-          "score": 0.684,
-          "reason": "Per FLS: 'A data race is a scenario where two or more threads access a shared memory location concurrently without any synchronization...' This matches MISRA's definition."
+          "score": 0.74,
+          "reason": "Per FLS: A data race is a scenario where two or more threads access a shared memory location concurrently without synchronization where one access is a write"
         },
         {
           "fls_id": "fls_isypweqewe78",
+          "fls_title": "Data race UB",
           "category": -4,
-          "fls_section": "17.1",
-          "fls_title": "Concurrency",
-          "score": 0.675,
-          "reason": "Per FLS: 'It is undefined behavior if two or more threads engage in a data race.' Rust explicitly classifies data races as UB."
+          "score": 0.77,
+          "reason": "Per FLS: It is undefined behavior if two or more threads engage in a data race. Rust prevents this through Send/Sync traits"
         },
         {
           "fls_id": "fls_eiw4by8z75di",
+          "fls_title": "Send and Sync",
           "category": 0,
-          "fls_section": "17.2",
-          "fls_title": "Send and Sync",
-          "score": 0.541,
-          "reason": "Section describing Rust's compile-time mechanism for preventing data races via Send and Sync traits."
-        },
-        {
-          "fls_id": "fls_n5l17mlglq11",
-          "category": -2,
-          "fls_section": "17.2",
-          "fls_title": "Send and Sync",
-          "score": null,
-          "reason": "Per FLS: 'The Rust programming language provides the core::marker::Send and core::marker::Sync traits for preventing data races at the type level.' This is Rust's primary compile-time data race prevention mechanism."
-        },
-        {
-          "fls_id": "fls_zgemofbs5q2x",
-          "category": -2,
-          "fls_section": "17.2",
-          "fls_title": "Send and Sync",
-          "score": null,
-          "reason": "Per FLS: 'A sync type shall have values that are allowed to be shared across multiple threads at any given time without incurring data races.'"
+          "score": 0.67,
+          "reason": "Traits that prevent data races at type level. Sync types can be shared across threads without data races"
         },
         {
           "fls_id": "fls_vyc9vcuamlph",
-          "category": 0,
-          "fls_section": "17.3",
           "fls_title": "Atomics",
-          "score": 0.566,
-          "reason": "Rust's atomic types provide safe concurrent access, addressing MISRA's recommendation for atomic synchronization."
+          "category": 0,
+          "score": 0.67,
+          "reason": "Atomic types provide primitive shared-memory communication between threads safely"
         }
       ],
-      "rejected_matches": [
-        {
-          "fls_id": "fls_jep7p27kaqlp",
-          "category": 0,
-          "fls_section": "19.1",
-          "score": 0.562,
-          "reason": "General unsafety section. While unsafe code can cause data races, this section is not specifically about data race prevention."
-        },
-        {
-          "fls_id": "fls_xdvdl2ssnhlo",
-          "category": 0,
-          "fls_section": "7.3",
-          "score": 0.501,
-          "reason": "About static storage duration, not data race prevention mechanisms."
-        }
-      ],
+      "rejected_matches": [],
       "fls_rationale_type": "direct_mapping",
       "confidence": "high",
-      "notes": "Rust provides strong data race prevention via the Send/Sync trait system, but per MISRA ADD-6: 'not all safe Rust types are race-free'. Safe Rust prevents memory-level data races but logical races (e.g., with atomics) are still possible. In unsafe Rust, the programmer must manually ensure data race freedom."
+      "notes": "Rust directly addresses MISRA Dir 5.1 through the borrow checker and Send/Sync traits which prevent data races at compile time in safe code. The FLS explicitly defines data races and marks them as UB."
     },
     {
       "guideline_id": "Dir 5.2",
@@ -981,7 +912,7 @@
       ],
       "fls_rationale_type": "partial_mapping",
       "misra_rust_category": "required",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust's type system prevents data races at compile time through Send/Sync traits, but does NOT prevent deadlocks. Deadlock prevention requires runtime mechanisms (lock ordering, try_lock, timeouts) or design patterns. The FLS addresses data races but deadlocks remain a programmer responsibility. This is a partial mapping - Rust helps with concurrency safety but does not fully address MISRA's deadlock concern.",
       "rejected_matches": []
     },
@@ -1016,7 +947,7 @@
       ],
       "fls_rationale_type": "direct_mapping",
       "misra_rust_category": "required",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "MISRA concern is about unpredictable thread creation overhead and analyzability. Thread creation in Rust is a library feature (std::thread::spawn), not a language primitive. The FLS defines: (1) Send/Sync traits for compile-time thread safety, (2) data race UB definition. With #[no_std], thread spawning is not available by default. Static thread pools would be implemented via library constructs, not language features. The FLS provides safety infrastructure but thread creation policy is a library/project concern.",
       "rejected_matches": [
         {
@@ -1073,7 +1004,7 @@
       ],
       "fls_rationale_type": "direct_mapping",
       "misra_rust_category": "required",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust has a formal specification (FLS) that defines syntax and semantics. The rustc compiler strictly enforces the language grammar - any syntax errors or constraint violations result in compilation failure. Unlike C where some violations may go undetected, Rust's strong type system catches most issues at compile time.",
       "rejected_matches": [
         {
@@ -1130,7 +1061,7 @@
       ],
       "fls_rationale_type": "rust_prevents",
       "misra_rust_category": "required",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust's core design goal is memory safety without garbage collection. Safe Rust (code without 'unsafe' keyword) cannot exhibit undefined behavior - the compiler statically prevents it through the type system and borrow checker. UB is only possible in unsafe blocks, which must be explicitly marked. This is stronger than MISRA's requirement - Rust prevents UB by construction in safe code.",
       "rejected_matches": []
     },
@@ -1144,7 +1075,7 @@
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "n_a",
       "misra_rust_comment": "this is specific to C versioning",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Per ADD-6: 'this is specific to C versioning'. Rust editions (2015, 2018, 2021) provide a different, more structured approach to language evolution.",
       "rejected_matches": []
     },
@@ -1173,7 +1104,7 @@
       "fls_rationale_type": "rust_alternative",
       "misra_rust_category": "required",
       "misra_rust_comment": "this applies to deprecated APIs",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust handles obsolescent features through editions and the deprecated attribute. MISRA ADD-6 notes this applies to deprecated APIs in Rust.",
       "rejected_matches": []
     },
@@ -1184,7 +1115,7 @@
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "direct",
       "misra_rust_category": "advisory",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "MISRA concern is about unreachable code indicating logic errors or wasted resources. Rust provides: (1) Language-level reachability via diverging expressions and never type (!), (2) Compiler lint unreachable_code that warns about code after diverging expressions, (3) Diagnostics attributes (#[allow], #[deny], #[warn], #[forbid]) for lint control. The FLS defines the language semantics of reachability; lint enforcement is a tooling concern controlled via diagnostics attributes.",
       "accepted_matches": [
         {
@@ -1226,7 +1157,7 @@
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "direct",
       "misra_rust_category": "required",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "MISRA concern is about dead code (executes but has no effect) indicating logic errors. Rust provides: (1) Compiler lint dead_code that warns about unused functions, structs, etc., (2) unused_variables, unused_assignments lints for unused bindings, (3) Diagnostics attributes for lint control. The FLS defines language semantics; dead code detection is a tooling concern controlled via diagnostics attributes. Rust's ownership system also helps identify dead code through unused value warnings.",
       "accepted_matches": [
         {
@@ -1285,7 +1216,7 @@
       ],
       "fls_rationale_type": "partial_mapping",
       "misra_rust_category": "recommended",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "FLS provides the lint mechanism but specific lints like dead_code are compiler implementation. Rustc's dead_code lint is enabled by default and warns on unused type declarations, addressing MISRA's concern through tooling rather than language specification.",
       "rejected_matches": []
     },
@@ -1297,7 +1228,7 @@
       "applicability_safe_rust": "not_applicable",
       "misra_rust_category": "n_a",
       "misra_rust_comment": "no separate tag name space in Rust",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Per ADD-6: 'no separate tag name space in Rust'. Rust has no struct/enum/union tag namespace - type names are directly in the type namespace.",
       "accepted_matches": [],
       "rejected_matches": []
@@ -1333,7 +1264,7 @@
       ],
       "fls_rationale_type": "partial_mapping",
       "misra_rust_category": "recommended",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "FLS defines macro visibility and scoping, but unused macro detection is a compiler lint (unused_macros). Rustc warns on unused macros by default. The concern maps to Rust through tooling rather than language specification.",
       "rejected_matches": []
     },
@@ -1375,7 +1306,7 @@
       ],
       "fls_rationale_type": "rust_alternative",
       "misra_rust_category": "recommended",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "MISRA concern is about C goto labels being declared but not used. Rust has NO goto statement. Rust labels are for naming loops/blocks to target with break/continue. The FLS defines: (1) Label Scope - labels are scoped to their loop/block, (2) Loop Labels - syntax and semantics for named loops. The compiler provides unused_labels lint for detecting labels not referenced by break/continue. This is a significant Rust alternative - structured loop control instead of arbitrary goto.",
       "rejected_matches": []
     },
@@ -1417,7 +1348,7 @@
       ],
       "fls_rationale_type": "direct_mapping",
       "misra_rust_category": "recommended",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "MISRA concern is about unused function parameters indicating spec/implementation mismatch. Rust provides: (1) Compiler lint unused_variables warns about unused parameters, (2) Underscore prefix (_param) or underscore pattern (_) explicitly marks intentionally unused parameters, (3) Trait implementations may require unused parameters for API conformance. The FLS defines function parameters and underscore patterns; lint enforcement is tooling.",
       "rejected_matches": []
     },
@@ -1428,7 +1359,7 @@
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "direct",
       "misra_rust_category": "recommended",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "MISRA concern is about unused object definitions indicating redundant code. Rust provides: (1) Compiler lint dead_code warns about unused structs, enums, functions, constants, (2) #[used] attribute explicitly marks items that should not be optimized away, (3) Visibility modifiers (pub) indicate intended external usage. The FLS defines items and their declaration; unused item detection is tooling.",
       "accepted_matches": [
         {
@@ -1474,7 +1405,7 @@
       "fls_rationale_type": "rust_alternative",
       "misra_rust_category": "advisory",
       "misra_rust_comment": "nested comments are fully supported",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust supports nested block comments by design, addressing MISRA's concern about /* within comments indicating missing */. The note that 'nested comments are fully supported' in MISRA ADD-6 confirms this.",
       "rejected_matches": [
         {
@@ -1495,7 +1426,7 @@
       "accepted_matches": [],
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust does not support line-splicing with backslash. Line continuation in strings uses string concatenation or raw strings. No equivalent concern.",
       "rejected_matches": []
     },
@@ -1508,7 +1439,7 @@
       "accepted_matches": [],
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust escape sequences are well-defined and don't have C's ambiguous octal parsing. Unicode escapes (\\u{...}) are delimited. No termination ambiguity.",
       "rejected_matches": []
     },
@@ -1519,7 +1450,7 @@
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust has no trigraphs. Raw string literals (r#\"...\"#) provide the functionality trigraphs were designed for in restricted character sets.",
       "accepted_matches": [],
       "rejected_matches": []
@@ -1533,64 +1464,37 @@
       "accepted_matches": [
         {
           "fls_id": "fls_21vnag69kbwe",
+          "fls_title": "Identifiers",
           "category": 0,
-          "fls_section": "2.2",
-          "fls_title": "Identifiers",
-          "score": 0.675,
-          "reason": "Parent section defining Rust's identifier rules."
+          "score": 0.8,
+          "reason": "Defines Rust identifier rules with full Unicode support and no length limitations. Two identifiers are same if they consist of same sequence after normalization"
         },
         {
-          "fls_id": "fls_j9yh8j8jgdeu",
-          "category": -2,
-          "fls_section": "2.2",
-          "fls_title": "Identifiers",
-          "score": 0.651,
-          "reason": "Per FLS: 'Two identifiers are considered the same if they consist of the same sequence of characters after performing normalization.' Rust considers the full identifier sequence, not a truncated prefix as C may."
-        },
-        {
-          "fls_id": "fls_vde7gev5rz4q",
-          "category": -2,
-          "fls_section": "2.2",
-          "fls_title": "Identifiers",
-          "score": 0.579,
-          "reason": "Per FLS: 'Identifiers are normalized using Normalization Form C...' Unicode normalization ensures consistent identifier comparison."
-        },
-        {
-          "fls_id": "fls_op0lp1i065di",
-          "category": -2,
-          "fls_section": "2.2",
-          "fls_title": "Identifiers",
-          "score": null,
-          "reason": "Per FLS: 'Names of items within external blocks' shall be ASCII. This restricts external/FFI identifiers."
-        },
-        {
-          "fls_id": "fls_tmoh3y9oyqsy",
+          "fls_id": "fls_p44fky7fifc",
+          "fls_title": "Attribute link_name",
           "category": 0,
-          "fls_section": "21.1",
-          "fls_title": "External Blocks",
-          "score": 0.496,
-          "reason": "FFI context where C ABI applies. Per MISRA ADD-6: identifier distinctness matters in extern \"C\" contexts where the C linker may truncate."
+          "score": 0.58,
+          "reason": "Allows explicit control of external symbol names. Attribute link_name specifies the linking symbol of external function or static"
+        },
+        {
+          "fls_id": "fls_mvd7nz8k3wcy",
+          "fls_title": "Attribute no_mangle",
+          "category": 0,
+          "score": 0.6,
+          "reason": "Controls symbol export. Attribute no_mangle causes the function or static to be publicly exported without name mangling"
+        },
+        {
+          "fls_id": "fls_i6qzga6dyaee",
+          "fls_title": "Path Resolution",
+          "category": 0,
+          "score": 0.54,
+          "reason": "Rust uses fully qualified paths for name resolution eliminating ambiguity issues that MISRA addresses"
         }
       ],
-      "rejected_matches": [
-        {
-          "fls_id": "fls_p090c5oTnElW",
-          "category": 0,
-          "fls_section": "2.7",
-          "score": 0.534,
-          "reason": "About C string literals, not identifier distinctness."
-        },
-        {
-          "fls_id": "fls_e0896uk0mdyl",
-          "category": 0,
-          "fls_section": "22.5",
-          "score": 0.516,
-          "reason": "About assembly instructions, not identifiers."
-        }
-      ],
-      "fls_rationale_type": "direct_mapping",
+      "rejected_matches": [],
+      "fls_rationale_type": "rust_alternative",
       "confidence": "high",
-      "notes": "Per MISRA ADD-6: 'no character limit, except in extern \"C\"'. In pure Rust, identifiers are always fully distinct with no truncation. In extern \"C\" contexts, the C linker's rules apply, which may have character limits. Safe Rust has no extern \"C\" items, hence not_applicable for safe Rust."
+      "notes": "MISRA Rule 5.1 addresses C limitations on external identifier length (31 chars). Rust has no such limitation - identifiers are full Unicode with no length restriction. External symbols are explicitly controlled via #[no_mangle] or #[link_name] attributes."
     },
     {
       "guideline_id": "Rule 5.2",
@@ -1617,7 +1521,7 @@
       "fls_rationale_type": "rust_prevents",
       "misra_rust_category": "required",
       "misra_rust_comment": "no character limit, but has name spaces",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "MISRA's concern about identifier length limits causing undefined behavior does not apply to Rust. Rust enforces full identifier comparison with Unicode normalization. The compiler will reject duplicate definitions in the same scope as a static error.",
       "rejected_matches": []
     },
@@ -1646,7 +1550,7 @@
       "fls_rationale_type": "direct_mapping",
       "misra_rust_category": "advisory",
       "misra_rust_comment": "this also applies to macro names",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust explicitly defines and restricts shadowing. Per FLS: 'No name shall be shadowed except for Prelude names, macro names within textual macro scope, and variable names.' This makes shadowing intentional and controlled. Clippy lint 'shadow_unrelated' can detect unintentional shadowing.",
       "rejected_matches": []
     },
@@ -1659,7 +1563,7 @@
       "accepted_matches": [],
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Per ADD-6: C-specific macro identifier rules. Rust's procedural macros are proper functions. Declarative macros (macro_rules!) have hygiene and clear scoping.",
       "rejected_matches": []
     },
@@ -1695,7 +1599,7 @@
       "fls_rationale_type": "rust_prevents",
       "misra_rust_category": "advisory",
       "misra_rust_comment": "macros and functions use different syntax",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust's namespace separation and hygiene system directly address MISRA's concern. Macros are invoked with different syntax (name! vs name) and occupy a separate namespace. MISRA ADD-6 marks safe Rust as Partial because the concern is largely prevented by language design.",
       "rejected_matches": []
     },
@@ -1730,7 +1634,7 @@
       ],
       "fls_rationale_type": "rust_prevents",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust's namespace system and shadowing rules prevent the C typedef uniqueness issue. MISRA ADD-6 marks this as n_a because Rust's module and namespace system provides stronger guarantees than C's flat namespace.",
       "rejected_matches": []
     },
@@ -1744,7 +1648,7 @@
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "n_a",
       "misra_rust_comment": "no separate tag name space in Rust",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Per ADD-6: 'no separate tag name space in Rust'. Rust types are in a single type namespace. struct Foo and enum Foo would conflict - no tag vs type distinction.",
       "rejected_matches": []
     },
@@ -1786,7 +1690,7 @@
       ],
       "fls_rationale_type": "direct_mapping",
       "misra_rust_category": "recommended",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust normally mangles symbols ensuring uniqueness. MISRA's concern applies when #[no_mangle] or #[export_name] is used for FFI. FLS defines these mechanisms; uniqueness enforcement is programmer/linker responsibility.",
       "rejected_matches": []
     },
@@ -1798,52 +1702,39 @@
       "applicability_safe_rust": "direct",
       "accepted_matches": [
         {
-          "fls_id": "fls_dq403wq5yrs",
-          "category": 0,
-          "fls_section": "14.3",
-          "fls_title": "Namespaces",
-          "score": 0.555,
-          "reason": "Per FLS fls_1d4jm61qnt4l: 'A namespace is a logical grouping of names such that the occurrence of a name in one namespace does not conflict with an occurrence of the same name in another namespace.' Rust's 5 namespaces (label, lifetime, macro, type, value) prevent the identifier confusion that MISRA aims to avoid."
-        },
-        {
           "fls_id": "fls_21vnag69kbwe",
-          "category": 0,
-          "fls_section": "2.3",
           "fls_title": "Identifiers",
-          "score": 0.674,
-          "reason": "Per FLS fls_j9yh8j8jgdeu: 'Two identifiers are considered the same if they consist of the same sequence of characters after performing normalization.' Defines identifier equality/uniqueness."
+          "category": 0,
+          "score": 0.79,
+          "reason": "Rust identifier rules with full Unicode support. Two identifiers same if they consist of same sequence after normalization"
         },
         {
-          "fls_id": "fls_151r19d7xbgz",
+          "fls_id": "fls_dq403wq5yrs",
+          "fls_title": "Namespaces",
           "category": 0,
-          "fls_section": "14.1",
-          "fls_title": "Entities",
-          "score": 0.588,
-          "reason": "Defines how entities (functions, objects, types) are named and resolved within Rust's module system, which provides isolation analogous to C's internal linkage."
+          "score": 0.55,
+          "reason": "Names segregated into namespaces (type value macro) so same name in different namespaces does not conflict"
+        },
+        {
+          "fls_id": "fls_jdknpu3kf865",
+          "fls_title": "Visibility",
+          "category": 0,
+          "score": 0.46,
+          "reason": "Private visibility allows name to be referred only by current module and descendants - replaces C internal linkage concept"
+        },
+        {
+          "fls_id": "fls_ydmnb7qnmzzq",
+          "fls_title": "Shadowing",
+          "category": 0,
+          "score": 0.59,
+          "reason": "Rust has explicit shadowing rules. Shadowing is well-defined behavior unlike C where duplicate internal names cause confusion"
         }
       ],
-      "fls_rationale_type": "direct_mapping",
+      "fls_rationale_type": "rust_alternative",
       "misra_rust_category": "n_a",
       "confidence": "high",
-      "notes": "MISRA aims to prevent confusion from duplicate internal-linkage identifiers. Rust's module system and namespace segregation (FLS 14.3) structurally prevents this issue. Private items are module-scoped, not file-scoped like C's 'static', and the 5-namespace model ensures names in different categories never conflict.",
-      "rejected_matches": [
-        {
-          "fls_id": "fls_p44fky7fifc",
-          "category": 0,
-          "fls_section": "13.19",
-          "fls_title": "Attribute link_name",
-          "score": 0.629,
-          "reason": "About renaming symbols for FFI linking, not about identifier uniqueness."
-        },
-        {
-          "fls_id": "fls_7bxv8lybxm18",
-          "category": 0,
-          "fls_section": "5.3",
-          "fls_title": "Identifier Patterns",
-          "score": 0.548,
-          "reason": "Pattern matching syntax, not about identifier uniqueness or naming conflicts."
-        }
-      ]
+      "notes": "MISRA Rule 5.9 addresses C internal linkage confusion. Rust replaces linkage concept with visibility modifiers and namespaces. Private items are scoped to modules and namespace separation prevents conflicts.",
+      "rejected_matches": []
     },
     {
       "guideline_id": "Rule 5.10",
@@ -1877,7 +1768,7 @@
       "fls_rationale_type": "rust_alternative",
       "misra_rust_category": "advisory",
       "misra_rust_comment": "only possible in some cases. Previously Rule 21.2",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust handles reserved identifiers differently than C. Keywords are strictly reserved, but there is no underscore-prefix convention. MISRA ADD-6 notes this applies partially - mainly in macro contexts or FFI where C naming conventions may leak through.",
       "rejected_matches": []
     },
@@ -1891,7 +1782,7 @@
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "n_a",
       "misra_rust_comment": "only provided as a library feature",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Per ADD-6: 'only provided as a library feature'. Rust has no native bit-field syntax. Use bitflags crate or manual bit manipulation with explicit types.",
       "rejected_matches": []
     },
@@ -1904,7 +1795,7 @@
       "accepted_matches": [],
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust has no native bit-fields. Bit manipulation is done with explicit integer types. signedness is always explicit (i32 vs u32).",
       "rejected_matches": []
     },
@@ -1917,7 +1808,7 @@
       "accepted_matches": [],
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust has no native bit-fields. Unions in Rust are for FFI compatibility and don't have bit-field members.",
       "rejected_matches": []
     },
@@ -1946,7 +1837,7 @@
       "fls_rationale_type": "rust_prevents",
       "misra_rust_category": "recommended",
       "misra_rust_comment": "Rust octals have a distinct prefix from decimals",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust prevents C's octal confusion by design. Octal requires explicit 0o prefix (0o777), not leading zero (0777 is invalid). MISRA ADD-6: 'Rust octals have a distinct prefix from decimals.'",
       "rejected_matches": []
     },
@@ -1982,7 +1873,7 @@
       "fls_rationale_type": "rust_alternative",
       "misra_rust_category": "recommended",
       "misra_rust_comment": "this is an error by default but can be enabled",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust has explicit type suffixes (u32, i64, etc.) more granular than C's U suffix. Type inference for unsuffixed literals is deterministic. Clippy lint default_numeric_fallback can enforce explicit suffixes.",
       "rejected_matches": []
     },
@@ -1995,7 +1886,7 @@
       "accepted_matches": [],
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust integer literal suffixes use full type names (i32, u64, etc.) not single letters. No 'l' suffix exists - uses i64 or u64 explicitly.",
       "rejected_matches": []
     },
@@ -2008,7 +1899,7 @@
       "accepted_matches": [],
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust string literals are &str (immutable by design). No implicit const-stripping. Mutable strings require String::from() or .to_string().",
       "rejected_matches": []
     },
@@ -2021,7 +1912,7 @@
       "accepted_matches": [],
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Per ADD-6: C-specific integer constant macro concern. Rust uses typed literals directly (123i32, 456u64) - no macros needed for type-specific constants.",
       "rejected_matches": []
     },
@@ -2034,7 +1925,7 @@
       "accepted_matches": [],
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Per ADD-6: C-specific macro concern. Rust uses explicit type suffixes on literals. No INT8_C or similar macros - just use 123i8 directly.",
       "rejected_matches": []
     },
@@ -2047,7 +1938,7 @@
       "accepted_matches": [],
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust requires explicit types in most contexts. Type inference exists but is local and explicit. Function signatures require types. No implicit int.",
       "rejected_matches": []
     },
@@ -2060,7 +1951,7 @@
       "accepted_matches": [],
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust functions always have explicit parameter types and return types. No K&R style declarations. Parameters are always named in definitions.",
       "rejected_matches": []
     },
@@ -2096,7 +1987,7 @@
       "fls_rationale_type": "direct_mapping",
       "misra_rust_category": "required",
       "misra_rust_comment": "an extern declaration shall have a type compatible with the C declaration",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "MISRA's concern directly applies to Rust FFI. FLS explicitly calls external functions 'unchecked' - type compatibility must be manually verified. This is why extern blocks are unsafe. Tools like bindgen can help generate correct declarations.",
       "rejected_matches": []
     },
@@ -2132,7 +2023,7 @@
       ],
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust has no separate declaration/definition model. Functions are defined in one place. For FFI (extern blocks), the extern declaration IS the declaration - there is no separate definition in Rust to check against. The C concept of \"compatible declaration\" checking between header and source file does not exist in Rust."
     },
     {
@@ -2160,7 +2051,7 @@
       "fls_rationale_type": "partial_mapping",
       "misra_rust_category": "advisory",
       "misra_rust_comment": "may affect extern \u201cC\u201d declarations",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust's module system naturally addresses this. External declarations are typically centralized in a single module (e.g., ffi.rs or sys.rs). Duplicate declarations are valid but poor practice. MISRA ADD-6 marks as advisory for extern C declarations.",
       "rejected_matches": []
     },
@@ -2173,60 +2064,39 @@
       "accepted_matches": [
         {
           "fls_id": "fls_tmoh3y9oyqsy",
-          "category": 0,
-          "fls_section": "21.1",
           "fls_title": "External Blocks",
-          "score": 0.5,
-          "reason": "Per FLS fls_4dje9t5y2dia: 'An external block is a construct that provides the declarations of external functions and external statics as unchecked imports.' The 'unchecked' nature means Rust trusts the linker to enforce ODR for external symbols."
+          "category": 0,
+          "score": 0.75,
+          "reason": "External blocks provide declarations of external functions and statics as unchecked imports - definitions exist in foreign code"
         },
         {
           "fls_id": "fls_yztwtek0y34v",
-          "category": 0,
-          "fls_section": "21.2",
           "fls_title": "External Functions",
-          "score": 0.48,
-          "reason": "Per FLS fls_v24ino4hix3m: 'An external function is an unchecked import of a foreign function.' Per fls_rdu4723vp0oo: 'An external function shall not specify a FunctionBody.' These are declarations only - the single definition must exist in linked C code."
+          "category": 0,
+          "score": 0.58,
+          "reason": "Defines external function as import of foreign function. External functions are declarations not definitions"
         },
         {
           "fls_id": "fls_s4yt19sptl7d",
-          "category": 0,
-          "fls_section": "21.3",
           "fls_title": "External Statics",
-          "score": 0.48,
-          "reason": "Per FLS fls_8ddsytjr4il6: 'An external static is an import of a foreign variable.' Per fls_tr7purzcldn0: 'An external static shall not specify a static initializer.' These are declarations only."
+          "category": 0,
+          "score": 0.63,
+          "reason": "External static is import of foreign variable. External statics are declarations not definitions"
         },
         {
-          "fls_id": "fls_mvd7nz8k3wcy",
-          "category": 0,
-          "fls_section": "13.24",
-          "fls_title": "Attribute no_mangle",
-          "score": 0.53,
-          "reason": "The #[no_mangle] attribute exposes Rust symbols with external linkage, making ODR concerns relevant when Rust functions are called from C."
+          "fls_id": "fls_89yNjGNB7KI3",
+          "fls_title": "Implementations uniqueness",
+          "category": -2,
+          "score": 0.68,
+          "reason": "Inherent implementations of same type shall not define more than one item with same name - compiler enforces uniqueness"
         }
       ],
-      "fls_rationale_type": "direct_mapping",
+      "fls_rationale_type": "rust_alternative",
       "misra_rust_category": "required",
       "misra_rust_comment": "may affect extern \u201cC\u201d declarations",
       "confidence": "high",
-      "notes": "MISRA enforces C's ODR for external linkage. In Rust, extern blocks provide 'unchecked imports' - the compiler trusts that exactly one definition exists in linked code. For pure Rust items, the module system and crate boundaries enforce uniqueness. For FFI with #[no_mangle], the user must ensure ODR compliance in the linked C code. Per ADD-6: 'may affect extern \"C\" declarations'.",
-      "rejected_matches": [
-        {
-          "fls_id": "fls_21vnag69kbwe",
-          "category": 0,
-          "fls_section": "2.3",
-          "fls_title": "Identifiers",
-          "score": 0.652,
-          "reason": "About identifier syntax, not about external linkage or definition uniqueness."
-        },
-        {
-          "fls_id": "fls_7bxv8lybxm18",
-          "category": 0,
-          "fls_section": "5.3",
-          "fls_title": "Identifier Patterns",
-          "score": 0.579,
-          "reason": "Pattern matching syntax, not related to external linkage."
-        }
-      ]
+      "notes": "MISRA Rule 8.6 One Definition Rule is enforced by Rust compiler. Rust separates declarations (extern blocks) from definitions. Duplicate definitions are compile-time errors.",
+      "rejected_matches": []
     },
     {
       "guideline_id": "Rule 8.7",
@@ -2260,7 +2130,7 @@
       "fls_rationale_type": "direct_mapping",
       "misra_rust_category": "advisory",
       "misra_rust_comment": "items should not be declared pub if referenced in only one crate",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust's visibility system directly addresses this. Items are private by default; pub(crate) provides crate-internal visibility. Clippy lint redundant_pub_crate can detect unnecessary pub exposure.",
       "rejected_matches": []
     },
@@ -2289,7 +2159,7 @@
       ],
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "C uses storage class specifiers (static/extern) for linkage control. Rust has no equivalent concept - visibility is controlled through the module system (pub, pub(crate), private by default). Rust's \"static\" keyword is for storage duration, not linkage."
     },
     {
@@ -2337,7 +2207,7 @@
       ],
       "fls_rationale_type": "direct_mapping",
       "misra_rust_category": "recommended",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust naturally enforces block scoping. Variables are declared at point of use with let and scoped to their containing block. Drop scopes ensure deterministic cleanup at block exit, directly addressing MISRA's concern about minimal scope.",
       "rejected_matches": []
     },
@@ -2376,7 +2246,7 @@
       ],
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "MISRA addresses C's UB when an inline function with external linkage lacks a definition in the translation unit, and timing ambiguity when both inline and external definitions exist. Rust has no equivalent issue: (1) functions have exactly one definition - no inline vs external definition distinction, (2) #[inline] is an optimization hint orthogonal to visibility (pub/pub(crate)), (3) Rust's module system and single-definition rule eliminate the linkage ambiguity that MISRA addresses."
     },
     {
@@ -2398,7 +2268,7 @@
       ],
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "MISRA addresses C's ability to declare arrays with incomplete type (unspecified size) with external linkage. Rust prevents this entirely: per FLS fls_imr2jx6cbuzq, array types require 'a constant expression or an inferred constant' for size. Rust has no concept of incomplete array types - [T; N] always requires N to be known at compile time. The concern about cross-translation-unit consistency is also moot since Rust's module system and single-definition semantics prevent the ambiguity."
     },
     {
@@ -2445,7 +2315,7 @@
       ],
       "fls_rationale_type": "rust_prevents",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "MISRA addresses C's ability to have duplicate enum constant values through mixing implicit and explicit specifications. Rust prevents this at compile time: per FLS fls_w9xj26ej869w, 'It is a static error if two enum variants have discriminants with the same value.' The discriminant calculation rules (fls_t36rk3wikq28: first variant is 0, fls_8ajw5trd23wi: subsequent are previous+1) combined with explicit initializers are checked for uniqueness by the compiler."
     },
     {
@@ -2500,7 +2370,7 @@
       ],
       "fls_rationale_type": "rust_alternative",
       "misra_rust_category": "advisory",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust's reference system directly addresses MISRA's concern. Immutable references (&T) are the default, enforcing const-by-default. Mutable references (&mut T) require explicit declaration. For unsafe/FFI, *const T parallels C's const pointer.",
       "rejected_matches": []
     },
@@ -2530,7 +2400,7 @@
       ],
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust has no 'restrict' type qualifier. The C 'restrict' keyword is a promise to the compiler about pointer aliasing that enables optimizations but causes UB if violated. Rust handles aliasing safety through the borrow checker for references (&T, &mut T) and provides no user-accessible aliasing hints for raw pointers. The compiler internally uses noalias annotations based on reference semantics, but this is not exposed to users. Since restrict cannot be written in Rust, this rule is not applicable."
     },
     {
@@ -2572,7 +2442,7 @@
       "fls_rationale_type": "rust_alternative",
       "misra_rust_category": "required",
       "misra_rust_comment": "may affect extern \u201cC\u201d declarations",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust prevents this issue by design: types have single definitions where alignment is specified. No forward declarations or separate object declarations exist. For FFI, alignment is intrinsic to the type used.",
       "rejected_matches": [
         {
@@ -2619,7 +2489,7 @@
       ],
       "fls_rationale_type": "rust_prevents",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust prevents alignment of 0 at compile time. Per FLS fls_muxfn9soi47l: 'The alignment of a value... is at least one, and always a power of two.' Attempting #[repr(align(0))] results in compiler error E0589: 'invalid repr(align) attribute: not a power of two'. C's _Alignas(0) meaning 'use default alignment' has no equivalent in Rust - if you want default alignment, simply don't specify any alignment."
     },
     {
@@ -2649,7 +2519,7 @@
       ],
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "In C, _Alignas can be applied directly to object declarations (variables), allowing confusing constructs like '_Alignas(4) _Alignas(8) int x;'. In Rust, alignment is specified via #[repr(align(N))] on type definitions only - you cannot specify alignment on individual variable declarations. While Rust technically allows multiple #[repr(align(N))] on a type (taking the maximum), this is uncommon and linted against by clippy. The MISRA concern about 'object declarations' doesn't translate directly since Rust's alignment model is type-centric rather than object-centric."
     },
     {
@@ -2671,7 +2541,7 @@
       ],
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "C 'tentative definitions' (e.g., 'int x;' without initializer in a header) create multiple object instances per translation unit. Rust has no equivalent concept. Rust's statics require explicit 'static' keyword and an initializer, enforcing single-definition semantics. Rust's module system and lack of textual header inclusion prevent the issue entirely - items are defined once and imported by path."
     },
     {
@@ -2693,7 +2563,7 @@
       ],
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "MISRA addresses C's pattern where 'extern' declarations appear in source files rather than headers, breaking modularity. Rust's compilation model is fundamentally different: there are no header files, no textual inclusion, and no 'extern' declarations for Rust items (only for FFI). Items are defined once in a module and made visible via 'pub' and 'use'. Rust's 'extern' blocks (for FFI) typically go in dedicated modules/crates and don't have the modularity concerns MISRA addresses."
     },
     {
@@ -2742,7 +2612,7 @@
       "fls_rationale_type": "direct_mapping",
       "misra_rust_category": "required",
       "misra_rust_comment": "enforced by rustc but can be bypassed by unsafe",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust directly enforces this via compile-time definite initialization analysis. The compiler tracks initialization state through all control flow paths and rejects programs that may use uninitialized variables.",
       "rejected_matches": [
         {
@@ -2788,7 +2658,7 @@
       ],
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "MISRA addresses C's ambiguous aggregate initialization where braces can be omitted (e.g., 'int arr[2][3] = {1,2,3,4,5,6}'). Rust's syntax is unambiguous by design: arrays use brackets [a, b, c], structs use braces Foo { field: value }, and nested structures require explicit nesting. The compiler enforces this - there's no optional brace syntax to misuse."
     },
     {
@@ -2818,7 +2688,7 @@
       ],
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "C allows partial array initialization (e.g., 'int arr[5] = {1, 2}' where remaining elements are implicitly zeroed). Rust has no equivalent concept - arrays must be fully initialized via element list [a, b, c] or repetition [x; N]. Per MISRA ADD-6: n/a."
     },
     {
@@ -2830,52 +2700,39 @@
       "accepted_matches": [
         {
           "fls_id": "fls_8tsynkj2cufj",
+          "fls_title": "Struct Expressions",
           "category": 0,
-          "fls_section": "6.4",
-          "fls_title": "Struct Expressions",
-          "score": 0.61,
-          "reason": "Per FLS fls_bbmm5vir9xos: 'Contain at most one matched named initializer'. Per fls_j2kmp1fee0g4: 'Contain at most one matched indexed initializer'. These rules explicitly prevent duplicate field initialization in struct expressions."
-        },
-        {
-          "fls_id": "fls_bbmm5vir9xos",
-          "category": -2,
-          "fls_section": "6.4",
-          "fls_title": "Struct Expressions",
-          "score": 0.62,
-          "reason": "'Contain at most one matched named initializer' - Rust enforces this at compile time, directly addressing MISRA's concern about duplicate initialization."
+          "score": 0.63,
+          "reason": "Defines struct expression initializers. Compiler enforces each field initialized exactly once"
         },
         {
           "fls_id": "fls_j2kmp1fee0g4",
+          "fls_title": "At most one initializer",
           "category": -2,
-          "fls_section": "6.4",
-          "fls_title": "Struct Expressions",
-          "score": 0.6,
-          "reason": "'Contain at most one matched indexed initializer' - Prevents duplicate initialization of tuple struct fields."
+          "score": 0.61,
+          "reason": "Per FLS: Contain at most one matched indexed initializer - prevents duplicate initialization"
+        },
+        {
+          "fls_id": "fls_xinykul167l",
+          "fls_title": "Array Expressions",
+          "category": 0,
+          "score": 0.63,
+          "reason": "Rust arrays use element constructor lists or repetition - no designated initializers like C that allow duplicates"
         },
         {
           "fls_id": "fls_3xvm61x0t251",
-          "category": 0,
-          "fls_section": "15.2",
           "fls_title": "Initialization",
-          "score": 0.651,
-          "reason": "Defines initialization semantics. Per FLS: 'A variable shall be initialized before it is accessed.' Rust's initialization tracking ensures each field is initialized exactly once."
+          "category": 0,
+          "score": 0.79,
+          "reason": "Initialization is supplying initial value to variable. Rust requires complete initialization before use"
         }
       ],
-      "fls_rationale_type": "direct_mapping",
+      "fls_rationale_type": "rust_prevents",
       "misra_rust_category": "required",
       "misra_rust_comment": "enforced by rustc",
       "confidence": "high",
-      "notes": "MISRA prevents duplicate designated initializers in C. Rust enforces this at compile time via FLS 6.4 (Struct Expressions): each field must have 'at most one matched named/indexed/shorthand initializer'. The compiler emits error E0062 for duplicate field specifications. Per ADD-6: 'enforced by rustc'.",
-      "rejected_matches": [
-        {
-          "fls_id": "fls_94a8v54bufn8",
-          "category": 0,
-          "fls_section": "7.1",
-          "fls_title": "Values",
-          "score": 0.517,
-          "reason": "General value semantics, not specifically about initialization uniqueness."
-        }
-      ]
+      "notes": "Rust prevents duplicate initialization by design. Struct expressions require each field initialized exactly once. Arrays use element lists or repetition constructors - no C-style designated initializers that allow duplicates.",
+      "rejected_matches": []
     },
     {
       "guideline_id": "Rule 9.5",
@@ -2904,7 +2761,7 @@
       ],
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "C99 designated initializers (e.g., 'int arr[10] = {[5] = 1, [2] = 3}') allow sparse array initialization where size can be implicitly determined by highest index. Rust has no designated initializer syntax for arrays - arrays are initialized via element list [a, b, c] (size inferred from count) or repetition [x; N] (size explicit). The concept doesn't exist in Rust."
     },
     {
@@ -2926,7 +2783,7 @@
       ],
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "C99 chained designators (e.g., 'struct s arr[2] = {[0].x = 1, 2, 3}') allow mixing designated and positional initializers, which is confusing. Rust has no chained designator syntax. Struct fields use named initialization (Foo { x: 1, y: 2 }), and arrays use element lists or repetition. The mixing of designated/non-designated initializers that MISRA prohibits cannot occur in Rust."
     },
     {
@@ -2938,43 +2795,38 @@
       "accepted_matches": [
         {
           "fls_id": "fls_vyc9vcuamlph",
-          "category": 0,
-          "fls_section": "17.1",
           "fls_title": "Atomics",
-          "score": 0.697,
-          "reason": "Per FLS fls_3pjla9s93mhd: 'An atomic type is a type defined in module core::sync::atomic. Atomic types provide primitive shared-memory communication between threads.' Rust's atomic types require const initialization (e.g., AtomicBool::new(false))."
+          "category": 0,
+          "score": 0.82,
+          "reason": "Atomic types defined in core::sync::atomic provide primitive shared-memory communication between threads"
+        },
+        {
+          "fls_id": "fls_3pjla9s93mhd",
+          "fls_title": "Atomic type definition",
+          "category": -2,
+          "score": 0.71,
+          "reason": "Per FLS: An atomic type is a type defined in module core::sync::atomic. Provides thread-safe communication"
         },
         {
           "fls_id": "fls_3xvm61x0t251",
-          "category": 0,
-          "fls_section": "15.2",
           "fls_title": "Initialization",
-          "score": 0.501,
-          "reason": "Per FLS fls_46910buiwvv9: 'A variable shall be initialized before it is accessed.' This fundamental rule applies to atomic types - the compiler enforces initialization before access."
+          "category": 0,
+          "score": 0.66,
+          "reason": "Rust requires proper initialization before access. Uninitialized memory access is prevented by compiler"
         },
         {
-          "fls_id": "fls_3v733mnewssy",
+          "fls_id": "fls_xdvdl2ssnhlo",
+          "fls_title": "Statics",
           "category": 0,
-          "fls_section": "17.0",
-          "fls_title": "Concurrency",
-          "score": 0.529,
-          "reason": "Per FLS fls_tx4b8r6i93n4: 'A data race is a scenario where two or more threads access a shared memory location concurrently without any synchronization, where one of the accesses is a modification.' Rust's atomic types prevent data races through memory ordering guarantees."
+          "score": 0.54,
+          "reason": "Static values associated with specific memory location. Static initializers must be constant expressions"
         }
       ],
       "fls_rationale_type": "direct_mapping",
       "misra_rust_category": "required",
       "confidence": "high",
-      "notes": "MISRA requires atomic objects to be initialized before access to avoid data races. Rust's atomic types (core::sync::atomic) must be initialized with const constructors like AtomicBool::new(). The compiler enforces FLS fls_46910buiwvv9: 'A variable shall be initialized before it is accessed.' For safe Rust, the type system prevents uninitialized access entirely. For unsafe Rust with static atomics, the const initialization requirement applies.",
-      "rejected_matches": [
-        {
-          "fls_id": "fls_xdvdl2ssnhlo",
-          "category": 0,
-          "fls_section": "3.10",
-          "fls_title": "Statics",
-          "score": 0.524,
-          "reason": "About static variable declarations, not specifically about atomic initialization."
-        }
-      ]
+      "notes": "Rust atomic types in core::sync::atomic provide safe concurrent access. Rust type system ensures initialization before access. Atomic::new() provides const initialization for statics.",
+      "rejected_matches": []
     },
     {
       "guideline_id": "Rule 10.1",
@@ -2983,7 +2835,7 @@
       "applicability_safe_rust": "not_applicable",
       "fls_rationale_type": "rust_prevents",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust's type system prevents implicit type conversions entirely. MISRA's 'essential type model' exists because C has implicit conversions between bool/char/numeric - Rust has none.",
       "guideline_title": "Operands shall not be of an inappropriate essential type C90 [Unspecified 23; Implementation G.3.4(8), G.3.5(3,5), G.3.9(6)] C99 [Undefined 13, 48, 49; Implementation J.3.4(2,5), J.3.5(5), J.3.9(6)] C11 [Undefined 15, 51, 52; Implementation J.3.4(2,5), J.3.5(5), J.3.9(7)]",
       "rejected_matches": [
@@ -3054,7 +2906,7 @@
       "applicability_safe_rust": "not_applicable",
       "fls_rationale_type": "rust_prevents",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust's char type cannot be used in arithmetic. Explicit cast to u32/i32 required for any numeric operations on character values.",
       "guideline_title": "Expressions of essentially character type shall not be used inappropriately in addition and subtraction operations",
       "rejected_matches": [
@@ -3110,7 +2962,7 @@
       "applicability_safe_rust": "not_applicable",
       "fls_rationale_type": "rust_prevents",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust's type system prevents implicit narrowing conversions entirely. All numeric type conversions require explicit 'as' casts. The compiler rejects assignments between incompatible types.",
       "accepted_matches": [
         {
@@ -3172,7 +3024,7 @@
       "applicability_safe_rust": "not_applicable",
       "fls_rationale_type": "rust_prevents",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "C's 'usual arithmetic conversions' don't exist in Rust. Operands must match exactly or code won't compile.",
       "guideline_title": "Both operands of an operator in which the usual arithmetic conversions are performed shall have the same essential type category C90 [Implementation G.3.6(2)], C99 [Implementation J.3.6(4)], C11 [Implementation J.3.6(5)]",
       "rejected_matches": [
@@ -3229,34 +3081,37 @@
       "misra_rust_category": "recommended",
       "misra_rust_comment": "includes both safe `as` and unsafe `transmute` operations",
       "confidence": "high",
-      "notes": "Rust's 'as' casts can perform potentially inappropriate conversions (truncation, sign loss). Clippy lints 'cast_possible_truncation', 'cast_sign_loss' provide additional enforcement.",
+      "notes": "Rust type cast expressions have strict legality rules. Only type coercion or specialized casts are legal. Compiler rejects inappropriate casts at compile time.",
       "guideline_title": "The value of an expression should not be cast to an inappropriate essential type",
-      "rejected_matches": [
-        {
-          "fls_id": "fls_xc1hof4qbf6p",
-          "fls_title": "Enum Type Representation",
-          "score": 0.61,
-          "reason": "About enum layout, not cast appropriateness",
-          "fls_section": "4.11.2.1",
-          "category": -2
-        },
-        {
-          "fls_id": "fls_wrecura8u5ar",
-          "fls_title": "Negation Expression",
-          "score": 0.57,
-          "reason": "Unary operator, not type casting",
-          "fls_section": "6.5.4",
-          "category": -2
-        }
-      ],
+      "rejected_matches": [],
       "accepted_matches": [
         {
           "fls_id": "fls_1qhsun1vyarz",
           "fls_title": "Type Cast Expressions",
-          "score": 0.7,
-          "reason": "Per FLS: Rust's 'as' casts allow numeric conversions including truncation and sign changes. While more restricted than C (no arbitrary pointer casts in safe Rust), numeric casts can still silently truncate. Advisory rule applies.",
-          "fls_section": "6.5.10",
-          "category": -2
+          "category": 0,
+          "score": 0.88,
+          "reason": "Defines legal casts in Rust. Cast changes type of operand with strict rules on what casts are allowed"
+        },
+        {
+          "fls_id": "fls_3ww5gbk9w4ys",
+          "fls_title": "Cast legality",
+          "category": -2,
+          "score": 0.6,
+          "reason": "Per FLS: A cast is legal when it either performs type coercion or is a specialized cast. Compiler rejects illegal casts"
+        },
+        {
+          "fls_id": "fls_4s69s9pcvbn7",
+          "fls_title": "Numeric cast",
+          "category": -2,
+          "score": 0.82,
+          "reason": "Operand of numeric type and target numeric type perform numeric cast - well-defined behavior"
+        },
+        {
+          "fls_id": "fls_le6bchl25ewz",
+          "fls_title": "Enum cast",
+          "category": -2,
+          "score": 0.8,
+          "reason": "Operand of enum type to integer performs enum cast - converts to discriminant then numeric cast"
         }
       ]
     },
@@ -3267,7 +3122,7 @@
       "applicability_safe_rust": "not_applicable",
       "fls_rationale_type": "rust_prevents",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust has no implicit widening. Assignment requires exact type match. If wider arithmetic is needed, explicit cast before the operation is required.",
       "guideline_title": "The value of a composite expression shall not be assigned to an object with wider essential type",
       "rejected_matches": [
@@ -3322,7 +3177,7 @@
       "applicability_safe_rust": "not_applicable",
       "fls_rationale_type": "rust_prevents",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Similar to 10.6 - Rust's same-type requirement for operators prevents mixing narrow composite expressions with wider operands.",
       "guideline_title": "If a composite expression is used as one operand of an operator in which the usual arithmetic conversions are performed then the other operand shall not have wider essential type",
       "rejected_matches": [
@@ -3378,7 +3233,7 @@
       "fls_rationale_type": "partial_mapping",
       "misra_rust_category": "advisory",
       "misra_rust_comment": "includes both safe `as` and unsafe `transmute` operations",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust allows explicit widening casts after narrow arithmetic. The MISRA concern is partially mitigated by defined overflow behavior, but explicit casts can still mask programmer intent errors.",
       "guideline_title": "The value of a composite expression shall not be cast to a different essential type category or a wider essential type",
       "rejected_matches": [
@@ -3427,42 +3282,45 @@
       "accepted_matches": [
         {
           "fls_id": "fls_xztr1kebz8bo",
-          "category": 0,
-          "fls_section": "4.8",
           "fls_title": "Function Pointer Types",
-          "score": 0.669,
-          "reason": "Per FLS fls_v2wrytr3t04h: 'A function pointer type is an indirection type that refers to a function.' Defines function pointer as a distinct type."
+          "category": 0,
+          "score": 0.77,
+          "reason": "Defines function pointer types in Rust. Per FLS validity invariant fls_52thmi9hnoks: 'It is a validity invariant for a value of a function pointer type to be not null.' This establishes the type safety foundation for function pointers."
         },
         {
           "fls_id": "fls_1qhsun1vyarz",
-          "category": 0,
-          "fls_section": "6.27",
           "fls_title": "Type Cast Expressions",
-          "score": 0.548,
-          "reason": "Per FLS fls_133j6xw8k4qe: 'An operand of a function pointer type and a target type *const V or *mut V... perform function-pointer-to-pointer cast.' Per fls_bhw2j9wjpf2x: function-pointer-to-address casts are explicitly defined. Rust allows these casts via 'as' but they require explicit syntax."
+          "category": 0,
+          "score": 0.56,
+          "reason": "Defines all legal casts involving function pointers. Per fls_133j6xw8k4qe: function-pointer-to-pointer cast requires 'target type *const V or *mut V'. Per fls_bhw2j9wjpf2x: function-pointer-to-address cast 'produces the address of the function.' These are the ONLY legal conversions from function pointer types."
         },
         {
-          "fls_id": "fls_wz2etmkpvxed",
-          "category": -2,
-          "fls_section": "4.19",
-          "fls_title": "Type Unification",
-          "score": 0.705,
-          "reason": "'A function pointer type is unifiable only with another function pointer type when...' - Function pointers have strict type compatibility rules, preventing implicit conversions."
+          "fls_id": "fls_jep7p27kaqlp",
+          "fls_title": "Unsafety",
+          "category": 0,
+          "score": 0.69,
+          "reason": "Per fls_jd1inwz7ulyw: 'Dereferencing a value of a raw pointer type' is unsafe. Function pointer manipulation through raw pointers requires unsafe blocks, providing visibility into potentially dangerous operations."
+        },
+        {
+          "fls_id": "fls_airvr79xkcag",
+          "fls_title": "Function Item Types",
+          "category": 0,
+          "score": 0.59,
+          "reason": "Distinguishes function items from function pointers. Per fls_e9x4f7qxvvjv: function items have unique types that coerce to function pointers. This type distinction prevents accidental misuse."
         }
       ],
-      "fls_rationale_type": "partial_mapping",
+      "fls_rationale_type": "direct_mapping",
       "misra_rust_category": "required",
       "misra_rust_comment": "includes both safe `as` and unsafe `transmute` operations",
       "confidence": "high",
-      "notes": "MISRA prohibits conversions between function pointers and other types due to UB. Rust allows explicit casts via 'as' (fn ptr -> *const T, fn ptr -> usize) but these are explicit, not implicit. For safe Rust, function pointers have strict type unification rules (fls_wz2etmkpvxed). For unsafe transmute operations, the user takes responsibility. Per ADD-6: 'includes both safe `as` and unsafe `transmute` operations'.",
+      "notes": "MISRA prohibits conversions between function pointers and other types. Rust addresses this through: (1) explicit type-checked casts in fls_1qhsun1vyarz allowing only specific conversions, (2) function pointer validity invariants in fls_52thmi9hnoks, (3) unsafe requirement for raw pointer dereferencing. The combination provides stronger guarantees than C.",
       "rejected_matches": [
         {
-          "fls_id": "fls_5cm4gkt55hjh",
+          "fls_id": "fls_v5x85lt5ulva",
+          "fls_title": "References",
           "category": 0,
-          "fls_section": "6.17",
-          "fls_title": "Dereference Expression",
-          "score": 0.528,
-          "reason": "About dereferencing pointers, not about function pointer type conversions."
+          "score": 0.65,
+          "reason": "References are distinct from function pointers - this section covers borrowed references not function pointer conversions."
         }
       ]
     },
@@ -3511,7 +3369,7 @@
       ],
       "fls_rationale_type": "direct_mapping",
       "misra_rust_category": "required",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust's Sized trait directly addresses this. Pointer casts explicitly require Sized types, preventing conversions involving dynamically sized (incomplete) types. This is compiler-enforced in safe Rust and well-defined in unsafe Rust.",
       "rejected_matches": [
         {
@@ -3568,7 +3426,7 @@
       ],
       "fls_rationale_type": "direct_mapping",
       "misra_rust_category": "required",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Safe Rust prevents this entirely - references are strictly typed. In unsafe Rust, pointer casts are allowed but dereferencing requires unsafe context and is subject to alignment/validity requirements. MISRA concern about alignment is addressed by FLS UB rules.",
       "rejected_matches": [
         {
@@ -3589,41 +3447,51 @@
       "accepted_matches": [
         {
           "fls_id": "fls_1qhsun1vyarz",
+          "fls_title": "Type Cast Expressions",
           "category": 0,
-          "fls_section": "6.27",
-          "fls_title": "Type Cast Expressions",
-          "score": 0.709,
-          "reason": "Defines pointer-to-integer and integer-to-pointer casts. Per fls_i4zsbbmfa2fl: 'pointer-to-address cast produces an integer that represents the machine address'. Per fls_59mpteeczzo: 'address-to-pointer cast produces a pointer that interprets the integer as a machine address.' These casts require explicit 'as' syntax."
+          "score": 0.81,
+          "reason": "Defines legal pointer-integer conversions. Per fls_i4zsbbmfa2fl: pointer-to-address cast with 'operand of type *const T or *mut T... and target integer type'. Per fls_59mpteeczzo: address-to-pointer cast 'produces a pointer to the address specified by the operand.' These are explicit, typed casts."
         },
         {
-          "fls_id": "fls_i4zsbbmfa2fl",
-          "category": -2,
-          "fls_section": "6.27",
-          "fls_title": "Type Cast Expressions",
+          "fls_id": "fls_3qnpv2z7yjil",
+          "fls_title": "Integer Types",
+          "category": 0,
+          "score": 0.69,
+          "reason": "Defines usize/isize platform-specific types. Per fls_75lntwhg20l: 'Type usize has the same number of bits as the platform's pointer type.' This ensures proper sizing for pointer-integer conversions."
+        },
+        {
+          "fls_id": "fls_ppd1xwve3tr7",
+          "fls_title": "Raw Pointer Types",
+          "category": 0,
+          "score": 0.65,
+          "reason": "Per fls_rpbhr0xukbx9: 'A raw pointer type is an indirection type without validity guarantees.' This establishes that pointer-integer conversions produce raw pointers requiring unsafe for dereference."
+        },
+        {
+          "fls_id": "fls_jep7p27kaqlp",
+          "fls_title": "Unsafety",
+          "category": 0,
+          "score": 0.65,
+          "reason": "Per fls_jd1inwz7ulyw: 'Dereferencing a value of a raw pointer type' requires unsafe context. Pointers created from integers must be dereferenced in unsafe blocks."
+        },
+        {
+          "fls_id": "fls_5cm4gkt55hjh",
+          "fls_title": "Dereference Expression",
+          "category": 0,
           "score": 0.68,
-          "reason": "'An operand of type *const T or *mut T... and a target integer type perform pointer-to-address cast... If the integer type is smaller than the type of the operand, the address is truncated.' Addresses truncation concern from MISRA."
-        },
-        {
-          "fls_id": "fls_59mpteeczzo",
-          "category": -2,
-          "fls_section": "6.27",
-          "fls_title": "Type Cast Expressions",
-          "score": 0.701,
-          "reason": "'An operand of integer type and target type *const V or *mut V... perform address-to-pointer cast.' Explicitly requires 'as' cast - no implicit conversion."
+          "reason": "Per fls_8i4jzksxlrw0: 'Dereferencing a raw pointer shall require unsafe context.' Per fls_9wgldua1u8yt: 'It is undefined behavior to dereference a raw pointer that is either dangling or unaligned.'"
         }
       ],
       "fls_rationale_type": "direct_mapping",
       "misra_rust_category": "required",
       "confidence": "high",
-      "notes": "MISRA prohibits implicit pointer-integer conversions due to alignment and representation UB. Rust requires explicit 'as' casts for pointer<->integer conversions (fls_i4zsbbmfa2fl, fls_59mpteeczzo). The explicit syntax ensures developer awareness. Using raw pointer casts to dereference requires unsafe context. For usize/isize, the cast is well-defined; for smaller integers, truncation occurs (documented in FLS).",
+      "notes": "MISRA prohibits pointer-to-integer and integer-to-pointer conversions. Rust addresses this through: (1) explicit as casts in fls_1qhsun1vyarz, (2) usize/isize types matching pointer size per fls_3qnpv2z7yjil, (3) raw pointers without validity guarantees per fls_ppd1xwve3tr7, (4) unsafe requirement for raw pointer dereference per fls_jep7p27kaqlp. The result is implementation-defined but explicit.",
       "rejected_matches": [
         {
-          "fls_id": "fls_ZfIBiJMf8qE1",
+          "fls_id": "fls_b4xporvr64s",
+          "fls_title": "Floating Point Types",
           "category": 0,
-          "fls_section": "7.3",
-          "fls_title": "Arithmetic Overflow",
-          "score": 0.586,
-          "reason": "About integer overflow, not about pointer-integer conversions."
+          "score": 0.66,
+          "reason": "Floating point types are unrelated to pointer-integer conversions."
         }
       ]
     },
@@ -3665,7 +3533,7 @@
       ],
       "fls_rationale_type": "direct_mapping",
       "misra_rust_category": "required",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust has no void* equivalent but uses *const c_void/*mut c_void for FFI. All raw pointer operations require unsafe, providing stronger safety than C. Current applicability (all_rust: direct, safe_rust: not_applicable) is correct.",
       "rejected_matches": []
     },
@@ -3678,49 +3546,44 @@
       "accepted_matches": [
         {
           "fls_id": "fls_1qhsun1vyarz",
+          "fls_title": "Type Cast Expressions",
           "category": 0,
-          "fls_section": "6.27",
-          "fls_title": "Type Cast Expressions",
-          "score": 0.658,
-          "reason": "Defines all pointer-to-integer and integer-to-pointer casts. Rust's *const T/*mut T (including *const ()) can be cast to usize/isize via explicit 'as', but requires unsafe for dereferencing."
+          "score": 0.76,
+          "reason": "Defines all legal pointer-integer conversions. Per fls_59mpteeczzo: address-to-pointer cast with typed target '*const V or *mut V'. Per fls_i4zsbbmfa2fl: pointer-to-address cast. Rust has no void* - all pointer types are typed."
         },
         {
-          "fls_id": "fls_i4zsbbmfa2fl",
-          "category": -2,
-          "fls_section": "6.27",
-          "fls_title": "Type Cast Expressions",
-          "score": 0.644,
-          "reason": "Per FLS: 'An operand of type *const T or *mut T... and a target integer type perform pointer-to-address cast.' This covers void pointer (*const ()) to integer conversion."
+          "fls_id": "fls_ppd1xwve3tr7",
+          "fls_title": "Raw Pointer Types",
+          "category": 0,
+          "score": 0.54,
+          "reason": "Per fls_rpbhr0xukbx9: 'A raw pointer type is an indirection type without validity guarantees.' Rust raw pointers are typed (*const T/*mut T), not void*."
         },
         {
-          "fls_id": "fls_59mpteeczzo",
-          "category": -2,
-          "fls_section": "6.27",
-          "fls_title": "Type Cast Expressions",
-          "score": 0.664,
-          "reason": "Per FLS: 'An operand of integer type and target type *const V or *mut V... perform address-to-pointer cast.' Covers integer to void pointer conversion."
+          "fls_id": "fls_3qnpv2z7yjil",
+          "fls_title": "Integer Types",
+          "category": 0,
+          "score": 0.66,
+          "reason": "Per fls_75lntwhg20l: 'Type usize has the same number of bits as the platform's pointer type.' Pointer-integer casts use usize for proper sizing."
+        },
+        {
+          "fls_id": "fls_jep7p27kaqlp",
+          "fls_title": "Unsafety",
+          "category": 0,
+          "score": 0.53,
+          "reason": "Per fls_jd1inwz7ulyw: 'Dereferencing a value of a raw pointer type' requires unsafe. Any pointer from integer must be dereferenced unsafely."
         }
       ],
-      "fls_rationale_type": "direct_mapping",
+      "fls_rationale_type": "rust_alternative",
       "misra_rust_category": "advisory",
       "confidence": "high",
-      "notes": "MISRA prohibits void* <-> arithmetic conversions. Rust doesn't have void* but uses *const ()/*mut c_void. These can be cast to usize/isize via explicit 'as' (fls_i4zsbbmfa2fl, fls_59mpteeczzo). No implicit conversions exist. Floating-point to pointer is not directly supported in Rust - would require intermediate integer cast. Only applicable in unsafe Rust for dereferencing.",
+      "notes": "MISRA prohibits void*-to-integer conversions due to implementation-defined behavior. Rust has no void* type - all pointers are typed (*const T, *mut T). The closest equivalent *const () requires explicit typed casts. This is a rust_alternative: Rust's typed pointer system eliminates the void* issue entirely while providing explicit as casts for pointer-integer conversions.",
       "rejected_matches": [
         {
-          "fls_id": "fls_pcromhosmnf0",
-          "category": -2,
-          "fls_section": "6.27",
-          "fls_title": "Type Cast Expressions",
-          "score": 0.704,
-          "reason": "About bool/char to integer casts, not about void pointer conversions."
-        },
-        {
-          "fls_id": "fls_ZfIBiJMf8qE1",
+          "fls_id": "fls_dw33yt5g6m0k",
+          "fls_title": "Type Coercion",
           "category": 0,
-          "fls_section": "7.3",
-          "fls_title": "Arithmetic Overflow",
-          "score": 0.506,
-          "reason": "About integer overflow, not about pointer-integer conversions."
+          "score": 0.55,
+          "reason": "Type coercion doesn't apply to pointer-integer conversions; explicit casts required."
         }
       ]
     },
@@ -3762,7 +3625,7 @@
       ],
       "fls_rationale_type": "partial_mapping",
       "misra_rust_category": "required",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust tracks const/mut distinction in raw pointer types (*const T vs *mut T). Safe Rust prevents removing const. Unsafe Rust allows *const to *mut casts but requires explicit unsafe block. Rust has no volatile or _Atomic equivalents - volatile operations use read_volatile/write_volatile intrinsics, atomics use std::sync::atomic types. Current applicability (all_rust: direct, safe_rust: partial) is correct.",
       "rejected_matches": []
     },
@@ -3794,7 +3657,7 @@
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "n_a",
       "misra_rust_comment": "Rust does not have a null pointer constant",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust has no NULL macro or integer null pointer constant. For raw pointers, Rust uses std::ptr::null() and std::ptr::null_mut() functions. For safe code, Option<T> replaces nullable pointers entirely. The C pattern of using 0 or (void*)0 as null doesn't exist in Rust. Per MISRA ADD-6: n/a."
     },
     {
@@ -3816,7 +3679,7 @@
       ],
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "C11's _Atomic is a type qualifier that can be applied to arbitrary types including void. Rust has no _Atomic qualifier - atomics are distinct types in core::sync::atomic (AtomicBool, AtomicU32, AtomicPtr<T>, etc.). You cannot create an 'atomic void' in Rust because atomics are concrete types, not qualifiers. Per MISRA ADD-6: n/a."
     },
     {
@@ -3858,7 +3721,7 @@
       "fls_rationale_type": "rust_prevents",
       "misra_rust_category": "implicit",
       "misra_rust_comment": "enforced by rustc",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "MISRA concern is implicit pointer-to-boolean conversion in C (if(ptr)). Rust PREVENTS this: (1) if expression subject must be bool type - no implicit conversions, (2) References have non-null validity invariant, (3) Raw pointers require explicit .is_null() check or comparison. The type system enforces explicit boolean expressions in control flow.",
       "rejected_matches": []
     },
@@ -3871,33 +3734,44 @@
       "accepted_matches": [
         {
           "fls_id": "fls_kw25194gpael",
-          "category": 0,
-          "fls_section": "6.21",
           "fls_title": "Expression Precedence",
-          "score": 0.733,
-          "reason": "FLS defines operator precedence and associativity rules. Rust has a well-defined precedence table. The MISRA concern about making precedence explicit applies - Rust allows parentheses for clarity."
+          "category": 0,
+          "score": 0.75,
+          "reason": "Defines operator precedence and associativity. Per fls_ya23jjg5wjl: 'Precedence is the order by which expressions are evaluated in the presence of other expressions.' Per fls_bezkcuwp5qol: 'Associativity is the order by which operands are evaluated within a single expression.'"
+        },
+        {
+          "fls_id": "fls_g0uyl7qw4c7w",
+          "fls_title": "Parenthesized Expressions",
+          "category": 0,
+          "score": 0.68,
+          "reason": "Per fls_jhazc75w5vj: 'A parenthesized expression is an expression that groups other expressions.' Provides mechanism to make precedence explicit per MISRA intent."
         },
         {
           "fls_id": "fls_ckvjj4tt1hh2",
-          "category": 0,
-          "fls_section": "6.0",
           "fls_title": "Expressions",
-          "score": 0.649,
-          "reason": "Chapter-level context for expression semantics and evaluation order."
+          "category": 0,
+          "score": 0.75,
+          "reason": "Defines operand terminology. Per fls_1r29rtnjlkql: 'A left operand is an operand that appears on the left-hand side of a binary operator.' Per fls_qxdpyf4u3hbz: similar for right operand."
+        },
+        {
+          "fls_id": "fls_abp6tjbz8tpn",
+          "fls_title": "Bit Expressions",
+          "category": 0,
+          "score": 0.74,
+          "reason": "Demonstrates evaluation order. Per fls_4gxj18t6cnzq: 'The left operand is evaluated' first, establishing deterministic left-to-right evaluation."
         }
       ],
       "fls_rationale_type": "direct_mapping",
       "misra_rust_category": "recommended",
       "confidence": "high",
-      "notes": "MISRA recommends explicit parentheses for precedence clarity. FLS 6.21 (Expression Precedence) defines Rust's operator precedence. Rust's precedence is well-defined but MISRA's stylistic recommendation to use parentheses for clarity applies equally. Clippy lint 'precedence' can warn about complex expressions.",
+      "notes": "MISRA requires explicit parentheses to clarify precedence. FLS fls_kw25194gpael defines Rust's precedence and associativity rules. FLS fls_g0uyl7qw4c7w provides parenthesized expressions for explicit grouping. The same readability concern applies - developers should use parentheses for clarity even when Rust's precedence would produce correct results.",
       "rejected_matches": [
         {
-          "fls_id": "fls_290jmzfh7x4e",
+          "fls_id": "fls_izdv9i4spokw",
+          "fls_title": "Operator Expressions",
           "category": 0,
-          "fls_section": "6.3",
-          "fls_title": "Compound Assignment Expressions",
-          "score": 0.676,
-          "reason": "About compound assignment operators specifically, not about general precedence."
+          "score": 0.69,
+          "reason": "General operator expression section - the specific precedence rules in fls_kw25194gpael are more directly applicable."
         }
       ]
     },
@@ -3946,7 +3820,7 @@
       ],
       "fls_rationale_type": "partial_mapping",
       "misra_rust_category": "advisory",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust handles shift overflow differently than C: debug builds panic on over-shift, release builds wrap. Safe APIs (checked_shl, overflowing_shl) allow explicit handling. Current applicability (all_rust: direct, safe_rust: partial) is appropriate - the concern exists but Rust provides runtime checks in debug mode.",
       "rejected_matches": []
     },
@@ -3969,7 +3843,7 @@
       ],
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust has no comma operator. In C, the comma operator evaluates left operand, discards result, evaluates right operand (e.g., 'a = (b++, c)'). Rust uses semicolons to separate statements and has no equivalent construct. Tuple construction uses commas but that's syntactically distinct. Per MISRA ADD-6: n/a."
     },
     {
@@ -4011,7 +3885,7 @@
       "fls_rationale_type": "rust_prevents",
       "misra_rust_category": "advisory",
       "misra_rust_comment": "this is either well-defined or will not occur",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust directly enforces this. Constant expression evaluation with arithmetic overflow is a compile-time error (panics during const eval). This is stricter than MISRA's 'should' - Rust makes it mandatory.",
       "rejected_matches": [
         {
@@ -4042,7 +3916,7 @@
       ],
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "In C, arrays decay to pointers when passed as function parameters, so sizeof on such a parameter gives pointer size, not array size. Rust has no array-to-pointer decay: arrays are passed by reference (&[T; N]) or as slices (&[T]). std::mem::size_of::<[T; N]>() always gives the actual array size. The C pitfall doesn't exist in Rust. Per MISRA ADD-6: n/a."
     },
     {
@@ -4064,7 +3938,7 @@
       ],
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "In C11, _Atomic can be applied to struct types, and directly accessing members of such atomic structs is non-atomic and unsafe. Rust's atomic types (AtomicU32, AtomicBool, etc.) are opaque - they don't expose internal fields. You must use methods like load(), store(), compare_exchange() which guarantee atomic access. There's no way to directly access 'members' of an atomic in Rust. Per MISRA ADD-6: n/a."
     },
     {
@@ -4075,28 +3949,48 @@
       "applicability_safe_rust": "direct",
       "accepted_matches": [
         {
-          "fls_id": "fls_8tsynkj2cufj",
+          "fls_id": "fls_3xvm61x0t251",
+          "fls_title": "Initialization",
           "category": 0,
-          "fls_section": "6.4",
-          "fls_title": "Struct Expressions",
-          "score": 0.682,
-          "reason": "Struct expressions define field initialization order. Per ADD-6: 'order of evaluation is strict in Rust' - field initializers are evaluated left-to-right."
+          "score": 0.77,
+          "reason": "Covers Rust's initialization semantics. Rust has deterministic initialization without C's unspecified order issues in aggregate initializers."
         },
         {
-          "fls_id": "fls_ckvjj4tt1hh2",
+          "fls_id": "fls_8tsynkj2cufj",
+          "fls_title": "Struct Expressions",
           "category": 0,
-          "fls_section": "6.0",
-          "fls_title": "Expressions",
-          "score": 0.6,
-          "reason": "Rust expressions have defined evaluation order, unlike C's unspecified order in initializer lists."
+          "score": 0.68,
+          "reason": "Defines struct initialization syntax. Per fls_z3gj1v6g605r: 'The value of a named initializer is the value of its expression.' Each initializer is evaluated independently."
+        },
+        {
+          "fls_id": "fls_xa4nbfas01cj",
+          "fls_title": "Call Expressions",
+          "category": -3,
+          "score": 0.55,
+          "reason": "Per fls_p52mfvpadu7w: 'The argument operands are evaluated in left-to-right order.' Demonstrates Rust's deterministic evaluation order."
+        },
+        {
+          "fls_id": "fls_kw25194gpael",
+          "fls_title": "Expression Precedence",
+          "category": 0,
+          "score": 0.5,
+          "reason": "Per fls_bezkcuwp5qol: 'Associativity is the order by which operands are evaluated within a single expression.' Defines deterministic evaluation order."
         }
       ],
-      "fls_rationale_type": "direct_mapping",
+      "fls_rationale_type": "rust_alternative",
       "misra_rust_category": "recommended",
       "misra_rust_comment": "order of evaluation is strict in Rust",
       "confidence": "high",
-      "notes": "MISRA prohibits side effects in initializers due to C's unspecified evaluation order. Rust has strict left-to-right evaluation order (per ADD-6). Side effects in struct field initializers are well-defined, making the MISRA concern less critical but still relevant for readability.",
-      "rejected_matches": []
+      "notes": "MISRA prohibits persistent side effects in initializer lists due to C's unspecified evaluation order. Rust has deterministic left-to-right evaluation order (fls_p52mfvpadu7w, fls_ehseim1p479z). This is a rust_alternative: while side effects in initializers may still be confusing, they are deterministic in Rust, eliminating the undefined behavior concern.",
+      "rejected_matches": [
+        {
+          "fls_id": "fls_jep7p27kaqlp",
+          "fls_title": "Unsafety",
+          "category": 0,
+          "score": 0.68,
+          "reason": "Unsafety section is about unsafe operations, not initializer evaluation order."
+        }
+      ]
     },
     {
       "guideline_id": "Rule 13.2",
@@ -4134,7 +4028,7 @@
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "n_a",
       "misra_rust_comment": "order of evaluation is strict in Rust",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust has defined left-to-right evaluation order for all expressions (e.g., FLS Arithmetic Expressions: 'The left operand is evaluated. The right operand is evaluated.'). C allows unspecified evaluation order leading to undefined behavior. The MISRA concern does not apply to Rust."
     },
     {
@@ -4164,7 +4058,7 @@
       ],
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust does not have ++ or -- operators. Increment/decrement is done via compound assignment (x += 1) which returns unit type, not the modified value. The MISRA concern about side effects from these operators does not apply."
     },
     {
@@ -4194,7 +4088,7 @@
       ],
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "In C, 'a = 5' returns 5, enabling problematic patterns like 'a = b = c = 0' or 'if (a = b)'. In Rust, assignment expressions return the unit type () per FLS fls_qengy157fa4a, so the result cannot be used. The MISRA concern is structurally prevented."
     },
     {
@@ -4242,7 +4136,7 @@
       ],
       "fls_rationale_type": "direct_mapping",
       "misra_rust_category": "recommended",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "FLS explicitly documents short-circuit evaluation semantics. While Rust has the same behavior as C, the FLS makes it clear when right operands are evaluated. MISRA's concern about hidden side effects applies - this is a coding style guideline for Rust as well.",
       "rejected_matches": []
     },
@@ -4274,7 +4168,7 @@
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "n_a",
       "misra_rust_comment": "this is not an expression operator in Rust",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust has no sizeof operator. Size is obtained via std::mem::size_of::<T>() which takes a type parameter, not an expression. You cannot write size_of(x + y) in Rust, eliminating the MISRA concern about unevaluated side effects in sizeof operands."
     },
     {
@@ -4323,7 +4217,7 @@
       "fls_rationale_type": "rust_alternative",
       "misra_rust_category": "required",
       "misra_rust_comment": "applies to while loops only",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust's loop design differs from C. For loops use iterators (std Range types are integer-only). While loops have bool conditions. Floating-point counters require explicit manual management, making the problematic pattern less common and more visible when used.",
       "rejected_matches": []
     },
@@ -4354,7 +4248,7 @@
       ],
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "MISRA's 'well-formed for loop' constrains C's 3-part for(init; cond; update) construct to prevent misuse. Rust's for loop is 'for pattern in iterator' per FLS fls_onfyolkcbeh3, based on IntoIterator trait. There is no separate init/condition/update to misuse. The C-specific concern does not apply."
     },
     {
@@ -4402,7 +4296,7 @@
       ],
       "fls_rationale_type": "direct_mapping",
       "misra_rust_category": "required",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust does not prohibit invariant controlling expressions at the language level, but rustc provides warnings via lints (unreachable_code, clippy). The FLS documents how such expressions are evaluated. This MISRA rule remains relevant as a coding guideline for Rust.",
       "rejected_matches": []
     },
@@ -4445,7 +4339,7 @@
       "fls_rationale_type": "rust_prevents",
       "misra_rust_category": "implicit",
       "misra_rust_comment": "enforced by rustc",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "MISRA concern is about non-boolean expressions in control flow (e.g., if(1), if(ptr)). Rust ENFORCES this at the language level: (1) FLS requires if expression subject to be type bool, (2) FLS requires while loop iteration expression to be type bool. There are NO implicit conversions to bool in Rust. This rule is fully addressed by Rust's type system.",
       "rejected_matches": []
     },
@@ -4459,7 +4353,7 @@
       "rejected_matches": [],
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust has no goto statement. Control flow is managed through structured constructs (loop, while, for, if, match) and labeled breaks/continues."
     },
     {
@@ -4472,7 +4366,7 @@
       "rejected_matches": [],
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust has no goto statement. Labeled breaks/continues only jump to enclosing loops, never forward to arbitrary labels."
     },
     {
@@ -4484,7 +4378,7 @@
       "accepted_matches": [],
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust has no goto statement. Loop labels for break/continue are scoped to the labeled loop expression.",
       "rejected_matches": []
     },
@@ -4497,26 +4391,46 @@
       "accepted_matches": [
         {
           "fls_id": "fls_jr4tpuyksr75",
-          "category": 0,
-          "fls_section": "6.15",
           "fls_title": "Break Expressions",
-          "score": 0.665,
-          "reason": "Defines break expression semantics. Rust allows labeled breaks for loop control, making multi-level breaks explicit and traceable."
+          "category": 0,
+          "score": 0.67,
+          "reason": "Defines break semantics. Per fls_ghxns2nggffj: 'A break expression without a label indication is associated with the innermost enclosing loop expression.' Per fls_2nmadhe3ismj: 'All enclosing loop expressions upto and including the associated loop expression are terminated.'"
         },
         {
           "fls_id": "fls_sjwrlwvpulp",
-          "category": 0,
-          "fls_section": "6.16",
           "fls_title": "Continue Expressions",
-          "score": 0.55,
-          "reason": "Defines continue expression semantics. Like break, supports labels for multi-level continues."
+          "category": 0,
+          "score": 0.71,
+          "reason": "Defines continue semantics. Per fls_wzs6kz9ffqzt: 'A continue expression shall appear within a loop expression.' Per fls_gm74eo754rq9: describes termination of enclosing loops."
+        },
+        {
+          "fls_id": "fls_sf4qnd43z2wc",
+          "fls_title": "Infinite Loops",
+          "category": 0,
+          "score": 0.65,
+          "reason": "Per fls_99imks9hj3kp: 'If the infinite loop expression contains at least one break expression, then the value is the break value of the break expression that broke out of the infinite loop expression.'"
+        },
+        {
+          "fls_id": "fls_uusi0zej55is",
+          "fls_title": "Loop Labels",
+          "category": 0,
+          "score": 0.58,
+          "reason": "Enables labeled breaks to specific loop levels. Per fls_7frvr2nm2mcj: 'The label indication of a break expression shall resolve to the label of an enclosing named block expression or named loop expression.'"
         }
       ],
       "fls_rationale_type": "direct_mapping",
       "misra_rust_category": "recommended",
       "confidence": "high",
-      "notes": "MISRA limits break/goto to improve control flow clarity. Rust has no goto statement. Break and continue support labels for multi-level control flow (break 'label), making intent explicit. This is a stylistic guideline - Rust's labeled breaks are more structured than C's goto.",
-      "rejected_matches": []
+      "notes": "MISRA limits break/goto to single exit from loops for structured programming. Rust has no goto but has break and continue with optional labels. The FLS sections define how break terminates loops (fls_jr4tpuyksr75) and how labels target specific loops (fls_uusi0zej55is). The MISRA concern about structured control flow applies equally - limiting to single break per loop improves readability.",
+      "rejected_matches": [
+        {
+          "fls_id": "fls_rr908hgunja7",
+          "fls_title": "Loop Expressions",
+          "category": 0,
+          "score": 0.51,
+          "reason": "General loop section - the specific break/continue sections are more directly applicable."
+        }
+      ]
     },
     {
       "guideline_id": "Rule 15.5",
@@ -4557,7 +4471,7 @@
       "fls_rationale_type": "direct_mapping",
       "misra_rust_category": "disapplied",
       "misra_rust_comment": "no longer endorsed by MISRA",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust allows multiple return points via return expressions, early returns with ?, and implicit final expression returns. MISRA's single-exit guideline is a style recommendation that can be applied to Rust but is not enforced by the language. Many Rust idioms encourage early returns for error handling.",
       "rejected_matches": []
     },
@@ -4570,7 +4484,7 @@
       "accepted_matches": [],
       "fls_rationale_type": "rust_prevents",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust enforces this by design. All if/loop/while/for/match constructs require block expressions as their body - single statements are not allowed. The \"dangling else\" ambiguity is impossible.",
       "rejected_matches": []
     },
@@ -4583,26 +4497,39 @@
       "accepted_matches": [
         {
           "fls_id": "fls_mkut7gut49gi",
-          "category": 0,
-          "fls_section": "6.7",
           "fls_title": "If Expressions",
-          "score": 0.653,
-          "reason": "Defines if/else expression semantics. Rust if is an expression, which naturally encourages exhaustive handling when used for values."
+          "category": 0,
+          "score": 0.65,
+          "reason": "Defines if/else expression structure. Per fls_2i4fbxbbvpf1: 'An if expression is an expression that evaluates either a block expression or an else expression depending on the value of its subject expression.' Per fls_5azwlk7hav1k: 'An else expression is an expression that represents either a block expression, an if expression, or an if let expression.'"
+        },
+        {
+          "fls_id": "fls_p0t1ch115tra",
+          "fls_title": "If Let Expressions",
+          "category": 0,
+          "score": 0.54,
+          "reason": "Per fls_dsrjup2umr9: 'An if let expression is an expression that evaluates either a block expression or an else expression depending on whether its pattern can be matched.' Extends if-else chains with pattern matching."
         },
         {
           "fls_id": "fls_e5td0fa92fay",
-          "category": 0,
-          "fls_section": "6.6",
           "fls_title": "Match Expressions",
-          "score": 0.55,
-          "reason": "Match expressions require exhaustive pattern coverage, providing a stronger alternative to if-else chains."
+          "category": -2,
+          "score": 0.59,
+          "reason": "Per fls_e02um1gb89d0: 'The patterns of all match arms taken together shall exhaustively match the subject expression's type.' Compiler-enforced exhaustiveness provides stronger guarantees than final else clause."
         }
       ],
       "fls_rationale_type": "direct_mapping",
       "misra_rust_category": "advisory",
       "confidence": "high",
-      "notes": "MISRA requires else clause for defensive programming. Rust's if is an expression - when used for its value, both branches must return compatible types (implicit exhaustiveness). For statement-style if, this is a stylistic recommendation. Match expressions provide compiler-enforced exhaustiveness as an alternative to if-else chains.",
-      "rejected_matches": []
+      "notes": "MISRA requires if-else-if chains to end with else. FLS fls_mkut7gut49gi defines Rust's if/else syntax. Additionally, fls_e5td0fa92fay provides match expressions with compiler-enforced exhaustiveness (fls_e02um1gb89d0), which is stronger than requiring a final else - the compiler rejects non-exhaustive matches.",
+      "rejected_matches": [
+        {
+          "fls_id": "fls_sjwrlwvpulp",
+          "fls_title": "Continue Expressions",
+          "category": 0,
+          "score": 0.63,
+          "reason": "Continue expressions are unrelated to if-else chain termination."
+        }
+      ]
     },
     {
       "guideline_id": "Rule 16.1",
@@ -4613,7 +4540,7 @@
       "accepted_matches": [],
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust has no switch statement. Match expressions have stricter, well-defined semantics: exhaustive patterns required, no fall-through, each arm is an expression.",
       "rejected_matches": []
     },
@@ -4626,7 +4553,7 @@
       "accepted_matches": [],
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust has no switch or case labels. Match arm patterns are syntactically bound to their match expression - they cannot appear elsewhere.",
       "rejected_matches": []
     },
@@ -4639,7 +4566,7 @@
       "accepted_matches": [],
       "fls_rationale_type": "rust_prevents",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust match arms have no fall-through semantics. Each arm is an expression that evaluates to a value - there is no need for break statements and no accidental fall-through.",
       "rejected_matches": []
     },
@@ -4651,7 +4578,7 @@
       "applicability_safe_rust": "rust_prevents",
       "misra_rust_category": "n_a",
       "misra_rust_comment": "a corresponding match expression must be complete",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust match expressions must be exhaustive - the compiler enforces that all possible values are covered. A wildcard pattern (_) serves as the equivalent of default when needed.",
       "accepted_matches": [],
       "rejected_matches": [],
@@ -4665,7 +4592,7 @@
       "applicability_safe_rust": "not_applicable",
       "misra_rust_category": "n_a",
       "misra_rust_comment": "irrefutable pattern causes a subsequent refutable one to be unreachable",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust has no default label. Wildcard patterns (_) in match expressions are ordered by specificity, not position, and the compiler checks for unreachable patterns.",
       "accepted_matches": [],
       "rejected_matches": [],
@@ -4678,7 +4605,7 @@
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust allows single-arm match expressions, though if-let or let-else are often more idiomatic for single-pattern matching.",
       "accepted_matches": [],
       "rejected_matches": [],
@@ -4693,7 +4620,7 @@
       "accepted_matches": [],
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust has no switch statement. Match expressions on bool are allowed but using if/else is more idiomatic for boolean conditions.",
       "rejected_matches": []
     },
@@ -4706,7 +4633,7 @@
       "accepted_matches": [],
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust has no stdarg.h equivalent. Variadic functions are only available in extern \"C\" FFI declarations. Safe Rust functions cannot be variadic.",
       "rejected_matches": []
     },
@@ -4717,7 +4644,7 @@
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "direct",
       "misra_rust_category": "required",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "MISRA bans recursion for stack predictability. Rust has no special recursion restrictions - same as C. The FLS defines call expressions and recursion_limit (for macros). Rust idiomatically prefers iteration with iterators. Static analysis tools can detect recursion.",
       "accepted_matches": [
         {
@@ -4761,7 +4688,7 @@
       "accepted_matches": [],
       "fls_rationale_type": "rust_prevents",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust has no implicit function declarations. All functions must be explicitly declared before use - the compiler enforces this strictly.",
       "rejected_matches": []
     },
@@ -4775,7 +4702,7 @@
       "fls_rationale_type": "rust_prevents",
       "misra_rust_category": "n_a",
       "misra_rust_comment": "the return keyword is not needed to return a value in Rust, only to exit",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust enforces this at compile time. All code paths in a non-unit-returning function must produce a value of the correct type. The last expression in a block is the return value.",
       "rejected_matches": []
     },
@@ -4788,7 +4715,7 @@
       "accepted_matches": [],
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "C arrays decay to pointers, losing size info. Rust arrays [T; N] carry size in the type. Slices &[T] carry runtime length. This C problem does not exist in Rust.",
       "rejected_matches": []
     },
@@ -4830,7 +4757,7 @@
       ],
       "fls_rationale_type": "direct_mapping",
       "misra_rust_category": "required",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust's #[must_use] attribute (not in FLS core but part of std) directly addresses this. Result and Option types require explicit handling. The compiler warns on unused function results when #[must_use] is applied. This is a key Rust idiom for error handling.",
       "rejected_matches": []
     },
@@ -4873,7 +4800,7 @@
       "fls_rationale_type": "rust_alternative",
       "misra_rust_category": "disapplied",
       "misra_rust_comment": "this cannot be done accidentally without declaring parameters `mut`",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "In Rust, function parameters are immutable bindings by default. Explicit 'mut' is required to modify a parameter. This makes parameter modification visible in the signature (fn foo(mut x: i32)). MISRA's concern is partially addressed by this explicitness.",
       "rejected_matches": []
     },
@@ -4916,7 +4843,7 @@
       "fls_rationale_type": "direct_mapping",
       "misra_rust_category": "required",
       "misra_rust_comment": "this is expressed with the `!` (Never) type, and enforced by rustc",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust's never type (!) directly maps to C11's _Noreturn. A function declared as fn foo() -> ! must diverge (never return). The compiler enforces this - attempting to return from such a function is a compile error.",
       "rejected_matches": []
     },
@@ -4929,7 +4856,7 @@
       "accepted_matches": [],
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust uses the never type (!) for diverging functions. A function returning ! can be assigned to any type variable since it never actually returns. Different design than C _Noreturn.",
       "rejected_matches": []
     },
@@ -4972,7 +4899,7 @@
       "fls_rationale_type": "direct_mapping",
       "misra_rust_category": "advisory",
       "misra_rust_comment": "a non-returning function can be declared to return a value type",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust's -> ! return type directly addresses this. Functions that never return (panic, abort, infinite loops) should be declared with -> ! to communicate intent and enable compiler optimizations. This is idiomatic Rust.",
       "rejected_matches": []
     },
@@ -4985,7 +4912,7 @@
       "accepted_matches": [],
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust function items have unique zero-sized types. They coerce to function pointers when needed. There is no ambiguity between function and function-pointer that this C rule addresses.",
       "rejected_matches": []
     },
@@ -4998,7 +4925,7 @@
       "accepted_matches": [],
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "C type qualifiers (const, volatile) on function types are undefined behavior. Rust has no type qualifiers on function types - this concept does not exist.",
       "rejected_matches": []
     },
@@ -5041,7 +4968,7 @@
       "fls_rationale_type": "rust_alternative",
       "misra_rust_category": "required",
       "misra_rust_comment": "by unsafe API",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "In safe Rust, array/slice indexing is bounds-checked at runtime. Raw pointer arithmetic requires unsafe and is not a built-in operator. Rust's design strongly discourages pointer arithmetic in favor of slice iterators and indexing, which are safe by default.",
       "rejected_matches": []
     },
@@ -5084,7 +5011,7 @@
       "fls_rationale_type": "rust_alternative",
       "misra_rust_category": "required",
       "misra_rust_comment": "by unsafe API",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust does not have a built-in pointer subtraction operator. The offset_from() method on raw pointers requires unsafe and documents that pointers must be from the same allocation. Safe Rust uses slice iterators and lengths instead of pointer arithmetic.",
       "rejected_matches": []
     },
@@ -5126,7 +5053,7 @@
       ],
       "fls_rationale_type": "rust_alternative",
       "misra_rust_category": "required",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust allows raw pointer comparison via <, >, etc., but the result is unspecified for pointers to different objects. Safe Rust references cannot be compared relationally across different allocations. MISRA's concern is partially addressed by Rust's preference for iterators over pointer arithmetic.",
       "rejected_matches": []
     },
@@ -5169,7 +5096,7 @@
       "fls_rationale_type": "rust_alternative",
       "misra_rust_category": "advisory",
       "misra_rust_comment": "applies to use of the unsafe API",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust does not have built-in +/- operators for raw pointers. Array subscript (arr[i]) is the standard way to access elements. For raw pointers, offset() requires unsafe. This aligns with MISRA's preference - Rust's design makes the safer pattern (indexing) the default.",
       "rejected_matches": []
     },
@@ -5204,7 +5131,7 @@
       ],
       "fls_rationale_type": "direct_mapping",
       "misra_rust_category": "recommended",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust allows multiple levels of pointer/reference nesting but the ownership system often provides alternatives. Deep nesting is syntactically obvious and uncommon in idiomatic Rust. This MISRA guideline remains a valid style recommendation for Rust code.",
       "rejected_matches": []
     },
@@ -5253,7 +5180,7 @@
       ],
       "fls_rationale_type": "rust_prevents",
       "misra_rust_category": "required",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust's borrow checker directly prevents this issue in safe code. References cannot outlive their referents - the compiler tracks lifetimes and rejects code that would create dangling references. This is one of Rust's core safety guarantees.",
       "rejected_matches": []
     },
@@ -5266,7 +5193,7 @@
       "accepted_matches": [],
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "C99 flexible array members (struct { int n; char data[]; }) have no Rust equivalent. Rust uses Vec<T> or slices for variable-length data, with proper bounds checking.",
       "rejected_matches": []
     },
@@ -5279,7 +5206,7 @@
       "accepted_matches": [],
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust has no VLAs. Array sizes must be compile-time constants. For runtime-sized collections, use Vec<T> which allocates on the heap with proper bounds checking.",
       "rejected_matches": []
     },
@@ -5292,7 +5219,7 @@
       "accepted_matches": [],
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "C array-to-pointer decay does not exist in Rust. Rust arrays [T; N] do not implicitly convert to pointers. Taking a reference to a temporary is controlled by borrowing rules.",
       "rejected_matches": []
     },
@@ -5305,7 +5232,7 @@
       "accepted_matches": [],
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust has no variably-modified array types (C99/C11 VLA feature). Array sizes are compile-time constants in Rust.",
       "rejected_matches": []
     },
@@ -5317,7 +5244,7 @@
       "applicability_safe_rust": "not_applicable",
       "fls_rationale_type": "rust_prevents",
       "misra_rust_category": "required",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Safe Rust's borrow checker prevents overlapping mutable references at compile time. FLS 15.3 explicitly states 'no other reference shall refer to a value that overlaps with the referent of the mutable reference'. In unsafe Rust, aliasing mutable references is explicitly UB.",
       "accepted_matches": [
         {
@@ -5365,73 +5292,44 @@
       "fls_rationale_type": "direct_mapping",
       "misra_rust_category": "advisory",
       "confidence": "high",
-      "notes": "Rust unions exist but have strict type restrictions (Copy/ManuallyDrop field types only). Reading any union field requires unsafe context. FLS defines implementation-defined and UB scenarios similar to MISRA's concerns.",
+      "notes": "MISRA discourages union due to type-punning risks. Rust unions require unsafe for reading (fls_ucghxcnpaq2t) and have explicit UB rules (fls_Vani4665hiJY). More importantly, Rust provides tagged enums (fls_szibmtfv117b) as a safe alternative with compiler-tracked discriminants. Prefer enums over unions in Rust.",
       "accepted_matches": [
         {
           "fls_id": "fls_fmdn7n7s413d",
-          "fls_section": "4.5.3",
           "fls_title": "Union Types",
+          "category": 0,
           "score": 0.69,
-          "reason": "PRIMARY: Defines union type rules including field type restrictions per FLS fls_ZJG2Q6lJYXhY: 'The type of a union field shall be either: A copy type, or a mutable reference type, or core::mem::ManuallyDrop...'",
-          "category": -2
-        },
-        {
-          "fls_id": "fls_cmq8ogs84ivh",
-          "fls_section": "4.11.2.3",
-          "fls_title": "Union Type Representation",
-          "score": 0.691,
-          "reason": "Defines union memory layout - size is max of all fields, all fields share common storage. Addresses MISRA's padding/alignment/endianness concerns.",
-          "category": -2
+          "reason": "Defines Rust union types. Per fls_ZJG2Q6lJYXhY: 'The type of a union field shall be either:' with restricted types allowed. Union field access is heavily restricted."
         },
         {
           "fls_id": "fls_jep7p27kaqlp",
-          "fls_section": "19",
           "fls_title": "Unsafety",
-          "score": 0.0,
-          "reason": "MANUAL: Per FLS fls_ucghxcnpaq2t: 'Accessing a field of a union, other than to assign to it' is listed as an unsafe operation requiring unsafe context.",
-          "category": -2
+          "category": 0,
+          "score": 0.56,
+          "reason": "Per fls_ucghxcnpaq2t: 'Accessing a field of a union, other than to assign to it' requires unsafe context. Reading union fields is unsafe, making the danger explicit."
         },
         {
           "fls_id": "fls_18k3uajrgq5f",
-          "fls_section": "6.13",
           "fls_title": "Field Access Expressions",
-          "score": 0.0,
-          "reason": "MANUAL: Per FLS fls_kddnnz8uc15b: 'Reading the selected field of a union shall require unsafe context.' This is the enforcement mechanism for MISRA's concern.",
-          "category": -2
+          "category": -4,
+          "score": 0.63,
+          "reason": "Per fls_Vani4665hiJY: 'It is undefined behavior reading the selected field of a union type when it contains data that is invalid for the selected field's type.' Per fls_kddnnz8uc15b: 'Reading the selected field of a union shall require unsafe context.'"
+        },
+        {
+          "fls_id": "fls_szibmtfv117b",
+          "fls_title": "Enum Types",
+          "category": 0,
+          "score": 0.78,
+          "reason": "Rust's tagged enums (fls_t4yeovFm83Wo: 'A discriminant is an opaque integer that identifies an enum variant') provide a safe alternative to unions with automatic tag tracking and exhaustive matching."
         }
       ],
       "rejected_matches": [
         {
-          "fls_id": "fls_rjxpof29a3nl",
-          "fls_section": "4.11.2.2",
-          "fls_title": "Struct Type Representation",
-          "score": 0.591,
-          "reason": "About struct layout, not union - high similarity due to shared 'representation' terminology.",
-          "category": -2
-        },
-        {
-          "fls_id": "fls_g1z6bpyjqxkz",
-          "fls_section": "4.11.1",
-          "fls_title": "Type Layout",
-          "score": 0.561,
-          "reason": "General layout section. Union-specific content is in child section 4.11.2.3 which is more specific.",
-          "category": -2
-        },
-        {
-          "fls_id": "fls_ohhsmifo0urd",
-          "fls_section": "4.11.2",
-          "fls_title": "Type Representation",
-          "score": 0.554,
-          "reason": "Parent section. Child 4.11.2.3 (Union Type Representation) is more specific and already accepted.",
-          "category": -2
-        },
-        {
-          "fls_id": "fls_wrvjizrqf3po",
-          "fls_section": "4.3.2",
-          "fls_title": "Char Type",
-          "score": 0.509,
-          "reason": "About char type, not unions. High score likely due to type representation terminology overlap.",
-          "category": -2
+          "fls_id": "fls_cmq8ogs84ivh",
+          "fls_title": "Union Type Representation",
+          "category": 0,
+          "score": 0.69,
+          "reason": "Representation details - the safety aspects in fls_jep7p27kaqlp and UB in fls_18k3uajrgq5f are more relevant to MISRA's concern."
         }
       ]
     },
@@ -5444,97 +5342,44 @@
       "fls_rationale_type": "direct_mapping",
       "misra_rust_category": "required",
       "confidence": "high",
-      "notes": "FLS explicitly defines UB for reading union fields with invalid data (fls_Vani4665hiJY). Reading any union field requires unsafe context. Rust treats union field read-after-different-write as transmute, matching MISRA's type punning concern.",
+      "notes": "MISRA requires union members to be set before reading. Rust directly addresses this: fls_Vani4665hiJY makes reading invalid union data UB, fls_ucghxcnpaq2t requires unsafe for reading union fields, and fls_t6xmsm2nk1bc clarifies that read-after-write is a transmute operation. The unsafe requirement ensures developers acknowledge the risk.",
       "accepted_matches": [
         {
-          "fls_id": "fls_fmdn7n7s413d",
-          "fls_section": "4.5.3",
-          "fls_title": "Union Types",
-          "score": 0.662,
-          "reason": "PRIMARY: Defines union field type restrictions (Copy/ManuallyDrop) which limit what can be stored and safely reinterpreted.",
-          "category": -2
-        },
-        {
           "fls_id": "fls_18k3uajrgq5f",
-          "fls_section": "6.13",
           "fls_title": "Field Access Expressions",
-          "score": 0.0,
-          "reason": "MANUAL: CRITICAL - Contains the explicit UB definition per FLS fls_Vani4665hiJY: 'It is undefined behavior reading the selected field of a union type when it contains data that is invalid for the selected field's type.' Also defines transmute equivalence for union field access (fls_t6xmsm2nk1bc).",
-          "category": -2
+          "category": -4,
+          "score": 0.55,
+          "reason": "Per fls_Vani4665hiJY: 'It is undefined behavior reading the selected field of a union type when it contains data that is invalid for the selected field's type.' Per fls_t6xmsm2nk1bc: 'Writing to and then reading from the selected field of a union... is equivalent to invoking function core::mem::transmute.' Directly addresses MISRA's concern."
         },
         {
           "fls_id": "fls_jep7p27kaqlp",
-          "fls_section": "19",
           "fls_title": "Unsafety",
-          "score": 0.524,
-          "reason": "Per FLS fls_ucghxcnpaq2t: Union field access (except assignment) is an unsafe operation. This forces explicit acknowledgment of the type punning risk.",
-          "category": -2
+          "category": -2,
+          "score": 0.79,
+          "reason": "Per fls_ucghxcnpaq2t: 'Accessing a field of a union, other than to assign to it' requires unsafe. Reading unset union members is explicitly unsafe."
         },
         {
-          "fls_id": "fls_cmq8ogs84ivh",
-          "fls_section": "4.11.2.3",
-          "fls_title": "Union Type Representation",
-          "score": 0.644,
-          "reason": "Per FLS: 'All union fields share a common storage.' This is the memory model underlying MISRA's concern about reading unwritten members.",
-          "category": -2
+          "fls_id": "fls_fmdn7n7s413d",
+          "fls_title": "Union Types",
+          "category": 0,
+          "score": 0.67,
+          "reason": "Per fls_ZJG2Q6lJYXhY: field type restrictions. Per fls_I5fN5Fmo5CyK: empty unions rejected. Union fields have restricted allowed types."
+        },
+        {
+          "fls_id": "fls_94a8v54bufn8",
+          "fls_title": "Values",
+          "category": -4,
+          "score": 0.66,
+          "reason": "Per fls_6lg0oaaopc26: 'It is undefined behavior to create a value from uninitialized memory unless the type of the value is a union type.' Unions are explicitly exempted because their read behavior is separately defined."
         }
       ],
       "rejected_matches": [
         {
           "fls_id": "fls_rjxpof29a3nl",
-          "fls_section": "4.11.2.2",
           "fls_title": "Struct Type Representation",
-          "score": 0.587,
-          "reason": "About struct layout, not union. High score due to shared 'representation' terminology.",
-          "category": -2
-        },
-        {
-          "fls_id": "fls_8tsynkj2cufj",
-          "fls_section": "6.11",
-          "fls_title": "Struct Expressions",
-          "score": 0.529,
-          "reason": "About struct initialization syntax, not union field access.",
-          "category": -2
-        },
-        {
-          "fls_id": "fls_v5x85lt5ulva",
-          "fls_section": "15.3",
-          "fls_title": "References",
-          "score": 0.524,
-          "reason": "About reference aliasing rules, not union type punning. More relevant to Rule 19.1.",
-          "category": -2
-        },
-        {
-          "fls_id": "fls_77scxuomlbgs",
-          "fls_section": "15.5",
-          "fls_title": "Passing Conventions",
-          "score": 0.524,
-          "reason": "About move/copy semantics during value transfer, not union field access.",
-          "category": -2
-        },
-        {
-          "fls_id": "fls_g1z6bpyjqxkz",
-          "fls_section": "4.11.1",
-          "fls_title": "Type Layout",
-          "score": 0.541,
-          "reason": "General layout section. Child section 4.11.2.3 is more specific for unions.",
-          "category": -2
-        },
-        {
-          "fls_id": "fls_ohhsmifo0urd",
-          "fls_section": "4.11.2",
-          "fls_title": "Type Representation",
-          "score": 0.52,
-          "reason": "Parent section. Child 4.11.2.3 already accepted and is more specific.",
-          "category": -2
-        },
-        {
-          "fls_id": "fls_5cm4gkt55hjh",
-          "fls_section": "6.5.2",
-          "fls_title": "Dereference Expression",
-          "score": 0.516,
-          "reason": "About pointer dereferencing, not union field access. Different unsafe operation.",
-          "category": -2
+          "category": 0,
+          "score": 0.69,
+          "reason": "Struct representation rules, not union member access safety."
         }
       ]
     },
@@ -5548,7 +5393,7 @@
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "n_a",
       "misra_rust_comment": "rules specific to the C preprocessor do not apply to Rust",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust has no #include. The mod/use system handles module imports with well-defined semantics independent of textual position.",
       "rejected_matches": []
     },
@@ -5561,7 +5406,7 @@
       "accepted_matches": [],
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust has no #include or header files. Module paths use :: separators and follow Rust identifier rules.",
       "rejected_matches": []
     },
@@ -5572,7 +5417,7 @@
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust has no #include directive. Module inclusion uses mod declarations with strict syntax.",
       "accepted_matches": [],
       "rejected_matches": [],
@@ -5617,7 +5462,7 @@
       "fls_rationale_type": "rust_prevents",
       "misra_rust_category": "required",
       "misra_rust_comment": "possible with raw identifiers but the compiler prevents visual conflicts",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "MISRA concern is C preprocessor defining over keywords. Rust PREVENTS this: (1) Macro names are identifiers, (2) Keywords cannot be identifiers, (3) Macro hygiene isolates macro-introduced names. The FLS explicitly distinguishes strict keywords (cannot be identifiers) from weak keywords.",
       "rejected_matches": []
     },
@@ -5630,7 +5475,7 @@
       "accepted_matches": [],
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust has no #undef. Rust macros use hygienic scoping and cannot be undefined after declaration.",
       "rejected_matches": []
     },
@@ -5643,7 +5488,7 @@
       "accepted_matches": [],
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust macros operate on token trees, not text. There are no preprocessing directives within macro arguments - the concept does not apply.",
       "rejected_matches": []
     },
@@ -5686,7 +5531,7 @@
       "fls_rationale_type": "rust_alternative",
       "misra_rust_category": "advisory",
       "misra_rust_comment": "possible to express with procedural macros only, not macro_rules",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "MISRA concern is C textual substitution causing precedence issues. Rust macros operate on AST tokens, not text. The expr fragment specifier captures a complete expression preserving precedence. No parenthesization needed since substitution is structural, not textual.",
       "rejected_matches": []
     },
@@ -5699,7 +5544,7 @@
       "accepted_matches": [],
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust uses cfg attributes and cfg! macro for conditional compilation. These use predicate syntax (cfg(feature = \"x\")), not integer expressions.",
       "rejected_matches": []
     },
@@ -5712,7 +5557,7 @@
       "accepted_matches": [],
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust cfg attributes check for presence/absence of configuration options. There is no integer expression evaluation with potentially undefined identifiers.",
       "rejected_matches": []
     },
@@ -5725,7 +5570,7 @@
       "accepted_matches": [],
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust has no # or ## stringizing/token-pasting operators. Rust macros use different mechanisms (stringify!, concat!) that are type-safe.",
       "rejected_matches": []
     },
@@ -5738,7 +5583,7 @@
       "accepted_matches": [],
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust has no # or ## operators. Macro hygiene and token tree manipulation in Rust avoid these C preprocessor pitfalls.",
       "rejected_matches": []
     },
@@ -5751,7 +5596,7 @@
       "accepted_matches": [],
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust has no # or ## operators. Rust macro expansion has well-defined ordering without these C preprocessor complexities.",
       "rejected_matches": []
     },
@@ -5764,7 +5609,7 @@
       "accepted_matches": [],
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust has no C-style preprocessing directives. # in Rust is used for attributes (#[...]) which have strict syntax requirements enforced by the compiler.",
       "rejected_matches": []
     },
@@ -5777,7 +5622,7 @@
       "accepted_matches": [],
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust has no #if/#else/#endif. The cfg attribute system applies to complete syntactic items and cannot span files.",
       "rejected_matches": []
     },
@@ -5792,7 +5637,7 @@
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "n_a",
       "misra_rust_comment": "previously Rule 21.1",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust has no #define/#undef. Rust macros (macro_rules! and proc macros) operate in a hygienic namespace system with different reserved identifier rules."
     },
     {
@@ -5848,7 +5693,7 @@
       "fls_rationale_type": "direct_mapping",
       "misra_rust_category": "required",
       "misra_rust_comment": "only accessible through unsafe extern \u201cC\u201d",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "MISRA ADD-6 notes this is only accessible through unsafe extern 'C'. In Rust, memory allocation uses Box/Vec with RAII, or the global allocator interface. When calling C's malloc/free via FFI, these sections apply.",
       "rejected_matches": []
     },
@@ -5884,7 +5729,7 @@
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "required",
       "misra_rust_comment": "only accessible through unsafe extern \u201cC\u201d",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "setjmp/longjmp have no Rust equivalent. Rust uses Result/Option for error handling and panic for unwinding. This rule applies only when calling C code via FFI that uses setjmp/longjmp.",
       "rejected_matches": []
     },
@@ -5896,7 +5741,7 @@
       "applicability_safe_rust": "not_applicable",
       "misra_rust_category": "required",
       "misra_rust_comment": "only accessible through unsafe extern \u201cC\u201d",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "C signal handling has no Rust equivalent. Rust does not have a standard signal handling mechanism. This rule applies only when calling C code via FFI that uses signal.h.",
       "accepted_matches": [
         {
@@ -5932,28 +5777,41 @@
       "applicability_safe_rust": "not_applicable",
       "accepted_matches": [
         {
-          "fls_id": "fls_usgd0xlijoxv",
+          "fls_id": "fls_osd6c4utyjb3",
+          "fls_title": "FFI",
           "category": 0,
-          "fls_section": "21.4",
-          "fls_title": "ABI",
           "score": 0.65,
-          "reason": "C library functions require ABI specification. Standard Library input/output functions only accessible in Rust through unsafe extern 'C' blocks."
+          "reason": "Per fls_djlglv2eaihl: 'Foreign Function Interface or FFI employs ABI, attributes, external blocks, external functions, linkage, and type layout to interface a Rust program with a foreign programming language.' If C stdio functions are needed, they would be accessed via FFI requiring explicit unsafe blocks."
         },
         {
-          "fls_id": "fls_tmoh3y9oyqsy",
+          "fls_id": "fls_usgd0xlijoxv",
+          "fls_title": "ABI",
           "category": 0,
-          "fls_section": "21.1",
-          "fls_title": "External Blocks",
-          "score": 0.55,
-          "reason": "C library function declarations would appear in unsafe external blocks, requiring unsafe context to call."
+          "score": 0.65,
+          "reason": "Defines calling conventions for external functions. Per fls_LfjvLXvI6TFL: 'extern \"C-unwind\"' for C interop. C stdio access requires explicit ABI specification."
+        },
+        {
+          "fls_id": "fls_p090c5oTnElW",
+          "fls_title": "Simple C String Literals",
+          "category": 0,
+          "score": 0.44,
+          "reason": "Rust provides c\"...\" literals for FFI string interop. This is for explicit C interoperability, not general I/O."
         }
       ],
-      "fls_rationale_type": "direct_mapping",
+      "fls_rationale_type": "rust_alternative",
       "misra_rust_category": "required",
       "misra_rust_comment": "only accessible through unsafe extern \u201cC\u201d",
       "confidence": "high",
-      "notes": "MISRA prohibits C stdio functions. In Rust, C stdio is only accessible via unsafe extern 'C'. Rust has std::io for safe I/O. Per ADD-6: 'only accessible through unsafe extern \"C\"'.",
-      "rejected_matches": []
+      "notes": "MISRA prohibits C stdio functions due to implementation-defined behavior. Rust has its own type-safe I/O system (std::io, println! macro) that doesn't use C stdio. C stdio functions can only be accessed via FFI (fls_osd6c4utyjb3) requiring explicit unsafe blocks. This is a rust_alternative: Rust provides safe, type-checked I/O primitives.",
+      "rejected_matches": [
+        {
+          "fls_id": "fls_e0896uk0mdyl",
+          "fls_title": "Assembly Instructions",
+          "category": 0,
+          "score": 0.57,
+          "reason": "Assembly instructions are unrelated to standard I/O library functions."
+        }
+      ]
     },
     {
       "guideline_id": "Rule 21.7",
@@ -5963,28 +5821,41 @@
       "applicability_safe_rust": "not_applicable",
       "accepted_matches": [
         {
-          "fls_id": "fls_usgd0xlijoxv",
+          "fls_id": "fls_pocsh1neugpc",
+          "fls_title": "Error Propagation Expression",
           "category": 0,
-          "fls_section": "21.4",
-          "fls_title": "ABI",
-          "score": 0.65,
-          "reason": "C library functions require ABI specification. atof, atoi, atol, atoll functions only accessible in Rust through unsafe extern 'C' blocks."
+          "score": 0.49,
+          "reason": "Per fls_ab4vhq4nwn7f: 'The type of an error propagation expression is associated type core::ops::Try::Output.' Rust's ? operator and Result type provide safe error handling for parsing operations."
         },
         {
-          "fls_id": "fls_tmoh3y9oyqsy",
+          "fls_id": "fls_ZfIBiJMf8qE1",
+          "fls_title": "Arithmetic Overflow",
           "category": 0,
-          "fls_section": "21.1",
-          "fls_title": "External Blocks",
-          "score": 0.55,
-          "reason": "C library function declarations would appear in unsafe external blocks, requiring unsafe context to call."
+          "score": 0.67,
+          "reason": "Per fls_8fU3h8PLasqA: 'There are two allowed behaviors for arithmetic overflow:' panic or wrapping. Per fls_oFIRXBPXu6Zv: arithmetic overflow is explicitly defined behavior, not UB."
+        },
+        {
+          "fls_id": "fls_osd6c4utyjb3",
+          "fls_title": "FFI",
+          "category": 0,
+          "score": 0.65,
+          "reason": "If C atoi functions are needed, they would be accessed via FFI requiring explicit extern blocks and unsafe context."
         }
       ],
-      "fls_rationale_type": "direct_mapping",
+      "fls_rationale_type": "rust_alternative",
       "misra_rust_category": "required",
       "misra_rust_comment": "only accessible through unsafe extern \u201cC\u201d",
       "confidence": "high",
-      "notes": "MISRA prohibits these due to undefined behavior on invalid input. In Rust, use str::parse() which returns Result for safe error handling. C functions only via unsafe extern 'C'. Per ADD-6: 'only accessible through unsafe extern \"C\"'.",
-      "rejected_matches": []
+      "notes": "MISRA prohibits C's atoi/atol due to undefined behavior on invalid input. Rust uses str::parse() returning Result<T, E> which safely handles parse failures. Overflow is defined behavior per fls_ZfIBiJMf8qE1 (panic or wrap). C functions would require FFI (fls_osd6c4utyjb3) with unsafe. This is rust_alternative: Rust's type-safe parsing eliminates the UB risk.",
+      "rejected_matches": [
+        {
+          "fls_id": "fls_usgd0xlijoxv",
+          "fls_title": "ABI",
+          "category": 0,
+          "score": 0.66,
+          "reason": "ABI conventions don't directly address string parsing safety."
+        }
+      ]
     },
     {
       "guideline_id": "Rule 21.8",
@@ -6032,7 +5903,7 @@
       "fls_rationale_type": "rust_alternative",
       "misra_rust_category": "required",
       "misra_rust_comment": "only accessible through unsafe extern \u201cC\u201d",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "C termination functions (abort, exit, _Exit, quick_exit) map to Rust's abort/panic. Rust uses std::process::abort() and panic!() for abnormal termination.",
       "rejected_matches": []
     },
@@ -6068,7 +5939,7 @@
       "fls_rationale_type": "rust_alternative",
       "misra_rust_category": "required",
       "misra_rust_comment": "only accessible through unsafe extern \u201cC\u201d",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "C's bsearch/qsort use function pointers which can be unsafe. Rust provides safe alternatives via slice::binary_search() and slice::sort() which are type-safe and don't require unsafe function pointers.",
       "rejected_matches": []
     },
@@ -6080,7 +5951,7 @@
       "applicability_safe_rust": "not_applicable",
       "misra_rust_category": "required",
       "misra_rust_comment": "only accessible through unsafe extern \u201cC\u201d",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "C time/date functions have no standard Rust equivalent. Rust uses chrono or std::time for time handling which are type-safe. This applies only when using C time functions via FFI.",
       "accepted_matches": [
         {
@@ -6119,7 +5990,7 @@
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "n_a",
       "misra_rust_comment": "no external interface",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust has no <tgmath.h>. Type-generic math in Rust is achieved through traits (e.g., num-traits crate) and generic functions, with compile-time type safety."
     },
     {
@@ -6154,7 +6025,7 @@
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "required",
       "misra_rust_comment": "only accessible through unsafe extern \u201cC\u201d",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "C floating-point environment (fenv.h) has no Rust equivalent. Rust does not expose floating-point exception flags or rounding mode control. This applies only when calling C code via FFI.",
       "rejected_matches": []
     },
@@ -6190,7 +6061,7 @@
       "fls_rationale_type": "rust_alternative",
       "misra_rust_category": "required",
       "misra_rust_comment": "only accessible through unsafe extern \u201cC\u201d",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "C's ctype.h functions accept int but expect unsigned char range. Rust's char methods (is_alphabetic, is_digit, etc.) work on Unicode chars and are type-safe. This applies only when calling C ctype.h via FFI.",
       "rejected_matches": []
     },
@@ -6226,7 +6097,7 @@
       "fls_rationale_type": "rust_alternative",
       "misra_rust_category": "required",
       "misra_rust_comment": "only accessible through unsafe extern \u201cC\u201d",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "C's memcmp can expose padding bytes. Rust's PartialEq/Eq traits provide safe comparisons. For byte-level comparison, Rust slices can be compared directly. This applies only when calling C memcmp via FFI.",
       "rejected_matches": []
     },
@@ -6262,7 +6133,7 @@
       "fls_rationale_type": "rust_alternative",
       "misra_rust_category": "required",
       "misra_rust_comment": "only accessible through unsafe extern \u201cC\u201d",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "C's memcpy/memmove/memcmp use void* which loses type information. Rust's slice::copy_from_slice and Clone are type-safe. This applies only when calling C memory functions via FFI.",
       "rejected_matches": []
     },
@@ -6298,7 +6169,7 @@
       "fls_rationale_type": "rust_alternative",
       "misra_rust_category": "required",
       "misra_rust_comment": "only accessible through unsafe extern \u201cC\u201d",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "C's memcmp with pointers to different types is problematic. Rust's comparison traits are type-safe. This applies only when calling C memcmp via FFI.",
       "rejected_matches": []
     },
@@ -6310,28 +6181,48 @@
       "applicability_safe_rust": "not_applicable",
       "accepted_matches": [
         {
-          "fls_id": "fls_usgd0xlijoxv",
+          "fls_id": "fls_vpbikb73dw4k",
+          "fls_title": "Slice Types",
           "category": 0,
-          "fls_section": "21.4",
-          "fls_title": "ABI",
-          "score": 0.65,
-          "reason": "C library functions require ABI specification. string.h buffer overflows only accessible in Rust through unsafe extern 'C' blocks."
+          "score": 0.5,
+          "reason": "Per fls_ftvua2hlvr08: 'A slice type is a sequence type that provides a view into a sequence of elements.' Rust slices carry length information, preventing buffer overflows."
         },
         {
-          "fls_id": "fls_tmoh3y9oyqsy",
+          "fls_id": "fls_4agmmu5al6gt",
+          "fls_title": "Str Type",
           "category": 0,
-          "fls_section": "21.1",
-          "fls_title": "External Blocks",
-          "score": 0.55,
-          "reason": "C library function declarations would appear in unsafe external blocks, requiring unsafe context to call."
+          "score": 0.53,
+          "reason": "Per fls_wlnoq1qoq2kr: 'Str is a sequence type that represents a slice of 8-bit unsigned bytes.' Rust strings are slices with length, not null-terminated C strings."
+        },
+        {
+          "fls_id": "fls_jep7p27kaqlp",
+          "fls_title": "Unsafety",
+          "category": 0,
+          "score": 0.61,
+          "reason": "Per fls_jd1inwz7ulyw: 'Dereferencing a value of a raw pointer type' requires unsafe. Any C-style pointer operations require unsafe blocks."
+        },
+        {
+          "fls_id": "fls_U1gHCy16emVe",
+          "fls_title": "C String Literals",
+          "category": 0,
+          "score": 0.59,
+          "reason": "Per fls_VKCW830CzhhN: 'A c string literal is a literal that consists of multiple characters with an implicit 0x00 byte appended.' Rust's CStr type for FFI interop is explicitly designed for C string handling."
         }
       ],
-      "fls_rationale_type": "direct_mapping",
+      "fls_rationale_type": "rust_alternative",
       "misra_rust_category": "required",
       "misra_rust_comment": "only accessible through unsafe extern \u201cC\u201d",
       "confidence": "high",
-      "notes": "MISRA prevents buffer overflows in string functions. Rust's String/&str are safe by design. C string functions only via unsafe extern 'C'. Use std::ffi::CStr/CString for FFI. Per ADD-6: 'only accessible through unsafe extern \"C\"'.",
-      "rejected_matches": []
+      "notes": "MISRA prohibits C string.h functions that can cause buffer overflows. Rust addresses this fundamentally: slices carry length (fls_vpbikb73dw4k), str is a length-aware type (fls_4agmmu5al6gt), and bounds are checked at runtime. C string functions would require FFI with unsafe. This is rust_alternative: Rust's type system prevents buffer overflows by design.",
+      "rejected_matches": [
+        {
+          "fls_id": "fls_p090c5oTnElW",
+          "fls_title": "Simple C String Literals",
+          "category": 0,
+          "score": 0.65,
+          "reason": "C string literal syntax exists for FFI but doesn't address the string handling safety concern - the slice types do."
+        }
+      ]
     },
     {
       "guideline_id": "Rule 21.18",
@@ -6365,7 +6256,7 @@
       "fls_rationale_type": "rust_alternative",
       "misra_rust_category": "required",
       "misra_rust_comment": "only accessible through unsafe extern \u201cC\u201d",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "C's string.h functions with size_t can have buffer overflow issues. Rust slices carry their length and prevent out-of-bounds access. This applies only when calling C string functions via FFI.",
       "rejected_matches": []
     },
@@ -6401,7 +6292,7 @@
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "required",
       "misra_rust_comment": "only accessible through unsafe extern \u201cC\u201d",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "C's localeconv/getenv/setlocale return pointers that can be invalidated. Rust's std::env functions return owned Strings. This applies only when calling C locale functions via FFI.",
       "rejected_matches": []
     },
@@ -6437,7 +6328,7 @@
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "required",
       "misra_rust_comment": "only accessible through unsafe extern \u201cC\u201d",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "C's strtok uses internal static state which is not thread-safe. Rust has no equivalent; String::split returns an iterator. This applies only when calling C strtok via FFI.",
       "rejected_matches": []
     },
@@ -6473,7 +6364,7 @@
       "fls_rationale_type": "rust_alternative",
       "misra_rust_category": "required",
       "misra_rust_comment": "only accessible through unsafe extern \u201cC\u201d",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "C's system() spawns a shell which is a security risk. Rust's std::process::Command allows explicit command execution without shell. This applies only when calling C system() via FFI.",
       "rejected_matches": []
     },
@@ -6487,7 +6378,7 @@
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "n_a",
       "misra_rust_comment": "no external interface",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust has no <tgmath.h> type-generic macros. Rust generics and traits provide type-safe polymorphism with compile-time checking.",
       "rejected_matches": []
     },
@@ -6501,7 +6392,7 @@
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "n_a",
       "misra_rust_comment": "no external interface",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust has no <tgmath.h>. Generic functions in Rust have explicit type constraints that the compiler enforces.",
       "rejected_matches": []
     },
@@ -6513,7 +6404,7 @@
       "applicability_safe_rust": "not_applicable",
       "misra_rust_category": "required",
       "misra_rust_comment": "only accessible through unsafe extern \u201cC\u201d",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "C's rand/srand are not cryptographically secure and use global state. Rust's rand crate provides thread-safe, seedable RNGs. This applies only when calling C random functions via FFI.",
       "accepted_matches": [
         {
@@ -6586,7 +6477,7 @@
       ],
       "fls_rationale_type": "direct_mapping",
       "misra_rust_category": "required",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Memory synchronization operations in C11 map to Rust's atomics. Rust's core::sync::atomic provides atomic types with ordering guarantees.",
       "rejected_matches": []
     },
@@ -6598,7 +6489,7 @@
       "applicability_safe_rust": "not_applicable",
       "misra_rust_category": "required",
       "misra_rust_comment": "only accessible through unsafe extern \u201cC\u201d",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "C11's mtx_timedlock() has no standard Rust equivalent. Rust's std::sync::Mutex doesn't support timed locking. parking_lot crate provides timed locking. This applies only when calling C mtx_timedlock via FFI.",
       "accepted_matches": [
         {
@@ -6634,7 +6525,7 @@
       "applicability_safe_rust": "not_applicable",
       "misra_rust_category": "required",
       "misra_rust_comment": "applies to resources acquired through FFI only",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Resource release maps directly to Rust's RAII/Drop semantics. In safe Rust, resources are automatically released when values go out of scope. When using C resources via FFI, manual management in unsafe code is required.",
       "accepted_matches": [
         {
@@ -6729,7 +6620,7 @@
       "fls_rationale_type": "direct_mapping",
       "misra_rust_category": "required",
       "misra_rust_comment": "only accessible through unsafe extern \u201cC\u201d",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Double-free prevention maps to Rust's ownership model. In safe Rust, each value has exactly one owner and is dropped exactly once. When using C memory via FFI, this rule applies to raw pointer management.",
       "rejected_matches": []
     },
@@ -6765,7 +6656,7 @@
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "required",
       "misra_rust_comment": "only accessible through unsafe extern \u201cC\u201d",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "C FILE* simultaneous read/write streams have no Rust equivalent. Rust's std::fs::File uses separate read/write handles. This applies only when calling C file functions via FFI.",
       "rejected_matches": []
     },
@@ -6801,7 +6692,7 @@
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "required",
       "misra_rust_comment": "only accessible through unsafe extern \u201cC\u201d",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "C FILE* read-only stream handling has no Rust equivalent. Rust's type system enforces read vs write at compile time. This applies only when calling C file functions via FFI.",
       "rejected_matches": []
     },
@@ -6837,7 +6728,7 @@
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "required",
       "misra_rust_comment": "only accessible through unsafe extern \u201cC\u201d",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "C FILE* is an opaque type that should not be dereferenced. Rust has no equivalent; File handles are opaque. This applies only when calling C file functions via FFI.",
       "rejected_matches": []
     },
@@ -6873,7 +6764,7 @@
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "required",
       "misra_rust_comment": "only accessible through unsafe extern \u201cC\u201d",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "C FILE* pointer becomes invalid after fclose. Rust's ownership prevents use-after-close. This applies only when calling C file functions via FFI.",
       "rejected_matches": []
     },
@@ -6909,7 +6800,7 @@
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "required",
       "misra_rust_comment": "only accessible through unsafe extern \u201cC\u201d",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "C's EOF macro has no Rust equivalent. Rust uses Result/Option for error/end-of-file. This applies only when calling C file functions via FFI.",
       "rejected_matches": []
     },
@@ -6921,7 +6812,7 @@
       "applicability_safe_rust": "not_applicable",
       "misra_rust_category": "disapplied",
       "misra_rust_comment": "only accessible through unsafe extern \u201cC\u201d",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "C's errno has no Rust equivalent. Rust uses Result for error handling. This applies only when calling C functions that set errno via FFI. Updated: Rust's Result/Option provide type-safe error handling as an alternative to errno.",
       "accepted_matches": [
         {
@@ -6971,7 +6862,7 @@
       "applicability_safe_rust": "not_applicable",
       "misra_rust_category": "disapplied",
       "misra_rust_comment": "only accessible through unsafe extern \u201cC\u201d",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "C's errno checking has no Rust equivalent. Rust uses Result for error handling. This applies only when calling C functions that set errno via FFI. Updated: Rust's Result/Option provide type-safe error handling as an alternative to errno.",
       "accepted_matches": [
         {
@@ -7021,7 +6912,7 @@
       "applicability_safe_rust": "not_applicable",
       "misra_rust_category": "disapplied",
       "misra_rust_comment": "only accessible through unsafe extern \u201cC\u201d",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "C's errno value semantics have no Rust equivalent. Rust uses Result for error handling. This applies only when calling C functions that set errno via FFI. Updated: Rust's Result/Option provide type-safe error handling as an alternative to errno.",
       "accepted_matches": [
         {
@@ -7070,7 +6961,7 @@
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "partial",
       "misra_rust_category": "required",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "C11 thread join/detach semantics have no direct FLS equivalent. Rust's std::thread::JoinHandle ensures threads are joined. This applies only when calling C11 thread functions via FFI.",
       "accepted_matches": [
         {
@@ -7158,7 +7049,7 @@
       "fls_rationale_type": "rust_alternative",
       "misra_rust_category": "required",
       "misra_rust_comment": "only accessible through unsafe extern \u201cC\u201d",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "C11 thread object copying maps to Rust's Send/Sync traits. Rust's type system enforces thread-safety at compile time.",
       "rejected_matches": []
     },
@@ -7214,7 +7105,7 @@
       ],
       "fls_rationale_type": "rust_alternative",
       "misra_rust_category": "required",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "C11 thread object destruction maps to Rust's Drop semantics. Rust's RAII ensures thread handles are properly cleaned up.",
       "rejected_matches": []
     },
@@ -7271,7 +7162,7 @@
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "required",
       "misra_rust_comment": "applies to creating synchronization objects before threads that use them",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "C11 thread synchronization object initialization has no direct FLS equivalent. Rust's Mutex/RwLock constructors ensure proper initialization. This applies only when using C11 sync primitives via FFI.",
       "rejected_matches": []
     },
@@ -7321,7 +7212,7 @@
       "fls_rationale_type": "rust_alternative",
       "misra_rust_category": "required",
       "misra_rust_comment": "applies to releasing synchronization objects after threads that use them",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "C11 thread-specific storage copying maps to Rust's Send/Sync traits. Rust enforces thread-safety at compile time.",
       "rejected_matches": []
     },
@@ -7378,7 +7269,7 @@
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "required",
       "misra_rust_comment": "only accessible through unsafe extern \u201cC\u201d",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "C11 mutex unlock requirements have no direct FLS equivalent. Rust's MutexGuard uses RAII to ensure unlock on drop. This applies only when using C11 mutexes via FFI.",
       "rejected_matches": []
     },
@@ -7390,7 +7281,7 @@
       "applicability_safe_rust": "not_applicable",
       "misra_rust_category": "required",
       "misra_rust_comment": "only accessible through unsafe extern \u201cC\u201d",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "C11 mutex ownership for unlock/cnd_wait has no direct FLS equivalent. Rust's MutexGuard enforces ownership. This applies only when using C11 mutexes via FFI.",
       "accepted_matches": [
         {
@@ -7446,7 +7337,7 @@
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "direct",
       "misra_rust_category": "required",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "C11 non-recursive mutex rules have no direct FLS equivalent. Rust's Mutex is non-recursive by default and panics on relock. This applies only when using C11 mutexes via FFI.",
       "accepted_matches": [
         {
@@ -7502,7 +7393,7 @@
       "applicability_all_rust": "direct",
       "applicability_safe_rust": "direct",
       "misra_rust_category": "required",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "C11 condition variable association rules have no direct FLS equivalent. Rust's Condvar doesn't have this restriction. This applies only when using C11 condition variables via FFI.",
       "accepted_matches": [
         {
@@ -7596,7 +7487,7 @@
       ],
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "required",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "C11 thread-specific storage creation timing has no direct FLS equivalent. Rust's thread_local! macro handles this at compile time. This applies only when using C11 TLS via FFI.",
       "rejected_matches": []
     },
@@ -7609,7 +7500,7 @@
       "accepted_matches": [],
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust has no C11 _Generic selection. Compile-time type dispatch in Rust uses trait methods, which are always type-safe and work with generics naturally.",
       "rejected_matches": []
     },
@@ -7622,7 +7513,7 @@
       "accepted_matches": [],
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust has no C11 _Generic selection. Rust trait-based dispatch does not have association lists with potentially unevaluated expressions.",
       "rejected_matches": []
     },
@@ -7635,7 +7526,7 @@
       "accepted_matches": [],
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust has no C11 _Generic selection with default associations. Rust match expressions require exhaustive patterns.",
       "rejected_matches": []
     },
@@ -7648,7 +7539,7 @@
       "accepted_matches": [],
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust has no C11 _Generic associations. Trait implementations specify concrete types that must be valid.",
       "rejected_matches": []
     },
@@ -7661,7 +7552,7 @@
       "accepted_matches": [],
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust has no C11 _Generic. Rust does not have implicit pointer conversions - all conversions must be explicit (via as or From/Into).",
       "rejected_matches": []
     },
@@ -7674,7 +7565,7 @@
       "accepted_matches": [],
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust has no C11 _Generic. Trait method dispatch in Rust is resolved at compile time with strict type matching.",
       "rejected_matches": []
     },
@@ -7687,7 +7578,7 @@
       "accepted_matches": [],
       "fls_rationale_type": "no_equivalent",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust has no C11 _Generic. Rust macro hygiene and the borrow checker prevent multiple evaluation issues naturally.",
       "rejected_matches": []
     },
@@ -7698,7 +7589,7 @@
       "applicability_all_rust": "not_applicable",
       "applicability_safe_rust": "not_applicable",
       "misra_rust_category": "n_a",
-      "confidence": "high",
+      "confidence": "medium",
       "notes": "Rust has no C11 _Generic associations. Match arm ordering in Rust is handled by the compiler with unreachable pattern warnings.",
       "accepted_matches": [],
       "rejected_matches": [],
