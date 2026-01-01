@@ -10,6 +10,42 @@ Valid standards: `misra-c`, `misra-cpp`, `cert-c`, `cert-cpp`
 
 ---
 
+## Project Purpose and End Goals
+
+### Ultimate Objective
+
+Identify and prioritize which coding guidelines to write for the iceoryx2 safety-critical codebase.
+
+### How This Works
+
+1. **MISRA-to-FLS Mapping** (Pipeline 2) - Determine how each MISRA C guideline relates to Rust via the FLS
+2. **iceoryx2-to-FLS Mapping** (Pipeline 1) - Document which FLS constructs iceoryx2 uses and how frequently
+3. **Cross-Reference** (Pipeline 3) - Combine both mappings to prioritize guidelines by relevance to iceoryx2
+
+### Four Output Categories
+
+The MISRA-to-FLS mapping produces four categories that drive different actions:
+
+| Category | Rationale Types | Coding Guideline Action |
+|----------|-----------------|-------------------------|
+| **Skip List** | `no_equivalent` | None needed - C concept doesn't exist in Rust |
+| **Adaptation List** | `direct_mapping`, `partial_mapping` | Adapt MISRA rule for Rust |
+| **Alternative List** | `rust_alternative` | Consider Rust-specific guidelines for the alternative mechanism |
+| **Prevention List** | `rust_prevents` | Verify prevention completeness; may need guidelines for escape hatches |
+
+### Important Distinction
+
+The mapping answers: **"Does this MISRA rule apply to Rust?"**
+
+This is separate from: **"Does Rust's mechanism need its own coding guidelines?"**
+
+For example:
+- MISRA Dir 4.8 (opaque pointers) → `rust_alternative` (Rust uses visibility instead)
+- This doesn't mean "no guideline needed" - it means "no MISRA-equivalent guideline needed"
+- Rust's visibility system might still need its own guidelines (e.g., "prefer `pub(crate)` over `pub`")
+
+---
+
 ## Tool Processing Flow
 
 ### Pipeline Overview
@@ -121,12 +157,27 @@ uv run validate-synthetic-ids
 
 ### Pipeline 3: Cross-Reference & Analysis
 
+**Status:** Partially implemented. Existing tools provide basic analysis; end-to-end prioritization workflow pending.
+
 | Command | Purpose | Usage |
 |---------|---------|-------|
 | `analyze-coverage` | Cross-reference FLS usage across all mappings | `uv run analyze-coverage` |
 | `review-mappings` | Interactive/batch review of coding standard mappings | `uv run review-mappings --standard misra-c --interactive` |
 
-**Future:** Pipeline 3 will cross-reference iceoryx2-FLS mappings with coding standards mappings to prioritize which coding guidelines to verify based on frequency of construct usage in iceoryx2.
+**Planned Tools (Not Yet Implemented):**
+
+| Command | Purpose |
+|---------|---------|
+| `generate-guideline-categories` | Group guidelines by rationale type into four category lists |
+| `compute-priority-scores` | Calculate priority based on iceoryx2 FLS usage |
+| `generate-writing-plan` | Produce prioritized guideline writing plan |
+
+**Purpose:** Cross-reference iceoryx2-FLS mappings with coding standards mappings to:
+1. Categorize guidelines by action needed (skip, adapt, alternative, prevention)
+2. Prioritize by frequency of FLS construct usage in iceoryx2
+3. Generate an actionable guideline writing plan
+
+See [`docs/future/cross-reference-analysis.md`](docs/future/cross-reference-analysis.md) for detailed design.
 
 ### Shared Resources
 
@@ -298,7 +349,8 @@ eclipse-iceoryx2-actionanable-safety-certification/
 │   │       ├── scaffold.py         # scaffold-progress
 │   │       ├── search.py           # search-fls
 │   │       ├── search_deep.py      # search-fls-deep
-│   │       └── recompute.py        # recompute-similarity
+│   │       ├── recompute.py        # recompute-similarity
+│   │       └── batch_check.py      # check-guideline
     │   └── analysis/                   # Pipeline 3: Cross-reference
     │       ├── coverage.py
     │       └── review.py
@@ -519,6 +571,48 @@ Chapter files documenting iceoryx2's use of FLS constructs. Schema: `iceoryx2-fl
   "confidence": "high"
 }
 ```
+
+### Match Semantics
+
+#### Stable Definitions
+
+| Field | Meaning |
+|-------|---------|
+| `accepted_matches` | FLS sections **relevant to understanding** how Rust handles the concern this MISRA rule addresses |
+| `rejected_matches` | FLS sections **considered during verification** but determined to be tangential or not useful |
+
+These definitions are **stable across all rationale types**.
+
+#### What Goes in `accepted_matches`
+
+Include an FLS section if someone working on coding guidelines would benefit from reading it to understand how Rust handles this concern.
+
+| Rationale Type | `accepted_matches` Contains |
+|----------------|----------------------------|
+| `direct_mapping` | FLS sections with equivalent rules/constraints |
+| `partial_mapping` | FLS sections covering the parts that map |
+| `rust_alternative` | FLS sections showing Rust's alternative mechanism |
+| `rust_prevents` | FLS sections showing HOW Rust prevents the issue |
+| `no_equivalent` | FLS sections explaining WHY the concept doesn't exist |
+
+#### What Goes in `rejected_matches`
+
+Include when:
+- FLS section appeared in similarity search but isn't useful for understanding the concern
+- Section is too generic (e.g., "Expressions" for a specific operator rule)
+- Section is tangentially related but doesn't help someone understand the MISRA concern
+
+#### Exception: Meta-Information
+
+FLS sections that are meta-information about the FLS document itself (e.g., "Scope", "Extent", "Versioning" from Chapter 1) should go in `rejected_matches` even if they appeared in search, because they describe the FLS document rather than language constructs that code uses.
+
+#### Why Both Fields Serve One Purpose
+
+`accepted_matches` serves two purposes simultaneously:
+1. **Applicability documentation** - Explains why/how the rule applies (or doesn't) to Rust
+2. **Cross-reference target** - Links to iceoryx2-FLS mapping for prioritization
+
+Both purposes need the same FLS sections, so one field serves both needs.
 
 ---
 
@@ -769,6 +863,10 @@ uv run record-decision \
     --decision accept_with_modifications \
     --confidence high \
     --rationale-type direct_mapping \
+    --search-used "550e8400-e29b-41d4-a716-446655440000:search-fls-deep:Dir 1.1:5" \
+    --search-used "a1b2c3d4-5678-90ab-cdef-1234567890ab:search-fls:ABI implementation:10" \
+    --search-used "b2c3d4e5-6789-01ab-cdef-2345678901ab:search-fls:rust ABI extern:10" \
+    --search-used "c3d4e5f6-7890-12ab-cdef-3456789012ab:search-fls:calling convention:10" \
     --accept-match "fls_abc123:ABI:0:0.64:FLS states X addressing MISRA concern Y"
 ```
 
@@ -800,11 +898,15 @@ uv run merge-decisions \
 
 This populates `verification_decision` fields in the batch report and aggregates any `proposed_applicability_change` entries for Phase 3 review.
 
+**Duplicate UUID validation:** Before merging, the tool checks all decision files for duplicate `search_id` values. If any UUID appears in multiple guidelines' decisions, the merge fails with an error listing the conflicts. This enforces that each search execution can only be used by one guideline.
+
 **Incremental merge:** Can merge partial progress (e.g., 30/54 decisions) and continue later.
 
 #### Phase 2: Analysis & Decision (LLM)
 
 If resuming an interrupted session, output "Resuming from Rule X.Y (N/M complete)" at the start.
+
+**IMPORTANT:** Process guidelines ONE AT A TIME. Complete all 4 searches and record the decision for each guideline before moving to the next. Do not batch searches across multiple guidelines or reuse search results. See "Search Protocol Enforcement" below for details.
 
 Process the batch report JSON and for each guideline:
 
@@ -822,7 +924,31 @@ Process the batch report JSON and for each guideline:
 | Standards Definitions | `coding-standards-fls-mapping/standards/misra_c_2025.json` | MISRA rule definitions |
 | Similarity Results | `embeddings/similarity/misra_c_to_fls.json` | Full similarity scores |
 
-3. **Search FLS for relevant content:**
+3. **Validate batch membership** before starting work on a guideline:
+
+   ```bash
+   uv run check-guideline --standard misra-c --guideline "Rule X.Y" --batch N
+   ```
+
+   This confirms the guideline is in the expected batch and shows its current status.
+   
+   **Success output:**
+   ```
+   OK: Guideline 'Rule 17.12' is in batch 2
+     Batch: 2 (Not applicable)
+     Batch status: pending
+     Guideline status: pending
+   ```
+   
+   **If batch mismatch:**
+   ```
+   ERROR: Guideline 'Rule 15.4' is not in batch 2. Actual batch: 1 (High-score direct mappings)
+     Batch 1 status: completed
+   ```
+   
+   If the guideline is not in the expected batch, do NOT proceed. Skip to the next guideline.
+
+4. **Search FLS for relevant content:**
 
    **Required search protocol** (mandatory for each guideline):
    
@@ -862,12 +988,86 @@ Process the batch report JSON and for each guideline:
    - Check `tools/data/fls_section_mapping.json` for section hierarchy
    - Check `coding-standards-fls-mapping/concept_to_fls.json` for known concept mappings
 
-4. **Make decisions:**
+#### Search Protocol Enforcement
+
+**CRITICAL: Each guideline MUST have its own 4 searches with results analyzed specifically for that guideline.**
+
+DO NOT:
+- Run searches for multiple guidelines, then use the combined results to inform multiple decisions
+- "Double-dip" by using the same search output to justify matches for different guidelines
+- Batch deep searches for multiple guidelines then share follow-up search results
+- Record decisions for multiple guidelines after a shared set of searches
+
+DO:
+- Complete all 4 searches for ONE guideline
+- Analyze the results specifically for that guideline's concerns
+- Record the decision immediately after completing all 4 searches
+- Then move to the next guideline and repeat
+
+**Example of WRONG approach:**
+```
+# WRONG: Batching searches then using results for multiple guidelines
+search-fls-deep Rule 10.1
+search-fls-deep Rule 10.2  
+search-fls-deep Rule 10.3
+search-fls "type conversion"  # Uses this result for all 3 rules
+record-decision Rule 10.1    # Based on shared search results
+record-decision Rule 10.2    # Based on same shared results
+record-decision Rule 10.3    # Based on same shared results
+```
+
+**Example of CORRECT approach:**
+```
+# CORRECT: Complete one rule at a time with dedicated analysis
+search-fls-deep Rule 10.1
+search-fls "essential type operand inappropriate" 
+search-fls "rust type system operator requirements"
+search-fls "implicit conversion promotion safety"
+# Analyze these results for Rule 10.1 specifically
+record-decision Rule 10.1
+
+search-fls-deep Rule 10.2
+search-fls "character type arithmetic expression"
+search-fls "rust char unicode operations"
+search-fls "char integer conversion safety"
+# Analyze these results for Rule 10.2 specifically
+record-decision Rule 10.2
+```
+
+**Rationale:** Each MISRA rule addresses specific concerns. Even thematically related rules have nuances that require dedicated analysis of search results in the context of that specific rule. Using the same search output for multiple guidelines leads to:
+- Missing rule-specific FLS content that would be found with tailored queries
+- Generic/shallow justifications that don't address the specific rule's concerns
+- Lower quality mappings that may need rework
+
+#### Batch Membership Validation
+
+The `record-decision` tool validates that the guideline belongs to the specified batch before writing. This is a safety net to prevent recording decisions to the wrong batch directory.
+
+**If `record-decision` fails with a batch mismatch error:**
+
+```
+ERROR: Guideline 'Rule 15.4' is not in batch 2. Actual batch: 1 (High-score direct mappings)
+```
+
+This means:
+1. The guideline was incorrectly included in the current batch's work
+2. All 4 searches performed for this guideline are wasted (cannot reuse UUIDs)
+3. The guideline must be verified when its actual batch is processed
+
+**Recovery steps:**
+1. Note which guideline caused the error
+2. Do NOT attempt to record the decision to the correct batch (search UUIDs were generated for the wrong context)
+3. Continue with the next guideline in the current batch
+4. The skipped guideline will be properly verified when its actual batch is processed
+
+**Prevention:** Always run `check-guideline` before starting the 4-search protocol for each guideline.
+
+5. **Make decisions:**
    - Accept matches with score and detailed reason (quote FLS paragraphs)
    - Reject matches above threshold with explanation
    - **May propose FLS sections not in similarity results** - clearly document why in the `reason` field
 
-5. **Flag applicability changes** (do not apply yet):
+6. **Flag applicability changes** (do not apply yet):
    
    When analysis suggests an applicability change is warranted:
    - In the guideline's `verification_decision`, set `proposed_applicability_change`:
@@ -883,7 +1083,7 @@ Process the batch report JSON and for each guideline:
    
    All changes remain in the batch report (`cache/verification/`) until approved in Phase 3.
 
-6. **Record decisions** using the `record-decision` tool:
+7. **Record decisions** using the `record-decision` tool:
 
    ```bash
    uv run record-decision \
@@ -893,10 +1093,24 @@ Process the batch report JSON and for each guideline:
        --decision accept_with_modifications \
        --confidence high \
        --rationale-type direct_mapping \
+       --search-used "550e8400-e29b-41d4-a716-446655440000:search-fls-deep:Dir 1.1:5" \
+       --search-used "a1b2c3d4-5678-90ab-cdef-1234567890ab:search-fls:ABI implementation:10" \
+       --search-used "b2c3d4e5-6789-01ab-cdef-2345678901ab:search-fls:rust ABI extern:10" \
+       --search-used "c3d4e5f6-7890-12ab-cdef-3456789012ab:search-fls:calling convention:10" \
        --accept-match "fls_abc123:Section Title:0:0.65:FLS states X which addresses MISRA concern Y" \
        --reject-match "fls_xyz789:Other Section:-1:0.55:Not relevant - discusses Z instead" \
        --notes "Optional notes about the decision"
    ```
+
+   **Search-used format:** `search_id:tool:query:result_count`
+   - `search_id`: UUID4 from search tool output (required for new decisions)
+   - `tool`: Search tool name (search-fls, search-fls-deep, etc.)
+   - `query`: The search query or guideline ID
+   - `result_count`: Number of results returned
+
+   Search tools now output a UUID at the start of their output. Copy this UUID
+   when recording decisions to ensure each search is uniquely tracked. At merge
+   time, duplicate UUIDs across different guidelines will cause a hard failure.
 
    **Match format:** `fls_id:fls_title:category:score:reason`
    - `fls_id`: FLS identifier (e.g., `fls_abc123`)
@@ -915,6 +1129,10 @@ Process the batch report JSON and for each guideline:
        --decision accept_with_modifications \
        --confidence high \
        --rationale-type rust_prevents \
+       --search-used "uuid1:search-fls-deep:Rule 11.1:5" \
+       --search-used "uuid2:search-fls:type conversion pointer:10" \
+       --search-used "uuid3:search-fls:rust type cast safety:10" \
+       --search-used "uuid4:search-fls:unsafe transmute:10" \
        --accept-match "fls_xxx:Type Safety:0:0.70:Rust type system prevents this" \
        --propose-change "applicability_all_rust:direct:rust_prevents:Rust's type system prevents unsafe conversions"
    ```
@@ -929,6 +1147,7 @@ Process the batch report JSON and for each guideline:
    - `fls_rationale_type`: "direct_mapping", "rust_alternative", "rust_prevents", "no_equivalent", or "partial_mapping"
    - `accepted_matches`: Array of FLS matches (each with `fls_id`, `fls_title`, `category`, `score`, `reason`)
    - `rejected_matches`: Array of explicitly rejected matches (optional but recommended for high-scoring rejects)
+   - `search_tools_used`: Array of search tool records (each with `search_id`, `tool`, `query`, `result_count`). At least 4 required.
    - `notes`: Additional notes (optional)
 
 **Crash recovery:** If the session is interrupted, the batch report in `cache/verification/` preserves all completed work. Run `check-progress` to see where to resume.
@@ -1072,13 +1291,45 @@ After `apply-verification` completes successfully:
 
 ### FLS Rationale Types
 
-| Value | Description |
-|-------|-------------|
-| `direct_mapping` | Rule maps directly to FLS concepts |
-| `rust_alternative` | Rust has a different/better mechanism |
-| `rust_prevents` | Rust's design prevents the issue |
-| `no_equivalent` | C concept doesn't exist in Rust |
-| `partial_mapping` | Some aspects map, others don't |
+#### Definitions and Decision Criteria
+
+| Type | Definition | Test Question | Coding Guideline Implication |
+|------|------------|---------------|------------------------------|
+| `direct_mapping` | MISRA rule maps directly to FLS concepts | "Does Rust have equivalent rules/constraints?" | **Adapt** MISRA rule for Rust |
+| `partial_mapping` | Some aspects map, others don't | "Does only part of the rule apply?" | **Partial adaptation** needed |
+| `rust_alternative` | Rust has a different mechanism for the same goal | "Does Rust solve this problem differently?" | Consider **separate** Rust-specific guidelines |
+| `rust_prevents` | Rust's design makes the issue impossible | "Does Rust's type system/borrow checker prevent this?" | **Verify** prevention is complete; check escape hatches |
+| `no_equivalent` | The C concept doesn't exist in Rust | "Does the C concept literally not exist?" | **None** needed - document as N/A |
+
+#### Distinguishing `no_equivalent` from `rust_alternative`
+
+This is the most common point of confusion. Use this test:
+
+| Question | `no_equivalent` | `rust_alternative` |
+|----------|-----------------|-------------------|
+| Does the underlying safety concern exist? | No - the problem space doesn't exist | Yes - but Rust solves it differently |
+| Is there a Rust mechanism addressing it? | No mechanism needed | Yes - a different mechanism |
+
+#### Concrete Examples
+
+**`no_equivalent` - Dir 4.10 (Header Guards):**
+- C problem: Headers can be included multiple times, causing redefinition errors
+- Rust: No header files exist. Modules are compiled once by design.
+- Classification: `no_equivalent` - the problem space (textual inclusion) doesn't exist
+- `accepted_matches`: Modules, Use Imports, Source Files (explain WHY no headers)
+
+**`rust_alternative` - Dir 4.8 (Opaque Pointers):**
+- C problem: Hide implementation details from external code
+- Rust: Uses visibility system (`pub`, `pub(crate)`, private-by-default) instead
+- Classification: `rust_alternative` - same goal (encapsulation), different mechanism
+- `accepted_matches`: Visibility, Struct Types, Field Access (show HOW Rust does it)
+
+**`rust_prevents` - Rule 10.4 (Usual Arithmetic Conversions):**
+- C problem: Implicit type promotions in arithmetic can cause unexpected results
+- Rust: Type system requires operands to be the same type; `i32 + i64` is a compile error
+- Classification: `rust_prevents` - Rust's type system makes the issue impossible
+- `accepted_matches`: Arithmetic Expressions, Type Coercion (show HOW Rust prevents it)
+- Note: `as` casts are an escape hatch that may need separate guidelines
 
 ### Validation
 

@@ -48,6 +48,7 @@ from fls_tools.shared import (
     SEE_ALSO_SCORE_PENALTY,
     SEE_ALSO_MAX_MATCHES,
     VALID_STANDARDS,
+    generate_search_id,
 )
 
 
@@ -614,6 +615,11 @@ def main():
     args = parser.parse_args()
     
     root = get_project_root()
+    
+    # Generate and print search ID for verification workflow tracking
+    search_id = generate_search_id()
+    print(f"Search ID: {search_id}")
+    print()
     
     print(f"Performing deep search for: {args.guideline}", file=sys.stderr)
     

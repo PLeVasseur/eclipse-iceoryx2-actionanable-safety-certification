@@ -53,20 +53,12 @@
       "description": "Additional notes about the decision"
     },
     "search_tools_used": {
-      "oneOf": [
-        {
-          "type": "array",
-          "minItems": 1,
-          "description": "Search tools used during verification (at least one required)",
-          "items": {
-            "$ref": "#/$defs/search_tool_usage"
-          }
-        },
-        {
-          "$ref": "#/$defs/search_waiver",
-          "description": "Waiver for legacy decisions made before search tracking"
-        }
-      ]
+      "type": "array",
+      "minItems": 1,
+      "description": "Search tools used during verification (at least one required)",
+      "items": {
+        "$ref": "#/$defs/search_tool_usage"
+      }
     },
     "proposed_applicability_change": {
       "type": ["object", "null"],
@@ -136,6 +128,11 @@
       "description": "Record of a search tool used during verification",
       "required": ["tool", "query"],
       "properties": {
+        "search_id": {
+          "type": "string",
+          "format": "uuid",
+          "description": "Unique identifier for this search execution (UUID4). Required for new decisions, optional for legacy decisions."
+        },
         "tool": {
           "type": "string",
           "enum": ["search-fls", "search-fls-deep", "recompute-similarity", "read-fls-chapter", "grep-fls"],
@@ -149,31 +146,6 @@
           "type": "integer",
           "minimum": 0,
           "description": "Number of results returned (optional)"
-        }
-      }
-    },
-    "search_waiver": {
-      "type": "object",
-      "description": "Waiver for decisions made before search tracking requirement",
-      "required": ["waiver_reason", "approved_by", "approval_date"],
-      "properties": {
-        "waiver_reason": {
-          "type": "string",
-          "enum": ["legacy_decision", "batch_report_sufficient", "manual_fls_review"],
-          "description": "Reason for waiving search tool requirement"
-        },
-        "approved_by": {
-          "type": "string",
-          "description": "GitHub handle or name of person approving the waiver"
-        },
-        "approval_date": {
-          "type": "string",
-          "format": "date",
-          "description": "Date waiver was approved (YYYY-MM-DD)"
-        },
-        "notes": {
-          "type": ["string", "null"],
-          "description": "Additional context for the waiver"
         }
       }
     }

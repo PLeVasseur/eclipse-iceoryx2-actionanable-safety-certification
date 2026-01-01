@@ -27,6 +27,7 @@ from fls_tools.shared import (
     get_fls_section_embeddings_path,
     get_fls_paragraph_embeddings_path,
     CATEGORY_NAMES,
+    generate_search_id,
 )
 
 
@@ -253,6 +254,11 @@ def main():
     
     root = get_project_root()
     fls_dir = get_fls_dir(root)
+    
+    # Generate and print search ID for verification workflow tracking
+    search_id = generate_search_id()
+    print(f"Search ID: {search_id}")
+    print()
     
     # Load FLS chapters for metadata
     print("Loading FLS chapters...", file=sys.stderr)

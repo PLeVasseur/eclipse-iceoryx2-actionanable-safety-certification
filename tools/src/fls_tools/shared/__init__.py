@@ -97,6 +97,11 @@ from .similarity import (
     search_embeddings,
 )
 
+from .search_id import (
+    generate_search_id,
+    validate_search_id,
+)
+
 __all__ = [
     # Standard name utilities
     "VALID_STANDARDS",
@@ -168,4 +173,7 @@ __all__ = [
     # similarity
     "cosine_similarity_vector",
     "search_embeddings",
+    # search_id
+    "generate_search_id",
+    "validate_search_id",
 ]

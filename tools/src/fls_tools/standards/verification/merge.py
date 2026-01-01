@@ -36,6 +36,8 @@ from pathlib import Path
 
 import jsonschema
 
+from collections import defaultdict
+
 from fls_tools.shared import (
     get_project_root,
     get_coding_standards_dir,
@@ -153,6 +155,37 @@ def load_decision_files(
             valid_decisions.append(decision)
     
     return valid_decisions, errors_by_file
+
+
+def check_duplicate_search_ids(decisions: list[dict]) -> dict[str, list[str]]:
+    """
+    Check for duplicate search IDs across decisions.
+    
+    Returns:
+        Dict mapping duplicate search_id -> list of guideline_ids that use it
+    """
+    # Map search_id -> list of guideline_ids
+    search_id_usage: dict[str, list[str]] = defaultdict(list)
+    
+    for decision in decisions:
+        guideline_id = decision.get("guideline_id", "(unknown)")
+        search_tools = decision.get("search_tools_used", [])
+        
+        # search_tools_used is always a list (waiver removed)
+        if isinstance(search_tools, list):
+            for tool in search_tools:
+                search_id = tool.get("search_id")
+                if search_id:
+                    search_id_usage[search_id].append(guideline_id)
+    
+    # Filter to only duplicates (used by more than one guideline)
+    duplicates = {
+        sid: guidelines
+        for sid, guidelines in search_id_usage.items()
+        if len(guidelines) > 1
+    }
+    
+    return duplicates
 
 
 def merge_decisions_into_report(
@@ -366,6 +399,16 @@ def main():
         sys.exit(0)
     
     print(f"Found {len(decisions)} valid decision file(s)")
+    
+    # Check for duplicate search IDs
+    duplicates = check_duplicate_search_ids(decisions)
+    if duplicates:
+        print("\nERROR: Duplicate search IDs detected:", file=sys.stderr)
+        for search_id, guidelines in duplicates.items():
+            print(f"  UUID {search_id[:8]}... used by: {', '.join(guidelines)}", file=sys.stderr)
+        print("\nEach search execution can only be claimed by one guideline.", file=sys.stderr)
+        print("Re-run the affected searches to generate new UUIDs.", file=sys.stderr)
+        sys.exit(1)
     
     # Merge decisions
     print(f"\nMerging decisions into batch report...")

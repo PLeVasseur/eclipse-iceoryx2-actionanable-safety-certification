@@ -23,24 +23,21 @@ Usage (in-place mode - updates batch report):
 
 Usage (per-guideline mode - parallel-safe):
     uv run record-decision \\
+        --standard misra-c \\
         --batch 4 \\
         --guideline "Dir 1.1" \\
         --decision accept_with_modifications \\
         --confidence high \\
         --rationale-type direct_mapping \\
-        --search-used "search-fls:implementation defined ABI:8" \\
-        --search-used "read-fls-chapter:chapter_21.json" \\
+        --search-used "550e8400-e29b-41d4-a716-446655440000:search-fls-deep:Dir 1.1:5" \\
+        --search-used "a1b2c3d4-5678-90ab-cdef-1234567890ab:search-fls:implementation defined ABI:8" \\
         --accept-match "fls_abc123:Section Title:0:0.65:FLS states X which addresses MISRA concern Y"
 
-    # With waiver for legacy decisions:
-    uv run record-decision \\
-        --batch 4 \\
-        --guideline "Dir 1.1" \\
-        --decision accept_with_modifications \\
-        --confidence high \\
-        --rationale-type direct_mapping \\
-        --search-waiver "legacy_decision:PLeVasseur:2026-01-01:Decision made before search tracking" \\
-        --accept-match "fls_abc123:Section Title:0:0.65:FLS states X which addresses MISRA concern Y"
+Search-used format: search_id:tool:query:result_count
+  - search_id: UUID4 from search tool output (required for new decisions)
+  - tool: Search tool name (search-fls, search-fls-deep, etc.)
+  - query: The search query or guideline ID
+  - result_count: Number of results returned
 
 Match format: fls_id:fls_title:category:score:reason
   - fls_id: FLS identifier (e.g., fls_abc123)
@@ -57,13 +54,16 @@ Change format: field:current_value:proposed_value:rationale
 
 Exceptional cases (no FLS matches):
     uv run record-decision \\
+        --standard misra-c \\
         --batch 4 \\
         --guideline "Rule X.Y" \\
         --decision accept_no_matches \\
         --confidence high \\
         --rationale-type no_equivalent \\
-        --search-used "search-fls-deep:Rule X.Y" \\
-        --search-used "search-fls:relevant keywords:10" \\
+        --search-used "uuid1:search-fls-deep:Rule X.Y:5" \\
+        --search-used "uuid2:search-fls:relevant keywords:10" \\
+        --search-used "uuid3:search-fls:rust equivalent:10" \\
+        --search-used "uuid4:search-fls:safety concept:10" \\
         --force-no-matches \\
         --notes "Searched for X, Y, Z. Rule concerns C preprocessor feature with no Rust equivalent."
 """
@@ -84,6 +84,7 @@ from fls_tools.shared import (
     validate_path_in_project,
     PathOutsideProjectError,
     VALID_STANDARDS,
+    validate_search_id,
 )
 
 
@@ -100,7 +101,6 @@ VALID_RATIONALE_TYPES = [
 VALID_CATEGORIES = [0, -1, -2, -3, -4, -5, -6, -7, -8]
 VALID_CHANGE_FIELDS = ["applicability_all_rust", "applicability_safe_rust", "fls_rationale_type"]
 VALID_SEARCH_TOOLS = ["search-fls", "search-fls-deep", "recompute-similarity", "read-fls-chapter", "grep-fls"]
-VALID_WAIVER_REASONS = ["legacy_decision", "batch_report_sufficient", "manual_fls_review"]
 
 
 def load_json(path: Path) -> dict:
@@ -231,71 +231,74 @@ def parse_search_used(search_used_list: list[str]) -> list[dict]:
     """
     Parse --search-used arguments into search_tool_usage objects.
     
-    Format: tool:query[:result_count]
+    Format: search_id:tool:query:result_count
+      - search_id: UUID4 from search tool output (required)
+      - tool: Search tool name
+      - query: The search query or guideline ID
+      - result_count: Number of results returned
+    
+    Legacy format (without UUID) is also accepted for backward compatibility:
+      tool:query[:result_count]
     """
     result = []
     for item in search_used_list:
-        parts = item.split(":", 2)  # Split into at most 3 parts
-        if len(parts) < 2:
-            raise ValueError(
-                f"Invalid --search-used format: '{item}'. "
-                f"Expected 'tool:query[:result_count]'"
-            )
+        parts = item.split(":", 3)  # Split into at most 4 parts
         
-        tool, query = parts[0], parts[1]
-        if tool not in VALID_SEARCH_TOOLS:
-            raise ValueError(
-                f"Invalid tool '{tool}'. Must be one of: {', '.join(VALID_SEARCH_TOOLS)}"
-            )
+        # Detect format based on first part
+        # If first part looks like a UUID, use new format
+        # Otherwise, use legacy format (no UUID)
+        first_part = parts[0] if parts else ""
+        is_new_format = validate_search_id(first_part)
         
-        entry: dict = {"tool": tool, "query": query}
-        if len(parts) == 3:
+        if is_new_format:
+            # New format: search_id:tool:query:result_count
+            if len(parts) < 4:
+                raise ValueError(
+                    f"Invalid --search-used format: '{item}'. "
+                    f"Expected 'search_id:tool:query:result_count' "
+                    f"(UUID detected but missing fields)"
+                )
+            
+            search_id, tool, query, result_count_str = parts
+            
+            if tool not in VALID_SEARCH_TOOLS:
+                raise ValueError(
+                    f"Invalid tool '{tool}'. Must be one of: {', '.join(VALID_SEARCH_TOOLS)}"
+                )
+            
             try:
-                entry["result_count"] = int(parts[2])
+                result_count = int(result_count_str)
             except ValueError:
-                raise ValueError(f"Invalid result_count '{parts[2]}'. Must be integer.")
+                raise ValueError(f"Invalid result_count '{result_count_str}'. Must be integer.")
+            
+            entry: dict = {
+                "search_id": search_id,
+                "tool": tool,
+                "query": query,
+                "result_count": result_count,
+            }
+        else:
+            # Legacy format: tool:query[:result_count] (no UUID)
+            if len(parts) < 2:
+                raise ValueError(
+                    f"Invalid --search-used format: '{item}'. "
+                    f"Expected 'search_id:tool:query:result_count' or legacy 'tool:query[:result_count]'"
+                )
+            
+            tool, query = parts[0], parts[1]
+            if tool not in VALID_SEARCH_TOOLS:
+                raise ValueError(
+                    f"Invalid tool '{tool}'. Must be one of: {', '.join(VALID_SEARCH_TOOLS)}"
+                )
+            
+            entry = {"tool": tool, "query": query}
+            if len(parts) >= 3:
+                try:
+                    entry["result_count"] = int(parts[2])
+                except ValueError:
+                    raise ValueError(f"Invalid result_count '{parts[2]}'. Must be integer.")
         
         result.append(entry)
-    return result
-
-
-def parse_search_waiver(waiver_str: str) -> dict:
-    """
-    Parse --search-waiver argument into search_waiver object.
-    
-    Format: reason:approved_by:approval_date[:notes]
-    """
-    parts = waiver_str.split(":", 3)  # Split into at most 4 parts
-    
-    if len(parts) < 3:
-        raise ValueError(
-            f"Invalid --search-waiver format: '{waiver_str}'. "
-            f"Expected 'reason:approved_by:approval_date[:notes]'"
-        )
-    
-    reason, approved_by, approval_date = parts[0], parts[1], parts[2]
-    
-    if reason not in VALID_WAIVER_REASONS:
-        raise ValueError(
-            f"Invalid waiver reason '{reason}'. "
-            f"Must be one of: {', '.join(VALID_WAIVER_REASONS)}"
-        )
-    
-    # Validate date format (YYYY-MM-DD)
-    try:
-        datetime.strptime(approval_date, "%Y-%m-%d")
-    except ValueError:
-        raise ValueError(f"Invalid date format '{approval_date}'. Expected YYYY-MM-DD")
-    
-    result = {
-        "waiver_reason": reason,
-        "approved_by": approved_by,
-        "approval_date": approval_date,
-    }
-    
-    if len(parts) == 4:
-        result["notes"] = parts[3]
-    
     return result
 
 
@@ -424,15 +427,9 @@ def main():
         dest="search_used",
         action="append",
         default=[],
-        help="Search tool used (format: tool:query[:result_count]). Repeatable. "
-             f"Tools: {', '.join(VALID_SEARCH_TOOLS)}",
-    )
-    parser.add_argument(
-        "--search-waiver",
-        type=str,
-        default=None,
-        help="Waiver for search requirement (format: reason:approved_by:approval_date[:notes]). "
-             f"Reasons: {', '.join(VALID_WAIVER_REASONS)}",
+        help="Search tool used (format: search_id:tool:query:result_count). Repeatable. "
+             f"Tools: {', '.join(VALID_SEARCH_TOOLS)}. "
+             "search_id is the UUID output by search tools.",
     )
     parser.add_argument(
         "--dry-run",
@@ -455,6 +452,17 @@ def main():
     if not per_guideline_mode and args.batch_report is None:
         print("ERROR: Either --batch or --batch-report must be provided", file=sys.stderr)
         sys.exit(1)
+    
+    # Validate guideline is in the specified batch (per-guideline mode only)
+    if per_guideline_mode:
+        from fls_tools.standards.verification.batch_check import validate_guideline_in_batch
+        
+        is_valid, error_msg, actual_batch = validate_guideline_in_batch(
+            root, args.standard, args.guideline, args.batch
+        )
+        if not is_valid:
+            print(f"ERROR: {error_msg}", file=sys.stderr)
+            sys.exit(1)
     
     # Resolve output directory for per-guideline mode
     output_dir = None
@@ -533,42 +541,30 @@ Exceptional cases only - use --force-no-matches when:
         print("ERROR: --force-no-matches requires --notes explaining why no FLS matches apply", file=sys.stderr)
         sys.exit(1)
     
-    # Validate and parse search tool usage (must have either --search-used or --search-waiver)
-    if not args.search_used and not args.search_waiver:
-        print("ERROR: Either --search-used or --search-waiver must be provided", file=sys.stderr)
-        print("  Use --search-used for new decisions (repeatable)", file=sys.stderr)
-        print("  Use --search-waiver for legacy decisions requiring approval", file=sys.stderr)
-        sys.exit(1)
-    
-    if args.search_used and args.search_waiver:
-        print("ERROR: Cannot specify both --search-used and --search-waiver", file=sys.stderr)
+    # Validate and parse search tool usage
+    if not args.search_used:
+        print("ERROR: --search-used is required (repeatable)", file=sys.stderr)
+        print("  Format: search_id:tool:query:result_count", file=sys.stderr)
+        print("  search_id is the UUID output by search tools", file=sys.stderr)
         sys.exit(1)
     
     # Parse search tool usage
-    search_tools_used = None
     MIN_SEARCHES = 4
-    if args.search_used:
-        try:
-            search_tools_used = parse_search_used(args.search_used)
-        except ValueError as e:
-            print(f"ERROR: {e}", file=sys.stderr)
-            sys.exit(1)
-        
-        # Enforce minimum search count
-        if len(search_tools_used) < MIN_SEARCHES:
-            print(f"ERROR: At least {MIN_SEARCHES} search tools required, got {len(search_tools_used)}", file=sys.stderr)
-            print("  Required protocol:", file=sys.stderr)
-            print("    1. search-fls-deep --guideline <id>", file=sys.stderr)
-            print("    2. search-fls with C/MISRA terminology", file=sys.stderr)
-            print("    3. search-fls with Rust terminology", file=sys.stderr)
-            print("    4. search-fls with safety/semantic concepts", file=sys.stderr)
-            sys.exit(1)
-    else:
-        try:
-            search_tools_used = parse_search_waiver(args.search_waiver)
-        except ValueError as e:
-            print(f"ERROR: {e}", file=sys.stderr)
-            sys.exit(1)
+    try:
+        search_tools_used = parse_search_used(args.search_used)
+    except ValueError as e:
+        print(f"ERROR: {e}", file=sys.stderr)
+        sys.exit(1)
+    
+    # Enforce minimum search count
+    if len(search_tools_used) < MIN_SEARCHES:
+        print(f"ERROR: At least {MIN_SEARCHES} search tools required, got {len(search_tools_used)}", file=sys.stderr)
+        print("  Required protocol:", file=sys.stderr)
+        print("    1. search-fls-deep --guideline <id>", file=sys.stderr)
+        print("    2. search-fls with C/MISRA terminology", file=sys.stderr)
+        print("    3. search-fls with Rust terminology", file=sys.stderr)
+        print("    4. search-fls with safety/semantic concepts", file=sys.stderr)
+        sys.exit(1)
     
     # Handle applicability change proposal
     proposed_change = None
@@ -636,14 +632,11 @@ Exceptional cases only - use --force-no-matches when:
             if args.notes:
                 print(f"  Notes: {args.notes}")
             # Print search tools info
-            if isinstance(search_tools_used, list):
-                print(f"  Search Tools Used: {len(search_tools_used)}")
-                for s in search_tools_used:
-                    count_str = f" ({s['result_count']} results)" if 'result_count' in s else ""
-                    print(f"    - {s['tool']}: {s['query']}{count_str}")
-            else:
-                print(f"  Search Waiver: {search_tools_used['waiver_reason']}")
-                print(f"    Approved by: {search_tools_used['approved_by']}")
+            print(f"  Search Tools Used: {len(search_tools_used)}")
+            for s in search_tools_used:
+                uuid_str = f"[{s['search_id'][:8]}...] " if s.get('search_id') else ""
+                count_str = f" ({s['result_count']} results)" if 'result_count' in s else ""
+                print(f"    - {uuid_str}{s['tool']}: {s['query']}{count_str}")
             if proposed_change:
                 print(f"  Proposed Change: {proposed_change['field']}: "
                       f"{proposed_change['current_value']} -> {proposed_change['proposed_value']}")
@@ -656,10 +649,7 @@ Exceptional cases only - use --force-no-matches when:
             print(f"  Output: {output_path}")
             print(f"  Decision: {args.decision}, Confidence: {args.confidence}")
             print(f"  Accepted: {len(accepted_matches)}, Rejected: {len(rejected_matches)}")
-            if isinstance(search_tools_used, list):
-                print(f"  Search Tools: {len(search_tools_used)}")
-            else:
-                print(f"  Search Waiver: {search_tools_used['waiver_reason']}")
+            print(f"  Search Tools: {len(search_tools_used)}")
             if proposed_change:
                 print(f"  Proposed change: {proposed_change['field']}: "
                       f"{proposed_change['current_value']} -> {proposed_change['proposed_value']}")
