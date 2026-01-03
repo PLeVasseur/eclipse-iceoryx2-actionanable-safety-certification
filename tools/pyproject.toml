@@ -80,6 +80,10 @@ extract-clippy-lints = "fls_tools.rust_docs.extract_clippy:main"
 generate-rust-embeddings = "fls_tools.rust_docs.generate_embeddings:main"
 search-rust-context = "fls_tools.rust_docs.search:main"
 
+# Concept crosswalk enrichment
+enrich-concept = "fls_tools.standards.crosswalk.enrich:main"
+validate-concept-crosswalk = "fls_tools.standards.crosswalk.validate:main"
+
 [build-system]
 requires = ["uv_build>=0.9.21,<0.10.0"]
 build-backend = "uv_build"

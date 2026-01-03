@@ -1,0 +1,182 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/eclipse-iceoryx/iceoryx2/coding-standards-fls-mapping/schema/concept_crosswalk.schema.json",
+  "title": "Concept to FLS Crosswalk",
+  "description": "Schema for mapping C/MISRA concepts to Ferrocene Language Specification (FLS) and other Rust documentation sources",
+  "type": "object",
+  "required": ["metadata", "concepts"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "description": "File metadata and configuration",
+      "required": ["description", "purpose", "fls_version", "created_date", "last_updated"],
+      "properties": {
+        "description": {
+          "type": "string",
+          "description": "Human-readable description of this file"
+        },
+        "purpose": {
+          "type": "string",
+          "description": "How this file is used in the toolchain"
+        },
+        "fls_version": {
+          "type": "string",
+          "description": "Version of the FLS used for mappings"
+        },
+        "created_date": {
+          "type": "string",
+          "format": "date",
+          "description": "Date when file was created (YYYY-MM-DD)"
+        },
+        "last_updated": {
+          "type": "string",
+          "format": "date",
+          "description": "Date when file was last updated (YYYY-MM-DD)"
+        },
+        "applicability_model": {
+          "type": "string",
+          "description": "Description of the applicability model used"
+        }
+      }
+    },
+    "concepts": {
+      "type": "object",
+      "description": "Mapping from concept keys to concept definitions",
+      "additionalProperties": {
+        "$ref": "#/$defs/concept_entry"
+      }
+    },
+    "applicability_rules": {
+      "type": "object",
+      "description": "Rules for determining applicability based on keywords/patterns",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "description": { "type": "string" },
+          "keyword_patterns": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "category_patterns": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "rule_patterns": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "note": { "type": "string" }
+        }
+      }
+    },
+    "misra_category_hints": {
+      "type": "object",
+      "description": "Hints for MISRA rule categories based on concept mappings",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "concepts": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Concept keys relevant to this MISRA category"
+          },
+          "typical_applicability_all_rust": {
+            "type": "string",
+            "enum": ["direct", "partial", "not_applicable", "rust_prevents", "unmapped"]
+          },
+          "typical_applicability_safe_rust": {
+            "type": "string",
+            "enum": ["direct", "partial", "not_applicable", "rust_prevents", "unmapped"]
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "concept_entry": {
+      "type": "object",
+      "description": "A concept mapping with cross-references to multiple documentation sources",
+      "required": ["description", "keywords"],
+      "properties": {
+        "description": {
+          "type": "string",
+          "description": "Human-readable description of this concept"
+        },
+        "keywords": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 1,
+          "description": "Search keywords for finding this concept (used by mapping tools)"
+        },
+        "c_terms": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "C/MISRA-specific terminology for this concept"
+        },
+        "rust_terms": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Rust-specific terminology for this concept"
+        },
+        "aliases": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Alternative keys that map to this concept (for fuzzy matching)"
+        },
+        "fls_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^fls_[a-zA-Z0-9]+$"
+          },
+          "description": "Ferrocene Language Specification IDs"
+        },
+        "fls_sections": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Human-readable FLS section numbers (e.g., '15.1', '6.5.10')"
+        },
+        "reference_ids": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Rust Reference r[...] IDs (e.g., 'type.pointer.raw.safety')"
+        },
+        "ucg_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^ucg_"
+          },
+          "description": "Unsafe Code Guidelines section IDs"
+        },
+        "nomicon_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^nomicon_"
+          },
+          "description": "Rustonomicon section IDs"
+        },
+        "clippy_lints": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Clippy lint names (without 'clippy::' prefix)"
+        },
+        "typical_applicability_all_rust": {
+          "type": "string",
+          "enum": ["direct", "partial", "not_applicable", "rust_prevents", "unmapped"],
+          "description": "Typical applicability for all Rust code"
+        },
+        "typical_applicability_safe_rust": {
+          "type": "string",
+          "enum": ["direct", "partial", "not_applicable", "rust_prevents", "unmapped"],
+          "description": "Typical applicability for safe Rust code only"
+        },
+        "rationale": {
+          "type": "string",
+          "description": "Explanation of why this concept has the given applicability"
+        }
+      }
+    }
+  }
+}

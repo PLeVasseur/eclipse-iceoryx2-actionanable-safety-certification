@@ -1,6 +1,6 @@
 # Rust Context Search Infrastructure
 
-**Status:** In Progress  
+**Status:** Complete  
 **Created:** 2026-01-03  
 **Last Updated:** 2026-01-03
 
@@ -781,15 +781,15 @@ uv run record-decision \
 
 | Phase | Description | Status | Notes |
 |-------|-------------|--------|-------|
-| 1 | Repository Acquisition | [ ] Not started | `clone-rust-docs` tool |
-| 2 | Extract Reference | [ ] Not started | `extract-reference` tool |
-| 3 | Extract UCG | [ ] Not started | `extract-ucg` tool |
-| 4 | Extract Nomicon | [ ] Not started | `extract-nomicon` tool |
-| 5 | Extract Clippy | [ ] Not started | `extract-clippy-lints` tool |
-| 6 | Generate Embeddings | [ ] Not started | `generate-rust-embeddings` tool |
-| 7 | Search Tool | [ ] Not started | `search-rust-context` tool |
-| 8 | Workflow Integration | [ ] Not started | AGENTS.md updates (requires approval) |
-| 9 | Concept Crosswalk | [ ] Not started | Enrich `concept_to_fls.json` |
+| 1 | Repository Acquisition | [x] Complete | `clone-rust-docs` tool |
+| 2 | Extract Reference | [x] Complete | `extract-reference` tool |
+| 3 | Extract UCG | [x] Complete | `extract-ucg` tool |
+| 4 | Extract Nomicon | [x] Complete | `extract-nomicon` tool |
+| 5 | Extract Clippy | [x] Complete | `extract-clippy-lints` tool |
+| 6 | Generate Embeddings | [x] Complete | `generate-rust-embeddings` tool |
+| 7 | Search Tool | [x] Complete | `search-rust-context` tool |
+| 8 | Workflow Integration | [x] Complete | AGENTS.md updated with 5-search workflow |
+| 9 | Concept Crosswalk | [x] Complete | `enrich-concept`, `validate-concept-crosswalk` tools |
 
 ### File Checklist
 

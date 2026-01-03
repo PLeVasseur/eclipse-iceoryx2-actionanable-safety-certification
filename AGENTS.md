@@ -221,6 +221,52 @@ Clippy results are weighted by category relevance to safety:
 | `pedantic` | 1.0x | Stricter checks |
 | `nursery` | 0.9x | Not yet stable |
 
+**Concept Crosswalk Enrichment:**
+
+The concept crosswalk (`concept_to_fls.json`) maps C/MISRA concepts to Rust documentation sources. During verification, use `enrich-concept` to add cross-references discovered via `search-rust-context`.
+
+| Command | Input | Output | Description |
+|---------|-------|--------|-------------|
+| `enrich-concept` | Concept key + IDs | Updated `concept_to_fls.json` | Add Reference/UCG/Nomicon/Clippy cross-references |
+| `validate-concept-crosswalk` | `concept_to_fls.json` | Validation report | Schema, ID, and alias validation |
+
+**Fuzzy Matching:** When adding/modifying concepts, the tool uses four-layer matching to prevent duplicates:
+1. Exact match (key or alias)
+2. Normalized match (case/punctuation insensitive)
+3. Token match (Jaccard similarity ≥0.5)
+4. Embedding match (cosine similarity ≥0.75)
+
+**Usage:**
+```bash
+cd tools
+
+# Show existing concept
+uv run enrich-concept --concept "type_conversions" --show
+
+# Add cross-references (validates IDs automatically)
+uv run enrich-concept --concept "type_conversions" \
+    --add-reference "expr.as" \
+    --add-clippy "cast_ptr_alignment"
+
+# Create new concept
+uv run enrich-concept --concept "drop_glue" \
+    --description "Compiler-generated destructor code" \
+    --add-rust-term "drop glue" \
+    --add-fls "fls_u2mzjgiwbkz0"
+
+# Validate entire crosswalk
+uv run validate-concept-crosswalk --verbose
+```
+
+**New Schema Fields:** The enriched crosswalk supports additional fields:
+- `c_terms` - C/MISRA terminology
+- `rust_terms` - Rust-specific terminology  
+- `aliases` - Alternative keys for fuzzy matching
+- `reference_ids` - Rust Reference IDs
+- `ucg_ids` - UCG section IDs
+- `nomicon_ids` - Nomicon section IDs
+- `clippy_lints` - Clippy lint names
+
 ### Pipeline 3: Cross-Reference & Analysis
 
 **Status:** Partially implemented. Existing tools provide basic analysis; end-to-end prioritization workflow pending.
@@ -277,8 +323,9 @@ See [`docs/future/cross-reference-analysis.md`](docs/future/cross-reference-anal
 | `fls_section_mapping.json` | `tools/data/` | Canonical FLS section hierarchy with fabricated sections |
 | `fls_id_to_section.json` | `tools/data/` | Reverse lookup from FLS ID to section |
 | `synthetic_fls_ids.json` | `tools/data/` | Tracks generated FLS IDs |
-| `concept_to_fls.json` | `coding-standards-fls-mapping/` | C concept to FLS ID keyword mappings |
+| `concept_to_fls.json` | `coding-standards-fls-mapping/` | C concept to FLS ID keyword mappings (enriched with cross-references) |
 | `misra_rust_applicability.json` | `coding-standards-fls-mapping/` | MISRA ADD-6 Rust applicability data |
+| `concept_crosswalk.schema.json` | `coding-standards-fls-mapping/schema/` | JSON Schema for concept crosswalk |
 
 ---
 
@@ -355,6 +402,7 @@ eclipse-iceoryx2-actionanable-safety-certification/
 │   ├── schema/
 │   │   ├── batch_report.schema.json
 │   │   ├── coding_standard_rules.schema.json
+│   │   ├── concept_crosswalk.schema.json
 │   │   ├── fls_mapping.schema.json
 │   │   ├── misra_rust_applicability.schema.json
 │   │   └── verification_progress.schema.json
@@ -404,6 +452,8 @@ eclipse-iceoryx2-actionanable-safety-certification/
 │   │   ├── index.json                  # Lint statistics
 │   │   ├── lints.json                  # Full lint definitions (793)
 │   │   └── embeddings.pkl              # Lint embeddings
+│   ├── concepts/                       # Concept crosswalk embeddings
+│   │   └── embeddings.pkl              # Cached concept embeddings for fuzzy matching
 │   ├── misra-c/                        # Per-standard embeddings (kebab-case)
 │   │   ├── embeddings.pkl              # Guideline-level embeddings
 │   │   ├── query_embeddings.pkl        # Query-level embeddings
@@ -455,6 +505,11 @@ eclipse-iceoryx2-actionanable-safety-certification/
     │   │   ├── embeddings/             # Embedding generation
     │   │   ├── mapping/                # Mapping generation
     │   │   ├── validation/             # Validation scripts
+    │   │   ├── crosswalk/              # Concept crosswalk enrichment
+    │   │   │   ├── enrich.py           # enrich-concept
+    │   │   │   ├── validate.py         # validate-concept-crosswalk
+    │   │   │   ├── matching.py         # Four-layer fuzzy matching
+    │   │   │   └── validation.py       # ID validation utilities
 │   │   └── verification/           # Verification workflow
 │   │       ├── batch.py            # verify-batch
 │   │       ├── apply.py            # apply-verification
