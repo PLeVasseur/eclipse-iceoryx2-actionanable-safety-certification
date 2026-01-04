@@ -106,9 +106,12 @@ VALID_CONTEXTS = ["all_rust", "safe_rust"]
 VALID_APPLICABILITY = ["yes", "no", "partial"]
 VALID_ADJUSTED_CATEGORIES = ["required", "advisory", "recommended", "disapplied", "implicit", "n_a"]
 VALID_CHANGE_FIELDS = ["applicability", "adjusted_category", "rationale_type"]
-VALID_SEARCH_TOOLS = ["search-fls", "search-fls-deep", "recompute-similarity", "read-fls-chapter", "grep-fls"]
+VALID_SEARCH_TOOLS = ["search-fls", "search-fls-deep", "search-rust-context", "recompute-similarity", "read-fls-chapter", "grep-fls"]
 
 MIN_SEARCHES_PER_CONTEXT = 4
+
+# Schema version for new decisions
+DECISION_SCHEMA_VERSION = "3.1"
 
 
 def load_json(path: Path) -> dict:
@@ -292,6 +295,112 @@ def build_scaffolded_context() -> dict:
     }
 
 
+def collect_existing_uuids(decisions_dir: Path, current_guideline: str) -> tuple[dict[str, list[str]], dict[str, str]]:
+    """
+    Collect all UUIDs from existing decision files in the batch directory.
+    
+    Returns:
+        - cross_guideline_uuids: dict mapping UUID -> list of (guideline, context) that use it
+        - Excludes the current guideline's file
+    """
+    cross_guideline_uuids: dict[str, list[str]] = {}
+    
+    if not decisions_dir.exists():
+        return cross_guideline_uuids, {}
+    
+    current_filename = guideline_id_to_filename(current_guideline)
+    
+    for f in decisions_dir.glob("*.json"):
+        if f.name == current_filename:
+            continue  # Skip current guideline's file
+        
+        try:
+            with open(f) as fp:
+                data = json.load(fp)
+        except (json.JSONDecodeError, IOError):
+            continue
+        
+        guideline = data.get("guideline_id", f.stem)
+        
+        for ctx in ["all_rust", "safe_rust"]:
+            ctx_data = data.get(ctx, {})
+            searches = ctx_data.get("search_tools_used", [])
+            for s in searches:
+                uuid = s.get("search_id")
+                if uuid:
+                    if uuid not in cross_guideline_uuids:
+                        cross_guideline_uuids[uuid] = []
+                    cross_guideline_uuids[uuid].append(f"{guideline}:{ctx}")
+    
+    return cross_guideline_uuids, {}
+
+
+def validate_uuids_for_context(
+    search_tools_used: list[dict],
+    context: str,
+    existing_decision: dict | None,
+    cross_guideline_uuids: dict[str, list[str]],
+    guideline_id: str,
+) -> list[str]:
+    """
+    Validate that UUIDs are not improperly reused.
+    
+    Rules:
+    1. search-fls-deep UUIDs CAN be shared across contexts of the same guideline
+    2. search-fls UUIDs must be UNIQUE per context (even within same guideline)
+    3. NO UUIDs can be shared across different guidelines
+    
+    Returns list of error messages (empty if valid).
+    """
+    errors = []
+    
+    # Get UUIDs from the other context of the same guideline (if exists)
+    other_context = "safe_rust" if context == "all_rust" else "all_rust"
+    other_context_uuids: dict[str, str] = {}  # uuid -> tool
+    
+    if existing_decision:
+        other_ctx_data = existing_decision.get(other_context, {})
+        other_searches = other_ctx_data.get("search_tools_used", [])
+        for s in other_searches:
+            uuid = s.get("search_id")
+            tool = s.get("tool")
+            if uuid and tool:
+                other_context_uuids[uuid] = tool
+    
+    # Check each UUID in the new search list
+    for search in search_tools_used:
+        uuid = search.get("search_id")
+        tool = search.get("tool")
+        
+        if not uuid:
+            continue
+        
+        # Check 1: Cross-guideline reuse (never allowed)
+        if uuid in cross_guideline_uuids:
+            usages = cross_guideline_uuids[uuid]
+            errors.append(
+                f"UUID {uuid[:12]}... already used by other guideline(s): {', '.join(usages)}"
+            )
+            continue
+        
+        # Check 2: Within-guideline reuse
+        if uuid in other_context_uuids:
+            other_tool = other_context_uuids[uuid]
+            # search-fls-deep can be shared across contexts of same guideline
+            if tool == "search-fls-deep" and other_tool == "search-fls-deep":
+                # Allowed - deep search is guideline-specific
+                pass
+            else:
+                # Not allowed - search-fls must have separate searches per context
+                errors.append(
+                    f"UUID {uuid[:12]}... already used in {other_context} context. "
+                    f"Only search-fls-deep UUIDs can be shared across contexts. "
+                    f"Run separate search-fls queries for each context."
+                )
+    
+    return errors
+
+
 def build_v2_decision_file(guideline_id: str) -> dict:
     """Build a new v2 decision file with scaffolded contexts (legacy)."""
     return {
@@ -314,9 +423,9 @@ def load_add6_data(root: Path) -> dict:
 
 
 def build_v3_decision_file(guideline_id: str, add6_snapshot: dict | None) -> dict:
-    """Build a new v3 decision file with ADD-6 snapshot and scaffolded contexts."""
+    """Build a new v3.1 decision file with ADD-6 snapshot and scaffolded contexts."""
     return {
-        "schema_version": "3.0",
+        "schema_version": DECISION_SCHEMA_VERSION,
         "guideline_id": guideline_id,
         "misra_add6_snapshot": add6_snapshot,
         "all_rust": build_scaffolded_context(),
@@ -389,6 +498,19 @@ def main():
         required=True,
         choices=VALID_CONFIDENCE,
         help="Confidence level in the decision",
+    )
+    parser.add_argument(
+        "--misra-concern",
+        type=str,
+        required=True,
+        help="The MISRA safety concern as it applies to this context (1-2 sentences). "
+             "Use 'Not applicable - <reason>' if the concern doesn't exist in this context.",
+    )
+    parser.add_argument(
+        "--rust-analysis",
+        type=str,
+        required=True,
+        help="How Rust handles this concern in this context, with FLS references (2-4 sentences).",
     )
     parser.add_argument(
         "--accept-match",
@@ -553,18 +675,37 @@ Use --force-no-matches only for exceptional cases (requires --notes).
     # Load existing decision file or create new one
     if output_path.exists():
         decision_file = load_json(output_path)
-        # Accept v2.0, v2.1, or v3.0 - upgrade to v3.0 if needed
+        # Accept v2.0, v2.1, v3.0, or v3.1 - upgrade to v3.1 if needed
         existing_version = decision_file.get("schema_version")
-        if existing_version not in ("2.0", "2.1", "3.0"):
+        if existing_version not in ("2.0", "2.1", "3.0", "3.1"):
             print(f"ERROR: Existing decision file has unsupported version: {existing_version}", file=sys.stderr)
             sys.exit(1)
-        # Upgrade to v3.0 if needed
-        if existing_version in ("2.0", "2.1"):
-            decision_file["schema_version"] = "3.0"
+        # Upgrade to v3.1
+        if existing_version in ("2.0", "2.1", "3.0"):
+            decision_file["schema_version"] = DECISION_SCHEMA_VERSION
             if "misra_add6_snapshot" not in decision_file and add6_snapshot:
                 decision_file["misra_add6_snapshot"] = add6_snapshot
     else:
         decision_file = build_v3_decision_file(args.guideline, add6_snapshot)
+    
+    # Validate UUIDs are not reused improperly
+    cross_guideline_uuids, _ = collect_existing_uuids(output_dir, args.guideline)
+    uuid_errors = validate_uuids_for_context(
+        search_tools_used,
+        context,
+        decision_file if output_path.exists() else None,
+        cross_guideline_uuids,
+        args.guideline,
+    )
+    
+    if uuid_errors:
+        print("ERROR: UUID validation failed:", file=sys.stderr)
+        for err in uuid_errors:
+            print(f"  - {err}", file=sys.stderr)
+        print("\nEach search execution must have a unique UUID.", file=sys.stderr)
+        print("Run separate search-fls queries for each context.", file=sys.stderr)
+        print("Only search-fls-deep UUIDs can be shared across contexts of the same guideline.", file=sys.stderr)
+        sys.exit(1)
     
     # Build the context decision
     context_decision = {
@@ -573,6 +714,10 @@ Use --force-no-matches only for exceptional cases (requires --notes).
         "adjusted_category": args.adjusted_category,
         "rationale_type": args.rationale_type,
         "confidence": args.confidence,
+        "analysis_summary": {
+            "misra_concern": args.misra_concern,
+            "rust_analysis": args.rust_analysis,
+        },
         "accepted_matches": accepted_matches,
         "rejected_matches": rejected_matches,
         "search_tools_used": search_tools_used,
@@ -605,6 +750,7 @@ Use --force-no-matches only for exceptional cases (requires --notes).
     if args.dry_run:
         print(f"DRY RUN - Would write decision file:")
         print(f"  Path: {output_path}")
+        print(f"  Schema Version: {DECISION_SCHEMA_VERSION}")
         print(f"  Guideline: {args.guideline}")
         print(f"  Context: {context}")
         print(f"  Decision: {args.decision}")
@@ -612,6 +758,8 @@ Use --force-no-matches only for exceptional cases (requires --notes).
         print(f"  Adjusted Category: {args.adjusted_category}")
         print(f"  Rationale Type: {args.rationale_type}")
         print(f"  Confidence: {args.confidence}")
+        print(f"  MISRA Concern: {args.misra_concern}")
+        print(f"  Rust Analysis: {args.rust_analysis}")
         print(f"  Accepted Matches: {len(accepted_matches)}")
         for m in accepted_matches:
             reason_preview = m['reason'][:60] + '...' if len(m['reason']) > 60 else m['reason']

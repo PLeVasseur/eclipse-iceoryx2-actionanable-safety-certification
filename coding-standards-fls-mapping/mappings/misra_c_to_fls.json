@@ -420,7 +420,7 @@
         "applicability": "yes",
         "adjusted_category": "advisory",
         "rationale_type": "direct_mapping",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_qezwyridmjob",
@@ -460,7 +460,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_prevents",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_s5nfhBFOk8Bu",
@@ -632,7 +632,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_3qnpv2z7yjil",
@@ -665,7 +665,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_3qnpv2z7yjil",
@@ -775,7 +775,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_alternative",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_jdknpu3kf865",
@@ -808,7 +808,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_alternative",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_jdknpu3kf865",
@@ -925,7 +925,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_maw4u1o8q37u",
@@ -958,7 +958,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_maw4u1o8q37u",
@@ -1305,7 +1305,7 @@
         "applicability": "yes",
         "adjusted_category": "required",
         "rationale_type": "direct_mapping",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_3v733mnewssy",
@@ -1359,7 +1359,7 @@
         "applicability": "partial",
         "adjusted_category": "required",
         "rationale_type": "partial_mapping",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_eiw4by8z75di",
@@ -1674,7 +1674,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_9cd746qe40ag",
@@ -1715,7 +1715,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_9cd746qe40ag",
@@ -1967,7 +1967,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_9ucqbbd0s2yo",
@@ -2008,7 +2008,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_9ucqbbd0s2yo",
@@ -2314,7 +2314,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_q8l2jza7d9xa",
@@ -2348,7 +2348,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_q8l2jza7d9xa",
@@ -2393,7 +2393,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_prevents",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_2ed4axpsy9u0",
@@ -2433,7 +2433,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_prevents",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_2ed4axpsy9u0",
@@ -2493,7 +2493,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_fgnllgz5k3e6",
@@ -2527,7 +2527,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_fgnllgz5k3e6",
@@ -2572,7 +2572,7 @@
         "applicability": "yes",
         "adjusted_category": "required",
         "rationale_type": "partial_mapping",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_21vnag69kbwe",
@@ -2619,7 +2619,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_21vnag69kbwe",
@@ -2757,7 +2757,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_xlfo7di0gsqz",
@@ -2804,7 +2804,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_xlfo7di0gsqz",
@@ -2964,7 +2964,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_dq403wq5yrs",
@@ -2997,7 +2997,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_dq403wq5yrs",
@@ -3098,7 +3098,7 @@
         "applicability": "yes",
         "adjusted_category": "n_a",
         "rationale_type": "rust_alternative",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_jdknpu3kf865",
@@ -3138,7 +3138,7 @@
         "applicability": "yes",
         "adjusted_category": "n_a",
         "rationale_type": "rust_alternative",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_jdknpu3kf865",
@@ -3241,7 +3241,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_rjxpof29a3nl",
@@ -3275,7 +3275,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_rjxpof29a3nl",
@@ -3321,7 +3321,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_3qnpv2z7yjil",
@@ -3354,7 +3354,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_9ucqbbd0s2yo",
@@ -3406,7 +3406,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_fmdn7n7s413d",
@@ -3439,7 +3439,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_fmdn7n7s413d",
@@ -3584,7 +3584,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_2ed4axpsy9u0",
@@ -3610,7 +3610,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_2ed4axpsy9u0",
@@ -3655,7 +3655,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_prevents",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_hucd52suu6it",
@@ -3688,7 +3688,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_prevents",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_hucd52suu6it",
@@ -3733,7 +3733,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_2ed4axpsy9u0",
@@ -3759,7 +3759,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_2ed4axpsy9u0",
@@ -3804,7 +3804,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_2ed4axpsy9u0",
@@ -3838,7 +3838,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_2ed4axpsy9u0",
@@ -3891,7 +3891,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_qcb1n9c0e5hz",
@@ -3932,7 +3932,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_yivm43r5wnp1",
@@ -3984,7 +3984,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_qcb1n9c0e5hz",
@@ -4017,7 +4017,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_qcb1n9c0e5hz",
@@ -4119,7 +4119,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_gklst7joeo33",
@@ -4159,7 +4159,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_e9hwvqsib5d5",
@@ -4261,7 +4261,7 @@
         "applicability": "yes",
         "adjusted_category": "required",
         "rationale_type": "partial_mapping",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_tmoh3y9oyqsy",
@@ -4308,7 +4308,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_maw4u1o8q37u",
@@ -4410,7 +4410,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_jdknpu3kf865",
@@ -4444,7 +4444,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_jdknpu3kf865",
@@ -4552,7 +4552,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_ypio6boj3pwf",
@@ -4586,7 +4586,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_ypio6boj3pwf",
@@ -4632,7 +4632,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_uj0kpjwyld60",
@@ -4665,7 +4665,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_uj0kpjwyld60",
@@ -4848,7 +4848,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_v5x85lt5ulva",
@@ -4882,7 +4882,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_a14slch83hzn",
@@ -5044,7 +5044,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_aibb2quva4mn",
@@ -5078,7 +5078,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_ohhsmifo0urd",
@@ -5123,7 +5123,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_e9hwvqsib5d5",
@@ -5149,7 +5149,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_maw4u1o8q37u",
@@ -5195,7 +5195,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_e9hwvqsib5d5",
@@ -5229,7 +5229,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_jdknpu3kf865",
@@ -5354,7 +5354,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_8tsynkj2cufj",
@@ -5380,7 +5380,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_k64tfywtn0g8",
@@ -5425,7 +5425,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_xinykul167l",
@@ -5459,7 +5459,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_xinykul167l",
@@ -5504,7 +5504,7 @@
         "applicability": "yes",
         "adjusted_category": "required",
         "rationale_type": "direct_mapping",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_8tsynkj2cufj",
@@ -5544,7 +5544,7 @@
         "applicability": "yes",
         "adjusted_category": "required",
         "rationale_type": "direct_mapping",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_8tsynkj2cufj",
@@ -5603,7 +5603,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_xinykul167l",
@@ -5637,7 +5637,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_xinykul167l",
@@ -5682,7 +5682,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_8tsynkj2cufj",
@@ -5708,7 +5708,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_8tsynkj2cufj",
@@ -5753,7 +5753,7 @@
         "applicability": "yes",
         "adjusted_category": "required",
         "rationale_type": "direct_mapping",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_vyc9vcuamlph",
@@ -5793,7 +5793,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_prevents",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_3xvm61x0t251",
@@ -5845,7 +5845,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_prevents",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_abp6tjbz8tpn",
@@ -5899,7 +5899,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_prevents",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_abp6tjbz8tpn",
@@ -5974,7 +5974,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_prevents",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_wrvjizrqf3po",
@@ -6007,7 +6007,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_prevents",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_wrvjizrqf3po",
@@ -6052,7 +6052,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_prevents",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_1qhsun1vyarz",
@@ -6092,7 +6092,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_prevents",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_1qhsun1vyarz",
@@ -6145,7 +6145,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_prevents",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_sLCBZ3vG1AWs",
@@ -6185,7 +6185,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_prevents",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_qqrqyc6uhol",
@@ -6237,7 +6237,7 @@
         "applicability": "yes",
         "adjusted_category": "recommended",
         "rationale_type": "direct_mapping",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_1qhsun1vyarz",
@@ -6277,7 +6277,7 @@
         "applicability": "partial",
         "adjusted_category": "recommended",
         "rationale_type": "partial_mapping",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_1qhsun1vyarz",
@@ -6329,7 +6329,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_prevents",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_vk17mfv47wk9",
@@ -6376,7 +6376,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_prevents",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_ittf4yggk7do",
@@ -6442,7 +6442,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_prevents",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_8imzo7agyx0k",
@@ -6475,7 +6475,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_prevents",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_kc3gwj9x3jnr",
@@ -6589,7 +6589,7 @@
         "applicability": "yes",
         "adjusted_category": "required",
         "rationale_type": "direct_mapping",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_xztr1kebz8bo",
@@ -6629,7 +6629,7 @@
         "applicability": "partial",
         "adjusted_category": "required",
         "rationale_type": "partial_mapping",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_xztr1kebz8bo",
@@ -6823,7 +6823,7 @@
         "applicability": "yes",
         "adjusted_category": "required",
         "rationale_type": "direct_mapping",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_1qhsun1vyarz",
@@ -6863,7 +6863,7 @@
         "applicability": "yes",
         "adjusted_category": "required",
         "rationale_type": "direct_mapping",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_1qhsun1vyarz",
@@ -6971,7 +6971,7 @@
         "applicability": "yes",
         "adjusted_category": "advisory",
         "rationale_type": "partial_mapping",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_1qhsun1vyarz",
@@ -7004,7 +7004,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_142vncdktbin",
@@ -7112,7 +7112,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_59mpteeczzo",
@@ -7145,7 +7145,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_ezh8aq6fmdvz",
@@ -7190,7 +7190,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_vyc9vcuamlph",
@@ -7216,7 +7216,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_hidfwkwr2r73",
@@ -7316,7 +7316,7 @@
         "applicability": "yes",
         "adjusted_category": "recommended",
         "rationale_type": "direct_mapping",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_kw25194gpael",
@@ -7356,7 +7356,7 @@
         "applicability": "yes",
         "adjusted_category": "recommended",
         "rationale_type": "direct_mapping",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_kw25194gpael",
@@ -7472,7 +7472,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_hndm19t57wby",
@@ -7498,7 +7498,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_nf65p0l0v0gr",
@@ -7608,7 +7608,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_uj0kpjwyld60",
@@ -7634,7 +7634,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_AAYJDCNMJgTq",
@@ -7679,7 +7679,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_3pjla9s93mhd",
@@ -7705,7 +7705,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_vyc9vcuamlph",
@@ -7750,7 +7750,7 @@
         "applicability": "yes",
         "adjusted_category": "recommended",
         "rationale_type": "rust_alternative",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_8tsynkj2cufj",
@@ -7790,7 +7790,7 @@
         "applicability": "yes",
         "adjusted_category": "recommended",
         "rationale_type": "rust_alternative",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_k64tfywtn0g8",
@@ -7842,7 +7842,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_prevents",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_izmfimd4yg27",
@@ -7868,7 +7868,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_prevents",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_vsxsbqps64o",
@@ -7913,7 +7913,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_290jmzfh7x4e",
@@ -7939,7 +7939,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_bwwtgqprbxrm",
@@ -7985,7 +7985,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_prevents",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_qengy157fa4a",
@@ -8018,7 +8018,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_prevents",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_qengy157fa4a",
@@ -8126,7 +8126,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_g1z6bpyjqxkz",
@@ -8152,7 +8152,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_66m4rnbssgig",
@@ -8262,7 +8262,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_onfyolkcbeh3",
@@ -8288,7 +8288,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_onfyolkcbeh3",
@@ -8453,7 +8453,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_jr4tpuyksr75",
@@ -8479,7 +8479,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_hndm19t57wby",
@@ -8524,7 +8524,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_uusi0zej55is",
@@ -8550,7 +8550,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_sjwrlwvpulp",
@@ -8595,7 +8595,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_769b4p8v3cwu",
@@ -8621,7 +8621,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_lnpyb285qdiy",
@@ -8666,7 +8666,7 @@
         "applicability": "yes",
         "adjusted_category": "recommended",
         "rationale_type": "direct_mapping",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_jr4tpuyksr75",
@@ -8706,7 +8706,7 @@
         "applicability": "yes",
         "adjusted_category": "recommended",
         "rationale_type": "direct_mapping",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_onfyolkcbeh3",
@@ -8849,7 +8849,7 @@
         "applicability": "yes",
         "adjusted_category": "advisory",
         "rationale_type": "direct_mapping",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_mkut7gut49gi",
@@ -8882,7 +8882,7 @@
         "applicability": "yes",
         "adjusted_category": "advisory",
         "rationale_type": "direct_mapping",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_p0t1ch115tra",
@@ -8934,7 +8934,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_e5td0fa92fay",
@@ -8960,7 +8960,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_e5td0fa92fay",
@@ -9005,7 +9005,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_e5td0fa92fay",
@@ -9031,7 +9031,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_e5td0fa92fay",
@@ -9131,7 +9131,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_prevents",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_qfsfnql1t7m",
@@ -9157,7 +9157,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_prevents",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_oj8dg28xw5yp",
@@ -9202,7 +9202,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_e5td0fa92fay",
@@ -9228,7 +9228,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_e5td0fa92fay",
@@ -9273,7 +9273,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_mkut7gut49gi",
@@ -9299,7 +9299,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_mkut7gut49gi",
@@ -9344,7 +9344,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_o4uSLPo00KUg",
@@ -9370,7 +9370,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_wjldgtio5o75",
@@ -9526,7 +9526,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_prevents",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_uj0kpjwyld60",
@@ -9552,7 +9552,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_prevents",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_uj0kpjwyld60",
@@ -9767,7 +9767,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_alternative",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_98lnexk53ru4",
@@ -9793,7 +9793,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_alternative",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_98lnexk53ru4",
@@ -9895,7 +9895,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_prevents",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_airvr79xkcag",
@@ -9921,7 +9921,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_prevents",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_airvr79xkcag",
@@ -9966,7 +9966,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_xztr1kebz8bo",
@@ -9992,7 +9992,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_xztr1kebz8bo",
@@ -10376,7 +10376,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_uj0kpjwyld60",
@@ -10402,7 +10402,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_uj0kpjwyld60",
@@ -10448,7 +10448,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_prevents",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_3gapgqys3ceb",
@@ -10474,7 +10474,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_prevents",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_imr2jx6cbuzq",
@@ -10520,7 +10520,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_prevents",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_a14slch83hzn",
@@ -10553,7 +10553,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_prevents",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_cckf6dtkgwb4",
@@ -10605,7 +10605,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_imr2jx6cbuzq",
@@ -10631,7 +10631,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_fx7b3qv3ghca",
@@ -10744,7 +10744,7 @@
         "applicability": "yes",
         "adjusted_category": "advisory",
         "rationale_type": "direct_mapping",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_fmdn7n7s413d",
@@ -10784,7 +10784,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_prevents",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_szibmtfv117b",
@@ -10836,7 +10836,7 @@
         "applicability": "yes",
         "adjusted_category": "required",
         "rationale_type": "direct_mapping",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_18k3uajrgq5f",
@@ -10876,7 +10876,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_prevents",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_szibmtfv117b",
@@ -10929,7 +10929,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_9gprp17h6t1q",
@@ -10955,7 +10955,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_9gprp17h6t1q",
@@ -11000,7 +11000,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_1zbaajz5prpn",
@@ -11026,7 +11026,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_1zbaajz5prpn",
@@ -11071,7 +11071,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_e9hwvqsib5d5",
@@ -11104,7 +11104,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_e9hwvqsib5d5",
@@ -11213,7 +11213,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_octf6sf7yso",
@@ -11239,7 +11239,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_xlfo7di0gsqz",
@@ -11291,7 +11291,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_qpx6lgapce57",
@@ -11317,7 +11317,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_gvwd0kf72jt",
@@ -11419,7 +11419,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_u1afezy1ye99",
@@ -11445,7 +11445,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_l96kyix5xsof",
@@ -11490,7 +11490,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_fymvsy6ig99a",
@@ -11516,7 +11516,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_spdmit5fy7el",
@@ -11561,7 +11561,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_ym00b6ewf4n3",
@@ -11587,7 +11587,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_8zypylq60zba",
@@ -11632,7 +11632,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_k01lsksqtq1r",
@@ -11658,7 +11658,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_dw1nq4r9ghhd",
@@ -11703,7 +11703,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_wjldgtio5o75",
@@ -11729,7 +11729,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_xscdaxvs4wx4",
@@ -11774,7 +11774,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_gvwd0kf72jt",
@@ -11800,7 +11800,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_yd0ehw5csaur",
@@ -11845,7 +11845,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_u1afezy1ye99",
@@ -11871,7 +11871,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_fhiqvgdamq5",
@@ -11916,7 +11916,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_cbsgp6k0qa82",
@@ -11942,7 +11942,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_mec5cg5aptf8",
@@ -11987,7 +11987,7 @@
         "applicability": "yes",
         "adjusted_category": "advisory",
         "rationale_type": "direct_mapping",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_yztwtek0y34v",
@@ -12027,7 +12027,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_prevents",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_u2mzjgiwbkz0",
@@ -12079,7 +12079,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_pocsh1neugpc",
@@ -12112,7 +12112,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_pocsh1neugpc",
@@ -12157,7 +12157,7 @@
         "applicability": "yes",
         "adjusted_category": "advisory",
         "rationale_type": "direct_mapping",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_yztwtek0y34v",
@@ -12190,7 +12190,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_mtuwzinpfvkl",
@@ -12236,7 +12236,7 @@
         "applicability": "yes",
         "adjusted_category": "required",
         "rationale_type": "direct_mapping",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_osd6c4utyjb3",
@@ -12276,7 +12276,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_prevents",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_jep7p27kaqlp",
@@ -12329,7 +12329,7 @@
         "applicability": "yes",
         "adjusted_category": "required",
         "rationale_type": "direct_mapping",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_yztwtek0y34v",
@@ -12369,7 +12369,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_prevents",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_dzq9cdz4ibsz",
@@ -12421,7 +12421,7 @@
         "applicability": "yes",
         "adjusted_category": "advisory",
         "rationale_type": "direct_mapping",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_hi1iz0gbnksi",
@@ -12454,7 +12454,7 @@
         "applicability": "yes",
         "adjusted_category": "advisory",
         "rationale_type": "direct_mapping",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_hi1iz0gbnksi",
@@ -12500,7 +12500,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_alternative",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_nsvzzbldhq53",
@@ -12533,7 +12533,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_alternative",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_nsvzzbldhq53",
@@ -12578,7 +12578,7 @@
         "applicability": "yes",
         "adjusted_category": "advisory",
         "rationale_type": "direct_mapping",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_yztwtek0y34v",
@@ -12604,7 +12604,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_9xnaxd7qbakp",
@@ -12643,7 +12643,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_qwljwqr07slp",
@@ -12669,7 +12669,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_b4xporvr64s",
@@ -12714,7 +12714,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_b4xporvr64s",
@@ -12740,7 +12740,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_b4xporvr64s",
@@ -12779,7 +12779,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_alternative",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_wrvjizrqf3po",
@@ -12805,7 +12805,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_alternative",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_wrvjizrqf3po",
@@ -12843,7 +12843,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_alternative",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_nsvzzbldhq53",
@@ -12869,7 +12869,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_alternative",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_nsvzzbldhq53",
@@ -12907,7 +12907,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_alternative",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_77scxuomlbgs",
@@ -12933,7 +12933,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_prevents",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_77scxuomlbgs",
@@ -12978,7 +12978,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_alternative",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_nsvzzbldhq53",
@@ -13004,7 +13004,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_alternative",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_nsvzzbldhq53",
@@ -13042,7 +13042,7 @@
         "applicability": "yes",
         "adjusted_category": "required",
         "rationale_type": "direct_mapping",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_jep7p27kaqlp",
@@ -13082,7 +13082,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_prevents",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_4agmmu5al6gt",
@@ -13134,7 +13134,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_alternative",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_4agmmu5al6gt",
@@ -13160,7 +13160,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_prevents",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_vpbikb73dw4k",
@@ -13198,7 +13198,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_xdvdl2ssnhlo",
@@ -13224,7 +13224,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_xdvdl2ssnhlo",
@@ -13262,7 +13262,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_xdvdl2ssnhlo",
@@ -13288,7 +13288,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_xdvdl2ssnhlo",
@@ -13326,7 +13326,7 @@
         "applicability": "yes",
         "adjusted_category": "advisory",
         "rationale_type": "direct_mapping",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_yztwtek0y34v",
@@ -13352,7 +13352,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_alternative",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_yztwtek0y34v",
@@ -13391,7 +13391,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_dw33yt5g6m0k",
@@ -13417,7 +13417,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_exe4zodlwfez",
@@ -13462,7 +13462,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_1k9mkv7rbezi",
@@ -13488,7 +13488,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_sLCBZ3vG1AWs",
@@ -13533,7 +13533,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_yztwtek0y34v",
@@ -13552,7 +13552,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_yztwtek0y34v",
@@ -13590,7 +13590,7 @@
         "applicability": "yes",
         "adjusted_category": "advisory",
         "rationale_type": "direct_mapping",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_vyc9vcuamlph",
@@ -13616,7 +13616,7 @@
         "applicability": "yes",
         "adjusted_category": "advisory",
         "rationale_type": "direct_mapping",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_vyc9vcuamlph",
@@ -13654,7 +13654,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_3v733mnewssy",
@@ -13680,7 +13680,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_3v733mnewssy",
@@ -13718,7 +13718,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_prevents",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_u2mzjgiwbkz0",
@@ -13744,7 +13744,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_prevents",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_u2mzjgiwbkz0",
@@ -13782,7 +13782,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_prevents",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_u2mzjgiwbkz0",
@@ -13808,7 +13808,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_prevents",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_svkx6szhr472",
@@ -13846,7 +13846,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_yztwtek0y34v",
@@ -13865,7 +13865,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_a14slch83hzn",
@@ -13903,7 +13903,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_yztwtek0y34v",
@@ -13922,7 +13922,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_yztwtek0y34v",
@@ -13960,7 +13960,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_5cm4gkt55hjh",
@@ -13979,7 +13979,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_5cm4gkt55hjh",
@@ -14017,7 +14017,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_prevents",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_svkx6szhr472",
@@ -14043,7 +14043,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_prevents",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_svkx6szhr472",
@@ -14081,7 +14081,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_pocsh1neugpc",
@@ -14100,7 +14100,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_pocsh1neugpc",
@@ -14138,7 +14138,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_dzq9cdz4ibsz",
@@ -14171,7 +14171,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_dzq9cdz4ibsz",
@@ -14223,7 +14223,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_dzq9cdz4ibsz",
@@ -14256,7 +14256,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_dzq9cdz4ibsz",
@@ -14308,7 +14308,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_dzq9cdz4ibsz",
@@ -14341,7 +14341,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_dzq9cdz4ibsz",
@@ -14393,7 +14393,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_prevents",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_77scxuomlbgs",
@@ -14426,7 +14426,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_prevents",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_77scxuomlbgs",
@@ -14478,7 +14478,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_prevents",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_jdknpu3kf865",
@@ -14511,7 +14511,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_prevents",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_jdknpu3kf865",
@@ -14563,7 +14563,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_prevents",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_a14slch83hzn",
@@ -14603,7 +14603,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_prevents",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_a14slch83hzn",
@@ -14663,7 +14663,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_prevents",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_3xvm61x0t251",
@@ -14696,7 +14696,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_prevents",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_3xvm61x0t251",
@@ -14748,7 +14748,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_prevents",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_v5x85lt5ulva",
@@ -14788,7 +14788,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_prevents",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_v5x85lt5ulva",
@@ -14847,7 +14847,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_prevents",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_rm4ncoopcdvj",
@@ -14880,7 +14880,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_prevents",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_rm4ncoopcdvj",
@@ -14932,7 +14932,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_prevents",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_dw33yt5g6m0k",
@@ -14965,7 +14965,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_prevents",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_dw33yt5g6m0k",
@@ -15017,7 +15017,7 @@
         "applicability": "partial",
         "adjusted_category": "advisory",
         "rationale_type": "rust_alternative",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_3v733mnewssy",
@@ -15050,7 +15050,7 @@
         "applicability": "partial",
         "adjusted_category": "advisory",
         "rationale_type": "rust_alternative",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_3v733mnewssy",
@@ -15102,7 +15102,7 @@
         "applicability": "yes",
         "adjusted_category": "advisory",
         "rationale_type": "direct_mapping",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_3v733mnewssy",
@@ -15135,7 +15135,7 @@
         "applicability": "yes",
         "adjusted_category": "advisory",
         "rationale_type": "direct_mapping",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_3v733mnewssy",
@@ -15187,7 +15187,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_prevents",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_3xvm61x0t251",
@@ -15220,7 +15220,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "rust_prevents",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_3xvm61x0t251",
@@ -15272,7 +15272,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_vhpwge5123cm",
@@ -15298,7 +15298,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_vhpwge5123cm",
@@ -15343,7 +15343,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_utuu8mdbuyxm",
@@ -15369,7 +15369,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_utuu8mdbuyxm",
@@ -15414,7 +15414,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_jeoas4n6su4",
@@ -15440,7 +15440,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_jeoas4n6su4",
@@ -15485,7 +15485,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_i7g2n7hfg3ch",
@@ -15511,7 +15511,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_i7g2n7hfg3ch",
@@ -15556,7 +15556,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_dw33yt5g6m0k",
@@ -15582,7 +15582,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_dw33yt5g6m0k",
@@ -15627,7 +15627,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_e5td0fa92fay",
@@ -15653,7 +15653,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_e5td0fa92fay",
@@ -15698,7 +15698,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_wjldgtio5o75",
@@ -15724,7 +15724,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_wjldgtio5o75",
@@ -15769,7 +15769,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_e5td0fa92fay",
@@ -15795,7 +15795,7 @@
         "applicability": "no",
         "adjusted_category": "n_a",
         "rationale_type": "no_equivalent",
-        "confidence": "high",
+        "confidence": "medium",
         "accepted_matches": [
           {
             "fls_id": "fls_e5td0fa92fay",

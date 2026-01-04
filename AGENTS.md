@@ -1277,6 +1277,8 @@ If resuming an interrupted session, output "Resuming from Rule X.Y (N/M complete
 
 **IMPORTANT:** Process guidelines ONE AT A TIME. Complete all 4 searches and record the decision for each guideline before moving to the next. Do not batch searches across multiple guidelines or reuse search results. See "Search Protocol Enforcement" below for details.
 
+**Compaction Recovery:** If a session undergoes context compaction mid-guideline, **restart that guideline from scratch**. Discard any searches/analysis done before compaction and re-run all 8 searches with fresh analysis. Compaction loses the analysis context (search results reviewed, patterns identified, FLS content analyzed). Attempting to continue with partial context leads to shallow or incorrect decisions.
+
 Process the batch report JSON and for each guideline:
 
 1. **Review extracted data** in the batch report
@@ -1321,10 +1323,11 @@ Process the batch report JSON and for each guideline:
    
    If the guideline is not in the expected batch, do NOT proceed. Skip to the next guideline.
 
-4. **Search for relevant content:**
+4. **Search and Record Protocol:**
 
-   **Required search protocol** (5 searches mandatory for each guideline):
-   
+   For each guideline, follow this exact sequence (8 search operations total):
+
+   **Phase A: Context and Deep Search (shared between contexts)**
    ```bash
    # Step 0: Context search (get Rust terminology before FLS search)
    uv run search-rust-context --query "<MISRA concern in plain terms>" --top 3
@@ -1336,7 +1339,10 @@ Process the batch report JSON and for each guideline:
    
    # Step 1: Deep search - displays ADD-6 context automatically
    uv run search-fls-deep --standard misra-c --guideline "Rule X.Y"
-   
+   ```
+
+   **Phase B: all_rust Context (3 keyword searches + record)**
+   ```bash
    # Step 2: C/MISRA terminology query (use --for-guideline to show ADD-6 context)
    uv run search-fls --query "<C concepts from rule text>" --top 10 --for-guideline "Rule X.Y"
    
@@ -1345,7 +1351,28 @@ Process the batch report JSON and for each guideline:
    
    # Step 4: Additional angles as needed (safety concepts, related mechanisms)
    uv run search-fls --query "<semantic/safety concepts>" --top 10
+   
+   # Step 5: Record all_rust decision
+   uv run record-decision --standard misra-c --batch N --guideline "Rule X.Y" --context all_rust ...
    ```
+
+   **Phase C: safe_rust Context (3 NEW keyword searches + record)**
+   ```bash
+   # Step 6: Safe Rust specific terminology
+   uv run search-fls --query "<safe Rust mechanisms>" --top 10
+   
+   # Step 7: Type system / borrow checker prevention
+   uv run search-fls --query "<type system safety concepts>" --top 10
+   
+   # Step 8: Additional safe Rust angles
+   uv run search-fls --query "<additional safe angles>" --top 10
+   
+   # Step 9: Record safe_rust decision
+   uv run record-decision --standard misra-c --batch N --guideline "Rule X.Y" --context safe_rust ...
+   ```
+
+   **Phase D: Output Decision Summary (AFTER both recordings)**
+   Output the structured summary (see format below) after completing both context recordings.
    
    **Why context search (Step 0) matters:**
    
@@ -1386,7 +1413,7 @@ Process the batch report JSON and for each guideline:
 
 #### Decision Summary Format
 
-For each guideline processed, output a structured analysis summary before recording decisions. This provides visibility into the reasoning and creates an audit trail.
+For each guideline processed, output a structured analysis summary **after recording both context decisions**. This provides visibility into the reasoning and creates an audit trail.
 
 **Format:**
 
@@ -1438,7 +1465,6 @@ For each guideline processed, output a structured analysis summary before record
 - Rust Analysis should explain the mechanism, not just state the decision
 - Both contexts must be shown even when identical
 - Key FLS column: use format `fls_id: brief justification` (full quotes go in the recorded decision)
-- Output this summary BEFORE running the `record-decision` commands
 
 #### Search Protocol Enforcement
 
@@ -1566,7 +1592,10 @@ This means:
        --adjusted-category advisory \
        --rationale-type direct_mapping \
        --confidence high \
-       --search-used "550e8400-e29b-41d4-a716-446655440000:search-fls-deep:Dir 1.1:5" \
+       --misra-concern "ABI compatibility is required when interfacing with C code via FFI." \
+       --rust-analysis "Rust provides extern C ABI for C interop. FLS fls_usgd0xlijoxv defines ABI kinds including extern C. The concern applies when using FFI." \
+       --search-used "550e8400-e29b-41d4-a716-446655440000:search-rust-context:ABI calling convention:3" \
+       --search-used "660e8400-e29b-41d4-a716-446655440001:search-fls-deep:Dir 1.1:5" \
        --search-used "a1b2c3d4-5678-90ab-cdef-1234567890ab:search-fls:ABI implementation:10" \
        --search-used "b2c3d4e5-6789-01ab-cdef-2345678901ab:search-fls:rust ABI extern:10" \
        --search-used "c3d4e5f6-7890-12ab-cdef-3456789012ab:search-fls:calling convention:10" \
@@ -1579,6 +1608,14 @@ This means:
    - `--context {all_rust,safe_rust}`: Which context this decision applies to
    - `--applicability {yes,no,partial}`: Whether the guideline applies in this context
    - `--adjusted-category`: MISRA adjusted category for Rust (`required`, `advisory`, `recommended`, `disapplied`, `implicit`, `n_a`)
+   - `--misra-concern`: The MISRA safety concern for this context (1-2 sentences):
+     - If applicable: State the concern and why it applies (e.g., "Union field access without tracking which field was last written causes UB in Rust just as in C.")
+     - If not applicable: Use "Not applicable - <reason>" (e.g., "Not applicable - safe Rust cannot read union fields, preventing this concern entirely.")
+     - If partial: State which aspects apply (e.g., "Partially applicable - the integer promotion concern doesn't apply, but the signedness concern does for explicit casts.")
+   - `--rust-analysis`: How Rust handles this concern in this context (2-4 sentences), with FLS references:
+     - If applicable: Explain the Rust mechanism that addresses the same concern (e.g., "Rust unions require unsafe to read fields. FLS fls_xxx states reading the wrong field type is UB. Same caution needed as in C.")
+     - If not applicable: Explain how Rust prevents/avoids the concern (e.g., "FLS fls_xxx requires unsafe context for union field reads. Safe Rust uses enums (tagged unions) which track active variant via discriminant.")
+     - If partial: Explain what applies and what doesn't
 
    **Search-used format:** `search_id:tool:query:result_count`
    - `search_id`: UUID4 from search tool output (required for new decisions)

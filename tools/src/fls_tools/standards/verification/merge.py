@@ -6,12 +6,12 @@ This tool merges individual decision files from a decisions directory back into
 a batch report for Phase 3 review. Supports v2.0, v2.1, and v3.0 decision files.
 
 Features:
-- Merges v2.0/v2.1/v3.0 decision files with all_rust and safe_rust contexts
+    - Merges v2.0/v2.1/v3.0/v3.1 decision files with all_rust and safe_rust contexts
 - Populates verification_decision fields in batch report
 - Aggregates proposed changes to top-level applicability_changes array
 - Updates summary statistics with per-context counts
 - Validates for duplicate search UUIDs across all decision files
-- Preserves misra_add6_snapshot from v2.1/v3.0 decision files
+    - Preserves misra_add6_snapshot from v2.1/v3.0/v3.1 decision files
 - Warns if ADD-6 snapshot mismatches batch report's misra_add6
 
 Usage:
@@ -181,7 +181,7 @@ def check_duplicate_search_ids(decisions: list[dict]) -> dict[str, list[str]]:
     2. All other search UUIDs (search-fls, etc.) must be unique per context
     3. Any UUID reuse across DIFFERENT guidelines is always flagged
     
-    Supports v1.0, v1.1, v2.0, v2.1, and v3.0 decision files.
+    Supports v1.0, v1.1, v2.0, v2.1, v3.0, and v3.1 decision files.
     
     Returns:
         Dict mapping duplicate search_id -> list of usages that violate rules
@@ -193,8 +193,8 @@ def check_duplicate_search_ids(decisions: list[dict]) -> dict[str, list[str]]:
         guideline_id = decision.get("guideline_id", "(unknown)")
         schema_version = decision.get("schema_version", "1.0")
         
-        # v2.0, v2.1, v3.0 have per-context structure
-        if schema_version in ("2.0", "2.1", "3.0"):
+        # v2.0, v2.1, v3.0, v3.1 have per-context structure
+        if schema_version in ("2.0", "2.1", "3.0", "3.1"):
             for context in ["all_rust", "safe_rust"]:
                 ctx_data = decision.get(context, {})
                 search_tools = ctx_data.get("search_tools_used", [])
@@ -282,8 +282,8 @@ def merge_decisions_into_report(
         
         schema_version = decision.get("schema_version", "1.0")
         
-        # v2.0, v2.1, v3.0: per-context structure
-        if schema_version in ("2.0", "2.1", "3.0"):
+        # v2.0, v2.1, v3.0, v3.1: per-context structure
+        if schema_version in ("2.0", "2.1", "3.0", "3.1"):
             # Merge per-context decisions
             verification_decision = {
                 "all_rust": decision.get("all_rust", {}),
@@ -321,8 +321,8 @@ def merge_decisions_into_report(
                         report["applicability_changes"].append(change_entry)
                         existing_changes[key] = len(report["applicability_changes"]) - 1
             
-            # Check ADD-6 snapshot consistency for v2.1/v3.0
-            if schema_version in ("2.1", "3.0"):
+            # Check ADD-6 snapshot consistency for v2.1/v3.0/v3.1
+            if schema_version in ("2.1", "3.0", "3.1"):
                 decision_add6 = decision.get("misra_add6_snapshot")
                 report_add6 = report["guidelines"][idx].get("misra_add6")
                 
@@ -408,11 +408,6 @@ def main():
         "--dry-run",
         action="store_true",
         help="Show what would be merged without writing to file",
-    )
-    parser.add_argument(
-        "--skip-uuid-validation",
-        action="store_true",
-        help="Skip duplicate UUID validation (use for legacy decisions only)",
     )
     
     args = parser.parse_args()
@@ -509,20 +504,19 @@ def main():
     version_info = ", ".join(f"v{v}: {c}" for v, c in sorted(version_counts.items()))
     print(f"Found {len(decisions)} valid decision file(s) ({version_info})")
     
-    # Check for duplicate search IDs
-    if not args.skip_uuid_validation:
-        duplicates = check_duplicate_search_ids(decisions)
-        if duplicates:
-            print("\nERROR: Duplicate search IDs detected:", file=sys.stderr)
-            for search_id, usages in list(duplicates.items())[:5]:
-                print(f"  UUID {search_id[:8]}... used by: {', '.join(usages)}", file=sys.stderr)
-            if len(duplicates) > 5:
-                print(f"  ... and {len(duplicates) - 5} more duplicates", file=sys.stderr)
-            print("\nEach search execution can only be claimed by one guideline.", file=sys.stderr)
-            print("\nFor legacy decisions, use --skip-uuid-validation to bypass this check.", file=sys.stderr)
-            sys.exit(1)
-    else:
-        print("WARNING: Skipping UUID validation for legacy decisions", file=sys.stderr)
+    # Check for duplicate search IDs (validation should now happen at record time,
+    # but we keep this as a safety net)
+    duplicates = check_duplicate_search_ids(decisions)
+    if duplicates:
+        print("\nERROR: Duplicate search IDs detected:", file=sys.stderr)
+        for search_id, usages in list(duplicates.items())[:5]:
+            print(f"  UUID {search_id[:8]}... used by: {', '.join(usages)}", file=sys.stderr)
+        if len(duplicates) > 5:
+            print(f"  ... and {len(duplicates) - 5} more duplicates", file=sys.stderr)
+        print("\nEach search execution can only be claimed by one guideline.", file=sys.stderr)
+        print("\nUUID validation should happen at record-decision time.", file=sys.stderr)
+        print("Delete the invalid decision files and re-record with proper search protocol.", file=sys.stderr)
+        sys.exit(1)
     
     # Merge decisions
     print(f"\nMerging decisions into batch report...")

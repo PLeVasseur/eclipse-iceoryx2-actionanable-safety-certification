@@ -35,7 +35,7 @@ from fls_tools.shared import (
     get_verification_progress_path,
     normalize_standard,
     VALID_STANDARDS,
-    get_guideline_schema_version,
+    is_v1_family,
 )
 
 
@@ -94,13 +94,13 @@ def assign_batches(
     guideline_data: dict[str, dict[str, Any]] = {}
     for m in mappings:
         gid = m["guideline_id"]
-        schema_ver = get_guideline_schema_version(m)
         
-        if schema_ver == "1.0":
+        if is_v1_family(m):
+            # v1 family (v1.0, v1.1): flat structure with applicability_all_rust
             confidence = m.get("confidence", "medium")
             applicability = m.get("applicability_all_rust", "unmapped")
         else:
-            # v2: Get from all_rust context
+            # v2 family (v2.0, v2.1, v3.0): per-context structure
             all_rust = m.get("all_rust", {})
             confidence = all_rust.get("confidence", "medium")
             # Convert v2 applicability values to v1 for batch assignment

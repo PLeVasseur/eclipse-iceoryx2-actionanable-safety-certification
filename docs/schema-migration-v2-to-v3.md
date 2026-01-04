@@ -104,19 +104,20 @@ As of 2026-01-03, `coding-standards-fls-mapping/mappings/misra_c_to_fls.json` co
 
 | Schema Version | Count | Percentage | Description |
 |----------------|-------|------------|-------------|
-| v1.0 | 115 | 51.6% | Batches 3, 4, 5 - unverified entries |
-| v2.0 | 108 | 48.4% | Batches 1, 2 - verified entries |
+| v1.1 | 77 | 34.5% | Batches 4, 5 - enriched but unverified |
+| v2.1 | 108 | 48.4% | Batches 1, 2 - verified, enriched |
+| v3.0 | 38 | 17.0% | Batch 3 - fresh verification with ADD-6 |
 | **Total** | 223 | 100% | |
 
-**Batch-to-Version Mapping:**
+**Batch-to-Version Status:**
 
-| Batch | Name | Current Version | After Migration |
-|-------|------|-----------------|-----------------|
-| 1 | High-score direct | v2.0 | v2.1 |
-| 2 | Not applicable | v2.0 | v2.1 |
-| 3 | Stdlib & Resources | v1.0 | v1.1 |
-| 4 | Medium-score direct | v1.0 | v1.1 |
-| 5 | Edge cases | v1.0 | v1.1 |
+| Batch | Name | Current Version | Status |
+|-------|------|-----------------|--------|
+| 1 | High-score direct | v2.1 | Enriched (verified in v2.0, ADD-6 added) |
+| 2 | Not applicable | v2.1 | Enriched (verified in v2.0, ADD-6 added) |
+| 3 | Stdlib & Resources | v3.0 | Fresh v3.0 verification complete |
+| 4 | Medium-score direct | v1.1 | Enriched (awaiting re-verification to v3.0) |
+| 5 | Edge cases | v1.1 | Enriched (awaiting re-verification to v3.0) |
 
 ### Decision Files
 

@@ -48,35 +48,47 @@ def save_json(path: Path, data: dict) -> None:
         f.write("\n")
 
 
-def reset_mappings(root: Path, standard: str, dry_run: bool) -> tuple[int, int]:
+def reset_mappings(root: Path, standard: str, dry_run: bool) -> tuple[int, int, int]:
     """
     Reset confidence from 'high' to 'medium' for all entries in the mapping file.
     
+    Handles both v1 (top-level confidence) and v2/v3 (per-context confidence) formats.
+    
     Returns:
-        Tuple of (total_entries, reset_count)
+        Tuple of (total_entries, v1_reset_count, v2_context_reset_count)
     """
     mappings_path = get_standard_mappings_path(root, standard)
     
     if not mappings_path.exists():
         print(f"Mappings file not found: {mappings_path}")
-        return 0, 0
+        return 0, 0, 0
     
     data = load_json(mappings_path)
     mappings = data.get("mappings", [])
     
     total = len(mappings)
-    reset_count = 0
+    v1_reset_count = 0
+    v2_context_reset_count = 0
     
     for m in mappings:
+        # v1 format: top-level confidence
         if m.get("confidence") == "high":
             if not dry_run:
                 m["confidence"] = "medium"
-            reset_count += 1
+            v1_reset_count += 1
+        
+        # v2/v3 format: per-context confidence
+        for context in ("all_rust", "safe_rust"):
+            ctx = m.get(context)
+            if isinstance(ctx, dict) and ctx.get("confidence") == "high":
+                if not dry_run:
+                    ctx["confidence"] = "medium"
+                v2_context_reset_count += 1
     
-    if not dry_run and reset_count > 0:
+    if not dry_run and (v1_reset_count > 0 or v2_context_reset_count > 0):
         save_json(mappings_path, data)
     
-    return total, reset_count
+    return total, v1_reset_count, v2_context_reset_count
 
 
 def regenerate_progress(root: Path, standard: str, dry_run: bool) -> bool:
@@ -203,13 +215,18 @@ Examples:
     mappings_path = get_standard_mappings_path(root, args.standard)
     print(f"  File: {mappings_path}")
     
-    total, reset_count = reset_mappings(root, args.standard, args.dry_run)
+    total, v1_reset_count, v2_context_reset_count = reset_mappings(root, args.standard, args.dry_run)
     
     if total == 0:
         print("  No mappings found")
     else:
         action = "Would reset" if args.dry_run else "Reset"
-        print(f"  {action} {reset_count}/{total} entries from 'high' to 'medium'")
+        if v1_reset_count > 0:
+            print(f"  {action} {v1_reset_count}/{total} v1 entries (top-level confidence)")
+        if v2_context_reset_count > 0:
+            print(f"  {action} {v2_context_reset_count} v2/v3 per-context confidence fields")
+        if v1_reset_count == 0 and v2_context_reset_count == 0:
+            print(f"  No entries with 'high' confidence found (0/{total})")
     
     print()
     
