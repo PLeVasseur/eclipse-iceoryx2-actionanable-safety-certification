@@ -67,7 +67,16 @@ validate-decisions = "fls_tools.standards.validation.decisions:main"
 validate-applicability = "fls_tools.standards.validation.applicability:main"
 generate-valid-fls-ids = "fls_tools.standards.validation.generate_fls_ids:main"
 
-# Analysis
+# Pipeline 3: Analysis (comparison and review)
+extract-comparison-data = "fls_tools.standards.analysis.extract:main"
+record-outlier-analysis = "fls_tools.standards.analysis.record:main"
+list-pending-outliers = "fls_tools.standards.analysis.pending:main"
+diff-fls-matches = "fls_tools.standards.analysis.diff:main"
+generate-analysis-reports = "fls_tools.standards.analysis.reports:main"
+review-outliers = "fls_tools.standards.analysis.review:main"
+reset-review = "fls_tools.standards.analysis.reset_review:main"
+
+# Analysis (legacy)
 analyze-coverage = "fls_tools.analysis.coverage:main"
 review-mappings = "fls_tools.analysis.review:main"
 

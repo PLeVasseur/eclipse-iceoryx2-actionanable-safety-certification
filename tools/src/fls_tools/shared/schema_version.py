@@ -10,10 +10,13 @@ Schema versions:
 - v2.0: Per-context structure with independent all_rust and safe_rust sections
 - v2.1: v2.0 + misra_add6 block (enriched via migration)
 - v3.0: Per-context + misra_add6, fresh verification (structurally same as v2.1)
+- v3.1: v3.0 + analysis_summary structured field (same per-context structure)
 
 Version semantics:
 - v1.1/v2.1 = Enriched legacy data (ADD-6 added via migration tool)
-- v3.0 = Fresh verification decisions (created with full ADD-6 context)
+- v3.x = Fresh verification decisions (created with full ADD-6 context)
+
+Note: is_v2_family() returns True for v2.x AND v3.x since both use per-context structure.
 """
 
 from typing import Dict, Any, Literal, Optional
@@ -54,8 +57,8 @@ def is_v2_1(data: Dict[str, Any]) -> bool:
 
 
 def is_v3(data: Dict[str, Any]) -> bool:
-    """Check if data is v3.0 format."""
-    return detect_schema_version(data) == "3.0"
+    """Check if data is v3.x format (v3.0, v3.1, etc.)."""
+    return str(detect_schema_version(data)).startswith("3.")
 
 
 def is_v1_family(data: Dict[str, Any]) -> bool:
@@ -64,8 +67,10 @@ def is_v1_family(data: Dict[str, Any]) -> bool:
 
 
 def is_v2_family(data: Dict[str, Any]) -> bool:
-    """Check if data is v2 family (v2.0, v2.1, or v3.0 - per-context structure)."""
-    return detect_schema_version(data) in ("2.0", "2.1", "3.0")
+    """Check if data is v2 family (v2.0, v2.1, or v3.x - per-context structure)."""
+    version = detect_schema_version(data)
+    # v2.0, v2.1, and any v3.x use per-context structure
+    return version in ("2.0", "2.1") or str(version).startswith("3.")
 
 
 def has_add6_data(data: Dict[str, Any]) -> bool:

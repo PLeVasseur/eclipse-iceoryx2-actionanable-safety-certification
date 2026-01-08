@@ -11,9 +11,26 @@ This script applies verified decisions from a v3 batch report to:
 When applying v3 decisions, entries are upgraded to v3.0 format regardless
 of their original version (v1.0, v1.1, v2.0, v2.1).
 
+**Analysis Gate (Optional):**
+
+When --analysis-dir is provided, the tool validates that all outliers have
+been reviewed before applying. Granular human decisions are respected:
+- Categorization: accept/reject controls applicability, rationale_type
+- FLS Removals: per-ID accept/reject controls which matches are removed
+- FLS Additions: per-ID accept/reject controls which matches are added
+- ADD-6 Divergence: reject reverts to ADD-6 values
+
 Usage:
     uv run apply-verification --standard misra-c --batch 1 --session 1
     uv run apply-verification --standard misra-c --batch 1 --session 1 --dry-run
+    
+    # With analysis gate
+    uv run apply-verification --standard misra-c --batch 1 --session 1 \\
+        --analysis-dir cache/analysis/
+    
+    # Skip analysis check (escape hatch)
+    uv run apply-verification --standard misra-c --batch 1 --session 1 \\
+        --skip-analysis-check --force
 """
 
 import argparse
@@ -41,6 +58,26 @@ from fls_tools.shared import (
     build_misra_add6_block,
     check_add6_mismatch,
 )
+
+# Analysis imports - lazy loaded to avoid circular imports
+def load_analysis_modules():
+    """Load analysis modules lazily."""
+    from fls_tools.standards.analysis.shared import (
+        get_outlier_analysis_dir,
+        load_outlier_analysis,
+        load_review_state,
+        recompute_review_summary,
+        is_outlier as check_is_outlier,
+        load_comparison_data,
+    )
+    return {
+        "get_outlier_analysis_dir": get_outlier_analysis_dir,
+        "load_outlier_analysis": load_outlier_analysis,
+        "load_review_state": load_review_state,
+        "recompute_review_summary": recompute_review_summary,
+        "check_is_outlier": check_is_outlier,
+        "load_comparison_data": load_comparison_data,
+    }
 
 
 def load_json(path: Path, description: str) -> dict:
@@ -417,6 +454,164 @@ def update_progress_v2(
     return progress, all_rust_count, safe_rust_count
 
 
+# =============================================================================
+# Analysis Gate Functions
+# =============================================================================
+
+def validate_analysis_complete(
+    analysis_dir: Path,
+    report: dict,
+    root: Path,
+) -> tuple[bool, dict]:
+    """
+    Validate that all outliers have been reviewed.
+    
+    Returns:
+        (is_complete, summary_dict)
+    """
+    analysis = load_analysis_modules()
+    
+    # Recompute review summary
+    summary = analysis["recompute_review_summary"](root)
+    
+    # Load batch guideline IDs
+    batch_guidelines = {g["guideline_id"] for g in report.get("guidelines", [])}
+    
+    # Check each batch guideline for outlier status
+    pending_outliers = []
+    partial_outliers = []
+    fully_reviewed = []
+    
+    outlier_dir = analysis["get_outlier_analysis_dir"](root)
+    
+    for gid in batch_guidelines:
+        outlier = analysis["load_outlier_analysis"](gid, root)
+        if outlier is None:
+            # Not an outlier, or comparison data not extracted
+            continue
+        
+        human_review = outlier.get("human_review")
+        if human_review is None:
+            pending_outliers.append(gid)
+        elif human_review.get("overall_status") == "pending":
+            pending_outliers.append(gid)
+        elif human_review.get("overall_status") == "partial":
+            partial_outliers.append(gid)
+        else:
+            fully_reviewed.append(gid)
+    
+    is_complete = len(pending_outliers) == 0 and len(partial_outliers) == 0
+    
+    return is_complete, {
+        "pending": pending_outliers,
+        "partial": partial_outliers,
+        "fully_reviewed": fully_reviewed,
+        "summary": summary,
+    }
+
+
+def merge_with_human_decisions(
+    mapping_ctx: dict,
+    decision_ctx: dict,
+    human_review: dict,
+    context: str,
+    add6_data: dict | None,
+) -> dict:
+    """
+    Merge LLM decision with human review adjustments for one context.
+    
+    Args:
+        mapping_ctx: Current state from mapping file for this context
+        decision_ctx: LLM decision for this context
+        human_review: Human review section from outlier analysis
+        context: "all_rust" or "safe_rust"
+        add6_data: ADD-6 data for the guideline (if available)
+    
+    Returns:
+        Merged context dict
+    """
+    final = {}
+    
+    # --- Categorization ---
+    cat_decision = None
+    cat_review = human_review.get("categorization", {})
+    if isinstance(cat_review, dict):
+        cat_decision = cat_review.get("decision")
+    
+    if cat_decision == "accept":
+        final["applicability"] = decision_ctx.get("applicability")
+        final["rationale_type"] = decision_ctx.get("rationale_type")
+        final["adjusted_category"] = decision_ctx.get("adjusted_category")
+    else:  # reject or not reviewed - keep mapping values
+        final["applicability"] = mapping_ctx.get("applicability")
+        final["rationale_type"] = mapping_ctx.get("rationale_type")
+        final["adjusted_category"] = mapping_ctx.get("adjusted_category")
+    
+    # --- ADD-6 Divergence Override ---
+    add6_review = human_review.get("add6_divergence", {})
+    if isinstance(add6_review, dict) and add6_review.get("decision") == "reject":
+        # Revert to ADD-6 values
+        if add6_data:
+            add6_app_key = f"applicability_{context}"
+            if add6_app_key in add6_data:
+                add6_app = add6_data[add6_app_key].lower() if add6_data[add6_app_key] else None
+                if add6_app == "yes":
+                    final["applicability"] = "yes"
+                elif add6_app == "no":
+                    final["applicability"] = "no"
+                elif add6_app == "partial":
+                    final["applicability"] = "partial"
+            if "adjusted_category" in add6_data:
+                final["adjusted_category"] = add6_data["adjusted_category"]
+    
+    # --- FLS Matches ---
+    mapping_matches = mapping_ctx.get("accepted_matches", [])
+    decision_matches = decision_ctx.get("accepted_matches", [])
+    
+    mapping_fls_ids = {m.get("fls_id") for m in mapping_matches if m.get("fls_id")}
+    decision_fls_ids = {m.get("fls_id") for m in decision_matches if m.get("fls_id")}
+    
+    retained = mapping_fls_ids & decision_fls_ids
+    removed = mapping_fls_ids - decision_fls_ids
+    added = decision_fls_ids - mapping_fls_ids
+    
+    final_matches = []
+    
+    # Include retained matches (use decision's version for updated reasons)
+    for match in decision_matches:
+        if match.get("fls_id") in retained:
+            final_matches.append(match)
+    
+    # Handle removals: include if human rejected the removal
+    fls_removals = human_review.get("fls_removals", {})
+    for match in mapping_matches:
+        fls_id = match.get("fls_id")
+        if fls_id in removed:
+            removal_item = fls_removals.get(fls_id, {})
+            if isinstance(removal_item, dict) and removal_item.get("decision") == "reject":
+                # Human rejected removal, keep it
+                final_matches.append(match)
+    
+    # Handle additions: include if human accepted the addition
+    fls_additions = human_review.get("fls_additions", {})
+    for match in decision_matches:
+        fls_id = match.get("fls_id")
+        if fls_id in added:
+            addition_item = fls_additions.get(fls_id, {})
+            if isinstance(addition_item, dict) and addition_item.get("decision") == "accept":
+                # Human accepted addition, include it
+                final_matches.append(match)
+    
+    final["accepted_matches"] = final_matches
+    
+    # Copy other fields from decision
+    final["confidence"] = "high"  # All verified decisions get high confidence
+    final["rejected_matches"] = decision_ctx.get("rejected_matches", [])
+    final["notes"] = decision_ctx.get("notes")
+    
+    return final
+
+
 def run_validation(root: Path) -> bool:
     """Run validation scripts and return success status."""
     import subprocess
@@ -489,6 +684,22 @@ def main():
         action="store_true",
         help="Skip running validation scripts after applying changes",
     )
+    parser.add_argument(
+        "--analysis-dir",
+        type=str,
+        default=None,
+        help="Path to analysis directory (enables analysis gate)",
+    )
+    parser.add_argument(
+        "--skip-analysis-check",
+        action="store_true",
+        help="Skip analysis completion check (requires --force)",
+    )
+    parser.add_argument(
+        "--force",
+        action="store_true",
+        help="Force apply without analysis gate (requires --skip-analysis-check)",
+    )
     
     args = parser.parse_args()
     
@@ -534,6 +745,60 @@ def main():
         print(f"WARNING: {len(pending)} unapproved applicability changes", file=sys.stderr)
         if args.apply_applicability_changes:
             print("  Only approved changes will be applied.", file=sys.stderr)
+    
+    # =============================================================================
+    # Analysis Gate Check
+    # =============================================================================
+    
+    analysis_results = None
+    
+    if args.analysis_dir:
+        try:
+            analysis_path = resolve_path(Path(args.analysis_dir))
+            analysis_path = validate_path_in_project(analysis_path, root)
+        except PathOutsideProjectError as e:
+            print(f"ERROR: {e}", file=sys.stderr)
+            sys.exit(1)
+        
+        if not analysis_path.exists():
+            print(f"ERROR: Analysis directory not found: {analysis_path}", file=sys.stderr)
+            print(f"  Run: uv run extract-comparison-data --standard {args.standard} --batches {report['batch_id']}", file=sys.stderr)
+            sys.exit(1)
+        
+        print(f"\nValidating analysis completion...", file=sys.stderr)
+        is_complete, analysis_results = validate_analysis_complete(analysis_path, report, root)
+        
+        pending_outliers = analysis_results["pending"]
+        partial_outliers = analysis_results["partial"]
+        fully_reviewed = analysis_results["fully_reviewed"]
+        
+        print(f"  Outliers: {len(fully_reviewed)} reviewed, {len(pending_outliers)} pending, {len(partial_outliers)} partial", file=sys.stderr)
+        
+        if not is_complete:
+            print(f"\nERROR: Analysis not complete. Blocking apply.", file=sys.stderr)
+            if pending_outliers:
+                print(f"\nPending outliers ({len(pending_outliers)}):", file=sys.stderr)
+                for gid in pending_outliers[:10]:
+                    print(f"  - {gid}", file=sys.stderr)
+                if len(pending_outliers) > 10:
+                    print(f"  ... and {len(pending_outliers) - 10} more", file=sys.stderr)
+            if partial_outliers:
+                print(f"\nPartially reviewed outliers ({len(partial_outliers)}):", file=sys.stderr)
+                for gid in partial_outliers[:10]:
+                    print(f"  - {gid}", file=sys.stderr)
+            print(f"\nTo complete review:", file=sys.stderr)
+            print(f"  uv run record-outlier-analysis --standard {args.standard} --guideline \"<GUIDELINE>\" ...", file=sys.stderr)
+            print(f"  uv run review-outliers --standard {args.standard} --guideline \"<GUIDELINE>\" --accept-all", file=sys.stderr)
+            print(f"\nOr bypass with:", file=sys.stderr)
+            print(f"  --skip-analysis-check --force", file=sys.stderr)
+            sys.exit(1)
+    
+    # Handle skip-analysis-check escape hatch
+    if args.skip_analysis_check:
+        if not args.force:
+            print("ERROR: --skip-analysis-check requires --force", file=sys.stderr)
+            sys.exit(1)
+        print("\nWARNING: Skipping analysis check. Decisions will be applied without human review.", file=sys.stderr)
     
     # Load ADD-6 data
     add6_all = load_add6_data(root)

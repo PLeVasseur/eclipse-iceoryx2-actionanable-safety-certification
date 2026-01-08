@@ -269,7 +269,24 @@ uv run validate-concept-crosswalk --verbose
 
 ### Pipeline 3: Cross-Reference & Analysis
 
-**Status:** Partially implemented. Existing tools provide basic analysis; end-to-end prioritization workflow pending.
+**Status:** Verification comparison tools complete. End-to-end prioritization workflow pending.
+
+**Verification Comparison Analysis:**
+
+Compare new decision files against existing mapping file to assess quality and identify outliers.
+
+| Command | Purpose | Usage |
+|---------|---------|-------|
+| `extract-comparison-data` | Extract raw comparison data, compute flags | `uv run extract-comparison-data --standard misra-c --batches 1,2,3` |
+| `list-pending-outliers` | Show outliers not yet analyzed | `uv run list-pending-outliers --standard misra-c --batches 1,2,3` |
+| `diff-fls-matches` | Human-readable diff for one guideline | `uv run diff-fls-matches --standard misra-c --guideline "Rule 10.1" --batch 1` |
+| `record-outlier-analysis` | Record LLM analysis for one outlier | See docs |
+| `generate-analysis-reports` | Generate Markdown reports | `uv run generate-analysis-reports --standard misra-c --batches 1,2,3` |
+| `review-outliers` | Interactive human review of outliers | `uv run review-outliers --standard misra-c --guideline "Rule 10.1" --accept-all` |
+
+See [`plans/verification-comparison-analysis.md`](plans/verification-comparison-analysis.md) for detailed design.
+
+**Legacy Analysis Tools:**
 
 | Command | Purpose | Usage |
 |---------|---------|-------|
@@ -1798,6 +1815,39 @@ After `apply-verification` completes successfully:
    ```
    
    After user approval, apply the changes in a separate update pass.
+
+7. **Preserve paragraph-level specificity:** FLS matches should cite **paragraph-level content** (legality rules, UB definitions, dynamic semantics) rather than section headers. The goal is citable text for writing coding guidelines.
+
+   **Category priority (highest to lowest value):**
+   
+   | Category | Code | Value | Description |
+   |----------|------|-------|-------------|
+   | Undefined Behavior | `-4` | **Highest** | UB definitions - essential for safety |
+   | Legality Rules | `-2` | **High** | Compiler-enforced rules - quotable |
+   | Dynamic Semantics | `-3` | **High** | Runtime behavior - quotable |
+   | Impl Requirements | `-5` | **Medium** | Implementation requirements |
+   | General/Intro | `-1` | **Low** | Introductory text before rubrics |
+   | Section Headers | `0` | **Lowest** | Container/heading only |
+   
+   **When selecting FLS matches:**
+   - **Prefer** paragraph-level matches (category < 0) over section-level (category = 0)
+   - If a search returns both section and paragraph matches from the same section, **cite the paragraphs**
+   - Section headers are implicit - citing `fls_abc123` (a legality rule under section X) implies section X
+   
+   **Specificity loss requires strong justification:**
+   
+   When removing a paragraph-level match (category < 0) while keeping/adding section-level matches (category = 0):
+   
+   | Justification | Acceptable? |
+   |---------------|-------------|
+   | "Replaced with a different paragraph-level match that's more relevant" | Yes |
+   | "Original paragraph was a false positive - discusses X, not MISRA concern Y" | Yes |
+   | "Consolidated into the section header" | **No** |
+   | "Section header captures the same content" | **No** |
+   
+   **Why this matters:** Coding guidelines need to cite specific normative text:
+   - Good: "Per FLS fls_3fg60jblx0xb: 'Inline assembly is written as an assembly code block wrapped inside a macro invocation.'"
+   - Bad: "Per FLS fls_z1il3w9nulzy: 'Inline Assembly'" - This says nothing useful
 
 #### FLS ID Validation
 
